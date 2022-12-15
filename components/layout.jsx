@@ -1,7 +1,7 @@
 import Head from "next/head";
 import Nav from "./nav";
 import Main from "./main";
-import Image from "next/legacy/image";
+import Footer from "./footer";
 
 const Layout = ({ children, title, description }) => {
   return (
@@ -11,10 +11,13 @@ const Layout = ({ children, title, description }) => {
         <meta name="description" content={description} />
       </Head>
 
-      <div className="md:flex lg:flex">
+      <div className="flex flex-col h-screen overflow-y-scroll">
         <Nav />
-        <Main>{children}</Main>
+        <Main />
+        {children}
       </div>
+
+      <Footer />
     </>
   );
 };
