@@ -32,13 +32,13 @@ function Index() {
       description={"RC - Web, Randy Caballero, Portfolio, Home"}
     >
       <motion.div
-        className="mx-auto mt-72"
+        className="flex flex-col items-center justify-center h-screen w-screen text-white"
         variants={containerVariants}
         initial="hidden"
         animate="visible"
         exit="exit"
       >
-        <p className="text-white text-opacity-40 text-7xl">
+        <p className="text-white text-opacity-40 lg:text-7xl md:text-5xl sm:text-3xl text-2xl">
           {"Hello, I'm Randy Caballero"}
         </p>
 
