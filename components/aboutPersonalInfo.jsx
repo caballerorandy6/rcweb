@@ -18,7 +18,7 @@ const firstContentVariants = {
 const AboutPersonalInfo = () => {
   return (
     <motion.div
-      className="flex flex-col w-11/12 sm:w-8/12 justify-center items-center sm:ml-16 mt-10 sm:mt-20"
+      className="flex flex-col w-11/12 sm:w-8/12 items-center sm:ml-16 mt-10 sm:mt-20"
       variants={firstContentVariants}
       initial="hidden"
       animate="visible"
