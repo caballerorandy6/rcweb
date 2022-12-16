@@ -27,7 +27,7 @@ const Nav = () => {
         initial="brightness"
         className="text-neutral-800 font-bold p-8 cursor-pointer bg-none sm:text-2xl md:text-3xl lg:text-4xl mx-auto sm:w-3/12 w-4/12 sm:text-start"
       >
-        RC Web
+        <Link href="/">RC Web</Link>
       </motion.h1>
 
       <div className="flex items-center justify-center mx-auto gap-4 sm:gap-8 font-bold uppercase text-xs sm:text-sm md:text-md w-9/12 lg:text-lg">
