@@ -11,15 +11,20 @@ const linkVariants = {
   },
 };
 
+const brightnessVariants = {
+  brightness: {
+    textShadow: "0px 0px 8px rgb(255, 255, 255)",
+  },
+};
+
 const Nav = () => {
   const router = useRouter();
 
   return (
     <nav className="w-full sm:flex">
       <motion.h1
-        initial={{ textShadow: "0px 0px 8px rgb(255, 255, 255)" }}
-        variants={linkVariants}
-        whileHover="hover"
+        variants={brightnessVariants}
+        initial="brightness"
         className="text-neutral-800 font-bold p-8 cursor-pointer bg-none sm:text-2xl md:text-3xl lg:text-4xl mx-auto sm:w-3/12 w-4/12 sm:text-start"
       >
         RC Web
