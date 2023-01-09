@@ -50,8 +50,8 @@ function Index() {
           </label>
           <Link
             target="_blank"
-            href="randycaballero.pdf"
-            download="randycaballero.pdf"
+            href="/public/Randy-Caballero.pdf"
+            download="Randy-Caballero.pdf"
             className="text-center p-2"
           >
             <Image

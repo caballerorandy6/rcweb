@@ -10,11 +10,12 @@
   },
   "dependencies": {
     "eslint": "8.29.0",
-    "eslint-config-next": "13.0.6",
+    "eslint-config-next": "^13.1.1",
     "framer-motion": "^7.9.1",
-    "next": "13.0.6",
-    "react": "18.2.0",
-    "react-dom": "18.2.0",
+    "next": "^13.1.1",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-hook-form": "^7.41.5",
     "typewriter-effect": "^2.19.0"
   },
   "devDependencies": {

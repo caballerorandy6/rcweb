@@ -4,7 +4,7 @@ const Document = () => {
   return (
     <Html>
       <Head>
-        <meta name="description" content="RCWeb - Personal Portfolio " />
+        <meta name="description" content="RCWeb - Personal Portfolio" />
         <link
           rel="stylesheet"
           href="https://necolas.github.io/normalize.css/8.0.1/normalize.css"
