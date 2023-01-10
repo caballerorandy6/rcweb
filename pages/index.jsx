@@ -5,6 +5,12 @@ import { useRouter } from "next/router";
 import TypewriterReact from "../components/typewriter";
 import { motion } from "framer-motion";
 
+const linkVariants = {
+  hover: {
+    scale: 1.2,
+  },
+};
+
 const containerVariants = {
   hidden: {
     opacity: 0,
@@ -55,27 +61,32 @@ function Index() {
               download="Randy-Caballero.pdf"
               className="text-center p-2"
             >
-              <Image
-                src="/img/download.png"
-                width={25}
-                height={25}
-                alt="download image"
-                priority
-              />
+              <motion.div variants={linkVariants} whileHover="hover">
+                <Image
+                  src="/img/download.png"
+                  width={25}
+                  height={25}
+                  alt="download image"
+                  priority
+                />
+              </motion.div>
             </Link>
           </div>
+
           <div className="flex flex-col">
             <label className="text-slate-400 text-center font-semibold uppercase text-sm mt-10">
               Contact me
             </label>
             <Link href="/contact" className="text-center p-2">
-              <Image
-                src="/icons/contact.png"
-                width={25}
-                height={25}
-                alt="download image"
-                priority
-              />
+              <motion.div variants={linkVariants} whileHover="hover">
+                <Image
+                  src="/icons/contact.png"
+                  width={25}
+                  height={25}
+                  alt="download image"
+                  priority
+                />
+              </motion.div>
             </Link>
           </div>
         </div>

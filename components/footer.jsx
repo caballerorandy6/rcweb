@@ -18,8 +18,8 @@ const shadowVariants = {
 
 function Footer() {
   return (
-    <footer className="flex align-bottom justify-evenly items-center h-32 bg-black opacity-95">
-      <nav className="flex items-center relative gap-4">
+    <footer className="flex align-bottom justify-around items-center h-32 bg-black opacity-95">
+      <nav className="flex items-center relative gap-2 mx-4">
         <motion.div variants={linkVariants} whileHover="hover">
           <Link href="https://github.com/caballerorandy6" target="_blank">
             <Image
@@ -56,10 +56,28 @@ function Footer() {
           </Link>
         </motion.div>
       </nav>
+
+      <div className="flex flex-col mt-8">
+        <motion.p
+          variants={shadowVariants}
+          initial="shadow"
+          className=" text-white  text-center text-xs font-semibold"
+        >
+          Developed with
+        </motion.p>
+        <Image
+          src="/footer/nextjs.png"
+          width={150}
+          height={80}
+          alt="github image"
+          priority
+        />
+      </div>
+
       <motion.p
         variants={shadowVariants}
         initial="shadow"
-        className=" text-white  text-center text-xs font-semibold "
+        className=" text-white  text-center text-xs font-semibold"
       >
         {`© ${new Date().getFullYear()}  All rights reserved.`}
       </motion.p>

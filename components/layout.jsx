@@ -2,6 +2,10 @@ import Head from "next/head";
 import Nav from "./nav";
 import Main from "./main";
 import Footer from "./footer";
+import { ToastContainer } from "react-toastify";
+
+//Estilos de Toastify
+import "react-toastify/dist/ReactToastify.css";
 
 const Layout = ({ children, title, description }) => {
   return (
@@ -15,6 +19,7 @@ const Layout = ({ children, title, description }) => {
         <Nav />
         <Main />
         {children}
+        <ToastContainer />
       </div>
 
       <Footer />

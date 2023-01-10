@@ -3,6 +3,7 @@ import { useForm } from "react-hook-form";
 import ErrorMessage from "./errorMessage";
 import emailjs from "@emailjs/browser";
 import { motion } from "framer-motion";
+import { toast } from "react-toastify";
 
 const firstContentVariants = {
   hidden: {
@@ -35,6 +36,7 @@ const secondContentVariants = {
 export const ContactForm = () => {
   const {
     handleSubmit,
+    reset,
     register,
     formState: { errors },
   } = useForm();
@@ -44,8 +46,7 @@ export const ContactForm = () => {
   //Recibir Email cuando envian formulario
   const form = useRef();
 
-  const onSubmit = (e) => {
-    e.preventDefault;
+  const onSubmit = () => {
     emailjs
       .sendForm("gmail", "rcweb_template", form.current, "jDYT49szBWHrh5m3P")
       .then(
@@ -56,6 +57,8 @@ export const ContactForm = () => {
           console.log(error.text);
         }
       );
+    toast.success("Message has been sent successfully!");
+    reset();
   };
 
   return (
@@ -79,14 +82,30 @@ export const ContactForm = () => {
           <input
             {...register("name", {
               required: "Name is required",
-              minLength: 2,
-              maxLength: 50,
+              minLength: {
+                value: 2,
+                message: "Name must have at least 2 or more characters!",
+              },
+              maxLength: {
+                value: 50,
+                message: "Name must be 50 characters or less!",
+              },
             })}
             type="text"
             placeholder="Name:"
             className="opacity-70 w-full border-b-2 bg-transparent focus:outline-none active:bg-transparent p-2 text-white"
           />
           <ErrorMessage>{errors?.name?.message}</ErrorMessage>
+          {errors?.name?.length < 2 ? (
+            <ErrorMessage message={errors?.name?.message} />
+          ) : (
+            ""
+          )}
+          {errors?.name?.length > 50 ? (
+            <ErrorMessage message={errors?.name?.message} />
+          ) : (
+            ""
+          )}
 
           <input
             {...register("email", {
@@ -102,7 +121,7 @@ export const ContactForm = () => {
             className="opacity-70 w-full border-b-2 bg-transparent focus:outline-none active:bg-transparent p-2  text-white mt-8"
           />
           <ErrorMessage>{errors?.email?.message}</ErrorMessage>
-          {errors?.email && <ErrorMessage message={errors.email.message} />}
+          {errors?.email && <ErrorMessage message={errors?.email?.message} />}
 
           <input
             {...register("phone", {
@@ -134,7 +153,7 @@ export const ContactForm = () => {
       </motion.div>
 
       <motion.div
-        className="w-full lg:w-6/12 xl:w-6/12  my-16"
+        className="w-full lg:w-6/12 xl:w-6/12 mt-16 lg:m-0"
         variants={secondContentVariants}
         initial="hidden"
         animate="visible"
