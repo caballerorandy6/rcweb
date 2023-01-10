@@ -1,26 +1,81 @@
+import React, { useRef } from "react";
 import { useForm } from "react-hook-form";
 import ErrorMessage from "./errorMessage";
+import emailjs from "@emailjs/browser";
+import { motion } from "framer-motion";
 
-const ContactForm = () => {
+const firstContentVariants = {
+  hidden: {
+    x: "100vw",
+  },
+  visible: {
+    x: 0,
+    transition: { type: "spring", mass: 1.2, damping: 10, delay: 0.5 },
+  },
+  exit: {
+    x: "100vw",
+    transition: { type: "spring", mass: 1.2, damping: 10, delay: 0.5 },
+  },
+};
+
+const secondContentVariants = {
+  hidden: {
+    x: "100vw",
+  },
+  visible: {
+    x: 0,
+    transition: { type: "spring", mass: 1.2, damping: 12, delay: 0.8 },
+  },
+  exit: {
+    x: "100vw",
+    transition: { type: "spring", mass: 1.2, damping: 10, delay: 0.5 },
+  },
+};
+
+export const ContactForm = () => {
   const {
     handleSubmit,
     register,
-    watch,
     formState: { errors },
   } = useForm();
 
-  console.log(errors);
-  const onSubmit = (data) => console.log(data);
+  //console.log(errors);
 
-  const newName = watch("phone");
+  //Recibir Email cuando envian formulario
+  const form = useRef();
+
+  const onSubmit = (e) => {
+    e.preventDefault;
+    emailjs
+      .sendForm("gmail", "rcweb_template", form.current, "jDYT49szBWHrh5m3P")
+      .then(
+        (result) => {
+          console.log(result.text);
+        },
+        (error) => {
+          console.log(error.text);
+        }
+      );
+  };
 
   return (
     <div className="lg:flex lg:mx-auto lg:w-10/12 xl:my-10 my-20">
-      <div className="flex flex-col lg:w-6/12 xl:w-6/12">
+      <motion.div
+        className="flex flex-col lg:w-6/12 xl:w-6/12"
+        variants={firstContentVariants}
+        initial="hidden"
+        animate="visible"
+        exit={"exit"}
+      >
         <h1 className="text-white text-center text-3xl mb-10 font-semibold">
           Message
         </h1>
-        <form onSubmit={handleSubmit(onSubmit)} noValidate className="mx-auto">
+        <form
+          ref={form}
+          onSubmit={handleSubmit(onSubmit)}
+          noValidate
+          className="mx-auto"
+        >
           <input
             {...register("name", {
               required: "Name is required",
@@ -76,9 +131,15 @@ const ContactForm = () => {
             value="Send Message"
           />
         </form>
-      </div>
+      </motion.div>
 
-      <div className="w-full lg:w-6/12 xl:w-6/12  my-16">
+      <motion.div
+        className="w-full lg:w-6/12 xl:w-6/12  my-16"
+        variants={secondContentVariants}
+        initial="hidden"
+        animate="visible"
+        exit={"exit"}
+      >
         <h1 className="text-white text-3xl text-center font-semibold mb-10 xl:mb-16">
           Contact Information
         </h1>
@@ -93,7 +154,7 @@ const ContactForm = () => {
             Address: <span className="opacity-70">Dickinson, TX</span>
           </p>
         </div>
-      </div>
+      </motion.div>
     </div>
   );
 };

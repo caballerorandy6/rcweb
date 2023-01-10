@@ -44,24 +44,40 @@ function Index() {
 
         <TypewriterReact />
 
-        <div className="flex flex-col">
-          <label className="text-slate-400 text-center font-semibold uppercase text-sm mt-10">
-            Download my resume
-          </label>
-          <Link
-            target="_blank"
-            href="/public/Randy-Caballero.pdf"
-            download="Randy-Caballero.pdf"
-            className="text-center p-2"
-          >
-            <Image
-              src="/img/download.png"
-              width={25}
-              height={25}
-              alt="download image"
-              priority
-            />
-          </Link>
+        <div className="flex gap-10">
+          <div className="flex flex-col">
+            <label className="text-slate-400 text-center font-semibold uppercase text-sm mt-10">
+              Download my resume
+            </label>
+            <Link
+              target="_blank"
+              href="/public/Randy-Caballero.pdf"
+              download="Randy-Caballero.pdf"
+              className="text-center p-2"
+            >
+              <Image
+                src="/img/download.png"
+                width={25}
+                height={25}
+                alt="download image"
+                priority
+              />
+            </Link>
+          </div>
+          <div className="flex flex-col">
+            <label className="text-slate-400 text-center font-semibold uppercase text-sm mt-10">
+              Contact me
+            </label>
+            <Link href="/contact" className="text-center p-2">
+              <Image
+                src="/icons/contact.png"
+                width={25}
+                height={25}
+                alt="download image"
+                priority
+              />
+            </Link>
+          </div>
         </div>
       </motion.div>
     </Layout>
