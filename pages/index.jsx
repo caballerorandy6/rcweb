@@ -57,7 +57,7 @@ function Index() {
             </label>
             <Link
               target="_blank"
-              href="/public/Randy-Caballero.pdf"
+              href="/pdf/Randy-Caballero.pdf"
               download="Randy-Caballero.pdf"
               className="text-center p-2"
             >
