@@ -18,13 +18,13 @@ const firstContentVariants = {
 const AboutPersonalInfo = () => {
   return (
     <motion.div
-      className="flex flex-col w-11/12 sm:w-8/12 items-center sm:ml-16 mt-10 sm:mt-20"
+      className="flex flex-col w-11/12 sm:w-8/12 mx-auto items-center sm:ml-16 mt-10 sm:mt-20"
       variants={firstContentVariants}
       initial="hidden"
       animate="visible"
       exit={"exit"}
     >
-      <h2 className="text-white text-xl font-bold p-2 sm:place-self-start">
+      <h2 className="text-slate-200 text-xl font-bold p-2 sm:place-self-start">
         Randy Caballero
       </h2>
       <div className="flex sm:place-self-start">
@@ -39,7 +39,7 @@ const AboutPersonalInfo = () => {
           United States, America
         </p>
       </div>
-      <p className="w-10/12 text-opacity-50 text-white p-2 sm:place-self-start">
+      <p className="w-10/12 text-center sm:text-start text-opacity-50 text-white p-2 sm:place-self-start">
         Hello, my name is Randy Caballero and I am a Web Developer. I am a
         professional committed to my profession and a lover of technology,
         specifically programming. My passion for the study and research of new
@@ -57,7 +57,7 @@ const AboutPersonalInfo = () => {
             priority
           />
           <div>
-            <p className="text-white font-bold">1 Year Experience</p>
+            <p className="text-slate-200 font-bold">1 Year Experience</p>
             <p className="text-opacity-50 text-white text-sm">Experience</p>
           </div>
         </div>
@@ -70,7 +70,7 @@ const AboutPersonalInfo = () => {
             priority
           />
           <div>
-            <p className="text-white font-bold">10+ Projects</p>
+            <p className="text-slate-200 font-bold">10+ Projects</p>
             <p className="text-opacity-50 text-white text-sm">Completed</p>
           </div>
         </div>
@@ -83,7 +83,7 @@ const AboutPersonalInfo = () => {
             priority
           />
           <div>
-            <p className="text-white font-bold">50+ Meetings</p>
+            <p className="text-slate-200 font-bold">50+ Meetings</p>
             <p className="text-opacity-50 text-white text-sm">Successful</p>
           </div>
         </div>

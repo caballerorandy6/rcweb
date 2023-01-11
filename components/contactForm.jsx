@@ -70,18 +70,18 @@ export const ContactForm = () => {
         animate="visible"
         exit={"exit"}
       >
-        <h1 className="text-white text-center text-3xl mb-10 font-semibold">
+        <h1 className="text-slate-200 text-center text-3xl mb-10 font-semibold">
           Message
         </h1>
         <form
           ref={form}
           onSubmit={handleSubmit(onSubmit)}
           noValidate
-          className="mx-auto"
+          className="w-10/12 sm:w-8/12 md:w-8/12 xl:w-10/12 mx-auto"
         >
           <input
             {...register("name", {
-              required: "Name is required",
+              required: "Name is required!",
               minLength: {
                 value: 2,
                 message: "Name must have at least 2 or more characters!",
@@ -134,7 +134,7 @@ export const ContactForm = () => {
             })}
             type="text"
             placeholder="Phone Number:"
-            className="opacity-70 w-full border-b-2 bg-transparent focus:outline-none active:bg-transparent p-2  text-white mt-8"
+            className="opacity-70 w-full border-b-2 bg-transparent focus:outline-none active:bg-transparent p-2 text-white mt-8"
           />
           <ErrorMessage>{errors?.phone?.message}</ErrorMessage>
           {errors?.phone && <ErrorMessage message={errors?.phone?.message} />}
@@ -142,11 +142,12 @@ export const ContactForm = () => {
           <textarea
             {...register("message")}
             placeholder="Message"
+            rows="5"
             className="opacity-70 w-full border-2 bg-transparent focus:outline-none active:bg-transparent p-2 text-white mt-12 rounded-md"
           />
           <input
             type="submit"
-            className="w-full text-white font-bold p-2 rounded-full mt-8 cursor-pointer bg-blue-500 hover:bg-blue-600 uppercase transition-colors"
+            className="w-full text-slate-800 font-bold p-2 rounded-full mt-8 cursor-pointer bg-slate-200 hover:bg-blue-300 uppercase transition-colors"
             value="Send Message"
           />
         </form>
@@ -159,18 +160,23 @@ export const ContactForm = () => {
         animate="visible"
         exit={"exit"}
       >
-        <h1 className="text-white text-3xl text-center font-semibold mb-10 xl:mb-16">
+        <h1 className="text-slate-200 text-3xl text-center font-semibold mb-10 xl:mb-16">
           Contact Information
         </h1>
         <div className="flex flex-col items-center mx-auto xl:w-10/12 w-11/12 gap-10">
-          <p className="text-white xl:text-xl text-md font-bold">
-            Phone: <span className=" opacity-70">+1 (832)546-5983</span>
+          <p className="text-blue-300 xl:text-xl text-md font-bold">
+            Phone:{" "}
+            <span className="text-white opacity-70">+1 (832)546-5983</span>
           </p>
-          <p className="text-white xl:text-xl text-md font-bold">
-            Email: <span className="opacity-70">caballerorandy6@gmail.com</span>
+          <p className="text-blue-300 xl:text-xl text-md font-bold">
+            Email:{" "}
+            <span className="text-white opacity-70">
+              caballerorandy6@gmail.com
+            </span>
           </p>
-          <p className="text-white xl:text-xl text-md font-bold">
-            Address: <span className="opacity-70">Dickinson, TX</span>
+          <p className="text-blue-300 xl:text-xl text-md font-bold">
+            Address:{" "}
+            <span className="text-white opacity-70">Dickinson, TX</span>
           </p>
         </div>
       </motion.div>

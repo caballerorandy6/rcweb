@@ -16,7 +16,7 @@
 
 .item {
   position: relative;
-  background: #0088ff;
+  background: #3792dc;
   overflow: hidden;
 }
 .item::after {

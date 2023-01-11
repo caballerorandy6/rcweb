@@ -33,7 +33,7 @@ const AboutSkills = () => {
       exit="exit"
     >
       <div className=" text-center">
-        <h1 className="text-3xl text-white mb-4">My Skills</h1>
+        <h1 className="text-3xl text-slate-200 mb-4">My Skills</h1>
         <div className="w-16 content-none mx-auto h-2 bg-blue-300"></div>
         <div className="hidden md:flex gap-4 justify-center mt-10">
           <Image
@@ -164,31 +164,17 @@ const AboutSkills = () => {
         </ul>
       </div>
       <div className="mt-10 sm:mt-20">
-        <p className="text-3xl text-white text-center">My Services</p>
+        <p className="text-3xl text-slate-200 text-center">My Services</p>
         <div className="sm:flex gap-6">
-          <div className="flex items-center gap-6 mt-10">
-            <div>
-              <h1 className="text-opacity-80 text-white text-lg font-bold">
-                Web Development
-              </h1>
-              <p className="text-opacity-50 text-white">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce
-                ullamcorper tortor ac neque placerat, vel vestibulum ligula
-                suscipit. Donec pharetra sollicitudin ultrices.
-              </p>
-            </div>
-          </div>
-          <div className="flex items-center gap-6 mt-10">
-            <div>
-              <h1 className="text-opacity-80 text-white text-lg font-bold">
-                Web Design
-              </h1>
-              <p className="text-opacity-50 text-white">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce
-                ullamcorper tortor ac neque placerat, vel vestibulum ligula
-                suscipit. Donec pharetra sollicitudin ultrices.
-              </p>
-            </div>
+          <div className="flex flex-col mx-auto mt-10 sm:w-10/12">
+            <h1 className="text-opacity-80 text-white text-lg font-bold text-center sm:text-start">
+              Web Development
+            </h1>
+            <p className="text-opacity-50 text-white text-center sm:text-start">
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce
+              ullamcorper tortor ac neque placerat, vel vestibulum ligula
+              suscipit. Donec pharetra sollicitudin ultrices.
+            </p>
           </div>
         </div>
       </div>
