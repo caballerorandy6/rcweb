@@ -1,6 +1,10 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
+import RCWebContextProvider from "@/context/RCWebContext";
+
+//Components
+import Header from "@/app/components/Header";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -23,11 +27,14 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" className="!scroll-smooth">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`${geistSans.variable} ${geistMono.variable} antialiased text-pretty bg-gray-950`}
       >
-        {children}
+        <RCWebContextProvider>
+          <Header />
+          {children}
+        </RCWebContextProvider>
       </body>
     </html>
   );
