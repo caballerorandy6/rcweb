@@ -11,10 +11,7 @@ import {
 import "react-vertical-timeline-component/style.min.css";
 
 //Icons
-import {
-  BriefcaseIcon,
-  AcademicCapIcon,
-} from "@heroicons/react/24/outline";
+import { BriefcaseIcon, AcademicCapIcon } from "@heroicons/react/24/outline";
 
 interface ExperienceProps {
   title: string;
@@ -30,7 +27,8 @@ const experience: ExperienceProps[] = [
     title: "Software Developer",
     company: "Atser Technologies, Inc.",
     location: "Houston, TX",
-    description: "Frontend Development, Backend Development, User Experience, Visual Design",
+    description:
+      "Frontend Development, Backend Development, User Experience, Visual Design",
     icon: <BriefcaseIcon />,
     date: "February 2025 - Present",
   },
@@ -39,7 +37,8 @@ const experience: ExperienceProps[] = [
     title: "Freelance Web Developer",
     company: "Freelancer",
     location: "Houston, TX",
-    description: "Frontend Development, Backend Development, User Experience, Visual Design",
+    description:
+      "Frontend Development, Backend Development, User Experience, Visual Design",
     icon: <BriefcaseIcon />,
     date: "January 2022 - February 2025",
   },
@@ -62,7 +61,16 @@ const Experience = () => {
         className="font-sans font-bold opacity-90"
       >
         {experience.map((item, index) => (
-          <VerticalTimelineElement key={index} contentStyle={{ background: "#1F2937", color: "#CBB26A", border: "1px, solid, rgba(0, 0, 0, 0.05)", boxShadow: "none", textAlign: "left", padding: "1.3rem 2rem" }}
+          <VerticalTimelineElement
+            key={index}
+            contentStyle={{
+              background: "#1F2937",
+              color: "#CBB26A",
+              border: "1px, solid, rgba(0, 0, 0, 0.05)",
+              boxShadow: "none",
+              textAlign: "left",
+              padding: "1.3rem 2rem",
+            }}
             contentArrowStyle={{ borderRight: "20px solid #1F2937" }}
             date={item.date}
             icon={item.icon}
@@ -70,7 +78,9 @@ const Experience = () => {
           >
             <h3 className="text-lg font-medium sm:text-xl/8 font-sans">{`${item.title} | ${item.company}`}</h3>
             <p className="font-normal mt-0">{item.location}</p>
-            <p className="!mt-1 !font-normal text-lg text-gray-400 sm:text-xl/8 font-sans">{item.description}</p>
+            <p className="!mt-1 !font-normal text-lg text-gray-400 sm:text-xl/8 font-sans">
+              {item.description}
+            </p>
           </VerticalTimelineElement>
         ))}
       </VerticalTimeline>

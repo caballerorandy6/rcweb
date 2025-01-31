@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
+import { RCWebProvider } from "@/context/rcwebContext";
 
 //Components
 import Header from "@/app/components/Header";
@@ -30,8 +31,10 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased text-pretty bg-gray-950`}
       >
-        <Header />
-        {children}
+        <RCWebProvider>
+          <Header />
+          {children}
+        </RCWebProvider>
       </body>
     </html>
   );

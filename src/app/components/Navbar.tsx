@@ -38,10 +38,8 @@ const Navbar = () => {
     <>
       <nav
         aria-label="Global"
-        className="flex items-center lg:px-8 justify-between w-full"
+        className="flex items-center lg:p-8 justify-center w-full"
       >
-        <Logo />
-
         <div className="flex md:hidden">
           <button
             type="button"
@@ -54,7 +52,7 @@ const Navbar = () => {
             />
           </button>
         </div>
-        <div className="hidden md:flex justify-start relative w-8/12">
+        <div className="hidden md:flex justify-start relative">
           <div className="flex items-center bg-gray-900/40 backdrop-blur-md py-4 px-8 gap-x-8 rounded-full">
             {navigation.map((item) => (
               <Link
