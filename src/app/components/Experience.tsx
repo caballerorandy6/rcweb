@@ -1,5 +1,9 @@
 "use client";
 
+import { useEffect } from "react";
+import { useInView } from "react-intersection-observer";
+import { useRCWeb } from "@/hooks/useRCWeb";
+
 //Components
 import Heading from "@/app/components/Heading";
 
@@ -53,9 +57,23 @@ const experience: ExperienceProps[] = [
 ];
 
 const Experience = () => {
+  const { setActiveSection } = useRCWeb();
+
+  const { ref, inView } = useInView({
+    threshold: 0.75,
+  });
+
+  useEffect(() => {
+    if (inView) {
+      setActiveSection("Experience");
+    }
+  }, [inView, setActiveSection]);
+
   return (
-    <section id="experience" className="py-16 mx-auto bg-gray-950">
-      <Heading>Experience</Heading>
+    <section ref={ref} id="experience" className="py-16 mx-auto bg-gray-950">
+      <Heading icon={<BriefcaseIcon className="w-8 text-gold" />}>
+        Experience
+      </Heading>
       <VerticalTimeline
         lineColor="#CBB26A"
         className="font-sans font-bold opacity-90"

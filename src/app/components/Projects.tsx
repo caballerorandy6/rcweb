@@ -1,13 +1,20 @@
+"use client";
+
+import { useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import clsx from "clsx";
+import { useInView } from "react-intersection-observer";
+import { useRCWeb } from "@/hooks/useRCWeb";
 
 //Icons
 import GithubIcon from "@/app/components/icons/Github";
 import Website from "@/app/components/icons/Website";
+import { CodeBracketIcon } from "@heroicons/react/24/outline";
 
 //Components
-import Heading from "./Heading";
+import Heading from "@/app/components/Heading";
+import ProjectsDialog from "@/app/components/ProjectsDialog";
 
 interface ProjectProps {
   name: string;
@@ -19,7 +26,7 @@ interface ProjectProps {
 }
 
 //Arrays
-const projects: ProjectProps[] = [
+export const projects: ProjectProps[] = [
   {
     name: "Limo Renting",
     tecnologies: [
@@ -66,9 +73,23 @@ const projects: ProjectProps[] = [
 ];
 
 const Projects = () => {
+  const { setActiveSection, handleClickProjetsDialog } = useRCWeb();
+
+  const { ref, inView } = useInView({
+    threshold: 0.75,
+  });
+
+  useEffect(() => {
+    if (inView) {
+      setActiveSection("Projects");
+    }
+  }, [inView, setActiveSection]);
+
   return (
-    <section id="projects" className="py-16">
-      <Heading>Projects</Heading>
+    <section ref={ref} id="projects" className="py-16">
+      <Heading icon={<CodeBracketIcon className="w-8 text-gold" />}>
+        Projects
+      </Heading>
       <ul
         role="list"
         className="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 w-10/12 mx-auto"
@@ -76,82 +97,81 @@ const Projects = () => {
         {projects.map((item) => (
           <li
             key={item.name}
-            className="col-span-1 flex flex-col divide-y divide-gray-800 bg-gray-900 text-center shadow-sm border-2 border-gold/50 rounded-lg"
+            className="col-span-1 flex flex-col h-full bg-gray-900 text-center border border-gold/50 rounded-lg shadow-md hover:shadow-lg transition-shadow animateProjectCard"
           >
-            <div className="flex flex-1 flex-col border-b-2 border-gold/50">
+            <div className="overflow-hidden rounded-t-lg">
               <Image
-                alt="Limo Renting"
+                alt={item.name}
                 src={item.image}
                 width={1000}
                 height={1000}
-                className="mx-auto w-full  object-cover rounded-t-md border-b-2 border-gold/50"
+                className="w-full h-36 object-cover rounded-t-lg transition-transform duration-300 hover:scale-110"
               />
-              <div className="p-4">
-                <h3 className="my-2 font-bold text-gold font-mono text-xl">
-                  {item.name}
-                </h3>
-                <dl className="my-4 flex grow flex-col justify-between">
-                  <dd className="text-sm flex flex-wrap justify-center gap-1">
-                    {item.tecnologies.map((item, index) => (
-                      <span
-                        key={index}
-                        className={clsx(
-                          "inline-flex gap-2 items-center rounded-full px-2 py-0.5 text-xs font-medium",
-                          {
-                            "bg-black/50 text-white": item === "NextJS",
-                            "bg-blue-500 text-white": item === "TypeScript",
-                            "bg-indigo-500 text-white": item === "TailwindCSS",
-                            "bg-gray-500 text-white": item === "ShadcnUi",
-                            "bg-yellow-500 text-black": item === "JavaScript",
-                            "bg-cyan-500 text-white": item === "React",
-                            "bg-violet-500 text-white": item === "Vite",
-                            "bg-fuchsia-500 text-white": item === "Zod",
-                            "bg-white/90 text-blue-700": item === "Zustand",
-                            "bg-red-500 text-white": item === "html",
-                            "bg-pink-500 text-white": item === "css",
-                            "bg-purple-500 text-white": item === "sass",
-                          }
-                        )}
-                      >
-                        {item}
-                      </span>
-                    ))}
-                  </dd>
-                  <dd className="mt-1">
-                    <span className="inline-flex items-center px-2 text-xs font-medium text-gray-300 mt-4">
-                      {item.description}
-                    </span>
-                  </dd>
-                </dl>
+            </div>
+
+            {/* Technologies */}
+            <div className="p-5 flex-grow flex flex-col">
+              <h3 className="text-xl font-bold text-gold">{item.name}</h3>
+              <p className="mt-2 text-sm text-gray-400">{item.description}</p>
+
+              <div className="flex flex-wrap justify-center gap-1 mt-4">
+                {item.tecnologies.map((item, index) => (
+                  <span
+                    key={index}
+                    className={clsx(
+                      "inline-flex gap-2 items-center rounded-full px-2 py-0.5 text-xs font-medium",
+                      {
+                        "bg-black/50 text-white": item === "NextJS",
+                        "bg-blue-500 text-white": item === "TypeScript",
+                        "bg-indigo-500 text-white": item === "TailwindCSS",
+                        "bg-gray-500 text-white": item === "ShadcnUi",
+                        "bg-yellow-500 text-black": item === "JavaScript",
+                        "bg-cyan-500 text-white": item === "React",
+                        "bg-violet-500 text-white": item === "Vite",
+                        "bg-fuchsia-500 text-white": item === "Zod",
+                        "bg-white/90 text-blue-700": item === "Zustand",
+                        "bg-red-500 text-white": item === "html",
+                        "bg-pink-500 text-white": item === "css",
+                        "bg-purple-500 text-white": item === "sass",
+                      }
+                    )}
+                  >
+                    {item}
+                  </span>
+                ))}
               </div>
             </div>
-            <div>
-              <div className="-mt-px flex divide-x divide-gray-700">
-                <div className="flex w-0 flex-1">
-                  <Link
-                    href={item.github}
-                    target="_blank"
-                    className="relative -mr-px inline-flex w-0 flex-1 items-center justify-center gap-x-3 py-4 text-sm font-semibold text-gold hover:bg-gray-800 transition-colors cursor-pointer border-r border-gold/50"
-                  >
-                    <GithubIcon />
-                    Github
-                  </Link>
-                </div>
-                <div className="-ml-px flex w-0 flex-1">
-                  <Link
-                    href={item.url}
-                    target="_blank"
-                    className="relative inline-flex w-0 flex-1 items-center justify-center gap-x-3 py-4 text-sm font-semibold text-gold hover:bg-gray-800 transition-colors cursor-pointer"
-                  >
-                    <Website />
-                    Website
-                  </Link>
-                </div>
-              </div>
+
+            {/* Buttons */}
+            <div className="flex divide-gray-700 border-t border-gold/50 mt-auto">
+              <Link
+                href={item.github}
+                target="_blank"
+                className="flex-1 py-3 text-sm font-semibold text-gold hover:bg-gray-800 transition rounded-bl-lg border-r border-gold/50"
+              >
+                <GithubIcon className="inline-block w-5 h-5 mr-2" />
+                GitHub
+              </Link>
+              <Link
+                href={item.url}
+                target="_blank"
+                className="flex-1 py-3 text-sm font-semibold text-gold hover:bg-gray-800 transition rounded-br-lg"
+              >
+                <Website className="inline-block w-5 h-5 mr-2" />
+                Preview
+              </Link>
             </div>
           </li>
         ))}
       </ul>
+      <button
+        type="button"
+        className="text-sm/6 font-semibold text-white hover:bg-gold/40 p-2 rounded-md transition-colors font-mono flex items-center gap-x-1 border-2 border-gold/50 mt-16 mx-auto"
+        onClick={handleClickProjetsDialog}
+      >
+        See all Projects
+      </button>
+      <ProjectsDialog />
     </section>
   );
 };

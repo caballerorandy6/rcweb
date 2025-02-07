@@ -1,29 +1,42 @@
 "use client";
 
-import { createContext, useState, ReactNode } from "react";
+import React, { createContext, useState, ReactNode } from "react";
+import { navigation } from "@/app/components/Navbar";
+
+type SectionName = (typeof navigation)[number]["name"];
 
 interface RCWebContextProps {
-  activeSection: string;
-  setActiveSection: (section: string) => void;
+  children: ReactNode;
+}
+
+interface RCWebContextType {
+  activeSection: SectionName;
+  setActiveSection: React.Dispatch<React.SetStateAction<SectionName>>;
   timeOfLastClick: number;
   setTimeOfLastClick: (time: number) => void;
   isOpen: boolean;
   setIsOpen: (open: boolean) => void;
-  closeModal: () => void;
-  openModal: () => void;
+  handleClickModal: () => void;
+  isOpenProjetsDialog: boolean;
+  setIsOpenProjetsDialog: (open: boolean) => void;
+  handleClickProjetsDialog: () => void;
 }
 
-export const RCWebContext = createContext<RCWebContextProps | undefined>(
-  undefined
-);
+export const RCWebContext = createContext<RCWebContextType | null>(null);
 
-export const RCWebProvider = ({ children }: { children: ReactNode }) => {
-  const [activeSection, setActiveSection] = useState("Home");
+export default function RCWebContextProvider({ children }: RCWebContextProps) {
+  const [activeSection, setActiveSection] = useState<SectionName>("Home");
   const [timeOfLastClick, setTimeOfLastClick] = useState(0);
   const [isOpen, setIsOpen] = useState(false);
+  const [isOpenProjetsDialog, setIsOpenProjetsDialog] = useState(false);
 
-  const closeModal = () => setIsOpen(false);
-  const openModal = () => setIsOpen(true);
+  const handleClickModal = () => {
+    setIsOpen(!isOpen);
+  };
+
+  const handleClickProjetsDialog = () => {
+    setIsOpenProjetsDialog(!isOpenProjetsDialog);
+  };
 
   return (
     <RCWebContext.Provider
@@ -34,11 +47,13 @@ export const RCWebProvider = ({ children }: { children: ReactNode }) => {
         setTimeOfLastClick,
         isOpen,
         setIsOpen,
-        closeModal,
-        openModal,
+        handleClickModal,
+        isOpenProjetsDialog,
+        setIsOpenProjetsDialog,
+        handleClickProjetsDialog,
       }}
     >
       {children}
     </RCWebContext.Provider>
   );
-};
+}
