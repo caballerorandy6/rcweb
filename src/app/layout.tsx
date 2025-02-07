@@ -3,7 +3,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import RCWebContextProvider from "@/context/rcWebContext";
 
-//Components
+// Components
 import Header from "@/app/components/Header";
 
 const geistSans = Geist({
@@ -26,9 +26,9 @@ export const metadata: Metadata = {
 
 export default function RootLayout({
   children,
-}: Readonly<{
+}: {
   children: React.ReactNode;
-}>) {
+}) {
   return (
     <html lang="en" className="!scroll-smooth" suppressHydrationWarning>
       <body

@@ -30,13 +30,9 @@ export default function RCWebContextProvider({ children }: RCWebContextProps) {
   const [isOpen, setIsOpen] = useState(false);
   const [isOpenProjetsDialog, setIsOpenProjetsDialog] = useState(false);
 
-  const handleClickModal = () => {
-    setIsOpen(!isOpen);
-  };
-
-  const handleClickProjetsDialog = () => {
+  const handleClickModal = () => setIsOpen(!isOpen);
+  const handleClickProjetsDialog = () =>
     setIsOpenProjetsDialog(!isOpenProjetsDialog);
-  };
 
   return (
     <RCWebContext.Provider
