@@ -15,7 +15,7 @@ import CustomBadge from "@/app/components/CustomBadge";
 import { ArrowDownIcon } from "@heroicons/react/24/outline";
 
 //Hooks
-import { useRCWeb } from "@/hooks/useRCWeb";
+import { useRCWeb } from "@/context/rcWebContext";
 
 const Hero = () => {
   const { setIsOpen, activeSection, setActiveSection } = useRCWeb();

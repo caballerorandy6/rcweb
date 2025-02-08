@@ -2,7 +2,7 @@
 
 import { useEffect } from "react";
 import { useInView } from "react-intersection-observer";
-import { useRCWeb } from "@/hooks/useRCWeb";
+import { useRCWeb } from "@/context/rcWebContext";
 
 //Components
 import Heading from "@/app/components/Heading";
