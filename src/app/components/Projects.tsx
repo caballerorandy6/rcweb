@@ -5,7 +5,7 @@ import Image from "next/image";
 import Link from "next/link";
 import clsx from "clsx";
 import { useInView } from "react-intersection-observer";
-import { useRCWeb } from "@/hooks/useRCWeb";
+import { useRCWeb } from "@/context/rcWebContext";
 
 //Icons
 import GithubIcon from "@/app/components/icons/Github";

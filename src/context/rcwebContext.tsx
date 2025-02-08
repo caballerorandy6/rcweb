@@ -1,6 +1,7 @@
 "use client";
 
 import React, { createContext, useState, ReactNode } from "react";
+import { useContext } from "react";
 import { navigation } from "@/app/components/Navbar";
 
 type SectionName = (typeof navigation)[number]["name"];
@@ -53,3 +54,11 @@ export default function RCWebContextProvider({ children }: RCWebContextProps) {
     </RCWebContext.Provider>
   );
 }
+
+export const useRCWeb = () => {
+  const context = useContext(RCWebContext);
+  if (!context) {
+    throw new Error("useRCWeb must be used within a RCWebProvider");
+  }
+  return context;
+};
