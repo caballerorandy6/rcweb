@@ -24,7 +24,7 @@ const ProjectsDialog = () => {
         className="fixed inset-0 bg-gray-950/80 transition-opacity data-closed:opacity-0 data-enter:duration-300 data-enter:ease-out data-leave:duration-200 data-leave:ease-in"
       />
 
-      <div className="fixed inset-0 z-10 w-screen overflow-y-auto">
+      <div className="fixed inset-0 z-10 w-screen overflow-y-auto mt-20">
         <div className="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
           <DialogPanel
             transition
@@ -38,7 +38,7 @@ const ProjectsDialog = () => {
                 {projects.map((item) => (
                   <li
                     key={item.name}
-                    className="col-span-1 flex flex-col h-full bg-gray-900 text-center border border-gold/50 rounded-lg shadow-md hover:shadow-lg transition-shadow animateProjectCard"
+                    className="col-span-1 flex flex-col h-full bg-gray-900 text-center border border-gold/50 rounded-lg shadow-md hover:shadow-lg transition-shadow"
                   >
                     <div className="overflow-hidden rounded-t-lg">
                       <Image
@@ -46,7 +46,7 @@ const ProjectsDialog = () => {
                         src={item.image}
                         width={1000}
                         height={1000}
-                        className="w-full h-36 object-cover rounded-t-lg transition-transform duration-300 hover:scale-110"
+                        className="w-full h-36 object-contain rounded-t-lg transition-transform duration-300 hover:scale-110"
                       />
                     </div>
 

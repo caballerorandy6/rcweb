@@ -6,7 +6,7 @@ import { motion } from "framer-motion";
 import { Dialog, DialogPanel } from "@headlessui/react";
 
 //Hooks
-import { useRCWeb } from "@/hooks/useRCWeb";
+import { useRCWeb } from "@/context/rcWebContext";
 
 //Icons
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
