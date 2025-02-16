@@ -8,7 +8,7 @@ import Link from "next/link";
 
 //Components
 import Logo from "@/app/components/Logo";
-import LetsContactDialog from "./LetsContactDialog";
+import LetsContactDialog from "@/app/components/LetsContactDialog";
 import CustomBadge from "@/app/components/CustomBadge";
 
 //Icons
