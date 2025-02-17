@@ -53,7 +53,7 @@ const Navbar = () => {
           </button>
         </div>
         <div className="hidden md:flex justify-start relative">
-          <div className="flex items-center bg-gray-900/40 backdrop-blur-md py-4 px-8 gap-x-8 rounded-full">
+          <div className="flex items-center animateHeadingDialog py-4 px-8 gap-x-8 rounded-full">
             {navigation.map((item) => (
               <Link
                 key={item.name}

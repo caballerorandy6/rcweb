@@ -4,6 +4,7 @@
 
 body .image-gradient {
   mask-image: linear-gradient(black 50%, transparent);
+  scrollbar-color: "#CBB26A";
 }
 
 @keyframes show {
@@ -25,4 +26,20 @@ body .image-gradient {
   animation-timeline: --image;
   animation-fill-mode: block;
   animation-name: show;
+}
+
+.animateHeadingDialog {
+  animation: blur linear both;
+  animation-timeline: scroll();
+  animation-range: 0 500px;
+}
+
+@keyframes blur {
+  to {
+    box-shadow:
+      0px 5px 50px -5px hsla(0, 0%, 100%, 0.1),
+      0px 0px 0px 1px hsla(0, 0%, 100%, 0.1);
+    background: rgba(0, 0, 0, 4);
+    backdrop-filter: blur(10px);
+  }
 }

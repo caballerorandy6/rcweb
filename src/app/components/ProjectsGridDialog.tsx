@@ -8,7 +8,7 @@ const ProjectsGridDialog = () => {
   return (
     <ul
       role="list"
-      className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 w-10/12 mx-auto gap-4 p-20"
+      className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 w-10/12 mx-auto gap-4 p-x-20"
     >
       {projects.map((item) => (
         <li
