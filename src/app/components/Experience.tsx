@@ -2,7 +2,9 @@
 
 import { useEffect } from "react";
 import { useInView } from "react-intersection-observer";
-import { useRCWeb } from "@/context/rcWebContext";
+
+//Zustand Store
+import { useRCWebStore } from "@/store/rcweb-store";
 
 //Components
 import Heading from "@/app/components/Heading";
@@ -57,7 +59,7 @@ const experience: ExperienceProps[] = [
 ];
 
 const Experience = () => {
-  const { setActiveSection } = useRCWeb();
+  const { setActiveSection } = useRCWebStore();
 
   const { ref, inView } = useInView({
     threshold: 0.75,

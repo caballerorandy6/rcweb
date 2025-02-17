@@ -14,11 +14,11 @@ import CustomBadge from "@/app/components/CustomBadge";
 //Icons
 import { ArrowDownIcon } from "@heroicons/react/24/outline";
 
-//Hooks
-import { useRCWeb } from "@/context/rcWebContext";
+//Zustand Store
+import { useRCWebStore } from "@/store/rcweb-store";
 
 const Hero = () => {
-  const { setIsOpen, activeSection, setActiveSection } = useRCWeb();
+  const { setIsOpen, activeSection, setActiveSection } = useRCWebStore();
 
   const { ref, inView } = useInView({
     threshold: 0.75,

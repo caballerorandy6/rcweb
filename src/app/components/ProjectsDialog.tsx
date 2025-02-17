@@ -1,7 +1,9 @@
 import Image from "next/image";
 import Link from "next/link";
-import { useRCWeb } from "@/context/rcWebContext";
 import clsx from "clsx";
+
+//Zustand Store
+import { useRCWebStore } from "@/store/rcweb-store";
 
 //Components
 import { Dialog, DialogBackdrop, DialogPanel } from "@headlessui/react";
@@ -11,7 +13,7 @@ import Website from "@/app/components/icons/Website";
 import { projects } from "@/app/components/Projects";
 
 const ProjectsDialog = () => {
-  const { isOpenProjetsDialog, setIsOpenProjetsDialog } = useRCWeb();
+  const { isOpenProjetsDialog, setIsOpenProjetsDialog } = useRCWebStore();
 
   return (
     <Dialog
@@ -46,7 +48,7 @@ const ProjectsDialog = () => {
                         src={item.image}
                         width={1000}
                         height={1000}
-                        className="w-full h-36 object-contain rounded-t-lg transition-transform duration-300 hover:scale-110"
+                        className="w-full h-36 object-cover rounded-t-lg transition-transform duration-300 hover:scale-110"
                       />
                     </div>
 

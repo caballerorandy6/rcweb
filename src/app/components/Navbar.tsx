@@ -6,7 +6,7 @@ import { motion } from "framer-motion";
 import { Dialog, DialogPanel } from "@headlessui/react";
 
 //Hooks
-import { useRCWeb } from "@/context/rcWebContext";
+import { useRCWebStore } from "@/store/rcweb-store";
 
 //Icons
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
@@ -32,7 +32,7 @@ export const navigation: NavigationProps[] = [
 
 const Navbar = () => {
   const { activeSection, setActiveSection, isOpen, handleClickModal } =
-    useRCWeb();
+    useRCWebStore();
 
   return (
     <>

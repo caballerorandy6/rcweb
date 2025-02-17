@@ -5,7 +5,7 @@ import Image from "next/image";
 import Link from "next/link";
 import clsx from "clsx";
 import { useInView } from "react-intersection-observer";
-import { useRCWeb } from "@/context/rcWebContext";
+import { useRCWebStore } from "@/store/rcweb-store";
 
 //Icons
 import GithubIcon from "@/app/components/icons/Github";
@@ -73,7 +73,7 @@ export const projects: ProjectProps[] = [
 ];
 
 const Projects = () => {
-  const { setActiveSection, handleClickProjetsDialog } = useRCWeb();
+  const { setActiveSection, handleClickProjetsDialog } = useRCWebStore();
 
   const { ref, inView } = useInView({
     threshold: 0.75,

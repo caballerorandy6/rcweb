@@ -1,11 +1,11 @@
-import { useRCWeb } from "@/context/rcWebContext";
+import { useRCWebStore } from "@/store/rcweb-store";
 
 //Components
 import DialogForm from "./DialogForm";
 import { Dialog, DialogBackdrop, DialogPanel } from "@headlessui/react";
 
 const LetsContactDialog = () => {
-  const { isOpen, setIsOpen } = useRCWeb();
+  const { isOpen, setIsOpen } = useRCWebStore();
 
   return (
     <Dialog
