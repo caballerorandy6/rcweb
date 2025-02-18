@@ -12,9 +12,9 @@ interface RCWebState {
   isOpen: boolean;
   setIsOpen: (open: boolean) => void;
   handleClickModal: () => void;
-  isOpenProjetsDialog: boolean;
-  setIsOpenProjetsDialog: (open: boolean) => void;
-  handleClickProjetsDialog: () => void;
+  isOpenProjectsDialog: boolean;
+  setIsOpenProjectsDialog: (open: boolean) => void;
+  handleClickProjectsDialog: () => void;
 }
 
 export const useRCWebStore = create<RCWebState>()(
@@ -27,14 +27,16 @@ export const useRCWebStore = create<RCWebState>()(
       isOpen: false,
       setIsOpen: (open) => set({ isOpen: open }),
       handleClickModal: () => set((state) => ({ isOpen: !state.isOpen })),
-      isOpenProjetsDialog: false,
-      setIsOpenProjetsDialog: (open) => set({ isOpenProjetsDialog: open }),
-      handleClickProjetsDialog: () =>
-        set((state) => ({ isOpenProjetsDialog: !state.isOpenProjetsDialog })),
+      isOpenProjectsDialog: false,
+      setIsOpenProjectsDialog: (open) => set({ isOpenProjectsDialog: open }),
+      handleClickProjectsDialog: () =>
+        set((state) => ({ isOpenProjectsDialog: !state.isOpenProjectsDialog })),
     }),
     {
       name: "rcweb-storage",
-      storage: createJSONStorage(() => localStorage),
+      storage: createJSONStorage(() =>
+        typeof window !== "undefined" ? localStorage : sessionStorage
+      ),
     }
   )
 );

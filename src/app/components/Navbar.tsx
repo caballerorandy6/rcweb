@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import clsx from "clsx";
 import { motion } from "framer-motion";
 import { Dialog, DialogPanel } from "@headlessui/react";
@@ -38,20 +39,26 @@ const Navbar = () => {
     <>
       <nav
         aria-label="Global"
-        className="flex items-center lg:p-8 justify-center w-full"
+        className="flex items-center p-8 justify-center w-full"
       >
-        <div className="flex md:hidden">
+        <div className="flex animateHeadingDialog items-center justify-between w-10/12 md:hidden py-4 px-8 rounded-full">
+          <Image
+            src="/logo2.webp"
+            alt="Logo"
+            width={1000}
+            height={1000}
+            className="w-12 h-auto"
+          />
+
           <button
             type="button"
             onClick={handleClickModal}
             className="-m-2.5 inline-flex items-center justify-center rounded-md p-2.5 text-gray-400"
           >
-            <Bars3Icon
-              aria-hidden="true"
-              className="size-10 text-white mr-10"
-            />
+            <Bars3Icon aria-hidden="true" className="size-12 text-white" />
           </button>
         </div>
+
         <div className="hidden md:flex justify-start relative">
           <div className="flex items-center animateHeadingDialog py-4 px-8 gap-x-8 rounded-full">
             {navigation.map((item) => (

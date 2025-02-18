@@ -9,7 +9,7 @@ const Logo = () => {
         alt="logo"
         width={1920}
         height={1080}
-        className="w-2/12 h-auto object-contain mx-auto"
+        className="w-6/12 sm:w-5/12 md:w-4/12 lg:w-3/12 h-auto mx-auto"
         priority
       />
     </Link>

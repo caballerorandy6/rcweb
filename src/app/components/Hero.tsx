@@ -43,7 +43,7 @@ const Hero = () => {
           src="/background.webp"
           width={1920}
           height={1080}
-          className="ixed inset-0 -z-10 size-full object-cover opacity-50 image-gradient"
+          className="fixed inset-0 -z-10 size-full object-cover object-right md:object-center opacity-50 image-gradient"
         />
       </div>
 
@@ -59,7 +59,7 @@ const Hero = () => {
             +3 years of experience. Software Engineer and Programming
             Specialized in developing unique web applications.
           </p>
-          <div className="mt-10 flex items-center justify-center gap-x-6">
+          <div className="mt-10 flex flex-col sm:flex-row gap-4 items-center justify-center gap-x-6">
             <Link
               href="/Randy Caballero - Resume.pdf"
               download="Randy Caballero - Resume.pdf"
