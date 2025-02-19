@@ -72,7 +72,7 @@ const Experience = () => {
   }, [inView, setActiveSection]);
 
   return (
-    <section ref={ref} id="experience" className="py-16 mx-auto bg-gray-950">
+    <section ref={ref} id="experience" className="pb-16 mx-auto bg-gray-950">
       <Heading icon={<BriefcaseIcon className="w-8 text-gold" />}>
         Experience
       </Heading>

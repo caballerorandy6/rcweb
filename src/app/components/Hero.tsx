@@ -18,7 +18,8 @@ import { ArrowDownIcon } from "@heroicons/react/24/outline";
 import { useRCWebStore } from "@/store/rcweb-store";
 
 const Hero = () => {
-  const { setIsOpen, activeSection, setActiveSection } = useRCWebStore();
+  const { setOpenLetsContactDialog, activeSection, setActiveSection } =
+    useRCWebStore();
 
   const { ref, inView } = useInView({
     threshold: 0.75,
@@ -43,12 +44,14 @@ const Hero = () => {
           src="/background.webp"
           width={1920}
           height={1080}
-          className="fixed inset-0 -z-10 size-full object-cover object-right md:object-center opacity-50 image-gradient"
+          className="inset-0 -z-10 size-full object-cover object-right md:object-center opacity-50 image-gradient"
         />
       </div>
 
       <div className="mx-auto max-w-7xl px-6 lg:px-8 h-full flex flex-col justify-center">
-        <Logo />
+        <div className="hidden md:block">
+          <Logo />
+        </div>
 
         <div className="mx-auto max-w-2xl text-center">
           <h1 className="text-5xl font-semibold tracking-tight sm:text-7xl font-mono text-gold">
@@ -78,7 +81,10 @@ const Hero = () => {
             <button
               type="button"
               className="text-sm/6 font-semibold text-white hover:bg-gold/40 p-2 rounded-md transition-colors font-mono flex items-center gap-x-1 border-2 border-gold/50"
-              onClick={() => setIsOpen(true)}
+              onClick={() => {
+                setOpenLetsContactDialog(true);
+                console.log("Open Lets Contact Dialog");
+              }}
             >
               Let&apos;s Connect
             </button>

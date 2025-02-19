@@ -5,12 +5,12 @@ import DialogForm from "./DialogForm";
 import { Dialog, DialogBackdrop, DialogPanel } from "@headlessui/react";
 
 const LetsContactDialog = () => {
-  const { isOpen, setIsOpen } = useRCWebStore();
+  const { isOpenLetsContactDialog, setOpenLetsContactDialog } = useRCWebStore();
 
   return (
     <Dialog
-      open={isOpen}
-      onClose={() => setIsOpen(false)}
+      open={isOpenLetsContactDialog}
+      onClose={() => setOpenLetsContactDialog(false)}
       className="relative z-10"
     >
       <DialogBackdrop

@@ -32,8 +32,13 @@ export const navigation: NavigationProps[] = [
 ];
 
 const Navbar = () => {
-  const { activeSection, setActiveSection, isOpen, handleClickModal } =
-    useRCWebStore();
+  const {
+    activeSection,
+    setActiveSection,
+    isOpen,
+    setIsOpen,
+    handleClickModal,
+  } = useRCWebStore();
 
   return (
     <>
@@ -93,7 +98,7 @@ const Navbar = () => {
             <Logo />
             <button
               type="button"
-              onClick={handleClickModal}
+              onClick={() => setIsOpen(false)}
               className="-m-2.5 rounded-md p-2.5 text-gray-400"
             >
               <XMarkIcon aria-hidden="true" className="size-6 mr-10" />

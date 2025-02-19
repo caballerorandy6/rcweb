@@ -15,6 +15,9 @@ interface RCWebState {
   isOpenProjectsDialog: boolean;
   setIsOpenProjectsDialog: (open: boolean) => void;
   handleClickProjectsDialog: () => void;
+  isOpenLetsContactDialog: boolean;
+  setOpenLetsContactDialog: (open: boolean) => void;
+  handleClickLetsContactDialog: () => void;
 }
 
 export const useRCWebStore = create<RCWebState>()(
@@ -31,6 +34,13 @@ export const useRCWebStore = create<RCWebState>()(
       setIsOpenProjectsDialog: (open) => set({ isOpenProjectsDialog: open }),
       handleClickProjectsDialog: () =>
         set((state) => ({ isOpenProjectsDialog: !state.isOpenProjectsDialog })),
+      isOpenLetsContactDialog: false,
+      setOpenLetsContactDialog: (open) =>
+        set({ isOpenLetsContactDialog: open }),
+      handleClickLetsContactDialog: () =>
+        set((state) => ({
+          isOpenLetsContactDialog: !state.isOpenLetsContactDialog,
+        })),
     }),
     {
       name: "rcweb-storage",
