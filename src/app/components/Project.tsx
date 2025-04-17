@@ -38,7 +38,7 @@ const Project = ({
       {/* Technologies */}
       <div className="p-5 flex-grow flex flex-col">
         <h3 className="text-xl font-bold text-gold">{name}</h3>
-        <p className="mt-2 text-sm text-gray-400">{description}</p>
+        <p className="mt-2 text-base text-white font-mono">{description}</p>
 
         <div className="flex flex-wrap justify-center gap-1 mt-4">
           {tecnologies.map((item, index) => (
@@ -73,7 +73,7 @@ const Project = ({
         <Link
           href={github}
           target="_blank"
-          className="flex-1 py-3 text-sm font-semibold text-gold hover:bg-gray-800 transition rounded-bl-lg border-r border-gold/50"
+          className="flex-1 py-3 text-base font-semibold text-gold hover:bg-gray-800 transition rounded-bl-lg border-r border-gold/50"
         >
           <GithubIcon className="inline-block w-5 h-5 mr-2" />
           GitHub
@@ -81,7 +81,7 @@ const Project = ({
         <Link
           href={url}
           target="_blank"
-          className="flex-1 py-3 text-sm font-semibold text-gold hover:bg-gray-800 transition rounded-br-lg"
+          className="flex-1 py-3 text-base font-semibold text-gold hover:bg-gray-800 transition rounded-br-lg"
         >
           <Website className="inline-block w-5 h-5 mr-2" />
           Preview

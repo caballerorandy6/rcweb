@@ -25,7 +25,7 @@ const ProjectsDialog = () => {
           transition
           className="relative transform overflow-hidden rounded-lg border-2 border-gold/50 bg-black/90 px-10 pt-16 pb-4 text-left shadow-xl transition-all data-closed:opacity-0 data-enter:duration-300 data-enter:ease-out data-leave:duration-200 data-leave:ease-in sm:p-6 w-[80vw] max-w-none max-h-[80vh] overflow-y-auto flex flex-col items-center"
         >
-          <h3 className="sticky top-0 z-10 w-fit flex items-center gap-x-2 text-gold font-mono font-bold text-3xl bg-black/60 px-6 py-4 animateHeadingDialog rounded-full left-1/2 -translate-x-1/2">
+          <h3 className="sticky top-0 z-10 w-fit flex items-center gap-x-2 text-gold font-mono font-bold text-xl bg-black/60 px-4 py-2 animateHeadingDialog rounded-full left-1/2 -translate-x-1/2">
             <CodeBracketIcon className="w-8 text-gold" />
             <span>Projects</span>
           </h3>

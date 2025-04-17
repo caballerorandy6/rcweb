@@ -1,18 +1,14 @@
 import Image from "next/image";
-import Link from "next/link";
 
 const Logo = () => {
   return (
-    <Link href="/">
-      <Image
-        src="/logo.webp"
-        alt="logo"
-        width={1920}
-        height={1080}
-        className="w-6/12 sm:w-5/12 md:w-4/12 lg:w-3/12 h-auto mx-auto"
-        priority
-      />
-    </Link>
+    <Image
+      src="/logo.webp"
+      alt="logo"
+      width={400} // un ancho realista
+      height={200}
+      className="mx-auto h-auto w-auto max-w-[60%] sm:max-w-[50%] md:max-w-[40%] lg:max-w-[30%]"
+    />
   );
 };
 

@@ -17,9 +17,12 @@ import {
 import "react-vertical-timeline-component/style.min.css";
 
 //Icons
-import { BriefcaseIcon, AcademicCapIcon } from "@heroicons/react/24/outline";
+import { BriefcaseIcon } from "@heroicons/react/24/outline";
 
-interface ExperienceProps {
+//Data
+import { experience } from "@/libs/arrays";
+
+export interface ExperienceProps {
   title: string;
   company: string;
   location: string;
@@ -27,36 +30,6 @@ interface ExperienceProps {
   icon: React.ReactNode;
   date: string;
 }
-
-const experience: ExperienceProps[] = [
-  {
-    title: "Software Developer",
-    company: "Atser Technologies, Inc.",
-    location: "Houston, TX",
-    description:
-      "Frontend Development, Backend Development, User Experience, Visual Design",
-    icon: <BriefcaseIcon />,
-    date: "February 2025 - Present",
-  },
-
-  {
-    title: "Freelance Web Developer",
-    company: "Freelancer",
-    location: "Houston, TX",
-    description:
-      "Frontend Development, Backend Development, User Experience, Visual Design",
-    icon: <BriefcaseIcon />,
-    date: "January 2022 - February 2025",
-  },
-  {
-    title: "Bachelor of Software Engineering",
-    company: "Universidad de Camaguey, Ignacio Agramonte Loynaz",
-    location: "Camaguey, Cuba",
-    description: "Software Engineering, Computer Science, Mathematics",
-    icon: <AcademicCapIcon />,
-    date: "September 2007 - July 2012",
-  },
-];
 
 const Experience = () => {
   const { setActiveSection } = useRCWebStore();
@@ -98,7 +71,7 @@ const Experience = () => {
           >
             <h3 className="text-lg font-medium sm:text-xl/8 font-sans">{`${item.title} | ${item.company}`}</h3>
             <p className="font-normal mt-0">{item.location}</p>
-            <p className="!mt-1 !font-normal text-lg text-gray-400 sm:text-xl/8 font-sans">
+            <p className="mt-1 text-base text-white/80 sm:text-xl/8 font-sans">
               {item.description}
             </p>
           </VerticalTimelineElement>

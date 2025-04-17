@@ -26,21 +26,24 @@ const Projects = () => {
   }, [inView, setActiveSection]);
 
   return (
-    <section ref={ref} id="projects" className="py-16 min-h-screen">
+    <section ref={ref} id="projects" className="py-16 w-10/12 mx-auto">
       <Heading icon={<CodeBracketIcon className="w-8 text-gold" />}>
         Projects
       </Heading>
 
       <ProjectsGrid />
 
-      <button
-        type="button"
-        className="text-sm/6 font-semibold text-white hover:bg-gold/40 p-2 rounded-md transition-colors font-mono flex items-center gap-x-1 border-2 border-gold/50 mt-16 mx-auto cursor-pointer"
-        onClick={handleClickProjectsDialog}
-      >
-        See all Projects
-      </button>
-      <ProjectsDialog />
+      <div className="flex justify-center mt-12 mb-10">
+        <button
+          type="button"
+          className="text-sm/6 font-semibold text-white hover:bg-gold/40 p-2 rounded-md transition-colors font-sans flex items-center gap-x-1 border-2 border-gold/50"
+          onClick={handleClickProjectsDialog}
+        >
+          All Projects
+        </button>
+
+        <ProjectsDialog />
+      </div>
     </section>
   );
 };

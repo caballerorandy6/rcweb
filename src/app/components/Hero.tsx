@@ -45,6 +45,7 @@ const Hero = () => {
           width={1920}
           height={1080}
           className="inset-0 -z-10 size-full object-cover object-right md:object-center opacity-50 image-gradient"
+          priority
         />
       </div>
 
@@ -58,7 +59,7 @@ const Hero = () => {
             I&apos;m Randy Caballero
           </h1>
           <CustomBadge>Open to Work</CustomBadge>
-          <p className="mt-8 text-lg font-medium text-gray-400 sm:text-xl/8 font-sans">
+          <p className="mt-8 font-mono  text-white/80 text-base">
             +3 years of experience. Software Engineer and Programming
             Specialized in developing unique web applications.
           </p>
@@ -68,22 +69,22 @@ const Hero = () => {
               download="Randy Caballero - Resume.pdf"
               target="_blank"
               rel="noopener noreferrer"
-              className="text-sm/6 font-semibold text-white hover:bg-gold/40 p-2 rounded-md transition-colors font-mono flex items-center gap-x-1 border-2 border-gold/50"
+              className="text-sm/6 font-semibold text-white/80 hover:bg-gold/40 p-2 rounded-md transition-colors font-sans flex items-center gap-x-1 border-2 border-gold/50"
             >
               Download CV
             </Link>
             <Link
               href="#experience"
-              className="text-sm/6 font-semibold text-white hover:bg-gold/40 p-2 rounded-md transition-colors font-mono flex items-center gap-x-1 border-2 border-gold/50"
+              className="text-sm/6 font-semibold text-white/80 hover:bg-gold/40 p-2 rounded-md transition-colors font-sans flex items-center gap-x-1 border-2 border-gold/50"
             >
               Experience <ArrowDownIcon className="text-white h-4" />
             </Link>
             <button
               type="button"
-              className="text-sm/6 font-semibold text-white hover:bg-gold/40 p-2 rounded-md transition-colors font-mono flex items-center gap-x-1 border-2 border-gold/50"
+              className="text-sm/6 font-semibold text-white/80 hover:bg-gold/40 p-2 rounded-md transition-colors font-sans flex items-center gap-x-1 border-2 border-gold/50"
               onClick={() => {
                 setOpenLetsContactDialog(true);
-                console.log("Open Lets Contact Dialog");
+                setActiveSection("Contact");
               }}
             >
               Let&apos;s Connect

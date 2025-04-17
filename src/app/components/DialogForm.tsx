@@ -2,17 +2,46 @@ import { useForm, SubmitHandler } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { ErrorMessage } from "@hookform/error-message";
 import { FormSshema, FormData } from "@/libs/zod";
+import { toast } from "sonner";
 
-const DialogForm = () => {
+interface DialogFormProps {
+  closeModal: () => void;
+}
+
+const DialogForm = ({ closeModal }: DialogFormProps) => {
   const {
     register,
     handleSubmit,
     formState: { errors },
+    reset,
   } = useForm<FormData>({
     resolver: zodResolver(FormSshema),
   });
 
-  const onSubmit: SubmitHandler<FormData> = (data) => console.log(data);
+  const onSubmit: SubmitHandler<FormData> = async (data) => {
+    try {
+      const response = await fetch("/api/receive-mail", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      });
+
+      const result = await response.json();
+
+      if (result.success) {
+        toast.success("Message sent successfully!");
+        reset();
+        closeModal();
+      } else {
+        toast.error("Failed to send message. Please try again.");
+      }
+    } catch (error) {
+      console.error("Error sending message:", error);
+      toast.error("Something went wrong. Please try again later.");
+    }
+  };
 
   return (
     <form
@@ -24,10 +53,7 @@ const DialogForm = () => {
       </h2>
 
       {/** Name Field */}
-      <div>
-        <label className="block text-gray-400 font-medium mb-1" htmlFor="name">
-          Name
-        </label>
+      <>
         <input
           {...register("name")}
           type="text"
@@ -42,13 +68,10 @@ const DialogForm = () => {
             <p className="text-red-500 text-sm mt-1">{message}</p>
           )}
         />
-      </div>
+      </>
 
       {/** Email Field */}
-      <div>
-        <label className="block text-gray-400 font-medium mb-1" htmlFor="email">
-          Email
-        </label>
+      <>
         <input
           {...register("email")}
           type="email"
@@ -63,13 +86,10 @@ const DialogForm = () => {
             <p className="text-red-500 text-sm mt-1">{message}</p>
           )}
         />
-      </div>
+      </>
 
       {/** Phone Field */}
-      <div>
-        <label className="block text-gray-400 font-medium mb-1" htmlFor="phone">
-          Phone Number
-        </label>
+      <>
         <input
           {...register("phone")}
           type="tel"
@@ -84,16 +104,10 @@ const DialogForm = () => {
             <p className="text-red-500 text-sm mt-1">{message}</p>
           )}
         />
-      </div>
+      </>
 
       {/** Message Field */}
-      <div>
-        <label
-          className="block text-gray-400 font-medium mb-1"
-          htmlFor="message"
-        >
-          Message
-        </label>
+      <>
         <textarea
           {...register("message")}
           id="message"
@@ -108,7 +122,7 @@ const DialogForm = () => {
             <p className="text-red-500 text-sm mt-1">{message}</p>
           )}
         />
-      </div>
+      </>
 
       {/** Submit Button */}
       <button

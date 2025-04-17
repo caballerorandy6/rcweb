@@ -47,3 +47,7 @@ body .image-gradient {
     backdrop-filter: blur(10px);
   }
 }
+
+.javascript-color {
+  color: #f7df1e;
+}

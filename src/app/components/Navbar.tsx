@@ -15,21 +15,13 @@ import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
 //Components
 import Logo from "@/app/components/Logo";
 
-interface NavigationProps {
+//Data
+import { navigation } from "@/libs/arrays";
+
+export interface NavigationProps {
   name: string;
   hash: string;
 }
-
-export const navigation: NavigationProps[] = [
-  { name: "Home", hash: "#home" },
-  {
-    name: "Experience",
-    hash: "#experience",
-  },
-  { name: "Projects", hash: "#projects" },
-  { name: "About", hash: "#about" },
-  { name: "Contact", hash: "#contact" },
-];
 
 const Navbar = () => {
   const {
@@ -91,45 +83,47 @@ const Navbar = () => {
           </div>
         </div>
       </nav>
-      <Dialog open={isOpen} onClose={handleClickModal} className="lg:hidden">
-        <div className="fixed inset-0 z-50 justify-between" />
-        <DialogPanel className="fixed inset-y-0 right-0 z-50 w-full overflow-y-auto bg-gray-900 sm:max-w-sm sm:ring-1 sm:ring-white/10">
-          <div className="flex items-center justify-between">
-            <Logo />
-            <button
-              type="button"
-              onClick={() => setIsOpen(false)}
-              className="-m-2.5 rounded-md p-2.5 text-gray-400"
-            >
-              <XMarkIcon aria-hidden="true" className="size-6 mr-10" />
-            </button>
-          </div>
-          <div className="mt-6 px-6 flow-root">
-            <div className="-my-6 divide-y">
-              <div className="space-y-2 py-6">
-                {navigation.map((item) => (
-                  <Link
-                    key={item.name}
-                    href={item.hash}
-                    onClick={() => {
-                      setActiveSection(item.name);
-                      handleClickModal();
-                    }}
-                    className={clsx(
-                      "-mx-3 block rounded-lg px-3 py-2 text-base/7 font-semibold text-white hover:text-gold",
-                      {
-                        "bg-gold/40": activeSection === item.name,
-                      }
-                    )}
-                  >
-                    {item.name}
-                  </Link>
-                ))}
+      <nav>
+        <Dialog open={isOpen} onClose={handleClickModal} className="sm:hidden">
+          <div className="fixed inset-0 z-50 justify-between" />
+          <DialogPanel className="fixed inset-y-0 right-0 z-50 w-full overflow-y-auto bg-gray-900 sm:max-w-sm sm:ring-1 sm:ring-white/10">
+            <div className="flex items-center justify-between">
+              <Logo />
+              <button
+                type="button"
+                onClick={() => setIsOpen(false)}
+                className="-m-2.5 rounded-md p-2.5 text-gray-400"
+              >
+                <XMarkIcon aria-hidden="true" className="size-6 mr-10" />
+              </button>
+            </div>
+            <div className="mt-6 px-6 flow-root">
+              <div className="-my-6 divide-y">
+                <div className="space-y-2 py-6">
+                  {navigation.map((item) => (
+                    <Link
+                      key={item.name}
+                      href={item.hash}
+                      onClick={() => {
+                        setActiveSection(item.name);
+                        handleClickModal();
+                      }}
+                      className={clsx(
+                        "-mx-3 block rounded-lg px-3 py-2 text-base/7 font-semibold text-white hover:text-gold",
+                        {
+                          "bg-gold/40": activeSection === item.name,
+                        }
+                      )}
+                    >
+                      {item.name}
+                    </Link>
+                  ))}
+                </div>
               </div>
             </div>
-          </div>
-        </DialogPanel>
-      </Dialog>
+          </DialogPanel>
+        </Dialog>
+      </nav>
     </>
   );
 };
