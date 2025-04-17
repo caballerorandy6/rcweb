@@ -9,6 +9,7 @@ interface DialogFormProps {
 }
 
 const DialogForm = ({ closeModal }: DialogFormProps) => {
+  console.log(process.env.NEXT_PUBLIC_RESEND_API_KEY);
   const {
     register,
     handleSubmit,
