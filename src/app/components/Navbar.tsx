@@ -84,7 +84,7 @@ const Navbar = () => {
         </div>
       </nav>
       <nav>
-        <Dialog open={isOpen} onClose={handleClickModal} className="sm:hidden">
+        <Dialog open={isOpen} onClose={handleClickModal} className="md:hidden">
           <div className="fixed inset-0 z-50 justify-between" />
           <DialogPanel className="fixed inset-y-0 right-0 z-50 w-full overflow-y-auto bg-gray-900 sm:max-w-sm sm:ring-1 sm:ring-white/10">
             <div className="flex items-center justify-between">
