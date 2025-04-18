@@ -25,7 +25,7 @@ const Contact = () => {
       <Heading icon={<EnvelopeIcon className="w-8 text-gold" />}>
         Contact
       </Heading>
-      <div className="mx-auto w-full sm:w-10/12 md:w-8/12 lg:w-6/12">
+      <div className="mx-auto w-full sm:w-10/12 md:w-8/12 lg:w-6/12 animateProjectCard">
         <DialogForm closeModal={() => setOpenLetsContactDialog(false)} />
       </div>
     </section>

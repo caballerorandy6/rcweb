@@ -61,7 +61,7 @@ const About = () => {
           alt="About Image"
           width={185}
           height={200}
-          className="image-gradient rounded-lg shadow-lg shadow-gray-900/50 hover:scale-105 transition-transform duration-300 ease-in-out border-2 border-gold/50 sepia mt-10 md:mt-0 mx-auto w-4/12 md:w-3/12 lg:w-2/12"
+          className="image-gradient rounded-lg shadow-lg shadow-gray-900/50 hover:scale-105 transition-transform duration-300 ease-in-out border-2 border-gold/50 sepia mt-10 md:mt-0 mx-auto w-4/12 md:w-3/12 lg:w-2/12 animateProjectCard"
         />
       </div>
       <div className="w-full mx-auto mt-6">
