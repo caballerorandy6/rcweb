@@ -36,15 +36,15 @@ const Navbar = () => {
     <>
       <nav
         aria-label="Global"
-        className="flex items-center p-8 justify-center w-full"
+        className="flex items-center p-4 justify-center w-full"
       >
-        <div className="flex animateHeadingDialog items-center justify-between w-10/12 md:hidden py-4 px-8 rounded-full">
+        <div className="flex animateHeadingDialog items-center justify-between w-10/12 sm:hidden rounded-full py-2 px-6">
           <Image
             src="/logo2.webp"
             alt="Logo"
             width={1000}
             height={1000}
-            className="w-12 h-auto"
+            className="w-10 h-auto"
           />
 
           <button
@@ -52,12 +52,12 @@ const Navbar = () => {
             onClick={handleClickModal}
             className="-m-2.5 inline-flex items-center justify-center rounded-md p-2.5 text-gray-400"
           >
-            <Bars3Icon aria-hidden="true" className="size-12 text-white" />
+            <Bars3Icon aria-hidden="true" className="size-10 text-white" />
           </button>
         </div>
 
-        <div className="hidden md:flex justify-start relative">
-          <div className="flex items-center animateHeadingDialog py-4 px-8 gap-x-8 rounded-full">
+        <div className="hidden sm:flex justify-start relative">
+          <div className="flex items-center animateHeadingDialog py-2 px-6 gap-x-8 rounded-full">
             {navigation.map((item) => (
               <Link
                 key={item.name}
@@ -73,7 +73,7 @@ const Navbar = () => {
                 {item.name}
                 {item.name === activeSection && (
                   <motion.span
-                    className="bg-gold/40 rounded-full absolute inset-0 -z-10"
+                    className="bg-gold/40 rounded-full absolute inset-0 -z-10 p-0.5"
                     layoutId="activeSection"
                     transition={{ type: "spring", stiffness: 380, damping: 30 }}
                   ></motion.span>

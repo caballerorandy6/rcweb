@@ -15,7 +15,7 @@ const Footer = () => {
           </Link>
         ))}
       </ul>
-      <p className="text-gold leading-relaxed">
+      <p className="text-gold leading-relaxed font-mono">
         © 2024 RC Web. All rights reserved.
       </p>
     </footer>

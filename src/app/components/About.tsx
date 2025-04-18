@@ -23,7 +23,7 @@ const About = () => {
   }, [inView, setActiveSection]);
 
   return (
-    <section ref={ref} id="about" className="py-16 mx-auto w-10/12">
+    <section ref={ref} id="about" className="mx-auto w-10/12">
       <Heading icon={<UserPlusIcon className="w-8 text-gold" />}>
         About Me
       </Heading>

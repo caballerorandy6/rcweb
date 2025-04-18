@@ -45,14 +45,11 @@ const Experience = () => {
   }, [inView, setActiveSection]);
 
   return (
-    <section ref={ref} id="experience" className="pb-16 mx-auto bg-gray-950">
+    <section ref={ref} id="experience" className="mx-auto bg-gray-950">
       <Heading icon={<BriefcaseIcon className="w-8 text-gold" />}>
         Experience
       </Heading>
-      <VerticalTimeline
-        lineColor="#CBB26A"
-        className="font-sans font-bold opacity-90"
-      >
+      <VerticalTimeline lineColor="#CBB26A" className="font-mono">
         {experience.map((item, index) => (
           <VerticalTimelineElement
             key={index}
@@ -69,9 +66,9 @@ const Experience = () => {
             icon={item.icon}
             iconStyle={{ background: "#CBB26A", color: "#1F2937" }}
           >
-            <h3 className="text-lg font-medium sm:text-xl/8 font-sans">{`${item.title} | ${item.company}`}</h3>
-            <p className="font-normal mt-0">{item.location}</p>
-            <p className="mt-1 text-base text-white/80 sm:text-xl/8 font-sans">
+            <h3 className="font-medium sm:text-xl font-sans">{`${item.title} | ${item.company}`}</h3>
+            <p className="font-mono">{item.location}</p>
+            <p className="mt-1 text-white/80 sm:text-xl font-mono">
               {item.description}
             </p>
           </VerticalTimelineElement>
