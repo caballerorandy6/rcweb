@@ -16,7 +16,7 @@ const Projects = () => {
   const { setActiveSection, handleClickProjectsDialog } = useRCWebStore();
 
   const { ref, inView } = useInView({
-    threshold: 0.75,
+    threshold: 0.25,
   });
 
   useEffect(() => {

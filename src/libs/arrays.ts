@@ -65,7 +65,7 @@ export const projects: ProjectProps[] = [
     ],
     description:
       "A web application that allows you to rent limousines for special events.",
-    image: "/limo-renting.webp",
+    image: "/limo-renting.avif",
     github: "https://github.com/caballerorandy6/Limo-Renting-NextJS",
     url: "https://limo-renting-next-js.vercel.app/",
   },
@@ -74,8 +74,8 @@ export const projects: ProjectProps[] = [
     tecnologies: ["React", "TailwindCSS", "JavaScript", "Vite"],
     description:
       "The SPA allows users to explore and request HVAC installation, repair, and maintenance services dynamically without page reloads.",
-    image: "/gsmactx.webp",
-    github: "https://github.com/caballerorandy6/GSM_AC_frontend",
+    image: "/gsmactx.avif",
+    github: "https://github.com/caballerorandy6/gsmactx_2.0",
     url: "https://www.gsmactx.com/",
   },
   {
@@ -83,7 +83,7 @@ export const projects: ProjectProps[] = [
     tecnologies: ["React", "Vite"],
     description:
       "The website allows users to search for and explore various drinks, providing details about their ingredients and preparation methods.",
-    image: "/searchdrinks.webp",
+    image: "/searchdrinks.avif",
     github: "https://github.com/caballerorandy6/seachdrinks",
     url: "https://seachdrinks.netlify.app/",
   },
@@ -92,7 +92,7 @@ export const projects: ProjectProps[] = [
     tecnologies: ["html", "css", "sass"],
     description:
       "The website is an online portfolio showcasing a photographer's work, providing visitors with a collection of images and information about their services.",
-    image: "/photographer.webp",
+    image: "/photographer.avif",
     github: "https://github.com/caballerorandy6/photographer-portfolio",
     url: "https://photographerportfolio1.netlify.app",
   },

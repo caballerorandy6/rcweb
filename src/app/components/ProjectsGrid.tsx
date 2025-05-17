@@ -1,4 +1,3 @@
-//Components
 import Project from "@/app/components/Project";
 import { projects } from "@/libs/arrays";
 
@@ -6,22 +5,20 @@ const ProjectsGrid = () => {
   return (
     <ul
       role="list"
-      className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 w-full mx-auto gap-4"
+      className="grid w-full gap-6
+                 grid-cols-1
+                 sm:grid-cols-2
+                 xl:grid-cols-3
+                 "
     >
-      {projects.slice(0, 3).map((item) => (
+      {projects.slice(0, 12).map((p) => (
         <li
-          key={item.name}
-          className="justify-center col-span-1 flex flex-col h-full bg-gray-900 text-center border border-gold/50 rounded-lg shadow-md hover:shadow-lg transition-shadow w-full animateProjectCard"
+          key={p.name}
+          className="flex flex-col h-full rounded-lg border border-gold/50
+                     bg-gray-900/90 text-center shadow-md transition-shadow
+                     hover:shadow-lg"
         >
-          <Project
-            key={item.name}
-            name={item.name}
-            tecnologies={item.tecnologies}
-            description={item.description}
-            image={item.image}
-            github={item.github}
-            url={item.url}
-          />
+          <Project {...p} />
         </li>
       ))}
     </ul>

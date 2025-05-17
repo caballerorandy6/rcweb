@@ -40,7 +40,7 @@ const Navbar = () => {
       >
         <div className="flex animateHeadingDialog items-center justify-between w-10/12 sm:hidden rounded-full py-2 px-6">
           <Image
-            src="/logo2.webp"
+            src="/logo2.avif"
             alt="Logo"
             width={1000}
             height={1000}

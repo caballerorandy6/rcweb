@@ -13,7 +13,7 @@ const About = () => {
   const { setActiveSection } = useRCWebStore();
 
   const { ref, inView } = useInView({
-    threshold: 0.75,
+    threshold: 0.25,
   });
 
   useEffect(() => {
@@ -57,7 +57,7 @@ const About = () => {
         </div>
 
         <Image
-          src="/about.webp"
+          src="/about.avif"
           alt="About Image"
           width={185}
           height={200}

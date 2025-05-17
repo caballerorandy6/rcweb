@@ -3,7 +3,7 @@ import Image from "next/image";
 const Logo = () => {
   return (
     <Image
-      src="/logo.webp"
+      src="/logo.avif"
       alt="logo"
       width={400} // un ancho realista
       height={200}

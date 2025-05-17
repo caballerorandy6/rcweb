@@ -22,7 +22,7 @@ const Hero = () => {
     useRCWebStore();
 
   const { ref, inView } = useInView({
-    threshold: 0.75,
+    threshold: 0.25,
   });
 
   useEffect(() => {
@@ -41,7 +41,7 @@ const Hero = () => {
       <div className="absolute inset-0 -z-10 h-full w-full">
         <Image
           alt="Background"
-          src="/background.webp"
+          src="/background.avif"
           width={1920}
           height={1080}
           className="inset-0 -z-10 size-full object-cover object-right md:object-center opacity-50 image-gradient"
