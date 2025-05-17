@@ -47,7 +47,7 @@ const Hero = () => {
           </p>
           <div className="mt-10 flex flex-col sm:flex-row gap-4 items-center justify-center gap-x-6">
             <Link
-              href="/Randy Caballero - Resume.pdf"
+              href="/resume.pdf"
               download="Randy Caballero - Resume.pdf"
               target="_blank"
               rel="noopener noreferrer"
