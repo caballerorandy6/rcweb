@@ -1,35 +1,18 @@
 "use client";
 
-import { useEffect } from "react";
-import { useInView } from "react-intersection-observer";
-
 import Image from "next/image";
 import Link from "next/link";
-
-//Components
 import Logo from "@/app/components/Logo";
 import LetsContactDialog from "@/app/components/LetsContactDialog";
 import CustomBadge from "@/app/components/CustomBadge";
-
-//Icons
 import { ArrowDownIcon } from "@heroicons/react/24/outline";
-
-//Zustand Store
 import { useRCWebStore } from "@/store/rcweb-store";
+import useSectionObserver from "@/hooks/useSectionObserver";
 
 const Hero = () => {
-  const { setOpenLetsContactDialog, activeSection, setActiveSection } =
-    useRCWebStore();
+  const { setOpenLetsContactDialog, setActiveSection } = useRCWebStore();
 
-  const { ref, inView } = useInView({
-    threshold: 0.25,
-  });
-
-  useEffect(() => {
-    if (inView) {
-      setActiveSection("Home");
-    }
-  }, [inView, activeSection, setActiveSection]);
+  const ref = useSectionObserver({ sectionName: "Home" });
 
   return (
     <section
@@ -37,7 +20,6 @@ const Hero = () => {
       ref={ref}
       className="relative isolate overflow-hidden pt-14 h-screen bg-gray-950"
     >
-      {/* Asegura que la imagen de fondo solo se aplique a esta sección */}
       <div className="absolute inset-0 -z-10 h-full w-full">
         <Image
           alt="Background"

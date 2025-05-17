@@ -32,6 +32,7 @@ const Project = ({
           width={1000}
           height={1000}
           className="w-full h-36 object-cover rounded-t-lg transition-transform duration-300 hover:scale-110"
+          priority={false}
         />
       </div>
 

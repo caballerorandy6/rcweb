@@ -2,6 +2,14 @@
 
 import { useEffect } from "react";
 
+const sectionTitle: Record<string, string> = {
+  home: "RC WEB | Home",
+  experience: "RC WEB | Experience",
+  projects: "RC WEB | Projects",
+  about: "RC WEB | About",
+  contact: "RC WEB | Contact",
+};
+
 export function useScrollSpy(sectionIds: string[]) {
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -11,6 +19,11 @@ export function useScrollSpy(sectionIds: string[]) {
             const id = entry.target.getAttribute("id");
             if (id) {
               history.replaceState(null, "", `#${id}`);
+
+              const newTitle = sectionTitle[id] || "RC WEB";
+              if (document.title !== newTitle) {
+                document.title = newTitle;
+              }
             }
             break;
           }
@@ -22,12 +35,11 @@ export function useScrollSpy(sectionIds: string[]) {
       }
     );
 
-    sectionIds.forEach((id) => {
-      const element = document.getElementById(id);
-      if (element) {
-        observer.observe(element);
-      }
-    });
+    const elements = sectionIds
+      .map((id) => document.getElementById(id))
+      .filter(Boolean);
+
+    elements.forEach((el) => observer.observe(el!));
 
     return () => observer.disconnect();
   }, [sectionIds]);

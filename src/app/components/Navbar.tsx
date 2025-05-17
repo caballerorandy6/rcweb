@@ -45,6 +45,7 @@ const Navbar = () => {
             width={1000}
             height={1000}
             className="w-10 h-auto"
+            priority={false}
           />
 
           <button

@@ -1,29 +1,18 @@
 "use client";
 
-import { useEffect } from "react";
-import { useInView } from "react-intersection-observer";
 import { useRCWebStore } from "@/store/rcweb-store";
-
-//Icons
 import { CodeBracketIcon } from "@heroicons/react/24/outline";
-
-//Components
 import Heading from "@/app/components/Heading";
 import ProjectsDialog from "@/app/components/ProjectsDialog";
 import ProjectsGrid from "@/app/components/ProjectsGrid";
+import useSectionObserver from "@/hooks/useSectionObserver";
 
 const Projects = () => {
-  const { setActiveSection, handleClickProjectsDialog } = useRCWebStore();
+  const { handleClickProjectsDialog } = useRCWebStore();
 
-  const { ref, inView } = useInView({
-    threshold: 0.25,
+  const ref = useSectionObserver({
+    sectionName: "Projects",
   });
-
-  useEffect(() => {
-    if (inView) {
-      setActiveSection("Projects");
-    }
-  }, [inView, setActiveSection]);
 
   return (
     <section ref={ref} id="projects" className="py-16 w-10/12 mx-auto">

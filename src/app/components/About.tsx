@@ -1,26 +1,13 @@
 "use client";
 
-import { useEffect } from "react";
-
 import Image from "next/image";
 import Heading from "@/app/components/Heading";
-import { useInView } from "react-intersection-observer";
-import { useRCWebStore } from "@/store/rcweb-store";
 import { UserPlusIcon } from "@heroicons/react/24/outline";
 import TechMarquee from "./TechMarquee";
+import useSectionObserver from "@/hooks/useSectionObserver";
 
 const About = () => {
-  const { setActiveSection } = useRCWebStore();
-
-  const { ref, inView } = useInView({
-    threshold: 0.25,
-  });
-
-  useEffect(() => {
-    if (inView) {
-      setActiveSection("About");
-    }
-  }, [inView, setActiveSection]);
+  const ref = useSectionObserver({ sectionName: "About" });
 
   return (
     <section ref={ref} id="about" className="mx-auto w-10/12">
@@ -62,6 +49,7 @@ const About = () => {
           width={185}
           height={200}
           className="image-gradient rounded-lg shadow-lg shadow-gray-900/50 hover:scale-105 transition-transform duration-300 ease-in-out border-2 border-gold/50 sepia mt-10 md:mt-0 mx-auto w-4/12 md:w-3/12 lg:w-2/12 animateProjectCard"
+          priority={false}
         />
       </div>
       <div className="w-full mx-auto mt-6">

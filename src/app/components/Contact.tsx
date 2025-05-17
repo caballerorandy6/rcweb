@@ -1,24 +1,14 @@
 "use client";
 
 import { useRCWebStore } from "@/store/rcweb-store";
-import { useEffect } from "react";
-import { useInView } from "react-intersection-observer";
 import Heading from "@/app/components/Heading";
 import { EnvelopeIcon } from "@heroicons/react/24/outline";
 import DialogForm from "@/app/components/DialogForm";
+import useSectionObserver from "@/hooks/useSectionObserver";
 
 const Contact = () => {
-  const { setActiveSection, setOpenLetsContactDialog } = useRCWebStore();
-
-  const { ref, inView } = useInView({
-    threshold: 0.25,
-  });
-
-  useEffect(() => {
-    if (inView) {
-      setActiveSection("Contact");
-    }
-  }, [inView, setActiveSection]);
+  const { setOpenLetsContactDialog } = useRCWebStore();
+  const ref = useSectionObserver({ sectionName: "Contact" });
 
   return (
     <section ref={ref} id="contact" className="py-16 mx-auto w-10/12">

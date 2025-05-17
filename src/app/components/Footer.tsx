@@ -16,7 +16,7 @@ const Footer = () => {
         ))}
       </ul>
       <p className="text-gold leading-relaxed font-mono">
-        © 2024 RC Web. All rights reserved.
+        {`© ${new Date().getFullYear()} RC Web. All Rights Reserved.`}
       </p>
     </footer>
   );

@@ -1,26 +1,14 @@
 "use client";
 
-import { useEffect } from "react";
-import { useInView } from "react-intersection-observer";
-
-//Zustand Store
-import { useRCWebStore } from "@/store/rcweb-store";
-
-//Components
 import Heading from "@/app/components/Heading";
-
-//npm packages
 import {
   VerticalTimeline,
   VerticalTimelineElement,
 } from "react-vertical-timeline-component";
 import "react-vertical-timeline-component/style.min.css";
-
-//Icons
 import { BriefcaseIcon } from "@heroicons/react/24/outline";
-
-//Data
 import { experience } from "@/libs/arrays";
+import useSectionObserver from "@/hooks/useSectionObserver";
 
 export interface ExperienceProps {
   title: string;
@@ -32,17 +20,7 @@ export interface ExperienceProps {
 }
 
 const Experience = () => {
-  const { setActiveSection } = useRCWebStore();
-
-  const { ref, inView } = useInView({
-    threshold: 0.25,
-  });
-
-  useEffect(() => {
-    if (inView) {
-      setActiveSection("Experience");
-    }
-  }, [inView, setActiveSection]);
+  const ref = useSectionObserver({ sectionName: "Experience" });
 
   return (
     <section ref={ref} id="experience" className="mx-auto bg-gray-950">
