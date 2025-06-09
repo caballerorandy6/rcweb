@@ -18,8 +18,10 @@ export function useScrollSpy(sectionIds: string[]) {
           if (entry.isIntersecting) {
             const id = entry.target.getAttribute("id");
             if (id) {
+              // Actualiza la URL sin recargar
               history.replaceState(null, "", `#${id}`);
 
+              // Cambia dinámicamente el título
               const newTitle = sectionTitle[id] || "RC WEB";
               if (document.title !== newTitle) {
                 document.title = newTitle;
@@ -30,7 +32,7 @@ export function useScrollSpy(sectionIds: string[]) {
         }
       },
       {
-        rootMargin: "-50% 0px -50% 0px",
+        rootMargin: "-50% 0px -50% 0px", // activa cuando la sección esté centrada
         threshold: 0,
       }
     );

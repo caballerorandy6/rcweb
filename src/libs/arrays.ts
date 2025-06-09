@@ -67,7 +67,7 @@ export const projects: ProjectProps[] = [
       "A web application that allows you to rent limousines for special events.",
     image: "/limo-renting.avif",
     github: "https://github.com/caballerorandy6/Limo-Renting-NextJS",
-    url: "https://limo-renting-next-js.vercel.app/",
+    url: "https://limo-renting-next-js-nu.vercel.app/",
   },
   {
     name: "GSM AC ",
@@ -79,15 +79,6 @@ export const projects: ProjectProps[] = [
     url: "https://www.gsmactx.com/",
   },
   {
-    name: "Search Drinks",
-    tecnologies: ["React", "Vite"],
-    description:
-      "The website allows users to search for and explore various drinks, providing details about their ingredients and preparation methods.",
-    image: "/searchdrinks.avif",
-    github: "https://github.com/caballerorandy6/seachdrinks",
-    url: "https://seachdrinks.netlify.app/",
-  },
-  {
     name: "Photographer Portfolio",
     tecnologies: ["html", "css", "sass"],
     description:
@@ -95,6 +86,33 @@ export const projects: ProjectProps[] = [
     image: "/photographer.avif",
     github: "https://github.com/caballerorandy6/photographer-portfolio",
     url: "https://photographerportfolio1.netlify.app",
+  },
+  {
+    name: "Little Lemon Restaurant",
+    tecnologies: [
+      "NextJS",
+      "TypeScript",
+      "TailwindCSS",
+      "ShadcnUi",
+      "Zod",
+      "Zustand",
+      "Prisma",
+      "PostgreSQL",
+    ],
+    description:
+      "A restaurant website that showcases the menu, location, and contact information, built with Next.js and Tailwind CSS.",
+    image: "/littlelemon.avif",
+    github: "https://github.com/caballerorandy6/little-lemon-restaurant",
+    url: "https://little-lemon-restaurant-nine-omega.vercel.app/",
+  },
+  {
+    name: "Search Drinks",
+    tecnologies: ["React", "Vite"],
+    description:
+      "The website allows users to search for and explore various drinks, providing details about their ingredients and preparation methods.",
+    image: "/searchdrinks.avif",
+    github: "https://github.com/caballerorandy6/seachdrinks",
+    url: "https://seachdrinks.netlify.app/",
   },
 ];
 

@@ -11,7 +11,7 @@ const ProjectsGrid = () => {
                  xl:grid-cols-3
                  "
     >
-      {projects.slice(0, 12).map((p) => (
+      {projects.slice(0, 3).map((p) => (
         <li
           key={p.name}
           className="flex flex-col h-full rounded-lg border border-gold/50
