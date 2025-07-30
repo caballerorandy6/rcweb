@@ -27,7 +27,7 @@ const Experience = () => {
       <Heading icon={<BriefcaseIcon className="w-8 text-gold" />}>
         Experience
       </Heading>
-      <VerticalTimeline lineColor="#CBB26A" className="font-mono">
+      <VerticalTimeline lineColor="#CBB26A" className="font-inter">
         {experience.map((item, index) => (
           <VerticalTimelineElement
             key={index}
@@ -39,16 +39,16 @@ const Experience = () => {
               textAlign: "left",
               padding: "1.3rem 2rem",
             }}
-            contentArrowStyle={{ borderRight: "20px solid #1F2937" }}
+            contentArrowStyle={{
+              borderRight: "20px solid #1F2937",
+            }}
             date={item.date}
             icon={item.icon}
             iconStyle={{ background: "#CBB26A", color: "#1F2937" }}
           >
-            <h3 className="font-medium sm:text-xl font-sans">{`${item.title} | ${item.company}`}</h3>
-            <p className="font-mono">{item.location}</p>
-            <p className="mt-1 text-white/80 sm:text-xl font-mono">
-              {item.description}
-            </p>
+            <h3 className="text-xl sm:text-4xl font-iceland">{`${item.title} | ${item.company}`}</h3>
+            <p className="font-inter text-base">{item.location}</p>
+            <p className="mt-1 text-white/80 font-inter">{item.description}</p>
           </VerticalTimelineElement>
         ))}
       </VerticalTimeline>

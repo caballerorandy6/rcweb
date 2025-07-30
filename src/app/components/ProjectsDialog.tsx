@@ -9,6 +9,7 @@ const ProjectsDialog = () => {
 
   return (
     <Dialog
+      transition
       open={isOpenProjectsDialog}
       onClose={() => setIsOpenProjectsDialog(false)}
       className="fixed inset-0 z-50"

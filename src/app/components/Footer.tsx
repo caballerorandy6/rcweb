@@ -9,13 +9,13 @@ const Footer = () => {
           <Link
             key={item.name}
             href={item.hash}
-            className="text-white/80 hover:text-gold transition-colors"
+            className="text-white/80 hover:text-gold transition-colors font-inter"
           >
             {item.name}
           </Link>
         ))}
       </ul>
-      <p className="text-gold leading-relaxed font-mono">
+      <p className="text-gold leading-relaxed font-iceland text-2xl">
         {`© ${new Date().getFullYear()} RC Web. All Rights Reserved.`}
       </p>
     </footer>

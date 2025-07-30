@@ -5,7 +5,7 @@ interface HeadingProps {
 
 const Heading = ({ children, icon }: HeadingProps) => {
   return (
-    <h1 className="flex items-center justify-center gap-x-2 text-gold font-mono font-semibold tracking-tight text-3xl text-center mb-16 uppercase">
+    <h1 className="flex items-center justify-center gap-x-2 text-gold font-iceland tracking-tight text-5xl text-center mb-16 uppercase">
       {icon}
       {children}
     </h1>

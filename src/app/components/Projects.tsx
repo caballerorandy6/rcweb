@@ -25,7 +25,7 @@ const Projects = () => {
       <div className="flex justify-center mt-12 mb-10">
         <button
           type="button"
-          className="text-sm/6 font-semibold text-white hover:bg-gold/40 p-2 rounded-md transition-colors font-sans flex items-center gap-x-1 border-2 border-gold/50"
+          className="text-sm/6 font-inter text-white/80 hover:bg-gold/20 p-2 rounded-md flex items-center gap-x-1 border-2 border-gold/50 transition-all duration-200 ease-in-out hover:scale-105"
           onClick={handleClickProjectsDialog}
         >
           All Projects

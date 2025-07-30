@@ -26,22 +26,30 @@ export const navigation: NavigationProps[] = [
 
 export const experience: ExperienceProps[] = [
   {
+    title: "Freelance Web Developer and Digital Marketing",
+    company: "Freelancer",
+    location: "Houston, TX",
+    description: "Web Developer and Digital Marketing Specialist",
+    icon: React.createElement(BriefcaseIcon),
+    date: "January 2022 - Present",
+  },
+  {
     title: "Software Developer",
     company: "Atser Technologies, Inc.",
     location: "Houston, TX",
     description: "Software Developer",
     icon: React.createElement(BriefcaseIcon),
-    date: "February 2025 - Present",
+    date: "November 2024 - April 2025",
   },
-
   {
-    title: "Freelance Web Developer",
-    company: "Freelancer",
+    title: "Software Developer",
+    company: "Revature",
     location: "Houston, TX",
     description: "Software Developer",
     icon: React.createElement(BriefcaseIcon),
-    date: "January 2022 - February 2025",
+    date: "August 2022 - September 2022",
   },
+
   {
     title: "Bachelor of Software Engineering",
     company: "Universidad de Camaguey, Ignacio Agramonte Loynaz",

@@ -38,15 +38,15 @@ const Project = ({
 
       {/* Technologies */}
       <div className="p-5 flex-grow flex flex-col">
-        <h3 className="text-xl font-bold text-gold">{name}</h3>
-        <p className="mt-2 text-base text-white font-mono">{description}</p>
+        <h3 className="text-2xl font-iceland text-gold">{name}</h3>
+        <p className="mt-2 text-base text-white/80 font-inter">{description}</p>
 
         <div className="flex flex-wrap justify-center gap-1 mt-4">
           {tecnologies.map((item, index) => (
             <span
               key={index}
               className={clsx(
-                "inline-flex gap-2 items-center rounded-full px-2 py-0.5 text-xs font-medium",
+                "inline-flex gap-2 items-center rounded-full px-2 py-0.5 text-xs font-inter",
                 {
                   "bg-black/50 text-white": item === "NextJS",
                   "bg-blue-500 text-white": item === "TypeScript",
@@ -74,7 +74,7 @@ const Project = ({
         <Link
           href={github}
           target="_blank"
-          className="flex-1 py-3 text-base font-semibold text-gold hover:bg-gray-800 transition rounded-bl-lg border-r border-gold/50"
+          className="flex-1 py-3 text-base font-inter text-gold hover:bg-gray-800 transition rounded-bl-lg border-r border-gold/50"
         >
           <GithubIcon className="inline-block w-5 h-5 mr-2" />
           GitHub
@@ -82,7 +82,7 @@ const Project = ({
         <Link
           href={url}
           target="_blank"
-          className="flex-1 py-3 text-base font-semibold text-gold hover:bg-gray-800 transition rounded-br-lg"
+          className="flex-1 py-3 text-base font-inter text-gold hover:bg-gray-800 transition rounded-br-lg"
         >
           <Website className="inline-block w-5 h-5 mr-2" />
           Preview

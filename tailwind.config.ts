@@ -11,6 +11,12 @@ export default {
       colors: {
         gold: "#CBB26A",
       },
+      fontFamily: {
+        sans: ["var(--font-geist-sans)", "sans-serif"],
+        mono: ["var(--font-geist-mono)", "monospace"],
+        iceland: ["var(--font-iceland)", "cursive"],
+        inter: ["var(--font-inter)", "sans-serif"],
+      },
     },
   },
   plugins: [],

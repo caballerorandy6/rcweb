@@ -48,7 +48,7 @@ const DialogForm = ({ closeModal }: DialogFormProps) => {
       onSubmit={handleSubmit(onSubmit)}
       className="space-y-5 bg-gray-900 p-6 rounded-xl shadow-lg"
     >
-      <h2 className="text-2xl font-bold text-white text-center">
+      <h2 className="text-4xl text-gold font-bold text-center font-iceland">
         Let&apos;s Connect
       </h2>
 
@@ -58,14 +58,14 @@ const DialogForm = ({ closeModal }: DialogFormProps) => {
           {...register("name")}
           type="text"
           id="name"
-          className="w-full p-3 bg-gray-800 text-white rounded-lg border border-gray-700 focus:outline-none focus:border-gold transition"
+          className="w-full p-3 bg-gray-800 text-white rounded-lg border border-gray-700 focus:outline-none focus:border-gold transition font-inter"
           placeholder="Full Name"
         />
         <ErrorMessage
           errors={errors}
           name="name"
           render={({ message }) => (
-            <p className="text-red-500 text-sm mt-1">{message}</p>
+            <p className="text-red-500 text-sm mt-1 font-inter">{message}</p>
           )}
         />
       </>
@@ -76,14 +76,14 @@ const DialogForm = ({ closeModal }: DialogFormProps) => {
           {...register("email")}
           type="email"
           id="email"
-          className="w-full p-3 bg-gray-800 text-white rounded-lg border border-gray-700 focus:outline-none focus:border-gold transition"
+          className="w-full p-3 bg-gray-800 text-white rounded-lg border border-gray-700 focus:outline-none focus:border-gold transition font-inter"
           placeholder="Email"
         />
         <ErrorMessage
           errors={errors}
           name="email"
           render={({ message }) => (
-            <p className="text-red-500 text-sm mt-1">{message}</p>
+            <p className="text-red-500 text-sm mt-1 font-inter">{message}</p>
           )}
         />
       </>
@@ -94,14 +94,14 @@ const DialogForm = ({ closeModal }: DialogFormProps) => {
           {...register("phone")}
           type="tel"
           id="phone"
-          className="w-full p-3 bg-gray-800 text-white rounded-lg border border-gray-700 focus:outline-none focus:border-gold transition"
+          className="w-full p-3 bg-gray-800 text-white rounded-lg border border-gray-700 focus:outline-none focus:border-gold transition font-inter"
           placeholder="Phone Number"
         />
         <ErrorMessage
           errors={errors}
           name="phone"
           render={({ message }) => (
-            <p className="text-red-500 text-sm mt-1">{message}</p>
+            <p className="text-red-500 text-sm mt-1 font-inter">{message}</p>
           )}
         />
       </>
@@ -111,7 +111,7 @@ const DialogForm = ({ closeModal }: DialogFormProps) => {
         <textarea
           {...register("message")}
           id="message"
-          className="w-full p-3 bg-gray-800 text-white rounded-lg border border-gray-700 focus:outline-none focus:border-gold transition"
+          className="w-full p-3 bg-gray-800 text-white rounded-lg border border-gray-700 focus:outline-none focus:border-gold transition font-inter"
           placeholder="Type your message..."
           rows={4}
         />
@@ -119,7 +119,7 @@ const DialogForm = ({ closeModal }: DialogFormProps) => {
           errors={errors}
           name="message"
           render={({ message }) => (
-            <p className="text-red-500 text-sm mt-1">{message}</p>
+            <p className="text-red-500 text-sm mt-1 font-inter">{message}</p>
           )}
         />
       </>
@@ -127,7 +127,7 @@ const DialogForm = ({ closeModal }: DialogFormProps) => {
       {/** Submit Button */}
       <button
         type="submit"
-        className="w-full py-3 text-lg font-semibold text-white bg-gold/80 hover:bg-gold rounded-lg transition shadow-md"
+        className="w-full py-3 text-lg font-semibold text-white bg-gold/80 hover:bg-gold rounded-lg transition shadow-md font-inter"
       >
         Send Message
       </button>
