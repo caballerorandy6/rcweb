@@ -15,7 +15,7 @@ const About = () => {
         About Me
       </Heading>
       <div className="flex flex-col md:flex-row justify-center items-center gap-x-20 w-full">
-        <div className="font-mono text-base text-gray-100">
+        <div className="text-base text-gray-100 font-inter">
           <span className="pb-10">
             My name is Randy Caballero. I graduated with a degree in{" "}
             <span className="text-gold">Software Engineering</span> from the

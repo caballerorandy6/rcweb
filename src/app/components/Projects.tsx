@@ -3,12 +3,18 @@
 import { useRCWebStore } from "@/store/rcweb-store";
 import { CodeBracketIcon } from "@heroicons/react/24/outline";
 import Heading from "@/app/components/Heading";
-import ProjectsDialog from "@/app/components/ProjectsDialog";
-import ProjectsGrid from "@/app/components/ProjectsGrid";
+
 import useSectionObserver from "@/hooks/useSectionObserver";
+import { projects } from "@/libs/arrays";
+import ProjectsList from "./ProjectsList";
+import { useId } from "react";
 
 const Projects = () => {
-  const { handleClickProjectsDialog } = useRCWebStore();
+  const { isExpanded, handleClickProjectsDialog } = useRCWebStore();
+  const contentId = useId();
+
+  const initialVisibleProjects = 3;
+  const visibleProjects = isExpanded ? projects.length : initialVisibleProjects;
 
   const ref = useSectionObserver({
     sectionName: "Projects",
@@ -20,19 +26,21 @@ const Projects = () => {
         Projects
       </Heading>
 
-      <ProjectsGrid />
+      <ProjectsList projects={projects.slice(0, visibleProjects)} />
 
-      <div className="flex justify-center mt-12 mb-10">
-        <button
-          type="button"
-          className="text-sm/6 font-inter text-white/80 hover:bg-gold/20 p-2 rounded-md flex items-center gap-x-1 border-2 border-gold/50 transition-all duration-200 ease-in-out hover:scale-105"
-          onClick={handleClickProjectsDialog}
-        >
-          All Projects
-        </button>
-
-        <ProjectsDialog />
-      </div>
+      {projects.length > initialVisibleProjects && (
+        <div className="flex justify-center mt-12 mb-10">
+          <button
+            type="button"
+            className="text-sm/6 font-inter text-white/80 hover:bg-gold/20 p-2 rounded-md flex items-center gap-x-1 border-2 border-gold/50 transition-all duration-200 ease-in-out hover:scale-105"
+            onClick={handleClickProjectsDialog}
+            aria-expanded={isExpanded}
+            aria-controls={contentId}
+          >
+            {isExpanded ? "Show Less" : "All Projects"}
+          </button>
+        </div>
+      )}
     </section>
   );
 };

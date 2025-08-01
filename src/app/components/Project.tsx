@@ -57,9 +57,13 @@ const Project = ({
                   "bg-violet-500 text-white": item === "Vite",
                   "bg-fuchsia-500 text-white": item === "Zod",
                   "bg-white/90 text-blue-700": item === "Zustand",
-                  "bg-red-500 text-white": item === "html",
-                  "bg-pink-500 text-white": item === "css",
-                  "bg-purple-500 text-white": item === "sass",
+                  "bg-red-500 text-white": item === "HTML",
+                  "bg-pink-500 text-white": item === "CSS",
+                  "bg-purple-500 text-white": item === "SASS",
+                  "bg-green-500 text-white": item === "PostgreSQL",
+                  "bg-gray-800 text-white": item === "Prisma",
+                  "bg-orange-500 text-white": item === "Docker",
+                  "bg-teal-500 text-white": item === "Tailwind UI",
                 }
               )}
             >

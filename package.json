@@ -16,7 +16,7 @@
     "@hookform/resolvers": "^3.10.0",
     "@react-email/components": "0.0.32",
     "clsx": "^2.1.1",
-    "framer-motion": "^12.6.3",
+    "framer-motion": "^12.23.12",
     "next": "15.1.6",
     "react": "19.0.0",
     "react-dom": "19.0.0",

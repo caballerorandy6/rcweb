@@ -12,8 +12,8 @@ interface RCWebState {
   isOpen: boolean;
   setIsOpen: (open: boolean) => void;
   handleClickModal: () => void;
-  isOpenProjectsDialog: boolean;
-  setIsOpenProjectsDialog: (open: boolean) => void;
+  isExpanded: boolean;
+  setIsExpanded: (expanded: boolean) => void;
   handleClickProjectsDialog: () => void;
   isOpenLetsContactDialog: boolean;
   setOpenLetsContactDialog: (open: boolean) => void;
@@ -30,10 +30,10 @@ export const useRCWebStore = create<RCWebState>()(
       isOpen: false,
       setIsOpen: (open) => set({ isOpen: open }),
       handleClickModal: () => set((state) => ({ isOpen: !state.isOpen })),
-      isOpenProjectsDialog: false,
-      setIsOpenProjectsDialog: (open) => set({ isOpenProjectsDialog: open }),
+      isExpanded: false,
+      setIsExpanded: (expanded) => set({ isExpanded: expanded }),
       handleClickProjectsDialog: () =>
-        set((state) => ({ isOpenProjectsDialog: !state.isOpenProjectsDialog })),
+        set((state) => ({ isExpanded: !state.isExpanded })),
       isOpenLetsContactDialog: false,
       setOpenLetsContactDialog: (open) =>
         set({ isOpenLetsContactDialog: open }),

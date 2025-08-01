@@ -72,23 +72,33 @@ export const projects: ProjectProps[] = [
       "Zustand",
     ],
     description:
-      "A web application that allows you to rent limousines for special events.",
+      "This web-based platform streamlines the process of renting limousines for special occasions, offering users real-time access to vehicle availability, service customization, and secure booking—all within a modern, responsive interface.",
     image: "/limo-renting.avif",
     github: "https://github.com/caballerorandy6/Limo-Renting-NextJS",
     url: "https://limo-renting-next-js-nu.vercel.app/",
   },
   {
     name: "GSM AC ",
-    tecnologies: ["React", "TailwindCSS", "JavaScript", "Vite"],
+    tecnologies: [
+      "NextJS",
+      "TypeScript",
+      "TailwindCSS",
+      "Tailwind UI",
+      "Zod",
+      "Zustand",
+      "Prisma",
+      "PostgreSQL",
+      "Docker",
+    ],
     description:
-      "The SPA allows users to explore and request HVAC installation, repair, and maintenance services dynamically without page reloads.",
+      "Developed a SPA for dynamic air conditioning service requests with real-time client-side rendering and an admin dashboard for managing listings and bulk email campaigns.",
     image: "/gsmactx.avif",
     github: "https://github.com/caballerorandy6/gsmactx_2.0",
     url: "https://www.gsmactx.com/",
   },
   {
     name: "Photographer Portfolio",
-    tecnologies: ["html", "css", "sass"],
+    tecnologies: ["HTML", "CSS", "SASS"],
     description:
       "The website is an online portfolio showcasing a photographer's work, providing visitors with a collection of images and information about their services.",
     image: "/photographer.avif",
