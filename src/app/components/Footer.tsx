@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { navigation } from "@/libs/arrays";
+import { navigation } from "@/libs/data";
 
 const Footer = () => {
   return (

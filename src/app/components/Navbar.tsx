@@ -14,7 +14,7 @@ import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
 import Logo from "@/app/components/Logo";
 
 // Data
-import { navigation } from "@/libs/arrays";
+import { navigation } from "@/libs/data";
 
 export interface NavigationProps {
   name: string;

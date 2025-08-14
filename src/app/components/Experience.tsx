@@ -7,7 +7,7 @@ import {
 } from "react-vertical-timeline-component";
 import "react-vertical-timeline-component/style.min.css";
 import { BriefcaseIcon } from "@heroicons/react/24/outline";
-import { experience } from "@/libs/arrays";
+import { experience } from "@/libs/data";
 import useSectionObserver from "@/hooks/useSectionObserver";
 
 export interface ExperienceProps {
