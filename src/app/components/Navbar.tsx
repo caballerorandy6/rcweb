@@ -4,16 +4,9 @@ import Link from "next/link";
 import clsx from "clsx";
 import { motion } from "framer-motion";
 import { Dialog, DialogPanel } from "@headlessui/react";
-
 import { useRCWebStore } from "@/store/rcweb-store";
-
-// Icons
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
-
-// Components
 import Logo from "@/app/components/Logo";
-
-// Data
 import { navigation } from "@/libs/data";
 
 export interface NavigationProps {
