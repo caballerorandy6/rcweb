@@ -37,7 +37,7 @@ const Navbar = () => {
         className="flex items-center p-6 justify-center w-full"
       >
         {/* 🟨 NAV MOBILE (visible hasta lg) */}
-        <div className="flex animateHeadingDialog items-center justify-between w-10/12 lg:hidden rounded-full px-6">
+        <div className="flex items-center justify-between w-10/12 lg:hidden rounded-full px-6 animateHeadingDialog">
           <Logo className="w-40 h-auto" /> {/* Tamaño base para mobile */}
           <button
             type="button"
@@ -53,7 +53,7 @@ const Navbar = () => {
         <div className="hidden lg:flex items-center justify-center relative w-full px-6">
           {/* Logo a la izquierda */}
           <div className="absolute left-6">
-            <Logo className="w-28 md:w-32 lg:w-36 xl:w-40 h-auto" />
+            <Logo className="w-28 md:w-32 lg:w-36 xl:w-40 h-auto animateHeadingDialog" />
           </div>
 
           {/* Menú centrado */}

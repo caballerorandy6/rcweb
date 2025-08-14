@@ -2,8 +2,8 @@
 
 import Image from "next/image";
 import Heading from "@/app/components/Heading";
+import Certifications from "@/app/components/Certifications";
 import { UserPlusIcon } from "@heroicons/react/24/outline";
-import TechMarquee from "./TechMarquee";
 import useSectionObserver from "@/hooks/useSectionObserver";
 
 const About = () => {
@@ -16,45 +16,49 @@ const About = () => {
       </Heading>
       <div className="flex flex-col md:flex-row justify-center items-center gap-x-20 w-full">
         <div className="text-base text-gray-100 font-inter">
-          <span className="pb-10">
-            My name is Randy Caballero. I graduated with a degree in{" "}
-            <span className="text-gold">Software Engineering</span> from the
-            University of Camagüey &quot;Ignacio Agramonte y Loynaz.&quot; I
-            also completed a{" "}
-            <span className="text-gold">Master&apos;s degree in Education</span>{" "}
-            and am currently pursuing my{" "}
-            <span className="text-gold">Ph.D. in Education</span> at Nova
-            Southeastern University. At present, I am working as a{" "}
-            <span className="text-gold">Software Developer</span> at Atser
-            Systems Inc.
-          </span>
-          <br />
-          <br />
-          <span>
-            I also work as a{" "}
-            <span className="text-gold">freelance developer</span>, providing
-            customized solutions and ongoing support to my clients to help them
-            achieve their technology goals. I collaborate closely with clients
-            to understand their unique requirements,{" "}
-            <span className="text-gold">
-              ensuring that each solution is customized and scalable
-            </span>{" "}
-            to meet their evolving business needs.
-          </span>
+          <p className="pb-10">
+            React and Next.js Developer with over{" "}
+            <strong className="text-gold">3 years of experience</strong>{" "}
+            building high-performance, scalable web applications. I have worked
+            as a freelancer for diverse clients, delivering full-cycle solutions
+            focused on{" "}
+            <strong className="text-gold">
+              speed, resource optimization, accessibility, and outstanding user
+              experience
+            </strong>
+            . My professional experience also includes roles at Atser Systems
+            Inc. and Revature, where I contributed to{" "}
+            <strong className="text-gold">
+              full-stack application development
+            </strong>{" "}
+            in collaborative Agile environments.
+          </p>
+          <p>
+            I specialize in{" "}
+            <span className="text-gold">modern frontend development</span> using
+            React and Next.js, and have hands-on experience{" "}
+            <span className="text-gold">integrating RESTful APIs</span>, working
+            with PostgreSQL databases, and managing state with tools like
+            Zustand. Additionally, I bring valuable knowledge in{" "}
+            <span className="text-gold">digital marketing</span> and{" "}
+            <span className="text-gold">WordPress</span>, allowing me to align
+            technical execution with business strategy and user engagement
+            goals.
+          </p>
         </div>
 
-        <Image
-          src="/about.avif"
-          alt="About Image"
-          width={185}
-          height={200}
-          className="image-gradient rounded-lg shadow-lg shadow-gray-900/50 hover:scale-105 transition-transform duration-300 ease-in-out border-2 border-gold/50 sepia mt-10 md:mt-0 mx-auto w-4/12 md:w-3/12 lg:w-2/12 animateProjectCard"
-          priority={false}
-        />
+        <figure>
+          <Image
+            src="/about.avif"
+            alt="About Image"
+            width={500}
+            height={500}
+            className="image-gradient rounded-lg shadow-lg shadow-gray-900/50 hover:scale-105 transition-transform duration-300 ease-in-out border-2 border-gold/50 sepia mt-10 md:mt-0 mx-auto w-6/12 md:w-10/12 lg:w-8/12 animateProjectCard"
+            priority={false}
+          />
+        </figure>
       </div>
-      <div className="w-full mx-auto mt-6">
-        <TechMarquee />
-      </div>
+      <Certifications />
     </section>
   );
 };

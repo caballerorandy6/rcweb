@@ -1,5 +1,6 @@
 "use client";
 
+import { useId } from "react";
 import { useRCWebStore } from "@/store/rcweb-store";
 import { CodeBracketIcon } from "@heroicons/react/24/outline";
 import Heading from "@/app/components/Heading";
@@ -7,7 +8,8 @@ import Heading from "@/app/components/Heading";
 import useSectionObserver from "@/hooks/useSectionObserver";
 import { projects } from "@/libs/arrays";
 import ProjectsList from "./ProjectsList";
-import { useId } from "react";
+
+import TechMarquee from "@/app/components/TechMarquee";
 
 const Projects = () => {
   const { isExpanded, handleClickProjectsDialog } = useRCWebStore();
@@ -21,7 +23,7 @@ const Projects = () => {
   });
 
   return (
-    <section ref={ref} id="projects" className="py-16 w-10/12 mx-auto">
+    <section ref={ref} id="projects" className="py-32 w-10/12 mx-auto">
       <Heading icon={<CodeBracketIcon className="w-8 text-gold" />}>
         Projects
       </Heading>
@@ -41,6 +43,9 @@ const Projects = () => {
           </button>
         </div>
       )}
+      <div className="w-full mx-auto mt-16">
+        <TechMarquee />
+      </div>
     </section>
   );
 };

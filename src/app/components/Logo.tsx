@@ -24,7 +24,7 @@ const Logo = ({ className }: LogoProps) => {
         xmlns="http://www.w3.org/2000/svg"
         role="img"
         aria-label="RC Web Logo"
-        className={`${className} animateHeadingDialog rounded-full p-2`}
+        className={`${className} rounded-full p-2`}
       >
         <text
           x="10"

@@ -11,7 +11,7 @@ const Contact = () => {
   const ref = useSectionObserver({ sectionName: "Contact" });
 
   return (
-    <section ref={ref} id="contact" className="py-16 mx-auto w-10/12">
+    <section ref={ref} id="contact" className="py-32 mx-auto w-10/12">
       <Heading icon={<EnvelopeIcon className="w-8 text-gold" />}>
         Contact
       </Heading>

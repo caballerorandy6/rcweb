@@ -8,10 +8,19 @@ import TailwindCSS from "@/app/components/icons/TailwindCSS";
 import Docker from "@/app/components/icons/Docker";
 import TypeScript from "@/app/components/icons/TypeScript";
 import AWS from "@/app/components/icons/AWS";
+import MySQL from "@/app/components/icons/MySQL";
+import Prisma from "@/app/components/icons/Prisma";
+import MongoDB from "@/app/components/icons/MongoDB";
+import SASS from "@/app/components/icons/SASS";
+import Jira from "@/app/components/icons/Jira";
+import Wordpress from "@/app/components/icons/Wordpress";
 import { TeachMarqueeProps } from "@/app/components/TechMarquee";
 import { BriefcaseIcon, AcademicCapIcon } from "@heroicons/react/24/outline";
 import { NavigationProps } from "@/app/components/Navbar";
 import { ExperienceProps } from "@/app/components/Experience";
+import { image } from "framer-motion/client";
+import { platform } from "os";
+import { Description } from "@headlessui/react";
 
 export const navigation: NavigationProps[] = [
   { name: "Home", hash: "#home" },
@@ -166,6 +175,21 @@ export const teachMarqueeData: TeachMarqueeProps[] = [
     icon: React.createElement(PostgreSQL),
   },
   {
+    href: "https://www.mysql.com/",
+    name: "MySQL",
+    icon: React.createElement(MySQL),
+  },
+  {
+    href: "https://www.prisma.io/",
+    name: "Prisma",
+    icon: React.createElement(Prisma),
+  },
+  {
+    href: "https://www.mongodb.com/",
+    name: "MongoDB",
+    icon: React.createElement(MongoDB),
+  },
+  {
     href: "https://www.docker.com/",
     name: "Docker",
     icon: React.createElement(Docker),
@@ -174,5 +198,149 @@ export const teachMarqueeData: TeachMarqueeProps[] = [
     href: "https://aws.amazon.com/",
     name: "AWS",
     icon: React.createElement(AWS),
+  },
+  {
+    href: "https://sass-lang.com/",
+    name: "SASS",
+    icon: React.createElement(SASS),
+  },
+  {
+    href: "https://www.atlassian.com/software/jira",
+    name: "Jira",
+    icon: React.createElement(Jira),
+  },
+  {
+    href: "https://wordpress.org/",
+    name: "WordPress",
+    icon: React.createElement(Wordpress),
+  },
+];
+
+//Repeated icons for the TechMarquee to avoid no gap between last and first icon
+export const repeatedIcons = [...teachMarqueeData, ...teachMarqueeData];
+
+export const certifications = [
+  {
+    name: "Evaluation of the Bachelor's Degree in Software Engineering",
+    platform: "Universidad de Camaguey, Cuba",
+    description:
+      "An evaluation of the Bachelor's degree program in Software Engineering.",
+    tutor: "Universidad de Camaguey, Cuba",
+    image:
+      "https://res.cloudinary.com/caballerorandy/image/upload/f_auto,w_1200,c_fill,q_auto/v1755196091/RC%20Web/randy_caballero-software_engineer_title_evaluation_bq77pk.webp",
+    url: "https://res.cloudinary.com/caballerorandy/image/upload/v1755196091/RC%20Web/randy_caballero-software_engineer_title_evaluation_bq77pk.ai",
+    pdfThumbnail:
+      "https://res.cloudinary.com/caballerorandy/image/upload/pg_1,w_200,h_200,c_fill/v1755196091/RC%20Web/randy_caballero-software_engineer_title_evaluation_bq77pk.avif",
+  },
+  {
+    name: "Master of Science",
+    platform: "Nova Southeastern University",
+    description: "Master of Science in Education",
+    tutor: "Nova Southeastern University",
+    image:
+      "https://res.cloudinary.com/caballerorandy/image/upload/f_auto,w_1200,c_fill,q_auto/v1755196091/RC%20Web/Master_of_Science_Title_zapkmh.webp",
+    url: "https://res.cloudinary.com/caballerorandy/image/upload/v1755196091/RC%20Web/Master_of_Science_Title_zapkmh.ai",
+    pdfThumbnail:
+      "https://res.cloudinary.com/caballerorandy/image/upload/pg_1,w_200,h_200,c_fill/v1755196091/RC%20Web/Master_of_Science_Title_zapkmh.avif",
+  },
+  {
+    name: "Modern JavaScript from Beginning",
+    platform: "Udemy",
+    description: "Learn modern JavaScript from the beginning.",
+    tutor: "Brad Traversy",
+    image:
+      "https://res.cloudinary.com/caballerorandy/image/upload/v1755197584/RC%20Web/Modern_JavaScript_from_the_beginning_iegcou.jpg",
+    url: "https://res.cloudinary.com/caballerorandy/image/upload/v1755197584/RC%20Web/Modern_JavaScript_from_the_beginning_iegcou.jpg",
+    pdfThumbnail:
+      "https://res.cloudinary.com/caballerorandy/image/upload/v1755197584/RC%20Web/Modern_JavaScript_from_the_beginning_iegcou.avif",
+  },
+  {
+    name: "HTML and CSS from the Beginning Including SASS",
+    platform: "Udemy",
+    description: "Learn HTML and CSS from the beginning, including SASS.",
+    tutor: "Brad Traversy",
+    image:
+      "https://res.cloudinary.com/caballerorandy/image/upload/v1755197571/RC%20Web/HTML_and_CSS_From_The_Beginning_Including_Sass_nadww4.webp",
+    url: "https://res.cloudinary.com/caballerorandy/image/upload/v1755197571/RC%20Web/HTML_and_CSS_From_The_Beginning_Including_Sass_nadww4.jpg",
+    pdfThumbnail:
+      "https://res.cloudinary.com/caballerorandy/image/upload/v1755197571/RC%20Web/HTML_and_CSS_From_The_Beginning_Including_Sass_nadww4.avif",
+  },
+  {
+    name: "Git + GitHub todo un Sistea de Control de Versiones",
+    platform: "Udemy",
+    description:
+      "Aprende a utilizar Git y GitHub para el control de versiones.",
+    tutor: "Fernando Herrera",
+    image:
+      "https://res.cloudinary.com/caballerorandy/image/upload/v1755197551/RC%20Web/Git_GitHub_sosdeb.webp",
+    url: "https://res.cloudinary.com/caballerorandy/image/upload/v1755197551/RC%20Web/Git_GitHub_sosdeb.jpg",
+    pdfThumbnail:
+      "https://res.cloudinary.com/caballerorandy/image/upload/pg_1,w_200,h_200,c_fill/v1755197551/RC%20Web/Git_GitHub_sosdeb.avif",
+  },
+  {
+    name: "React Basics",
+    platform: "Coursera",
+    description: "Learn the fundamentals of React.",
+    tutor: "Coursera",
+    image:
+      "https://res.cloudinary.com/caballerorandy/image/upload/f_auto,w_1200,c_fill,q_auto/v1755196091/RC%20Web/Coursera_-_React_Basics_oiuwkw.webp",
+    url: "https://res.cloudinary.com/caballerorandy/image/upload/v1755196091/RC%20Web/Coursera_-_React_Basics_oiuwkw.ai",
+    pdfThumbnail:
+      "https://res.cloudinary.com/caballerorandy/image/upload/pg_1,w_200,h_200,c_fill/v1755196091/RC%20Web/Coursera_-_React_Basics_oiuwkw.avif",
+  },
+  {
+    name: "Advanced React",
+    platform: "Coursera",
+    description: "Build on your React knowledge with advanced concepts.",
+    tutor: "Coursera",
+    image:
+      "https://res.cloudinary.com/caballerorandy/image/upload/f_auto,w_1200,c_fill,q_auto/v1755196091/RC%20Web/Coursera_-_Advanced_React_gilkkk.webp",
+    url: "https://res.cloudinary.com/caballerorandy/image/upload/v1755196092/RC%20Web/Coursera_-_Advanced_React_gilkkk.ai",
+    pdfThumbnail:
+      "https://res.cloudinary.com/caballerorandy/image/upload/pg_1,w_200,h_200,c_fill/v1755196091/RC%20Web/Coursera_-_Advanced_React_gilkkk.avif",
+  },
+  {
+    name: "Introduction to Front-End Development",
+    platform: "Coursera",
+    description: "Learn the basics of frontend development.",
+    tutor: "Coursera",
+    image:
+      "https://res.cloudinary.com/caballerorandy/image/upload/f_auto,w_1200,c_fill,q_auto/v1755196091/RC%20Web/Coursera_-_Introduction_to_Front-End_Development_mdyuav.webp",
+    url: "https://res.cloudinary.com/caballerorandy/image/upload/v1755196091/RC%20Web/Coursera_-_Introduction_to_Front-End_Development_mdyuav.ai",
+    pdfThumbnail:
+      "https://res.cloudinary.com/caballerorandy/image/upload/pg_1,w_200,h_200,c_fill/v1755196091/RC%20Web/Coursera_-_Introduction_to_Front-End_Development_mdyuav.avif",
+  },
+  {
+    name: "Programming with JavaScript",
+    platform: "Coursera",
+    description: "Learn the fundamentals of JavaScript.",
+    tutor: "Coursera",
+    image:
+      "https://res.cloudinary.com/caballerorandy/image/upload/f_auto,w_1200,c_fill,q_auto/v1755196091/RC%20Web/Coursera_-_Programming_with_JavaScript_ioxvot.webp",
+    url: "https://res.cloudinary.com/caballerorandy/image/upload/v1755196091/RC%20Web/Coursera_-_Programming_with_JavaScript_ioxvot.ai",
+    pdfThumbnail:
+      "https://res.cloudinary.com/caballerorandy/image/upload/pg_1,w_200,h_200,c_fill/v1755196091/RC%20Web/Coursera_-_Programming_with_JavaScript_ioxvot.avif",
+  },
+  {
+    name: "Version Control",
+    platform: "Coursera",
+    description: "Learn the basics of version control with Git.",
+    tutor: "Coursera",
+    image:
+      "https://res.cloudinary.com/caballerorandy/image/upload/f_auto,w_1200,c_fill,q_auto/v1755196091/RC%20Web/Coursera_Version_Control_jcakao.webp",
+    url: "https://res.cloudinary.com/caballerorandy/image/upload/v1755196091/RC%20Web/Coursera_Version_Control_jcakao.ai",
+    pdfThumbnail:
+      "https://res.cloudinary.com/caballerorandy/image/upload/pg_1,w_200,h_200,c_fill/v1755196091/RC%20Web/Coursera_Version_Control_jcakao.avif",
+  },
+  {
+    name: "HTML and CSS in Depth",
+    platform: "Coursera",
+    description: "Master the fundamentals of HTML and CSS.",
+    tutor: "Coursera",
+    image:
+      "https://res.cloudinary.com/caballerorandy/image/upload/f_auto,w_1200,c_fill,q_auto/v1755196091/RC%20Web/Coursera_-_HTML_and_CSS_in_depth_qwz3ec.webp",
+    url: "https://res.cloudinary.com/caballerorandy/image/upload/v1755196091/RC%20Web/Coursera_-_HTML_and_CSS_in_depth_qwz3ec.ai",
+    pdfThumbnail:
+      "https://res.cloudinary.com/caballerorandy/image/upload/pg_1,w_200,h_200,c_fill/v1755196091/RC%20Web/Coursera_-_HTML_and_CSS_in_depth_qwz3ec.avif",
   },
 ];

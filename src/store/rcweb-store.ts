@@ -18,6 +18,9 @@ interface RCWebState {
   isOpenLetsContactDialog: boolean;
   setOpenLetsContactDialog: (open: boolean) => void;
   handleClickLetsContactDialog: () => void;
+  isOpenCertificationsDialog: boolean;
+  setOpenCertificationsDialog: (open: boolean) => void;
+  handleClickCertificationsDialog: () => void;
 }
 
 export const useRCWebStore = create<RCWebState>()(
@@ -40,6 +43,13 @@ export const useRCWebStore = create<RCWebState>()(
       handleClickLetsContactDialog: () =>
         set((state) => ({
           isOpenLetsContactDialog: !state.isOpenLetsContactDialog,
+        })),
+      isOpenCertificationsDialog: false,
+      setOpenCertificationsDialog: (open) =>
+        set({ isOpenCertificationsDialog: open }),
+      handleClickCertificationsDialog: () =>
+        set((state) => ({
+          isExpanded: !state.isExpanded,
         })),
     }),
     {
