@@ -1,18 +1,14 @@
 "use client";
 
-//import Image from "next/image";
 import { useEffect, useRef } from "react";
 import Link from "next/link";
-//import Logo from "@/app/components/Logo";
 import LetsContactDialog from "@/app/components/LetsContactDialog";
 import CustomBadge from "@/app/components/CustomBadge";
 import { ArrowDownIcon } from "@heroicons/react/24/outline";
-import { useRCWebStore } from "@/store/rcweb-store";
+
 import useSectionObserver from "@/hooks/useSectionObserver";
 
 const Hero = () => {
-  const { setOpenLetsContactDialog, setActiveSection } = useRCWebStore();
-
   const ref = useSectionObserver({ sectionName: "Home" });
   const videoRef = useRef<HTMLVideoElement>(null);
 
@@ -29,14 +25,6 @@ const Hero = () => {
       className="relative isolate overflow-hidden pt-14 h-screen bg-gray-950"
     >
       <div className="absolute inset-0 -z-10 h-full w-full">
-        {/* <Image
-          alt="Background"
-          src="/background.avif"
-          width={1920}
-          height={1080}
-          className="inset-0 -z-10 size-full object-cover object-right md:object-center opacity-50 image-gradient"
-          priority
-        /> */}
         <video
           ref={videoRef}
           autoPlay
@@ -49,10 +37,6 @@ const Hero = () => {
       </div>
 
       <div className="mx-auto max-w-7xl px-6 lg:px-8 h-full flex flex-col justify-center">
-        {/* <div className="hidden md:block">
-          <Logo />
-        </div> */}
-
         <div className="mx-auto max-w-2xl text-center">
           <h1 className="text-5xl font-iceland tracking-tight sm:text-9xl text-gold">
             I&apos;m Randy Caballero
@@ -78,16 +62,12 @@ const Hero = () => {
             >
               Experience <ArrowDownIcon className="text-white h-4" />
             </Link>
-            <button
-              type="button"
+            <Link
+              href="/#contact"
               className="text-sm/6 font-inter text-white/80 hover:bg-gold/20 p-2 rounded-md flex items-center gap-x-1 border-2 border-gold/50 transition-all duration-200 ease-in-out hover:scale-105"
-              onClick={() => {
-                setOpenLetsContactDialog(true);
-                setActiveSection("Contact");
-              }}
             >
               Let&apos;s Connect
-            </button>
+            </Link>
             <LetsContactDialog />
           </div>
         </div>
