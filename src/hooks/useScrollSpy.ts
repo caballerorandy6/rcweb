@@ -4,10 +4,16 @@ import { useEffect } from "react";
 
 const sectionTitle: Record<string, string> = {
   home: "RC WEB | Home",
-  experience: "RC WEB | Experience",
+  services: "RC WEB | Services",
   projects: "RC WEB | Projects",
+  process: "RC WEB | Process",
+  experience: "RC WEB | Experience",
+  testimonials: "RC WEB | Testimonials",
   about: "RC WEB | About",
+  pricing: "RC WEB | Pricing",
+  faq: "RC WEB | FAQ",
   contact: "RC WEB | Contact",
+  cta: "RC WEB | CTA",
 };
 
 export function useScrollSpy(sectionIds: string[]) {

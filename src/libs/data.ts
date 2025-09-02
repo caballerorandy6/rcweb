@@ -17,17 +17,23 @@ import Wordpress from "@/app/components/icons/Wordpress";
 import { TeachMarqueeProps } from "@/app/components/TechMarquee";
 import { BriefcaseIcon, AcademicCapIcon } from "@heroicons/react/24/outline";
 import { NavigationProps } from "@/app/components/Navbar";
-import { ExperienceProps } from "@/app/components/Experience";
+import { ExperienceProps } from "@/app/components/Sections/Experience";
 
 export const navigation: NavigationProps[] = [
   { name: "Home", hash: "#home" },
+  { name: "Services", hash: "#services" },
+  { name: "Projects", hash: "#projects" },
+  { name: "Process", hash: "#process" },
   {
     name: "Experience",
     hash: "#experience",
   },
-  { name: "Projects", hash: "#projects" },
+  { name: "Testimonials", hash: "#testimonials" },
   { name: "About", hash: "#about" },
+  { name: "Pricing", hash: "#pricing" },
+  { name: "FAQ", hash: "#faq" },
   { name: "Contact", hash: "#contact" },
+  { name: "CTA", hash: "#cta" },
 ];
 
 export const experience: ExperienceProps[] = [
