@@ -11,7 +11,7 @@ import About from "@/app/components/Sections/About";
 import Pricing from "@/app/components/Sections/Pricing";
 import FAQ from "@/app/components/Sections/FAQ";
 import Contact from "@/app/components/Sections/Contact";
-import CTA from "@/app/components/Sections/CTA";
+import CTA from "@/app/components/Sections/FloatingCTA";
 
 import { useScrollSpy } from "@/hooks/useScrollSpy";
 

@@ -2,10 +2,7 @@
 
 import { useEffect, useRef } from "react";
 import Link from "next/link";
-import LetsContactDialog from "@/app/components/LetsContactDialog";
 import CustomBadge from "@/app/components/CustomBadge";
-import { ArrowDownIcon } from "@heroicons/react/24/outline";
-
 import useSectionObserver from "@/hooks/useSectionObserver";
 
 const Hero = () => {
@@ -39,36 +36,45 @@ const Hero = () => {
       <div className="mx-auto max-w-7xl px-6 lg:px-8 h-full flex flex-col justify-center">
         <div className="mx-auto max-w-2xl text-center">
           <h1 className="text-5xl font-iceland tracking-tight sm:text-9xl text-gold">
-            I&apos;m Randy Caballero
+            Randy Caballero
           </h1>
-          <CustomBadge>Open to Work</CustomBadge>
+          <CustomBadge>Available for Projects</CustomBadge>
           <p className="mt-8 font-inter text-white/80 text-base">
-            +3 years of experience. Software Engineer and Programming
-            Specialized in developing unique web applications.
+            Full-Stack Developer specializing in Next.js with 3+ years creating
+            digital solutions for businesses.
           </p>
+
+          {/* Social Proof */}
+          <div className="mt-6 flex justify-center gap-8 text-lg font-inter text-gold/70">
+            <span>10+ Projects</span>
+            <span>•</span>
+            <span>5+ Happy Clients</span>
+            <span>•</span>
+            <span>100% Remote</span>
+          </div>
+
           <div className="mt-10 flex flex-col sm:flex-row gap-4 items-center justify-center gap-x-6">
+            <Link
+              href="#services"
+              className="text-sm/6 font-inter text-gray-900 bg-gold hover:bg-gold/90 p-3 px-6 rounded-md transition-all duration-200 ease-in-out hover:scale-105"
+            >
+              View Services
+            </Link>
+            <Link
+              href="#contact"
+              className="text-sm/6 font-inter text-white/80 hover:bg-gold/20 p-3 px-6 rounded-md flex items-center gap-x-1 border-2 border-gold/50 transition-all duration-200 ease-in-out hover:scale-105"
+            >
+              Schedule a Call
+            </Link>
             <Link
               href="/resume.pdf"
               download="Randy Caballero - Resume.pdf"
               target="_blank"
               rel="noopener noreferrer"
-              className="text-sm/6 font-inter text-white/80 hover:bg-gold/20 p-2 rounded-md flex items-center gap-x-1 border-2 border-gold/50 transition-all duration-200 ease-in-out hover:scale-105"
+              className="text-sm/6 font-inter text-white/80 hover:bg-gold/20 p-3 px-6 rounded-md flex items-center gap-x-1 border-2 border-gold/50 transition-all duration-200 ease-in-out hover:scale-105"
             >
               Download CV
             </Link>
-            <Link
-              href="#experience"
-              className="text-sm/6 font-inter text-white/80 hover:bg-gold/20 p-2 rounded-md flex items-center gap-x-1 border-2 border-gold/50 transition-all duration-200 ease-in-out hover:scale-105"
-            >
-              Experience <ArrowDownIcon className="text-white h-4" />
-            </Link>
-            <Link
-              href="/#contact"
-              className="text-sm/6 font-inter text-white/80 hover:bg-gold/20 p-2 rounded-md flex items-center gap-x-1 border-2 border-gold/50 transition-all duration-200 ease-in-out hover:scale-105"
-            >
-              Let&apos;s Connect
-            </Link>
-            <LetsContactDialog />
           </div>
         </div>
       </div>

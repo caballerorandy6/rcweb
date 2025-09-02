@@ -11,7 +11,7 @@ const About = () => {
 
   return (
     <section ref={ref} id="about" className="mx-auto w-10/12">
-      <Heading icon={<UserPlusIcon className="w-8 text-gold" />}>
+      <Heading icon={<UserPlusIcon className="w-8 text-gold" />} level={3}>
         About Me
       </Heading>
       <div className="flex flex-col md:flex-row justify-center items-center gap-x-20 w-full">

@@ -18,6 +18,15 @@ import { TeachMarqueeProps } from "@/app/components/TechMarquee";
 import { BriefcaseIcon, AcademicCapIcon } from "@heroicons/react/24/outline";
 import { NavigationProps } from "@/app/components/Navbar";
 import { ExperienceProps } from "@/app/components/Sections/Experience";
+import {
+  ChatBubbleLeftRightIcon,
+  PencilSquareIcon,
+  CodeBracketSquareIcon,
+  RocketLaunchIcon,
+  CodeBracketIcon,
+  ChartBarIcon,
+  CubeTransparentIcon,
+} from "@heroicons/react/24/outline";
 
 export const navigation: NavigationProps[] = [
   { name: "Home", hash: "#home" },
@@ -345,5 +354,188 @@ export const certifications = [
     url: "https://res.cloudinary.com/caballerorandy/image/upload/v1755196091/RC%20Web/Coursera_-_HTML_and_CSS_in_depth_qwz3ec.ai",
     pdfThumbnail:
       "https://res.cloudinary.com/caballerorandy/image/upload/pg_1,w_200,h_200,c_fill/v1755196091/RC%20Web/Coursera_-_HTML_and_CSS_in_depth_qwz3ec.avif",
+  },
+];
+
+export const processSteps = [
+  {
+    icon: ChatBubbleLeftRightIcon,
+    title: "Discovery",
+    week: "Week 1",
+    description:
+      "Free initial consultation to understand your needs and objectives.",
+    details: [
+      "Requirements analysis",
+      "Competition research",
+      "Detailed proposal",
+      "Transparent quote",
+    ],
+  },
+  {
+    icon: PencilSquareIcon,
+    title: "Design & Planning",
+    week: "Weeks 1-2",
+    description: "Create wireframes and define your application architecture.",
+    details: [
+      "Interactive mockups",
+      "Tech stack selection",
+      "Project timeline",
+      "Review & feedback",
+    ],
+  },
+  {
+    icon: CodeBracketSquareIcon,
+    title: "Iterative Development",
+    week: "Weeks 2-5",
+    description:
+      "Build your application with weekly demos and continuous adjustments.",
+    details: [
+      "Weekly sprints",
+      "Friday demos",
+      "Continuous testing",
+      "Real-time adjustments",
+    ],
+  },
+  {
+    icon: RocketLaunchIcon,
+    title: "Launch & Support",
+    week: "Week 6",
+    description:
+      "Production deployment with training and 30 days of included support.",
+    details: [
+      "Secure deployment",
+      "Complete training",
+      "Documentation",
+      "30-day support",
+    ],
+  },
+];
+
+export const services = [
+  {
+    icon: RocketLaunchIcon,
+    title: "Full-Stack Web Applications",
+    description:
+      "Complete applications built with Next.js 14, TypeScript, and scalable databases.",
+    features: ["SPA/SSR", "Admin Panel", "RESTful APIs", "Authentication"],
+    highlight: "Like GSM AC, Limo Renting & Little Lemon Restaurant",
+  },
+  {
+    icon: CodeBracketIcon,
+    title: "High-Converting Landing Pages",
+    description:
+      "Optimized websites designed to convert visitors into customers with modern design.",
+    features: ["Responsive", "SEO", "Analytics", "Animations"],
+    highlight: "95+ Lighthouse Score",
+  },
+  {
+    icon: CubeTransparentIcon,
+    title: "Management Systems",
+    description:
+      "Custom dashboards to automate and manage your business efficiently.",
+    features: ["Dashboard", "Reports", "Bulk Email", "User Management"],
+    highlight: "15 hours/week saved",
+  },
+  {
+    icon: ChartBarIcon,
+    title: "Digital Consulting",
+    description:
+      "Web strategy and optimization with 3+ years of digital marketing experience.",
+    features: ["Web Audit", "SEO", "WordPress", "Performance"],
+    highlight: "60% more organic traffic",
+  },
+];
+
+export const pricingPlans = [
+  {
+    name: "Starter",
+    price: "$1,500",
+    range: "1.5k - 2.5k",
+    description: "Professional Landing Page",
+    duration: "2-3 weeks",
+    features: [
+      "1-5 responsive pages",
+      "Custom design",
+      "Basic SEO optimization",
+      "Contact form",
+      "Hosting setup",
+      "30 days support",
+    ],
+    ideal: "Perfect for portfolios and corporate sites",
+    cta: "Start Project",
+    featured: false,
+  },
+  {
+    name: "Business",
+    price: "$3,500",
+    range: "3.5k - 7k",
+    description: "Complete Web Application",
+    duration: "4-6 weeks",
+    features: [
+      "Full system with admin",
+      "PostgreSQL database",
+      "User authentication",
+      "API integrations",
+      "Analytics dashboard",
+      "Email notifications",
+      "60 days support",
+      "Training included",
+    ],
+    ideal: "Similar to GSM AC or Limo Renting",
+    cta: "Most Popular",
+    featured: true,
+  },
+  {
+    name: "Enterprise",
+    price: "$8,000+",
+    range: "From 8k",
+    description: "Custom Solution",
+    duration: "2-4 months",
+    features: [
+      "Custom development",
+      "Scalable architecture",
+      "Multiple integrations",
+      "CI/CD pipeline",
+      "Automated testing",
+      "Complete documentation",
+      "Priority support",
+      "Guaranteed SLA",
+    ],
+    ideal: "For complex enterprise projects",
+    cta: "Contact",
+    featured: false,
+  },
+];
+
+export const faqs = [
+  {
+    question: "Do you work with clients outside Houston?",
+    answer:
+      "Yes, I work with clients throughout the United States and Latin America. I use Zoom, Slack, and other tools for effective communication. Most of my projects are 100% remote.",
+  },
+  {
+    question: "How long does a typical project take?",
+    answer:
+      "It depends on the scope: Landing pages: 2-3 weeks, Web applications: 4-8 weeks, Enterprise projects: 2-4 months. I always provide a detailed timeline before starting.",
+  },
+  {
+    question: "Do you offer post-launch support?",
+    answer:
+      "All projects include 30 days of free support for adjustments and fixes. After that, I offer maintenance plans starting at $200/month including updates, backups, and priority support.",
+  },
+  {
+    question: "Do you work with technologies besides Next.js?",
+    answer:
+      "My specialty is the React/Next.js ecosystem, but I have experience with WordPress, vanilla JavaScript, and can adapt to project needs. I always recommend the best technology for each case.",
+  },
+  {
+    question: "How does the payment process work?",
+    answer:
+      "I work with a 3-payment structure: 30% upfront to start, 40% at the mid-project milestone, 30% upon project delivery. I accept Zelle, Wire Transfer, PayPal, and international payments.",
+  },
+  {
+    question: "Can I see progress during development?",
+    answer:
+      "Absolutely! I do weekly demos every Friday and you'll have access to a staging environment where you can see real-time progress. Transparency is key to my process.",
   },
 ];

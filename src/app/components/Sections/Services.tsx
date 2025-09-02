@@ -1,47 +1,7 @@
 "use client";
 
 import useSectionObserver from "@/hooks/useSectionObserver";
-import {
-  CodeBracketIcon,
-  RocketLaunchIcon,
-  ChartBarIcon,
-  CubeTransparentIcon,
-} from "@heroicons/react/24/outline";
-
-const services = [
-  {
-    icon: RocketLaunchIcon,
-    title: "Full-Stack Web Applications",
-    description:
-      "Complete applications built with Next.js 14, TypeScript, and scalable databases.",
-    features: ["SPA/SSR", "Admin Panel", "RESTful APIs", "Authentication"],
-    highlight: "Like GSM AC, Limo Renting & Little Lemon Restaurant",
-  },
-  {
-    icon: CodeBracketIcon,
-    title: "High-Converting Landing Pages",
-    description:
-      "Optimized websites designed to convert visitors into customers with modern design.",
-    features: ["Responsive", "SEO", "Analytics", "Animations"],
-    highlight: "95+ Lighthouse Score",
-  },
-  {
-    icon: CubeTransparentIcon,
-    title: "Management Systems",
-    description:
-      "Custom dashboards to automate and manage your business efficiently.",
-    features: ["Dashboard", "Reports", "Bulk Email", "User Management"],
-    highlight: "15 hours/week saved",
-  },
-  {
-    icon: ChartBarIcon,
-    title: "Digital Consulting",
-    description:
-      "Web strategy and optimization with 3+ years of digital marketing experience.",
-    features: ["Web Audit", "SEO", "WordPress", "Performance"],
-    highlight: "60% more organic traffic",
-  },
-];
+import { services } from "@/libs/data";
 
 const Services = () => {
   const ref = useSectionObserver({ sectionName: "Services" });

@@ -18,7 +18,7 @@ const Certifications = () => {
 
   return (
     <section id="certifications" className=" mt-20 w-10/12 mx-auto">
-      <Heading icon={<CheckCircleIcon className="w-8 text-gold" />}>
+      <Heading icon={<CheckCircleIcon className="w-8 text-gold" />} level={3}>
         Certifications
       </Heading>
 
