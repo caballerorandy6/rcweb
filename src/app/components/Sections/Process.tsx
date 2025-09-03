@@ -11,6 +11,10 @@ import Heading from "@/app/components/Heading";
 const Process = () => {
   const ref = useSectionObserver({ sectionName: "Process" });
   const [activeStep, setActiveStep] = useState(0);
+  const [mobileActiveStep, setMobileActiveStep] = useState<number | null>(null);
+
+  // Validación para asegurar que activeStep esté en rango válido
+  const currentStep = processSteps[activeStep] || processSteps[0];
 
   return (
     <section id="process" ref={ref} className="pt-24 sm:pt-32">
@@ -68,89 +72,92 @@ const Process = () => {
 
           {/* Active Step Content */}
           <AnimatePresence mode="wait">
-            <motion.div
-              key={activeStep}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -20 }}
-              transition={{ duration: 0.3 }}
-              className="max-w-3xl mx-auto"
-            >
-              <div className="bg-gray-950/50 backdrop-blur-sm rounded-2xl p-8 border border-gold/20">
-                {/* Icon and Title */}
-                <div className="flex items-center gap-4 mb-6">
-                  <div className="w-14 h-14 bg-gold/10 rounded-xl flex items-center justify-center">
-                    {React.createElement(processSteps[activeStep].icon, {
-                      className: "w-7 h-7 text-gold",
-                    })}
+            {currentStep && (
+              <motion.div
+                key={activeStep}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -20 }}
+                transition={{ duration: 0.3 }}
+                className="max-w-3xl mx-auto"
+              >
+                <div className="bg-gray-950/50 backdrop-blur-sm rounded-2xl p-8 border border-gold/20">
+                  {/* Icon and Title */}
+                  <div className="flex items-center gap-4 mb-6">
+                    <div className="w-14 h-14 bg-gold/10 rounded-xl flex items-center justify-center">
+                      {currentStep.icon &&
+                        React.createElement(currentStep.icon, {
+                          className: "w-7 h-7 text-gold",
+                        })}
+                    </div>
+                    <div>
+                      <h3 className="text-2xl font-iceland text-white">
+                        Step {activeStep + 1}: {currentStep.title}
+                      </h3>
+                      <p className="text-sm font-inter text-gold/70">
+                        {currentStep.week}
+                      </p>
+                    </div>
                   </div>
-                  <div>
-                    <h3 className="text-2xl font-iceland text-white">
-                      Step {activeStep + 1}: {processSteps[activeStep].title}
-                    </h3>
-                    <p className="text-sm font-inter text-gold/70">
-                      {processSteps[activeStep].week}
-                    </p>
+
+                  {/* Description */}
+                  <p className="text-base font-inter text-white/80 mb-6">
+                    {currentStep.description}
+                  </p>
+
+                  {/* Details Grid */}
+                  <div className="grid grid-cols-2 gap-3">
+                    {currentStep.details?.map((detail, idx) => (
+                      <motion.div
+                        key={idx}
+                        initial={{ opacity: 0, x: -10 }}
+                        animate={{ opacity: 1, x: 0 }}
+                        transition={{ delay: idx * 0.1 }}
+                        className="flex items-center text-sm font-inter text-white/60"
+                      >
+                        <ChevronRightIcon className="w-4 h-4 text-gold mr-2 flex-shrink-0" />
+                        {detail}
+                      </motion.div>
+                    ))}
                   </div>
-                </div>
 
-                {/* Description */}
-                <p className="text-base font-inter text-white/80 mb-6">
-                  {processSteps[activeStep].description}
-                </p>
-
-                {/* Details Grid */}
-                <div className="grid grid-cols-2 gap-3">
-                  {processSteps[activeStep].details.map((detail, idx) => (
-                    <motion.div
-                      key={idx}
-                      initial={{ opacity: 0, x: -10 }}
-                      animate={{ opacity: 1, x: 0 }}
-                      transition={{ delay: idx * 0.1 }}
-                      className="flex items-center text-sm font-inter text-white/60"
+                  {/* Navigation */}
+                  <div className="flex justify-between mt-8">
+                    <button
+                      onClick={() => setActiveStep(Math.max(0, activeStep - 1))}
+                      disabled={activeStep === 0}
+                      className={`px-4 py-2 rounded-lg font-inter text-sm transition-all ${
+                        activeStep === 0
+                          ? "bg-gray-800 text-gray-600 cursor-not-allowed"
+                          : "bg-gold/10 text-gold hover:bg-gold/20"
+                      }`}
                     >
-                      <ChevronRightIcon className="w-4 h-4 text-gold mr-2 flex-shrink-0" />
-                      {detail}
-                    </motion.div>
-                  ))}
+                      Previous
+                    </button>
+                    <button
+                      onClick={() =>
+                        setActiveStep(
+                          Math.min(processSteps.length - 1, activeStep + 1)
+                        )
+                      }
+                      disabled={activeStep === processSteps.length - 1}
+                      className={`px-4 py-2 rounded-lg font-inter text-sm transition-all ${
+                        activeStep === processSteps.length - 1
+                          ? "bg-gray-800 text-gray-600 cursor-not-allowed"
+                          : "bg-gold text-gray-900 hover:bg-gold/90"
+                      }`}
+                    >
+                      Next Step
+                    </button>
+                  </div>
                 </div>
-
-                {/* Navigation */}
-                <div className="flex justify-between mt-8">
-                  <button
-                    onClick={() => setActiveStep(Math.max(0, activeStep - 1))}
-                    disabled={activeStep === 0}
-                    className={`px-4 py-2 rounded-lg font-inter text-sm transition-all ${
-                      activeStep === 0
-                        ? "bg-gray-800 text-gray-600 cursor-not-allowed"
-                        : "bg-gold/10 text-gold hover:bg-gold/20"
-                    }`}
-                  >
-                    Previous
-                  </button>
-                  <button
-                    onClick={() =>
-                      setActiveStep(
-                        Math.min(processSteps.length - 1, activeStep + 1)
-                      )
-                    }
-                    disabled={activeStep === processSteps.length - 1}
-                    className={`px-4 py-2 rounded-lg font-inter text-sm transition-all ${
-                      activeStep === processSteps.length - 1
-                        ? "bg-gray-800 text-gray-600 cursor-not-allowed"
-                        : "bg-gold text-gray-900 hover:bg-gold/90"
-                    }`}
-                  >
-                    Next Step
-                  </button>
-                </div>
-              </div>
-            </motion.div>
+              </motion.div>
+            )}
           </AnimatePresence>
         </div>
 
         {/* Mobile: Accordion Style */}
-        <div className="lg:hidden space-y-4">
+        <div className="lg:hidden space-y-4 m-12">
           {processSteps.map((step, index) => (
             <motion.div
               key={index}
@@ -160,7 +167,9 @@ const Process = () => {
               transition={{ delay: index * 0.1 }}
             >
               <button
-                onClick={() => setActiveStep(activeStep === index ? -1 : index)}
+                onClick={() =>
+                  setMobileActiveStep(mobileActiveStep === index ? null : index)
+                }
                 className="w-full bg-gray-950/50 rounded-xl p-4 border border-gold/20 hover:border-gold/40 transition-all"
               >
                 <div className="flex items-center justify-between">
@@ -177,13 +186,13 @@ const Process = () => {
                   </div>
                   <ChevronRightIcon
                     className={`w-5 h-5 text-gold transition-transform ${
-                      activeStep === index ? "rotate-90" : ""
+                      mobileActiveStep === index ? "rotate-90" : ""
                     }`}
                   />
                 </div>
 
                 <AnimatePresence>
-                  {activeStep === index && (
+                  {mobileActiveStep === index && (
                     <motion.div
                       initial={{ height: 0, opacity: 0 }}
                       animate={{ height: "auto", opacity: 1 }}
@@ -196,7 +205,7 @@ const Process = () => {
                           {step.description}
                         </p>
                         <div className="space-y-2">
-                          {step.details.map((detail, idx) => (
+                          {step.details?.map((detail, idx) => (
                             <div
                               key={idx}
                               className="flex items-start text-xs font-inter text-white/50"
