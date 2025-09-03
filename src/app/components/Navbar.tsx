@@ -23,101 +23,202 @@ const Navbar = () => {
     handleClickModal,
   } = useRCWebStore();
 
+  // Separar Contact como CTA
+  const mainNavigation = navigation.slice(0, -2); // Todos menos Contact y CTA
+  const contactItem = navigation.find((item) => item.name === "Contact");
+
   return (
     <>
       <nav
         aria-label="Global"
-        className="flex items-center p-6 justify-center w-full"
+        className="fixed top-0 left-0 right-0 z-40 animateHeadingDialog"
       >
-        {/* 🟨 NAV MOBILE (visible hasta lg) */}
-        <div className="flex items-center justify-between w-10/12 xl:hidden rounded-full px-6 animateHeadingDialog">
-          <Logo className="w-40 h-auto" /> {/* Tamaño base para mobile */}
-          <button
-            type="button"
-            onClick={handleClickModal}
-            className="inline-flex items-center justify-center rounded-md text-gray-400"
-          >
-            <Bars3Icon aria-hidden="true" className="size-10 text-white" />
-          </button>
-        </div>
+        <div className="mx-auto max-w-7xl">
+          <div className="flex items-center justify-between px-6 py-4">
+            {/* Logo */}
+            <Logo className="w-32 lg:w-36 xl:w-40 h-auto" />
 
-        {/* 🟩 NAV DESKTOP (desde lg) */}
-        <div className="hidden xl:flex items-center justify-center relative w-full px-6">
-          {/* Logo a la izquierda */}
-          <div className="absolute left-6">
-            <Logo className="w-28 lg:w-36 xl:w-40 h-auto animateHeadingDialog" />
-          </div>
+            {/* Desktop Navigation - Hidden on smaller screens */}
+            <div className="hidden 2xl:flex items-center gap-x-1">
+              {mainNavigation.map((item) => (
+                <Link
+                  key={item.name}
+                  href={item.hash}
+                  onClick={() => setActiveSection(item.name)}
+                  className={clsx(
+                    "px-3 py-2 text-sm font-inter text-white/80 hover:text-gold transition-all duration-200 relative",
+                    {
+                      "text-gold": activeSection === item.name,
+                    }
+                  )}
+                >
+                  {item.name}
+                  {item.name === activeSection && (
+                    <motion.span
+                      className="bg-gold/20 rounded-full absolute inset-0 -z-10"
+                      layoutId="activeSection"
+                      transition={{
+                        type: "spring",
+                        stiffness: 380,
+                        damping: 30,
+                      }}
+                    />
+                  )}
+                </Link>
+              ))}
 
-          {/* Menú centrado */}
-          <div className="flex items-center gap-x-8 animateHeadingDialog px-6 py-2 rounded-full">
-            {navigation.map((item) => (
-              <Link
-                key={item.name}
-                href={item.hash}
-                onClick={() => setActiveSection(item.name)}
-                className={clsx(
-                  "-mx-3 block rounded-lg px-3 text-base/7 font-inter text-white hover:text-gold relative transition-colors",
-                  {
-                    "text-white": activeSection === item.name,
-                  }
-                )}
-              >
-                {item.name}
-                {item.name === activeSection && (
-                  <motion.span
-                    className="bg-gold/40 rounded-full absolute inset-0 -z-10 p-0.5"
-                    layoutId="activeSection"
-                    transition={{ type: "spring", stiffness: 380, damping: 30 }}
-                  />
-                )}
-              </Link>
-            ))}
-          </div>
-        </div>
-      </nav>
+              {/* Contact as CTA Button */}
+              {contactItem && (
+                <Link
+                  href={contactItem.hash}
+                  onClick={() => setActiveSection(contactItem.name)}
+                  className="ml-4 px-4 py-2 bg-gold text-gray-900 rounded-lg text-sm font-inter font-medium hover:bg-gold/90 transition-all duration-200"
+                >
+                  {contactItem.name}
+                </Link>
+              )}
+            </div>
 
-      {/* 🟥 MODAL: NAV MOBILE (Drawer desde la derecha) */}
-      <nav>
-        <Dialog open={isOpen} onClose={handleClickModal} className="lg:hidden">
-          <div className="fixed inset-0 z-50 justify-between" />
-          <DialogPanel className="fixed inset-y-0 right-0 z-50 w-full overflow-y-auto bg-gray-900 sm:max-w-sm sm:ring-1 sm:ring-white/10">
-            <div className="flex items-center justify-between px-4 pt-4">
-              <Logo className="w-24 h-auto" />
+            {/* Tablet/Large Screen Compact Menu */}
+            <div className="hidden lg:flex 2xl:hidden items-center gap-x-6">
+              {/* Show only key items */}
+              {["Services", "Projects", "Pricing"].map((itemName) => {
+                const item = navigation.find((n) => n.name === itemName);
+                if (!item) return null;
+                return (
+                  <Link
+                    key={item.name}
+                    href={item.hash}
+                    onClick={() => setActiveSection(item.name)}
+                    className="text-sm font-inter text-white/80 hover:text-gold transition-colors"
+                  >
+                    {item.name}
+                  </Link>
+                );
+              })}
+
+              {/* Contact Button */}
+              {contactItem && (
+                <Link
+                  href={contactItem.hash}
+                  onClick={() => setActiveSection(contactItem.name)}
+                  className="px-4 py-2 bg-gold text-gray-900 rounded-lg text-sm font-inter font-medium hover:bg-gold/90 transition-all duration-200"
+                >
+                  Let&#39;s Talk
+                </Link>
+              )}
+
+              {/* More Menu */}
               <button
                 type="button"
-                onClick={() => setIsOpen(false)}
-                className="-m-2.5 rounded-md p-2.5 text-gray-400"
+                onClick={handleClickModal}
+                className="text-white/80 hover:text-gold transition-colors"
               >
-                <XMarkIcon aria-hidden="true" className="size-6 mr-10" />
+                <Bars3Icon className="w-6 h-6" />
               </button>
             </div>
-            <div className="mt-6 px-6 flow-root">
-              <div className="-my-6 divide-y">
-                <div className="space-y-2 py-6">
-                  {navigation.map((item) => (
-                    <Link
-                      key={item.name}
-                      href={item.hash}
-                      onClick={() => {
-                        setActiveSection(item.name);
-                        handleClickModal();
-                      }}
-                      className={clsx(
-                        "-mx-3 block rounded-lg px-3 py-2 text-base/7 font-inter text-white hover:text-gold",
-                        {
-                          "bg-gold/40": activeSection === item.name,
-                        }
-                      )}
-                    >
-                      {item.name}
-                    </Link>
-                  ))}
-                </div>
-              </div>
-            </div>
-          </DialogPanel>
-        </Dialog>
+
+            {/* Mobile Menu Button */}
+            <button
+              type="button"
+              onClick={handleClickModal}
+              className="lg:hidden inline-flex items-center justify-center rounded-md text-white/80 hover:text-gold transition-colors"
+            >
+              <Bars3Icon aria-hidden="true" className="w-6 h-6" />
+            </button>
+          </div>
+        </div>
       </nav>
+
+      {/* Spacer for fixed navbar */}
+      <div className="h-[72px]" />
+
+      {/* Mobile/Tablet Drawer */}
+      <Dialog
+        open={isOpen}
+        onClose={handleClickModal}
+        className="relative z-50"
+      >
+        <div className="fixed inset-0 bg-black/50" />
+
+        <div className="fixed inset-0 overflow-hidden">
+          <div className="absolute inset-0 overflow-hidden">
+            <div className="pointer-events-none fixed inset-y-0 right-0 flex max-w-full">
+              <DialogPanel className="pointer-events-auto w-screen max-w-sm">
+                <div className="flex h-full flex-col bg-gray-900 shadow-xl">
+                  {/* Header */}
+                  <div className="flex items-center justify-between px-6 py-4 border-b border-gold/10">
+                    <Logo className="w-32 h-auto" />
+                    <button
+                      type="button"
+                      onClick={() => setIsOpen(false)}
+                      className="rounded-md text-white/80 hover:text-gold transition-colors"
+                    >
+                      <XMarkIcon aria-hidden="true" className="w-6 h-6" />
+                    </button>
+                  </div>
+
+                  {/* Navigation Items */}
+                  <div className="flex-1 overflow-y-auto px-6 py-6">
+                    <nav className="space-y-1">
+                      {navigation.map((item) => {
+                        // Skip CTA from regular menu
+                        if (item.name === "CTA") return null;
+
+                        // Style Contact differently
+                        if (item.name === "Contact") {
+                          return (
+                            <Link
+                              key={item.name}
+                              href={item.hash}
+                              onClick={() => {
+                                setActiveSection(item.name);
+                                handleClickModal();
+                              }}
+                              className="block w-full mt-4 px-4 py-3 bg-gold text-gray-900 rounded-lg text-center font-inter font-medium hover:bg-gold/90 transition-all duration-200"
+                            >
+                              Get In Touch
+                            </Link>
+                          );
+                        }
+
+                        return (
+                          <Link
+                            key={item.name}
+                            href={item.hash}
+                            onClick={() => {
+                              setActiveSection(item.name);
+                              handleClickModal();
+                            }}
+                            className={clsx(
+                              "block px-4 py-3 rounded-lg text-base font-inter transition-all duration-200",
+                              {
+                                "bg-gold/20 text-gold":
+                                  activeSection === item.name,
+                                "text-white/80 hover:text-gold hover:bg-gold/5":
+                                  activeSection !== item.name,
+                              }
+                            )}
+                          >
+                            {item.name}
+                          </Link>
+                        );
+                      })}
+                    </nav>
+                  </div>
+
+                  {/* Footer Info */}
+                  <div className="border-t border-gold/10 px-6 py-4">
+                    <p className="text-sm font-inter text-white/50 text-center">
+                      Available for freelance projects
+                    </p>
+                  </div>
+                </div>
+              </DialogPanel>
+            </div>
+          </div>
+        </div>
+      </Dialog>
     </>
   );
 };

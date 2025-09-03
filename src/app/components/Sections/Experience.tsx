@@ -4,6 +4,7 @@ import { BriefcaseIcon } from "@heroicons/react/24/outline";
 import { experience } from "@/libs/data";
 import useSectionObserver from "@/hooks/useSectionObserver";
 import { motion } from "framer-motion";
+import Heading from "../Heading";
 
 export interface ExperienceProps {
   title: string;
@@ -18,25 +19,17 @@ const Experience = () => {
   const ref = useSectionObserver({ sectionName: "Experience" });
 
   return (
-    <section ref={ref} id="experience" className="py-24 sm:py-32">
+    <section ref={ref} id="experience" className="pt-24 sm:pt-32">
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
-        {/* Header */}
-        <div className="mx-auto max-w-2xl text-center mb-16">
-          <div className="flex justify-center items-center gap-2">
-            <div className="flex justify-center">
-              <BriefcaseIcon className="w-10 h-10 text-gold" />
-            </div>
-            <h2 className="text-4xl font-iceland tracking-tight text-gold sm:text-6xl">
-              Experience
-            </h2>
-          </div>
-          <p className="mt-4 text-lg font-inter text-white/80">
-            My professional journey in software development
-          </p>
-        </div>
+        <Heading
+          icon={<BriefcaseIcon className="w-8 text-gold" />}
+          text="My professional journey in software development."
+        >
+          Experience
+        </Heading>
 
         {/* Experience Cards - Zigzag Layout */}
-        <div className="relative max-w-5xl mx-auto">
+        <div className="relative max-w-5xl mx-auto mt-12">
           {/* Central line for desktop */}
           <div className="hidden lg:block absolute left-1/2 transform -translate-x-1/2 w-0.5 h-full bg-gradient-to-b from-gold/20 via-gold/40 to-gold/20"></div>
 

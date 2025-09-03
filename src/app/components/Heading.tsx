@@ -1,19 +1,35 @@
-import { JSX } from "react";
+import { motion } from "framer-motion";
 
 interface HeadingProps {
-  children: React.ReactNode;
-  icon: React.ReactNode;
-  level?: 1 | 2 | 3;
+  children: React.ReactNode; // título
+  icon: React.ReactNode; // ícono decorativo o informativo
+  text: string; // descripción
 }
 
-const Heading = ({ children, icon, level = 1 }: HeadingProps) => {
-  const HeadingTag = `h${level}` as keyof JSX.IntrinsicElements;
-
+const Heading = ({ children, icon, text }: HeadingProps) => {
   return (
-    <HeadingTag className="flex items-center justify-center gap-x-2 text-gold font-iceland tracking-tight text-5xl text-center mb-16 uppercase">
-      {icon}
-      {children}
-    </HeadingTag>
+    <motion.section
+      initial={{ opacity: 0, y: 40 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, amount: 0.3 }}
+      transition={{ duration: 0.8, ease: "easeOut" }}
+      className="mx-auto max-w-2xl text-center"
+    >
+      <div className="flex items-center justify-center gap-2">
+        <span
+          className="text-gold w-6 h-6 lg:w-8 lg:h-8 flex items-center justify-center"
+          aria-hidden="true"
+        >
+          {icon}
+        </span>
+
+        <h1 className="text-2xl font-semibold text-gold font-iceland sm:text-3xl md:text-4xl lg:text-5xl">
+          {children}
+        </h1>
+      </div>
+
+      <p className="mt-6 text-lg font-inter text-white/80">{text}</p>
+    </motion.section>
   );
 };
 

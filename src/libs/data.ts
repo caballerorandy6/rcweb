@@ -14,6 +14,7 @@ import MongoDB from "@/app/components/icons/MongoDB";
 import SASS from "@/app/components/icons/SASS";
 import Jira from "@/app/components/icons/Jira";
 import Wordpress from "@/app/components/icons/Wordpress";
+import NodeJS from "@/app/components/icons/NodeJS";
 import { TeachMarqueeProps } from "@/app/components/TechMarquee";
 import { BriefcaseIcon, AcademicCapIcon } from "@heroicons/react/24/outline";
 import { NavigationProps } from "@/app/components/Navbar";
@@ -39,6 +40,7 @@ export const navigation: NavigationProps[] = [
   },
   { name: "Testimonials", hash: "#testimonials" },
   { name: "About", hash: "#about" },
+  { name: "Certifications", hash: "#certifications" },
   { name: "Pricing", hash: "#pricing" },
   { name: "FAQ", hash: "#faq" },
   { name: "Contact", hash: "#contact" },
@@ -118,15 +120,6 @@ export const projects: ProjectProps[] = [
     url: "https://www.gsmactx.com/",
   },
   {
-    name: "Photographer Portfolio",
-    tecnologies: ["HTML", "CSS", "SASS"],
-    description:
-      "The website is an online portfolio showcasing a photographer's work, providing visitors with a collection of images and information about their services.",
-    image: "/photographer.avif",
-    github: "https://github.com/caballerorandy6/photographer-portfolio",
-    url: "https://photographerportfolio1.netlify.app",
-  },
-  {
     name: "Little Lemon Restaurant",
     tecnologies: [
       "NextJS",
@@ -144,6 +137,34 @@ export const projects: ProjectProps[] = [
     github: "https://github.com/caballerorandy6/little-lemon-restaurant",
     url: "https://little-lemon-restaurant-nine-omega.vercel.app/",
   },
+  {
+    name: "Todo List App",
+    tecnologies: [
+      "NextJS",
+      "TypeScript",
+      "TailwindCSS",
+      "Node",
+      "Express",
+      "MySQL",
+      "Prisma",
+      "Zod",
+    ],
+    description:
+      "A simple Todo List application built with Next.js, TypeScript, TailwindCSS, Node, Express, MySQL, Prisma, and Zod.",
+    image: "/todo-list-app.avif",
+    github: "https://github.com/caballerorandy6/todo-app-frontend",
+    url: "https://todo-app-frontend-flame-nu.vercel.app/",
+  },
+  {
+    name: "Photographer Portfolio",
+    tecnologies: ["HTML", "CSS", "SASS"],
+    description:
+      "The website is an online portfolio showcasing a photographer's work, providing visitors with a collection of images and information about their services.",
+    image: "/photographer.avif",
+    github: "https://github.com/caballerorandy6/photographer-portfolio",
+    url: "https://photographerportfolio1.netlify.app",
+  },
+
   {
     name: "Search Drinks",
     tecnologies: ["React", "Vite"],
@@ -180,6 +201,11 @@ export const teachMarqueeData: TeachMarqueeProps[] = [
     href: "https://tailwindcss.com/",
     name: "Tailwind CSS",
     icon: React.createElement(TailwindCSS),
+  },
+  {
+    href: "https://nodejs.org/",
+    name: "Node.js",
+    icon: React.createElement(NodeJS),
   },
   {
     href: "https://www.postgresql.org/",

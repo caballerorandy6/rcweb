@@ -7,6 +7,7 @@ import {
   QuestionMarkCircleIcon,
 } from "@heroicons/react/24/outline";
 import { faqs } from "@/libs/data";
+import Heading from "../Heading";
 
 const FAQ = () => {
   const ref = useSectionObserver({ sectionName: "FAQ" });
@@ -16,23 +17,15 @@ const FAQ = () => {
     <section
       id="faq"
       ref={ref}
-      className="relative isolate overflow-hidden py-24 sm:py-32 bg-gray-950"
+      className="relative isolate overflow-hidden pt-24 sm:pt-32"
     >
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
-        <div className="mx-auto max-w-2xl text-center">
-          <div className="flex justify-center items-center gap-2">
-            <div className="flex justify-center">
-              <QuestionMarkCircleIcon className="w-10 h-10 text-gold" />
-            </div>
-            <h2 className="text-4xl font-iceland tracking-tight text-gold sm:text-6xl">
-              Frequently Asked Questions
-            </h2>
-          </div>
-
-          <p className="mt-6 text-lg font-inter text-white/80">
-            Everything you need to know before we start
-          </p>
-        </div>
+        <Heading
+          icon={<QuestionMarkCircleIcon />}
+          text="Everything you need to know before we start"
+        >
+          Frequently Asked Questions
+        </Heading>
 
         <div className="mx-auto mt-16 max-w-3xl">
           <div className="space-y-4">

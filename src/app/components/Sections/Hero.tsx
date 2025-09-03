@@ -19,7 +19,7 @@ const Hero = () => {
     <section
       id="home"
       ref={ref}
-      className="relative isolate overflow-hidden pt-14 h-screen bg-gray-950"
+      className="relative isolate overflow-hidden pt-14 h-screen"
     >
       <div className="absolute inset-0 -z-10 h-full w-full">
         <video
@@ -45,11 +45,11 @@ const Hero = () => {
           </p>
 
           {/* Social Proof */}
-          <div className="mt-6 flex justify-center gap-8 text-lg font-inter text-gold/70">
+          <div className="mt-6 flex justify-center gap-12 text-lg font-inter font-semibold text-gold/70">
             <span>10+ Projects</span>
-            <span>•</span>
+
             <span>5+ Happy Clients</span>
-            <span>•</span>
+
             <span>100% Remote</span>
           </div>
 

@@ -44,94 +44,148 @@ const DialogForm = ({ closeModal }: DialogFormProps) => {
   };
 
   return (
-    <form
-      onSubmit={handleSubmit(onSubmit)}
-      className="space-y-5 bg-gray-900 p-6 rounded-xl shadow-lg"
-    >
-      <h2 className="text-4xl text-gold font-bold text-center font-iceland">
-        Let&apos;s Connect
-      </h2>
+    <div className="relative">
+      {/* Efecto de fondo con gradiente */}
+      <div className="absolute inset-0 bg-gradient-to-br from-gold/5 via-transparent to-purple-500/5 rounded-2xl blur-xl"></div>
 
-      {/** Name Field */}
-      <>
-        <input
-          {...register("name")}
-          type="text"
-          id="name"
-          className="w-full p-3 bg-gray-800 text-white rounded-lg border border-gray-700 focus:outline-none focus:border-gold transition font-inter"
-          placeholder="Full Name"
-        />
-        <ErrorMessage
-          errors={errors}
-          name="name"
-          render={({ message }) => (
-            <p className="text-red-500 text-sm mt-1 font-inter">{message}</p>
-          )}
-        />
-      </>
-
-      {/** Email Field */}
-      <>
-        <input
-          {...register("email")}
-          type="email"
-          id="email"
-          className="w-full p-3 bg-gray-800 text-white rounded-lg border border-gray-700 focus:outline-none focus:border-gold transition font-inter"
-          placeholder="Email"
-        />
-        <ErrorMessage
-          errors={errors}
-          name="email"
-          render={({ message }) => (
-            <p className="text-red-500 text-sm mt-1 font-inter">{message}</p>
-          )}
-        />
-      </>
-
-      {/** Phone Field */}
-      <>
-        <input
-          {...register("phone")}
-          type="tel"
-          id="phone"
-          className="w-full p-3 bg-gray-800 text-white rounded-lg border border-gray-700 focus:outline-none focus:border-gold transition font-inter"
-          placeholder="Phone Number"
-        />
-        <ErrorMessage
-          errors={errors}
-          name="phone"
-          render={({ message }) => (
-            <p className="text-red-500 text-sm mt-1 font-inter">{message}</p>
-          )}
-        />
-      </>
-
-      {/** Message Field */}
-      <>
-        <textarea
-          {...register("message")}
-          id="message"
-          className="w-full p-3 bg-gray-800 text-white rounded-lg border border-gray-700 focus:outline-none focus:border-gold transition font-inter"
-          placeholder="Type your message..."
-          rows={4}
-        />
-        <ErrorMessage
-          errors={errors}
-          name="message"
-          render={({ message }) => (
-            <p className="text-red-500 text-sm mt-1 font-inter">{message}</p>
-          )}
-        />
-      </>
-
-      {/** Submit Button */}
-      <button
-        type="submit"
-        className="w-full py-3 text-lg font-semibold text-white bg-gold/80 hover:bg-gold rounded-lg transition shadow-md font-inter"
+      <form
+        onSubmit={handleSubmit(onSubmit)}
+        className="relative space-y-6 bg-gradient-to-br from-gray-900/95 to-gray-800/95 p-8 rounded-2xl shadow-2xl backdrop-blur-sm border border-gray-700/50 hover:border-gold/30 transition-all duration-500"
       >
-        Send Message
-      </button>
-    </form>
+        {/* Decorative elements */}
+        <div className="absolute top-0 left-0 w-20 h-20 bg-gold/10 rounded-full blur-2xl"></div>
+        <div className="absolute bottom-0 right-0 w-16 h-16 bg-purple-500/10 rounded-full blur-2xl"></div>
+
+        <div className="relative">
+          <h2 className="text-4xl md:text-5xl text-gold  font-bold text-center font-iceland tracking-wide">
+            Let&apos;s Connect
+          </h2>
+          <div className="w-24 h-1 bg-gradient-to-r from-transparent via-gold to-transparent mx-auto mt-4 rounded-full"></div>
+        </div>
+
+        {/** Name Field */}
+        <div className="group">
+          <div className="relative">
+            <input
+              {...register("name")}
+              type="text"
+              id="name"
+              className="w-full p-4 bg-gray-800/80 text-white rounded-xl border border-gray-700/60 focus:outline-none focus:border-gold focus:ring-2 focus:ring-gold/20 transition-all duration-300 font-inter placeholder-gray-400 hover:bg-gray-800 peer backdrop-blur-sm"
+              placeholder="Full Name"
+            />
+            <div className="absolute inset-0 rounded-xl bg-gradient-to-r from-gold/0 via-gold/5 to-gold/0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"></div>
+          </div>
+          <ErrorMessage
+            errors={errors}
+            name="name"
+            render={({ message }) => (
+              <p className="text-red-400 text-sm mt-2 font-inter animate-pulse flex items-center">
+                <span className="w-1 h-1 bg-red-400 rounded-full mr-2"></span>
+                {message}
+              </p>
+            )}
+          />
+        </div>
+
+        {/** Email Field */}
+        <div className="group">
+          <div className="relative">
+            <input
+              {...register("email")}
+              type="email"
+              id="email"
+              className="w-full p-4 bg-gray-800/80 text-white rounded-xl border border-gray-700/60 focus:outline-none focus:border-gold focus:ring-2 focus:ring-gold/20 transition-all duration-300 font-inter placeholder-gray-400 hover:bg-gray-800 peer backdrop-blur-sm"
+              placeholder="Email"
+            />
+            <div className="absolute inset-0 rounded-xl bg-gradient-to-r from-gold/0 via-gold/5 to-gold/0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"></div>
+          </div>
+          <ErrorMessage
+            errors={errors}
+            name="email"
+            render={({ message }) => (
+              <p className="text-red-400 text-sm mt-2 font-inter animate-pulse flex items-center">
+                <span className="w-1 h-1 bg-red-400 rounded-full mr-2"></span>
+                {message}
+              </p>
+            )}
+          />
+        </div>
+
+        {/** Phone Field */}
+        <div className="group">
+          <div className="relative">
+            <input
+              {...register("phone")}
+              type="tel"
+              id="phone"
+              className="w-full p-4 bg-gray-800/80 text-white rounded-xl border border-gray-700/60 focus:outline-none focus:border-gold focus:ring-2 focus:ring-gold/20 transition-all duration-300 font-inter placeholder-gray-400 hover:bg-gray-800 peer backdrop-blur-sm"
+              placeholder="Phone Number"
+            />
+            <div className="absolute inset-0 rounded-xl bg-gradient-to-r from-gold/0 via-gold/5 to-gold/0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"></div>
+          </div>
+          <ErrorMessage
+            errors={errors}
+            name="phone"
+            render={({ message }) => (
+              <p className="text-red-400 text-sm mt-2 font-inter animate-pulse flex items-center">
+                <span className="w-1 h-1 bg-red-400 rounded-full mr-2"></span>
+                {message}
+              </p>
+            )}
+          />
+        </div>
+
+        {/** Message Field */}
+        <div className="group">
+          <div className="relative">
+            <textarea
+              {...register("message")}
+              id="message"
+              className="w-full p-4 bg-gray-800/80 text-white rounded-xl border border-gray-700/60 focus:outline-none focus:border-gold focus:ring-2 focus:ring-gold/20 transition-all duration-300 font-inter placeholder-gray-400 hover:bg-gray-800 peer backdrop-blur-sm resize-none"
+              placeholder="Type your message..."
+              rows={5}
+            />
+            <div className="absolute inset-0 rounded-xl bg-gradient-to-r from-gold/0 via-gold/5 to-gold/0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"></div>
+          </div>
+          <ErrorMessage
+            errors={errors}
+            name="message"
+            render={({ message }) => (
+              <p className="text-red-400 text-sm mt-2 font-inter animate-pulse flex items-center">
+                <span className="w-1 h-1 bg-red-400 rounded-full mr-2"></span>
+                {message}
+              </p>
+            )}
+          />
+        </div>
+
+        {/** Submit Button */}
+        <div className="pt-2">
+          <button
+            type="submit"
+            className="relative w-full py-4 text-lg font-semibold text-black bg-gradient-to-r from-gold via-yellow-200 to-gold hover:from-yellow-200 hover:via-gold hover:to-yellow-200 rounded-xl transition-all duration-300 shadow-lg hover:shadow-gold/25 font-inter group overflow-hidden transform hover:scale-[1.02] active:scale-[0.98]"
+          >
+            <div className="absolute inset-0 bg-white/20 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700 skew-x-12"></div>
+            <span className="relative flex items-center justify-center">
+              Send Message
+              <svg
+                className="ml-2 w-5 h-5 transform group-hover:translate-x-1 transition-transform duration-300"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"
+                />
+              </svg>
+            </span>
+          </button>
+        </div>
+      </form>
+    </div>
   );
 };
 

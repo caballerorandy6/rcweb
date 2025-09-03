@@ -3,30 +3,53 @@
 import useSectionObserver from "@/hooks/useSectionObserver";
 import { CheckIcon } from "@heroicons/react/24/outline";
 import { pricingPlans } from "@/libs/data";
+import Heading from "../Heading";
+import { motion } from "framer-motion";
 
 const Pricing = () => {
   const ref = useSectionObserver({ sectionName: "Pricing" });
+
+  // 2. Definir las variantes de animación
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    show: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.2, // Tiempo entre la animación de cada tarjeta
+      },
+    },
+  };
+
+  const cardVariants = {
+    hidden: { opacity: 0, y: 50 }, // Empieza 50px abajo y transparente
+    show: { opacity: 1, y: 0 }, // Termina en su posición original y visible
+  };
 
   return (
     <section
       id="pricing"
       ref={ref}
-      className="relative isolate overflow-hidden py-24 sm:py-32 bg-gray-950"
+      className="relative isolate overflow-hidden pt-24 sm:pt-32"
     >
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
-        <div className="mx-auto max-w-2xl text-center">
-          <h2 className="text-4xl font-iceland tracking-tight text-gold sm:text-6xl">
-            Clear & Transparent Pricing
-          </h2>
-          <p className="mt-6 text-lg font-inter text-white/80">
-            USD pricing for clients in Houston and LATAM
-          </p>
-        </div>
+        <Heading
+          icon={<CheckIcon />}
+          text="USD pricing for clients in Houston and LATAM"
+        >
+          Clear & Transparent Pricing
+        </Heading>
 
-        <div className="mx-auto mt-16 grid max-w-lg grid-cols-1 gap-8 lg:max-w-none lg:grid-cols-3">
+        <motion.div
+          variants={containerVariants}
+          initial="hidden"
+          whileInView="show"
+          viewport={{ once: true, amount: 0.2 }}
+          className="mx-auto mt-16 grid max-w-lg grid-cols-1 gap-8 lg:max-w-none lg:grid-cols-3"
+        >
           {pricingPlans.map((plan) => (
-            <div
+            <motion.div
               key={plan.name}
+              variants={cardVariants}
               className={`relative rounded-2xl ${
                 plan.featured
                   ? "border-2 border-gold ring-2 ring-gold/20 scale-105"
@@ -83,9 +106,9 @@ const Pricing = () => {
               >
                 {plan.cta}
               </button>
-            </div>
+            </motion.div>
           ))}
-        </div>
+        </motion.div>
 
         <div className="mx-auto mt-10 max-w-2xl text-center">
           <p className="text-sm font-inter text-white/50">

@@ -6,26 +6,24 @@ import { motion, AnimatePresence } from "framer-motion";
 import useSectionObserver from "@/hooks/useSectionObserver";
 import { ChevronRightIcon } from "@heroicons/react/24/outline";
 import { processSteps } from "@/libs/data";
+import Heading from "@/app/components/Heading";
 
 const Process = () => {
   const ref = useSectionObserver({ sectionName: "Process" });
   const [activeStep, setActiveStep] = useState(0);
 
   return (
-    <section id="process" ref={ref} className="py-24 sm:py-32">
+    <section id="process" ref={ref} className="pt-24 sm:pt-32">
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
-        {/* Header */}
-        <div className="mx-auto max-w-2xl text-center mb-16">
-          <h2 className="text-4xl font-iceland tracking-tight text-gold sm:text-6xl">
-            My Work Process
-          </h2>
-          <p className="mt-4 text-lg font-inter text-white/80">
-            From idea to reality in 4-6 weeks with complete transparency
-          </p>
-        </div>
+        <Heading
+          icon={<ChevronRightIcon className="w-8 text-gold" />}
+          text="From idea to reality in 4-6 weeks with complete transparency"
+        >
+          My Work Process
+        </Heading>
 
         {/* Desktop: Interactive Horizontal Steps */}
-        <div className="hidden lg:block">
+        <div className="hidden lg:block mt-12">
           {/* Step Indicators */}
           <div className="flex justify-between items-center max-w-4xl mx-auto mb-12">
             {processSteps.map((step, index) => (
