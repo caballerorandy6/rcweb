@@ -1,58 +1,71 @@
+import { useTransition } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { ErrorMessage } from "@hookform/error-message";
-import { FormSshema, FormData } from "@/libs/zod";
+import { FormSchema, FormData } from "@/libs/zod";
 import { toast } from "sonner";
+import { createContactAction } from "@/actions/createContactAction";
 
 interface DialogFormProps {
   closeModal: () => void;
 }
 
 const DialogForm = ({ closeModal }: DialogFormProps) => {
+  const [isPending, startTransition] = useTransition();
+
   const {
     register,
     handleSubmit,
     formState: { errors },
     reset,
   } = useForm<FormData>({
-    resolver: zodResolver(FormSshema),
+    resolver: zodResolver(FormSchema),
+    defaultValues: {
+      name: "",
+      email: "",
+      phone: "",
+      message: "",
+      marketingConsent: true,
+    },
   });
 
   const onSubmit: SubmitHandler<FormData> = async (data) => {
+    // Mostrar toast de carga y guardar su ID
+    const toastId = toast.loading("Sending message...");
+
     try {
-      const response = await fetch("/api/receive-mail", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(data),
+      startTransition(async () => {
+        const contact = await createContactAction(data);
+
+        if (contact.success) {
+          toast.success(contact.message, { id: toastId });
+          reset();
+          closeModal();
+        } else {
+          const errorMessages = Object.values(contact.errors)
+            .flat()
+            .join(" • ");
+          toast.error(
+            errorMessages || contact.message || "Failed to send message",
+            { id: toastId }
+          );
+          console.error(contact.errors);
+        }
       });
-
-      const result = await response.json();
-
-      if (result.success) {
-        toast.success("Message sent successfully!");
-        reset();
-        closeModal();
-      } else {
-        toast.error("Failed to send message. Please try again.");
-      }
     } catch (error) {
-      console.error("Error sending message:", error);
-      toast.error("Something went wrong. Please try again later.");
+      console.error(error);
+      toast.error("Something went wrong. Please try again.", { id: toastId });
     }
   };
 
   return (
     <div className="relative">
-      {/* Efecto de fondo con gradiente */}
       <div className="absolute inset-0 bg-gradient-to-br from-gold/5 via-transparent to-purple-500/5 rounded-2xl blur-xl"></div>
 
       <form
         onSubmit={handleSubmit(onSubmit)}
         className="relative space-y-6 bg-gradient-to-br from-gray-900/95 to-gray-800/95 p-8 rounded-2xl shadow-2xl backdrop-blur-sm border border-gray-700/50 hover:border-gold/30 transition-all duration-500"
       >
-        {/* Decorative elements */}
         <div className="absolute top-0 left-0 w-20 h-20 bg-gold/10 rounded-full blur-2xl"></div>
         <div className="absolute bottom-0 right-0 w-16 h-16 bg-purple-500/10 rounded-full blur-2xl"></div>
 
@@ -159,15 +172,39 @@ const DialogForm = ({ closeModal }: DialogFormProps) => {
           />
         </div>
 
+        {/** Marketing Consent Checkbox */}
+        <div className="group">
+          <label className="flex items-start space-x-3 cursor-pointer hover:bg-gray-800/30 p-3 rounded-lg transition-all duration-200">
+            <div className="flex items-center h-5 mt-1">
+              <input
+                {...register("marketingConsent")}
+                type="checkbox"
+                className="w-5 h-5 bg-gray-800/80 border-2 border-gray-700/60 rounded text-gold focus:ring-2 focus:ring-gold/20 focus:ring-offset-0 focus:ring-offset-gray-900 checked:bg-gold checked:border-gold cursor-pointer transition-all duration-200 hover:border-gold/50"
+              />
+            </div>
+            <div className="flex-1">
+              <span className="text-sm text-gray-300 font-inter leading-relaxed">
+                I agree to receive marketing communications including
+                promotional emails, newsletters, and SMS messages about your
+                services and special offers.
+                <span className="text-gray-500 block mt-1 text-xs">
+                  You can unsubscribe at any time. We respect your privacy.
+                </span>
+              </span>
+            </div>
+          </label>
+        </div>
+
         {/** Submit Button */}
         <div className="pt-2">
           <button
+            disabled={isPending}
             type="submit"
             className="relative w-full py-4 text-lg font-semibold text-black bg-gradient-to-r from-gold via-yellow-200 to-gold hover:from-yellow-200 hover:via-gold hover:to-yellow-200 rounded-xl transition-all duration-300 shadow-lg hover:shadow-gold/25 font-inter group overflow-hidden transform hover:scale-[1.02] active:scale-[0.98]"
           >
             <div className="absolute inset-0 bg-white/20 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700 skew-x-12"></div>
             <span className="relative flex items-center justify-center">
-              Send Message
+              {isPending ? <p>Sending...</p> : <p>Send Message</p>}
               <svg
                 className="ml-2 w-5 h-5 transform group-hover:translate-x-1 transition-transform duration-300"
                 fill="none"

@@ -1,0 +1,41 @@
+// prisma/schema.prisma
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+model Contact {
+  id               String          @id @default(uuid())
+  name             String
+  marketingConsent Boolean         @default(false)
+  createdAt        DateTime        @default(now())
+  updatedAt        DateTime        @updatedAt
+
+  // Relaciones
+  emails           ContactEmail[]
+  phones           ContactPhone[]
+}
+
+model ContactEmail {
+  id        String   @id @default(uuid())
+  contactId String
+  email     String   @unique
+  contact   Contact  @relation(fields: [contactId], references: [id], onDelete: Cascade)
+
+  @@index([email])
+}
+
+model ContactPhone {
+  id        String   @id @default(uuid())
+  contactId String
+  phone     String   @unique
+  contact   Contact  @relation(fields: [contactId], references: [id], onDelete: Cascade)
+
+  @@index([phone])
+}

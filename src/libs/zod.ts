@@ -1,6 +1,7 @@
+// libs/zod.ts
 import z from "zod";
 
-export const FormSshema = z.object({
+export const FormSchema = z.object({
   name: z
     .string()
     .min(2, { message: "Name is too short" })
@@ -12,7 +13,7 @@ export const FormSshema = z.object({
   phone: z
     .string()
     .min(10, { message: "Phone number is too short" })
-    .max(10, { message: "Phone number is too long" })
+    .max(15, { message: "Phone number is too long" })
     .nonempty({
       message: "Phone number is required",
     }),
@@ -20,8 +21,12 @@ export const FormSshema = z.object({
     .string()
     .min(2, { message: "Message is too short" })
     .max(500, { message: "Message is too long" })
-    .nonempty({ message: "Message is required" }),
+    .optional(), // mensaje opcional para captura rápida de contactos
+  marketingConsent: z
+    .boolean()
+    .default(false)
+    .describe("Consent to receive marketing emails and messages"),
 });
 
 // Infer the type
-export type FormData = z.infer<typeof FormSshema>;
+export type FormData = z.infer<typeof FormSchema>;

@@ -254,7 +254,6 @@ export const teachMarqueeData: TeachMarqueeProps[] = [
   },
 ];
 
-//Repeated icons for the TechMarquee to avoid no gap between last and first icon
 export const repeatedIcons = [...teachMarqueeData, ...teachMarqueeData];
 
 export const certifications = [
@@ -472,67 +471,6 @@ export const services = [
   },
 ];
 
-export const pricingPlans = [
-  {
-    name: "Starter",
-    price: "$1,500",
-    range: "1.5k - 2.5k",
-    description: "Professional Landing Page",
-    duration: "2-3 weeks",
-    features: [
-      "1-5 responsive pages",
-      "Custom design",
-      "Basic SEO optimization",
-      "Contact form",
-      "Hosting setup",
-      "30 days support",
-    ],
-    ideal: "Perfect for portfolios and corporate sites",
-    cta: "Start Project",
-    featured: false,
-  },
-  {
-    name: "Business",
-    price: "$3,500",
-    range: "3.5k - 7k",
-    description: "Complete Web Application",
-    duration: "4-6 weeks",
-    features: [
-      "Full system with admin",
-      "PostgreSQL database",
-      "User authentication",
-      "API integrations",
-      "Analytics dashboard",
-      "Email notifications",
-      "60 days support",
-      "Training included",
-    ],
-    ideal: "Similar to GSM AC or Limo Renting",
-    cta: "Most Popular",
-    featured: true,
-  },
-  {
-    name: "Enterprise",
-    price: "$8,000+",
-    range: "From 8k",
-    description: "Custom Solution",
-    duration: "2-4 months",
-    features: [
-      "Custom development",
-      "Scalable architecture",
-      "Multiple integrations",
-      "CI/CD pipeline",
-      "Automated testing",
-      "Complete documentation",
-      "Priority support",
-      "Guaranteed SLA",
-    ],
-    ideal: "For complex enterprise projects",
-    cta: "Contact",
-    featured: false,
-  },
-];
-
 export const faqs = [
   {
     question: "Do you work with clients outside Houston?",
@@ -565,3 +503,96 @@ export const faqs = [
       "Absolutely! I do weekly demos every Friday and you'll have access to a staging environment where you can see real-time progress. Transparency is key to my process.",
   },
 ];
+
+export const pricingPlans = [
+  {
+    name: "Starter",
+    price: "$1,499",
+    range: "$1,499 - $2,999",
+    duration: "2-3 weeks",
+    description: "Perfect for small businesses starting their digital journey",
+    features: [
+      "5-7 page responsive website",
+      "Mobile-optimized design",
+      "Basic SEO setup",
+      "Contact form integration",
+      "Social media links",
+      "Google Analytics setup",
+      "1 month free support"
+    ],
+    ideal: "Ideal for: Local businesses, freelancers, personal brands",
+    featured: false,
+    cta: "Start Your Project"
+  },
+  {
+    name: "Growth",
+    price: "$3,499",
+    range: "$3,499 - $5,999",
+    duration: "3-5 weeks",
+    description: "Scale your business with advanced features and functionality",
+    features: [
+      "10-15 page dynamic website",
+      "Custom animations & interactions",
+      "Advanced SEO optimization",
+      "CMS integration (blog/news)",
+      "Email marketing integration",
+      "Lead capture & automation",
+      "Google My Business setup",
+      "3 months free support"
+    ],
+    ideal: "Ideal for: Growing startups, service businesses, B2B companies",
+    featured: true,
+    cta: "Most Popular Choice"
+  },
+  {
+    name: "Premium",
+    price: "$7,999",
+    range: "$7,999 - $14,999",
+    duration: "6-8 weeks",
+    description: "Complete digital solution for established businesses",
+    features: [
+      "20+ page custom website",
+      "E-commerce functionality",
+      "Custom web application features",
+      "API integrations",
+      "Advanced analytics dashboard",
+      "Multi-language support",
+      "A/B testing setup",
+      "6 months premium support",
+      "Monthly performance reports"
+    ],
+    ideal: "Ideal for: Established SMBs, E-commerce, Multi-location businesses",
+    featured: false,
+    cta: "Transform Your Business"
+  }
+];
+
+export const additionalServices = [
+  {
+    service: "Monthly Maintenance",
+    price: "$199-$499/month",
+    description: "Ongoing updates, backups, and security monitoring"
+  },
+  {
+    service: "Content Creation",
+    price: "$500-$2,000",
+    description: "Professional copywriting and content strategy"
+  },
+  {
+    service: "Email Marketing Setup",
+    price: "$999",
+    description: "Complete email automation and campaign setup"
+  },
+  {
+    service: "Social Media Integration",
+    price: "$799",
+    description: "Full social media feed integration and automation"
+  }
+];
+
+export const paymentTerms = {
+  upfront: "30%",
+  milestone: "40%",
+  delivery: "30%",
+  description: "Flexible payment terms to ease cash flow for small businesses"
+};

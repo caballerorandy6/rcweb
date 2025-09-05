@@ -10,6 +10,7 @@ const sectionTitle: Record<string, string> = {
   experience: "RC WEB | Experience",
   testimonials: "RC WEB | Testimonials",
   about: "RC WEB | About",
+  certifications: "RC WEB | Certifications",
   pricing: "RC WEB | Pricing",
   faq: "RC WEB | FAQ",
   contact: "RC WEB | Contact",
