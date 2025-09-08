@@ -10,6 +10,7 @@
     "email": "PORT=3001 emails dev"
   },
   "dependencies": {
+    "@aws-sdk/client-sns": "^3.883.0",
     "@headlessui/react": "^2.2.0",
     "@heroicons/react": "^2.2.0",
     "@hookform/error-message": "^2.0.1",
