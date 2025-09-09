@@ -7,7 +7,7 @@ import { CodeBracketIcon, ChevronDownIcon } from "@heroicons/react/24/outline";
 import Heading from "@/app/components/Heading";
 
 import useSectionObserver from "@/hooks/useSectionObserver";
-import { projects } from "@/libs/data";
+import { projects } from "@/lib/data";
 import ProjectsList from "@/app/components/ProjectsList";
 
 import TechMarquee from "@/app/components/TechMarquee";

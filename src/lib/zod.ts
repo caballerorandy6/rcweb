@@ -1,4 +1,3 @@
-// libs/zod.ts
 import z from "zod";
 
 export const FormSchema = z.object({
@@ -27,6 +26,21 @@ export const FormSchema = z.object({
     .default(false)
     .describe("Consent to receive marketing emails and messages"),
 });
+
+// Schema de validación
+export const LoginSchema = z.object({
+  email: z
+    .string()
+    .email({ message: "Invalid email address" })
+    .min(3, { message: "Email must be at least 3 characters" })
+    .nonempty({ message: "Email is required" }),
+  password: z
+    .string()
+    .min(6, { message: "Password must be at least 6 characters" })
+    .nonempty({ message: "Password is required" }),
+});
+
+export type LoginData = z.infer<typeof LoginSchema>;
 
 // Infer the type
 export type FormData = z.infer<typeof FormSchema>;

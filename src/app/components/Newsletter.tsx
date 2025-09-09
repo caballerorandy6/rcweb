@@ -1,7 +1,6 @@
-// app/admin/newsletter/page.tsx
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useTransition } from "react";
 import { sendNewsletterAction } from "@/actions/sendNewsletterAction";
 import {
   getNumberOfEligibleContactsAction,
@@ -37,40 +36,42 @@ export default function Newsletter() {
     success: boolean;
     message: string;
   } | null>(null);
+  const [isPending, startTransition] = useTransition();
 
   // 2. Mapear correctamente los datos de las actions al estado del componente
   useEffect(() => {
-    const fetchAllStats = async () => {
-      const [contactsData, emailsData] = await Promise.all([
-        getNumberOfEligibleContactsAction(),
-        getNumberOfEligibleEmailsAction(),
-      ]);
+    startTransition(() => {
+      const fetchAllStats = async () => {
+        const [contactsData, emailsData] = await Promise.all([
+          getNumberOfEligibleContactsAction(),
+          getNumberOfEligibleEmailsAction(),
+        ]);
 
-      // Aquí está la corrección clave:
-      // Se toman los nombres de propiedad que realmente devuelven las actions
-      // y se asignan a la estructura del estado del componente.
-      setStats({
-        contacts: {
-          eligible: contactsData.eligible ?? 0,
-          total: contactsData.total ?? 0,
-          percentage: contactsData.percentage ?? 0,
-        },
-        emails: {
-          eligible: emailsData.eligibleEmails ?? 0,
-          total: emailsData.totalEmails ?? 0,
-          percentage: emailsData.consentPercentage ?? 0,
-        },
-      });
-    };
+        // Mapear los datos recibidos a la estructura esperada
+        setStats({
+          contacts: {
+            eligible: contactsData.eligible ?? 0,
+            total: contactsData.total ?? 0,
+            percentage: contactsData.percentage ?? 0,
+          },
+          emails: {
+            eligible: emailsData.eligibleEmails ?? 0,
+            total: emailsData.totalEmails ?? 0,
+            percentage: emailsData.consentPercentage ?? 0,
+          },
+        });
+      };
 
-    fetchAllStats();
+      fetchAllStats();
+    });
   }, []);
 
+  // Manejar el envío del newsletter
   const handleSend = async () => {
     if (!subject || !content) {
       setResult({
         success: false,
-        message: "Por favor completa todos los campos",
+        message: "Please provide both subject and content.",
       });
       return;
     }
@@ -207,14 +208,14 @@ export default function Newsletter() {
           <div className="flex gap-4">
             <button
               onClick={handleSend}
-              disabled={loading}
+              disabled={isPending || loading}
               className={`flex-1 py-3 rounded-lg font-semibold transition-colors font-inter ${
                 testMode
                   ? "bg-blue-500 hover:bg-blue-600 text-white"
                   : "bg-gold hover:bg-gold/90 text-black"
               } ${loading ? "opacity-50 cursor-not-allowed" : ""}`}
             >
-              {loading
+              {loading || isPending
                 ? "Sending..."
                 : testMode
                   ? "Send Test Email"

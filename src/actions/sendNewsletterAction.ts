@@ -1,6 +1,6 @@
 "use server";
 
-import { prisma } from "@/libs/prisma";
+import { prisma } from "@/lib/prisma";
 import { Resend } from "resend";
 
 const resend = new Resend(process.env.RESEND_API_KEY!);

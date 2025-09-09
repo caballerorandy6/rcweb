@@ -6,7 +6,7 @@ import {
   ChevronDownIcon,
   QuestionMarkCircleIcon,
 } from "@heroicons/react/24/outline";
-import { faqs } from "@/libs/data";
+import { faqs } from "@/lib/data";
 import Heading from "../Heading";
 
 const FAQ = () => {

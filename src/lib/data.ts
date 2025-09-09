@@ -30,20 +30,20 @@ import {
 } from "@heroicons/react/24/outline";
 
 export const navigation: NavigationProps[] = [
-  { name: "Home", hash: "#home" },
-  { name: "Services", hash: "#services" },
-  { name: "Projects", hash: "#projects" },
-  { name: "Process", hash: "#process" },
+  { name: "Home", hash: "/#home" },
+  { name: "Services", hash: "/#services" },
+  { name: "Projects", hash: "/#projects" },
+  { name: "Process", hash: "/#process" },
   {
     name: "Experience",
-    hash: "#experience",
+    hash: "/#experience",
   },
-  { name: "Testimonials", hash: "#testimonials" },
-  { name: "About", hash: "#about" },
-  { name: "Certifications", hash: "#certifications" },
-  { name: "Pricing", hash: "#pricing" },
-  { name: "FAQ", hash: "#faq" },
-  { name: "Contact", hash: "#contact" },
+  { name: "Testimonials", hash: "/#testimonials" },
+  { name: "About", hash: "/#about" },
+  { name: "Certifications", hash: "/#certifications" },
+  { name: "Pricing", hash: "/#pricing" },
+  { name: "FAQ", hash: "/#faq" },
+  { name: "Contact", hash: "/#contact" },
   { name: "CTA", hash: "#cta" },
 ];
 
@@ -518,11 +518,11 @@ export const pricingPlans = [
       "Contact form integration",
       "Social media links",
       "Google Analytics setup",
-      "1 month free support"
+      "1 month free support",
     ],
     ideal: "Ideal for: Local businesses, freelancers, personal brands",
     featured: false,
-    cta: "Start Your Project"
+    cta: "Start Your Project",
   },
   {
     name: "Growth",
@@ -538,11 +538,11 @@ export const pricingPlans = [
       "Email marketing integration",
       "Lead capture & automation",
       "Google My Business setup",
-      "3 months free support"
+      "3 months free support",
     ],
     ideal: "Ideal for: Growing startups, service businesses, B2B companies",
     featured: true,
-    cta: "Most Popular Choice"
+    cta: "Most Popular Choice",
   },
   {
     name: "Premium",
@@ -559,40 +559,40 @@ export const pricingPlans = [
       "Multi-language support",
       "A/B testing setup",
       "6 months premium support",
-      "Monthly performance reports"
+      "Monthly performance reports",
     ],
     ideal: "Ideal for: Established SMBs, E-commerce, Multi-location businesses",
     featured: false,
-    cta: "Transform Your Business"
-  }
+    cta: "Transform Your Business",
+  },
 ];
 
 export const additionalServices = [
   {
     service: "Monthly Maintenance",
     price: "$199-$499/month",
-    description: "Ongoing updates, backups, and security monitoring"
+    description: "Ongoing updates, backups, and security monitoring",
   },
   {
     service: "Content Creation",
     price: "$500-$2,000",
-    description: "Professional copywriting and content strategy"
+    description: "Professional copywriting and content strategy",
   },
   {
     service: "Email Marketing Setup",
     price: "$999",
-    description: "Complete email automation and campaign setup"
+    description: "Complete email automation and campaign setup",
   },
   {
     service: "Social Media Integration",
     price: "$799",
-    description: "Full social media feed integration and automation"
-  }
+    description: "Full social media feed integration and automation",
+  },
 ];
 
 export const paymentTerms = {
   upfront: "30%",
   milestone: "40%",
   delivery: "30%",
-  description: "Flexible payment terms to ease cash flow for small businesses"
+  description: "Flexible payment terms to ease cash flow for small businesses",
 };

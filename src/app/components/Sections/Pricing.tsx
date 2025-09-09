@@ -2,7 +2,7 @@
 
 import useSectionObserver from "@/hooks/useSectionObserver";
 import { CheckIcon } from "@heroicons/react/24/outline";
-import { pricingPlans } from "@/libs/data";
+import { pricingPlans } from "@/lib/data";
 import Heading from "../Heading";
 import { motion } from "framer-motion";
 

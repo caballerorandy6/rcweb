@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { navigation } from "@/libs/data";
+import { navigation } from "@/lib/data";
 import Logo from "@/app/components/Logo";
 
 const Footer = () => {

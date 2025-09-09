@@ -5,7 +5,7 @@ import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import useSectionObserver from "@/hooks/useSectionObserver";
 import { ChevronRightIcon } from "@heroicons/react/24/outline";
-import { processSteps } from "@/libs/data";
+import { processSteps } from "@/lib/data";
 import Heading from "@/app/components/Heading";
 
 const Process = () => {

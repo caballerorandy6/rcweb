@@ -7,7 +7,8 @@ import { Dialog, DialogPanel } from "@headlessui/react";
 import { useRCWebStore } from "@/store/rcweb-store";
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
 import Logo from "@/app/components/Logo";
-import { navigation } from "@/libs/data";
+import { navigation } from "@/lib/data";
+import { usePathname } from "next/navigation";
 
 export interface NavigationProps {
   name: string;
@@ -22,6 +23,14 @@ const Navbar = () => {
     setIsOpen,
     handleClickModal,
   } = useRCWebStore();
+
+  const pathname = usePathname();
+  const isHomePage = pathname === "/";
+
+  // Función helper para obtener el href correcto
+  const getHref = (hash: string) => {
+    return isHomePage ? hash : `/${hash}`;
+  };
 
   // Separar Contact como CTA
   const mainNavigation = navigation.slice(0, -2); // Todos menos Contact y CTA
@@ -43,7 +52,7 @@ const Navbar = () => {
               {mainNavigation.map((item) => (
                 <Link
                   key={item.name}
-                  href={item.hash}
+                  href={getHref(item.hash)}
                   onClick={() => setActiveSection(item.name)}
                   className={clsx(
                     "px-3 py-2 text-sm font-inter text-white/80 hover:text-gold transition-all duration-200 relative",

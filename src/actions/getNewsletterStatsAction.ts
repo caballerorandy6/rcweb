@@ -1,7 +1,6 @@
-// actions/getNewsletterStatsAction.ts
 "use server";
 
-import { prisma } from "@/libs/prisma";
+import { prisma } from "@/lib/prisma";
 
 // Obtener estadísticas de contactos elegibles
 export const getNumberOfEligibleContactsAction = async () => {

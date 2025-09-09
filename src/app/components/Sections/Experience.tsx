@@ -1,7 +1,7 @@
 "use client";
 
 import { BriefcaseIcon } from "@heroicons/react/24/outline";
-import { experience } from "@/libs/data";
+import { experience } from "@/lib/data";
 import useSectionObserver from "@/hooks/useSectionObserver";
 import { motion } from "framer-motion";
 import Heading from "../Heading";

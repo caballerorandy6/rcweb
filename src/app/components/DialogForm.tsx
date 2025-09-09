@@ -2,7 +2,7 @@ import { useTransition } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { ErrorMessage } from "@hookform/error-message";
-import { FormSchema, FormData } from "@/libs/zod";
+import { FormSchema, FormData } from "@/lib/zod";
 import { toast } from "sonner";
 import { createContactAction } from "@/actions/createContactAction";
 

@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import Marquee from "react-fast-marquee";
-import { repeatedIcons } from "@/libs/data";
+import { repeatedIcons } from "@/lib/data";
 import { useId } from "react";
 
 export interface TeachMarqueeProps {

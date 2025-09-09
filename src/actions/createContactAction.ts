@@ -1,7 +1,7 @@
 "use server";
 
-import { prisma } from "@/libs/prisma";
-import { FormSchema, type FormData } from "@/libs/zod";
+import { prisma } from "@/lib/prisma";
+import { FormSchema, type FormData } from "@/lib/zod";
 import { Resend } from "resend";
 
 export interface CreateContactAction {

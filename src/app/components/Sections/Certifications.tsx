@@ -6,7 +6,7 @@ import { useRCWebStore } from "@/store/rcweb-store";
 import { CheckCircleIcon, ChevronDownIcon } from "@heroicons/react/24/outline";
 import Heading from "@/app/components/Heading";
 import CertificationsList from "@/app/components/CertificationsList";
-import { certifications } from "@/libs/data";
+import { certifications } from "@/lib/data";
 
 const Certifications = () => {
   const { isExpanded, handleClickCertificationsDialog } = useRCWebStore();

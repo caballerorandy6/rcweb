@@ -11,7 +11,7 @@ export async function POST(request: Request) {
   try {
     const data = await resend.emails.send({
       from: "RC Web <no-reply@rcweb.dev>",
-      to: ["caballerorandy7@gmail.com"],
+      to: ["admin@rcweb.dev"],
       subject: `New message from ${name}`,
       text: `You have received a new message from ${name} (${email}, ${phone}): ${message}`,
     });
