@@ -101,7 +101,9 @@ export default async function AdminDashboard() {
             <div className="flex items-center justify-between">
               <div>
                 <p className="text-gray-400 text-sm font-inter">Emails Sent</p>
-                <p className="text-3xl font-bold text-blue-400 mt-1">0</p>
+                <p className="text-3xl font-bold text-blue-400 mt-1 font-inter">
+                  0
+                </p>
               </div>
               <div className="text-blue-400">
                 <svg
@@ -124,8 +126,10 @@ export default async function AdminDashboard() {
           <div className="bg-gray-800/50 rounded-lg p-6 border border-gray-700/50">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-gray-400 text-sm font-inter">SMS Sent</p>
-                <p className="text-3xl font-bold text-purple-400 mt-1">0</p>
+                <p className="text-gray-400 text-sm">SMS Sent</p>
+                <p className="text-3xl font-bold text-purple-400 mt-1 font-inter">
+                  0
+                </p>
               </div>
               <div className="text-purple-400">
                 <svg
@@ -148,7 +152,7 @@ export default async function AdminDashboard() {
 
         {/* Quick Actions */}
         <div className="bg-gray-800/50 rounded-lg p-6 border border-gray-700/50 mb-8">
-          <h2 className="text-xl font-bold text-white mb-4 font-iceland">
+          <h2 className="text-2xl font-bold text-white mb-4 font-iceland">
             Quick Actions
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
@@ -160,7 +164,9 @@ export default async function AdminDashboard() {
                 <p className="text-white font-medium font-inter">
                   View Contacts
                 </p>
-                <p className="text-gray-400 text-sm">Manage all contacts</p>
+                <p className="text-gray-400 text-sm font-inter">
+                  Manage all contacts
+                </p>
               </div>
               <svg
                 className="w-5 h-5 text-gray-400 group-hover:text-gold transition-colors"
@@ -185,7 +191,9 @@ export default async function AdminDashboard() {
                 <p className="text-white font-medium font-inter">
                   Send Newsletter
                 </p>
-                <p className="text-gray-400 text-sm">Email campaign</p>
+                <p className="text-gray-400 text-sm font-inter">
+                  Email campaign
+                </p>
               </div>
               <svg
                 className="w-5 h-5 text-gray-400 group-hover:text-gold transition-colors"
@@ -208,7 +216,7 @@ export default async function AdminDashboard() {
             >
               <div>
                 <p className="text-white font-medium font-inter">Send SMS</p>
-                <p className="text-gray-400 text-sm">SMS campaign</p>
+                <p className="text-gray-400 text-sm font-inter">SMS campaign</p>
               </div>
               <svg
                 className="w-5 h-5 text-gray-400 group-hover:text-gold transition-colors"
@@ -229,7 +237,7 @@ export default async function AdminDashboard() {
 
         {/* User Info */}
         <div className="bg-gray-800/50 rounded-lg p-6 border border-gray-700/50">
-          <h2 className="text-xl font-bold text-white mb-4 font-iceland">
+          <h2 className="text-2xl font-bold text-white mb-4 font-iceland">
             Session Information
           </h2>
           <div className="space-y-2 font-inter">
