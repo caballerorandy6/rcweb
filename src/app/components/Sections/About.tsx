@@ -2,7 +2,6 @@
 
 import Image from "next/image";
 import Heading from "@/app/components/Heading";
-import Certifications from "@/app/components/Sections/Certifications";
 import { UserPlusIcon } from "@heroicons/react/24/outline";
 import useSectionObserver from "@/hooks/useSectionObserver";
 import { motion, Variants } from "framer-motion";
@@ -134,7 +133,6 @@ const About = () => {
           />
         </motion.figure>
       </div>
-      <Certifications />
     </section>
   );
 };

@@ -15,7 +15,6 @@ const resend = new Resend(process.env.RESEND_API_KEY!);
 export const createContactAction = async (
   data: FormData
 ): Promise<CreateContactAction> => {
-  // 1. Validar formulario
   const parsed = FormSchema.safeParse(data);
 
   if (!parsed.success) {
@@ -27,87 +26,84 @@ export const createContactAction = async (
   }
 
   try {
-    //Buscar contacto existente por un email o por un telefono
-    const existingContact = await prisma.contact.findFirst({
-      where: {
-        OR: [
-          { emails: { some: { email: parsed.data.email } } },
-          { phones: { some: { phone: parsed.data.phone } } },
-        ],
-      },
-    });
+    const { name, email, phone, marketingConsent, message } = parsed.data;
 
-    if (existingContact) {
+    // 1. Buscar contacto por email
+    let contact = email
+      ? await prisma.contact.findFirst({
+          where: { emails: { some: { email } } },
+          include: { emails: true, phones: true },
+        })
+      : null;
+
+    // 2. Si no existe por email, buscar por teléfono
+    if (!contact && phone) {
+      contact = await prisma.contact.findFirst({
+        where: { phones: { some: { phone } } },
+        include: { emails: true, phones: true },
+      });
+    }
+
+    // 3. Si existe contacto, actualizar y agregar nuevos emails/phones
+    if (contact) {
       await prisma.contact.update({
-        where: { id: existingContact.id },
+        where: { id: contact.id },
         data: {
-          name: parsed.data.name,
-          marketingConsent: parsed.data.marketingConsent,
-          // Conecta o crea el email (añade si es nuevo)
-          emails: {
-            connectOrCreate: {
-              where: { email: parsed.data.email },
-              create: { email: parsed.data.email },
-            },
-          },
-          phones: parsed.data.phone
+          name,
+          marketingConsent,
+          emails: email
             ? {
                 connectOrCreate: {
-                  where: { phone: parsed.data.phone },
-                  create: { phone: parsed.data.phone },
+                  where: { email },
+                  create: { email },
+                },
+              }
+            : undefined,
+          phones: phone
+            ? {
+                connectOrCreate: {
+                  where: { phone },
+                  create: { phone },
                 },
               }
             : undefined,
         },
       });
     } else {
+      // 4. Si no existe, crear nuevo contacto con email y teléfono
       await prisma.contact.create({
         data: {
-          name: parsed.data.name,
-          marketingConsent: parsed.data.marketingConsent,
-          emails: {
-            connectOrCreate: {
-              where: { email: parsed.data.email },
-              create: { email: parsed.data.email },
-            },
-          },
-          phones: parsed.data.phone
-            ? {
-                connectOrCreate: {
-                  where: { phone: parsed.data.phone },
-                  create: { phone: parsed.data.phone },
-                },
-              }
-            : undefined,
+          name,
+          marketingConsent,
+          emails: email ? { create: { email } } : undefined,
+          phones: phone ? { create: { phone } } : undefined,
         },
       });
     }
 
-    // 3. Enviar email de confirmación
-    await resend.emails.send({
-      from: `RC Web <noreply@rcweb.dev>`,
-      to: parsed.data.email,
-      subject: "New Contact Form Submission",
-      html: `
-        <h1>New Contact Form Submission</h1>
-        <p><strong>Name:</strong> ${parsed.data.name}</p>
-        <p><strong>Email:</strong> ${parsed.data.email}</p>
-        <p><strong>Phone:</strong> ${parsed.data.phone}</p>
-        <p><strong>Message:</strong> ${parsed.data.message || "No message provided"}</p>
-      `,
-    });
+    // 5. Enviar email de confirmación
+    if (email) {
+      await resend.emails.send({
+        from: "RC Web <noreply@rcweb.dev>",
+        to: email,
+        subject: "New Contact Form Submission",
+        html: `
+          <h1>New Contact Form Submission</h1>
+          <p><strong>Name:</strong> ${name}</p>
+          <p><strong>Email:</strong> ${email}</p>
+          <p><strong>Phone:</strong> ${phone}</p>
+          <p><strong>Message:</strong> ${message || "No message provided"}</p>
+        `,
+      });
+    }
 
     return {
       success: true,
-      message: "Contact created successfully",
+      message: "Contact processed successfully",
       errors: {},
     };
   } catch (error) {
     console.error(error);
-    return {
-      success: false,
-      message: "Internal Server Error",
-      errors: {},
-    };
+    return { success: false, message: "Internal Server Error", errors: {} };
   }
 };

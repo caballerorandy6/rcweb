@@ -12,6 +12,7 @@ import Pricing from "@/app/components/Sections/Pricing";
 import FAQ from "@/app/components/Sections/FAQ";
 import Contact from "@/app/components/Sections/Contact";
 import CTA from "@/app/components/Sections/FloatingCTA";
+import Certifications from "@/app/components/Sections/Certifications";
 
 import { useScrollSpy } from "@/hooks/useScrollSpy";
 
@@ -20,12 +21,12 @@ export default function Home() {
     "home",
     "services",
     "projects",
-    "process",
-    "experience",
     "testimonials",
-    "about",
+    "process",
     "pricing",
     "faq",
+    "experience",
+    "about",
     "contact",
     "cta",
   ]);
@@ -35,12 +36,13 @@ export default function Home() {
       <Hero />
       <Services />
       <Projects />
-      <Process />
-      <Experience />
       <Testimonials />
-      <About />
+      <Process />
       <Pricing />
       <FAQ />
+      <Experience />
+      <Certifications />
+      <About />
       <Contact />
       <CTA />
     </main>

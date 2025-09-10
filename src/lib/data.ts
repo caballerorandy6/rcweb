@@ -31,20 +31,17 @@ import {
 
 export const navigation: NavigationProps[] = [
   { name: "Home", hash: "/#home" },
-  { name: "Services", hash: "/#services" },
-  { name: "Projects", hash: "/#projects" },
-  { name: "Process", hash: "/#process" },
-  {
-    name: "Experience",
-    hash: "/#experience",
-  },
-  { name: "Testimonials", hash: "/#testimonials" },
-  { name: "About", hash: "/#about" },
+  { name: "Services", hash: "/#services" }, // Lo más importante primero
+  { name: "Projects", hash: "/#projects" }, // Muestras tu trabajo
+  { name: "Testimonials", hash: "/#testimonials" }, // Respaldas con pruebas sociales
+  { name: "Process", hash: "/#process" }, // Explicas cómo trabajas
+  { name: "Pricing", hash: "/#pricing" }, // El cliente ya confía, ahora ve el costo
+  { name: "FAQ", hash: "/#faq" }, // Resuelves dudas comunes
+  { name: "Experience", hash: "/#experience" }, // Refuerzas credibilidad
   { name: "Certifications", hash: "/#certifications" },
-  { name: "Pricing", hash: "/#pricing" },
-  { name: "FAQ", hash: "/#faq" },
-  { name: "Contact", hash: "/#contact" },
-  { name: "CTA", hash: "#cta" },
+  { name: "About", hash: "/#about" }, // Quién eres (menos prioridad que lo anterior)
+  { name: "Contact", hash: "/#contact" }, // Punto de conversión
+  { name: "CTA", hash: "#cta" }, // Botón extra destacado
 ];
 
 export const experience: ExperienceProps[] = [

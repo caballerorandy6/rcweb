@@ -11,11 +11,6 @@ async function main() {
       password: "Libre2025!",
       name: "Admin",
     },
-    {
-      email: "caballerorandy7@gmail.com",
-      password: "Libre2025!",
-      name: "Randy Caballero",
-    },
   ];
 
   for (const admin of admins) {

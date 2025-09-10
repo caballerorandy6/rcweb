@@ -4,10 +4,14 @@ import { redirect } from "next/navigation";
 import SignOutButton from "@/app/components/SignOutButton";
 import { getTotalContactsAction } from "@/actions/getTotalContactsAction";
 import { getMarketingConsentAction } from "@/actions/getMarketingConsentAction";
+import { getTotalEmailsSentAction } from "@/actions/getTotalEmailsSentAction";
+import { getTotalSMSsentAction } from "@/actions/getTotalSMSSentAction";
 
 export default async function AdminDashboard() {
   const totalContacts = await getTotalContactsAction();
   const totalMarketingConsent = await getMarketingConsentAction();
+  const totalEmailsSent = await getTotalEmailsSentAction();
+  const totalSMSsent = await getTotalSMSsentAction();
 
   const session = await auth();
 
@@ -19,7 +23,7 @@ export default async function AdminDashboard() {
   return (
     <div className="pt-24 lg:pt-32">
       {/* Header */}
-      <header className="bg-gray-800/50 border-b border-gray-700">
+      <header className="bg-gray-900/50 backdrop-blur-sm border-b border-gray-700/50 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full z-50 rounded-lg">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center py-4">
             <div className="flex items-center space-x-4">
@@ -102,7 +106,7 @@ export default async function AdminDashboard() {
               <div>
                 <p className="text-gray-400 text-sm font-inter">Emails Sent</p>
                 <p className="text-3xl font-bold text-blue-400 mt-1 font-inter">
-                  0
+                  {totalEmailsSent}
                 </p>
               </div>
               <div className="text-blue-400">
@@ -126,9 +130,9 @@ export default async function AdminDashboard() {
           <div className="bg-gray-800/50 rounded-lg p-6 border border-gray-700/50">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-gray-400 text-sm">SMS Sent</p>
+                <p className="text-gray-400 text-sm font-inter">SMS Sent</p>
                 <p className="text-3xl font-bold text-purple-400 mt-1 font-inter">
-                  0
+                  {totalSMSsent}
                 </p>
               </div>
               <div className="text-purple-400">

@@ -57,6 +57,14 @@ export const sendNewsletterAction = async (
       return { success: false, message: "No valid emails to send." };
     }
 
+    const emailCampaign = await prisma.emailCampaign.create({
+      data: {
+        name: subject,
+        sentAt: new Date(),
+        emailsSent: 0, // Se actualizará después del envío
+      },
+    });
+
     // 3. Test mode: send only the first email in the list
     if (testMode) {
       const testEmail = emailsToSend[0];
@@ -78,8 +86,7 @@ export const sendNewsletterAction = async (
     const { data, error } = await resend.batch.send(emailsToSend);
 
     if (error) {
-      // Este error ocurre si la petición a Resend falla por completo (ej. API key inválida)
-      console.error("Error en la API de Resend Batch:", error);
+      console.error("Resend API Batch Error:", error);
       throw error;
     }
 
@@ -93,6 +100,12 @@ export const sendNewsletterAction = async (
         message: "The campaign was processed, but no emails could be sent.",
       };
     }
+
+    //Update Emails Sent Count in EmailCampaign
+    await prisma.emailCampaign.update({
+      where: { id: emailCampaign.id },
+      data: { emailsSent: successfulSends },
+    });
 
     return {
       success: true,

@@ -65,3 +65,20 @@ model Admin {
   
   @@index([email])
 }
+
+
+model EmailCampaign {
+  id         String   @id @default(uuid())
+  name       String
+  createdAt  DateTime @default(now())
+  sentAt     DateTime?
+  emailsSent Int      @default(0)  // Total de emails enviados en esta campaña
+}
+
+model SmsCampaign {
+  id        String   @id @default(uuid())
+  name      String
+  createdAt DateTime @default(now())
+  sentAt    DateTime?
+  smsSent   Int      @default(0)  // Total de SMS enviados en esta campaña
+}
