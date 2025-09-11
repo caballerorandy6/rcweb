@@ -26,7 +26,7 @@ const initialStats: Stats = {
   emails: { eligible: 0, total: 0, percentage: 0 },
 };
 
-export default function Newsletter() {
+export default function SendNewsletterCampaign() {
   const [subject, setSubject] = useState("");
   const [content, setContent] = useState("");
   const [testMode, setTestMode] = useState(true);

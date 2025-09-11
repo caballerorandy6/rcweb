@@ -1,4 +1,4 @@
-import Newsletter from "@/app/components/Newsletter";
+import Newsletter from "@/app/components/SendNewsletterCampaign";
 
 const NewsletterPage = () => {
   return (

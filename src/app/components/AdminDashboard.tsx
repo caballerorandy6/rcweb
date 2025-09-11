@@ -6,12 +6,14 @@ import { getTotalContactsAction } from "@/actions/getTotalContactsAction";
 import { getMarketingConsentAction } from "@/actions/getMarketingConsentAction";
 import { getTotalEmailsSentAction } from "@/actions/getTotalEmailsSentAction";
 import { getTotalSMSsentAction } from "@/actions/getTotalSMSSentAction";
+//import { getSmsStatsAction } from "@/actions/getSmsStatsAction";
 
 export default async function AdminDashboard() {
   const totalContacts = await getTotalContactsAction();
   const totalMarketingConsent = await getMarketingConsentAction();
   const totalEmailsSent = await getTotalEmailsSentAction();
   const totalSMSsent = await getTotalSMSsentAction();
+  //const { totalSMSsent } = await getSmsStatsAction();
 
   const session = await auth();
 
