@@ -661,4 +661,17 @@ export const pricingPlans = [
     featured: false,
     cta: "Transform Your Business",
   },
+  {
+    id: "test",
+    name: "test",
+    price: "$1",
+    priceInCents: 100, // $1.00
+    range: "$1 - $2",
+    duration: "test",
+    description: "test",
+    features: ["test"],
+    ideal: "test",
+    featured: false,
+    cta: "test",
+  },
 ];

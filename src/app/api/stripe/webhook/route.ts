@@ -3,6 +3,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import Stripe from "stripe";
 import { prisma } from "@/lib/prisma";
+import { Resend } from "resend";
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
   apiVersion: "2025-08-27.basil",
@@ -34,7 +35,18 @@ export async function POST(req: NextRequest) {
 
       // Aquí puedes:
       // 1. Crear un registro del proyecto
+
       // 2. Enviar email de confirmación
+      const resend = new Resend(process.env.RESEND_API_KEY!);
+      if (session.customer_email) {
+        await resend.emails.send({
+          from: "no-reply@rcweb.dev",
+          to: session.customer_email,
+          subject: "Payment Confirmation",
+          html: `<p>Thank you for your payment. Your checkout session has been completed.</p>`,
+        });
+      }
+
       // 3. Actualizar el estado del contacto a "customer"
 
       if (session.customer_email) {

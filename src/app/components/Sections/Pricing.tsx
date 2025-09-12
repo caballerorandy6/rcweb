@@ -49,6 +49,16 @@ const Pricing = () => {
       return;
     }
 
+    // 👉 Abre la pestaña de inmediato (vacía o con loader)
+    const stripeTab = window.open("", "_blank");
+
+    if (!stripeTab) {
+      toast.error(
+        "Popup blocked! Please allow popups to continue to checkout."
+      );
+      return;
+    }
+
     startTransition(async () => {
       const result = await createCustomCheckoutSession(
         {
@@ -60,10 +70,12 @@ const Pricing = () => {
       );
 
       if (result.success && result.sessionUrl) {
-        // Redirigir a Stripe Checkout
-        window.location.href = result.sessionUrl;
+        // 👉 Redirige la pestaña recién abierta
+        stripeTab.location.href = result.sessionUrl;
       } else {
         toast.error(result.error || "Failed to create checkout session");
+        // 👉 Si falla, cierra la pestaña
+        stripeTab.close();
       }
     });
   };
