@@ -1,10 +1,10 @@
 import { Suspense } from "react";
-import Newsletter from "@/app/components/SendNewsletterCampaign";
+import ProjectManagement from "@/app/components/ProjectManagement";
 import Spinner from "@/app/components/Spinner";
 import { auth } from "@/lib/auth";
 import { redirect } from "next/navigation";
 
-const NewsletterPage = async () => {
+const ProjectManagementPage = async () => {
   const session = await auth();
 
   // Doble verificación (el middleware ya lo hace, pero por seguridad)
@@ -13,12 +13,10 @@ const NewsletterPage = async () => {
   }
 
   return (
-    <section id="newsletter">
-      <Suspense fallback={<Spinner />}>
-        <Newsletter />
-      </Suspense>
-    </section>
+    <Suspense fallback={<Spinner />}>
+      <ProjectManagement />
+    </Suspense>
   );
 };
 
-export default NewsletterPage;
+export default ProjectManagementPage;

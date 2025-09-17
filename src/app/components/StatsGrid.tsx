@@ -1,0 +1,101 @@
+"use client";
+
+import { useState, useEffect } from "react";
+import { getTotalContactsAction } from "@/actions/getTotalContactsAction";
+import { getMarketingConsentAction } from "@/actions/getMarketingConsentAction";
+import { getTotalEmailsSentAction } from "@/actions/getTotalEmailsSentAction";
+import { getTotalSMSsentAction } from "@/actions/getTotalSMSSentAction";
+import { getProjectStatsAction } from "@/actions/getProjectStatsAction";
+//import { getSmsStatsAction } from "@/actions/getSmsStatsAction";
+import {
+  UserGroupIcon,
+  CheckCircleIcon,
+  EnvelopeIcon,
+  ChatBubbleLeftRightIcon,
+  BriefcaseIcon,
+} from "@heroicons/react/24/outline";
+
+export default function StatsGrid() {
+  const [stats, setStats] = useState({
+    totalContacts: 0,
+    totalMarketingConsent: 0,
+    totalEmailsSent: 0,
+    totalSMSsent: 0,
+    totalProjects: 0,
+  });
+
+  useEffect(() => {
+    let isMounted = true;
+
+    async function fetchStats() {
+      const totalContacts = await getTotalContactsAction();
+      const totalMarketingConsent = await getMarketingConsentAction();
+      const totalEmailsSent = await getTotalEmailsSentAction();
+      const totalSMSsent = await getTotalSMSsentAction();
+      const projectStats = await getProjectStatsAction();
+
+      if (isMounted) {
+        setStats({
+          totalContacts,
+          totalMarketingConsent,
+          totalEmailsSent,
+          totalSMSsent,
+          totalProjects: projectStats?.stats?.total || 0,
+        });
+      }
+    }
+
+    fetchStats();
+
+    return () => {
+      isMounted = false;
+    };
+  }, []);
+
+  const statsCards = [
+    {
+      label: "Total Contacts",
+      value: stats.totalContacts,
+      icon: <UserGroupIcon className="w-8 h-8 text-gold" />,
+    },
+    {
+      label: "Marketing Consent",
+      value: stats.totalMarketingConsent,
+      icon: <CheckCircleIcon className="w-8 h-8 text-green-400" />,
+    },
+    {
+      label: "Emails Sent",
+      value: stats.totalEmailsSent,
+      icon: <EnvelopeIcon className="w-8 h-8 text-blue-400" />,
+    },
+    {
+      label: "SMS Sent",
+      value: stats.totalSMSsent,
+      icon: <ChatBubbleLeftRightIcon className="w-8 h-8 text-purple-400" />,
+    },
+    {
+      label: "Projects",
+      value: stats.totalProjects,
+      icon: <BriefcaseIcon className="w-8 h-8 text-yellow-400" />,
+    },
+  ];
+
+  return (
+    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6 mb-8 font-inter">
+      {statsCards.map((card, i) => (
+        <div
+          key={i}
+          className="bg-gray-800/50 rounded-lg p-6 border border-gray-700/50"
+        >
+          <div className="flex items-center justify-between">
+            <div>
+              <p className="text-gray-400 text-sm">{card.label}</p>
+              <p className="text-3xl font-bold text-white mt-1">{card.value}</p>
+            </div>
+            <div>{card.icon}</div>
+          </div>
+        </div>
+      ))}
+    </div>
+  );
+}

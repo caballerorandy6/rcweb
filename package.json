@@ -22,6 +22,7 @@
     "@stripe/stripe-js": "^7.9.0",
     "@supabase/supabase-js": "^2.57.0",
     "bcryptjs": "^3.0.2",
+    "canvas-confetti": "^1.9.3",
     "clsx": "^2.1.1",
     "dotenv": "^17.2.2",
     "framer-motion": "^12.23.12",
@@ -44,6 +45,7 @@
   "devDependencies": {
     "@eslint/eslintrc": "^3",
     "@types/bcryptjs": "^2.4.6",
+    "@types/canvas-confetti": "^1.9.0",
     "@types/node": "^20.19.13",
     "@types/nodemailer": "^7.0.1",
     "@types/react": "^19",

@@ -93,24 +93,24 @@ export default function SendNewsletterCampaign() {
   const useTemplate = () => {
     setSubject("🚀 Special Offer for {{name}}!");
     setContent(`
-      <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
-        <h1 style="color: #FFD700;">Hi {{name}}!</h1>
-        <p>We have an exclusive offer just for you:</p>
-        <div style="background: #f5f5f5; padding: 20px; border-radius: 8px; margin: 20px 0;">
-          <h2>20% OFF Web Development Services</h2>
-          <p>Valid until the end of this month</p>
-          <a href="https://rcweb.com" style="display: inline-block; background: #FFD700; color: black; padding: 10px 20px; text-decoration: none; border-radius: 5px; font-weight: bold;">
-            Claim Your Discount
-          </a>
-        </div>
-        <p>Best regards,<br>RC Web Team</p>
-        <hr style="margin: 30px 0; border: none; border-top: 1px solid #eee;">
-        <p style="font-size: 12px; color: #666;">
-          You received this because you opted in for marketing emails.
-          <a href="https://rcweb.com/unsubscribe">Unsubscribe</a>
-        </p>
+    <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
+      <h1 style="color: #FFD700;">Hi {{name}}!</h1>
+      <p>We have an exclusive offer just for you:</p>
+      <div style="background: #f5f5f5; padding: 20px; border-radius: 8px; margin: 20px 0;">
+        <h2>20% OFF Web Development Services</h2>
+        <p>Valid until the end of this month</p>
+        <a href="https://rcweb.dev" style="display: inline-block; background: #FFD700; color: black; padding: 10px 20px; text-decoration: none; border-radius: 5px; font-weight: bold;">
+          Claim Your Discount
+        </a>
       </div>
-    `);
+      <p>Best regards,<br>RC Web Team</p>
+      <hr style="margin: 30px 0; border: none; border-top: 1px solid #eee;">
+      <p style="font-size: 12px; color: #666;">
+        You received this because you opted in for marketing emails.
+        <a href="https://rcweb.dev/unsubscribe?email={{email}}" style="color: #666;">Unsubscribe</a>
+      </p>
+    </div>
+  `);
   };
 
   return (

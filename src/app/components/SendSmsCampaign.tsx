@@ -1,4 +1,3 @@
-// app/(admin)/sms/page.tsx
 "use client";
 
 import { useState, useEffect, useTransition } from "react";
@@ -94,18 +93,18 @@ export default function SendSmsCampaign() {
   const segmentCost = 0.0079 * smsSegments;
 
   return (
-    <div className="min-h-screen bg-gray-900 pb-8 px-8 pt-24 sm:pt-32">
+    <div className="min-h-screen bg-gray-900 pb-8 px-8 py-24 lg:py-32">
       <div className="max-w-4xl mx-auto">
         {/* Header */}
         <div className="mb-8">
-          <h1 className="text-4xl font-bold text-blue-400 mb-4 font-iceland">
+          <h1 className="text-4xl font-bold text-gold mb-4 font-iceland">
             Send SMS Campaign
           </h1>
 
           {/* Stats */}
           <div className="bg-gray-800/50 p-4 rounded-lg font-inter">
             <p className="text-white mb-2">
-              <span className="text-blue-400 font-bold">
+              <span className="text-gold font-bold">
                 {stats.eligibleContacts}
               </span>{" "}
               phone numbers will receive this SMS

@@ -82,3 +82,35 @@ model SmsCampaign {
   sentAt    DateTime?
   smsSent   Int      @default(0)  // Total de SMS enviados en esta campaña
 }
+
+model Payment {
+  id              String    @id @default(uuid())
+  projectCode     String    @unique @default(cuid()) // Código corto para el cliente
+  accessToken     String    @unique @default(uuid()) // Token seguro para URLs
+  email           String
+  name            String
+  planName        String
+  totalAmount     Int       // Total en centavos
+  firstPayment    Int       // Primer pago en centavos
+  secondPayment   Int       // Segundo pago en centavos
+  firstPaid       Boolean   @default(false)
+  secondPaid      Boolean   @default(false)
+  firstSessionId  String?   // Stripe session ID del primer pago
+  secondSessionId String?   // Stripe session ID del segundo pago
+  
+  // Datos del proyecto
+  projectStatus   String    @default("pending") // pending, in_progress, ready_for_payment, completed
+  projectNotes    String?   // Notas internas
+  
+  // Fechas importantes
+  firstPaidAt     DateTime?
+  secondPaidAt    DateTime?
+  projectStarted  DateTime?
+  projectReady    DateTime?
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+  
+  @@index([email])
+  @@index([projectCode])
+  @@index([accessToken])
+}

@@ -2,7 +2,7 @@ import Link from "next/link";
 import { navigation } from "@/lib/data";
 import Logo from "@/app/components/Logo";
 
-const Footer = () => {
+export default function Footer() {
   const mainNavigation = navigation.slice(0, -2);
   const contactItem = navigation.find((item) => item.name === "Contact");
 
@@ -162,6 +162,4 @@ const Footer = () => {
       </div>
     </footer>
   );
-};
-
-export default Footer;
+}
