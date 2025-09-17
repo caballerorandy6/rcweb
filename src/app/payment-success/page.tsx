@@ -1,16 +1,17 @@
-// app/payment-success/page.tsx
 import { updatePaymentStatusAction } from "@/actions/updatePaymentStatusAction";
 import Link from "next/link";
 import { CopyButton } from "@/app/components/CopyButton";
 
-export default async function PaymentSuccessPage({
-  searchParams,
-}: {
-  searchParams: { code?: string; session_id?: string };
+type SearchParams = Promise<{ code?: string; session_id?: string }>;
+
+export default async function PaymentSuccessPage(props: {
+  searchParams: SearchParams;
 }) {
+  const searchParams = await props.searchParams;
   const projectCode = searchParams.code;
   const sessionId = searchParams.session_id;
 
+  // Actualizar estado de pago solo si tenemos projectCode y sessionId
   if (projectCode && sessionId) {
     await updatePaymentStatusAction(projectCode);
   }
