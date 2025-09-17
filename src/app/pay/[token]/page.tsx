@@ -2,11 +2,13 @@ import { prisma } from "@/lib/prisma";
 import { redirect } from "next/navigation";
 import { createFinalPaymentSessionAction } from "@/actions/createFinalPaymentSessionAction";
 
-export default async function MagicLinkPaymentPage({
-  params,
-}: {
-  params: { token: string };
-}) {
+interface PageProps {
+  params: {
+    token: string;
+  };
+}
+
+export default async function MagicLinkPaymentPage({ params }: PageProps) {
   const payment = await prisma.payment.findUnique({
     where: { accessToken: params.token },
   });
