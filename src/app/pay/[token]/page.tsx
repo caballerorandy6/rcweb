@@ -4,12 +4,9 @@ import { createFinalPaymentSessionAction } from "@/actions/createFinalPaymentSes
 
 type Params = Promise<{ token: string }>;
 
-export default async function MagicLinkPaymentPage({
-  params,
-}: {
-  params: { token: string };
-}) {
-  const { token } = await params;
+export default async function MagicLinkPaymentPage(props: { params: Params }) {
+  const params = await props.params;
+  const { token } = params;
 
   if (!token) {
     redirect("/final-payment?error=invalid-link");
