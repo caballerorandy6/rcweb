@@ -1,9 +1,7 @@
-// app/api/stripe/webhook/route.ts
-
 import { NextRequest, NextResponse } from "next/server";
 import Stripe from "stripe";
 import { prisma } from "@/lib/prisma";
-import { sendPaymentConfirmationAction } from "@/actions/sendPaymentConfirmationAction";
+import { Resend } from "resend";
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
   apiVersion: "2025-08-27.basil",
@@ -37,7 +35,23 @@ export async function POST(req: NextRequest) {
       // 1. Crear un registro del proyecto
 
       // 2. Enviar email de confirmación
-      sendPaymentConfirmationAction(session.customer_email || "");
+      const resend = new Resend(process.env.RESEND_API_KEY);
+
+      await resend.emails.send({
+        from: "no-reply@rcweb.dev",
+        to: session.customer_email!,
+        subject: "Payment Confirmation - RC Web",
+        html: `
+        <div style="font-family: Arial, sans-serif; line-height:1.5; color:#333;">
+          <h2 style="color:#0f172a;">Thank you for your payment!</h2>
+          <p>Your checkout has been completed successfully.</p>
+          <p>We are excited to start working on your project 🚀</p>
+          <p>You will receive the next steps shortly from our team.</p>
+          <br/>
+          <p style="font-size:14px; color:#64748b;">Best regards,<br/>RC Web Team</p>
+        </div>
+      `,
+      });
 
       // 3. Actualizar el estado del contacto a "customer"
 
