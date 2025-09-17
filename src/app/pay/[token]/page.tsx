@@ -2,13 +2,15 @@ import { prisma } from "@/lib/prisma";
 import { redirect } from "next/navigation";
 import { createFinalPaymentSessionAction } from "@/actions/createFinalPaymentSessionAction";
 
-interface PageProps {
-  params: {
-    token: string;
-  };
-}
+export default async function MagicLinkPaymentPage({
+  params,
+}: {
+  params: { token: string };
+}) {
+  if (!params?.token) {
+    redirect("/final-payment?error=invalid-link");
+  }
 
-export default async function MagicLinkPaymentPage({ params }: PageProps) {
   const payment = await prisma.payment.findUnique({
     where: { accessToken: params.token },
   });
@@ -25,7 +27,6 @@ export default async function MagicLinkPaymentPage({ params }: PageProps) {
     redirect("/final-payment?error=project-not-ready");
   }
 
-  // Auto-crear sesión de pago
   const result = await createFinalPaymentSessionAction(
     payment.email,
     payment.projectCode
