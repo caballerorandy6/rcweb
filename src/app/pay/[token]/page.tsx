@@ -2,17 +2,21 @@ import { prisma } from "@/lib/prisma";
 import { redirect } from "next/navigation";
 import { createFinalPaymentSessionAction } from "@/actions/createFinalPaymentSessionAction";
 
+type Params = Promise<{ token: string }>;
+
 export default async function MagicLinkPaymentPage({
   params,
 }: {
   params: { token: string };
 }) {
-  if (!params?.token) {
+  const { token } = await params;
+
+  if (!token) {
     redirect("/final-payment?error=invalid-link");
   }
 
   const payment = await prisma.payment.findUnique({
-    where: { accessToken: params.token },
+    where: { accessToken: token },
   });
 
   if (!payment) {
