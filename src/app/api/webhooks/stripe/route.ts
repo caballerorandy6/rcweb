@@ -28,7 +28,7 @@ export async function POST(req: Request) {
   // Manejar el evento
   if (event.type === "checkout.session.completed") {
     const session = event.data.object as Stripe.Checkout.Session;
-    
+
     const paymentId = session.metadata?.paymentId;
     const projectCode = session.metadata?.projectCode;
     const paymentType = session.metadata?.paymentType;
@@ -38,18 +38,18 @@ export async function POST(req: Request) {
       // Actualizar estado del pago en BD
       const payment = await prisma.payment.update({
         where: { id: paymentId },
-        data: { 
+        data: {
           firstPaid: true,
           firstPaidAt: new Date(),
-          projectStatus: "in_progress"
+          projectStatus: "in_progress",
         },
       });
 
       // ENVIAR EMAIL CON EL CÓDIGO DEL PROYECTO
       await resend.emails.send({
-        from: 'RC Web <noreply@rcweb.dev>',
+        from: "RC Web <no-reply@rcweb.dev>",
         to: session.customer_email!,
-        subject: '✅ Payment Confirmed - Your Project Code',
+        subject: "✅ Payment Confirmed - Your Project Code",
         html: `
           <!DOCTYPE html>
           <html>
@@ -72,7 +72,7 @@ export async function POST(req: Request) {
                 <h3 style="color: #fbbf24;">What happens next?</h3>
                 <ol style="line-height: 1.8;">
                   <li>We'll contact you within 24 hours to discuss project details</li>
-                  <li>Project development will take ${payment.planName === 'Starter' ? '2-3 weeks' : payment.planName === 'Growth' ? '3-5 weeks' : '6-8 weeks'}</li>
+                  <li>Project development will take ${payment.planName === "Starter" ? "2-3 weeks" : payment.planName === "Growth" ? "3-5 weeks" : "6-8 weeks"}</li>
                   <li>Once complete, we'll notify you for the final payment</li>
                   <li>After final payment, you'll receive all deliverables</li>
                 </ol>
