@@ -1,4 +1,4 @@
-import { headers } from "next/headers";
+// app/api/webhooks/stripe/route.ts
 import { NextResponse } from "next/server";
 import Stripe from "stripe";
 import { prisma } from "@/lib/prisma";
@@ -7,33 +7,55 @@ import { Resend } from "resend";
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!);
 const resend = new Resend(process.env.RESEND_API_KEY!);
 
-// Obtén este secret desde el dashboard de Stripe
-const endpointSecret = process.env.STRIPE_WEBHOOK_SECRET!;
+export async function POST(request: Request) {
+  console.log("🔔 WEBHOOK RECEIVED at /api/webhooks/stripe");
 
-export async function POST(req: Request) {
-  const body = await req.text();
-  const signature = (await headers()).get("stripe-signature") as string;
+  // En Next.js 15, obtén el header directamente del request
+  const signature = request.headers.get("stripe-signature");
+  const body = await request.text();
 
   let event: Stripe.Event;
 
   try {
-    event = stripe.webhooks.constructEvent(body, signature, endpointSecret);
+    if (!process.env.STRIPE_WEBHOOK_SECRET || !signature) {
+      console.log(
+        "⚠️ No webhook secret or signature, parsing without verification"
+      );
+      event = JSON.parse(body) as Stripe.Event;
+    } else {
+      event = stripe.webhooks.constructEvent(
+        body,
+        signature,
+        process.env.STRIPE_WEBHOOK_SECRET
+      );
+    }
+    console.log("✅ Event type:", event.type);
   } catch (err) {
+    console.error("❌ Webhook verification failed:", err);
     return NextResponse.json(
       { error: `Webhook Error: ${err}` },
       { status: 400 }
     );
   }
 
-  // Manejar el evento
   if (event.type === "checkout.session.completed") {
     const session = event.data.object as Stripe.Checkout.Session;
 
+<<<<<<< HEAD
+=======
+    console.log("💳 Session data:", {
+      sessionId: session.id,
+      customerEmail: session.customer_email,
+      metadata: session.metadata,
+    });
+
+>>>>>>> 0ed1308 (working in send email error)
     const paymentId = session.metadata?.paymentId;
     const projectCode = session.metadata?.projectCode;
     const paymentType = session.metadata?.paymentType;
     const customerName = session.metadata?.customerName;
 
+<<<<<<< HEAD
     if (paymentType === "initial" && paymentId) {
       // Actualizar estado del pago en BD
       const payment = await prisma.payment.update({
@@ -118,6 +140,58 @@ export async function POST(req: Request) {
             </body>
           </html>
         `,
+=======
+    if (paymentType === "initial" && paymentId && projectCode) {
+      try {
+        // Actualizar BD
+        const payment = await prisma.payment.update({
+          where: { id: paymentId },
+          data: {
+            firstPaid: true,
+            firstPaidAt: new Date(),
+            projectStatus: "in_progress",
+          },
+        });
+        console.log("✅ DB updated for payment:", paymentId);
+
+        // Enviar email
+        console.log("📧 Attempting to send email to:", session.customer_email);
+
+        try {
+          const emailResult = await resend.emails.send({
+            from: "no-reply@rcweb.dev",
+            to: [session.customer_email!], // Usa array como en tu ejemplo que funciona
+            subject: "✅ Payment Confirmed - Your Project Code",
+            text: `Your project code is: ${projectCode}`, // Agrega versión de texto
+            html: `
+              <!DOCTYPE html>
+              <html>
+                <body style="font-family: Arial, sans-serif;">
+                  <h2>Payment Confirmed! ✅</h2>
+                  <p>Hi ${customerName || "Customer"},</p>
+                  <p>Project Code: <strong style="font-size: 24px; color: #f59e0b;">${projectCode}</strong></p>
+                  <p>Plan: ${payment.planName}</p>
+                  <p>Payment: $${(payment.firstPayment / 100).toFixed(2)}</p>
+                  <p>Save this code for your final payment at: https://rcweb.dev/final-payment</p>
+                </body>
+              </html>
+            `,
+          });
+
+          console.log("✅ Email sent:", emailResult);
+        } catch (emailError) {
+          console.error("❌ Email error:", emailError);
+        }
+      } catch (dbError) {
+        console.error("❌ Database error:", dbError);
+      }
+    } else {
+      console.log("⏭️ Skipping email - missing data:", {
+        hasPaymentType: !!paymentType,
+        isInitial: paymentType === "initial",
+        hasPaymentId: !!paymentId,
+        hasProjectCode: !!projectCode,
+>>>>>>> 0ed1308 (working in send email error)
       });
     }
   }

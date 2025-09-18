@@ -3,9 +3,9 @@
 import Stripe from "stripe";
 import { prisma } from "@/lib/prisma";
 import { generateProjectCode } from "@/lib/utils";
-//import { Resend } from "resend";
+////import { Resend } from "resend";
 
-//const resend = new Resend(process.env.RESEND_API_KEY!);
+////const resend = new Resend(process.env.RESEND_API_KEY!);
 
 export interface SplitPaymentResponse {
   success: boolean;
@@ -88,32 +88,32 @@ export async function createInitialPaymentSessionAction(
       data: { firstSessionId: session.id },
     });
 
-    // await resend.emails.send({
-    //   from: "RC Web <no-reply@rcweb.dev>",
-    //   to: customerInfo.email,
-    //   subject: "✅ Payment Confirmed - Save Your Project Code",
-    //   html: `
-    //     <h2>Payment Confirmed!</h2>
-    //     <p>Hi ${customerInfo.name},</p>
-    //     <p>Your initial payment has been processed successfully.</p>
-        
-    //     <div style="background: #f3f4f6; padding: 20px; border-radius: 8px; margin: 20px 0;">
-    //       <h3>Your Project Code: <code style="font-size: 24px; color: #d97706;">${projectCode}</code></h3>
-    //       <h4>Email Address: <code style="font-size: 18px; color: #2563eb;">${customerInfo.email}</code></h4>
-    //       <p>Save this code! You'll need it for the final payment.</p>
-    //     </div>
-        
-    //     <p><strong>Final Payment Instructions:</strong></p>
-    //     <p>When your project is ready, visit: ${process.env.NEXT_PUBLIC_BASE_URL}/final-payment</p>
-    //     <p>You'll need:</p>
-    //     <ul>
-    //       <li>Your email: ${customerInfo.email}</li>
-    //       <li>Your project code: ${projectCode}</li>
-    //     </ul>
-        
-    //     <p>Thank you for your business!</p>
-    //   `,
-    // });
+    // // await resend.emails.send({
+    // //   from: "RC Web <no-reply@rcweb.dev>",
+    // //   to: customerInfo.email,
+    // //   subject: "✅ Payment Confirmed - Save Your Project Code",
+    // //   html: `
+    // //     <h2>Payment Confirmed!</h2>
+    // //     <p>Hi ${customerInfo.name},</p>
+    // //     <p>Your initial payment has been processed successfully.</p>
+
+    // //     <div style="background: #f3f4f6; padding: 20px; border-radius: 8px; margin: 20px 0;">
+    // //       <h3>Your Project Code: <code style="font-size: 24px; color: #d97706;">${projectCode}</code></h3>
+    // //       <h4>Email Address: <code style="font-size: 18px; color: #2563eb;">${customerInfo.email}</code></h4>
+    // //       <p>Save this code! You'll need it for the final payment.</p>
+    // //     </div>
+
+    // //     <p><strong>Final Payment Instructions:</strong></p>
+    // //     <p>When your project is ready, visit: ${process.env.NEXT_PUBLIC_BASE_URL}/final-payment</p>
+    // //     <p>You'll need:</p>
+    // //     <ul>
+    // //       <li>Your email: ${customerInfo.email}</li>
+    // //       <li>Your project code: ${projectCode}</li>
+    // //     </ul>
+
+    // //     <p>Thank you for your business!</p>
+    // //   `,
+    // // });
 
     return {
       success: true,
