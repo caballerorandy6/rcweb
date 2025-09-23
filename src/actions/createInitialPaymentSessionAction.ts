@@ -12,8 +12,8 @@ export interface SplitPaymentResponse {
 }
 
 const PAYMENT_TERMS = {
-  INITIAL: 0.5, // 50% upfront
-  FINAL: 0.5, // 50% upon completion
+  INITIAL: 0.5,
+  FINAL: 0.5,
 };
 
 export async function createInitialPaymentSessionAction(
@@ -32,14 +32,14 @@ export async function createInitialPaymentSessionAction(
       apiVersion: "2025-08-27.basil",
     });
 
-    // Calcular montos
+    // calcular montos
     const firstPaymentAmount = Math.round(plan.price * PAYMENT_TERMS.INITIAL);
     const secondPaymentAmount = plan.price - firstPaymentAmount;
 
-    // Generar código único de proyecto
+    // generar código único
     const projectCode = generateProjectCode();
 
-    // Crear registro en BD
+    // guardar en BD
     const payment = await prisma.payment.create({
       data: {
         projectCode,
@@ -53,17 +53,26 @@ export async function createInitialPaymentSessionAction(
     });
 
     // Crear sesión de Stripe con toda la metadata
+    console.log("✅ Creando checkout con metadata:", {
+      paymentId: payment.id,
+      projectCode,
+      paymentType: "initial",
+      customerName: customerInfo.name,
+      planName: plan.name,
+      customerEmail: customerInfo.email,
+    });
+
+    // crear sesión Stripe con toda la metadata
     const session = await stripe.checkout.sessions.create({
       payment_method_types: ["card"],
       mode: "payment",
       customer_email: customerInfo.email,
-      // 👇 aquí va
       metadata: {
         paymentId: payment.id,
-        projectCode: payment.projectCode,
+        projectCode,
         paymentType: "initial",
-        customerName: customerInfo.name,
         planName: plan.name,
+        customerName: customerInfo.name,
         customerEmail: customerInfo.email,
       },
       line_items: [
@@ -83,7 +92,7 @@ export async function createInitialPaymentSessionAction(
       cancel_url: `${process.env.NEXT_PUBLIC_BASE_URL}/#pricing`,
     });
 
-    // Guardar session ID en BD
+    // actualizar con el id de la sesión
     await prisma.payment.update({
       where: { id: payment.id },
       data: { firstSessionId: session.id },
@@ -95,7 +104,7 @@ export async function createInitialPaymentSessionAction(
       projectCode,
     };
   } catch (error) {
-    console.error("Error creating initial payment:", error);
+    console.error("❌ Error creando sesión inicial:", error);
     return {
       success: false,
       error: "Failed to create initial payment session",

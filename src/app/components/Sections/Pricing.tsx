@@ -18,20 +18,17 @@ const Pricing = () => {
 
   const ref = useSectionObserver({ sectionName: "Pricing" });
 
-  // 2. Definir las variantes de animación
   const containerVariants = {
     hidden: { opacity: 0 },
     show: {
       opacity: 1,
-      transition: {
-        staggerChildren: 0.2, // Tiempo entre la animación de cada tarjeta
-      },
+      transition: { staggerChildren: 0.2 },
     },
   };
 
   const cardVariants = {
-    hidden: { opacity: 0, y: 50 }, // Empieza 50px abajo y transparente
-    show: { opacity: 1, y: 0 }, // Termina en su posición original y visible
+    hidden: { opacity: 0, y: 50 },
+    show: { opacity: 1, y: 0 },
   };
 
   const handlePlanSelection = (planId: string) => {
@@ -48,9 +45,8 @@ const Pricing = () => {
       return;
     }
 
-    // Abre la pestaña de inmediato (vacía o con loader)
+    // Abrir pestaña vacía primero
     const stripeTab = window.open("", "_blank");
-
     if (!stripeTab) {
       toast.error(
         "Popup blocked! Please allow popups to continue to checkout."
@@ -59,6 +55,13 @@ const Pricing = () => {
     }
 
     startTransition(async () => {
+      console.log("🟡 Enviando datos al server action:", {
+        planName: plan.name,
+        planPrice: plan.priceInCents,
+        customerName,
+        customerEmail,
+      });
+
       const result = await createInitialPaymentSessionAction(
         {
           name: plan.name,
@@ -68,24 +71,28 @@ const Pricing = () => {
         { email: customerEmail, name: customerName }
       );
 
+      console.log("🟢 Respuesta del server action:", result);
+
       if (result.success && result.sessionUrl) {
         if (result.projectCode) {
           sessionStorage.setItem("projectCode", result.projectCode);
+          console.log(
+            "📌 Project Code guardado en sessionStorage:",
+            result.projectCode
+          );
         }
-        // Redirige a Stripe Checkout
+
         stripeTab.location.href = result.sessionUrl;
 
-        // CERRAR MODAL y limpiar campos
+        // Reset
         setShowModal(false);
         setCustomerEmail("");
         setCustomerName("");
         setSelectedPlan(null);
 
-        // Mostrar mensaje de éxito
         toast.success("Redirecting to secure payment...");
       } else {
         toast.error(result.error || "Failed to create checkout session");
-        //  Si falla, cierra la pestaña
         stripeTab.close();
       }
     });
@@ -177,7 +184,7 @@ const Pricing = () => {
           ))}
         </motion.div>
 
-        {/* Payment Modal */}
+        {/* Modal de pago */}
         {showModal && (
           <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 backdrop-blur-sm p-4">
             <motion.div
@@ -190,7 +197,6 @@ const Pricing = () => {
                 Complete Your Order
               </h3>
 
-              {/* Información del plan con mejor diseño */}
               <div className="bg-gray-800/50 rounded-lg p-4 mb-6 border border-gold/10 font-inter">
                 <div className="flex justify-between items-center mb-2">
                   <span className="text-gray-400 text-sm">Selected Plan:</span>
@@ -219,7 +225,7 @@ const Pricing = () => {
                 </div>
               </div>
 
-              {/* Campos del formulario */}
+              {/* Campos */}
               <div className="space-y-4 font-inter">
                 <div>
                   <label className="block text-sm text-gray-300 mb-2 font-medium">
@@ -233,7 +239,6 @@ const Pricing = () => {
                     placeholder="John Doe"
                   />
                 </div>
-
                 <div>
                   <label className="block text-sm text-gray-300 mb-2 font-medium">
                     Email Address
@@ -248,39 +253,14 @@ const Pricing = () => {
                 </div>
               </div>
 
-              {/* Botones mejorados */}
+              {/* Botones */}
               <div className="flex gap-4 mt-6 font-inter">
                 <button
                   onClick={handleCheckout}
                   disabled={isPending}
                   className="flex-1 bg-gradient-to-r from-gold to-yellow-500 text-gray-900 py-3 rounded-lg font-semibold hover:from-gold/90 hover:to-yellow-500/90 transition-all disabled:opacity-50 shadow-lg shadow-gold/20"
                 >
-                  {isPending ? (
-                    <span className="flex items-center justify-center">
-                      <svg
-                        className="animate-spin -ml-1 mr-2 h-4 w-4 text-gray-900"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                      >
-                        <circle
-                          className="opacity-25"
-                          cx="12"
-                          cy="12"
-                          r="10"
-                          stroke="currentColor"
-                          strokeWidth="4"
-                        ></circle>
-                        <path
-                          className="opacity-75"
-                          fill="currentColor"
-                          d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
-                        ></path>
-                      </svg>
-                      Processing...
-                    </span>
-                  ) : (
-                    "Proceed to Payment"
-                  )}
+                  {isPending ? "Processing..." : "Proceed to Payment"}
                 </button>
                 <button
                   onClick={() => setShowModal(false)}
@@ -289,41 +269,6 @@ const Pricing = () => {
                 >
                   Cancel
                 </button>
-              </div>
-
-              {/* Información adicional con iconos */}
-              <div className="mt-6 pt-4 border-t border-gray-800 font-inter">
-                <div className="flex items-center justify-center gap-4 text-xs text-gray-500">
-                  <div className="flex items-center gap-1">
-                    <svg
-                      className="w-4 h-4"
-                      fill="currentColor"
-                      viewBox="0 0 20 20"
-                    >
-                      <path
-                        fillRule="evenodd"
-                        d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z"
-                        clipRule="evenodd"
-                      />
-                    </svg>
-                    Secure Payment
-                  </div>
-                  <div className="flex items-center gap-1">
-                    <svg
-                      className="w-4 h-4"
-                      fill="currentColor"
-                      viewBox="0 0 20 20"
-                    >
-                      <path d="M4 4a2 2 0 00-2 2v1h16V6a2 2 0 00-2-2H4z" />
-                      <path
-                        fillRule="evenodd"
-                        d="M18 9H2v5a2 2 0 002 2h12a2 2 0 002-2V9zM4 13a1 1 0 011-1h1a1 1 0 110 2H5a1 1 0 01-1-1zm5-1a1 1 0 100 2h1a1 1 0 100-2H9z"
-                        clipRule="evenodd"
-                      />
-                    </svg>
-                    Powered by Stripe
-                  </div>
-                </div>
               </div>
             </motion.div>
           </div>
