@@ -3,9 +3,6 @@
 import Stripe from "stripe";
 import { prisma } from "@/lib/prisma";
 import { generateProjectCode } from "@/lib/utils";
-////import { Resend } from "resend";
-
-////const resend = new Resend(process.env.RESEND_API_KEY!);
 
 export interface SplitPaymentResponse {
   success: boolean;
@@ -19,7 +16,6 @@ const PAYMENT_TERMS = {
   FINAL: 0.5, // 50% upon completion
 };
 
-//Primer Pago - Crear sesión de pago inicial
 export async function createInitialPaymentSessionAction(
   plan: {
     name: string;
@@ -35,6 +31,7 @@ export async function createInitialPaymentSessionAction(
     const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
       apiVersion: "2025-08-27.basil",
     });
+
     // Calcular montos
     const firstPaymentAmount = Math.round(plan.price * PAYMENT_TERMS.INITIAL);
     const secondPaymentAmount = plan.price - firstPaymentAmount;
@@ -55,15 +52,19 @@ export async function createInitialPaymentSessionAction(
       },
     });
 
-    // Crear sesión de Stripe
+    // Crear sesión de Stripe con toda la metadata
     const session = await stripe.checkout.sessions.create({
       payment_method_types: ["card"],
       mode: "payment",
       customer_email: customerInfo.email,
+      // 👇 aquí va
       metadata: {
         paymentId: payment.id,
         projectCode: payment.projectCode,
         paymentType: "initial",
+        customerName: customerInfo.name,
+        planName: plan.name,
+        customerEmail: customerInfo.email,
       },
       line_items: [
         {
@@ -82,43 +83,16 @@ export async function createInitialPaymentSessionAction(
       cancel_url: `${process.env.NEXT_PUBLIC_BASE_URL}/#pricing`,
     });
 
-    // Guardar session ID
+    // Guardar session ID en BD
     await prisma.payment.update({
       where: { id: payment.id },
       data: { firstSessionId: session.id },
     });
 
-    // // await resend.emails.send({
-    // //   from: "RC Web <no-reply@rcweb.dev>",
-    // //   to: customerInfo.email,
-    // //   subject: "✅ Payment Confirmed - Save Your Project Code",
-    // //   html: `
-    // //     <h2>Payment Confirmed!</h2>
-    // //     <p>Hi ${customerInfo.name},</p>
-    // //     <p>Your initial payment has been processed successfully.</p>
-
-    // //     <div style="background: #f3f4f6; padding: 20px; border-radius: 8px; margin: 20px 0;">
-    // //       <h3>Your Project Code: <code style="font-size: 24px; color: #d97706;">${projectCode}</code></h3>
-    // //       <h4>Email Address: <code style="font-size: 18px; color: #2563eb;">${customerInfo.email}</code></h4>
-    // //       <p>Save this code! You'll need it for the final payment.</p>
-    // //     </div>
-
-    // //     <p><strong>Final Payment Instructions:</strong></p>
-    // //     <p>When your project is ready, visit: ${process.env.NEXT_PUBLIC_BASE_URL}/final-payment</p>
-    // //     <p>You'll need:</p>
-    // //     <ul>
-    // //       <li>Your email: ${customerInfo.email}</li>
-    // //       <li>Your project code: ${projectCode}</li>
-    // //     </ul>
-
-    // //     <p>Thank you for your business!</p>
-    // //   `,
-    // // });
-
     return {
       success: true,
       sessionUrl: session.url!,
-      projectCode, // Retornar el código para mostrarlo al cliente
+      projectCode,
     };
   } catch (error) {
     console.error("Error creating initial payment:", error);
