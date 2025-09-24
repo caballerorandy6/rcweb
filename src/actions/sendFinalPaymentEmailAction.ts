@@ -18,35 +18,121 @@ export async function sendFinalPaymentEmail(projectCode: string) {
     // Generar URL con token seguro
     const paymentUrl = `${process.env.NEXT_PUBLIC_BASE_URL}/pay/${payment.accessToken}`;
 
-    // Enviar email con Resend o tu servicio preferido
     await resend.emails.send({
-      from: "noreply@rcweb.dev",
+      from: "RC Web <no-reply@rcweb.dev>",
       to: payment.email,
-      subject: `Your project ${payment.planName} is ready!`,
+      subject: `🎉 Project Complete - ${payment.planName} Website Ready!`,
       html: `
-        <h2>Project Complete! 🎉</h2>
-        <p>Hi ${payment.name},</p>
-        <p>Great news! Your ${payment.planName} project is complete and ready for final review.</p>
-        
-        <div style="background: #f3f4f6; padding: 20px; border-radius: 8px; margin: 20px 0;">
-          <p><strong>Project Code:</strong> ${payment.projectCode}</p>
-          <p><strong>Final Payment Due:</strong> $${(payment.secondPayment / 100).toFixed(2)}</p>
-        </div>
-        
-        <p>You can complete your payment in two ways:</p>
-        <ol>
-          <li><strong>Direct Link:</strong> <a href="${paymentUrl}">Click here to pay</a></li>
-          <li><strong>Manual Access:</strong> Visit https://rcweb.dev/final-payment and use:
-            <ul>
-              <li>Email: ${payment.email}</li>
-              <li>Project Code: ${payment.projectCode}</li>
-            </ul>
-          </li>
-        </ol>
-        
-        <p>Once payment is complete, you'll receive all project files and documentation.</p>
-        
-        <p>Best regards,<br>RC Web Team</p>
+      <!DOCTYPE html>
+      <html>
+        <head>
+          <meta charset="utf-8">
+          <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        </head>
+        <body style="margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif; background-color: #f3f4f6;">
+          <table cellpadding="0" cellspacing="0" border="0" width="100%" style="background-color: #f3f4f6; padding: 40px 20px;">
+            <tr>
+              <td align="center">
+                <table cellpadding="0" cellspacing="0" border="0" width="600" style="background-color: #ffffff; border-radius: 16px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); overflow: hidden;">
+                  <!-- Header -->
+                  <tr>
+                    <td style="background: linear-gradient(135deg, #10b981 0%, #059669 100%); padding: 48px 32px; text-align: center;">
+                      <div style="display: inline-block; background: rgba(255, 255, 255, 0.2); border-radius: 50%; padding: 16px; margin-bottom: 16px;">
+                        <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                          <path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"></path>
+                          <path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"></path>
+                          <path d="M6 2v7"></path>
+                          <path d="M18 2v7"></path>
+                          <path d="M6 9a6 6 0 0 0 12 0"></path>
+                          <path d="M12 15v6"></path>
+                          <path d="M9 21h6"></path>
+                        </svg>
+                      </div>
+                      <h1 style="color: #ffffff; margin: 0; font-size: 32px; font-weight: 700;">Project Complete!</h1>
+                      <p style="color: rgba(255, 255, 255, 0.9); margin: 8px 0 0 0; font-size: 16px;">Your ${payment.planName} website is ready</p>
+                    </td>
+                  </tr>
+                  
+                  <!-- Body -->
+                  <tr>
+                    <td style="padding: 40px 32px;">
+                      <p style="color: #374151; font-size: 16px; line-height: 1.6; margin: 0 0 24px 0;">
+                        Hi <strong>${payment.name}</strong>,
+                      </p>
+                      
+                      <p style="color: #374151; font-size: 16px; line-height: 1.6; margin: 0 0 32px 0;">
+                        Congratulations! Your project has been successfully completed and your final payment of 
+                        <strong style="color: #059669; font-size: 18px;">$${(payment.secondPayment / 100).toFixed(2)}</strong> is now due to receive all deliverables.
+                      </p>
+                      
+                      <!-- Project Summary -->
+                      <div style="background-color: #f9fafb; border-radius: 12px; padding: 24px; margin: 0 0 32px 0;">
+                        <h3 style="color: #111827; font-size: 18px; font-weight: 600; margin: 0 0 16px 0;">
+                          Project Summary
+                        </h3>
+                        <table style="width: 100%; font-size: 14px;">
+                          <tr>
+                            <td style="padding: 6px 0; color: #6b7280;">Project Code:</td>
+                            <td style="text-align: right; font-weight: 600; color: #374151; font-family: 'Courier New', monospace;">${payment.projectCode}</td>
+                          </tr>
+                          <tr>
+                            <td style="padding: 6px 0; color: #6b7280;">Plan:</td>
+                            <td style="text-align: right; font-weight: 600; color: #374151;">${payment.planName}</td>
+                          </tr>
+                          <tr>
+                            <td style="padding: 6px 0; color: #6b7280;">Final Payment Due:</td>
+                            <td style="text-align: right; font-weight: 600; color: #059669; font-size: 16px;">$${(payment.secondPayment / 100).toFixed(2)}</td>
+                          </tr>
+                        </table>
+                      </div>
+                      
+                      <!-- Payment Instructions -->
+                      <div style="background: linear-gradient(135deg, #ede9fe 0%, #ddd6fe 100%); border-left: 4px solid #7c3aed; border-radius: 8px; padding: 20px; margin: 0 0 32px 0;">
+                        <p style="margin: 0 0 12px 0; color: #5b21b6; font-weight: 600; font-size: 16px;">
+                          Complete Your Final Payment
+                        </p>
+                        <p style="margin: 0 0 8px 0; color: #374151; font-size: 14px;">
+                          You can complete your payment directly:
+                        </p>
+                        <p style="margin: 0 0 8px 0;">
+                          <a href="${paymentUrl}" style="color: #7c3aed; font-weight: 600; text-decoration: none;">Click here to pay now</a>
+                        </p>
+                        <p style="margin: 0; color: #4b5563; font-size: 14px;">
+                          Or visit <a href="https://rcweb.dev/final-payment" style="color: #7c3aed; text-decoration: none;">rcweb.dev/final-payment</a> and use your email <strong>${payment.email}</strong> and project code <strong>${payment.projectCode}</strong>.
+                        </p>
+                      </div>
+                      
+                      <!-- Thank You -->
+                      <div style="background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%); border-radius: 12px; padding: 24px; text-align: center; margin: 0 0 32px 0;">
+                        <p style="color: #92400e; font-size: 18px; font-weight: 600; margin: 0;">
+                          Thank you for choosing RC Web!
+                        </p>
+                        <p style="color: #b45309; font-size: 14px; margin: 8px 0 0 0;">
+                          We're excited to see your business grow with your new website.
+                        </p>
+                      </div>
+                      
+                      <!-- Footer -->
+                      <hr style="border: none; border-top: 1px solid #e5e7eb; margin: 32px 0;">
+                      <p style="text-align: center; color: #6b7280; font-size: 14px; margin: 0;">
+                        Questions? Contact us at <a href="mailto:support@rcweb.dev" style="color: #7c3aed; text-decoration: none;">support@rcweb.dev</a>
+                      </p>
+
+                      <hr style="border: none; border-top: 1px solid #e5e7eb; margin: 32px 0;">
+                      <p style="text-align: center; color: #6b7280; font-size: 12px;">
+                        You can unsubscribe from marketing emails at any time by clicking
+                      <a href="${process.env.NEXT_PUBLIC_BASE_URL}/unsubscribe?email=${encodeURIComponent(payment.email)}" style="color: #7c3aed; text-decoration: none;">
+                        here
+                      </a>.
+                      </p>
+                    </td>
+                  </tr>
+                </table>
+              </td>
+            </tr>
+          </table>
+        </body>
+      </html>
       `,
     });
 
