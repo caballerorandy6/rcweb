@@ -13,12 +13,9 @@ export default function Unsubscribe() {
 
   const handleUnsubscribe = () => {
     if (!email) return;
-
     startTransition(async () => {
       const result = await unsubscribeFromEmailAction(email);
-      if (result.success) {
-        setUnsubscribed(true);
-      }
+      if (result.success) setUnsubscribed(true);
     });
   };
 
@@ -30,9 +27,9 @@ export default function Unsubscribe() {
     );
   }
 
-  if (unsubscribed) {
-    return (
-      <div className="min-h-screen bg-gray-900 flex items-center justify-center px-4">
+  return (
+    <div className="min-h-screen bg-gray-900 flex items-center justify-center px-4">
+      {unsubscribed ? (
         <div className="max-w-md w-full bg-gray-800 rounded-lg p-8 text-center">
           <svg
             className="mx-auto h-16 w-16 text-green-500 mb-4"
@@ -57,48 +54,44 @@ export default function Unsubscribe() {
             You will still receive transactional emails about your projects.
           </p>
         </div>
-      </div>
-    );
-  }
+      ) : (
+        <div className="max-w-md w-full bg-gray-800 rounded-lg p-8">
+          <h1 className="text-2xl font-bold text-white mb-4">
+            Unsubscribe from Emails
+          </h1>
 
-  return (
-    <div className="min-h-screen bg-gray-900 flex items-center justify-center px-4">
-      <div className="max-w-md w-full bg-gray-800 rounded-lg p-8">
-        <h1 className="text-2xl font-bold text-white mb-4">
-          Unsubscribe from Emails
-        </h1>
+          <p className="text-gray-300 mb-6">
+            Are you sure you want to unsubscribe{" "}
+            <span className="text-gold font-semibold">{email}</span> from
+            marketing emails?
+          </p>
 
-        <p className="text-gray-300 mb-6">
-          Are you sure you want to unsubscribe{" "}
-          <span className="text-gold font-semibold">{email}</span> from
-          marketing emails?
-        </p>
+          <div className="bg-gray-700/50 rounded p-4 mb-6">
+            <p className="text-sm text-gray-400">You will no longer receive:</p>
+            <ul className="mt-2 text-sm text-gray-300 space-y-1">
+              <li>• Marketing updates</li>
+              <li>• Special offers</li>
+              <li>• Newsletter</li>
+            </ul>
+          </div>
 
-        <div className="bg-gray-700/50 rounded p-4 mb-6">
-          <p className="text-sm text-gray-400">You will no longer receive:</p>
-          <ul className="mt-2 text-sm text-gray-300 space-y-1">
-            <li>• Marketing updates</li>
-            <li>• Special offers</li>
-            <li>• Newsletter</li>
-          </ul>
+          <div className="flex gap-4">
+            <button
+              onClick={handleUnsubscribe}
+              disabled={isPending}
+              className="flex-1 bg-red-600 text-white py-2 rounded hover:bg-red-700 disabled:opacity-50"
+            >
+              {isPending ? "Processing..." : "Yes, Unsubscribe"}
+            </button>
+            <Link
+              href="/"
+              className="flex-1 bg-gray-700 text-white py-2 rounded hover:bg-gray-600 text-center"
+            >
+              Cancel
+            </Link>
+          </div>
         </div>
-
-        <div className="flex gap-4">
-          <button
-            onClick={handleUnsubscribe}
-            disabled={isPending}
-            className="flex-1 bg-red-600 text-white py-2 rounded hover:bg-red-700 disabled:opacity-50"
-          >
-            {isPending ? "Processing..." : "Yes, Unsubscribe"}
-          </button>
-          <Link
-            href="/"
-            className="flex-1 bg-gray-700 text-white py-2 rounded hover:bg-gray-600 text-center"
-          >
-            Cancel
-          </Link>
-        </div>
-      </div>
+      )}
     </div>
   );
 }

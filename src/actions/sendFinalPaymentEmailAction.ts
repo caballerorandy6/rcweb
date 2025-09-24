@@ -115,7 +115,7 @@ export async function sendFinalPaymentEmail(projectCode: string) {
                       <!-- Footer -->
                       <hr style="border: none; border-top: 1px solid #e5e7eb; margin: 32px 0;">
                       <p style="text-align: center; color: #6b7280; font-size: 14px; margin: 0;">
-                        Questions? Contact us at <a href="mailto:support@rcweb.dev" style="color: #7c3aed; text-decoration: none;">support@rcweb.dev</a>
+                        Questions? Contact us at <a href="mailto:contactus@rcweb.dev" style="color: #7c3aed; text-decoration: none;">contactus@rcweb.dev</a>
                       </p>
 
                       <hr style="border: none; border-top: 1px solid #e5e7eb; margin: 32px 0;">
