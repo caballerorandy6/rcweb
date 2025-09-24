@@ -44,7 +44,7 @@ export async function POST(req: NextRequest) {
                 
                 <p><strong>How to complete your payment:</strong></p>
                 <ol>
-                  <li>Visit: <a href="https://rcweb.dev/final-payment" style="color: #fbbf24;">rcweb.dev/final-payment</a></li>
+                  <li>Visit: <a href="https://rcweb.dev/final-payment" style="color: #fbbf24;">https://rcweb.dev/final-payment</a></li>
                   <li>Enter your email: ${payment.email}</li>
                   <li>Enter your project code: ${payment.projectCode}</li>
                   <li>Complete the secure payment via Stripe</li>

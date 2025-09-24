@@ -99,16 +99,16 @@ export default function PaymentComplete() {
           </svg>
         </div>
 
-        <h1 className="text-4xl font-bold text-white mb-2 font-iceland">
+        <h1 className="text-4xl font-bold mb-2 font-iceland text-gold">
           Project Fully Paid! 🎉
         </h1>
 
-        <p className="text-xl text-gold mb-6 font-inter">
+        <p className="text-xl text-white mb-6 font-inter">
           Thank you for your business!
         </p>
 
         <div className="bg-gray-700/50 rounded-lg p-6 mb-6 text-left">
-          <h3 className="text-white font-semibold mb-4 text-center font-inter">
+          <h3 className="text-gold font-semibold mb-4 text-center font-inter">
             What Happens Next:
           </h3>
           <ul className="space-y-3 text-sm text-gray-300 font-inter">

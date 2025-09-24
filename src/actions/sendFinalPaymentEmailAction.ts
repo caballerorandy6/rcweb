@@ -36,7 +36,7 @@ export async function sendFinalPaymentEmail(projectCode: string) {
         <p>You can complete your payment in two ways:</p>
         <ol>
           <li><strong>Direct Link:</strong> <a href="${paymentUrl}">Click here to pay</a></li>
-          <li><strong>Manual Access:</strong> Visit rcweb.dev/final-payment and use:
+          <li><strong>Manual Access:</strong> Visit https://rcweb.dev/final-payment and use:
             <ul>
               <li>Email: ${payment.email}</li>
               <li>Project Code: ${payment.projectCode}</li>

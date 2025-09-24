@@ -680,4 +680,32 @@ export const pricingPlans = [
   },
 ];
 
-
+export const deliverables = {
+          Starter: [
+            "Complete source code repository",
+            "Deployment on your hosting",
+            "Basic documentation",
+            "30 days of post-launch support",
+            "Training session (1 hour)",
+          ],
+          Growth: [
+            "Complete source code repository",
+            "Deployment and configuration",
+            "Comprehensive documentation",
+            "60 days of post-launch support",
+            "Training sessions (3 hours)",
+            "Basic SEO setup",
+            "Analytics integration",
+          ],
+          Premium: [
+            "Complete source code repository",
+            "Multi-environment deployment",
+            "Full technical documentation",
+            "90 days of priority support",
+            "Training sessions (5 hours)",
+            "Advanced SEO optimization",
+            "Analytics and monitoring setup",
+            "Performance optimization",
+            "Security hardening",
+          ],
+        };

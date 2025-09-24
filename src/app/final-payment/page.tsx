@@ -117,7 +117,7 @@ export default function FinalPaymentPage() {
           </>
         ) : (
           <>
-            <div className="bg-gray-700 rounded-lg p-4 mb-6">
+            <div className="bg-gray-700 rounded-lg p-4 mb-6 font-inter">
               <h3 className="text-white font-semibold mb-3">Project Details</h3>
               <div className="space-y-2 text-sm">
                 <p className="text-gray-300">
@@ -155,7 +155,7 @@ export default function FinalPaymentPage() {
                 setVerified(false);
                 setProjectInfo(null);
               }}
-              className="w-full mt-3 text-gray-400 hover:text-white transition-colors"
+              className="w-full mt-3 hover:text-white transition-colors font-inter text-gold font-bold"
             >
               Use Different Project
             </button>
@@ -163,7 +163,8 @@ export default function FinalPaymentPage() {
         )}
 
         <p className="text-sm text-gray-300 mt-6 text-center font-inter">
-          Need help? Contact contactus@rcweb.dev
+          Need help? Contact{" "}
+          <span className="font-semibold text-gold">contactus@rcweb.dev</span>
         </p>
       </div>
     </div>
