@@ -55,7 +55,7 @@ export default function Unsubscribe() {
           </p>
           <Link
             href="/"
-            className="mt-6 inline-block bg-gray-700 text-white py-2 px-4 rounded hover:bg-gray-600"
+            className="mt-6 inline-block bg-gray-700 text-white py-2 px-4 rounded hover:bg-gray-600 font-inter"
           >
             Back to Home
           </Link>

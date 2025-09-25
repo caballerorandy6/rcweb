@@ -4,9 +4,11 @@ import Unsubscribe from "@/app/components/Unsubscribe";
 
 const UnsubscribePage = () => {
   return (
-    <Suspense fallback={<Spinner />}>
-      <Unsubscribe />
-    </Suspense>
+    <section id="unsubscribe-page">
+      <Suspense fallback={<Spinner />}>
+        <Unsubscribe />
+      </Suspense>
+    </section>
   );
 };
 

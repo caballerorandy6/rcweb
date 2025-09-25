@@ -74,7 +74,14 @@ const Services = () => {
                 </p>
               </div>
 
-              <button className="mt-4 text-sm font-inter text-white/80 hover:bg-gold/20 p-2 rounded-md border border-gold/50 transition-all duration-200 ease-in-out hover:scale-105">
+              <button
+                onClick={() => {
+                  document
+                    .getElementById("contact")
+                    ?.scrollIntoView({ behavior: "smooth" });
+                }}
+                className="mt-4 text-sm font-inter text-white/80 hover:bg-gold/20 p-2 rounded-md border border-gold/50 transition-all duration-200 ease-in-out hover:scale-105"
+              >
                 Get Quote →
               </button>
             </motion.li>
