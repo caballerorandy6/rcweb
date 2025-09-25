@@ -44,29 +44,35 @@ export default function Unsubscribe() {
               d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
             />
           </svg>
-          <h1 className="text-2xl font-bold text-white mb-2">
+          <h1 className="text-4xl font-bold text-gold mb-2 font-iceland">
             Unsubscribed Successfully
           </h1>
-          <p className="text-gray-300">
+          <p className="text-gray-300 font-inter">
             {email} has been removed from our marketing emails.
           </p>
-          <p className="text-sm text-gray-500 mt-4">
+          <p className="text-sm text-gray-400 mt-4 font-inter">
             You will still receive transactional emails about your projects.
           </p>
+          <Link
+            href="/"
+            className="mt-6 inline-block bg-gray-700 text-white py-2 px-4 rounded hover:bg-gray-600"
+          >
+            Back to Home
+          </Link>
         </div>
       ) : (
         <div className="max-w-md w-full bg-gray-800 rounded-lg p-8">
-          <h1 className="text-2xl font-bold text-white mb-4">
+          <h1 className="text-4xl font-bold text-gold mb-2 font-iceland">
             Unsubscribe from Emails
           </h1>
 
-          <p className="text-gray-300 mb-6">
+          <p className="text-gray-300 font-inter mb-6">
             Are you sure you want to unsubscribe{" "}
-            <span className="text-gold font-semibold">{email}</span> from
-            marketing emails?
+            <span className="text-gold font-semibold font-inter">{email}</span>{" "}
+            from marketing emails?
           </p>
 
-          <div className="bg-gray-700/50 rounded p-4 mb-6">
+          <div className="bg-gray-700/50 rounded p-4 mb-6 font-inter">
             <p className="text-sm text-gray-400">You will no longer receive:</p>
             <ul className="mt-2 text-sm text-gray-300 space-y-1">
               <li>• Marketing updates</li>
@@ -79,13 +85,13 @@ export default function Unsubscribe() {
             <button
               onClick={handleUnsubscribe}
               disabled={isPending}
-              className="flex-1 bg-red-600 text-white py-2 rounded hover:bg-red-700 disabled:opacity-50"
+              className="flex-1 bg-red-600 text-white py-2 rounded hover:bg-red-700 disabled:opacity-50 font-inter"
             >
               {isPending ? "Processing..." : "Yes, Unsubscribe"}
             </button>
             <Link
               href="/"
-              className="flex-1 bg-gray-700 text-white py-2 rounded hover:bg-gray-600 text-center"
+              className="flex-1 bg-gray-700 text-white py-2 rounded hover:bg-gray-600 text-center font-inter"
             >
               Cancel
             </Link>
