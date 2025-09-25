@@ -88,6 +88,7 @@ export async function createInitialPaymentSessionAction(
           quantity: 1,
         },
       ],
+      automatic_tax: { enabled: true },
       success_url: `${process.env.NEXT_PUBLIC_BASE_URL}/payment-success?session_id={CHECKOUT_SESSION_ID}&code=${projectCode}`,
       cancel_url: `${process.env.NEXT_PUBLIC_BASE_URL}/#pricing`,
     });

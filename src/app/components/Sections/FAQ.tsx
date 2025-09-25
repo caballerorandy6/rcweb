@@ -40,7 +40,7 @@ const FAQ = () => {
                   }
                   className="flex w-full items-center justify-between px-6 py-4 text-left"
                 >
-                  <h3 className="text-base font-iceland text-white">
+                  <h3 className="text-lg font-iceland text-gold">
                     {faq.question}
                   </h3>
                   <ChevronDownIcon

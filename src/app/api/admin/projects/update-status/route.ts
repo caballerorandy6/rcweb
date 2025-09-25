@@ -103,7 +103,7 @@ export async function POST(req: NextRequest) {
                       </a>
                     </div>
                     <p style="margin: 0; color: #4b5563; font-size: 14px;">
-                      Or visit <a href="https://rcweb.dev/final-payment" target="_blank" rel="noopener noreferrer" style="color: #7c3aed; text-decoration: none;">rcweb.dev/final-payment</a> 
+                      Or visit <a href="https://rcweb.dev/final-payment" target="_blank" rel="noopener noreferrer" style="color: #7c3aed; text-decoration: none;">https://rcweb.dev/final-payment</a> 
                       and use your email <strong>${payment.email}</strong> and project code <strong>${payment.projectCode}</strong>.
                     </p>
                   </div>

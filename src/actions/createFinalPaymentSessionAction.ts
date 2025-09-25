@@ -68,6 +68,7 @@ export async function createFinalPaymentSessionAction(
           quantity: 1,
         },
       ],
+      automatic_tax: { enabled: true },
       success_url: `${process.env.NEXT_PUBLIC_BASE_URL}/payment-complete?code=${projectCode}`,
       cancel_url: `${process.env.NEXT_PUBLIC_BASE_URL}/final-payment`,
     });

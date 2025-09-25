@@ -150,7 +150,7 @@ export default function FinalPayment() {
               {isPending ? "Processing..." : "Proceed to Payment"}
             </button>
 
-            <button
+            {/* <button
               onClick={() => {
                 setVerified(false);
                 setProjectInfo(null);
@@ -158,7 +158,7 @@ export default function FinalPayment() {
               className="w-full mt-3 hover:text-white transition-colors font-inter text-gold font-bold"
             >
               Use Different Project
-            </button>
+            </button> */}
           </>
         )}
 

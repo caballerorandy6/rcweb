@@ -470,9 +470,9 @@ export const services = [
 
 export const faqs = [
   {
-    question: "Do you work with clients outside Houston?",
+    question: "Do you work with clients outside USA?",
     answer:
-      "Yes, I work with clients throughout the United States and Latin America. I use Zoom, Slack, and other tools for effective communication. Most of my projects are 100% remote.",
+      "I work with clients worldwide. My projects are fully remote, and I use tools like Zoom and Slack to communicate and collaborate effectively. Payments are easy and secure through Stripe, so you can work with me from anywhere.",
   },
   {
     question: "How long does a typical project take?",
@@ -492,7 +492,7 @@ export const faqs = [
   {
     question: "How does the payment process work?",
     answer:
-      "I work with a 3-payment structure: 30% upfront to start, 40% at the mid-project milestone, 30% upon project delivery. I accept Zelle, Wire Transfer, PayPal, and international payments.",
+      "I use a two-payment structure — 50% upfront to kick off your project and 50% once it’s completed and delivered. You can pay conveniently via Zelle or through Stripe on my website.",
   },
   {
     question: "Can I see progress during development?",
@@ -681,31 +681,31 @@ export const pricingPlans = [
 ];
 
 export const deliverables = {
-          Starter: [
-            "Complete source code repository",
-            "Deployment on your hosting",
-            "Basic documentation",
-            "30 days of post-launch support",
-            "Training session (1 hour)",
-          ],
-          Growth: [
-            "Complete source code repository",
-            "Deployment and configuration",
-            "Comprehensive documentation",
-            "60 days of post-launch support",
-            "Training sessions (3 hours)",
-            "Basic SEO setup",
-            "Analytics integration",
-          ],
-          Premium: [
-            "Complete source code repository",
-            "Multi-environment deployment",
-            "Full technical documentation",
-            "90 days of priority support",
-            "Training sessions (5 hours)",
-            "Advanced SEO optimization",
-            "Analytics and monitoring setup",
-            "Performance optimization",
-            "Security hardening",
-          ],
-        };
+  Starter: [
+    "Complete source code repository",
+    "Deployment on your hosting",
+    "Basic documentation",
+    "30 days of post-launch support",
+    "Training session (1 hour)",
+  ],
+  Growth: [
+    "Complete source code repository",
+    "Deployment and configuration",
+    "Comprehensive documentation",
+    "60 days of post-launch support",
+    "Training sessions (3 hours)",
+    "Basic SEO setup",
+    "Analytics integration",
+  ],
+  Premium: [
+    "Complete source code repository",
+    "Multi-environment deployment",
+    "Full technical documentation",
+    "90 days of priority support",
+    "Training sessions (5 hours)",
+    "Advanced SEO optimization",
+    "Analytics and monitoring setup",
+    "Performance optimization",
+    "Security hardening",
+  ],
+};

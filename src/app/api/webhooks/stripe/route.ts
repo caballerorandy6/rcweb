@@ -334,7 +334,7 @@ export async function POST(req: Request) {
                                 Need help? We're here for you!
                               </p>
                               <div>
-                                <a href="mailto:support@rcweb.dev" style="display: inline-block; background: #7c3aed; color: white; padding: 10px 24px; border-radius: 8px; text-decoration: none; font-weight: 600; margin: 4px;">
+                                <a href="mailto:contactus@rcweb.dev" style="display: inline-block; background: #7c3aed; color: white; padding: 10px 24px; border-radius: 8px; text-decoration: none; font-weight: 600; margin: 4px;">
                                   Email Support
                                 </a>
                                 <a href="https://rcweb.dev" style="display: inline-block; background: #10b981; color: white; padding: 10px 24px; border-radius: 8px; text-decoration: none; font-weight: 600; margin: 4px;">

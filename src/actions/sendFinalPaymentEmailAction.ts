@@ -98,7 +98,7 @@ export async function sendFinalPaymentEmail(projectCode: string) {
                           <a href="${paymentUrl}" style="color: #7c3aed; font-weight: 600; text-decoration: none;">Click here to pay now</a>
                         </p>
                         <p style="margin: 0; color: #4b5563; font-size: 14px;">
-                          Or visit <a href="https://rcweb.dev/final-payment" style="color: #7c3aed; text-decoration: none;">rcweb.dev/final-payment</a> and use your email <strong>${payment.email}</strong> and project code <strong>${payment.projectCode}</strong>.
+                          Or visit <a href="https://rcweb.dev/final-payment" style="color: #7c3aed; text-decoration: none;">https://rcweb.dev/final-payment</a> and use your email <strong>${payment.email}</strong> and project code <strong>${payment.projectCode}</strong>.
                         </p>
                       </div>
                       
