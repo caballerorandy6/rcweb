@@ -661,23 +661,6 @@ export const pricingPlans = [
     featured: false,
     cta: "Transform Your Business",
   },
-  {
-    id: "test",
-    name: "Test Plan",
-    price: "$1",
-    priceInCents: 100, // $1.00
-    range: "Test Only",
-    duration: "Immediate",
-    description: "Test payment flow - DO NOT USE IN PRODUCTION",
-    features: [
-      "Test payment processing",
-      "Verify webhook integration",
-      "Check email notifications",
-    ],
-    ideal: "For testing purposes only",
-    featured: false,
-    cta: "Test Payment",
-  },
 ];
 
 export const deliverables = {
