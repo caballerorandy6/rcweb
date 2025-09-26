@@ -692,3 +692,39 @@ export const deliverables = {
     "Security hardening",
   ],
 };
+
+export const testimonials = [
+  {
+    content:
+      "Randy transformed our business idea into a functional platform. The real-time booking system he developed increased our conversions by 40%. Professional and always available.",
+    author: "Michael Rodriguez",
+    role: "CEO, Limo Renting Houston",
+    image: "/testimonials/client1.jpg",
+    rating: 5,
+    project: "Booking Platform",
+  },
+  {
+    content:
+      "The admin dashboard Randy created saved us 15 hours per week in management. The bulk email feature was exactly what we needed. Excellent work.",
+    author: "Sarah Johnson",
+    role: "Manager, GSM AC Services",
+    image: "/testimonials/client2.jpg",
+    rating: 5,
+    project: "Management System",
+  },
+  {
+    content:
+      "Working with Randy was excellent. He not only developed our site but also advised us on digital strategy. Our organic traffic grew 60% in 3 months.",
+    author: "Carlos Mendez",
+    role: "Professional Photographer",
+    image: "/testimonials/client3.jpg",
+    rating: 5,
+    project: "Portfolio + Marketing",
+  },
+];
+
+export const extraFooterLinks = [
+  { name: "Privacy Policy", hash: "/privacy-policy" },
+  { name: "Terms of Service", hash: "/terms" },
+  { name: "Refund Policy", hash: "/refund-policy" },
+];

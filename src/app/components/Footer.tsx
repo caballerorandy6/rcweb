@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { navigation } from "@/lib/data";
+import { navigation, extraFooterLinks } from "@/lib/data";
 import Logo from "@/app/components/Logo";
 
 export default function Footer() {
@@ -79,6 +79,7 @@ export default function Footer() {
               </ul>
             </div>
 
+            {/* Columna de navegación secundaria */}
             <div className="lg:col-span-1 text-center lg:text-left">
               <h3 className="text-gold font-inter font-semibold text-sm uppercase tracking-wide mb-6 relative inline-block lg:block">
                 More
@@ -99,19 +100,22 @@ export default function Footer() {
               </ul>
             </div>
 
+            {/* Columna de conexión */}
             <div className="lg:col-span-1 text-center lg:text-left">
               <h3 className="text-gold font-inter font-semibold text-sm uppercase tracking-wide mb-6 relative inline-block lg:block">
                 Connect
                 <div className="absolute -bottom-2 left-1/2 lg:left-0 w-8 h-0.5 bg-gold rounded-full transform -translate-x-1/2 lg:translate-x-0"></div>
               </h3>
-              <div className="space-y-4">
-                <div className="text-white/60 font-inter text-sm">
+              <div className="space-y-4 max-w-sm mx-auto lg:mx-0">
+                {/* Texto centrado en mobile y alineado a la izquierda en pantallas grandes */}
+                <div className="text-white/60 font-inter text-sm text-center lg:text-left">
                   <p className="mb-2">Ready to start your project?</p>
                   <p className="text-xs text-white/50">
                     Available for freelance opportunities
                   </p>
                 </div>
 
+                {/* Estado de disponibilidad */}
                 <div className="flex items-center justify-center lg:justify-start">
                   <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse mr-2"></div>
                   <span className="text-green-400 font-inter text-xs font-medium">
@@ -122,11 +126,11 @@ export default function Footer() {
             </div>
           </div>
 
-          <div className="w-full h-px bg-gradient-to-r from-transparent via-white/10 to-transparent mb-8"></div>
+          <div className="w-full h-px bg-gradient-to-r from-transparent via-white/10 to-transparent mb-6"></div>
 
-          {/* Footer inferior */}
-          <div className="flex flex-col-reverse md:flex-row items-center justify-between gap-4">
-            {/* Links de navegación compactos para mobile */}
+          {/* Bloque con links principales + legales */}
+          <div className="flex flex-wrap justify-center lg:justify-between gap-6 text-sm">
+            {/* Links principales compactos */}
             <div className="flex flex-wrap justify-center gap-x-6 gap-y-2 text-sm">
               {mainNavigation.slice(0, 4).map((item) => (
                 <Link
@@ -140,16 +144,30 @@ export default function Footer() {
               ))}
             </div>
 
-            {/* Copyright */}
-            <div className="text-center">
-              <p className="text-gold font-iceland text-xl md:text-2xl mb-1 relative inline-block">
-                © {new Date().getFullYear()} RC Web
-                <span className="absolute -top-1 -right-2 w-1 h-1 bg-gold rounded-full animate-ping"></span>
-              </p>
-              <p className="text-white/40 font-inter text-xs">
-                All Rights Reserved
-              </p>
+            {/* Links legales */}
+            <div className="flex flex-wrap justify-center gap-x-6 gap-y-2 text-sm">
+              {extraFooterLinks.map((link) => (
+                <Link
+                  key={link.name}
+                  href={link.hash}
+                  className="text-white/50 hover:text-gold transition-colors font-inter text-xs relative group"
+                >
+                  {link.name}
+                  <span className="absolute -bottom-1 left-0 w-0 h-px bg-gold transition-all duration-300 group-hover:w-full"></span>
+                </Link>
+              ))}
             </div>
+          </div>
+
+          {/* Copyright */}
+          <div className="mt-6 text-center flex flex-col sm:flex-row items-center justify-center gap-4">
+            <p className="text-gold font-iceland text-xl md:text-2xl relative inline-block">
+              © {new Date().getFullYear()} RC Web
+              <span className="absolute -top-1 -right-2 w-1 h-1 bg-gold rounded-full animate-ping"></span>
+            </p>
+            <p className="text-white/40 font-inter text-xs">
+              All Rights Reserved
+            </p>
           </div>
 
           {/* Elementos decorativos inferiores */}

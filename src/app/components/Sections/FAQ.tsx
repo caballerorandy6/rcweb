@@ -8,10 +8,48 @@ import {
 } from "@heroicons/react/24/outline";
 import { faqs } from "@/lib/data";
 import Heading from "../Heading";
+import { motion, Variants, AnimatePresence } from "framer-motion";
 
 const FAQ = () => {
   const ref = useSectionObserver({ sectionName: "FAQ" });
   const [openIndex, setOpenIndex] = useState<number | null>(0);
+
+  // Variantes para la animación de las tarjetas
+  const containerVariants: Variants = {
+    hidden: { opacity: 0 },
+    show: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.15,
+      },
+    },
+  };
+
+  const cardVariants: Variants = {
+    hidden: { opacity: 0, y: 40, scale: 0.98 },
+    show: {
+      opacity: 1,
+      y: 0,
+      scale: 1,
+      transition: {
+        duration: 0.6,
+        ease: "easeOut",
+      },
+    },
+  };
+
+  const answerVariants: Variants = {
+    hidden: { opacity: 0, height: 0 },
+    show: {
+      opacity: 1,
+      height: "auto",
+      transition: {
+        duration: 0.3,
+        ease: "easeOut",
+      },
+    },
+    exit: { opacity: 0, height: 0, transition: { duration: 0.25 } },
+  };
 
   return (
     <section
@@ -27,11 +65,18 @@ const FAQ = () => {
           Frequently Asked Questions
         </Heading>
 
-        <div className="mx-auto mt-16 max-w-3xl">
+        <motion.div
+          variants={containerVariants}
+          initial="hidden"
+          whileInView="show"
+          viewport={{ once: true, amount: 0.2 }}
+          className="mx-auto mt-16 max-w-3xl"
+        >
           <div className="space-y-4">
             {faqs.map((faq, index) => (
-              <div
+              <motion.div
                 key={index}
+                variants={cardVariants}
                 className="rounded-lg border border-gold/20 bg-gray-900/50 backdrop-blur-sm transition-all duration-200 hover:border-gold/50"
               >
                 <button
@@ -50,17 +95,26 @@ const FAQ = () => {
                   />
                 </button>
 
-                {openIndex === index && (
-                  <div className="px-6 pb-4">
-                    <p className="text-sm font-inter text-white/70">
-                      {faq.answer}
-                    </p>
-                  </div>
-                )}
-              </div>
+                <AnimatePresence initial={false}>
+                  {openIndex === index && (
+                    <motion.div
+                      key="answer"
+                      variants={answerVariants}
+                      initial="hidden"
+                      animate="show"
+                      exit="exit"
+                      className="px-6 pb-4 overflow-hidden"
+                    >
+                      <p className="text-sm font-inter text-white/70">
+                        {faq.answer}
+                      </p>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+              </motion.div>
             ))}
           </div>
-        </div>
+        </motion.div>
       </div>
     </section>
   );

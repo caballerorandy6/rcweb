@@ -4,6 +4,7 @@ import { useEffect, useRef } from "react";
 import Link from "next/link";
 import CustomBadge from "@/app/components/CustomBadge";
 import useSectionObserver from "@/hooks/useSectionObserver";
+import { motion } from "framer-motion";
 
 const Hero = () => {
   const ref = useSectionObserver({ sectionName: "Home" });
@@ -34,49 +35,126 @@ const Hero = () => {
       </div>
 
       <div className="mx-auto max-w-7xl px-6 lg:px-8 h-full flex flex-col justify-center">
-        <div className="mx-auto max-w-2xl text-center">
-          <h1 className="text-5xl font-iceland tracking-tight sm:text-9xl text-gold">
+        <motion.div
+          className="mx-auto max-w-2xl text-center"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.8 }}
+        >
+          <motion.h1
+            className="text-5xl font-iceland tracking-tight sm:text-9xl text-gold"
+            initial={{ opacity: 0, y: 30, scale: 0.9 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            transition={{ duration: 0.8, delay: 0.2 }}
+          >
             Randy Caballero
-          </h1>
-          <CustomBadge>Available for Projects</CustomBadge>
-          <p className="mt-8 font-inter text-white/80 text-base">
+          </motion.h1>
+
+          <motion.div
+            initial={{ opacity: 0, scale: 0 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{
+              type: "spring",
+              stiffness: 200,
+              damping: 10,
+              delay: 0.5,
+            }}
+          >
+            <CustomBadge>Available for Projects</CustomBadge>
+          </motion.div>
+
+          <motion.p
+            className="mt-8 font-inter text-white/80 text-base"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.7 }}
+          >
             Full-Stack Developer specializing in Next.js with 3+ years creating
             digital solutions for businesses.
-          </p>
+          </motion.p>
 
-          {/* Social Proof */}
-          <div className="mt-6 flex justify-center gap-12 text-lg font-inter font-semibold text-gold/70">
-            <span>10+ Projects</span>
-
-            <span>5+ Happy Clients</span>
-
-            <span>100% Remote</span>
-          </div>
-
-          <div className="mt-10 flex flex-col sm:flex-row gap-4 items-center justify-center gap-x-6">
-            <Link
-              href="#services"
-              className="text-sm/6 font-inter text-gray-900 bg-gold hover:bg-gold/90 p-3 px-6 rounded-md transition-all duration-200 ease-in-out hover:scale-105"
+          {/* Social Proof con animación */}
+          <motion.div
+            className="mt-6 flex justify-center gap-12 text-lg font-inter font-semibold text-gold/70"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.6, delay: 0.9 }}
+          >
+            <motion.span
+              whileHover={{ scale: 1.1, color: "#fbbf24" }}
+              transition={{ type: "spring", stiffness: 300 }}
             >
-              View Services
-            </Link>
-            <Link
-              href="#contact"
-              className="text-sm/6 font-inter text-white/80 hover:bg-gold/20 p-3 px-6 rounded-md flex items-center gap-x-1 border-2 border-gold/50 transition-all duration-200 ease-in-out hover:scale-105"
+              10+ Projects
+            </motion.span>
+            <motion.span
+              whileHover={{ scale: 1.1, color: "#fbbf24" }}
+              transition={{ type: "spring", stiffness: 300 }}
             >
-              Schedule a Call
-            </Link>
-            <Link
-              href="/resume.pdf"
-              download="Randy Caballero - Resume.pdf"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-sm/6 font-inter text-white/80 hover:bg-gold/20 p-3 px-6 rounded-md flex items-center gap-x-1 border-2 border-gold/50 transition-all duration-200 ease-in-out hover:scale-105"
+              5+ Happy Clients
+            </motion.span>
+            <motion.span
+              whileHover={{ scale: 1.1, color: "#fbbf24" }}
+              transition={{ type: "spring", stiffness: 300 }}
             >
-              Download CV
-            </Link>
-          </div>
-        </div>
+              100% Remote
+            </motion.span>
+          </motion.div>
+
+          <motion.div
+            className="mt-10 flex flex-col sm:flex-row gap-4 items-center justify-center gap-x-6"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.6, delay: 1.1 }}
+          >
+            <motion.div
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 1.2 }}
+            >
+              <Link
+                href="#services"
+                className="inline-block text-sm/6 font-inter text-gray-900 bg-gold hover:bg-gold/90 p-3 px-6 rounded-md transition-colors duration-200"
+              >
+                View Services
+              </Link>
+            </motion.div>
+
+            <motion.div
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 1.3 }}
+            >
+              <Link
+                href="#contact"
+                className="text-sm/6 font-inter text-white/80 hover:bg-gold/20 p-3 px-6 rounded-md flex items-center gap-x-1 border-2 border-gold/50 transition-colors duration-200"
+              >
+                Schedule a Call
+              </Link>
+            </motion.div>
+
+            <motion.div
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 1.4 }}
+            >
+              <Link
+                href="/resume.pdf"
+                download="Randy Caballero - Resume.pdf"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-sm/6 font-inter text-white/80 hover:bg-gold/20 p-3 px-6 rounded-md flex items-center gap-x-1 border-2 border-gold/50 transition-colors duration-200"
+              >
+                Download CV
+              </Link>
+            </motion.div>
+          </motion.div>
+        </motion.div>
       </div>
     </section>
   );

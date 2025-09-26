@@ -5,7 +5,7 @@ import useSectionObserver from "@/hooks/useSectionObserver";
 import { CheckIcon } from "@heroicons/react/24/outline";
 import { pricingPlans } from "@/lib/data";
 import Heading from "../Heading";
-import { motion } from "framer-motion";
+import { motion, Variants } from "framer-motion";
 import { createInitialPaymentSessionAction } from "@/actions/createInitialPaymentSessionAction";
 import { toast } from "sonner";
 
@@ -18,17 +18,26 @@ const Pricing = () => {
 
   const ref = useSectionObserver({ sectionName: "Pricing" });
 
+  // Variantes de animación mejoradas (como en Services y Testimonials)
   const containerVariants = {
     hidden: { opacity: 0 },
     show: {
       opacity: 1,
-      transition: { staggerChildren: 0.2 },
+      transition: { staggerChildren: 0.15 },
     },
   };
 
-  const cardVariants = {
-    hidden: { opacity: 0, y: 50 },
-    show: { opacity: 1, y: 0 },
+  const cardVariants: Variants = {
+    hidden: { opacity: 0, y: 50, scale: 0.95 },
+    show: {
+      opacity: 1,
+      y: 0,
+      scale: 1,
+      transition: {
+        duration: 0.7,
+        ease: "easeOut",
+      },
+    },
   };
 
   const handlePlanSelection = (planId: string) => {
@@ -45,7 +54,6 @@ const Pricing = () => {
       return;
     }
 
-    // Abrir pestaña vacía primero
     const stripeTab = window.open("", "_blank");
     if (!stripeTab) {
       toast.error(
@@ -55,13 +63,6 @@ const Pricing = () => {
     }
 
     startTransition(async () => {
-      console.log("🟡 Enviando datos al server action:", {
-        planName: plan.name,
-        planPrice: plan.priceInCents,
-        customerName,
-        customerEmail,
-      });
-
       const result = await createInitialPaymentSessionAction(
         {
           name: plan.name,
@@ -71,20 +72,13 @@ const Pricing = () => {
         { email: customerEmail, name: customerName }
       );
 
-      console.log("🟢 Respuesta del server action:", result);
-
       if (result.success && result.sessionUrl) {
         if (result.projectCode) {
           sessionStorage.setItem("projectCode", result.projectCode);
-          console.log(
-            "📌 Project Code guardado en sessionStorage:",
-            result.projectCode
-          );
         }
 
         stripeTab.location.href = result.sessionUrl;
 
-        // Reset
         setShowModal(false);
         setCustomerEmail("");
         setCustomerName("");
@@ -112,6 +106,7 @@ const Pricing = () => {
           Clear & Transparent Pricing
         </Heading>
 
+        {/* Animación mejorada en la grilla de planes */}
         <motion.div
           variants={containerVariants}
           initial="hidden"
@@ -184,7 +179,7 @@ const Pricing = () => {
           ))}
         </motion.div>
 
-        {/* Modal de pago */}
+        {/* Modal */}
         {showModal && (
           <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 backdrop-blur-sm p-4">
             <motion.div
