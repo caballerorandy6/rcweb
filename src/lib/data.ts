@@ -27,6 +27,10 @@ import {
   CodeBracketIcon,
   ChartBarIcon,
   CubeTransparentIcon,
+  CurrencyDollarIcon,
+  ShieldCheckIcon,
+  ScaleIcon,
+  MapPinIcon,
 } from "@heroicons/react/24/outline";
 
 export const navigation: NavigationProps[] = [
@@ -725,6 +729,50 @@ export const testimonials = [
 
 export const extraFooterLinks = [
   { name: "Privacy Policy", hash: "/privacy-policy" },
-  { name: "Terms of Service", hash: "/terms" },
+  { name: "Terms of Service", hash: "/terms-of-service" },
   { name: "Refund Policy", hash: "/refund-policy" },
+];
+
+export const sections = [
+  {
+    icon: React.createElement(BriefcaseIcon, { className: "w-6 h-6" }),
+    title: "Experience",
+    content: "Showcase of professional experience and career highlights.",
+    color: "from-gray-500/20 to-gray-600/20",
+  },
+  {
+    icon: React.createElement(CurrencyDollarIcon, { className: "w-6 h-6" }),
+    title: "Payments",
+    content:
+      "A 50% non-refundable deposit is required to begin work. The balance is due upon completion and before final delivery. Refunds are not offered except in cases of non-delivery or breach by RC Web Solutions LLC.",
+    color: "from-green-500/20 to-green-600/20",
+  },
+  {
+    icon: React.createElement(ShieldCheckIcon, { className: "w-6 h-6" }),
+    title: "Intellectual Property",
+    content:
+      "Upon full payment, all deliverables (code, designs, and assets) become the client's property unless otherwise agreed in writing.",
+    color: "from-blue-500/20 to-blue-600/20",
+  },
+  {
+    icon: React.createElement(ScaleIcon, { className: "w-6 h-6" }),
+    title: "Limitation of Liability",
+    content:
+      'Our services are provided "as is." RC Web Solutions LLC is not liable for indirect or consequential damages arising from the use of our services.',
+    color: "from-orange-500/20 to-orange-600/20",
+  },
+  {
+    icon: React.createElement(MapPinIcon, { className: "w-6 h-6" }),
+    title: "Jurisdiction",
+    content:
+      "These Terms are governed by the laws of the State of Texas, USA. Any disputes will be handled in the courts located in Houston, Texas.",
+    color: "from-red-500/20 to-red-600/20",
+  },
+];
+
+export const thirdPartyLinks = [
+  { name: "Google Analytics", url: "https://policies.google.com/privacy" },
+  { name: "Resend", url: "https://resend.com/legal/privacy-policy" },
+  { name: "Stripe", url: "https://stripe.com/us/privacy" },
+  { name: "Zelle", url: "https://www.zelle.com/legal/legal-and-privacy" },
 ];

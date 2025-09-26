@@ -109,8 +109,24 @@ model Payment {
   projectReady    DateTime?
   createdAt       DateTime  @default(now())
   updatedAt       DateTime  @updatedAt
-  
+
+  termsAcceptance TermsAcceptance?
+
   @@index([email])
   @@index([projectCode])
   @@index([accessToken])
 }
+
+model TermsAcceptance {
+  id           String   @id @default(cuid())
+  userId       String?
+  paymentId    String?   @unique // opcional si quieres ligarlo a un pago
+  plan         String?
+  acceptedAt   DateTime
+  ipAddress    String?
+  userAgent    String?
+  termsVersion String
+
+  payment      Payment?  @relation(fields: [paymentId], references: [id], onDelete: Cascade)
+}
+
