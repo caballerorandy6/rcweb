@@ -8,6 +8,7 @@ export interface SplitPaymentResponse {
   success: boolean;
   sessionUrl?: string;
   projectCode?: string;
+  paymentId?: string;
   error?: string;
 }
 
@@ -25,7 +26,8 @@ export async function createInitialPaymentSessionAction(
   customerInfo: {
     email: string;
     name: string;
-  }
+  },
+  options?: { onlyCreateRecord?: boolean }
 ): Promise<SplitPaymentResponse> {
   try {
     const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
@@ -35,8 +37,6 @@ export async function createInitialPaymentSessionAction(
     // calcular montos
     const firstPaymentAmount = Math.round(plan.price * PAYMENT_TERMS.INITIAL);
     const secondPaymentAmount = plan.price - firstPaymentAmount;
-
-    // generar código único
     const projectCode = generateProjectCode();
 
     // guardar en BD
@@ -52,15 +52,13 @@ export async function createInitialPaymentSessionAction(
       },
     });
 
-    // Crear sesión de Stripe con toda la metadata
-    console.log("✅ Creando checkout con metadata:", {
-      paymentId: payment.id,
-      projectCode,
-      paymentType: "initial",
-      customerName: customerInfo.name,
-      planName: plan.name,
-      customerEmail: customerInfo.email,
-    });
+    if (options?.onlyCreateRecord) {
+      return {
+        success: true,
+        paymentId: payment.id,
+        projectCode,
+      };
+    }
 
     // crear sesión Stripe con toda la metadata
     const session = await stripe.checkout.sessions.create({

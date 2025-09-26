@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useTransition } from "react";
+import { useRouter } from "next/navigation";
 import useSectionObserver from "@/hooks/useSectionObserver";
 import { CheckIcon } from "@heroicons/react/24/outline";
 import { pricingPlans } from "@/lib/data";
@@ -17,6 +18,8 @@ const Pricing = () => {
   const [isPending, startTransition] = useTransition();
 
   const ref = useSectionObserver({ sectionName: "Pricing" });
+
+  const router = useRouter();
 
   // Variantes de animación mejoradas (como en Services y Testimonials)
   const containerVariants = {
@@ -45,49 +48,33 @@ const Pricing = () => {
     setShowModal(true);
   };
 
-  const handleCheckout = async () => {
+  const handleStartPayment = () => {
     const plan = pricingPlans.find((p) => p.id === selectedPlan);
     if (!plan) return;
-
     if (!customerEmail || !customerName) {
       toast.error("Please fill in all fields");
       return;
     }
 
-    const stripeTab = window.open("", "_blank");
-    if (!stripeTab) {
-      toast.error(
-        "Popup blocked! Please allow popups to continue to checkout."
-      );
-      return;
-    }
-
     startTransition(async () => {
+      toast.loading("Creating payment record...");
       const result = await createInitialPaymentSessionAction(
         {
           name: plan.name,
           price: plan.priceInCents,
           description: plan.description,
         },
-        { email: customerEmail, name: customerName }
+        { email: customerEmail, name: customerName },
+        { onlyCreateRecord: true }
       );
+      toast.dismiss();
 
-      if (result.success && result.sessionUrl) {
-        if (result.projectCode) {
-          sessionStorage.setItem("projectCode", result.projectCode);
-        }
-
-        stripeTab.location.href = result.sessionUrl;
-
-        setShowModal(false);
-        setCustomerEmail("");
-        setCustomerName("");
-        setSelectedPlan(null);
-
-        toast.success("Redirecting to secure payment...");
+      if (result.success && result.paymentId) {
+        router.push(
+          `/terms-of-service?paymentId=${result.paymentId}&plan=${plan.id}`
+        );
       } else {
-        toast.error(result.error || "Failed to create checkout session");
-        stripeTab.close();
+        toast.error(result.error || "Failed to start payment process");
       }
     });
   };
@@ -251,16 +238,16 @@ const Pricing = () => {
               {/* Botones */}
               <div className="flex gap-4 mt-6 font-inter">
                 <button
-                  onClick={handleCheckout}
+                  onClick={handleStartPayment}
                   disabled={isPending}
                   className="flex-1 bg-gradient-to-r from-gold to-yellow-500 text-gray-900 py-3 rounded-lg font-semibold hover:from-gold/90 hover:to-yellow-500/90 transition-all disabled:opacity-50 shadow-lg shadow-gold/20"
                 >
-                  {isPending ? "Processing..." : "Proceed to Payment"}
+                  {isPending ? "Loading..." : "Go to Terms & Pay"}
                 </button>
                 <button
                   onClick={() => setShowModal(false)}
                   disabled={isPending}
-                  className="flex-1 border border-gold/50 text-gold py-3 rounded-lg hover:bg-gold/10 transition-all disabled:opacity-50"
+                  className={`flex-1 border border-gold/50 text-gold py-3 rounded-lg hover:bg-gold/10 transition-all disabled:opacity-50 ${isPending ? "cursor-wait" : ""}`}
                 >
                   Cancel
                 </button>

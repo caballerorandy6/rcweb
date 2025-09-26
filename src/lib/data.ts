@@ -665,6 +665,19 @@ export const pricingPlans = [
     featured: false,
     cta: "Transform Your Business",
   },
+  {
+    id: "test",
+    name: "Test",
+    price: "$1",
+    priceInCents: 100, // $1.00
+    range: "$1 - $1",
+    duration: "1 day",
+    description: "Test plan for development",
+    features: ["Test feature 1"],
+    ideal: "Ideal for: Testing purposes",
+    featured: false,
+    cta: "Test Plan",
+  },
 ];
 
 export const deliverables = {

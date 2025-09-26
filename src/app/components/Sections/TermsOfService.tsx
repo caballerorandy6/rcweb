@@ -1,7 +1,7 @@
 "use client";
 
 import { useTransition } from "react";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import Heading from "@/app/components/Heading";
 import {
   DocumentTextIcon,
@@ -13,16 +13,14 @@ import { motion, Variants } from "framer-motion";
 import { sections } from "@/lib/data";
 import { acceptTermsAction } from "@/actions/acceptTermsAction";
 import { toast } from "sonner";
-import { AcceptTermsActionProps } from "@/actions/acceptTermsAction";
 
-const TermsOfService = ({
-  userId,
-  paymentId,
-  plan,
-}: AcceptTermsActionProps) => {
+const TermsOfService = () => {
   const router = useRouter();
   const [isPending, startTransition] = useTransition();
   const ref = useSectionObserver({ sectionName: "Terms of Service" });
+
+  const searchParams = useSearchParams();
+  const paymentIdParam = searchParams.get("paymentId");
 
   const containerVariants: Variants = {
     hidden: { opacity: 0 },
@@ -57,15 +55,13 @@ const TermsOfService = ({
       toast.loading("Processing your acceptance...");
       startTransition(async () => {
         await acceptTermsAction({
-          userId,
-          paymentId,
-          plan,
+          paymentId: paymentIdParam ?? undefined,
           termsVersion: "2025-09-25",
         });
         localStorage.setItem("termsAccepted", new Date().toISOString());
         toast.dismiss();
         toast.success("Terms accepted successfully!");
-        router.push("");
+        router.push(`/checkout?paymentId=${paymentIdParam}`);
       });
     } catch (error) {
       toast.dismiss();
@@ -201,13 +197,7 @@ const TermsOfService = ({
             disabled={isPending}
           >
             <ShieldCheckIcon className="w-5 h-5" />
-            {isPending ? (
-              "Processing…"
-            ) : (
-              <>
-                <ShieldCheckIcon className="w-5 h-5" />I Accept These Terms
-              </>
-            )}
+            {isPending ? "Processing…" : <>I Accept These Terms</>}
           </motion.button>
 
           <motion.a
