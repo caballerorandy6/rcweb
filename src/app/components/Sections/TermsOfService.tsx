@@ -1,5 +1,7 @@
 "use client";
 
+import { useTransition } from "react";
+import { useRouter } from "next/navigation";
 import Heading from "@/app/components/Heading";
 import {
   DocumentTextIcon,
@@ -9,8 +11,17 @@ import {
 import useSectionObserver from "@/hooks/useSectionObserver";
 import { motion, Variants } from "framer-motion";
 import { sections } from "@/lib/data";
+import { acceptTermsAction } from "@/actions/acceptTermsAction";
+import { toast } from "sonner";
+import { AcceptTermsActionProps } from "@/actions/acceptTermsAction";
 
-const TermsOfService = () => {
+const TermsOfService = ({
+  userId,
+  paymentId,
+  plan,
+}: AcceptTermsActionProps) => {
+  const router = useRouter();
+  const [isPending, startTransition] = useTransition();
   const ref = useSectionObserver({ sectionName: "Terms of Service" });
 
   const containerVariants: Variants = {
@@ -39,6 +50,28 @@ const TermsOfService = () => {
         ease: "easeOut",
       },
     },
+  };
+
+  const handleAcceptTerms = () => {
+    try {
+      toast.loading("Processing your acceptance...");
+      startTransition(async () => {
+        await acceptTermsAction({
+          userId,
+          paymentId,
+          plan,
+          termsVersion: "2025-09-25",
+        });
+        localStorage.setItem("termsAccepted", new Date().toISOString());
+        toast.dismiss();
+        toast.success("Terms accepted successfully!");
+        router.push("");
+      });
+    } catch (error) {
+      toast.dismiss();
+      toast.error("Failed to accept terms. Please try again.");
+      console.error("Error accepting terms:", error);
+    }
   };
 
   return (
@@ -163,17 +196,18 @@ const TermsOfService = () => {
           <motion.button
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
-            className="inline-flex items-center gap-2 px-8 py-3 bg-gold text-gray-900 font-bold rounded-lg hover:bg-gold/90 transition-colors font-inter"
-            onClick={() => {
-              // Guardar aceptación en localStorage
-              localStorage.setItem("termsAccepted", new Date().toISOString());
-              // Opcional: enviar a analytics o base de datos
-              console.log("Terms accepted at:", new Date().toISOString());
-              // Redirigir o mostrar notificación
-              alert("Terms accepted successfully!");
-            }}
+            className={`inline-flex items-center gap-2 px-8 py-3 bg-gold text-gray-900 font-bold rounded-lg hover:bg-gold/90 transition-colors font-inter ${isPending ? "opacity-70 cursor-wait" : "bg-gold text-gray-900 hover:bg-gold/90"}`}
+            onClick={handleAcceptTerms}
+            disabled={isPending}
           >
-            <ShieldCheckIcon className="w-5 h-5" />I Accept These Terms
+            <ShieldCheckIcon className="w-5 h-5" />
+            {isPending ? (
+              "Processing…"
+            ) : (
+              <>
+                <ShieldCheckIcon className="w-5 h-5" />I Accept These Terms
+              </>
+            )}
           </motion.button>
 
           <motion.a
