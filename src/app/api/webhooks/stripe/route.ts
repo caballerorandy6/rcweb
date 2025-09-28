@@ -1,3 +1,5 @@
+// app/api/stripe/webhook/route.ts
+
 import { NextResponse } from "next/server";
 import Stripe from "stripe";
 import { prisma } from "@/lib/prisma";
@@ -25,36 +27,89 @@ export async function POST(req: Request) {
 
   if (event.type === "checkout.session.completed") {
     const session = event.data.object as Stripe.Checkout.Session;
+    const metadata = session.metadata || {};
 
-    const paymentId = session.metadata?.paymentId;
-    const projectCode = session.metadata?.projectCode;
-    const paymentType = session.metadata?.paymentType;
-    const customerName = session.metadata?.customerName;
-    const planName = session.metadata?.planName;
-    const customerEmail =
-      session.customer_email || session.metadata?.customerEmail;
+    const paymentType = metadata.paymentType;
+    const projectCode = metadata.projectCode;
+    const customerName = metadata.customerName;
+    const planName = metadata.planName;
+    const customerEmail = session.customer_email || metadata.customerEmail;
 
     console.log("📋 Metadata recibido:", {
       paymentType,
-      paymentId,
       projectCode,
       customerEmail,
+      planName,
     });
 
     const resend = new Resend(process.env.RESEND_API_KEY!);
 
-    // ============= PAGO INICIAL =============
-    if (paymentType === "initial" && paymentId && customerEmail) {
+    // ============= PAGO INICIAL - CREAR PAYMENT Y TERMSACCEPTANCE =============
+    if (paymentType === "initial" && projectCode && customerEmail) {
       try {
-        await prisma.payment.update({
-          where: { id: paymentId },
-          data: {
-            firstPaid: true,
-            firstPaidAt: new Date(),
-            projectStatus: "in_progress",
-          },
+        // Verificar si ya existe para evitar duplicados (idempotencia)
+        const existingPayment = await prisma.payment.findUnique({
+          where: { projectCode },
         });
 
+        if (existingPayment) {
+          console.log("⚠️ Payment ya existe para projectCode:", projectCode);
+          return NextResponse.json({ received: true });
+        }
+
+        // Extraer todos los montos de metadata
+        const totalAmount = parseInt(metadata.totalAmount || "0");
+        const firstPaymentAmount = parseInt(metadata.firstPaymentAmount || "0");
+        const secondPaymentAmount = parseInt(
+          metadata.secondPaymentAmount || "0"
+        );
+
+        console.log("💾 Creando nuevo Payment con projectCode:", projectCode);
+
+        // CREAR Payment Y TermsAcceptance en una transacción atómica
+        const payment = await prisma.$transaction(async (tx) => {
+          // 1. Crear el registro de Payment
+          const newPayment = await tx.payment.create({
+            data: {
+              projectCode, // Generado con tu función generateProjectCode()
+              email: customerEmail,
+              name: customerName || "Client",
+              planName: planName || "Unknown Plan",
+              totalAmount,
+              firstPayment: firstPaymentAmount,
+              secondPayment: secondPaymentAmount,
+              firstPaid: true,
+              firstPaidAt: new Date(),
+              firstSessionId: session.id,
+              projectStatus: "in_progress",
+            },
+          });
+
+          // 2. Crear TermsAcceptance ligado al Payment recién creado
+          if (metadata.termsAcceptedAt) {
+            await tx.termsAcceptance.create({
+              data: {
+                paymentId: newPayment.id, // ID del Payment recién creado
+                acceptedAt: new Date(metadata.termsAcceptedAt),
+                termsVersion: "2025-09-25",
+                plan: planName,
+                ipAddress: "stripe-checkout",
+                userAgent: "stripe-checkout",
+                // NO incluir userId ya que no es necesario
+              },
+            });
+            console.log(
+              "✅ TermsAcceptance creado para paymentId:",
+              newPayment.id
+            );
+          }
+
+          return newPayment;
+        });
+
+        console.log("✅ Payment creado exitosamente con ID:", payment.id);
+
+        // ============= ENVIAR EMAIL AL CLIENTE =============
         await resend.emails.send({
           from: "RC Web <no-reply@rcweb.dev>",
           to: customerEmail,
@@ -132,6 +187,25 @@ export async function POST(req: Request) {
                               </ol>
                             </div>
                             
+                            <!-- Payment Summary -->
+                            <div style="background-color: #f3f4f6; border-radius: 12px; padding: 20px; margin: 0 0 32px 0;">
+                              <h3 style="color: #111827; font-size: 16px; font-weight: 600; margin: 0 0 12px 0;">Payment Summary</h3>
+                              <table style="width: 100%; font-size: 14px;">
+                                <tr>
+                                  <td style="padding: 4px 0; color: #6b7280;">Initial Payment (50%):</td>
+                                  <td style="text-align: right; color: #059669; font-weight: 600;">$${(firstPaymentAmount / 100).toFixed(2)} ✓</td>
+                                </tr>
+                                <tr>
+                                  <td style="padding: 4px 0; color: #6b7280;">Final Payment (50%):</td>
+                                  <td style="text-align: right; color: #6b7280;">$${(secondPaymentAmount / 100).toFixed(2)}</td>
+                                </tr>
+                                <tr style="border-top: 1px solid #d1d5db;">
+                                  <td style="padding: 8px 0 0 0; color: #374151; font-weight: 600;">Total Project Cost:</td>
+                                  <td style="padding: 8px 0 0 0; text-align: right; color: #374151; font-weight: 600;">$${(totalAmount / 100).toFixed(2)}</td>
+                                </tr>
+                              </table>
+                            </div>
+                            
                             <!-- Final Payment Info -->
                             <div style="background: linear-gradient(135deg, #ede9fe 0%, #ddd6fe 100%); border-left: 4px solid #7c3aed; border-radius: 8px; padding: 20px; margin: 0 0 32px 0;">
                               <p style="margin: 0 0 12px 0; color: #5b21b6; font-weight: 600; font-size: 16px;">
@@ -161,7 +235,7 @@ export async function POST(req: Request) {
                             <hr style="border: none; border-top: 1px solid #e5e7eb; margin: 32px 0;">
                             <p style="text-align: center; color: #6b7280; font-size: 12px;">
                               You can unsubscribe from marketing emails at any time by clicking 
-                            <a href="${process.env.NEXT_PUBLIC_BASE_URL}/unsubscribe?email=${encodeURIComponent(customerEmail)}" style="color: #7c3aed; text-decoration: none;">
+                              <a href="${process.env.NEXT_PUBLIC_BASE_URL}/unsubscribe?email=${encodeURIComponent(customerEmail)}" style="color: #7c3aed; text-decoration: none;">here</a>.
                             </p>
                           </td>
                         </tr>
@@ -174,28 +248,53 @@ export async function POST(req: Request) {
           `,
         });
 
-        console.log("✅ Email inicial enviado");
+        console.log("✅ Email inicial enviado al cliente");
 
-        // También notificar al admin
+        // ============= NOTIFICAR AL ADMIN =============
         await resend.emails.send({
           from: "RC Web <no-reply@rcweb.dev>",
           to: "admin@rcweb.dev",
           subject: `💰 New advance payment received - Project ${projectCode}`,
           html: `
-            <p>A new advance payment has been received for the project. <strong>${projectCode}</strong>.</p>
-            <p>Client: ${customerName || "Unknown"}</p>
-            <p>Plan: ${planName}</p>
-            <p>Email: ${customerEmail}</p>
+            <h2>New Initial Payment Received</h2>
+            <p><strong>Project Code:</strong> ${projectCode}</p>
+            <p><strong>Client:</strong> ${customerName || "Unknown"}</p>
+            <p><strong>Email:</strong> ${customerEmail}</p>
+            <p><strong>Plan:</strong> ${planName}</p>
+            <p><strong>Initial Payment:</strong> $${(firstPaymentAmount / 100).toFixed(2)}</p>
+            <p><strong>Pending Payment:</strong> $${(secondPaymentAmount / 100).toFixed(2)}</p>
+            <p><strong>Payment ID:</strong> ${payment.id}</p>
+            <hr>
+            <p>Remember to contact the client within 24 hours to discuss project details.</p>
           `,
         });
+
+        console.log("✅ Email enviado al admin");
       } catch (err) {
-        console.error("Error procesing first payment:", err);
+        // Si es un error de constraint único (P2002), significa que ya fue procesado
+        interface PrismaError extends Error {
+          code?: string;
+        }
+        const prismaErr = err as PrismaError;
+        if (prismaErr.code === "P2002") {
+          console.log("⚠️ Payment ya fue procesado anteriormente");
+          return NextResponse.json({ received: true });
+        }
+
+        console.error("❌ Error procesando pago inicial:", err);
+        // Re-lanzar el error para que Stripe reintente si es necesario
+        throw err;
       }
-    } else if (paymentType === "final" && paymentId && customerEmail) {
+    }
+
+    // ============= PAGO FINAL =============
+    else if (paymentType === "final" && metadata.paymentId && customerEmail) {
       console.log("💰 Procesando PAGO FINAL");
 
+      const paymentId = metadata.paymentId;
+
       try {
-        // Buscar el payment para obtener todos los datos
+        // Buscar el payment existente
         const payment = await prisma.payment.findUnique({
           where: { id: paymentId },
         });
@@ -205,19 +304,20 @@ export async function POST(req: Request) {
           return NextResponse.json({ received: true });
         }
 
-        // Actualizar como pagado completamente
+        // Actualizar el Payment como completamente pagado
         await prisma.payment.update({
           where: { id: paymentId },
           data: {
             secondPaid: true,
             secondPaidAt: new Date(),
+            secondSessionId: session.id,
             projectStatus: "completed",
           },
         });
 
-        console.log("✅ Data base updated - Project completed");
+        console.log("✅ Payment actualizado - Proyecto completado");
 
-        // Enviar email de proyecto completado
+        // ============= EMAIL DE PROYECTO COMPLETADO =============
         await resend.emails.send({
           from: "RC Web <no-reply@rcweb.dev>",
           to: customerEmail,
@@ -278,7 +378,7 @@ export async function POST(req: Request) {
                               <table style="width: 100%; font-size: 14px;">
                                 <tr>
                                   <td style="padding: 6px 0; color: #6b7280;">Project Code:</td>
-                                  <td style="text-align: right; font-weight: 600; color: #374151; font-family: 'Courier New', monospace;">${projectCode}</td>
+                                  <td style="text-align: right; font-weight: 600; color: #374151; font-family: 'Courier New', monospace;">${payment.projectCode}</td>
                                 </tr>
                                 <tr>
                                   <td style="padding: 6px 0; color: #6b7280;">Plan:</td>
@@ -351,9 +451,7 @@ export async function POST(req: Request) {
                             <hr style="border: none; border-top: 1px solid #e5e7eb; margin: 32px 0;">
                             <p style="text-align: center; color: #6b7280; font-size: 12px;">
                               You can unsubscribe from marketing emails at any time by clicking 
-                            <a href="${process.env.NEXT_PUBLIC_BASE_URL}/unsubscribe?email=${encodeURIComponent(customerEmail)}" style="color: #7c3aed; text-decoration: none;">
-                              here
-                            </a>.
+                              <a href="${process.env.NEXT_PUBLIC_BASE_URL}/unsubscribe?email=${encodeURIComponent(customerEmail)}" style="color: #7c3aed; text-decoration: none;">here</a>.
                             </p>
                           </td>
                         </tr>
@@ -366,37 +464,53 @@ export async function POST(req: Request) {
           `,
         });
 
-        console.log("✅ payment email sent to:", customerEmail);
+        console.log("✅ Email de proyecto completado enviado al cliente");
 
-        // Also send notification to admin
+        // ============= NOTIFICAR AL ADMIN DEL PAGO FINAL =============
         await resend.emails.send({
           from: "RC Web <no-reply@rcweb.dev>",
           to: "admin@rcweb.dev",
-          subject: `💰 Final Payment Received - ${payment.planName} - ${projectCode}`,
+          subject: `💰 Final Payment Received - ${payment.planName} - ${payment.projectCode}`,
           html: `
             <h2>Final Payment Completed ✅</h2>
+            <p><strong>Project Code:</strong> ${payment.projectCode}</p>
             <p><strong>Client:</strong> ${payment.name} (${customerEmail})</p>
-            <p><strong>Project Code:</strong> ${projectCode}</p>
             <p><strong>Plan:</strong> ${payment.planName}</p>
             <p><strong>Final Payment:</strong> $${(payment.secondPayment / 100).toFixed(2)}</p>
             <p><strong>Total Project Value:</strong> $${(payment.totalAmount / 100).toFixed(2)}</p>
-            <p>Remember to send repository access and schedule training!</p>
+            <p><strong>Project Status:</strong> COMPLETED</p>
+            <hr>
+            <p style="background: #fef3c7; padding: 12px; border-radius: 8px;">
+              <strong>⚠️ ACTION REQUIRED:</strong><br>
+              Remember to send repository access and schedule training session!
+            </p>
           `,
         });
 
-        console.log("✅ Email al admin enviado");
+        console.log("✅ Email enviado al admin sobre pago final");
       } catch (err) {
         console.error("❌ Error procesando pago final:", err);
+        // Re-lanzar para reintentos
+        throw err;
       }
     }
-    // Si no es ni initial ni final
+
+    // ============= SI NO CUMPLE CONDICIONES =============
     else {
-      console.log("⚠️ Condiciones no cumplidas:");
+      console.log("⚠️ Condiciones no cumplidas para procesar el pago:");
       console.log("- paymentType:", paymentType);
-      console.log("- paymentId:", paymentId);
+      console.log("- projectCode:", projectCode);
+      console.log("- paymentId:", metadata.paymentId);
       console.log("- customerEmail:", customerEmail);
+
+      // Registrar pero no fallar
+      return NextResponse.json({
+        received: true,
+        warning: "Payment received but conditions not met for processing",
+      });
     }
   }
 
+  // Retornar éxito para otros tipos de eventos
   return NextResponse.json({ received: true });
 }

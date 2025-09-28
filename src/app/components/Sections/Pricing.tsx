@@ -7,7 +7,6 @@ import { CheckIcon } from "@heroicons/react/24/outline";
 import { pricingPlans } from "@/lib/data";
 import Heading from "../Heading";
 import { motion, Variants } from "framer-motion";
-import { createInitialPaymentSessionAction } from "@/actions/createInitialPaymentSessionAction";
 import { toast } from "sonner";
 
 const Pricing = () => {
@@ -18,16 +17,11 @@ const Pricing = () => {
   const [isPending, startTransition] = useTransition();
 
   const ref = useSectionObserver({ sectionName: "Pricing" });
-
   const router = useRouter();
 
-  // Variantes de animación mejoradas (como en Services y Testimonials)
   const containerVariants = {
     hidden: { opacity: 0 },
-    show: {
-      opacity: 1,
-      transition: { staggerChildren: 0.15 },
-    },
+    show: { opacity: 1, transition: { staggerChildren: 0.15 } },
   };
 
   const cardVariants: Variants = {
@@ -36,10 +30,7 @@ const Pricing = () => {
       opacity: 1,
       y: 0,
       scale: 1,
-      transition: {
-        duration: 0.7,
-        ease: "easeOut",
-      },
+      transition: { duration: 0.7, ease: "easeOut" },
     },
   };
 
@@ -48,7 +39,7 @@ const Pricing = () => {
     setShowModal(true);
   };
 
-  const handleStartPayment = () => {
+  const handleGoToTerms = () => {
     const plan = pricingPlans.find((p) => p.id === selectedPlan);
     if (!plan) return;
     if (!customerEmail || !customerName) {
@@ -56,26 +47,17 @@ const Pricing = () => {
       return;
     }
 
-    startTransition(async () => {
-      toast.loading("Creating payment record...");
-      const result = await createInitialPaymentSessionAction(
-        {
-          name: plan.name,
-          price: plan.priceInCents,
-          description: plan.description,
-        },
-        { email: customerEmail, name: customerName },
-        { onlyCreateRecord: true }
-      );
-      toast.dismiss();
+    // Solo redirigir a términos con los datos necesarios
+    startTransition(() => {
+      const params = new URLSearchParams({
+        planName: plan.name,
+        planPrice: plan.priceInCents.toString(),
+        planDescription: plan.description,
+        customerEmail,
+        customerName,
+      });
 
-      if (result.success && result.paymentId) {
-        router.push(
-          `/terms-of-service?paymentId=${result.paymentId}&plan=${plan.id}`
-        );
-      } else {
-        toast.error(result.error || "Failed to start payment process");
-      }
+      router.push(`/terms-of-service?${params.toString()}`);
     });
   };
 
@@ -93,7 +75,6 @@ const Pricing = () => {
           Clear & Transparent Pricing
         </Heading>
 
-        {/* Animación mejorada en la grilla de planes */}
         <motion.div
           variants={containerVariants}
           initial="hidden"
@@ -200,14 +181,8 @@ const Pricing = () => {
                     ).toFixed(2)}
                   </span>
                 </div>
-                <div className="mt-3 pt-3 border-t border-gray-700">
-                  <p className="text-xs text-gray-500">
-                    Final payment (50%) due upon project completion
-                  </p>
-                </div>
               </div>
 
-              {/* Campos */}
               <div className="space-y-4 font-inter">
                 <div>
                   <label className="block text-sm text-gray-300 mb-2 font-medium">
@@ -235,10 +210,9 @@ const Pricing = () => {
                 </div>
               </div>
 
-              {/* Botones */}
               <div className="flex gap-4 mt-6 font-inter">
                 <button
-                  onClick={handleStartPayment}
+                  onClick={handleGoToTerms}
                   disabled={isPending}
                   className="flex-1 bg-gradient-to-r from-gold to-yellow-500 text-gray-900 py-3 rounded-lg font-semibold hover:from-gold/90 hover:to-yellow-500/90 transition-all disabled:opacity-50 shadow-lg shadow-gold/20"
                 >
@@ -247,7 +221,9 @@ const Pricing = () => {
                 <button
                   onClick={() => setShowModal(false)}
                   disabled={isPending}
-                  className={`flex-1 border border-gold/50 text-gold py-3 rounded-lg hover:bg-gold/10 transition-all disabled:opacity-50 ${isPending ? "cursor-wait" : ""}`}
+                  className={`flex-1 border border-gold/50 text-gold py-3 rounded-lg hover:bg-gold/10 transition-all disabled:opacity-50 ${
+                    isPending ? "cursor-wait" : ""
+                  }`}
                 >
                   Cancel
                 </button>

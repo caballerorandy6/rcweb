@@ -11,60 +11,90 @@ import {
 import useSectionObserver from "@/hooks/useSectionObserver";
 import { motion, Variants } from "framer-motion";
 import { sections } from "@/lib/data";
-import { acceptTermsAction } from "@/actions/acceptTermsAction";
 import { toast } from "sonner";
+import { useSearchParams } from "next/navigation";
+import { createStripeCheckoutAction } from "@/actions/createStripeCheckoutAction";
 
-const TermsOfService = ({ paymentId }: { paymentId?: string }) => {
+const TermsOfService = () => {
   const router = useRouter();
-  const [isPending, startTransition] = useTransition();
+  const searchParams = useSearchParams();
   const ref = useSectionObserver({ sectionName: "Terms of Service" });
+  const [isPending, startTransition] = useTransition();
+
+  // Obtener datos de URL
+  const planName = searchParams.get("planName");
+  const planPrice = searchParams.get("planPrice");
+  const planDescription = searchParams.get("planDescription");
+  const customerEmail = searchParams.get("customerEmail");
+  const customerName = searchParams.get("customerName");
+
+  const handleAcceptTerms = () => {
+    if (!planName || !planPrice || !customerEmail || !customerName) {
+      toast.error("Missing information. Please start from pricing.");
+      router.push("/#pricing");
+      return;
+    }
+
+    startTransition(async () => {
+      try {
+        toast.loading("Processing...");
+
+        // Registrar timestamp de aceptación
+        const termsAcceptedAt = new Date().toISOString();
+
+        // Crear sesión de Stripe (NO crear Payment aún)
+        const result = await createStripeCheckoutAction({
+          plan: {
+            name: planName,
+            price: parseInt(planPrice),
+            description: planDescription || planName,
+          },
+          customer: {
+            email: customerEmail,
+            name: customerName,
+          },
+          termsAcceptedAt,
+        });
+
+        toast.dismiss();
+
+        if (result.success && result.sessionUrl) {
+          toast.success("Redirecting to secure payment...");
+
+          // Guardar projectCode temporalmente
+          if (result.projectCode) {
+            sessionStorage.setItem("tempProjectCode", result.projectCode);
+          }
+
+          // Redirigir a Stripe
+          window.location.href = result.sessionUrl;
+        } else {
+          toast.error(result.error || "Failed to process");
+        }
+      } catch (error) {
+        toast.dismiss();
+        toast.error("An error occurred");
+        console.error("Error in handleAcceptTerms:", error);
+      }
+    });
+  };
 
   const containerVariants: Variants = {
     hidden: { opacity: 0 },
     visible: {
       opacity: 1,
-      transition: {
-        staggerChildren: 0.15,
-        delayChildren: 0.2,
-      },
+      transition: { staggerChildren: 0.15, delayChildren: 0.2 },
     },
   };
 
   const sectionVariants: Variants = {
-    hidden: {
-      opacity: 0,
-      y: 30,
-      scale: 0.95,
-    },
+    hidden: { opacity: 0, y: 30, scale: 0.95 },
     visible: {
       opacity: 1,
       y: 0,
       scale: 1,
-      transition: {
-        duration: 0.6,
-        ease: "easeOut",
-      },
+      transition: { duration: 0.6, ease: "easeOut" },
     },
-  };
-
-  const handleAcceptTerms = () => {
-    try {
-      toast.loading("Processing your acceptance...");
-      startTransition(async () => {
-        await acceptTermsAction({
-          paymentId: paymentId,
-          termsVersion: "2025-09-25",
-        });
-        localStorage.setItem("termsAccepted", new Date().toISOString());
-        toast.dismiss();
-        toast.success("Terms accepted successfully!");
-        router.push(`/checkout?paymentId=${paymentId}`);
-      });
-    } catch (error) {
-      toast.dismiss();
-      toast.error("Failed to accept terms. Please try again.");
-      console.error("Error accepting terms:", error);
-    }
   };
 
   return (
@@ -81,7 +111,7 @@ const TermsOfService = ({ paymentId }: { paymentId?: string }) => {
           Terms of Service
         </Heading>
 
-        {/* Introduction Card */}
+        {/* Contenido legal */}
         <motion.div
           className="mt-16 max-w-4xl mx-auto"
           initial={{ opacity: 0, y: 20 }}
@@ -94,13 +124,11 @@ const TermsOfService = ({ paymentId }: { paymentId?: string }) => {
               Welcome to{" "}
               <span className="text-gold font-bold">RC Web Solutions LLC</span>.
               By accessing or using our services, you agree to be bound by these
-              Terms of Service. Please read them carefully before engaging our
-              services.
+              Terms of Service. Please read them carefully.
             </p>
           </div>
         </motion.div>
 
-        {/* Terms Sections Grid */}
         <motion.div
           className="mt-12 grid grid-cols-1 md:grid-cols-2 gap-6 max-w-6xl mx-auto"
           variants={containerVariants}
@@ -112,22 +140,12 @@ const TermsOfService = ({ paymentId }: { paymentId?: string }) => {
             <motion.div
               key={index}
               variants={sectionVariants}
-              className={`
-                group relative overflow-hidden
-                bg-gray-900/60 backdrop-blur-md 
-                rounded-xl border border-gold/20 
-                hover:border-gold/40 transition-all duration-300
-                ${index === sections.length - 1 && sections.length % 2 !== 0 ? "md:col-span-2 md:max-w-2xl md:mx-auto" : ""}
-              `}
-              whileHover={{ scale: 1.02, transition: { duration: 0.2 } }}
+              className="group relative overflow-hidden bg-gray-900/60 backdrop-blur-md rounded-xl border border-gold/20 hover:border-gold/40 transition-all duration-300"
             >
-              {/* Gradient Background */}
               <div
                 className={`absolute inset-0 bg-gradient-to-br ${section.color} opacity-0 group-hover:opacity-100 transition-opacity duration-300`}
               />
-
               <div className="relative p-6">
-                {/* Header with Icon */}
                 <div className="flex items-center gap-3 mb-4">
                   <div className="p-2 bg-gold/10 rounded-lg text-gold group-hover:bg-gold/20 transition-colors">
                     {section.icon}
@@ -136,8 +154,6 @@ const TermsOfService = ({ paymentId }: { paymentId?: string }) => {
                     {section.title}
                   </h3>
                 </div>
-
-                {/* Content */}
                 <p className="text-gray-100 leading-relaxed text-sm font-inter">
                   {section.content}
                 </p>
@@ -146,7 +162,6 @@ const TermsOfService = ({ paymentId }: { paymentId?: string }) => {
           ))}
         </motion.div>
 
-        {/* Footer Information */}
         <motion.div
           className="mt-16 max-w-4xl mx-auto"
           initial={{ opacity: 0 }}
@@ -159,26 +174,9 @@ const TermsOfService = ({ paymentId }: { paymentId?: string }) => {
               <CalendarIcon className="w-4 h-4" />
               <span>Last updated: September 25, 2025</span>
             </div>
-            <div className="mt-4 pt-4 border-t border-gold/10 flex flex-col items-center">
-              <p className="text-gold font-bold mb-2 font-iceland text-2xl">
-                RC Web Solutions LLC
-              </p>
-              <p className="text-white/70 text-sm font-inter">
-                6210 Newquay St, Houston, TX 77085
-              </p>
-              <p className="text-white/70 text-sm font-inter mt-1">
-                <a
-                  href="mailto:contactus@rcweb.dev"
-                  className="text-gold hover:text-gold/80 transition-colors"
-                >
-                  contactus@rcweb.dev
-                </a>
-              </p>
-            </div>
           </div>
         </motion.div>
 
-        {/* CTA Button */}
         <motion.div
           className="mt-8 flex flex-col sm:flex-row gap-4 justify-center items-center"
           initial={{ opacity: 0, y: 20 }}
@@ -189,7 +187,7 @@ const TermsOfService = ({ paymentId }: { paymentId?: string }) => {
           <motion.button
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
-            className={`inline-flex items-center gap-2 px-8 py-3 bg-gold text-gray-900 font-bold rounded-lg hover:bg-gold/90 transition-colors font-inter ${isPending ? "opacity-70 cursor-wait" : "bg-gold text-gray-900 hover:bg-gold/90"}`}
+            className={`inline-flex items-center gap-2 px-8 py-3 bg-gold text-gray-900 font-bold rounded-lg hover:bg-gold/90 transition-colors font-inter ${isPending ? "opacity-70 cursor-wait" : ""}`}
             onClick={handleAcceptTerms}
             disabled={isPending}
           >
