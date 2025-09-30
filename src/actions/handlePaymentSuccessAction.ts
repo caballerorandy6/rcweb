@@ -29,23 +29,29 @@ export async function handlePaymentSuccessAction(
       return { success: false, error: "No project code found" };
     }
 
-    // Esperar a que el webhook procese (5 segundos solamente)
+    // AUMENTAR el tiempo de espera para dar más tiempo al webhook
     let payment = null;
     let attempts = 0;
-    const maxAttempts = 5; // Solo 5 intentos × 1s = 5 segundos
+    const maxAttempts = 3; // 15 intentos × 1s = 15 segundos (era 5)
     const delayMs = 1000;
 
     console.log(`🔄 Esperando a que webhook procese: ${finalProjectCode}`);
 
     while (attempts < maxAttempts && !payment) {
       try {
-        payment = await prisma.payment.findUnique({
-          where: { projectCode: finalProjectCode },
+        // Buscar por projectCode O por sessionId
+        payment = await prisma.payment.findFirst({
+          where: {
+            OR: [
+              { projectCode: finalProjectCode },
+              { firstSessionId: session.id },
+            ],
+          },
         });
 
         if (payment) {
           console.log(
-            `✅ Payment encontrado después de ${attempts + 1} segundos`
+            `✅ Payment encontrado después de ${attempts + 1} segundos (webhook procesó)`
           );
           return { success: true, payment, fallbackUsed: false };
         }
@@ -55,28 +61,27 @@ export async function handlePaymentSuccessAction(
 
       attempts++;
       if (attempts < maxAttempts) {
-        await new Promise((resolve) => setTimeout(resolve, delayMs));
+        // Usar backoff exponencial para los últimos intentos
+        const waitTime = attempts > 10 ? delayMs * 2 : delayMs;
+        await new Promise((resolve) => setTimeout(resolve, waitTime));
       }
     }
 
-    // FALLBACK: Crear Payment Y enviar emails
-    console.log("⚠️ Webhook no procesó, usando fallback...");
+    // FALLBACK: Solo si el webhook definitivamente no procesó después de 15 segundos
+    console.log(
+      "⚠️ Webhook no procesó después de 15 segundos, usando fallback..."
+    );
 
-    // Última verificación
-    const existingPayment = await prisma.payment.findUnique({
-      where: { projectCode: finalProjectCode },
+    // Última verificación antes de crear
+    const existingPayment = await prisma.payment.findFirst({
+      where: {
+        OR: [{ projectCode: finalProjectCode }, { firstSessionId: session.id }],
+      },
     });
 
     if (existingPayment) {
+      console.log("✅ Payment encontrado en verificación final");
       return { success: true, payment: existingPayment, fallbackUsed: false };
-    }
-
-    const paymentBySession = await prisma.payment.findFirst({
-      where: { firstSessionId: session.id },
-    });
-
-    if (paymentBySession) {
-      return { success: true, payment: paymentBySession, fallbackUsed: false };
     }
 
     // Preparar datos
@@ -91,9 +96,24 @@ export async function handlePaymentSuccessAction(
       return { success: false, error: "Customer email not found" };
     }
 
-    // Crear Payment
+    // Crear Payment con lock optimista para evitar duplicados
     try {
       payment = await prisma.$transaction(async (tx) => {
+        // Verificar una vez más dentro de la transacción
+        const checkAgain = await tx.payment.findFirst({
+          where: {
+            OR: [
+              { projectCode: finalProjectCode },
+              { firstSessionId: session.id },
+            ],
+          },
+        });
+
+        if (checkAgain) {
+          console.log("✅ Payment encontrado dentro de transacción");
+          return checkAgain;
+        }
+
         const newPayment = await tx.payment.create({
           data: {
             projectCode: finalProjectCode,
@@ -132,6 +152,7 @@ export async function handlePaymentSuccessAction(
       const resend = new Resend(process.env.RESEND_API_KEY!);
 
       try {
+        // Email al cliente
         await resend.emails.send({
           from: "RC Web <no-reply@rcweb.dev>",
           to: customerEmail,
@@ -196,13 +217,14 @@ export async function handlePaymentSuccessAction(
         });
         console.log("✅ Email enviado al cliente desde fallback");
 
+        // Email al admin con alerta de fallback
         await resend.emails.send({
           from: "RC Web <no-reply@rcweb.dev>",
           to: "admin@rcweb.dev",
           subject: `💰 New payment (FALLBACK) - ${finalProjectCode}`,
           html: `
             <h2>New Initial Payment (Created via Fallback)</h2>
-            <p><strong>⚠️ WEBHOOK NO PROCESÓ - Payment creado desde fallback</strong></p>
+            <p><strong>⚠️ WEBHOOK NO PROCESÓ EN 15 SEGUNDOS - Payment creado desde fallback</strong></p>
             <p><strong>Project Code:</strong> ${finalProjectCode}</p>
             <p><strong>Client:</strong> ${customerName}</p>
             <p><strong>Email:</strong> ${customerEmail}</p>
@@ -210,7 +232,12 @@ export async function handlePaymentSuccessAction(
             <p><strong>Initial Payment:</strong> $${(firstPaymentAmount / 100).toFixed(2)}</p>
             <p><strong>Payment ID:</strong> ${payment.id}</p>
             <hr>
-            <p style="color: red;">⚠️ IMPORTANTE: Revisar configuración del webhook en Stripe Dashboard</p>
+            <p style="color: orange;">⚠️ IMPORTANTE: Verificar los siguientes puntos:</p>
+            <ul>
+              <li>Webhook URL en Stripe Dashboard: debe apuntar a tu-dominio.com/api/stripe/webhook</li>
+              <li>Webhook endpoint secret coincide con STRIPE_WEBHOOK_SECRET en .env</li>
+              <li>Revisar logs del webhook en Stripe Dashboard para ver si hay errores</li>
+            </ul>
           `,
         });
         console.log("✅ Email enviado al admin desde fallback");
@@ -226,10 +253,17 @@ export async function handlePaymentSuccessAction(
         "code" in error &&
         (error as { code?: string }).code === "P2002"
       ) {
-        const existingPayment = await prisma.payment.findUnique({
-          where: { projectCode: finalProjectCode },
+        // Unique constraint - el webhook procesó mientras estábamos en el fallback
+        const existingPayment = await prisma.payment.findFirst({
+          where: {
+            OR: [
+              { projectCode: finalProjectCode },
+              { firstSessionId: session.id },
+            ],
+          },
         });
         if (existingPayment) {
+          console.log("✅ Webhook procesó mientras ejecutábamos fallback");
           return {
             success: true,
             payment: existingPayment,

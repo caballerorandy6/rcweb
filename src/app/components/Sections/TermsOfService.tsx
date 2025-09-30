@@ -7,6 +7,8 @@ import {
   DocumentTextIcon,
   ShieldCheckIcon,
   CalendarIcon,
+  ArrowLeftIcon,
+  ExclamationTriangleIcon,
 } from "@heroicons/react/24/outline";
 import useSectionObserver from "@/hooks/useSectionObserver";
 import { motion, Variants } from "framer-motion";
@@ -79,6 +81,10 @@ const TermsOfService = () => {
     });
   };
 
+  const handleGoBack = () => {
+    router.back();
+  };
+
   const containerVariants: Variants = {
     hidden: { opacity: 0 },
     visible: {
@@ -104,6 +110,41 @@ const TermsOfService = () => {
       className="relative py-24 sm:py-32 overflow-hidden"
     >
       <div className="relative z-10 mx-auto max-w-7xl px-6 lg:px-8">
+        {/* Mensaje de advertencia y botón de regresar */}
+        <motion.div
+          initial={{ opacity: 0, y: -20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5 }}
+          className="mb-8 max-w-4xl mx-auto"
+        >
+          <div className="bg-amber-500/10 border border-amber-500/30 rounded-xl p-4 sm:p-6 backdrop-blur-sm">
+            <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4">
+              <div className="flex-shrink-0 ">
+                <ExclamationTriangleIcon className="w-10 h-10 text-amber-500" />
+              </div>
+              <div className="flex-grow">
+                <h3 className="text-amber-500 font-bold text-2xl mb-1 font-iceland">
+                  Important: Review Required
+                </h3>
+                <p className="text-white/80 text-sm sm:text-base font-inter">
+                  Please carefully review and accept our Terms of Service before
+                  proceeding to payment. This legal agreement outlines the
+                  conditions of our service.
+                </p>
+              </div>
+              <motion.button
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                onClick={handleGoBack}
+                className="flex-shrink-0 inline-flex items-center gap-2 px-4 py-2 bg-gray-800 hover:bg-gray-700 text-white rounded-lg transition-colors border border-gray-600 font-inter"
+              >
+                <ArrowLeftIcon className="w-4 h-4" />
+                Go Back
+              </motion.button>
+            </div>
+          </div>
+        </motion.div>
+
         <Heading
           icon={<DocumentTextIcon className="w-8 text-gold" />}
           text="Legal Agreement"
@@ -177,34 +218,57 @@ const TermsOfService = () => {
           </div>
         </motion.div>
 
+        {/* Sección de botones mejorada con recordatorio */}
         <motion.div
-          className="mt-8 flex flex-col sm:flex-row gap-4 justify-center items-center"
+          className="mt-12 max-w-4xl mx-auto"
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6, delay: 0.6 }}
         >
-          <motion.button
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-            className={`inline-flex items-center gap-2 px-8 py-3 bg-gold text-gray-900 font-bold rounded-lg hover:bg-gold/90 transition-colors font-inter ${isPending ? "opacity-70 cursor-wait" : ""}`}
-            onClick={handleAcceptTerms}
-            disabled={isPending}
-          >
-            <ShieldCheckIcon className="w-5 h-5" />
-            {isPending ? "Processing…" : <>I Accept These Terms</>}
-          </motion.button>
+          {/* Mensaje de recordatorio antes de aceptar */}
+          <div className="text-center mb-6 font-inter flex flex-col items-center">
+            <p className="text-white/70 text-sm">
+              By clicking &quot;I Accept These Terms&quot;, you confirm that you
+              have read, understood, and agree to be bound by these Terms of
+              Service.
+            </p>
+          </div>
 
-          <motion.a
-            href="/terms-of-service.pdf"
-            download="RC-Web-Terms-of-Service.pdf"
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-            className="inline-flex items-center gap-2 px-8 py-3 bg-transparent border-2 border-gold text-gold font-bold rounded-lg hover:bg-gold/10 transition-colors font-inter"
-          >
-            <DocumentTextIcon className="w-5 h-5" />
-            Download PDF
-          </motion.a>
+          {/* Botones de acción */}
+          <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
+            <motion.button
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              className={`inline-flex items-center gap-2 px-8 py-3 bg-gold text-gray-900 font-bold rounded-lg hover:bg-gold/90 transition-colors font-inter ${isPending ? "opacity-70 cursor-wait" : ""}`}
+              onClick={handleAcceptTerms}
+              disabled={isPending}
+            >
+              <ShieldCheckIcon className="w-5 h-5" />
+              {isPending ? "Processing…" : <>I Accept These Terms</>}
+            </motion.button>
+
+            <motion.a
+              href="/terms-of-service.pdf"
+              download="RC-Web-Terms-of-Service.pdf"
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              className="inline-flex items-center gap-2 px-8 py-3 bg-transparent border-2 border-gold text-gold font-bold rounded-lg hover:bg-gold/10 transition-colors font-inter"
+            >
+              <DocumentTextIcon className="w-5 h-5" />
+              Download PDF
+            </motion.a>
+          </div>
+
+          {/* Botón adicional para volver al inicio */}
+          <div className="mt-6 text-center font-inter">
+            <button
+              onClick={() => router.push("/#pricing")}
+              className="text-white/50 hover:text-white underline text-sm transition-colors"
+            >
+              Return to Pricing Plans
+            </button>
+          </div>
         </motion.div>
       </div>
     </section>

@@ -10,7 +10,8 @@
     "lint": "next lint",
     "email": "PORT=3001 emails dev",
     "seed": "tsx prisma/seed.ts",
-    "test:twilio": "tsx scripts/test-twilio.ts"
+    "test:twilio": "tsx scripts/test-twilio.ts",
+    "test:webhook": "tsx src/test-webhook.ts"
   },
   "dependencies": {
     "@headlessui/react": "^2.2.0",

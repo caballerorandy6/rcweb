@@ -144,7 +144,7 @@ export const projects: ProjectProps[] = [
       "NextJS",
       "TypeScript",
       "TailwindCSS",
-      "Node",
+      "NodeJS",
       "Express",
       "MySQL",
       "Prisma",

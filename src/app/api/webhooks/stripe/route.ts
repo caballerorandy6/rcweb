@@ -9,6 +9,7 @@ const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!);
 const endpointSecret = process.env.STRIPE_WEBHOOK_SECRET!;
 
 export async function POST(req: Request) {
+  console.log("🚨 WEBHOOK RECIBIDO:", new Date().toISOString());
   // DEBUGGING: Log inicial para verificar que el webhook está siendo alcanzado
   console.log("🚀 Webhook endpoint alcanzado");
   console.log("🌐 URL completa:", req.url);
@@ -18,6 +19,14 @@ export async function POST(req: Request) {
   console.log("📦 Body length:", body.length);
 
   const signature = req.headers.get("stripe-signature") as string;
+
+  console.log("📦 Body recibido:", body.length > 0 ? "Sí" : "No");
+  console.log("🔑 Signature:", signature ? "Presente" : "Ausente");
+  console.log(
+    "🔐 Secret configurado:",
+    process.env.STRIPE_WEBHOOK_SECRET ? "Sí" : "No"
+  );
+
   console.log("🔑 Signature presente:", !!signature);
   console.log(
     "🔑 Signature value:",
@@ -28,6 +37,7 @@ export async function POST(req: Request) {
 
   try {
     event = stripe.webhooks.constructEvent(body, signature, endpointSecret);
+    console.log("✅ Firma verificada, evento:", event.type);
     console.log("✅ Evento verificado correctamente");
   } catch (err) {
     console.error("❌ Error verificando webhook signature:", err);

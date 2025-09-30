@@ -70,7 +70,7 @@ const Pricing = () => {
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
         <Heading
           icon={<CheckIcon />}
-          text="USD pricing for clients in Houston and LATAM"
+          text="Pricing in USD • Serving clients in the US and worldwide"
         >
           Clear & Transparent Pricing
         </Heading>
