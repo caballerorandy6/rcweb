@@ -1,9 +1,13 @@
-// actions/createFinalPaymentSessionAction.ts
 "use server";
 
 import { verifyProjectAccessAction } from "@/actions/verifyProjectAccessAction";
 import { Stripe } from "stripe";
-import { SplitPaymentResponse } from "@/actions/createInitialPaymentSessionAction";
+
+interface SplitPaymentResponse {
+  success: boolean;
+  sessionUrl?: string;
+  error?: string;
+}
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
   apiVersion: "2025-08-27.basil",
