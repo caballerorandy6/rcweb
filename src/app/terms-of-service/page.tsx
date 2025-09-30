@@ -1,15 +1,21 @@
-//import { use } from "react";
+import { Suspense } from "react";
 import TermsOfService from "@/app/components/Sections/TermsOfService";
 
-//type SearchParams = Promise<{ [key: string]: string | string[] | undefined }>;
+// Loading component para el Suspense
+function TermsLoading() {
+  return (
+    <div className="min-h-screen flex items-center justify-center">
+      <div className="animate-pulse text-gold text-lg">Loading terms...</div>
+    </div>
+  );
+}
 
 const TermsOfServicePage = () => {
-  //const searchParams = use(props.searchParams);
-  //const paymentId = searchParams.paymentId as string | undefined;
-
   return (
     <section id="terms-of-service">
-      <TermsOfService />
+      <Suspense fallback={<TermsLoading />}>
+        <TermsOfService />
+      </Suspense>
     </section>
   );
 };
