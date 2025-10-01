@@ -5,49 +5,53 @@ import Stripe from "stripe";
 import { prisma } from "@/lib/prisma";
 import { Resend } from "resend";
 
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!);
-const endpointSecret = process.env.STRIPE_WEBHOOK_SECRET!;
+// Environment variables validation
+if (!process.env.STRIPE_SECRET_KEY) {
+  throw new Error("STRIPE_SECRET_KEY is not configured");
+}
+if (!process.env.STRIPE_WEBHOOK_SECRET) {
+  throw new Error("STRIPE_WEBHOOK_SECRET is not configured");
+}
+if (!process.env.RESEND_API_KEY) {
+  throw new Error("RESEND_API_KEY is not configured");
+}
+
+const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
+const endpointSecret = process.env.STRIPE_WEBHOOK_SECRET;
+const TERMS_VERSION = "2025-09-25"; // Centralized terms version
 
 export async function POST(req: Request) {
-  console.log("🚨 WEBHOOK RECIBIDO:", new Date().toISOString());
-  // DEBUGGING: Log inicial para verificar que el webhook está siendo alcanzado
-  console.log("🚀 Webhook endpoint alcanzado");
-  console.log("🌐 URL completa:", req.url);
-  console.log("🔍 Headers:", Object.fromEntries(req.headers.entries()));
+  const isDev = process.env.NODE_ENV === "development";
+
+  if (isDev) {
+    console.log("🚨 WEBHOOK RECEIVED:", new Date().toISOString());
+    console.log("🚀 Webhook endpoint reached");
+    console.log("🌐 Full URL:", req.url);
+  }
 
   const body = await req.text();
-  console.log("📦 Body length:", body.length);
-
   const signature = req.headers.get("stripe-signature") as string;
 
-  console.log("📦 Body recibido:", body.length > 0 ? "Sí" : "No");
-  console.log("🔑 Signature:", signature ? "Presente" : "Ausente");
-  console.log(
-    "🔐 Secret configurado:",
-    process.env.STRIPE_WEBHOOK_SECRET ? "Sí" : "No"
-  );
-
-  console.log("🔑 Signature presente:", !!signature);
-  console.log(
-    "🔑 Signature value:",
-    signature ? signature.substring(0, 20) + "..." : "null"
-  );
+  if (isDev) {
+    console.log("📦 Body length:", body.length);
+    console.log("🔑 Signature present:", !!signature);
+  }
 
   let event: Stripe.Event;
 
   try {
     event = stripe.webhooks.constructEvent(body, signature, endpointSecret);
-    console.log("✅ Firma verificada, evento:", event.type);
-    console.log("✅ Evento verificado correctamente");
+    console.log("✅ Signature verified, event:", event.type);
+    console.log("✅ Event verified successfully");
   } catch (err) {
-    console.error("❌ Error verificando webhook signature:", err);
+    console.error("❌ Error verifying webhook signature:", err);
     return NextResponse.json(
       { error: `Webhook Error: ${err}` },
       { status: 400 }
     );
   }
 
-  console.log("🔔 Webhook recibido:", event.type);
+  console.log("🔔 Webhook received:", event.type);
 
   if (event.type === "checkout.session.completed") {
     const session = event.data.object as Stripe.Checkout.Session;
@@ -59,52 +63,75 @@ export async function POST(req: Request) {
     const planName = metadata.planName;
     const customerEmail = session.customer_email || metadata.customerEmail;
 
-    console.log("📋 Metadata recibido:", {
-      paymentType,
-      projectCode,
-      customerEmail,
-      planName,
-      sessionId: session.id,
-    });
+    if (isDev) {
+      console.log("📋 Metadata received:", {
+        paymentType,
+        projectCode,
+        customerEmail,
+        planName,
+        sessionId: session.id,
+      });
+    }
 
     const resend = new Resend(process.env.RESEND_API_KEY!);
 
-    // ============= PAGO INICIAL =============
+    // ============= INITIAL PAYMENT =============
     if (paymentType === "initial" && projectCode && customerEmail) {
       try {
-        console.log("💰 Procesando PAGO INICIAL para:", projectCode);
+        console.log("💰 Processing INITIAL PAYMENT for:", projectCode);
 
-        // VERIFICACIÓN 1: Por projectCode
-        const existingByCode = await prisma.payment.findUnique({
-          where: { projectCode },
-        });
-
-        if (existingByCode) {
-          console.log("⚠️ Payment ya existe con projectCode:", projectCode);
-          return NextResponse.json({ received: true, duplicate: "by_code" });
-        }
-
-        // VERIFICACIÓN 2: Por sessionId (evita duplicados si webhook se ejecuta 2 veces)
-        const existingBySession = await prisma.payment.findFirst({
-          where: { firstSessionId: session.id },
-        });
-
-        if (existingBySession) {
-          console.log("⚠️ Payment ya existe con sessionId:", session.id);
-          return NextResponse.json({ received: true, duplicate: "by_session" });
-        }
-
-        // Extraer montos de metadata
+        // Extract and validate amounts from metadata
         const totalAmount = parseInt(metadata.totalAmount || "0");
         const firstPaymentAmount = parseInt(metadata.firstPaymentAmount || "0");
         const secondPaymentAmount = parseInt(
           metadata.secondPaymentAmount || "0"
         );
 
-        console.log("💾 Creando nuevo Payment con projectCode:", projectCode);
+        // Validate that amounts are valid
+        if (
+          isNaN(totalAmount) ||
+          isNaN(firstPaymentAmount) ||
+          isNaN(secondPaymentAmount) ||
+          totalAmount <= 0 ||
+          firstPaymentAmount <= 0 ||
+          secondPaymentAmount <= 0
+        ) {
+          console.error("❌ Invalid amounts in metadata:", {
+            totalAmount: metadata.totalAmount,
+            firstPaymentAmount: metadata.firstPaymentAmount,
+            secondPaymentAmount: metadata.secondPaymentAmount,
+          });
+          return NextResponse.json(
+            { error: "Invalid payment amounts in metadata" },
+            { status: 400 }
+          );
+        }
 
-        // CREAR Payment Y TermsAcceptance en transacción
+        if (isDev) {
+          console.log("💾 Creating new Payment with projectCode:", projectCode);
+        }
+
+        // CREATE Payment and TermsAcceptance in transaction with duplicate verification
         const payment = await prisma.$transaction(async (tx) => {
+          // Verify duplicates inside transaction to avoid race conditions
+          const existingByCode = await tx.payment.findUnique({
+            where: { projectCode },
+          });
+
+          if (existingByCode) {
+            console.log("⚠️ Payment already exists with projectCode:", projectCode);
+            throw new Error("DUPLICATE_PROJECT_CODE");
+          }
+
+          const existingBySession = await tx.payment.findFirst({
+            where: { firstSessionId: session.id },
+          });
+
+          if (existingBySession) {
+            console.log("⚠️ Payment already exists with sessionId:", session.id);
+            throw new Error("DUPLICATE_SESSION_ID");
+          }
+
           const newPayment = await tx.payment.create({
             data: {
               projectCode,
@@ -126,24 +153,28 @@ export async function POST(req: Request) {
               data: {
                 paymentId: newPayment.id,
                 acceptedAt: new Date(metadata.termsAcceptedAt),
-                termsVersion: "2025-09-25",
+                termsVersion: TERMS_VERSION,
                 plan: planName,
                 ipAddress: "stripe-checkout",
                 userAgent: "stripe-checkout",
               },
             });
-            console.log(
-              "✅ TermsAcceptance creado para paymentId:",
-              newPayment.id
-            );
+            if (isDev) {
+              console.log(
+                "✅ TermsAcceptance created for paymentId:",
+                newPayment.id
+              );
+            }
           }
 
           return newPayment;
         });
 
-        console.log("✅ Payment creado exitosamente con ID:", payment.id);
+        console.log("✅ Payment created successfully with ID:", payment.id);
 
-        // ============= EMAIL AL CLIENTE =============
+        // ============= CLIENT EMAIL =============
+        const emailErrors: string[] = [];
+
         try {
           await resend.emails.send({
             from: "RC Web <no-reply@rcweb.dev>",
@@ -232,13 +263,14 @@ export async function POST(req: Request) {
               </html>
             `,
           });
-          console.log("✅ Email inicial enviado al cliente");
+          console.log("✅ Initial email sent to client");
         } catch (emailError) {
-          console.error("❌ Error enviando email al cliente:", emailError);
-          // No fallar todo el proceso si el email falla
+          const errorMsg = `Error sending email to client: ${emailError instanceof Error ? emailError.message : String(emailError)}`;
+          console.error("❌", errorMsg);
+          emailErrors.push(errorMsg);
         }
 
-        // ============= EMAIL AL ADMIN =============
+        // ============= ADMIN EMAIL =============
         try {
           await resend.emails.send({
             from: "RC Web <no-reply@rcweb.dev>",
@@ -257,70 +289,105 @@ export async function POST(req: Request) {
               <p>Remember to contact the client within 24 hours to discuss project details.</p>
             `,
           });
-          console.log("✅ Email enviado al admin");
+          console.log("✅ Email sent to admin");
         } catch (emailError) {
-          console.error("❌ Error enviando email al admin:", emailError);
+          const errorMsg = `Error sending email to admin: ${emailError instanceof Error ? emailError.message : String(emailError)}`;
+          console.error("❌", errorMsg);
+          emailErrors.push(errorMsg);
         }
 
-        return NextResponse.json({ received: true, paymentId: payment.id });
+        // If there were email errors, include them in response (but don't fail)
+        return NextResponse.json({
+          received: true,
+          paymentId: payment.id,
+          ...(emailErrors.length > 0 && { emailErrors }),
+        });
       } catch (err: unknown) {
-        // Si es error de unique constraint, significa que ya fue procesado
+        // Handle duplicates in an idempotent way
+        if (err instanceof Error) {
+          if (
+            err.message === "DUPLICATE_PROJECT_CODE" ||
+            err.message === "DUPLICATE_SESSION_ID"
+          ) {
+            console.log("⚠️ Payment already processed (duplicate detected)");
+            return NextResponse.json({
+              received: true,
+              duplicate: err.message,
+            });
+          }
+        }
+
+        // If it's a Prisma unique constraint error, it means it was already processed
         if (
           typeof err === "object" &&
           err !== null &&
           "code" in err &&
           (err as { code?: string }).code === "P2002"
         ) {
-          console.log("⚠️ Payment ya fue procesado (P2002)");
+          console.log("⚠️ Payment already processed (P2002 constraint)");
           return NextResponse.json({ received: true, duplicate: "constraint" });
         }
 
-        console.error("❌ Error procesando pago inicial:", err);
-        throw err; // Re-lanzar para que Stripe reintente
+        console.error("❌ Error processing initial payment:", {
+          error: err instanceof Error ? err.message : String(err),
+          projectCode,
+          sessionId: session.id,
+        });
+        throw err; // Re-throw for Stripe to retry
       }
     }
 
-    // ============= PAGO FINAL =============
+    // ============= FINAL PAYMENT =============
     else if (paymentType === "final" && metadata.paymentId && customerEmail) {
-      console.log("💰 Procesando PAGO FINAL");
+      console.log("💰 Processing FINAL PAYMENT");
 
       const paymentId = metadata.paymentId;
 
       try {
-        const payment = await prisma.payment.findUnique({
-          where: { id: paymentId },
+        // Use transaction for complete idempotency
+        const payment = await prisma.$transaction(async (tx) => {
+          const existingPayment = await tx.payment.findUnique({
+            where: { id: paymentId },
+          });
+
+          if (!existingPayment) {
+            console.error("❌ Payment not found:", paymentId);
+            throw new Error("PAYMENT_NOT_FOUND");
+          }
+
+          // Check if already processed with this sessionId
+          if (existingPayment.secondSessionId === session.id) {
+            console.log(
+              "⚠️ Final payment already processed with this sessionId:",
+              session.id
+            );
+            throw new Error("DUPLICATE_FINAL_SESSION");
+          }
+
+          // Check if already processed (with another sessionId)
+          if (existingPayment.secondPaid) {
+            console.log("⚠️ Final payment already processed previously");
+            throw new Error("ALREADY_PAID");
+          }
+
+          const updatedPayment = await tx.payment.update({
+            where: { id: paymentId },
+            data: {
+              secondPaid: true,
+              secondPaidAt: new Date(),
+              secondSessionId: session.id,
+              projectStatus: "completed",
+            },
+          });
+
+          return updatedPayment;
         });
 
-        if (!payment) {
-          console.error("❌ Payment no encontrado:", paymentId);
-          return NextResponse.json({
-            received: true,
-            error: "Payment not found",
-          });
-        }
+        console.log("✅ Payment updated - Project completed");
 
-        // Verificar si ya fue procesado
-        if (payment.secondPaid) {
-          console.log("⚠️ Pago final ya fue procesado anteriormente");
-          return NextResponse.json({
-            received: true,
-            duplicate: "already_paid",
-          });
-        }
+        // ============= PROJECT COMPLETION EMAIL =============
+        const emailErrors: string[] = [];
 
-        await prisma.payment.update({
-          where: { id: paymentId },
-          data: {
-            secondPaid: true,
-            secondPaidAt: new Date(),
-            secondSessionId: session.id,
-            projectStatus: "completed",
-          },
-        });
-
-        console.log("✅ Payment actualizado - Proyecto completado");
-
-        // ============= EMAIL DE PROYECTO COMPLETADO =============
         try {
           await resend.emails.send({
             from: "RC Web <no-reply@rcweb.dev>",
@@ -367,12 +434,14 @@ export async function POST(req: Request) {
               </html>
             `,
           });
-          console.log("✅ Email de proyecto completado enviado");
+          console.log("✅ Project completion email sent");
         } catch (emailError) {
-          console.error("❌ Error enviando email de completado:", emailError);
+          const errorMsg = `Error sending completion email: ${emailError instanceof Error ? emailError.message : String(emailError)}`;
+          console.error("❌", errorMsg);
+          emailErrors.push(errorMsg);
         }
 
-        // ============= EMAIL AL ADMIN =============
+        // ============= ADMIN EMAIL =============
         try {
           await resend.emails.send({
             from: "RC Web <no-reply@rcweb.dev>",
@@ -388,18 +457,55 @@ export async function POST(req: Request) {
               <p><strong>Project Status:</strong> COMPLETED</p>
             `,
           });
-          console.log("✅ Email enviado al admin sobre pago final");
+          console.log("✅ Email sent to admin about final payment");
         } catch (emailError) {
-          console.error("❌ Error enviando email al admin:", emailError);
+          const errorMsg = `Error sending email to admin: ${emailError instanceof Error ? emailError.message : String(emailError)}`;
+          console.error("❌", errorMsg);
+          emailErrors.push(errorMsg);
         }
 
-        return NextResponse.json({ received: true, completed: true });
-      } catch (err) {
-        console.error("❌ Error procesando pago final:", err);
-        throw err;
+        // If there were email errors, include them in response (but don't fail)
+        return NextResponse.json({
+          received: true,
+          completed: true,
+          ...(emailErrors.length > 0 && { emailErrors }),
+        });
+      } catch (err: unknown) {
+        // Handle idempotency-specific errors
+        if (err instanceof Error) {
+          if (err.message === "PAYMENT_NOT_FOUND") {
+            console.error("❌ Payment not found:", paymentId);
+            return NextResponse.json(
+              { received: true, error: "Payment not found" },
+              { status: 404 }
+            );
+          }
+
+          if (
+            err.message === "DUPLICATE_FINAL_SESSION" ||
+            err.message === "ALREADY_PAID"
+          ) {
+            console.log(
+              "⚠️ Final payment already processed:",
+              err.message,
+              "- Returning idempotent response"
+            );
+            return NextResponse.json({
+              received: true,
+              duplicate: err.message,
+            });
+          }
+        }
+
+        console.error("❌ Error processing final payment:", {
+          error: err instanceof Error ? err.message : String(err),
+          paymentId,
+          sessionId: session.id,
+        });
+        throw err; // Re-throw for Stripe to retry
       }
     } else {
-      console.log("⚠️ Condiciones no cumplidas para procesar el pago");
+      console.log("⚠️ Conditions not met to process payment");
       return NextResponse.json({
         received: true,
         warning: "Conditions not met",
