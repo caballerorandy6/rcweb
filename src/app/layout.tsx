@@ -4,7 +4,6 @@ import { Geist, Geist_Mono, Iceland, Inter } from "next/font/google";
 import "./globals.css";
 import { Toaster } from "sonner";
 
-// Components
 import Header from "@/app/components/Header";
 import Footer from "./components/Footer";
 
@@ -31,10 +30,63 @@ const inter = Inter({
 
 export const metadata: Metadata = {
   title: {
-    default: "RC Web",
-    template: "%s | Randy Caballero",
+    default: "RC Web - Full-Stack Web Development Services",
+    template: "%s | RC Web",
   },
-  description: "Randy Caballero Personal Portfolio.",
+  description:
+    "Professional web development services by Randy Caballero. Specializing in Next.js, React, and full-stack solutions for businesses. 5+ years of experience building scalable, modern web applications.",
+  keywords: [
+    "web development",
+    "Next.js developer",
+    "React developer",
+    "full-stack developer",
+    "freelance web developer",
+    "custom web applications",
+    "Randy Caballero",
+    "web development services",
+  ],
+  authors: [{ name: "Randy Caballero" }],
+  creator: "Randy Caballero",
+  publisher: "RC Web Solutions LLC",
+  openGraph: {
+    type: "website",
+    locale: "en_US",
+    url: "https://rcweb.dev",
+    siteName: "RC Web Solutions LLC",
+    title: "RC Web - Professional Web Development Services",
+    description:
+      "Full-stack web development services specializing in Next.js and React. Custom solutions for your business needs.",
+    images: [
+      {
+        url: "/og-image.jpg",
+        width: 1200,
+        height: 630,
+        alt: "RC Web - Randy Caballero Web Development Services",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "RC Web - Professional Web Development Services",
+    description:
+      "Full-stack web development services specializing in Next.js and React.",
+    images: ["/og-image.jpg"],
+    creator: "@RCWeb2025",
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-video-preview": -1,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+    },
+  },
+  verification: {
+    // google: "your-google-verification-code", // Add when you verify with Google Search Console
+  },
 };
 
 export default function RootLayout({

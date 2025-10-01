@@ -28,10 +28,11 @@ const Hero = () => {
           autoPlay
           loop
           muted
-          className="inset-0 -z-10 size-full object-cover object-right md:object-center opacity-35 image-gradient"
+          className="inset-0 -z-10 size-full object-cover object-right md:object-center opacity-35"
         >
           <source src="/hero.webm" type="video/webm" />
         </video>
+        <div className="absolute inset-0 bg-gradient-to-b from-black/50 via-black/30 to-black/70"></div>
       </div>
 
       <div className="mx-auto max-w-7xl px-6 lg:px-8 h-full flex flex-col justify-center">
