@@ -70,7 +70,7 @@ const Hero = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.7 }}
           >
-            Full-Stack Developer specializing in Next.js with 3+ years creating
+            Full-Stack Developer specializing in Next.js with 5+ years creating
             digital solutions for businesses.
           </motion.p>
 

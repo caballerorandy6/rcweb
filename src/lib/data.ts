@@ -789,3 +789,56 @@ export const thirdPartyLinks = [
   { name: "Stripe", url: "https://stripe.com/us/privacy" },
   { name: "Zelle", url: "https://www.zelle.com/legal/legal-and-privacy" },
 ];
+
+export const socialLinks = [
+  {
+    name: "LinkedIn",
+    url: "https://www.linkedin.com/in/caballerorandy/",
+    ariaLabel: "Connect on LinkedIn",
+    bgColor: "bg-[#0A66C2]",
+    hoverColor: "hover:bg-[#004182]",
+    delay: 0.1,
+  },
+  {
+    name: "Phone",
+    url: "tel:+18325465983",
+    ariaLabel: "Call directly",
+    bgColor: "bg-blue-600",
+    hoverColor: "hover:bg-blue-700",
+    delay: 0.15,
+    isButton: true,
+  },
+  {
+    name: "WhatsApp",
+    url: "https://wa.me/18325465983?text=Hi%20Randy%2C%20I%20saw%20your%20portfolio%20and%20I%27m%20interested%20in%20discussing%20a%20project",
+    ariaLabel: "Contact via WhatsApp",
+    bgColor: "bg-[#25D366]",
+    hoverColor: "hover:bg-[#128C7E]",
+    delay: 0.2,
+    isButton: true,
+  },
+  {
+    name: "Facebook",
+    url: "https://www.facebook.com/rcwebsolutionsllc",
+    ariaLabel: "Connect on Facebook",
+    bgColor: "bg-[#1877F2]",
+    hoverColor: "hover:bg-[#155DBB]",
+    delay: 0.25,
+  },
+  {
+    name: "Instagram",
+    url: "https://www.instagram.com/rcwebsolutionsllc",
+    ariaLabel: "Connect on Instagram",
+    bgColor: "bg-[#E1306C]",
+    hoverColor: "hover:bg-[#C13584]",
+    delay: 0.3,
+  },
+  {
+    name: "X",
+    url: "https://x.com/RCWeb2025",
+    ariaLabel: "Connect on X",
+    bgColor: "bg-gray-800",
+    hoverColor: "hover:bg-black",
+    delay: 0.35,
+  },
+];
