@@ -41,8 +41,9 @@ const Projects = () => {
             height: "auto",
           }}
           transition={{
-            duration: 0.5,
-            ease: "easeInOut",
+            type: "spring",
+            stiffness: 200,
+            damping: 20,
           }}
         >
           <ProjectsList projects={projects.slice(0, visibleProjects)} />
@@ -73,7 +74,7 @@ const Projects = () => {
               </span>
               <motion.div
                 animate={{ rotate: isExpanded ? 180 : 0 }}
-                transition={{ duration: 0.3, ease: "easeInOut" }}
+                transition={{ type: "spring", stiffness: 260, damping: 20 }}
               >
                 <ChevronDownIcon className="w-4 h-4 text-gold" />
               </motion.div>
@@ -84,7 +85,7 @@ const Projects = () => {
         <motion.div
           className="mt-20 pt-12"
           layout
-          transition={{ duration: 0.3 }}
+          transition={{ type: "spring", stiffness: 200, damping: 20 }}
         >
           <TechMarquee />
         </motion.div>

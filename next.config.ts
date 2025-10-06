@@ -12,6 +12,9 @@ const nextConfig: NextConfig = {
     ],
   },
 
+  // Transpile framer-motion para evitar problemas con export *
+  transpilePackages: ["framer-motion"],
+
   // Experimental features válidas en Next.js 15
   experimental: {
     // ppr: true,  // Partial Prerendering (si lo necesitas)

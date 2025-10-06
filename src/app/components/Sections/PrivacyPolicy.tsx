@@ -38,8 +38,9 @@ export default function PrivacyPolicy() {
       opacity: 1,
       y: 0,
       transition: {
-        duration: 0.5,
-        ease: "easeOut",
+        type: "spring",
+        stiffness: 200,
+        damping: 20,
       },
     },
   };
@@ -71,7 +72,7 @@ export default function PrivacyPolicy() {
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
+          transition={{ type: "spring", stiffness: 200, damping: 20 }}
         >
           <div className="bg-gradient-to-r from-gold/10 to-gold/5 backdrop-blur-lg rounded-2xl p-8 border border-gold/20 shadow-xl shadow-black/50">
             <p className="text-white/90 text-lg leading-relaxed font-inter">
@@ -95,7 +96,7 @@ export default function PrivacyPolicy() {
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.6, delay: 0.2 }}
+          transition={{ type: "spring", stiffness: 200, damping: 20, delay: 0.2 }}
         >
           <div className="inline-flex flex-col sm:flex-row items-center gap-4 text-white/70 text-sm font-inter">
             <span className="font-bold text-gold">RC Web Solutions LLC</span>
@@ -124,7 +125,7 @@ export default function PrivacyPolicy() {
               key={index}
               variants={itemVariants}
               className="group relative overflow-hidden bg-gray-900/60 backdrop-blur-md rounded-xl border border-gold/20 hover:border-gold/40 transition-all duration-300"
-              whileHover={{ scale: 1.02, transition: { duration: 0.2 } }}
+              whileHover={{ scale: 1.02, transition: { type: "spring", stiffness: 400, damping: 17 } }}
             >
               {/* Gradient Background */}
               <div
@@ -157,7 +158,7 @@ export default function PrivacyPolicy() {
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
+          transition={{ type: "spring", stiffness: 200, damping: 20 }}
         >
           <div className="bg-gray-900/60 backdrop-blur-md rounded-xl border border-gold/20 p-8">
             <h3 className="text-xl font-bold text-gold font-iceland mb-6 text-center">
@@ -171,7 +172,7 @@ export default function PrivacyPolicy() {
                   target="_blank"
                   rel="noopener noreferrer"
                   className="bg-gray-800/50 hover:bg-gold/10 border border-gold/10 hover:border-gold/30 rounded-lg p-3 text-center transition-all duration-200"
-                  whileHover={{ scale: 1.05 }}
+                  whileHover={{ scale: 1.05, transition: { type: "spring", stiffness: 400, damping: 17 } }}
                   whileTap={{ scale: 0.95 }}
                 >
                   <span className="text-gold text-sm font-inter">
@@ -189,7 +190,7 @@ export default function PrivacyPolicy() {
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
+          transition={{ type: "spring", stiffness: 200, damping: 20 }}
         >
           <div className="bg-gradient-to-r from-gold/10 to-transparent backdrop-blur-md rounded-xl border border-gold/20 p-8">
             <h3 className="text-xl font-bold text-gold font-iceland mb-6">
@@ -227,13 +228,13 @@ export default function PrivacyPolicy() {
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.6, delay: 0.2 }}
+          transition={{ type: "spring", stiffness: 200, damping: 20, delay: 0.2 }}
         >
           <motion.a
             href="https://www.privacypolicies.com/live/1efd6eca-e9ce-4dc7-89dc-8b8e5cb8102a"
             target="_blank"
             rel="noopener noreferrer"
-            whileHover={{ scale: 1.05 }}
+            whileHover={{ scale: 1.05, transition: { type: "spring", stiffness: 400, damping: 17 } }}
             whileTap={{ scale: 0.95 }}
             className="inline-flex items-center gap-2 px-8 py-3 bg-gold text-gray-900 font-bold rounded-lg hover:bg-gold/90 transition-colors font-inter"
           >
@@ -244,7 +245,7 @@ export default function PrivacyPolicy() {
           <motion.a
             href="/privacy-policy.pdf"
             download="RC-Web-Privacy-Policy.pdf"
-            whileHover={{ scale: 1.05 }}
+            whileHover={{ scale: 1.05, transition: { type: "spring", stiffness: 400, damping: 17 } }}
             whileTap={{ scale: 0.95 }}
             className="inline-flex items-center gap-2 px-8 py-3 bg-transparent border-2 border-gold text-gold font-bold rounded-lg hover:bg-gold/10 transition-colors font-inter"
           >
@@ -259,7 +260,7 @@ export default function PrivacyPolicy() {
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.6, delay: 0.4 }}
+          transition={{ type: "spring", stiffness: 200, damping: 20, delay: 0.4 }}
         >
           <p className="text-white/50 text-sm font-inter">
             For GDPR purposes, RC Web Solutions LLC is the Data Controller

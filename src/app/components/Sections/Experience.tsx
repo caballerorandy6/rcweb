@@ -39,7 +39,7 @@ const Experience = () => {
               initial={{ opacity: 0, x: index % 2 === 0 ? -50 : 50 }}
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: index * 0.1 }}
+              transition={{ type: "spring", stiffness: 200, damping: 20, delay: index * 0.1 }}
               className={`relative flex items-center mb-12 lg:mb-16 ${
                 index % 2 === 0 ? "lg:flex-row" : "lg:flex-row-reverse"
               }`}

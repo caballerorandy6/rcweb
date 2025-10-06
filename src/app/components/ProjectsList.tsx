@@ -41,8 +41,9 @@ const ProjectsList = ({ projects }: { projects: ProjectProps[] }) => {
       scale: 0.95,
       y: -20,
       transition: {
-        duration: 0.3,
-        ease: "easeInOut",
+        type: "spring",
+        stiffness: 260,
+        damping: 25,
       },
     },
   };
@@ -52,8 +53,9 @@ const ProjectsList = ({ projects }: { projects: ProjectProps[] }) => {
       layout
       transition={{
         layout: {
-          duration: 0.5,
-          ease: "easeInOut",
+          type: "spring",
+          stiffness: 200,
+          damping: 20,
         },
       }}
       id={contentId}
@@ -80,7 +82,7 @@ const ProjectsList = ({ projects }: { projects: ProjectProps[] }) => {
               whileHover={{
                 scale: 1.03,
                 borderColor: "rgba(203, 178, 106, 0.8)",
-                transition: { duration: 0.2 },
+                transition: { type: "spring", stiffness: 400, damping: 17 },
               }}
             >
               <Project

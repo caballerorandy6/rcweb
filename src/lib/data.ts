@@ -821,6 +821,15 @@ export const socialLinks = [
     iconSize: "w-6 h-6 lg:w-8 lg:h-8",
   },
   {
+    name: "Tik Tok",
+    url: "https://www.tiktok.com/@rcwebsolutionsllc",
+    ariaLabel: "Connect on Tik Tok",
+    bgColor: "bg-transparent",
+    hoverColor: "hover:bg-[#4FC3F7]",
+    delay: 0.4,
+    iconSize: "w-6 h-6 lg:w-8 lg:h-8",
+  },
+  {
     name: "Facebook",
     url: "https://www.facebook.com/rcwebsolutionsllc",
     ariaLabel: "Connect on Facebook",

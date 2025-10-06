@@ -9,12 +9,14 @@ import Facebook from "@/app/components/icons/Facebook";
 import Phone from "@/app/components/icons/Phone";
 import Instagram from "@/app/components/icons/Instagram";
 import X from "@/app/components/icons/X";
+import TikTok from "@/app/components/icons/TikTok";
 
 const getIconComponent = (name: string, iconSize?: string) => {
   const iconMap: Record<string, React.ReactNode> = {
     LinkedIn: <Linkedin className={iconSize} />,
     Phone: <Phone className={iconSize} />,
     WhatsApp: <WhatsApp className={iconSize} />,
+    "Tik Tok": <TikTok className={iconSize} />,
     Facebook: <Facebook className={iconSize} />,
     Instagram: <Instagram className={iconSize} />,
     X: <X className={iconSize} />,
@@ -57,26 +59,48 @@ const FloatingCTA = () => {
   return (
     <motion.div
       ref={ctaRef}
-      className="fixed bottom-6 right-8 z-50 flex flex-col-reverse gap-4 items-end pr"
+      style={{
+        position: "fixed",
+        bottom: "1.5rem",
+        right: "2rem",
+        zIndex: 50,
+        display: "flex",
+        flexDirection: "column-reverse",
+        gap: "1rem",
+        alignItems: "flex-end",
+      }}
       initial={{ opacity: 0, x: 100 }}
       animate={{
         opacity: isContactInView ? 0 : 1,
         x: isContactInView ? 100 : 0,
         pointerEvents: isContactInView ? "none" : "auto",
       }}
-      transition={{ duration: 0.3, ease: "easeInOut" }}
+      transition={{ type: "spring", stiffness: 260, damping: 20 }}
     >
       <div
         className={`flex flex-col-reverse gap-4 items-center ${isOpen ? "animateHeadingDialog rounded-full py-4" : "items-end"}`}
       >
         {/* Toggle Button - Always visible */}
         <motion.button
-          onClick={() => setIsOpen(!isOpen)}
-          className="flex h-12 w-12 items-center justify-center rounded-full bg-gradient-to-br text-white shadow-xl transition-all duration-300 hover:scale-110 hover:shadow-2xl from-gold to-yellow-400"
+          type="button"
+          style={{
+            display: "flex",
+            height: "3rem",
+            width: "3rem",
+            alignItems: "center",
+            justifyContent: "center",
+            borderRadius: "9999px",
+            background: "linear-gradient(to bottom right, rgb(203 178 106), rgb(250 204 21))",
+            color: "white",
+            boxShadow: "0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1)",
+            transition: "all 0.3s",
+            border: "none",
+            cursor: "pointer",
+          }}
           aria-label={isOpen ? "Close contact options" : "Open contact options"}
-          whileHover={{ rotate: 90, scale: 1.1 }}
+          whileHover={{ rotate: 90, scale: 1.1, transition: { type: "spring", stiffness: 300, damping: 15 } }}
           whileTap={{ scale: 0.95 }}
-          transition={{ duration: 0.3, ease: "easeInOut" }}
+          onTap={() => setIsOpen(!isOpen)}
         >
           <svg
             className="w-5 h-5"
@@ -103,7 +127,11 @@ const FloatingCTA = () => {
 
         {/* Contact Buttons - Show/Hide based on isOpen */}
         <motion.div
-          className="flex flex-col gap-3"
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            gap: "0.75rem",
+          }}
           initial={{ opacity: 0, y: 20, scale: 0 }}
           animate={{
             opacity: isOpen ? 1 : 0,
@@ -111,14 +139,14 @@ const FloatingCTA = () => {
             scale: isOpen ? 1 : 0,
             pointerEvents: isOpen ? "auto" : "none",
           }}
-          transition={{ duration: 0.3, ease: "easeOut" }}
+          transition={{ type: "spring", stiffness: 200, damping: 20 }}
         >
           {socialLinks.map((link) => (
             <motion.div
               key={link.name}
               initial={{ opacity: 0, x: 20 }}
               animate={{ opacity: isOpen ? 1 : 0, x: isOpen ? 0 : 20 }}
-              transition={{ duration: 0.2, delay: link.delay }}
+              transition={{ type: "spring", stiffness: 300, damping: 25, delay: link.delay }}
             >
               {link.isButton ? (
                 <button

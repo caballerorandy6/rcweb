@@ -89,6 +89,7 @@ export default function PaymentSuccess({
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
+        transition={{ type: "spring", stiffness: 200, damping: 20 }}
         className="max-w-2xl w-full"
       >
         {/* Success Icon */}
@@ -137,7 +138,7 @@ export default function PaymentSuccess({
             <motion.div
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.4 }}
+              transition={{ type: "spring", stiffness: 200, damping: 20, delay: 0.4 }}
               className="bg-gradient-to-r from-gold/20 to-yellow-500/20 rounded-xl p-6 mb-8 border border-gold/30 font-inter flex flex-col items-center"
             >
               <p className="text-sm text-gold mb-2 text-center uppercase tracking-wide">

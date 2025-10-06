@@ -68,7 +68,7 @@ const Navbar = () => {
                       layoutId="activeSection"
                       transition={{
                         type: "spring",
-                        stiffness: 380,
+                        stiffness: 400,
                         damping: 30,
                       }}
                     />

@@ -38,7 +38,7 @@ const Process = () => {
                     <motion.div
                       initial={{ width: "0%" }}
                       animate={{ width: activeStep > index ? "100%" : "0%" }}
-                      transition={{ duration: 0.5 }}
+                      transition={{ type: "spring", stiffness: 200, damping: 25 }}
                       className="h-full bg-gold"
                     />
                   </div>
@@ -50,7 +50,7 @@ const Process = () => {
                   className="relative z-10 mx-auto flex"
                 >
                   <motion.div
-                    whileHover={{ scale: 1.1 }}
+                    whileHover={{ scale: 1.1, transition: { type: "spring", stiffness: 400, damping: 17 } }}
                     whileTap={{ scale: 0.95 }}
                     className={`w-12 h-12 rounded-full flex items-center justify-center transition-all duration-300 ${
                       activeStep >= index
@@ -78,7 +78,7 @@ const Process = () => {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -20 }}
-                transition={{ duration: 0.3 }}
+                transition={{ type: "spring", stiffness: 260, damping: 25 }}
                 className="max-w-3xl mx-auto"
               >
                 <div className="bg-gray-950/50 backdrop-blur-sm rounded-2xl p-8 border border-gold/20">
@@ -112,7 +112,7 @@ const Process = () => {
                         key={idx}
                         initial={{ opacity: 0, x: -10 }}
                         animate={{ opacity: 1, x: 0 }}
-                        transition={{ delay: idx * 0.1 }}
+                        transition={{ type: "spring", stiffness: 260, damping: 22, delay: idx * 0.1 }}
                         className="flex items-center text-sm font-inter text-white/60"
                       >
                         <ChevronRightIcon className="w-4 h-4 text-gold mr-2 flex-shrink-0" />
@@ -164,7 +164,7 @@ const Process = () => {
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ delay: index * 0.1 }}
+              transition={{ type: "spring", stiffness: 200, damping: 20, delay: index * 0.1 }}
             >
               <button
                 onClick={() =>
@@ -197,7 +197,7 @@ const Process = () => {
                       initial={{ height: 0, opacity: 0 }}
                       animate={{ height: "auto", opacity: 1 }}
                       exit={{ height: 0, opacity: 0 }}
-                      transition={{ duration: 0.3 }}
+                      transition={{ type: "spring", stiffness: 260, damping: 25 }}
                       className="overflow-hidden"
                     >
                       <div className="pt-4 mt-4 border-t border-gold/10">

@@ -26,7 +26,7 @@ const About = () => {
       opacity: 1,
       y: 0,
       filter: "blur(0px)",
-      transition: { duration: 0.8, ease: "easeOut" },
+      transition: { type: "spring", stiffness: 200, damping: 20 },
     },
   };
 
@@ -36,7 +36,7 @@ const About = () => {
       opacity: 1,
       scale: 1,
       rotateY: 0,
-      transition: { duration: 1, ease: "easeOut", delay: 0.3 },
+      transition: { type: "spring", stiffness: 150, damping: 20, delay: 0.3 },
     },
   };
 

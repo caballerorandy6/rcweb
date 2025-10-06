@@ -32,8 +32,9 @@ const FAQ = () => {
       y: 0,
       scale: 1,
       transition: {
-        duration: 0.6,
-        ease: "easeOut",
+        type: "spring",
+        stiffness: 200,
+        damping: 20,
       },
     },
   };
@@ -44,11 +45,12 @@ const FAQ = () => {
       opacity: 1,
       height: "auto",
       transition: {
-        duration: 0.3,
-        ease: "easeOut",
+        type: "spring",
+        stiffness: 260,
+        damping: 25,
       },
     },
-    exit: { opacity: 0, height: 0, transition: { duration: 0.25 } },
+    exit: { opacity: 0, height: 0, transition: { type: "spring", stiffness: 300, damping: 30 } },
   };
 
   return (

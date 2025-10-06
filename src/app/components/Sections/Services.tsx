@@ -32,9 +32,10 @@ const Services = () => {
               whileInView={{ opacity: 1, y: 0, scale: 1 }}
               viewport={{ once: true, amount: 0.2 }}
               transition={{
-                duration: 0.7,
+                type: "spring",
+                stiffness: 200,
+                damping: 20,
                 delay: index * 0.1,
-                ease: [0.16, 1, 0.3, 1], // curva más suave (easeOut cubic bezier)
               }}
               className="group relative flex flex-col gap-6 rounded-2xl border border-gold/20 bg-gray-900/50 p-8 backdrop-blur-sm transition-all duration-200 hover:scale-105 hover:border-gold/50 hover:bg-gold/5"
             >

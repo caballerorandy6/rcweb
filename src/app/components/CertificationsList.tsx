@@ -1,107 +1,75 @@
 "use client";
 
+import { useCallback } from "react";
+import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/24/outline";
+import useEmblaCarousel from "embla-carousel-react";
 import Certification from "./Certification";
 import { CertificationProps } from "./Certification";
-import { motion, AnimatePresence, Variants } from "framer-motion";
-import { useId } from "react";
 
 const CertificationsList = ({
   certifications,
 }: {
   certifications: CertificationProps[];
 }) => {
-  const headingId = useId();
-  const contentId = useId();
+  const [emblaRef, emblaApi] = useEmblaCarousel({
+    loop: true,
+    align: "center",
+    slidesToScroll: 1,
+  });
 
-  // Variantes para la animación del contenedor y los elementos
-  const container: Variants = {
-    hidden: { opacity: 0 },
-    show: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.1,
-        delayChildren: 0.1,
-      },
-    },
-  };
+  const scrollPrev = useCallback(() => {
+    if (emblaApi) emblaApi.scrollPrev();
+  }, [emblaApi]);
 
-  const item: Variants = {
-    hidden: {
-      opacity: 0,
-      y: 20,
-      scale: 0.95,
-    },
-    show: {
-      opacity: 1,
-      y: 0,
-      scale: 1,
-      transition: {
-        type: "spring" as const,
-        stiffness: 100,
-        damping: 15,
-      },
-    },
-    exit: {
-      opacity: 0,
-      scale: 0.95,
-      y: -20,
-      transition: {
-        duration: 0.3,
-        ease: "easeInOut",
-      },
-    },
-  };
+  const scrollNext = useCallback(() => {
+    if (emblaApi) emblaApi.scrollNext();
+  }, [emblaApi]);
 
   return (
-    <motion.div
-      layout
-      transition={{
-        layout: {
-          duration: 0.5,
-          ease: "easeInOut",
-        },
-      }}
-      id={contentId}
-      aria-labelledby={headingId}
-      className="mx-auto max-w-7xl px-6 lg:px-8"
-    >
-      <motion.ul
-        variants={container}
-        initial="hidden"
-        animate="show"
-        className="mx-auto mt-16 grid max-w-2xl grid-cols-1 gap-x-8 gap-y-20 lg:mx-0 lg:max-w-none lg:grid-cols-3"
-      >
-        <AnimatePresence mode="popLayout">
-          {certifications.map((certification, index) => (
-            <motion.li
+    <div className="mx-auto max-w-7xl px-6 lg:px-8 mt-16">
+      {/* Carousel Viewport */}
+      <div className="overflow-hidden" ref={emblaRef}>
+        <div className="flex gap-6">
+          {certifications.map((certification) => (
+            <div
               key={certification.name}
-              layout
-              variants={item}
-              initial="hidden"
-              animate="show"
-              exit="exit"
-              custom={index}
-              className="col-span-1 flex flex-col h-full bg-gray-900 text-center border border-gold/50 rounded-lg shadow-md hover:shadow-lg transition-shadow w-full animateProjectCard"
-              whileHover={{
-                scale: 1.03,
-                borderColor: "rgba(203, 178, 106, 0.8)",
-                transition: { duration: 0.2 },
-              }}
+              className="flex-[0_0_100%] sm:flex-[0_0_50%] lg:flex-[0_0_33.333%] min-w-0"
             >
-              <Certification
-                name={certification.name}
-                platform={certification.platform}
-                description={certification.description}
-                image={certification.image}
-                tutor={certification.tutor}
-                url={certification.url}
-                pdfThumbnail={certification.pdfThumbnail}
-              />
-            </motion.li>
+              <div className="h-full bg-gray-900 text-center border border-gold/50 rounded-lg shadow-md hover:shadow-lg hover:scale-[1.03] hover:border-gold/80 transition-all duration-200 animateProjectCard">
+                <Certification
+                  name={certification.name}
+                  platform={certification.platform}
+                  description={certification.description}
+                  image={certification.image}
+                  tutor={certification.tutor}
+                  url={certification.url}
+                  pdfThumbnail={certification.pdfThumbnail}
+                />
+              </div>
+            </div>
           ))}
-        </AnimatePresence>
-      </motion.ul>
-    </motion.div>
+        </div>
+      </div>
+
+      {/* Navigation Buttons - Below Cards */}
+      <div className="flex justify-center gap-4 mt-8">
+        <button
+          onClick={scrollPrev}
+          className="bg-gold/90 hover:bg-gold text-gray-900 p-3 rounded-full shadow-xl transition-all duration-200 hover:scale-110"
+          aria-label="Previous certification"
+        >
+          <ChevronLeftIcon className="w-6 h-6" />
+        </button>
+
+        <button
+          onClick={scrollNext}
+          className="bg-gold/90 hover:bg-gold text-gray-900 p-3 rounded-full shadow-xl transition-all duration-200 hover:scale-110"
+          aria-label="Next certification"
+        >
+          <ChevronRightIcon className="w-6 h-6" />
+        </button>
+      </div>
+    </div>
   );
 };
 

@@ -40,13 +40,13 @@ const Hero = () => {
           className="mx-auto max-w-2xl text-center"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          transition={{ duration: 0.8 }}
+          transition={{ type: "spring", stiffness: 150, damping: 20 }}
         >
           <motion.h1
             className="text-5xl font-iceland tracking-tight sm:text-9xl text-gold"
             initial={{ opacity: 0, y: 30, scale: 0.9 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
-            transition={{ duration: 0.8, delay: 0.2 }}
+            transition={{ type: "spring", stiffness: 180, damping: 20, delay: 0.2 }}
           >
             Randy Caballero
           </motion.h1>
@@ -68,7 +68,7 @@ const Hero = () => {
             className="mt-8 font-inter text-white/80 text-base"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.7 }}
+            transition={{ type: "spring", stiffness: 220, damping: 22, delay: 0.7 }}
           >
             Full-Stack Developer specializing in Next.js with 5+ years creating
             digital solutions for businesses.
@@ -79,7 +79,7 @@ const Hero = () => {
             className="mt-6 flex justify-center gap-12 text-lg font-inter font-semibold text-gold/70"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            transition={{ duration: 0.6, delay: 0.9 }}
+            transition={{ type: "spring", stiffness: 200, damping: 20, delay: 0.9 }}
           >
             <motion.span
               whileHover={{ scale: 1.1, color: "#fbbf24" }}
@@ -105,14 +105,14 @@ const Hero = () => {
             className="mt-10 flex flex-col sm:flex-row gap-4 items-center justify-center gap-x-6"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            transition={{ duration: 0.6, delay: 1.1 }}
+            transition={{ type: "spring", stiffness: 200, damping: 20, delay: 1.1 }}
           >
             <motion.div
-              whileHover={{ scale: 1.05 }}
+              whileHover={{ scale: 1.05, transition: { type: "spring", stiffness: 400, damping: 17 } }}
               whileTap={{ scale: 0.95 }}
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 1.2 }}
+              transition={{ type: "spring", stiffness: 200, damping: 20, delay: 1.2 }}
             >
               <Link
                 href="#services"
@@ -123,11 +123,11 @@ const Hero = () => {
             </motion.div>
 
             <motion.div
-              whileHover={{ scale: 1.05 }}
+              whileHover={{ scale: 1.05, transition: { type: "spring", stiffness: 400, damping: 17 } }}
               whileTap={{ scale: 0.95 }}
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 1.3 }}
+              transition={{ type: "spring", stiffness: 200, damping: 20, delay: 1.3 }}
             >
               <Link
                 href="#contact"
@@ -138,11 +138,11 @@ const Hero = () => {
             </motion.div>
 
             <motion.div
-              whileHover={{ scale: 1.05 }}
+              whileHover={{ scale: 1.05, transition: { type: "spring", stiffness: 400, damping: 17 } }}
               whileTap={{ scale: 0.95 }}
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 1.4 }}
+              transition={{ type: "spring", stiffness: 200, damping: 20, delay: 1.4 }}
             >
               <Link
                 href="/resume.pdf"

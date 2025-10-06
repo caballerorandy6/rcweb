@@ -1,3 +1,5 @@
+"use client";
+
 import { motion } from "framer-motion";
 
 interface HeadingProps {
@@ -12,7 +14,7 @@ const Heading = ({ children, icon, text }: HeadingProps) => {
       initial={{ opacity: 0, y: 40 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, amount: 0.3 }}
-      transition={{ duration: 0.8, ease: "easeOut" }}
+      transition={{ type: "spring", stiffness: 200, damping: 20 }}
       className="mx-auto max-w-2xl text-center"
     >
       <div className="flex items-center justify-center gap-2">

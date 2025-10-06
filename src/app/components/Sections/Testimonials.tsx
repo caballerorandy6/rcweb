@@ -20,11 +20,16 @@ const Testimonials = () => {
   };
 
   const cardVariants = {
-    hidden: { opacity: 0, y: 50, scale: 0.95 }, // más suave y consistente
-    show: { opacity: 1, y: 0, scale: 1 },
-    transition: {
-      duration: 0.7,
-      ease: [0.16, 1, 0.3, 1], // curva más fluida
+    hidden: { opacity: 0, y: 50, scale: 0.95 },
+    show: {
+      opacity: 1,
+      y: 0,
+      scale: 1,
+      transition: {
+        type: "spring",
+        stiffness: 200,
+        damping: 20,
+      },
     },
   };
 

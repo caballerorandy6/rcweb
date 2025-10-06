@@ -99,7 +99,7 @@ const TermsOfService = () => {
       opacity: 1,
       y: 0,
       scale: 1,
-      transition: { duration: 0.6, ease: "easeOut" },
+      transition: { type: "spring", stiffness: 200, damping: 20 },
     },
   };
 
@@ -114,7 +114,7 @@ const TermsOfService = () => {
         <motion.div
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
+          transition={{ type: "spring", stiffness: 220, damping: 22 }}
           className="mb-8 max-w-4xl mx-auto"
         >
           <div className="bg-amber-500/10 border border-amber-500/30 rounded-xl p-4 sm:p-6 backdrop-blur-sm">
@@ -133,7 +133,7 @@ const TermsOfService = () => {
                 </p>
               </div>
               <motion.button
-                whileHover={{ scale: 1.05 }}
+                whileHover={{ scale: 1.05, transition: { type: "spring", stiffness: 400, damping: 17 } }}
                 whileTap={{ scale: 0.95 }}
                 onClick={handleGoBack}
                 className="flex-shrink-0 inline-flex items-center gap-2 px-4 py-2 bg-gray-800 hover:bg-gray-700 text-white rounded-lg transition-colors border border-gray-600 font-inter"
@@ -158,7 +158,7 @@ const TermsOfService = () => {
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
+          transition={{ type: "spring", stiffness: 200, damping: 20 }}
         >
           <div className="bg-gradient-to-r from-gold/10 to-gold/5 backdrop-blur-lg rounded-2xl p-8 border border-gold/20 shadow-xl shadow-black/50">
             <p className="text-white/90 text-lg leading-relaxed font-inter text-center">
@@ -208,7 +208,7 @@ const TermsOfService = () => {
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.6, delay: 0.4 }}
+          transition={{ type: "spring", stiffness: 200, damping: 20, delay: 0.4 }}
         >
           <div className="bg-gray-900/60 backdrop-blur-md rounded-xl border border-gold/10 p-6 text-center">
             <div className="flex items-center justify-center gap-2 text-white/50 text-sm font-inter">
@@ -224,7 +224,7 @@ const TermsOfService = () => {
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.6, delay: 0.6 }}
+          transition={{ type: "spring", stiffness: 200, damping: 20, delay: 0.6 }}
         >
           {/* Mensaje de recordatorio antes de aceptar */}
           <div className="text-center mb-6 font-inter flex flex-col items-center">
@@ -238,7 +238,7 @@ const TermsOfService = () => {
           {/* Botones de acción */}
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
             <motion.button
-              whileHover={{ scale: 1.05 }}
+              whileHover={{ scale: 1.05, transition: { type: "spring", stiffness: 400, damping: 17 } }}
               whileTap={{ scale: 0.95 }}
               className={`inline-flex items-center gap-2 px-8 py-3 bg-gold text-gray-900 font-bold rounded-lg hover:bg-gold/90 transition-colors font-inter ${isPending ? "opacity-70 cursor-wait" : ""}`}
               onClick={handleAcceptTerms}
@@ -251,7 +251,7 @@ const TermsOfService = () => {
             <motion.a
               href="/terms-of-service.pdf"
               download="RC-Web-Terms-of-Service.pdf"
-              whileHover={{ scale: 1.05 }}
+              whileHover={{ scale: 1.05, transition: { type: "spring", stiffness: 400, damping: 17 } }}
               whileTap={{ scale: 0.95 }}
               className="inline-flex items-center gap-2 px-8 py-3 bg-transparent border-2 border-gold text-gold font-bold rounded-lg hover:bg-gold/10 transition-colors font-inter"
             >
