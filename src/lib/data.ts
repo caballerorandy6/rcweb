@@ -793,11 +793,12 @@ export const thirdPartyLinks = [
 export const socialLinks = [
   {
     name: "LinkedIn",
-    url: "https://www.linkedin.com/in/caballerorandy/",
+    url: "https://www.linkedin.com/company/rcwebsolutions",
     ariaLabel: "Connect on LinkedIn",
     bgColor: "bg-[#0A66C2]",
     hoverColor: "hover:bg-[#004182]",
     delay: 0.1,
+    iconSize: "w-6 h-6 lg:w-8 lg:h-8",
   },
   {
     name: "Phone",
@@ -807,6 +808,7 @@ export const socialLinks = [
     hoverColor: "hover:bg-blue-700",
     delay: 0.15,
     isButton: true,
+    iconSize: "w-6 h-6 lg:w-8 lg:h-8",
   },
   {
     name: "WhatsApp",
@@ -816,6 +818,7 @@ export const socialLinks = [
     hoverColor: "hover:bg-[#128C7E]",
     delay: 0.2,
     isButton: true,
+    iconSize: "w-6 h-6 lg:w-8 lg:h-8",
   },
   {
     name: "Facebook",
@@ -824,6 +827,7 @@ export const socialLinks = [
     bgColor: "bg-[#1877F2]",
     hoverColor: "hover:bg-[#155DBB]",
     delay: 0.25,
+    iconSize: "w-6 h-6 lg:w-8 lg:h-8",
   },
   {
     name: "Instagram",
@@ -832,13 +836,15 @@ export const socialLinks = [
     bgColor: "bg-[#E1306C]",
     hoverColor: "hover:bg-[#C13584]",
     delay: 0.3,
+    iconSize: "w-6 h-6 lg:w-8 lg:h-8",
   },
   {
     name: "X",
     url: "https://x.com/RCWeb2025",
     ariaLabel: "Connect on X",
-    bgColor: "bg-gray-800",
-    hoverColor: "hover:bg-black",
+    bgColor: "bg-transparent",
+    hoverColor: "hover:bg-gray-100",
     delay: 0.35,
+    iconSize: "w-4 h-4 lg:w-6 lg:h-6",
   },
 ];
