@@ -10,6 +10,8 @@ import Phone from "@/app/components/icons/Phone";
 import Instagram from "@/app/components/icons/Instagram";
 import X from "@/app/components/icons/X";
 import TikTok from "@/app/components/icons/TikTok";
+import Chat from "@/app/components/Chat";
+import Image from "next/image";
 
 const getIconComponent = (name: string, iconSize?: string) => {
   const iconMap: Record<string, React.ReactNode> = {
@@ -28,6 +30,7 @@ const FloatingCTA = () => {
   const ctaRef = useRef(null);
   const [isContactInView, setIsContactInView] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
+  const [isChatOpen, setIsChatOpen] = useState(false);
 
   useEffect(() => {
     // Find the Contact section
@@ -141,6 +144,26 @@ const FloatingCTA = () => {
           }}
           transition={{ type: "spring", stiffness: 200, damping: 20 }}
         >
+          {/* Chat Button */}
+          <motion.div
+            initial={{ opacity: 0, x: 20 }}
+            animate={{ opacity: isOpen ? 1 : 0, x: isOpen ? 0 : 20 }}
+            transition={{ type: "spring", stiffness: 300, damping: 25, delay: 0 }}
+          >
+            <button
+              onClick={() => setIsChatOpen(true)}
+              className="relative flex h-14 w-14 items-center justify-center rounded-full bg-gradient-to-br from-purple-500 to-purple-700 shadow-lg transition-all duration-200 hover:scale-110 hover:from-purple-600 hover:to-purple-800 hover:shadow-xl overflow-hidden ring-2 ring-purple-400/30"
+              aria-label="Open AI Chat Assistant - Maria"
+            >
+              <Image
+                src="/chat.avif"
+                alt="Chat"
+                fill
+                className="object-cover"
+              />
+            </button>
+          </motion.div>
+
           {socialLinks.map((link) => (
             <motion.div
               key={link.name}
@@ -171,6 +194,9 @@ const FloatingCTA = () => {
           ))}
         </motion.div>
       </div>
+
+      {/* Chat Component */}
+      {isChatOpen && <Chat onClose={() => setIsChatOpen(false)} />}
     </motion.div>
   );
 };
