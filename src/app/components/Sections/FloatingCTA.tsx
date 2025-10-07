@@ -80,9 +80,7 @@ const FloatingCTA = () => {
       }}
       transition={{ type: "spring", stiffness: 260, damping: 20 }}
     >
-      <div
-        className={`flex flex-col-reverse gap-4 items-center ${isOpen ? "animateHeadingDialog rounded-full py-4" : "items-end"}`}
-      >
+      <div className="flex flex-col-reverse gap-4 items-end">
         {/* Toggle Button - Always visible */}
         <motion.button
           type="button"
@@ -93,15 +91,21 @@ const FloatingCTA = () => {
             alignItems: "center",
             justifyContent: "center",
             borderRadius: "9999px",
-            background: "linear-gradient(to bottom right, rgb(203 178 106), rgb(250 204 21))",
+            background:
+              "linear-gradient(to bottom right, rgb(203 178 106), rgb(250 204 21))",
             color: "white",
-            boxShadow: "0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1)",
+            boxShadow:
+              "0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1)",
             transition: "all 0.3s",
             border: "none",
             cursor: "pointer",
           }}
           aria-label={isOpen ? "Close contact options" : "Open contact options"}
-          whileHover={{ rotate: 90, scale: 1.1, transition: { type: "spring", stiffness: 300, damping: 15 } }}
+          whileHover={{
+            rotate: 90,
+            scale: 1.1,
+            transition: { type: "spring", stiffness: 300, damping: 15 },
+          }}
           whileTap={{ scale: 0.95 }}
           onTap={() => setIsOpen(!isOpen)}
         >
@@ -130,6 +134,7 @@ const FloatingCTA = () => {
 
         {/* Contact Buttons - Show/Hide based on isOpen */}
         <motion.div
+          className={isOpen ? "animateFloatingLinks rounded-full py-4" : ""}
           style={{
             display: "flex",
             flexDirection: "column",
@@ -148,11 +153,16 @@ const FloatingCTA = () => {
           <motion.div
             initial={{ opacity: 0, x: 20 }}
             animate={{ opacity: isOpen ? 1 : 0, x: isOpen ? 0 : 20 }}
-            transition={{ type: "spring", stiffness: 300, damping: 25, delay: 0 }}
+            transition={{
+              type: "spring",
+              stiffness: 300,
+              damping: 25,
+              delay: 0,
+            }}
           >
             <button
               onClick={() => setIsChatOpen(true)}
-              className="relative flex h-14 w-14 items-center justify-center rounded-full bg-gradient-to-br from-purple-500 to-purple-700 shadow-lg transition-all duration-200 hover:scale-110 hover:from-purple-600 hover:to-purple-800 hover:shadow-xl overflow-hidden ring-2 ring-purple-400/30"
+              className="relative flex h-14 w-14 items-center justify-center rounded-full bg-gradient-to-br shadow-lg transition-all duration-200 hover:scale-110 hover:shadow-xl overflow-hidden "
               aria-label="Open AI Chat Assistant - Maria"
             >
               <Image
@@ -169,7 +179,12 @@ const FloatingCTA = () => {
               key={link.name}
               initial={{ opacity: 0, x: 20 }}
               animate={{ opacity: isOpen ? 1 : 0, x: isOpen ? 0 : 20 }}
-              transition={{ type: "spring", stiffness: 300, damping: 25, delay: link.delay }}
+              transition={{
+                type: "spring",
+                stiffness: 300,
+                damping: 25,
+                delay: link.delay,
+              }}
             >
               {link.isButton ? (
                 <button

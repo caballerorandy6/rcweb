@@ -48,6 +48,14 @@ body .image-gradient {
   }
 }
 
+.animateFloatingLinks {
+  box-shadow:
+    0px 5px 50px -5px hsla(0, 0%, 100%, 0.2),
+    0px 0px 0px 1px hsla(0, 0%, 100%, 0.1);
+  background: rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(10px);
+}
+
 .javascript-color {
   color: #f7df1e;
 }
