@@ -802,7 +802,7 @@ export const socialLinks = [
   },
   {
     name: "Phone",
-    url: "tel:+18325465983",
+    url: "tel:+13463757534",
     ariaLabel: "Call directly",
     bgColor: "bg-blue-600",
     hoverColor: "hover:bg-blue-700",

@@ -205,11 +205,11 @@ export default function PrivacyPolicy() {
                 <span className="text-sm">contactus@rcweb.dev</span>
               </a>
               <a
-                href="tel:8325465983"
+                href="tel:3463757534"
                 className="flex items-center gap-3 text-white/80 hover:text-gold transition-colors group"
               >
                 <PhoneIcon className="w-5 h-5 text-gold group-hover:scale-110 transition-transform" />
-                <span className="text-sm">832-546-5983</span>
+                <span className="text-sm">346-375-7534</span>
               </a>
               <Link
                 href="/#contact"
