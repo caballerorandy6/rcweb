@@ -18,12 +18,43 @@ export interface SmsActionResponse {
   failedCount?: number;
 }
 
+/**
+ * Check if current time is within allowed hours for sending SMS
+ * Allowed: 9 AM - 8 PM local time
+ */
+function isWithinAllowedHours(): { allowed: boolean; message?: string } {
+  const now = new Date();
+  const hour = now.getHours();
+
+  // Allow sending between 9 AM and 8 PM
+  if (hour < 9 || hour >= 20) {
+    return {
+      allowed: false,
+      message: `SMS campaigns can only be sent between 9:00 AM and 8:00 PM. Current time: ${now.toLocaleTimeString()}`,
+    };
+  }
+
+  return { allowed: true };
+}
+
 export const sendSmsCampaignAction = async (
   messageContent: string,
-  testMode = false
+  testMode = false,
+  skipTimeValidation = false // For admin override or scheduled campaigns
 ): Promise<SmsActionResponse> => {
   try {
-    // 1. Obtener contactos con consentimiento y teléfonos
+    // 1. Check if within allowed hours (skip for test mode or if explicitly allowed)
+    if (!testMode && !skipTimeValidation) {
+      const timeCheck = isWithinAllowedHours();
+      if (!timeCheck.allowed) {
+        return {
+          success: false,
+          message: timeCheck.message!,
+        };
+      }
+    }
+
+    // 2. Obtener contactos con consentimiento y teléfonos
     const contactsWithPhone = await prisma.contact.findMany({
       where: {
         marketingConsent: true,
@@ -48,11 +79,11 @@ export const sendSmsCampaignAction = async (
       };
     }
 
-    // 2. Preparar lista de mensajes personalizados
+    // 2. Preparar lista de mensajes
     const smsToSend = contactsWithPhone.flatMap((contact) =>
       contact.phones.map((phone) => ({
         to: phone.phone.startsWith("+") ? phone.phone : `+1${phone.phone}`,
-        body: messageContent.replace(/{{name}}/g, contact.name),
+        body: messageContent.replace(/{{name}}/g, contact.name || "Dear customer"),
         name: contact.name,
       }))
     );
@@ -93,13 +124,23 @@ export const sendSmsCampaignAction = async (
           message: `Test SMS sent to ${testSms.to}`,
           sentCount: 1,
         };
-      } catch (error: unknown) {
+      } catch (error) {
         console.error("Twilio error:", error);
+        const twilioError = error as { message?: string; code?: number };
+        const errorMessage = twilioError?.message || "Unknown error";
+        const errorCode = twilioError?.code || 0;
+
+        // Handle Twilio trial account restrictions
+        if (errorCode === 21608) {
+          return {
+            success: false,
+            message: "Cannot send SMS to unverified numbers with trial account. Please upgrade your Twilio account or verify the recipient number.",
+          };
+        }
+
         return {
           success: false,
-          message: `Failed to send test SMS: ${
-            error instanceof Error ? error.message : "Unknown error"
-          }`,
+          message: `Failed to send test SMS: ${errorMessage}`,
         };
       }
     }
@@ -122,14 +163,24 @@ export const sendSmsCampaignAction = async (
 
         // Pequeña pausa entre mensajes para evitar límites de rate
         await new Promise((resolve) => setTimeout(resolve, 1000));
-      } catch (error: unknown) {
-        if (error instanceof Error) {
-          console.error(`Failed to send SMS to ${sms.to}:`, error.message);
-          errors.push(`${sms.to}: ${error.message}`);
+      } catch (error) {
+        const twilioError = error as { message?: string; code?: number };
+        const errorMessage = twilioError?.message || "Unknown error";
+        const errorCode = twilioError?.code || 0;
+
+        console.error(`Failed to send SMS to ${sms.to}:`, errorMessage);
+
+        // Provide specific error messages for common Twilio errors
+        if (errorCode === 21608) {
+          errors.push(`${sms.to}: Unverified number (upgrade Twilio account required)`);
+        } else if (errorCode === 21211) {
+          errors.push(`${sms.to}: Invalid phone number`);
+        } else if (errorCode === 21606) {
+          errors.push(`${sms.to}: Phone number is not SMS capable`);
         } else {
-          console.error(`Failed to send SMS to ${sms.to}:`, error);
-          errors.push(`${sms.to}: Unknown error`);
+          errors.push(`${sms.to}: ${errorMessage}`);
         }
+
         failedCount++;
       }
     }
@@ -152,12 +203,12 @@ export const sendSmsCampaignAction = async (
       sentCount: successCount,
       failedCount: failedCount > 0 ? failedCount : undefined,
     };
-  } catch (error: unknown) {
+  } catch (error) {
     console.error("Error sending SMS campaign:", error);
+    const errorObj = error as { message?: string };
     return {
       success: false,
-      message:
-        error instanceof Error ? error.message : "An unexpected error occurred",
+      message: errorObj?.message || "An unexpected error occurred",
     };
   }
 };
