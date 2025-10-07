@@ -213,7 +213,7 @@ const TermsOfService = () => {
           <div className="bg-gray-900/60 backdrop-blur-md rounded-xl border border-gold/10 p-6 text-center">
             <div className="flex items-center justify-center gap-2 text-white/50 text-sm font-inter">
               <CalendarIcon className="w-4 h-4" />
-              <span>Last updated: September 25, 2025</span>
+              <span>Last updated: October 7, 2025</span>
             </div>
           </div>
         </motion.div>

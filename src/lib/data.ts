@@ -31,6 +31,9 @@ import {
   ShieldCheckIcon,
   ScaleIcon,
   MapPinIcon,
+  ClockIcon,
+  DocumentCheckIcon,
+  XCircleIcon,
 } from "@heroicons/react/24/outline";
 
 export const navigation: NavigationProps[] = [
@@ -749,37 +752,59 @@ export const extraFooterLinks = [
 export const sections = [
   {
     icon: React.createElement(BriefcaseIcon, { className: "w-6 h-6" }),
-    title: "Experience",
-    content: "Showcase of professional experience and career highlights.",
-    color: "from-gray-500/20 to-gray-600/20",
+    title: "Our Services",
+    content:
+      "RC Web Solutions LLC specializes in Full-Stack Web Applications (Next.js 14+, TypeScript, React, PostgreSQL), High-Converting Landing Pages, Custom Management Systems (dashboards, analytics, user management), API Development (RESTful, authentication, third-party integrations), and Digital Consulting (web audits, SEO optimization, performance enhancement, WordPress solutions). All services include responsive design, security best practices, and scalable architecture.",
+    color: "from-purple-500/20 to-purple-600/20",
   },
   {
     icon: React.createElement(CurrencyDollarIcon, { className: "w-6 h-6" }),
-    title: "Payments",
+    title: "Payment Terms",
     content:
-      "A 50% non-refundable deposit is required to begin work. The balance is due upon completion and before final delivery. Refunds are not offered except in cases of non-delivery or breach by RC Web Solutions LLC.",
+      "A 50% non-refundable deposit is required to initiate any project. This deposit secures your project timeline and covers initial development costs. The remaining 50% balance is due upon project completion and before final delivery of all assets. We accept payments via Stripe (credit/debit cards) and Zelle. Refunds are only provided in cases of non-delivery or documented breach of contract by RC Web Solutions LLC. Late payments may result in project delays and additional fees.",
     color: "from-green-500/20 to-green-600/20",
   },
   {
     icon: React.createElement(ShieldCheckIcon, { className: "w-6 h-6" }),
-    title: "Intellectual Property",
+    title: "Intellectual Property Rights",
     content:
-      "Upon full payment, all deliverables (code, designs, and assets) become the client's property unless otherwise agreed in writing.",
+      "Upon receipt of full payment, all deliverables including source code, designs, graphics, and digital assets become the exclusive property of the client, unless otherwise specified in a separate written agreement. RC Web Solutions LLC retains the right to showcase completed projects in our portfolio and marketing materials unless confidentiality is explicitly requested. Pre-existing tools, libraries, and frameworks remain property of their respective owners and are licensed accordingly.",
     color: "from-blue-500/20 to-blue-600/20",
   },
   {
     icon: React.createElement(ScaleIcon, { className: "w-6 h-6" }),
-    title: "Limitation of Liability",
+    title: "Warranties & Liability",
     content:
-      'Our services are provided "as is." RC Web Solutions LLC is not liable for indirect or consequential damages arising from the use of our services.',
+      'All services are provided "as is" without warranties of any kind, express or implied. RC Web Solutions LLC is not liable for indirect, incidental, consequential, or punitive damages arising from the use or inability to use our services. Our maximum liability shall not exceed the total amount paid for the specific service. We provide a 30-day bug-fix warranty for all custom development work. Third-party integrations and hosting services are subject to their respective terms.',
     color: "from-orange-500/20 to-orange-600/20",
   },
   {
-    icon: React.createElement(MapPinIcon, { className: "w-6 h-6" }),
-    title: "Jurisdiction",
+    icon: React.createElement(ClockIcon, { className: "w-6 h-6" }),
+    title: "Project Timeline & Changes",
     content:
-      "These Terms are governed by the laws of the State of Texas, USA. Any disputes will be handled in the courts located in Houston, Texas.",
+      "Project timelines are estimates and may vary based on complexity, client responsiveness, and scope changes. Delays caused by client-side factors (content delays, feedback, approvals) will extend the timeline accordingly. Scope changes or additional features not included in the original agreement will be quoted separately and may affect the project timeline and cost. We require 48-hour notice for meetings and provide weekly progress updates.",
+    color: "from-cyan-500/20 to-cyan-600/20",
+  },
+  {
+    icon: React.createElement(DocumentCheckIcon, { className: "w-6 h-6" }),
+    title: "Client Responsibilities",
+    content:
+      "Clients are responsible for providing accurate project requirements, timely feedback, necessary content (text, images, branding), and access to required accounts (hosting, domain, APIs). Clients must review and approve deliverables within 5 business days. Failure to provide timely feedback may result in project delays. Clients are responsible for maintaining backups and ensuring compliance with applicable laws and regulations for their website content.",
+    color: "from-indigo-500/20 to-indigo-600/20",
+  },
+  {
+    icon: React.createElement(XCircleIcon, { className: "w-6 h-6" }),
+    title: "Termination & Cancellation",
+    content:
+      "Either party may terminate the agreement with 14 days written notice. Upon termination by client before completion, the deposit is non-refundable, and client will be invoiced for work completed to date at our hourly rate. RC Web Solutions LLC reserves the right to terminate services immediately for non-payment, violation of terms, or abusive behavior. Upon termination, all work completed will be delivered, but source code access requires full payment.",
     color: "from-red-500/20 to-red-600/20",
+  },
+  {
+    icon: React.createElement(MapPinIcon, { className: "w-6 h-6" }),
+    title: "Governing Law & Jurisdiction",
+    content:
+      "These Terms of Service are governed by and construed in accordance with the laws of the State of Texas, United States of America, without regard to its conflict of law provisions. Any legal action or proceeding arising under these terms shall be brought exclusively in the state or federal courts located in Harris County, Houston, Texas. Both parties consent to the jurisdiction and venue of such courts. If any provision is found unenforceable, the remaining provisions remain in full effect.",
+    color: "from-amber-500/20 to-amber-600/20",
   },
 ];
 
