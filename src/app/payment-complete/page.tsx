@@ -1,5 +1,6 @@
 import PaymentComplete from "@/app/components/PaymentComplete";
 import { genPageMetadata } from "@/utils/genPageMetadata";
+import { Suspense } from "react";
 
 export const metadata = genPageMetadata({
   title: "Payment Successful - Thank You!",
@@ -9,5 +10,9 @@ export const metadata = genPageMetadata({
 });
 
 export default function PaymentCompletePage() {
-  return <PaymentComplete />;
+  return (
+    <Suspense fallback={<div className="min-h-screen bg-gray-900 flex items-center justify-center"><div className="text-gold">Loading...</div></div>}>
+      <PaymentComplete />
+    </Suspense>
+  );
 }
