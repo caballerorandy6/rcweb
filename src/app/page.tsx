@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { siteConfig } from "@/config/site";
 
 // Components
 import Hero from "@/app/components/Sections/Hero";
@@ -35,7 +36,7 @@ export const metadata: Metadata = {
     title: "RC Web - Professional Web Development Services",
     description:
       "Transform your business with custom web solutions. Specializing in Next.js, React, and full-stack development. 5+ years of experience delivering scalable, modern applications.",
-    url: "https://rcweb.dev",
+    url: siteConfig.baseUrl,
     siteName: "RC Web Solutions LLC",
     images: [
       {
@@ -57,7 +58,7 @@ export const metadata: Metadata = {
     creator: "@RCWeb2025",
   },
   alternates: {
-    canonical: "https://rcweb.dev",
+    canonical: siteConfig.baseUrl,
   },
   robots: {
     index: true,

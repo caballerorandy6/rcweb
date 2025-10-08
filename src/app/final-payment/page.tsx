@@ -1,5 +1,6 @@
 import FinalPayment from "@/app/components/FinalPayment";
 import { Metadata } from "next";
+import { siteConfig } from "@/config/site";
 
 export const metadata: Metadata = {
   title: "Final Payment - Complete Your Project",
@@ -9,7 +10,7 @@ export const metadata: Metadata = {
     title: "Final Payment - Complete Your Project | RC Web",
     description:
       "Complete your final payment to receive your completed project. Secure payment processing through Stripe.",
-    url: "https://rcweb.dev/final-payment",
+    url: `${siteConfig.baseUrl}/final-payment`,
   },
   twitter: {
     card: "summary_large_image",

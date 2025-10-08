@@ -1,5 +1,6 @@
 import RefundPolicy from "@/app/components/Sections/RefundPolicy";
 import { Metadata } from "next";
+import { siteConfig } from "@/config/site";
 
 export const metadata: Metadata = {
   title: "Refund Policy",
@@ -9,7 +10,7 @@ export const metadata: Metadata = {
     title: "Refund Policy | RC Web Solutions LLC",
     description:
       "Learn about RC Web Solutions LLC refund policy, payment structure, and cancellation terms.",
-    url: "https://rcweb.dev/refund-policy",
+    url: `${siteConfig.baseUrl}/refund-policy`,
   },
   twitter: {
     card: "summary",

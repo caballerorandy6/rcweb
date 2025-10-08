@@ -1,5 +1,6 @@
 import TermsOfService from "@/app/components/Sections/TermsOfService";
 import { Metadata } from "next";
+import { siteConfig } from "@/config/site";
 
 export const metadata: Metadata = {
   title: "Terms of Service",
@@ -9,7 +10,7 @@ export const metadata: Metadata = {
     title: "Terms of Service | RC Web Solutions LLC",
     description:
       "Review RC Web Solutions LLC Terms of Service for web development projects and digital services.",
-    url: "https://rcweb.dev/terms-of-service",
+    url: `${siteConfig.baseUrl}/terms-of-service`,
   },
   twitter: {
     card: "summary",

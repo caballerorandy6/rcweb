@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import PrivacyPolicy from "@/app/components/Sections/PrivacyPolicy";
+import { siteConfig } from "@/config/site";
 
 export const metadata: Metadata = {
   title: "Privacy Policy",
@@ -9,7 +10,7 @@ export const metadata: Metadata = {
     title: "Privacy Policy | RC Web Solutions LLC",
     description:
       "Learn how RC Web Solutions LLC collects, uses, and protects your personal data.",
-    url: "https://rcweb.dev/privacy-policy",
+    url: `${siteConfig.baseUrl}/privacy-policy`,
   },
   twitter: {
     card: "summary",

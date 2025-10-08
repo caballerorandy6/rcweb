@@ -6,6 +6,7 @@ import { Toaster } from "sonner";
 
 import Header from "@/app/components/Header";
 import Footer from "./components/Footer";
+import { siteConfig } from "@/config/site";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -29,13 +30,12 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://www.rcweb.dev"),
+  metadataBase: new URL(siteConfig.baseUrl),
   title: {
-    default: "RC Web - Full-Stack Web Development Services",
-    template: "%s | RC Web",
+    default: `${siteConfig.siteNameShort} - Full-Stack Web Development Services`,
+    template: `%s | ${siteConfig.siteNameShort}`,
   },
-  description:
-    "Professional web development services by Randy Caballero. Specializing in Next.js, React, and full-stack solutions for businesses. 5+ years of experience building scalable, modern web applications.",
+  description: siteConfig.description,
   keywords: [
     "web development",
     "Next.js developer",
@@ -43,36 +43,36 @@ export const metadata: Metadata = {
     "full-stack developer",
     "freelance web developer",
     "custom web applications",
-    "Randy Caballero",
+    siteConfig.author.name,
     "web development services",
   ],
-  authors: [{ name: "Randy Caballero" }],
-  creator: "Randy Caballero",
-  publisher: "RC Web Solutions LLC",
+  authors: [{ name: siteConfig.author.name }],
+  creator: siteConfig.author.name,
+  publisher: siteConfig.siteName,
   openGraph: {
     type: "website",
     locale: "en_US",
-    url: "https://rcweb.dev",
-    siteName: "RC Web Solutions LLC",
-    title: "RC Web - Professional Web Development Services",
+    url: siteConfig.baseUrl,
+    siteName: siteConfig.siteName,
+    title: `${siteConfig.siteNameShort} - Professional Web Development Services`,
     description:
       "Full-stack web development services specializing in Next.js and React. Custom solutions for your business needs.",
     images: [
       {
-        url: "/og-image.jpg",
+        url: siteConfig.defaultOgImg,
         width: 1200,
         height: 630,
-        alt: "RC Web - Randy Caballero Web Development Services",
+        alt: `${siteConfig.siteNameShort} - ${siteConfig.author.name} Web Development Services`,
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "RC Web - Professional Web Development Services",
+    title: `${siteConfig.siteNameShort} - Professional Web Development Services`,
     description:
       "Full-stack web development services specializing in Next.js and React.",
-    images: ["/og-image.jpg"],
-    creator: "@RCWeb2025",
+    images: [siteConfig.defaultOgImg],
+    creator: siteConfig.social.twitter,
   },
   robots: {
     index: true,

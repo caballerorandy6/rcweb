@@ -1,4 +1,19 @@
+/**
+ * Generate the sitemap.xml file for a Next.js site
+ *
+ * Requirements:
+ * - Next.js 13.3.0 or higher
+ * - Next.js App Router
+ *
+ * Usage:
+ * 1. Update the manualRoutes array below with your site's routes
+ * 2. Set the lastModified date for each route (format: YYYY-MM-DD)
+ * 3. Optionally set changeFrequency and priority for each route
+ * 4. The sitemap will be available at /sitemap.xml
+ */
+
 import { MetadataRoute } from "next";
+import { siteConfig } from "@/config/site";
 
 type SitemapRoute = {
   route: string;
@@ -20,7 +35,7 @@ type SitemapConfig = {
 };
 
 const sitemapConfig: SitemapConfig = {
-  baseUrl: "https://rcweb.dev",
+  baseUrl: siteConfig.baseUrl,
   manualRoutes: [
     {
       route: "/",
