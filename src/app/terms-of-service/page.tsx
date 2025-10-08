@@ -1,7 +1,9 @@
 import TermsOfService from "@/app/components/Sections/TermsOfService";
+import TermsOfServiceSkeleton from "@/app/components/TermsOfServiceSkeleton";
 import { JsonLdForBreadcrumb } from "@/app/components/JsonLdForBreadcrumb";
 import { genPageMetadata } from "@/utils/genPageMetadata";
 import { siteConfig } from "@/config/site";
+import { Suspense } from "react";
 
 export const metadata = genPageMetadata({
   title: "Terms of Service",
@@ -19,7 +21,9 @@ export default function TermsOfServicePage() {
           { name: "Terms of Service", item: `${siteConfig.baseUrl}/terms-of-service` },
         ]}
       />
-      <TermsOfService />
+      <Suspense fallback={<TermsOfServiceSkeleton />}>
+        <TermsOfService />
+      </Suspense>
     </section>
   );
 }
