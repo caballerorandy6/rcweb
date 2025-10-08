@@ -1,10 +1,18 @@
-import { Suspense } from "react";
 import SendSmsCampaign from "@/app/components/SendSmsCampaign";
-import Spinner from "@/app/components/Spinner";
 import { auth } from "@/lib/auth";
 import { redirect } from "next/navigation";
+import { Metadata } from "next";
 
-const SMSPage = async () => {
+export const metadata: Metadata = {
+  title: "SMS Campaigns",
+  description: "Send SMS campaigns for RC Web Solutions LLC.",
+  robots: {
+    index: false,
+    follow: false,
+  },
+};
+
+export default async function SMSPage() {
   const session = await auth();
 
   // Doble verificación (el middleware ya lo hace, pero por seguridad)
@@ -14,11 +22,7 @@ const SMSPage = async () => {
 
   return (
     <section id="sms">
-      <Suspense fallback={<Spinner />}>
-        <SendSmsCampaign />
-      </Suspense>
+      <SendSmsCampaign />
     </section>
   );
-};
-
-export default SMSPage;
+}

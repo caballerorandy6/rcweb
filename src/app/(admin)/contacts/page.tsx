@@ -1,10 +1,28 @@
-import { Suspense } from "react";
 import { auth } from "@/lib/auth";
 import { redirect } from "next/navigation";
-import Spinner from "@/app/components/Spinner";
+import { Suspense } from "react";
 import ContactManagement from "@/app/components/ContactManagement";
+import ContactManagementSkeleton from "@/app/components/ContactManagementSkeleton";
+import { getContactsAction } from "@/actions/getContactsAction";
+import { Metadata } from "next";
 
-const ContactsPage = async () => {
+export const metadata: Metadata = {
+  title: "Contact Management",
+  description: "Manage contacts for RC Web Solutions LLC admin panel.",
+  robots: {
+    index: false,
+    follow: false,
+  },
+};
+
+async function ContactManagementWrapper() {
+  const result = await getContactsAction();
+  const contacts = result.success ? result.contacts || [] : [];
+
+  return <ContactManagement initialContacts={contacts} />;
+}
+
+export default async function ContactsPage() {
   const session = await auth();
 
   if (!session || session.user.role !== "ADMIN") {
@@ -13,11 +31,9 @@ const ContactsPage = async () => {
 
   return (
     <section id="contact-management">
-      <Suspense fallback={<Spinner />}>
-        <ContactManagement />
+      <Suspense fallback={<ContactManagementSkeleton />}>
+        <ContactManagementWrapper />
       </Suspense>
     </section>
   );
-};
-
-export default ContactsPage;
+}

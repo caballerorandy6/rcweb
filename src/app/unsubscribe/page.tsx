@@ -1,15 +1,19 @@
-import { Suspense } from "react";
-import Spinner from "@/app/components/Spinner";
 import Unsubscribe from "@/app/components/Unsubscribe";
+import { Metadata } from "next";
 
-const UnsubscribePage = () => {
-  return (
-    <section id="unsubscribe-page">
-      <Suspense fallback={<Spinner />}>
-        <Unsubscribe />
-      </Suspense>
-    </section>
-  );
+export const metadata: Metadata = {
+  title: "Unsubscribe",
+  description: "Unsubscribe from RC Web Solutions LLC email communications.",
+  robots: {
+    index: false,
+    follow: false,
+  },
 };
 
-export default UnsubscribePage;
+export default function UnsubscribePage() {
+  return (
+    <section id="unsubscribe-page">
+      <Unsubscribe />
+    </section>
+  );
+}

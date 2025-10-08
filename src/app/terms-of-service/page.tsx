@@ -1,23 +1,32 @@
-import { Suspense } from "react";
 import TermsOfService from "@/app/components/Sections/TermsOfService";
+import { Metadata } from "next";
 
-// Loading component para el Suspense
-function TermsLoading() {
-  return (
-    <div className="min-h-screen flex items-center justify-center">
-      <div className="animate-pulse text-gold text-lg">Loading terms...</div>
-    </div>
-  );
-}
-
-const TermsOfServicePage = () => {
-  return (
-    <section id="terms-of-service">
-      <Suspense fallback={<TermsLoading />}>
-        <TermsOfService />
-      </Suspense>
-    </section>
-  );
+export const metadata: Metadata = {
+  title: "Terms of Service",
+  description:
+    "Terms of Service for RC Web Solutions LLC. Review our service terms, payment conditions, intellectual property rights, warranties, liability, and client responsibilities for web development projects.",
+  openGraph: {
+    title: "Terms of Service | RC Web Solutions LLC",
+    description:
+      "Review RC Web Solutions LLC Terms of Service for web development projects and digital services.",
+    url: "https://rcweb.dev/terms-of-service",
+  },
+  twitter: {
+    card: "summary",
+    title: "Terms of Service | RC Web Solutions LLC",
+    description:
+      "Review RC Web Solutions LLC Terms of Service for web development projects and digital services.",
+  },
+  robots: {
+    index: true, // Terms of Service should be indexed
+    follow: true,
+  },
 };
 
-export default TermsOfServicePage;
+export default function TermsOfServicePage() {
+  return (
+    <section id="terms-of-service">
+      <TermsOfService />
+    </section>
+  );
+}

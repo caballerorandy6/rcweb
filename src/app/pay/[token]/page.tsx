@@ -1,6 +1,16 @@
 import { prisma } from "@/lib/prisma";
 import { redirect } from "next/navigation";
 import { createFinalPaymentSessionAction } from "@/actions/createFinalPaymentSessionAction";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Processing Payment...",
+  description: "Redirecting to secure payment checkout.",
+  robots: {
+    index: false,
+    follow: false,
+  },
+};
 
 type Params = Promise<{ token: string }>;
 

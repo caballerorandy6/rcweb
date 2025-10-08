@@ -1,12 +1,11 @@
 "use client";
 
-import { useState, useEffect, useTransition } from "react";
+import { useState, useTransition } from "react";
 import { toast } from "sonner";
 import { getContactsAction } from "@/actions/getContactsAction";
 import { createContactAction } from "@/actions/createContactAction";
 import { deleteContactAction } from "@/actions/deleteContactAction";
 import { updateContactAction } from "@/actions/updateContactAction";
-import Spinner from "@/app/components/Spinner";
 
 type Contact = {
   id: string;
@@ -18,9 +17,14 @@ type Contact = {
   phones: { id: string; phone: string }[];
 };
 
-export default function ContactManagement() {
-  const [contacts, setContacts] = useState<Contact[]>([]);
-  const [loading, setLoading] = useState(true);
+type ContactManagementProps = {
+  initialContacts: Contact[];
+};
+
+export default function ContactManagement({
+  initialContacts,
+}: ContactManagementProps) {
+  const [contacts, setContacts] = useState<Contact[]>(initialContacts);
   const [showAddModal, setShowAddModal] = useState(false);
   const [editingContact, setEditingContact] = useState<Contact | null>(null);
   const [searchTerm, setSearchTerm] = useState("");
@@ -33,19 +37,13 @@ export default function ContactManagement() {
     marketingConsent: false,
   });
 
-  useEffect(() => {
-    loadContacts();
-  }, []);
-
   const loadContacts = async () => {
-    setLoading(true);
     const result = await getContactsAction();
     if (result.success) {
       setContacts(result.contacts || []);
     } else {
       toast.error("Failed to load contacts");
     }
-    setLoading(false);
   };
 
   const handleCreateContact = () => {
@@ -114,14 +112,6 @@ export default function ContactManagement() {
       contact.emails.some((e) => e.email.includes(searchTerm)) ||
       contact.phones.some((p) => p.phone.includes(searchTerm))
   );
-
-  if (loading) {
-    return (
-      <div className="min-h-screen bg-gray-900 flex items-center justify-center">
-        <Spinner />
-      </div>
-    );
-  }
 
   return (
     <div className="min-h-screen bg-gray-900 py-24 lg:py-32 px-4">

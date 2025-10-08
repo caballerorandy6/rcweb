@@ -1,15 +1,23 @@
 import { Suspense } from "react";
-import Spinner from "@/app/components/Spinner";
 import AdminDashboard from "@/app/components/AdminDashboard";
+import AdminDashboardSkeleton from "@/app/components/AdminDashboardSkeleton";
+import { Metadata } from "next";
 
-const AdminDashboardPage = async () => {
+export const metadata: Metadata = {
+  title: "Admin Dashboard",
+  description: "Admin dashboard for RC Web Solutions LLC management panel.",
+  robots: {
+    index: false,
+    follow: false,
+  },
+};
+
+export default function AdminDashboardPage() {
   return (
     <section id="admin-dashboard" className="min-h-screen">
-      <Suspense fallback={<Spinner />}>
+      <Suspense fallback={<AdminDashboardSkeleton />}>
         <AdminDashboard />
       </Suspense>
     </section>
   );
-};
-
-export default AdminDashboardPage;
+}

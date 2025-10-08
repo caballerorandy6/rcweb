@@ -1,9 +1,22 @@
 import { handlePaymentSuccessAction } from "@/actions/handlePaymentSuccessAction";
 import PaymentSuccess from "@/app/components/PaymentSuccess";
+import PaymentSuccessSkeleton from "@/app/components/PaymentSuccessSkeleton";
+import { Metadata } from "next";
+import { Suspense } from "react";
+
+export const metadata: Metadata = {
+  title: "Payment Successful - Thank You!",
+  description:
+    "Your payment has been successfully processed. Thank you for choosing RC Web Solutions LLC for your project.",
+  robots: {
+    index: false,
+    follow: false,
+  },
+};
 
 type SearchParams = Promise<{ [key: string]: string | string[] | undefined }>;
 
-export default async function PaymentSuccessPage({
+async function PaymentSuccessWrapper({
   searchParams,
 }: {
   searchParams: SearchParams;
@@ -16,7 +29,7 @@ export default async function PaymentSuccessPage({
   const result = await handlePaymentSuccessAction(sessionId, code);
 
   if (result.fallbackUsed) {
-    console.warn("⚠️ Webhook no procesó a tiempo, se usó fallback");
+    console.warn("⚠️ Webhook no proccess on time, fallback used");
   }
 
   return (
@@ -26,5 +39,17 @@ export default async function PaymentSuccessPage({
       projectCode={code || result.payment?.projectCode}
       fallbackUsed={result.fallbackUsed}
     />
+  );
+}
+
+export default function PaymentSuccessPage({
+  searchParams,
+}: {
+  searchParams: SearchParams;
+}) {
+  return (
+    <Suspense fallback={<PaymentSuccessSkeleton />}>
+      <PaymentSuccessWrapper searchParams={searchParams} />
+    </Suspense>
   );
 }

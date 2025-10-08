@@ -1,13 +1,16 @@
-import { Suspense } from "react";
-import Spinner from "@/app/components/Spinner";
 import PaymentComplete from "@/app/components/PaymentComplete";
+import { Metadata } from "next";
 
-const PaymentCompletePage = () => {
-  return (
-    <Suspense fallback={<Spinner />}>
-      <PaymentComplete />
-    </Suspense>
-  );
+export const metadata: Metadata = {
+  title: "Payment Successful - Thank You!",
+  description:
+    "Your payment has been successfully processed. Thank you for choosing RC Web Solutions LLC.",
+  robots: {
+    index: false,
+    follow: false,
+  },
 };
 
-export default PaymentCompletePage;
+export default function PaymentCompletePage() {
+  return <PaymentComplete />;
+}

@@ -1,11 +1,10 @@
 "use client";
 
-import { useEffect, useState, useTransition } from "react";
+import { useState, useTransition } from "react";
 import { toast } from "sonner";
 import { getAllProjectsAction } from "@/actions/getAllProjectsAction";
 import { getProjectStatsAction } from "@/actions/getProjectStatsAction";
 import { updateProjectStatusAction } from "@/actions/updateProjectStatusAction";
-import Spinner from "@/app/components/Spinner";
 
 type Project = {
   id: string;
@@ -27,18 +26,20 @@ type Stats = {
   awaitingPayment: number;
 };
 
-export default function ProjectManagement() {
-  const [projects, setProjects] = useState<Project[]>([]);
-  const [stats, setStats] = useState<Stats | null>(null);
-  const [loading, setLoading] = useState(true);
+type ProjectManagementProps = {
+  initialProjects: Project[];
+  initialStats: Stats | null;
+};
+
+export default function ProjectManagement({
+  initialProjects,
+  initialStats,
+}: ProjectManagementProps) {
+  const [projects, setProjects] = useState<Project[]>(initialProjects);
+  const [stats, setStats] = useState<Stats | null>(initialStats);
   const [isPending, startTransition] = useTransition();
 
-  useEffect(() => {
-    loadData();
-  }, []);
-
   const loadData = async () => {
-    setLoading(true);
     try {
       const [projectsResult, statsResult] = await Promise.all([
         getAllProjectsAction(),
@@ -62,8 +63,9 @@ export default function ProjectManagement() {
       if (statsResult.success) {
         setStats(statsResult.stats!);
       }
-    } finally {
-      setLoading(false);
+    } catch (error) {
+      toast.error("Failed to load data");
+      console.error(error);
     }
   };
 
@@ -117,14 +119,6 @@ export default function ProjectManagement() {
         return null;
     }
   };
-
-  if (loading) {
-    return (
-      <div className="min-h-screen bg-gray-900 flex items-center justify-center">
-        <Spinner />
-      </div>
-    );
-  }
 
   return (
     <div className="min-h-screen bg-gray-900 p-8 py-24 lg:py-32">

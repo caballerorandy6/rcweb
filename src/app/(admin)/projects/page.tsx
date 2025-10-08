@@ -1,10 +1,43 @@
-import { Suspense } from "react";
 import ProjectManagement from "@/app/components/ProjectManagement";
-import Spinner from "@/app/components/Spinner";
+import ProjectManagementSkeleton from "@/app/components/ProjectManagementSkeleton";
 import { auth } from "@/lib/auth";
 import { redirect } from "next/navigation";
+import { Suspense } from "react";
+import { getAllProjectsAction } from "@/actions/getAllProjectsAction";
+import { getProjectStatsAction } from "@/actions/getProjectStatsAction";
+import { Metadata } from "next";
 
-const ProjectManagementPage = async () => {
+export const metadata: Metadata = {
+  title: "Project Management",
+  description: "Manage projects and track progress for RC Web Solutions LLC.",
+  robots: {
+    index: false,
+    follow: false,
+  },
+};
+
+async function ProjectManagementWrapper() {
+  const [projectsResult, statsResult] = await Promise.all([
+    getAllProjectsAction(),
+    getProjectStatsAction(),
+  ]);
+
+  const projects = projectsResult.success
+    ? projectsResult.projects!.map((project) => ({
+        ...project,
+        createdAt:
+          typeof project.createdAt === "string"
+            ? project.createdAt
+            : project.createdAt.toISOString(),
+      }))
+    : [];
+
+  const stats = statsResult.success ? statsResult.stats! : null;
+
+  return <ProjectManagement initialProjects={projects} initialStats={stats} />;
+}
+
+export default async function ProjectManagementPage() {
   const session = await auth();
 
   // Doble verificación (el middleware ya lo hace, pero por seguridad)
@@ -13,10 +46,8 @@ const ProjectManagementPage = async () => {
   }
 
   return (
-    <Suspense fallback={<Spinner />}>
-      <ProjectManagement />
+    <Suspense fallback={<ProjectManagementSkeleton />}>
+      <ProjectManagementWrapper />
     </Suspense>
   );
-};
-
-export default ProjectManagementPage;
+}
