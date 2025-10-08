@@ -29,6 +29,7 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://www.rcweb.dev"),
   title: {
     default: "RC Web - Full-Stack Web Development Services",
     template: "%s | RC Web",
@@ -85,7 +86,7 @@ export const metadata: Metadata = {
     },
   },
   verification: {
-    // google: "your-google-verification-code", // Add when you verify with Google Search Console
+    // google: "your-google-verification-code", // Not needed - already verified via another method
   },
 };
 

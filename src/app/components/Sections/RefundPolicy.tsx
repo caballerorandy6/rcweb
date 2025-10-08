@@ -10,37 +10,7 @@ import {
 } from "@heroicons/react/24/outline";
 import useSectionObserver from "@/hooks/useSectionObserver";
 import { motion, Variants } from "framer-motion";
-
-const refundSections = [
-  {
-    title: "30-Day Money Back Guarantee",
-    content:
-      "We offer a full refund within 30 days of your initial payment if you are not satisfied with our services. No questions asked.",
-    icon: <CurrencyDollarIcon className="w-6 h-6" />,
-    color: "from-green-500/10 to-green-600/10",
-  },
-  {
-    title: "Eligibility Requirements",
-    content:
-      "To be eligible for a refund, you must request it within 30 days of your payment date. Refunds are only available for first-time purchases.",
-    icon: <DocumentTextIcon className="w-6 h-6" />,
-    color: "from-blue-500/10 to-blue-600/10",
-  },
-  {
-    title: "Refund Process",
-    content:
-      "To request a refund, contact us at support@rcwebsolutionsllc.com with your order details. Refunds are processed within 5-10 business days.",
-    icon: <CalendarIcon className="w-6 h-6" />,
-    color: "from-purple-500/10 to-purple-600/10",
-  },
-  {
-    title: "Non-Refundable Services",
-    content:
-      "Custom development work completed and delivered, third-party services purchased on your behalf, and domain registration fees are non-refundable.",
-    icon: <DocumentTextIcon className="w-6 h-6" />,
-    color: "from-amber-500/10 to-amber-600/10",
-  },
-];
+import { refundSections } from "@/lib/data";
 
 const RefundPolicy = () => {
   const router = useRouter();
@@ -83,7 +53,10 @@ const RefundPolicy = () => {
           className="mb-8 max-w-4xl mx-auto flex justify-end"
         >
           <motion.button
-            whileHover={{ scale: 1.05, transition: { type: "spring", stiffness: 400, damping: 17 } }}
+            whileHover={{
+              scale: 1.05,
+              transition: { type: "spring", stiffness: 400, damping: 17 },
+            }}
             whileTap={{ scale: 0.95 }}
             onClick={handleGoBack}
             className="inline-flex items-center gap-2 px-4 py-2 bg-gray-800 hover:bg-gray-700 text-white rounded-lg transition-colors border border-gray-600 font-inter"
@@ -158,7 +131,12 @@ const RefundPolicy = () => {
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
           viewport={{ once: true }}
-          transition={{ type: "spring", stiffness: 200, damping: 20, delay: 0.4 }}
+          transition={{
+            type: "spring",
+            stiffness: 200,
+            damping: 20,
+            delay: 0.4,
+          }}
         >
           <div className="bg-gray-900/60 backdrop-blur-md rounded-xl border border-gold/10 p-6 text-center">
             <div className="flex items-center justify-center gap-2 text-white/50 text-sm font-inter">
@@ -174,13 +152,21 @@ const RefundPolicy = () => {
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ type: "spring", stiffness: 200, damping: 20, delay: 0.6 }}
+          transition={{
+            type: "spring",
+            stiffness: 200,
+            damping: 20,
+            delay: 0.6,
+          }}
         >
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
             <motion.a
               href="/refund-policy.pdf"
               download="RC-Web-Refund-Policy.pdf"
-              whileHover={{ scale: 1.05, transition: { type: "spring", stiffness: 400, damping: 17 } }}
+              whileHover={{
+                scale: 1.05,
+                transition: { type: "spring", stiffness: 400, damping: 17 },
+              }}
               whileTap={{ scale: 0.95 }}
               className="inline-flex items-center gap-2 px-8 py-3 bg-gold text-gray-900 font-bold rounded-lg hover:bg-gold/90 transition-colors font-inter"
             >

@@ -34,6 +34,7 @@ import {
   ClockIcon,
   DocumentCheckIcon,
   XCircleIcon,
+  DocumentTextIcon,
 } from "@heroicons/react/24/outline";
 
 export const navigation: NavigationProps[] = [
@@ -880,5 +881,43 @@ export const socialLinks = [
     hoverColor: "hover:bg-gray-100",
     delay: 0.35,
     iconSize: "w-4 h-4 lg:w-6 lg:h-6",
+  },
+];
+
+export const refundSections = [
+  {
+    title: "Two-Payment Project Structure",
+    content:
+      "All projects require two payments: First payment (50%) to start the project, and second payment (50%) upon completion. Once the first payment is made, the project begins immediately and work commences.",
+    icon: React.createElement(CurrencyDollarIcon, { className: "w-6 h-6" }),
+    color: "from-blue-500/10 to-blue-600/10",
+  },
+  {
+    title: "NO Refunds After First Payment",
+    content:
+      "Once the first payment is processed, the project starts immediately and this payment becomes NON-REFUNDABLE. If you decide not to continue with the project after the first payment, no refund will be issued as we have already invested time and resources.",
+    icon: React.createElement(DocumentTextIcon, { className: "w-6 h-6" }),
+    color: "from-red-500/10 to-red-600/10",
+  },
+  {
+    title: "Cancellation Before Payment",
+    content:
+      "You may cancel your order at any time BEFORE making the first payment with no penalty. Once payment is processed, the no-refund policy takes effect immediately.",
+    icon: React.createElement(ClockIcon, { className: "w-6 h-6" }),
+    color: "from-green-500/10 to-green-600/10",
+  },
+  {
+    title: "Contact for Questions",
+    content:
+      "If you have any questions or concerns about starting a project, please contact us at support@rcwebsolutionsllc.com BEFORE making your first payment. We're happy to discuss your project and address any concerns.",
+    icon: React.createElement(DocumentTextIcon, { className: "w-6 h-6" }),
+    color: "from-purple-500/10 to-purple-600/10",
+  },
+  {
+    title: "Non-Refundable Items",
+    content:
+      "First payment (project initiation), second payment (project completion), custom development work, third-party services purchased on your behalf, domain registrations, and hosting services are all non-refundable.",
+    icon: React.createElement(XCircleIcon, { className: "w-6 h-6" }),
+    color: "from-amber-500/10 to-amber-600/10",
   },
 ];
