@@ -1,14 +1,11 @@
 import Unsubscribe from "@/app/components/Unsubscribe";
-import { Metadata } from "next";
+import { genPageMetadata } from "@/utils/genPageMetadata";
 
-export const metadata: Metadata = {
+export const metadata = genPageMetadata({
   title: "Unsubscribe",
   description: "Unsubscribe from RC Web Solutions LLC email communications.",
-  robots: {
-    index: false,
-    follow: false,
-  },
-};
+  pageRoute: "/unsubscribe",
+});
 
 export default function UnsubscribePage() {
   return (

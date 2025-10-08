@@ -1,14 +1,11 @@
 import AdminLoginForm from "@/app/components/AdminLoginForm";
-import { Metadata } from "next";
+import { genPageMetadata } from "@/utils/genPageMetadata";
 
-export const metadata: Metadata = {
+export const metadata = genPageMetadata({
   title: "Admin Login",
   description: "Admin login page for RC Web Solutions LLC dashboard access.",
-  robots: {
-    index: false, // Don't index login pages
-    follow: false,
-  },
-};
+  pageRoute: "/login",
+});
 
 const LoginPage = () => {
   return (

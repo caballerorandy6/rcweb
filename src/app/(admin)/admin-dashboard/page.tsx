@@ -1,16 +1,13 @@
 import { Suspense } from "react";
 import AdminDashboard from "@/app/components/AdminDashboard";
 import AdminDashboardSkeleton from "@/app/components/AdminDashboardSkeleton";
-import { Metadata } from "next";
+import { genPageMetadata } from "@/utils/genPageMetadata";
 
-export const metadata: Metadata = {
+export const metadata = genPageMetadata({
   title: "Admin Dashboard",
   description: "Admin dashboard for RC Web Solutions LLC management panel.",
-  robots: {
-    index: false,
-    follow: false,
-  },
-};
+  pageRoute: "/admin-dashboard",
+});
 
 export default function AdminDashboardPage() {
   return (

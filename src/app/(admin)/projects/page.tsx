@@ -5,16 +5,13 @@ import { redirect } from "next/navigation";
 import { Suspense } from "react";
 import { getAllProjectsAction } from "@/actions/getAllProjectsAction";
 import { getProjectStatsAction } from "@/actions/getProjectStatsAction";
-import { Metadata } from "next";
+import { genPageMetadata } from "@/utils/genPageMetadata";
 
-export const metadata: Metadata = {
+export const metadata = genPageMetadata({
   title: "Project Management",
   description: "Manage projects and track progress for RC Web Solutions LLC.",
-  robots: {
-    index: false,
-    follow: false,
-  },
-};
+  pageRoute: "/projects",
+});
 
 async function ProjectManagementWrapper() {
   const [projectsResult, statsResult] = await Promise.all([

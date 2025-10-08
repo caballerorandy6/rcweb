@@ -1,32 +1,24 @@
 import TermsOfService from "@/app/components/Sections/TermsOfService";
-import { Metadata } from "next";
+import { JsonLdForBreadcrumb } from "@/app/components/JsonLdForBreadcrumb";
+import { genPageMetadata } from "@/utils/genPageMetadata";
 import { siteConfig } from "@/config/site";
 
-export const metadata: Metadata = {
+export const metadata = genPageMetadata({
   title: "Terms of Service",
   description:
     "Terms of Service for RC Web Solutions LLC. Review our service terms, payment conditions, intellectual property rights, warranties, liability, and client responsibilities for web development projects.",
-  openGraph: {
-    title: "Terms of Service | RC Web Solutions LLC",
-    description:
-      "Review RC Web Solutions LLC Terms of Service for web development projects and digital services.",
-    url: `${siteConfig.baseUrl}/terms-of-service`,
-  },
-  twitter: {
-    card: "summary",
-    title: "Terms of Service | RC Web Solutions LLC",
-    description:
-      "Review RC Web Solutions LLC Terms of Service for web development projects and digital services.",
-  },
-  robots: {
-    index: true, // Terms of Service should be indexed
-    follow: true,
-  },
-};
+  pageRoute: "/terms-of-service",
+});
 
 export default function TermsOfServicePage() {
   return (
     <section id="terms-of-service">
+      <JsonLdForBreadcrumb
+        itemList={[
+          { name: "Home", item: siteConfig.baseUrl },
+          { name: "Terms of Service", item: `${siteConfig.baseUrl}/terms-of-service` },
+        ]}
+      />
       <TermsOfService />
     </section>
   );

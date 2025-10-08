@@ -4,16 +4,13 @@ import { Suspense } from "react";
 import ContactManagement from "@/app/components/ContactManagement";
 import ContactManagementSkeleton from "@/app/components/ContactManagementSkeleton";
 import { getContactsAction } from "@/actions/getContactsAction";
-import { Metadata } from "next";
+import { genPageMetadata } from "@/utils/genPageMetadata";
 
-export const metadata: Metadata = {
+export const metadata = genPageMetadata({
   title: "Contact Management",
   description: "Manage contacts for RC Web Solutions LLC admin panel.",
-  robots: {
-    index: false,
-    follow: false,
-  },
-};
+  pageRoute: "/contacts",
+});
 
 async function ContactManagementWrapper() {
   const result = await getContactsAction();

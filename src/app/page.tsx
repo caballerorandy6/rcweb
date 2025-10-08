@@ -16,7 +16,8 @@ import CTA from "@/app/components/Sections/FloatingCTA";
 import Certifications from "@/app/components/Sections/Certifications";
 import ScrollSpy from "@/app/components/ScrollSpy";
 import { JsonLdForFaq } from "@/app/components/JsonLdForFaq";
-import { faqs } from "@/lib/data";
+import { JsonLdForProduct } from "@/app/components/JsonLdForProduct";
+import { faqs, pricingPlans } from "@/lib/data";
 
 export const metadata: Metadata = {
   title: "Home",
@@ -72,6 +73,14 @@ export default function Home() {
   return (
     <main>
       <JsonLdForFaq faqs={faqs} />
+      {pricingPlans.map((plan) => (
+        <JsonLdForProduct
+          key={plan.id}
+          name={`${plan.name} Plan - Web Development Services`}
+          description={`${plan.description}. ${plan.ideal}. Includes: ${plan.features.join(", ")}`}
+          image={`${siteConfig.baseUrl}/og-image.jpg`}
+        />
+      ))}
       <ScrollSpy />
       <Hero />
       <Services />

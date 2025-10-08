@@ -1,15 +1,12 @@
 import PaymentComplete from "@/app/components/PaymentComplete";
-import { Metadata } from "next";
+import { genPageMetadata } from "@/utils/genPageMetadata";
 
-export const metadata: Metadata = {
+export const metadata = genPageMetadata({
   title: "Payment Successful - Thank You!",
   description:
     "Your payment has been successfully processed. Thank you for choosing RC Web Solutions LLC.",
-  robots: {
-    index: false,
-    follow: false,
-  },
-};
+  pageRoute: "/payment-complete",
+});
 
 export default function PaymentCompletePage() {
   return <PaymentComplete />;

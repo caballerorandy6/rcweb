@@ -1,18 +1,15 @@
 import { handlePaymentSuccessAction } from "@/actions/handlePaymentSuccessAction";
 import PaymentSuccess from "@/app/components/PaymentSuccess";
 import PaymentSuccessSkeleton from "@/app/components/PaymentSuccessSkeleton";
-import { Metadata } from "next";
+import { genPageMetadata } from "@/utils/genPageMetadata";
 import { Suspense } from "react";
 
-export const metadata: Metadata = {
+export const metadata = genPageMetadata({
   title: "Payment Successful - Thank You!",
   description:
     "Your payment has been successfully processed. Thank you for choosing RC Web Solutions LLC for your project.",
-  robots: {
-    index: false,
-    follow: false,
-  },
-};
+  pageRoute: "/payment-success",
+});
 
 type SearchParams = Promise<{ [key: string]: string | string[] | undefined }>;
 

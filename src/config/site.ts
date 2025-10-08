@@ -10,6 +10,7 @@ export type SiteConfig = {
   };
   social: {
     twitter: string;
+    linkedin: string;
   };
 };
 
@@ -26,5 +27,6 @@ export const siteConfig: SiteConfig = {
   },
   social: {
     twitter: "@RCWeb2025",
+    linkedin: "https://www.linkedin.com/company/rcwebsolutions",
   },
 };

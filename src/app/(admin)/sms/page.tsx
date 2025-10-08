@@ -1,16 +1,13 @@
 import SendSmsCampaign from "@/app/components/SendSmsCampaign";
 import { auth } from "@/lib/auth";
 import { redirect } from "next/navigation";
-import { Metadata } from "next";
+import { genPageMetadata } from "@/utils/genPageMetadata";
 
-export const metadata: Metadata = {
+export const metadata = genPageMetadata({
   title: "SMS Campaigns",
   description: "Send SMS campaigns for RC Web Solutions LLC.",
-  robots: {
-    index: false,
-    follow: false,
-  },
-};
+  pageRoute: "/sms",
+});
 
 export default async function SMSPage() {
   const session = await auth();
