@@ -60,8 +60,12 @@ export const sendNewsletterAction = async (
     const emailCampaign = await prisma.emailCampaign.create({
       data: {
         name: subject,
+        subject: subject,
+        htmlContent: htmlContent,
         sentAt: new Date(),
         emailsSent: 0, // Se actualizará después del envío
+        totalEmails: emailsToSend.length,
+        status: "completed", // This action sends all at once
       },
     });
 

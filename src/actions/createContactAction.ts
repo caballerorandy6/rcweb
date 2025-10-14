@@ -3,6 +3,7 @@
 import { prisma } from "@/lib/prisma";
 import { FormSchema, type FormData } from "@/lib/zod";
 import { Resend } from "resend";
+import { checkAndReserveEmailQuota, releaseEmailQuota } from "@/lib/emailQuota";
 
 export interface CreateContactAction {
   success: boolean;
@@ -81,7 +82,21 @@ export const createContactAction = async (
       });
     }
 
-    // 5. Enviar ambos emails en paralelo
+    // 5. Verificar y reservar cuota (2 emails: admin + confirmación)
+    const emailCount = email ? 2 : 1; // 1 para admin, +1 si hay confirmación
+    const quotaCheck = await checkAndReserveEmailQuota(emailCount);
+
+    if (!quotaCheck.canSend) {
+      console.warn(`⚠️ Quota limit reached: ${quotaCheck.message}`);
+      // Still return success for contact creation, but don't send emails
+      return {
+        success: true,
+        message: "Message received successfully!",
+        errors: {},
+      };
+    }
+
+    // 6. Enviar ambos emails en paralelo
     try {
       await Promise.all([
         // Email al admin
@@ -207,6 +222,8 @@ export const createContactAction = async (
       console.log("✅ Emails sent successfully");
     } catch (emailError) {
       console.error("❌ Failed to send emails:", emailError);
+      // Release quota on email send failure
+      await releaseEmailQuota(emailCount);
       throw emailError;
     }
 

@@ -68,11 +68,46 @@ model Admin {
 
 
 model EmailCampaign {
-  id         String   @id @default(uuid())
-  name       String
-  createdAt  DateTime @default(now())
-  sentAt     DateTime?
-  emailsSent Int      @default(0)  // Total de emails enviados en esta campaña
+  id              String              @id @default(uuid())
+  name            String
+  subject         String
+  htmlContent     String              @db.Text
+  createdAt       DateTime            @default(now())
+  sentAt          DateTime?
+  completedAt     DateTime?
+  emailsSent      Int                 @default(0)     // Total de emails enviados hasta ahora
+  totalEmails     Int                 @default(0)     // Total de emails a enviar
+  status          String              @default("pending")  // pending, in_progress, completed, failed, sending
+  lastBatchSentAt DateTime?                           // Última vez que se envió un lote
+  emailLogs       CampaignEmailLog[]
+
+  @@index([status])
+}
+
+model CampaignEmailLog {
+  id           String        @id @default(uuid())
+  campaignId   String
+  campaign     EmailCampaign @relation(fields: [campaignId], references: [id], onDelete: Cascade)
+  emailAddress String
+  contactName  String
+  sentAt       DateTime      @default(now())
+  resendId     String?
+  status       String        @default("sent") // sent, failed, bounced
+  errorMessage String?
+
+  @@index([campaignId])
+  @@index([emailAddress])
+  @@index([status])
+}
+
+model DailyEmailQuota {
+  id          String   @id @default(uuid())
+  date        DateTime @unique @db.Date
+  emailsSent  Int      @default(0)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@index([date])
 }
 
 model SmsCampaign {
