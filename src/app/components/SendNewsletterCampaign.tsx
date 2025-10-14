@@ -5,7 +5,7 @@ import Image from "next/image";
 import {
   createAndSendBatchCampaign,
   continueBatchCampaign,
-  getAllCampaigns
+  getAllCampaigns,
 } from "@/actions/sendBatchNewsletterAction";
 import {
   getNumberOfEligibleContactsAction,
@@ -139,7 +139,11 @@ export default function SendNewsletterCampaign() {
     setLoading(true);
     setResult(null);
 
-    const response = await createAndSendBatchCampaign(subject, content, testMode);
+    const response = await createAndSendBatchCampaign(
+      subject,
+      content,
+      testMode
+    );
 
     setResult(response);
     setLoading(false);
@@ -361,11 +365,17 @@ export default function SendNewsletterCampaign() {
                     Batch Campaign Mode
                   </h3>
                   <p className="text-sm text-gray-300 mb-2">
-                    You have {stats.emails.eligible} emails to send. Due to Resend&apos;s 100 emails/day limit, your campaign will be sent in batches:
+                    You have {stats.emails.eligible} emails to send. Due to
+                    Resend&apos;s 100 emails/day limit, your campaign will be
+                    sent in batches:
                   </p>
                   <ul className="text-sm text-gray-400 space-y-1 ml-4">
                     <li>• First batch: 100 emails sent immediately</li>
-                    <li>• Remaining: {stats.emails.eligible - 100} emails (sent in {Math.ceil((stats.emails.eligible - 100) / 100)} more batches)</li>
+                    <li>
+                      • Remaining: {stats.emails.eligible - 100} emails (sent in{" "}
+                      {Math.ceil((stats.emails.eligible - 100) / 100)} more
+                      batches)
+                    </li>
                     <li>• Wait 24 hours between each batch</li>
                     <li>• Track progress in Campaign History below</li>
                   </ul>
@@ -389,9 +399,6 @@ export default function SendNewsletterCampaign() {
               placeholder="Your amazing subject line..."
               className="w-full p-3 bg-gray-800 text-white rounded-lg border border-gray-700 focus:border-gold focus:outline-none font-inter"
             />
-            <p className="text-xs text-gray-500 mt-1 font-inter">
-              Use {"{{name}}"} to personalize
-            </p>
           </div>
 
           {/* Image Upload */}
@@ -438,7 +445,7 @@ export default function SendNewsletterCampaign() {
             <textarea
               value={content}
               onChange={(e) => setContent(e.target.value)}
-              placeholder="<h1>Hello {{name}}!</h1>..."
+              placeholder="<h1>Your email content here...</h1>..."
               rows={12}
               className="w-full p-3 bg-gray-800 text-white rounded-lg border border-gray-700 focus:border-gold focus:outline-none font-mono text-sm"
             />
@@ -553,7 +560,8 @@ export default function SendNewsletterCampaign() {
             </div>
 
             <p className="text-sm text-gray-400 mt-4 font-inter text-center">
-              💡 This preview shows how your email will look on desktop and mobile devices
+              💡 This preview shows how your email will look on desktop and
+              mobile devices
             </p>
           </div>
         )}
@@ -571,7 +579,7 @@ export default function SendNewsletterCampaign() {
           </button>
 
           {showCampaigns && campaigns.length > 0 && (
-            <div className="mt-4 space-y-4">
+            <div className="mt-4 space-y-4 font-inter">
               {campaigns.map((campaign) => {
                 const progress = Math.round(
                   (campaign.emailsSent / campaign.totalEmails) * 100
@@ -602,7 +610,8 @@ export default function SendNewsletterCampaign() {
                           {campaign.subject}
                         </h4>
                         <p className="text-sm text-gray-400 mt-1">
-                          Created: {new Date(campaign.createdAt).toLocaleString()}
+                          Created:{" "}
+                          {new Date(campaign.createdAt).toLocaleString()}
                         </p>
                       </div>
                       <span
@@ -623,7 +632,8 @@ export default function SendNewsletterCampaign() {
                       <div className="flex justify-between text-sm mb-1">
                         <span className="text-gray-400">Progress</span>
                         <span className="text-white font-semibold">
-                          {campaign.emailsSent} / {campaign.totalEmails} ({progress}%)
+                          {campaign.emailsSent} / {campaign.totalEmails} (
+                          {progress}%)
                         </span>
                       </div>
                       <div className="w-full bg-gray-700 rounded-full h-2">
@@ -686,7 +696,6 @@ export default function SendNewsletterCampaign() {
             <li>• Campaigns automatically pause after 100 emails</li>
             <li>• Continue sending after 24 hours (Resend free plan limit)</li>
             <li>• Always test before sending to all contacts</li>
-            <li>• Use {"{{name}}"} for personalization</li>
             <li>• Keep subject lines under 50 characters</li>
           </ul>
         </div>

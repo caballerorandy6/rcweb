@@ -77,15 +77,15 @@ export default function SendSmsCampaign() {
   const templates = [
     {
       name: "Special Offer",
-      text: "Hi {{name}}! RC Web: 20% OFF this week only. Visit rcweb.com/offer Reply STOP to unsubscribe",
+      text: "Hi! RC Web: 20% OFF this week only. Visit rcweb.com/offer Reply STOP to unsubscribe",
     },
     {
       name: "Appointment",
-      text: "{{name}}, reminder: Your consultation is tomorrow at 3 PM. Reply YES to confirm.",
+      text: "Reminder: Your consultation is tomorrow at 3 PM. Reply YES to confirm.",
     },
     {
       name: "New Service",
-      text: "{{name}}, RC Web now offers mobile apps! 15% off for existing clients. Info: rcweb.com",
+      text: "RC Web now offers mobile apps! 15% off for existing clients. Info: rcweb.com",
     },
   ];
 
@@ -158,14 +158,13 @@ export default function SendSmsCampaign() {
             <textarea
               value={message}
               onChange={(e) => setMessage(e.target.value)}
-              placeholder="Hi {{name}}, your message here... (Reply STOP to unsubscribe)"
+              placeholder="Your message here... (Always include: Reply STOP to unsubscribe)"
               rows={4}
               maxLength={480} // Max 3 SMS segments
               className="w-full p-3 bg-gray-800 text-white rounded-lg border border-gray-700 focus:border-blue-400 focus:outline-none font-inter"
             />
             <p className="text-xs text-gray-500 mt-1 font-inter">
-              Use {"{{name}}"} to personalize. Always include opt-out
-              instructions.
+              Always include opt-out instructions in your message.
             </p>
           </div>
 

@@ -92,8 +92,8 @@ export const createAndSendBatchCampaign = async (
       contact.emails.map((email) => ({
         from: "RC Web <no-reply@rcweb.dev>",
         to: email.email,
-        subject: subject.replace(/{{name}}/g, contact.name),
-        html: htmlContent.replace(/{{name}}/g, contact.name),
+        subject: subject,
+        html: htmlContent,
         contactName: contact.name,
       }))
     );
@@ -370,8 +370,8 @@ export const continueBatchCampaign = async (
       contact.emails.map((email) => ({
         from: "RC Web <no-reply@rcweb.dev>",
         to: email.email,
-        subject: campaign.subject.replace(/{{name}}/g, contact.name),
-        html: campaign.htmlContent.replace(/{{name}}/g, contact.name),
+        subject: campaign.subject,
+        html: campaign.htmlContent,
         contactName: contact.name,
       }))
     );

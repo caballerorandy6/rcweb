@@ -14,6 +14,7 @@ model Contact {
   id               String          @id @default(uuid())
   name             String
   marketingConsent Boolean         @default(false)
+  source           String?         // web_form, sms_opt_in, manual, etc.
   createdAt        DateTime        @default(now())
   updatedAt        DateTime        @updatedAt
 
@@ -35,6 +36,7 @@ model ContactPhone {
   id        String   @id @default(uuid())
   contactId String
   phone     String   @unique
+  type      String?  // mobile, home, work, etc.
   contact   Contact  @relation(fields: [contactId], references: [id], onDelete: Cascade)
 
   @@index([phone])
@@ -165,3 +167,18 @@ model TermsAcceptance {
   payment      Payment?  @relation(fields: [paymentId], references: [id], onDelete: Cascade)
 }
 
+
+model SmsLog {
+  id          String   @id @default(uuid())
+  phoneNumber String
+  message     String   @db.Text
+  direction   String   // received, sent
+  command     String?  // START, STOP, HELP, etc.
+  status      String?  // queued, sent, delivered, failed
+  twilioSid   String?
+  createdAt   DateTime @default(now())
+
+  @@index([phoneNumber])
+  @@index([direction])
+  @@index([createdAt])
+}
