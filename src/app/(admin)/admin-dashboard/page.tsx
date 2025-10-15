@@ -1,6 +1,4 @@
-import { Suspense } from "react";
 import AdminDashboard from "@/app/components/AdminDashboard";
-import AdminDashboardSkeleton from "@/app/components/AdminDashboardSkeleton";
 import { genPageMetadata } from "@/utils/genPageMetadata";
 
 export const metadata = genPageMetadata({
@@ -12,9 +10,7 @@ export const metadata = genPageMetadata({
 export default function AdminDashboardPage() {
   return (
     <section id="admin-dashboard" className="min-h-screen">
-      <Suspense fallback={<AdminDashboardSkeleton />}>
-        <AdminDashboard />
-      </Suspense>
+      <AdminDashboard />
     </section>
   );
 }

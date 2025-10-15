@@ -1,7 +1,9 @@
+import { Suspense } from "react";
 import { auth } from "@/lib/auth";
 import { redirect } from "next/navigation";
 import SignOutButton from "@/app/components/SignOutButton";
 import StatsGrid from "@/app/components/StatsGrid";
+import StatsGridSkeleton from "@/app/components/StatsGridSkeleton";
 import QuickActions from "@/app/components/QuickActions";
 
 export default async function AdminDashboard() {
@@ -37,8 +39,10 @@ export default async function AdminDashboard() {
 
       {/* Main Content */}
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        {/* Stats Grid */}
-        <StatsGrid />
+        {/* Stats Grid with Suspense */}
+        <Suspense fallback={<StatsGridSkeleton />}>
+          <StatsGrid />
+        </Suspense>
 
         {/* Quick Actions */}
         <QuickActions />

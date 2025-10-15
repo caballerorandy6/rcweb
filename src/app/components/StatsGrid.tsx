@@ -1,12 +1,8 @@
-"use client";
-
-import { useState, useEffect } from "react";
 import { getTotalContactsAction } from "@/actions/getTotalContactsAction";
 import { getMarketingConsentAction } from "@/actions/getMarketingConsentAction";
 import { getTotalEmailsSentAction } from "@/actions/getTotalEmailsSentAction";
 import { getTotalSMSsentAction } from "@/actions/getTotalSMSSentAction";
 import { getProjectStatsAction } from "@/actions/getProjectStatsAction";
-//import { getSmsStatsAction } from "@/actions/getSmsStatsAction";
 import {
   UserGroupIcon,
   CheckCircleIcon,
@@ -15,42 +11,29 @@ import {
   BriefcaseIcon,
 } from "@heroicons/react/24/outline";
 
-export default function StatsGrid() {
-  const [stats, setStats] = useState({
-    totalContacts: 0,
-    totalMarketingConsent: 0,
-    totalEmailsSent: 0,
-    totalSMSsent: 0,
-    totalProjects: 0,
-  });
+export default async function StatsGrid() {
+  // Fetch all stats in parallel
+  const [
+    totalContacts,
+    totalMarketingConsent,
+    totalEmailsSent,
+    totalSMSsent,
+    projectStats,
+  ] = await Promise.all([
+    getTotalContactsAction(),
+    getMarketingConsentAction(),
+    getTotalEmailsSentAction(),
+    getTotalSMSsentAction(),
+    getProjectStatsAction(),
+  ]);
 
-  useEffect(() => {
-    let isMounted = true;
-
-    async function fetchStats() {
-      const totalContacts = await getTotalContactsAction();
-      const totalMarketingConsent = await getMarketingConsentAction();
-      const totalEmailsSent = await getTotalEmailsSentAction();
-      const totalSMSsent = await getTotalSMSsentAction();
-      const projectStats = await getProjectStatsAction();
-
-      if (isMounted) {
-        setStats({
-          totalContacts,
-          totalMarketingConsent,
-          totalEmailsSent,
-          totalSMSsent,
-          totalProjects: projectStats?.stats?.total || 0,
-        });
-      }
-    }
-
-    fetchStats();
-
-    return () => {
-      isMounted = false;
-    };
-  }, []);
+  const stats = {
+    totalContacts,
+    totalMarketingConsent,
+    totalEmailsSent,
+    totalSMSsent,
+    totalProjects: projectStats?.stats?.total || 0,
+  };
 
   const statsCards = [
     {
