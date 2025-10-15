@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono, Iceland, Inter } from "next/font/google";
 import Script from "next/script";
+import { Suspense } from "react";
 
 import "./globals.css";
 import { Toaster } from "sonner";
@@ -123,7 +124,9 @@ export default function RootLayout({
           </>
         )}
 
-        <Analytics />
+        <Suspense fallback={null}>
+          <Analytics />
+        </Suspense>
         <Header />
         <Toaster position="bottom-right" richColors closeButton={true} />
         {children}
