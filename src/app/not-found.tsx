@@ -77,7 +77,7 @@ export default function NotFound() {
   return (
     <section
       id="not-found"
-      className="relative min-h-screen flex items-center justify-center overflow-hidden py-24 sm:py-32"
+      className="relative min-h-screen flex items-center justify-center overflow-hidden"
     >
       {/* Video Background */}
       <div className="absolute inset-0 z-0">
@@ -165,7 +165,13 @@ export default function NotFound() {
           variants={itemVariants}
           className="flex flex-col sm:flex-row gap-4 justify-center items-center"
         >
-          <motion.div whileHover={{ scale: 1.05, transition: { type: "spring", stiffness: 400, damping: 17 } }} whileTap={{ scale: 0.95 }}>
+          <motion.div
+            whileHover={{
+              scale: 1.05,
+              transition: { type: "spring", stiffness: 400, damping: 17 },
+            }}
+            whileTap={{ scale: 0.95 }}
+          >
             <Link
               href="/"
               className="inline-flex items-center gap-2 px-8 py-4 bg-gold text-gray-900 font-bold rounded-lg hover:bg-gold/90 transition-all duration-200 font-inter group"
@@ -175,7 +181,13 @@ export default function NotFound() {
             </Link>
           </motion.div>
 
-          <motion.div whileHover={{ scale: 1.05, transition: { type: "spring", stiffness: 400, damping: 17 } }} whileTap={{ scale: 0.95 }}>
+          <motion.div
+            whileHover={{
+              scale: 1.05,
+              transition: { type: "spring", stiffness: 400, damping: 17 },
+            }}
+            whileTap={{ scale: 0.95 }}
+          >
             <button
               onClick={() => window.history.back()}
               className="inline-flex items-center gap-2 px-8 py-4 bg-transparent border-2 border-gold text-gold font-bold rounded-lg hover:bg-gold/10 transition-all duration-200 font-inter group"
