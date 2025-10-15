@@ -6,8 +6,7 @@ import { Suspense } from "react";
 import "./globals.css";
 import { Toaster } from "sonner";
 
-import Header from "@/app/components/Header";
-import Footer from "./components/Footer";
+import ConditionalLayout from "@/app/components/ConditionalLayout";
 import Analytics from "@/app/components/Analytics";
 import { siteConfig } from "@/config/site";
 import { GA_MEASUREMENT_ID } from "@/lib/analytics";
@@ -127,10 +126,8 @@ export default function RootLayout({
         <Suspense fallback={null}>
           <Analytics />
         </Suspense>
-        <Header />
         <Toaster position="bottom-right" richColors closeButton={true} />
-        {children}
-        <Footer />
+        <ConditionalLayout>{children}</ConditionalLayout>
       </body>
     </html>
   );

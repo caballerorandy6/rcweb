@@ -27,10 +27,8 @@ export default async function ContactsPage() {
   }
 
   return (
-    <section id="contact-management">
-      <Suspense fallback={<ContactManagementSkeleton />}>
-        <ContactManagementWrapper />
-      </Suspense>
-    </section>
+    <Suspense fallback={<ContactManagementSkeleton />}>
+      <ContactManagementWrapper />
+    </Suspense>
   );
 }

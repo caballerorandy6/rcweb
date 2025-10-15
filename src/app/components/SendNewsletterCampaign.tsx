@@ -1,18 +1,13 @@
 "use client";
 
-import { useState, useEffect, useTransition } from "react";
+import { useState } from "react";
 import Image from "next/image";
 import {
   createAndSendBatchCampaign,
   continueBatchCampaign,
   getAllCampaigns,
 } from "@/actions/sendBatchNewsletterAction";
-import {
-  getNumberOfEligibleContactsAction,
-  getNumberOfEligibleEmailsAction,
-} from "@/actions/getNewsletterStatsAction";
 
-// 1. Adaptar la interfaz para que use nombres genéricos y consistentes
 interface Stats {
   contacts: {
     eligible: number;
@@ -26,11 +21,6 @@ interface Stats {
   };
 }
 
-const initialStats: Stats = {
-  contacts: { eligible: 0, total: 0, percentage: 0 },
-  emails: { eligible: 0, total: 0, percentage: 0 },
-};
-
 interface Campaign {
   id: string;
   name: string;
@@ -42,54 +32,28 @@ interface Campaign {
   lastBatchSentAt: Date | null;
 }
 
-export default function SendNewsletterCampaign() {
+interface SendNewsletterCampaignProps {
+  initialStats: Stats;
+  initialCampaigns: Campaign[];
+}
+
+export default function SendNewsletterCampaign({
+  initialStats,
+  initialCampaigns,
+}: SendNewsletterCampaignProps) {
   const [subject, setSubject] = useState("");
   const [content, setContent] = useState("");
   const [imageBase64, setImageBase64] = useState("");
   const [showPreview, setShowPreview] = useState(false);
   const [testMode, setTestMode] = useState(true);
   const [loading, setLoading] = useState(false);
-  const [stats, setStats] = useState<Stats>(initialStats);
-  const [campaigns, setCampaigns] = useState<Campaign[]>([]);
+  const [stats] = useState<Stats>(initialStats);
+  const [campaigns, setCampaigns] = useState<Campaign[]>(initialCampaigns);
   const [showCampaigns, setShowCampaigns] = useState(false);
   const [result, setResult] = useState<{
     success: boolean;
     message: string;
   } | null>(null);
-  const [isPending, startTransition] = useTransition();
-
-  // 2. Mapear correctamente los datos de las actions al estado del componente
-  useEffect(() => {
-    startTransition(() => {
-      const fetchAllStats = async () => {
-        const [contactsData, emailsData, campaignsData] = await Promise.all([
-          getNumberOfEligibleContactsAction(),
-          getNumberOfEligibleEmailsAction(),
-          getAllCampaigns(),
-        ]);
-
-        // Mapear los datos recibidos a la estructura esperada
-        setStats({
-          contacts: {
-            eligible: contactsData.eligible ?? 0,
-            total: contactsData.total ?? 0,
-            percentage: contactsData.percentage ?? 0,
-          },
-          emails: {
-            eligible: emailsData.eligibleEmails ?? 0,
-            total: emailsData.totalEmails ?? 0,
-            percentage: emailsData.consentPercentage ?? 0,
-          },
-        });
-
-        if (campaignsData.success) {
-          setCampaigns(campaignsData.campaigns as Campaign[]);
-        }
-      };
-
-      fetchAllStats();
-    });
-  }, []);
 
   // Convert image to base64
   const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -485,14 +449,14 @@ export default function SendNewsletterCampaign() {
           <div className="flex gap-4 flex-wrap">
             <button
               onClick={handleSend}
-              disabled={isPending || loading}
+              disabled={loading}
               className={`flex-1 min-w-[200px] py-3 rounded-lg font-semibold transition-colors font-inter ${
                 testMode
                   ? "bg-blue-500 hover:bg-blue-600 text-white"
                   : "bg-gold hover:bg-gold/90 text-black"
               } ${loading ? "opacity-50 cursor-not-allowed" : ""}`}
             >
-              {loading || isPending
+              {loading
                 ? "Sending..."
                 : testMode
                   ? "Send Test Email"

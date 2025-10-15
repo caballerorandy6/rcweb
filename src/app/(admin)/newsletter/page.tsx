@@ -1,13 +1,47 @@
+import { Suspense } from "react";
 import Newsletter from "@/app/components/SendNewsletterCampaign";
+import CampaignSkeleton from "@/app/components/CampaignSkeleton";
 import { auth } from "@/lib/auth";
 import { redirect } from "next/navigation";
 import { genPageMetadata } from "@/utils/genPageMetadata";
+import {
+  getNumberOfEligibleContactsAction,
+  getNumberOfEligibleEmailsAction,
+} from "@/actions/getNewsletterStatsAction";
+import { getAllCampaigns } from "@/actions/sendBatchNewsletterAction";
 
 export const metadata = genPageMetadata({
   title: "Newsletter Campaigns",
   description: "Send newsletter campaigns for RC Web Solutions LLC.",
   pageRoute: "/newsletter",
 });
+
+async function NewsletterContent() {
+  const [contactsData, emailsData, campaignsData] = await Promise.all([
+    getNumberOfEligibleContactsAction(),
+    getNumberOfEligibleEmailsAction(),
+    getAllCampaigns(),
+  ]);
+
+  const initialStats = {
+    contacts: {
+      eligible: contactsData.eligible ?? 0,
+      total: contactsData.total ?? 0,
+      percentage: contactsData.percentage ?? 0,
+    },
+    emails: {
+      eligible: emailsData.eligibleEmails ?? 0,
+      total: emailsData.totalEmails ?? 0,
+      percentage: emailsData.consentPercentage ?? 0,
+    },
+  };
+
+  const initialCampaigns = campaignsData.success ? campaignsData.campaigns : [];
+
+  return (
+    <Newsletter initialStats={initialStats} initialCampaigns={initialCampaigns} />
+  );
+}
 
 export default async function NewsletterPage() {
   const session = await auth();
@@ -18,8 +52,8 @@ export default async function NewsletterPage() {
   }
 
   return (
-    <section id="newsletter">
-      <Newsletter />
-    </section>
+    <Suspense fallback={<CampaignSkeleton />}>
+      <NewsletterContent />
+    </Suspense>
   );
 }

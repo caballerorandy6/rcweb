@@ -12,30 +12,20 @@ interface SmsStats {
   consentPercentage: number;
 }
 
-export default function SendSmsCampaign() {
+interface SendSmsCampaignProps {
+  initialStats: SmsStats;
+}
+
+export default function SendSmsCampaign({ initialStats }: SendSmsCampaignProps) {
   const [message, setMessage] = useState("");
   const [testMode, setTestMode] = useState(true);
-  const [stats, setStats] = useState<SmsStats>({
-    eligibleContacts: 0,
-    totalContacts: 0,
-    totalPhones: 0,
-    estimatedCost: 0,
-    consentPercentage: 0,
-  });
+  const [stats, setStats] = useState<SmsStats>(initialStats);
   const [result, setResult] = useState<{
     success: boolean;
     message: string;
   } | null>(null);
   const [isPending, startTransition] = useTransition();
   const [charCount, setCharCount] = useState(0);
-
-  // Cargar estadísticas al montar
-  useEffect(() => {
-    startTransition(async () => {
-      const data = await getSmsStatsAction();
-      setStats(data);
-    });
-  }, []);
 
   // Actualizar contador de caracteres
   useEffect(() => {

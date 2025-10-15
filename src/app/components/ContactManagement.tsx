@@ -114,58 +114,62 @@ export default function ContactManagement({
   );
 
   return (
-    <div className="min-h-screen bg-gray-900 py-24 lg:py-32 px-4">
-      <div className="max-w-7xl mx-auto">
-        {/* Header */}
-        <div className="flex justify-between items-center mb-8">
+    <div className="space-y-6">
+      {/* Header */}
+      <div className="flex justify-between items-center">
+        <div>
           <h1 className="text-4xl font-bold text-gold font-iceland">
             Contact Management
           </h1>
-          <button
-            onClick={() => setShowAddModal(true)}
-            className="bg-gold text-gray-900 px-4 py-2 rounded-lg font-semibold font-inter hover:bg-gold/90"
-          >
-            + Add Contact
-          </button>
+          <p className="text-gray-400 font-inter mt-2">
+            Manage all your contacts and marketing consents
+          </p>
         </div>
+        <button
+          onClick={() => setShowAddModal(true)}
+          className="bg-gold text-gray-900 px-4 py-2 rounded-lg font-semibold font-inter hover:bg-gold/90 transition-colors"
+        >
+          + Add Contact
+        </button>
+      </div>
 
-        {/* Search */}
-        <div className="mb-6 font-inter">
-          <input
-            type="text"
-            placeholder="Search by name, email, or phone..."
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
-            className="w-full md:w-96 p-3 bg-gray-800 text-white rounded-lg border border-gray-700 focus:border-gold focus:outline-none"
-          />
+      {/* Search */}
+      <div className="font-inter">
+        <input
+          type="text"
+          placeholder="Search by name, email, or phone..."
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
+          className="w-full md:w-96 p-3 bg-gray-800 text-white rounded-lg border border-gray-700 focus:border-gold focus:outline-none"
+        />
+      </div>
+
+      {/* Stats */}
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-4 font-inter">
+        <div className="bg-gray-800 p-4 rounded-lg">
+          <h3 className="text-gray-400 text-sm mb-1">Total Contacts</h3>
+          <p className="text-2xl font-bold text-white">{contacts.length}</p>
         </div>
-
-        {/* Stats */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8 font-inter">
-          <div className="bg-gray-800 p-4 rounded-lg">
-            <h3 className="text-gray-400 text-sm mb-1">Total Contacts</h3>
-            <p className="text-2xl font-bold text-white">{contacts.length}</p>
-          </div>
-          <div className="bg-gray-800 p-4 rounded-lg">
-            <h3 className="text-gray-400 text-sm mb-1">
-              With Marketing Consent
-            </h3>
-            <p className="text-2xl font-bold text-green-500">
-              {contacts.filter((c) => c.marketingConsent).length}
-            </p>
-          </div>
-          <div className="bg-gray-800 p-4 rounded-lg">
-            <h3 className="text-gray-400 text-sm mb-1">Total Emails</h3>
-            <p className="text-2xl font-bold text-blue-500">
-              {contacts.reduce((acc, c) => acc + c.emails.length, 0)}
-            </p>
-          </div>
+        <div className="bg-gray-800 p-4 rounded-lg">
+          <h3 className="text-gray-400 text-sm mb-1">
+            With Marketing Consent
+          </h3>
+          <p className="text-2xl font-bold text-green-500">
+            {contacts.filter((c) => c.marketingConsent).length}
+          </p>
         </div>
+        <div className="bg-gray-800 p-4 rounded-lg">
+          <h3 className="text-gray-400 text-sm mb-1">Total Emails</h3>
+          <p className="text-2xl font-bold text-blue-500">
+            {contacts.reduce((acc, c) => acc + c.emails.length, 0)}
+          </p>
+        </div>
+      </div>
 
-        {/* Contacts Table */}
-        <div className="bg-gray-800 rounded-lg overflow-hidden font-inter">
-          <div className="overflow-x-auto">
-            <table className="w-full">
+      {/* Contacts Table */}
+      <div className="bg-gray-800 rounded-lg overflow-hidden font-inter">
+        <div className="overflow-x-auto">
+          <table className="w-full">
               <thead>
                 <tr className="bg-gray-700 text-left">
                   <th className="px-6 py-3 text-sm font-medium text-gray-300">
@@ -338,106 +342,105 @@ export default function ContactManagement({
                   </tr>
                 ))}
               </tbody>
-            </table>
-          </div>
+          </table>
         </div>
+      </div>
 
-        {/* Add Contact Modal */}
-        {showAddModal && (
-          <div className="fixed inset-0 bg-black/50 flex items-center justify-center p-4 z-50">
-            <div className="bg-gray-800 rounded-lg p-6 max-w-md w-full">
-              <h2 className="text-2xl font-bold text-gold mb-4 font-iceland">
-                Add New Contact
-              </h2>
+      {/* Add Contact Modal */}
+      {showAddModal && (
+        <div className="fixed inset-0 bg-black/50 flex items-center justify-center p-4 z-50">
+          <div className="bg-gray-800 rounded-lg p-6 max-w-md w-full">
+            <h2 className="text-2xl font-bold text-gold mb-4 font-iceland">
+              Add New Contact
+            </h2>
 
-              <div className="space-y-4 font-inter">
-                <div>
-                  <label className="block text-sm text-gray-300 mb-1">
-                    Name *
-                  </label>
-                  <input
-                    type="text"
-                    value={formData.name}
-                    onChange={(e) =>
-                      setFormData({ ...formData, name: e.target.value })
-                    }
-                    className="w-full p-2 bg-gray-700 text-white rounded border border-gray-600 focus:border-gold focus:outline-none"
-                  />
-                </div>
-
-                <div>
-                  <label className="block text-sm text-gray-300 mb-1">
-                    Email
-                  </label>
-                  <input
-                    type="email"
-                    value={formData.email}
-                    onChange={(e) =>
-                      setFormData({ ...formData, email: e.target.value })
-                    }
-                    className="w-full p-2 bg-gray-700 text-white rounded border border-gray-600 focus:border-gold focus:outline-none"
-                  />
-                </div>
-
-                <div>
-                  <label className="block text-sm text-gray-300 mb-1">
-                    Phone
-                  </label>
-                  <input
-                    type="tel"
-                    value={formData.phone}
-                    onChange={(e) =>
-                      setFormData({ ...formData, phone: e.target.value })
-                    }
-                    className="w-full p-2 bg-gray-700 text-white rounded border border-gray-600 focus:border-gold focus:outline-none"
-                  />
-                </div>
-
-                <div className="flex items-center">
-                  <input
-                    type="checkbox"
-                    checked={formData.marketingConsent}
-                    onChange={(e) =>
-                      setFormData({
-                        ...formData,
-                        marketingConsent: e.target.checked,
-                      })
-                    }
-                    className="mr-2"
-                  />
-                  <label className="text-sm text-gray-300">
-                    Marketing consent
-                  </label>
-                </div>
+            <div className="space-y-4 font-inter">
+              <div>
+                <label className="block text-sm text-gray-300 mb-1">
+                  Name *
+                </label>
+                <input
+                  type="text"
+                  value={formData.name}
+                  onChange={(e) =>
+                    setFormData({ ...formData, name: e.target.value })
+                  }
+                  className="w-full p-2 bg-gray-700 text-white rounded border border-gray-600 focus:border-gold focus:outline-none"
+                />
               </div>
 
-              <div className="flex gap-3 mt-6">
-                <button
-                  onClick={handleCreateContact}
-                  disabled={isPending}
-                  className="flex-1 bg-gold text-gray-900 py-2 rounded font-semibold hover:bg-gold/90 disabled:opacity-50 font-inter"
-                >
-                  {isPending ? "Creating..." : "Create Contact"}
-                </button>
-                <button
-                  onClick={() => {
-                    setShowAddModal(false);
+              <div>
+                <label className="block text-sm text-gray-300 mb-1">
+                  Email
+                </label>
+                <input
+                  type="email"
+                  value={formData.email}
+                  onChange={(e) =>
+                    setFormData({ ...formData, email: e.target.value })
+                  }
+                  className="w-full p-2 bg-gray-700 text-white rounded border border-gray-600 focus:border-gold focus:outline-none"
+                />
+              </div>
+
+              <div>
+                <label className="block text-sm text-gray-300 mb-1">
+                  Phone
+                </label>
+                <input
+                  type="tel"
+                  value={formData.phone}
+                  onChange={(e) =>
+                    setFormData({ ...formData, phone: e.target.value })
+                  }
+                  className="w-full p-2 bg-gray-700 text-white rounded border border-gray-600 focus:border-gold focus:outline-none"
+                />
+              </div>
+
+              <div className="flex items-center">
+                <input
+                  type="checkbox"
+                  checked={formData.marketingConsent}
+                  onChange={(e) =>
                     setFormData({
-                      name: "",
-                      email: "",
-                      phone: "",
-                      marketingConsent: false,
-                    });
-                  }}
-                  className="flex-1 bg-gray-700 text-white py-2 rounded hover:bg-gray-600 font-inter"
-                >
-                  Cancel
-                </button>
+                      ...formData,
+                      marketingConsent: e.target.checked,
+                    })
+                  }
+                  className="mr-2"
+                />
+                <label className="text-sm text-gray-300">
+                  Marketing consent
+                </label>
               </div>
             </div>
+
+            <div className="flex gap-3 mt-6">
+              <button
+                onClick={handleCreateContact}
+                disabled={isPending}
+                className="flex-1 bg-gold text-gray-900 py-2 rounded font-semibold hover:bg-gold/90 disabled:opacity-50 font-inter"
+              >
+                {isPending ? "Creating..." : "Create Contact"}
+              </button>
+              <button
+                onClick={() => {
+                  setShowAddModal(false);
+                  setFormData({
+                    name: "",
+                    email: "",
+                    phone: "",
+                    marketingConsent: false,
+                  });
+                }}
+                className="flex-1 bg-gray-700 text-white py-2 rounded hover:bg-gray-600 font-inter"
+              >
+                Cancel
+              </button>
+            </div>
           </div>
-        )}
-      </div>
+        </div>
+      )}
     </div>
   );
 }

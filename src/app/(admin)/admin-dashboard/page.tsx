@@ -8,9 +8,5 @@ export const metadata = genPageMetadata({
 });
 
 export default function AdminDashboardPage() {
-  return (
-    <section id="admin-dashboard" className="min-h-screen">
-      <AdminDashboard />
-    </section>
-  );
+  return <AdminDashboard />;
 }
