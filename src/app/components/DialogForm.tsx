@@ -5,6 +5,7 @@ import { ErrorMessage } from "@hookform/error-message";
 import { FormSchema, FormData } from "@/lib/zod";
 import { toast } from "sonner";
 import { createContactAction } from "@/actions/createContactAction";
+import { trackContactFormSubmit } from "@/lib/analytics";
 
 interface DialogFormProps {
   closeModal: () => void;
@@ -38,6 +39,9 @@ const DialogForm = ({ closeModal }: DialogFormProps) => {
         const contact = await createContactAction(data);
 
         if (contact.success) {
+          // Track successful contact form submission
+          trackContactFormSubmit("homepage_dialog");
+
           toast.success(contact.message, { id: toastId });
           reset();
           closeModal();

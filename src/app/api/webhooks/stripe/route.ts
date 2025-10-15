@@ -4,6 +4,7 @@ import { NextResponse } from "next/server";
 import Stripe from "stripe";
 import { prisma } from "@/lib/prisma";
 import { Resend } from "resend";
+import { trackPaymentComplete } from "@/lib/analytics";
 
 // Environment variables validation
 if (!process.env.STRIPE_SECRET_KEY) {
@@ -171,6 +172,9 @@ export async function POST(req: Request) {
         });
 
         console.log("✅ Payment created successfully with ID:", payment.id);
+
+        // Track payment completion in Google Analytics
+        trackPaymentComplete(firstPaymentAmount / 100, "initial_deposit");
 
         // ============= CLIENT EMAIL =============
         const emailErrors: string[] = [];
@@ -384,6 +388,9 @@ export async function POST(req: Request) {
         });
 
         console.log("✅ Payment updated - Project completed");
+
+        // Track final payment completion in Google Analytics
+        trackPaymentComplete(payment.secondPayment / 100, "final_payment");
 
         // ============= PROJECT COMPLETION EMAIL =============
         const emailErrors: string[] = [];

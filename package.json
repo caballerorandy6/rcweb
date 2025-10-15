@@ -45,6 +45,7 @@
     "@eslint/eslintrc": "^3",
     "@types/bcryptjs": "^2.4.6",
     "@types/canvas-confetti": "^1.9.0",
+    "@types/gtag.js": "^0.0.20",
     "@types/node": "^20.19.13",
     "@types/nodemailer": "^7.0.1",
     "@types/react": "^19",

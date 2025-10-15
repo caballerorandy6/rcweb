@@ -2,6 +2,7 @@
 
 import { prisma } from "@/lib/prisma";
 import { Resend } from "resend";
+import { trackEmailCampaignSent } from "@/lib/analytics";
 
 const resend = new Resend(process.env.RESEND_API_KEY!);
 
@@ -110,6 +111,9 @@ export const sendNewsletterAction = async (
       where: { id: emailCampaign.id },
       data: { emailsSent: successfulSends },
     });
+
+    // Track email campaign sent in Google Analytics
+    trackEmailCampaignSent(successfulSends);
 
     return {
       success: true,

@@ -2,6 +2,7 @@
 
 import { prisma } from "@/lib/prisma";
 import twilio from "twilio";
+import { trackSMSCampaignSent } from "@/lib/analytics";
 
 // Inicializar cliente Twilio
 const twilioClient = twilio(
@@ -288,6 +289,11 @@ export const sendSmsCampaignAction = async (
       where: { id: smsCampaign.id },
       data: { smsSent: successCount },
     });
+
+    // Track SMS campaign sent in Google Analytics
+    if (successCount > 0) {
+      trackSMSCampaignSent(successCount);
+    }
 
     // 8. Preparar mensaje de respuesta
     let responseMessage = `Campaign sent: ${successCount} successful`;
