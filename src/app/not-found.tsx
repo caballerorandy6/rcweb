@@ -77,7 +77,7 @@ export default function NotFound() {
   return (
     <section
       id="not-found"
-      className="relative min-h-screen flex items-center justify-center overflow-hidden"
+      className="relative min-h-screen flex items-center justify-center overflow-hidden pt-20"
     >
       {/* Video Background */}
       <div className="absolute inset-0 z-0">
@@ -105,10 +105,7 @@ export default function NotFound() {
         animate="visible"
       >
         {/* Warning Icon */}
-        <motion.div
-          className="flex justify-center mb-8"
-          variants={itemVariants}
-        >
+        <motion.div className="flex justify-center" variants={itemVariants}>
           <motion.div
             className="p-6 bg-gold/10 backdrop-blur-sm rounded-full border-2 border-gold/50"
             variants={pulseVariants}

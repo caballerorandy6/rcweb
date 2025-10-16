@@ -42,6 +42,7 @@ export const navigation: NavigationProps[] = [
   { name: "Services", hash: "/#services" }, // Lo más importante primero
   { name: "Projects", hash: "/#projects" }, // Muestras tu trabajo
   { name: "Testimonials", hash: "/#testimonials" }, // Respaldas con pruebas sociales
+  { name: "Blog", hash: "/blog" }, // Insights y contenido
   { name: "Process", hash: "/#process" }, // Explicas cómo trabajas
   { name: "Pricing", hash: "/#pricing" }, // El cliente ya confía, ahora ve el costo
   { name: "FAQ", hash: "/#faq" }, // Resuelves dudas comunes

@@ -17,6 +17,8 @@ import Certifications from "@/app/components/Sections/Certifications";
 import ScrollSpy from "@/app/components/ScrollSpy";
 import { JsonLdForFaq } from "@/app/components/JsonLdForFaq";
 import { JsonLdForProduct } from "@/app/components/JsonLdForProduct";
+import { JsonLdForOrganization } from "@/app/components/JsonLdForOrganization";
+import { JsonLdForLocalBusiness } from "@/app/components/JsonLdForLocalBusiness";
 import { faqs, pricingPlans } from "@/lib/data";
 
 export const metadata: Metadata = {
@@ -72,6 +74,8 @@ export const metadata: Metadata = {
 export default function Home() {
   return (
     <main>
+      <JsonLdForOrganization />
+      <JsonLdForLocalBusiness />
       <JsonLdForFaq faqs={faqs} />
       {pricingPlans.map((plan) => (
         <JsonLdForProduct
