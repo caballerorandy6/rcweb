@@ -1,15 +1,30 @@
 export const GA_MEASUREMENT_ID = process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID;
 
-// Track page views
-export const pageview = (url: string) => {
-  if (typeof window !== "undefined" && window.gtag && GA_MEASUREMENT_ID) {
-    window.gtag("config", GA_MEASUREMENT_ID, {
-      page_path: url,
+// Extend Window interface to include dataLayer
+declare global {
+  interface Window {
+    dataLayer?: Array<Record<string, unknown>>;
+  }
+}
+
+// Helper para enviar eventos a GTM dataLayer
+const pushToDataLayer = (eventName: string, parameters?: Record<string, unknown>) => {
+  if (typeof window !== "undefined" && window.dataLayer) {
+    window.dataLayer.push({
+      event: eventName,
+      ...parameters,
     });
   }
 };
 
-// Track custom events
+// Track page views
+export const pageview = (url: string) => {
+  pushToDataLayer("page_view", {
+    page_path: url,
+  });
+};
+
+// Track custom events (legacy - mantener por compatibilidad)
 export const event = ({
   action,
   category,
@@ -21,42 +36,35 @@ export const event = ({
   label?: string;
   value?: number;
 }) => {
-  if (typeof window !== "undefined" && window.gtag) {
-    window.gtag("event", action, {
-      event_category: category,
-      event_label: label,
-      value: value,
-    });
-  }
+  pushToDataLayer(action, {
+    event_category: category,
+    event_label: label,
+    value: value,
+  });
 };
 
-// Specific event trackers for RC Web Solutions
+// Specific event trackers for RC Web Solutions (GTM-ready)
 
 // 1. Contact form submit
 export const trackContactFormSubmit = (formLocation: string) => {
-  event({
-    action: "contact_form_submitted",
-    category: "lead_generation",
-    label: formLocation, // e.g., "homepage", "services_page"
+  pushToDataLayer("contact_form_submit", {
+    form_location: formLocation, // e.g., "homepage", "contact_section"
   });
 };
 
 // 2. Quote request
 export const trackQuoteRequest = (packageType: string) => {
-  event({
-    action: "quote_requested",
-    category: "lead_generation",
-    label: packageType, // "starter", "growth", "premium"
+  pushToDataLayer("quote_request", {
+    package_type: packageType, // "starter", "growth", "premium"
   });
 };
 
 // 3. Payment complete
 export const trackPaymentComplete = (amount: number, paymentType: string) => {
-  event({
-    action: "purchase",
-    category: "ecommerce",
-    label: paymentType, // "initial_deposit", "final_payment"
+  pushToDataLayer("purchase", {
     value: amount,
+    currency: "USD",
+    payment_type: paymentType, // "initial_deposit", "final_payment"
   });
 };
 
