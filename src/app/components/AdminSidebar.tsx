@@ -3,6 +3,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import type { Route } from "next";
 import {
   HomeIcon,
   UsersIcon,
@@ -24,7 +25,7 @@ import {
 
 interface NavItem {
   name: string;
-  href: string;
+  href: Route;
   icon: React.ComponentType<React.SVGProps<SVGSVGElement>>;
   iconSolid: React.ComponentType<React.SVGProps<SVGSVGElement>>;
 }
@@ -72,7 +73,7 @@ export default function AdminSidebar() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const pathname = usePathname();
 
-  const isActive = (href: string) => pathname === href;
+  const isActive = (href: Route) => pathname === href;
 
   return (
     <>

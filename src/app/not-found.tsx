@@ -2,6 +2,7 @@
 "use client";
 
 import Link from "next/link";
+import type { Route } from "next";
 import { motion, Variants } from "framer-motion";
 import {
   HomeIcon,
@@ -201,14 +202,14 @@ export default function NotFound() {
             <MapIcon className="w-4 h-4" />
             <span>Lost? Try our </span>
             <Link
-              href="/sitemap"
+              href={"/sitemap" as Route}
               className="text-gold hover:text-gold/80 transition-colors underline"
             >
               sitemap
             </Link>
             <span> or </span>
             <Link
-              href="/#contact"
+              href={"/#contact" as Route}
               className="text-gold hover:text-gold/80 transition-colors underline"
             >
               contact us

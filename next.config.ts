@@ -22,12 +22,14 @@ const nextConfig: NextConfig = {
     },
   },
 
-  // Experimental features válidas en Next.js 15
+  // Rutas tipadas (movido de experimental en Next.js 15.5+)
+  typedRoutes: true,
+
+  // Experimental features
   experimental: {
     // ppr: true,  // Partial Prerendering (si lo necesitas)
-     typedRoutes: true,  // Para rutas tipadas
-     serverActions: {
-       bodySizeLimit: '2mb',
+    serverActions: {
+      bodySizeLimit: '2mb',
     },
   },
 

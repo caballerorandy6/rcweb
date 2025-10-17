@@ -1,5 +1,4 @@
 "use client";
-import Link from "next/link";
 import { motion } from "framer-motion";
 import { useRef, useEffect, useState } from "react";
 import { socialLinks } from "@/lib/data";
@@ -195,7 +194,7 @@ const FloatingCTA = () => {
                   {getIconComponent(link.name, link.iconSize)}
                 </button>
               ) : (
-                <Link
+                <a
                   href={link.url}
                   target="_blank"
                   rel="noopener noreferrer"
@@ -203,7 +202,7 @@ const FloatingCTA = () => {
                   aria-label={link.ariaLabel}
                 >
                   {getIconComponent(link.name, link.iconSize)}
-                </Link>
+                </a>
               )}
             </motion.div>
           ))}

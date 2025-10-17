@@ -1,5 +1,4 @@
 import Image from "next/image";
-import Link from "next/link";
 import clsx from "clsx";
 
 //Icons
@@ -80,22 +79,24 @@ const Project = ({
 
       {/* Buttons */}
       <div className="flex divide-gray-700 border-t border-gold/50 mt-auto">
-        <Link
+        <a
           href={github}
           target="_blank"
+          rel="noopener noreferrer"
           className="flex-1 py-3 text-base font-inter text-gold hover:bg-gray-800 transition rounded-bl-lg border-r border-gold/50"
         >
           <GithubIcon className="inline-block w-5 h-5 mr-2" />
           GitHub
-        </Link>
-        <Link
+        </a>
+        <a
           href={url}
           target="_blank"
+          rel="noopener noreferrer"
           className="flex-1 py-3 text-base font-inter text-gold hover:bg-gray-800 transition rounded-br-lg"
         >
           <Website className="inline-block w-5 h-5 mr-2" />
           Preview
-        </Link>
+        </a>
       </div>
     </>
   );

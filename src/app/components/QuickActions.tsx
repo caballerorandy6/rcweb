@@ -1,4 +1,5 @@
 import Link from "next/link";
+import type { Route } from "next";
 import { ArrowRightIcon } from "@heroicons/react/24/solid";
 
 export const quickActions = [
@@ -38,7 +39,7 @@ export default function QuickActions() {
         {quickActions.map((action, index) => (
           <Link
             key={index}
-            href={action.href}
+            href={action.href as Route}
             className="flex items-center justify-between p-4 bg-gray-700/30 hover:bg-gray-700/50 rounded-lg transition-colors group"
           >
             <div>

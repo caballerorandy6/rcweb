@@ -1,4 +1,5 @@
 import Link from "next/link";
+import type { Route } from "next";
 import { navigation, extraFooterLinks } from "@/lib/data";
 import Logo from "@/app/components/Logo";
 
@@ -36,7 +37,7 @@ export default function Footer() {
               {/* Contact CTA */}
               {contactItem && (
                 <Link
-                  href={contactItem.hash}
+                  href={contactItem.hash as Route}
                   className="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-gold to-yellow-300 text-gray-900 rounded-lg text-sm font-inter font-semibold hover:from-yellow-300 hover:to-gold transition-all duration-300 hover:shadow-lg hover:shadow-gold/20 hover:-translate-y-0.5 group"
                 >
                   Get In Touch
@@ -67,7 +68,7 @@ export default function Footer() {
                 {primaryLinks.map((item) => (
                   <li key={item.name}>
                     <Link
-                      href={item.hash}
+                      href={item.hash as Route}
                       className="text-white/60 hover:text-gold transition-all duration-200 font-inter text-sm inline-flex items-center justify-center sm:justify-start w-full sm:w-auto group"
                     >
                       <span className="w-1 h-1 bg-gold/50 rounded-full mr-2 opacity-0 group-hover:opacity-100 transition-opacity duration-200" />
@@ -87,7 +88,7 @@ export default function Footer() {
                 {secondaryLinks.map((item) => (
                   <li key={item.name}>
                     <Link
-                      href={item.hash}
+                      href={item.hash as Route}
                       className="text-white/60 hover:text-gold transition-all duration-200 font-inter text-sm inline-flex items-center justify-center sm:justify-start w-full sm:w-auto group"
                     >
                       <span className="w-1 h-1 bg-gold/50 rounded-full mr-2 opacity-0 group-hover:opacity-100 transition-opacity duration-200" />
@@ -139,7 +140,7 @@ export default function Footer() {
                 {mainNavigation.slice(0, 4).map((item) => (
                   <Link
                     key={item.name}
-                    href={item.hash}
+                    href={item.hash as Route}
                     className="text-white/50 hover:text-gold transition-colors duration-200 font-inter text-xs relative group"
                   >
                     {item.name}
@@ -153,7 +154,7 @@ export default function Footer() {
                 {extraFooterLinks.map((link) => (
                   <Link
                     key={link.name}
-                    href={link.hash}
+                    href={link.hash as Route}
                     className="text-white/50 hover:text-gold transition-colors duration-200 font-inter text-xs relative group"
                   >
                     {link.name}

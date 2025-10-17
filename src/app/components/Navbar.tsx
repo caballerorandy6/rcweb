@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import type { Route } from "next";
 import clsx from "clsx";
 import { motion } from "framer-motion";
 import { Dialog, DialogPanel } from "@headlessui/react";
@@ -28,8 +29,8 @@ const Navbar = () => {
   const isHomePage = pathname === "/";
 
   // Función helper para obtener el href correcto
-  const getHref = (hash: string) => {
-    return isHomePage ? hash : `/${hash}`;
+  const getHref = (hash: string): Route => {
+    return (isHomePage ? hash : `/${hash}`) as Route;
   };
 
   // Separar Contact como CTA
@@ -79,7 +80,7 @@ const Navbar = () => {
               {/* Contact as CTA Button */}
               {contactItem && (
                 <Link
-                  href={contactItem.hash}
+                  href={contactItem.hash as Route}
                   onClick={() => setActiveSection(contactItem.name)}
                   className="ml-4 px-4 py-2 bg-gold text-gray-900 rounded-lg text-sm font-inter font-medium hover:bg-gold/90 transition-all duration-200"
                 >
@@ -97,7 +98,7 @@ const Navbar = () => {
                 return (
                   <Link
                     key={item.name}
-                    href={item.hash}
+                    href={item.hash as Route}
                     onClick={() => setActiveSection(item.name)}
                     className="text-sm font-inter text-white/80 hover:text-gold transition-colors"
                   >
@@ -109,7 +110,7 @@ const Navbar = () => {
               {/* Contact Button */}
               {contactItem && (
                 <Link
-                  href={contactItem.hash}
+                  href={contactItem.hash as Route}
                   onClick={() => setActiveSection(contactItem.name)}
                   className="px-4 py-2 bg-gold text-gray-900 rounded-lg text-sm font-inter font-medium hover:bg-gold/90 transition-all duration-200"
                 >
@@ -179,7 +180,7 @@ const Navbar = () => {
                           return (
                             <Link
                               key={item.name}
-                              href={item.hash}
+                              href={item.hash as Route}
                               onClick={() => {
                                 setActiveSection(item.name);
                                 handleClickModal();
@@ -194,7 +195,7 @@ const Navbar = () => {
                         return (
                           <Link
                             key={item.name}
-                            href={item.hash}
+                            href={item.hash as Route}
                             onClick={() => {
                               setActiveSection(item.name);
                               handleClickModal();

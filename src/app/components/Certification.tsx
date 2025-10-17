@@ -1,5 +1,4 @@
 import Image from "next/image";
-import Link from "next/link";
 import { useState } from "react";
 
 export interface CertificationProps {
@@ -107,7 +106,7 @@ const Certification = ({
       </div>
 
       <div className="flex divide-gray-700 border-t border-gold/50 mt-auto">
-        <Link
+        <a
           href={url}
           target="_blank"
           rel="noopener noreferrer"
@@ -128,7 +127,7 @@ const Certification = ({
             />
           </svg>
           {isPDF ? "See PDF" : "See Certificate"}
-        </Link>
+        </a>
         <button
           onClick={() => {
             if (isPDF) {

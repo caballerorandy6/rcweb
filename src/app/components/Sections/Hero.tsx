@@ -2,6 +2,7 @@
 
 import { useEffect, useRef } from "react";
 import Link from "next/link";
+import type { Route } from "next";
 import CustomBadge from "@/app/components/CustomBadge";
 import useSectionObserver from "@/hooks/useSectionObserver";
 import { motion } from "framer-motion";
@@ -115,7 +116,7 @@ const Hero = () => {
               transition={{ type: "spring", stiffness: 200, damping: 20, delay: 1.2 }}
             >
               <Link
-                href="#services"
+                href={"#services" as Route}
                 className="inline-block text-sm/6 font-inter text-gray-900 bg-gold hover:bg-gold/90 p-3 px-6 rounded-md transition-colors duration-200"
               >
                 View Services
@@ -130,7 +131,7 @@ const Hero = () => {
               transition={{ type: "spring", stiffness: 200, damping: 20, delay: 1.3 }}
             >
               <Link
-                href="#contact"
+                href={"#contact" as Route}
                 className="text-sm/6 font-inter text-white/80 hover:bg-gold/20 p-3 px-6 rounded-md flex items-center gap-x-1 border-2 border-gold/50 transition-colors duration-200"
               >
                 Schedule a Call
@@ -144,7 +145,7 @@ const Hero = () => {
               animate={{ opacity: 1, y: 0 }}
               transition={{ type: "spring", stiffness: 200, damping: 20, delay: 1.4 }}
             >
-              <Link
+              <a
                 href="/resume.pdf"
                 download="Randy Caballero - Resume.pdf"
                 target="_blank"
@@ -152,7 +153,7 @@ const Hero = () => {
                 className="text-sm/6 font-inter text-white/80 hover:bg-gold/20 p-3 px-6 rounded-md flex items-center gap-x-1 border-2 border-gold/50 transition-colors duration-200"
               >
                 Download CV
-              </Link>
+              </a>
             </motion.div>
           </motion.div>
         </motion.div>

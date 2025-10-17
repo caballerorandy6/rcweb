@@ -1,5 +1,6 @@
 import { prisma } from "@/lib/prisma";
 import { redirect } from "next/navigation";
+import type { Route } from "next";
 import { createFinalPaymentSessionAction } from "@/actions/createFinalPaymentSessionAction";
 import { Metadata } from "next";
 
@@ -44,8 +45,8 @@ export default async function MagicLinkPaymentPage(props: { params: Params }) {
   );
 
   if (result.success && result.sessionUrl) {
-    redirect(result.sessionUrl);
+    redirect(result.sessionUrl as Route);
   } else {
-    redirect("/final-payment?error=payment-failed");
+    redirect("/final-payment?error=payment-failed" as Route);
   }
 }
