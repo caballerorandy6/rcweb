@@ -25,6 +25,13 @@ export default function LinkedInInsightTag() {
     }
   }, [pathname]);
 
+  useEffect(() => {
+    console.log(
+      "✅ LinkedIn Insight Tag loaded with Partner ID:",
+      process.env.NEXT_PUBLIC_LINKEDIN_PARTNER_ID
+    );
+  }, []);
+
   // Don't render if no partner ID
   if (!LINKEDIN_PARTNER_ID) return null;
 
@@ -34,6 +41,8 @@ export default function LinkedInInsightTag() {
 // Helper function for tracking conversions
 export const trackLinkedInConversion = (conversionId?: string) => {
   if (typeof window !== "undefined" && window.lintrk) {
-    window.lintrk("track", { conversion_id: conversionId || LINKEDIN_PARTNER_ID });
+    window.lintrk("track", {
+      conversion_id: conversionId || LINKEDIN_PARTNER_ID,
+    });
   }
 };
