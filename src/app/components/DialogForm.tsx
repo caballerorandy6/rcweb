@@ -42,6 +42,11 @@ const DialogForm = ({ closeModal }: DialogFormProps) => {
           // Track successful contact form submission
           trackContactFormSubmit("homepage_dialog");
 
+          // Track Google Ads conversion
+          if (typeof window !== "undefined" && (window as any).gtag) {
+            (window as any).gtag("event", "conversion_event_submit_lead_form");
+          }
+
           toast.success(contact.message, { id: toastId });
           reset();
           closeModal();
