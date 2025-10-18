@@ -7,6 +7,13 @@ import { toast } from "sonner";
 import { createContactAction } from "@/actions/createContactAction";
 import { trackContactFormSubmit } from "@/lib/analytics";
 
+// Extend Window interface for gtag
+declare global {
+  interface Window {
+    gtag?: (command: string, ...args: unknown[]) => void;
+  }
+}
+
 interface DialogFormProps {
   closeModal: () => void;
 }
@@ -43,8 +50,8 @@ const DialogForm = ({ closeModal }: DialogFormProps) => {
           trackContactFormSubmit("homepage_dialog");
 
           // Track Google Ads conversion
-          if (typeof window !== "undefined" && (window as any).gtag) {
-            (window as any).gtag("event", "conversion_event_submit_lead_form");
+          if (typeof window !== "undefined" && window.gtag) {
+            window.gtag("event", "conversion_event_submit_lead_form");
           }
 
           toast.success(contact.message, { id: toastId });
