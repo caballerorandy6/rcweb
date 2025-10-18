@@ -49,9 +49,12 @@ const DialogForm = ({ closeModal }: DialogFormProps) => {
           // Track successful contact form submission
           trackContactFormSubmit("homepage_dialog");
 
-          // Track Google Ads conversion
+          // Track Google Ads conversion with Enhanced Conversions
           if (typeof window !== "undefined" && window.gtag) {
-            window.gtag("event", "conversion_event_submit_lead_form");
+            window.gtag("event", "conversion_event_submit_lead_form", {
+              email: data.email,
+              phone_number: data.phone,
+            });
           }
 
           toast.success(contact.message, { id: toastId });
