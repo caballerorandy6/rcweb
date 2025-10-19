@@ -203,11 +203,9 @@ const DialogForm = ({ closeModal }: DialogFormProps) => {
             </div>
             <div className="flex-1">
               <span className="text-sm text-gray-300 font-inter leading-relaxed">
-                By submitting this form, I agree to receive emails and SMS
-                updates and offers from RC Web Solutions LLC. Message & data
-                rates may apply. Reply STOP to unsubscribe.
+                I would like to receive promotional emails and SMS messages from RC Web Solutions LLC about services, updates, and special offers.
                 <span className="text-gray-500 block mt-1 text-xs">
-                  You can unsubscribe at any time. We respect your privacy.
+                  Message & data rates may apply. Reply STOP to opt-out. Consent is not a condition of purchase or service. You can unsubscribe at any time.
                 </span>
               </span>
             </div>
