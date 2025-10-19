@@ -10,11 +10,11 @@ import { PhoneIcon } from "@heroicons/react/24/outline";
 
 // Google Ads Phone Conversion Tracking
 const trackPhoneConversion = () => {
-  if (typeof window !== 'undefined' && window.gtag) {
-    window.gtag('event', 'conversion', {
-      'send_to': 'AW-17661176254/wW9-CKCVjLAbEL7TwOVB',
-      'value': 1.0,
-      'currency': 'USD'
+  if (typeof window !== "undefined" && window.gtag) {
+    window.gtag("event", "conversion", {
+      send_to: "AW-17661176254/wW9-CKCVjLAbEL7TwOVB",
+      value: 1.0,
+      currency: "USD",
     });
   }
 };
@@ -59,7 +59,12 @@ const Hero = () => {
             className="text-5xl font-iceland tracking-tight sm:text-9xl text-gold"
             initial={{ opacity: 0, y: 30, scale: 0.9 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
-            transition={{ type: "spring", stiffness: 180, damping: 20, delay: 0.2 }}
+            transition={{
+              type: "spring",
+              stiffness: 180,
+              damping: 20,
+              delay: 0.2,
+            }}
           >
             Randy Caballero
           </motion.h1>
@@ -81,7 +86,12 @@ const Hero = () => {
             className="mt-8 font-inter text-white/80 text-base"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ type: "spring", stiffness: 220, damping: 22, delay: 0.7 }}
+            transition={{
+              type: "spring",
+              stiffness: 220,
+              damping: 22,
+              delay: 0.7,
+            }}
           >
             Full-Stack Developer specializing in Next.js with 5+ years creating
             digital solutions for businesses.
@@ -92,7 +102,12 @@ const Hero = () => {
             className="mt-6 flex justify-center gap-12 text-lg font-inter font-semibold text-gold/70"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            transition={{ type: "spring", stiffness: 200, damping: 20, delay: 0.9 }}
+            transition={{
+              type: "spring",
+              stiffness: 200,
+              damping: 20,
+              delay: 0.9,
+            }}
           >
             <motion.span
               whileHover={{ scale: 1.1, color: "#fbbf24" }}
@@ -118,14 +133,27 @@ const Hero = () => {
             className="mt-10 flex flex-col sm:flex-row gap-4 items-center justify-center gap-x-6"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            transition={{ type: "spring", stiffness: 200, damping: 20, delay: 1.1 }}
+            transition={{
+              type: "spring",
+              stiffness: 200,
+              damping: 20,
+              delay: 1.1,
+            }}
           >
             <motion.div
-              whileHover={{ scale: 1.05, transition: { type: "spring", stiffness: 400, damping: 17 } }}
+              whileHover={{
+                scale: 1.05,
+                transition: { type: "spring", stiffness: 400, damping: 17 },
+              }}
               whileTap={{ scale: 0.95 }}
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ type: "spring", stiffness: 200, damping: 20, delay: 1.2 }}
+              transition={{
+                type: "spring",
+                stiffness: 200,
+                damping: 20,
+                delay: 1.2,
+              }}
             >
               <Link
                 href={"#services" as Route}
@@ -136,11 +164,19 @@ const Hero = () => {
             </motion.div>
 
             <motion.div
-              whileHover={{ scale: 1.05, transition: { type: "spring", stiffness: 400, damping: 17 } }}
+              whileHover={{
+                scale: 1.05,
+                transition: { type: "spring", stiffness: 400, damping: 17 },
+              }}
               whileTap={{ scale: 0.95 }}
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ type: "spring", stiffness: 200, damping: 20, delay: 1.3 }}
+              transition={{
+                type: "spring",
+                stiffness: 200,
+                damping: 20,
+                delay: 1.3,
+              }}
             >
               <Link
                 href={"#contact" as Route}
@@ -151,11 +187,19 @@ const Hero = () => {
             </motion.div>
 
             <motion.div
-              whileHover={{ scale: 1.05, transition: { type: "spring", stiffness: 400, damping: 17 } }}
+              whileHover={{
+                scale: 1.05,
+                transition: { type: "spring", stiffness: 400, damping: 17 },
+              }}
               whileTap={{ scale: 0.95 }}
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ type: "spring", stiffness: 200, damping: 20, delay: 1.4 }}
+              transition={{
+                type: "spring",
+                stiffness: 200,
+                damping: 20,
+                delay: 1.4,
+              }}
             >
               <a
                 href="/resume.pdf"
@@ -171,12 +215,17 @@ const Hero = () => {
 
           {/* Phone Number CTA */}
           <motion.div
-            className="mt-8 text-center"
+            className="mt-8 text-center mx-auto flex flex-col items-center"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ type: "spring", stiffness: 200, damping: 20, delay: 1.5 }}
+            transition={{
+              type: "spring",
+              stiffness: 200,
+              damping: 20,
+              delay: 1.5,
+            }}
           >
-            <p className="text-white/60 font-inter text-sm mb-2">
+            <p className="text-white/60 font-inter text-sm mb-2 text-center">
               Or call us directly:
             </p>
             <motion.a
@@ -187,7 +236,7 @@ const Hero = () => {
               className="inline-flex items-center gap-2 text-gold hover:text-gold/80 transition-colors font-inter text-lg font-semibold"
             >
               <PhoneIcon className="w-5 h-5" />
-              (346) 375-7534
+              +1 (346) 375-7534
             </motion.a>
           </motion.div>
         </motion.div>
