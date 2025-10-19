@@ -6,6 +6,18 @@ import type { Route } from "next";
 import CustomBadge from "@/app/components/CustomBadge";
 import useSectionObserver from "@/hooks/useSectionObserver";
 import { motion } from "framer-motion";
+import { PhoneIcon } from "@heroicons/react/24/outline";
+
+// Google Ads Phone Conversion Tracking
+const trackPhoneConversion = () => {
+  if (typeof window !== 'undefined' && window.gtag) {
+    window.gtag('event', 'conversion', {
+      'send_to': 'AW-17661176254/wW9-CKCVjLAbEL7TwOVB',
+      'value': 1.0,
+      'currency': 'USD'
+    });
+  }
+};
 
 const Hero = () => {
   const ref = useSectionObserver({ sectionName: "Home" });
@@ -155,6 +167,28 @@ const Hero = () => {
                 Download CV
               </a>
             </motion.div>
+          </motion.div>
+
+          {/* Phone Number CTA */}
+          <motion.div
+            className="mt-8 text-center"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ type: "spring", stiffness: 200, damping: 20, delay: 1.5 }}
+          >
+            <p className="text-white/60 font-inter text-sm mb-2">
+              Or call us directly:
+            </p>
+            <motion.a
+              href="tel:+13463757534"
+              onClick={trackPhoneConversion}
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              className="inline-flex items-center gap-2 text-gold hover:text-gold/80 transition-colors font-inter text-lg font-semibold"
+            >
+              <PhoneIcon className="w-5 h-5" />
+              (346) 375-7534
+            </motion.a>
           </motion.div>
         </motion.div>
       </div>
