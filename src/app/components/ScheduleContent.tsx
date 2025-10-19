@@ -5,6 +5,17 @@ import { CalendarDaysIcon, ClockIcon, VideoCameraIcon, PhoneIcon } from "@heroic
 import Link from "next/link";
 import Heading from "@/app/components/Heading";
 
+// Google Ads Phone Conversion Tracking
+const trackPhoneConversion = () => {
+  if (typeof window !== 'undefined' && window.gtag) {
+    window.gtag('event', 'conversion', {
+      'send_to': 'AW-17661176254/wW9-CKCVjLAbEL7TwOVB',
+      'value': 1.0,
+      'currency': 'USD'
+    });
+  }
+};
+
 export default function ScheduleContent() {
   return (
     <section className="relative isolate overflow-hidden py-24 sm:py-32 bg-gradient-to-b from-gray-900 via-gray-900/95 to-gray-900">
@@ -135,6 +146,7 @@ export default function ScheduleContent() {
 
           <motion.a
             href="tel:+13463757534"
+            onClick={trackPhoneConversion}
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
             className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-transparent border-2 border-gold text-gold font-bold rounded-lg hover:bg-gold/10 transition-colors font-inter text-lg"

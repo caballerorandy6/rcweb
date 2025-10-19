@@ -15,6 +15,17 @@ import useSectionObserver from "@/hooks/useSectionObserver";
 import { sections } from "@/lib/data";
 import { thirdPartyLinks } from "@/lib/data";
 
+// Google Ads Phone Conversion Tracking
+const trackPhoneConversion = () => {
+  if (typeof window !== 'undefined' && window.gtag) {
+    window.gtag('event', 'conversion', {
+      'send_to': 'AW-17661176254/wW9-CKCVjLAbEL7TwOVB',
+      'value': 1.0,
+      'currency': 'USD'
+    });
+  }
+};
+
 export default function PrivacyPolicy() {
   const ref = useSectionObserver({ sectionName: "Privacy Policy" });
 
@@ -217,6 +228,7 @@ export default function PrivacyPolicy() {
               </a>
               <a
                 href="tel:3463757534"
+                onClick={trackPhoneConversion}
                 className="flex items-center gap-3 text-white/80 hover:text-gold transition-colors group"
               >
                 <PhoneIcon className="w-5 h-5 text-gold group-hover:scale-110 transition-transform" />

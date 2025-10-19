@@ -113,13 +113,13 @@ export default function GuideContent() {
                   <div className="flex items-center gap-2 text-white/80">
                     <LightBulbIcon className="w-5 h-5 text-gold" />
                     <span className="text-sm font-inter">
-                      30+ Pages of Expert Insights
+                      Expert Insights & Strategies
                     </span>
                   </div>
                   <div className="flex items-center gap-2 text-white/80">
                     <LightBulbIcon className="w-5 h-5 text-gold" />
                     <span className="text-sm font-inter">
-                      Proven Strategies & Tips
+                      Proven Tips & Best Practices
                     </span>
                   </div>
                   <div className="flex items-center gap-2 text-white/80">
