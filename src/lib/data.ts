@@ -35,6 +35,7 @@ import {
   DocumentCheckIcon,
   XCircleIcon,
   DocumentTextIcon,
+  DevicePhoneMobileIcon,
 } from "@heroicons/react/24/outline";
 
 export const navigation: NavigationProps[] = [
@@ -760,6 +761,13 @@ export const sections = [
     color: "from-purple-500/20 to-purple-600/20",
   },
   {
+    icon: React.createElement(DevicePhoneMobileIcon, { className: "w-6 h-6" }),
+    title: "SMS/Text Message Marketing",
+    content:
+      "RC Web Solutions LLC may send promotional SMS messages to phone numbers provided by users who have explicitly opted in to receive such communications. By providing your phone number and checking the marketing consent box, you consent to receive text messages about our services, promotions, and updates. SMS consent is completely optional and not required to use our services or make a purchase. Message and data rates may apply. You can opt-out at any time by replying STOP to any message. We use Twilio as our SMS service provider. Phone numbers are stored securely and are never shared with third parties for marketing purposes. We retain phone numbers as long as you maintain consent; upon opt-out, your number is immediately removed from marketing lists.",
+    color: "from-blue-500/20 to-blue-600/20",
+  },
+  {
     icon: React.createElement(CurrencyDollarIcon, { className: "w-6 h-6" }),
     title: "Payment Terms",
     content:
@@ -815,6 +823,7 @@ export const thirdPartyLinks = [
   { name: "Resend", url: "https://resend.com/legal/privacy-policy" },
   { name: "Stripe", url: "https://stripe.com/us/privacy" },
   { name: "Zelle", url: "https://www.zelle.com/legal/legal-and-privacy" },
+  { name: "Twilio", url: "https://www.twilio.com/legal/privacy" },
 ];
 
 export const socialLinks = [
