@@ -4,9 +4,11 @@ import { motion } from "framer-motion";
 import { CalendarDaysIcon, ClockIcon, VideoCameraIcon, PhoneIcon } from "@heroicons/react/24/outline";
 import Link from "next/link";
 import Heading from "@/app/components/Heading";
+import { trackFBPhoneCall } from "@/app/components/FacebookPixel";
 
-// Google Ads Phone Conversion Tracking
+// Phone Conversion Tracking (Google Ads + Facebook)
 const trackPhoneConversion = () => {
+  // Google Ads conversion
   if (typeof window !== 'undefined' && window.gtag) {
     window.gtag('event', 'conversion', {
       'send_to': 'AW-17661176254/wW9-CKCVjLAbEL7TwOVB',
@@ -14,6 +16,9 @@ const trackPhoneConversion = () => {
       'currency': 'USD'
     });
   }
+
+  // Facebook Pixel conversion
+  trackFBPhoneCall();
 };
 
 export default function ScheduleContent() {

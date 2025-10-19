@@ -12,6 +12,7 @@ import Heading from "@/app/components/Heading";
 import { useState } from "react";
 import { toast } from "sonner";
 import { downloadGuideAction } from "@/actions/downloadGuideAction";
+import { trackFBLead } from "@/app/components/FacebookPixel";
 
 export default function GuideContent() {
   const [email, setEmail] = useState("");
@@ -35,6 +36,9 @@ export default function GuideContent() {
 
       // 3. Handle result
       if (result.success) {
+        // Track Facebook Lead conversion
+        trackFBLead();
+
         if (result.emailSent) {
           toast.success("Guide downloaded and sent to your email!");
         } else {

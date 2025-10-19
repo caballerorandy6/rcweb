@@ -6,6 +6,7 @@ import { FormSchema, FormData } from "@/lib/zod";
 import { toast } from "sonner";
 import { createContactAction } from "@/actions/createContactAction";
 import { trackContactFormSubmit } from "@/lib/analytics";
+import { trackFBLead } from "@/app/components/FacebookPixel";
 
 // Extend Window interface for gtag
 declare global {
@@ -56,6 +57,9 @@ const DialogForm = ({ closeModal }: DialogFormProps) => {
               phone_number: data.phone,
             });
           }
+
+          // Track Facebook Lead conversion
+          trackFBLead();
 
           toast.success(contact.message, { id: toastId });
           reset();

@@ -62,3 +62,7 @@ export const trackFBContact = () => {
 export const trackFBViewContent = (contentName: string) => {
   trackFBEvent("ViewContent", { content_name: contentName });
 };
+
+export const trackFBPhoneCall = () => {
+  trackFBEvent("Contact", { contact_type: "phone" });
+};
