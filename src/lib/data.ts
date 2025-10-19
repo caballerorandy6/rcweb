@@ -750,6 +750,7 @@ export const extraFooterLinks = [
   { name: "Privacy Policy", hash: "/privacy-policy" },
   { name: "Terms of Service", hash: "/terms-of-service" },
   { name: "Refund Policy", hash: "/refund-policy" },
+  { name: "Free Guide", hash: "/guide" },
 ];
 
 export const sections = [

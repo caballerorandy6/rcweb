@@ -50,8 +50,26 @@ const sitemapConfig: SitemapConfig = {
       priority: 0.8,
     },
     {
+      route: "/schedule",
+      lastModified: new Date().toISOString().split("T")[0],
+      changeFrequency: "monthly",
+      priority: 0.9,
+    },
+    {
+      route: "/offer",
+      lastModified: new Date().toISOString().split("T")[0],
+      changeFrequency: "weekly",
+      priority: 0.9,
+    },
+    {
+      route: "/guide",
+      lastModified: new Date().toISOString().split("T")[0],
+      changeFrequency: "monthly",
+      priority: 0.8,
+    },
+    {
       route: "/privacy-policy",
-      lastModified: "2025-10-07",
+      lastModified: "2025-10-18",
       changeFrequency: "monthly",
       priority: 0.5,
     },
