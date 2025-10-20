@@ -15,7 +15,10 @@ declare global {
     gtag?: (command: string, ...args: unknown[]) => void;
     grecaptcha?: {
       ready: (callback: () => void) => void;
-      execute: (siteKey: string, options: { action: string }) => Promise<string>;
+      execute: (
+        siteKey: string,
+        options: { action: string }
+      ) => Promise<string>;
     };
   }
 }
@@ -77,12 +80,15 @@ const DialogForm = ({ closeModal }: DialogFormProps) => {
       }
     }
 
-    // Mostrar toast de carga y guardar su ID
     const toastId = toast.loading("Sending message...");
 
     try {
       startTransition(async () => {
-        const contact = await createContactAction(data, recaptchaToken, timeSpent);
+        const contact = await createContactAction(
+          data,
+          recaptchaToken,
+          timeSpent
+        );
 
         if (contact.success) {
           // Track successful contact form submission
@@ -158,174 +164,178 @@ const DialogForm = ({ closeModal }: DialogFormProps) => {
             aria-hidden="true"
           />
 
-        {/** Name Field */}
-        <div className="group">
-          <div className="relative">
-            <input
-              {...register("name")}
-              type="text"
-              id="name"
-              className="w-full p-4 bg-gray-800/80 text-white rounded-xl border border-gray-700/60 focus:outline-none focus:border-gold focus:ring-2 focus:ring-gold/20 transition-all duration-300 font-inter placeholder-gray-400 hover:bg-gray-800 peer backdrop-blur-sm"
-              placeholder="Full Name"
-            />
-            <div className="absolute inset-0 rounded-xl bg-gradient-to-r from-gold/0 via-gold/5 to-gold/0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"></div>
-          </div>
-          <ErrorMessage
-            errors={errors}
-            name="name"
-            render={({ message }) => (
-              <p className="text-red-400 text-sm mt-2 font-inter animate-pulse flex items-center">
-                <span className="w-1 h-1 bg-red-400 rounded-full mr-2"></span>
-                {message}
-              </p>
-            )}
-          />
-        </div>
-
-        {/** Email Field */}
-        <div className="group">
-          <div className="relative">
-            <input
-              {...register("email")}
-              type="email"
-              id="email"
-              className="w-full p-4 bg-gray-800/80 text-white rounded-xl border border-gray-700/60 focus:outline-none focus:border-gold focus:ring-2 focus:ring-gold/20 transition-all duration-300 font-inter placeholder-gray-400 hover:bg-gray-800 peer backdrop-blur-sm"
-              placeholder="Email"
-            />
-            <div className="absolute inset-0 rounded-xl bg-gradient-to-r from-gold/0 via-gold/5 to-gold/0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"></div>
-          </div>
-          <ErrorMessage
-            errors={errors}
-            name="email"
-            render={({ message }) => (
-              <p className="text-red-400 text-sm mt-2 font-inter animate-pulse flex items-center">
-                <span className="w-1 h-1 bg-red-400 rounded-full mr-2"></span>
-                {message}
-              </p>
-            )}
-          />
-        </div>
-
-        {/** Phone Field */}
-        <div className="group">
-          <div className="relative">
-            <input
-              {...register("phone")}
-              type="tel"
-              id="phone"
-              className="w-full p-4 bg-gray-800/80 text-white rounded-xl border border-gray-700/60 focus:outline-none focus:border-gold focus:ring-2 focus:ring-gold/20 transition-all duration-300 font-inter placeholder-gray-400 hover:bg-gray-800 peer backdrop-blur-sm"
-              placeholder="Phone Number"
-            />
-            <div className="absolute inset-0 rounded-xl bg-gradient-to-r from-gold/0 via-gold/5 to-gold/0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"></div>
-          </div>
-          <ErrorMessage
-            errors={errors}
-            name="phone"
-            render={({ message }) => (
-              <p className="text-red-400 text-sm mt-2 font-inter animate-pulse flex items-center">
-                <span className="w-1 h-1 bg-red-400 rounded-full mr-2"></span>
-                {message}
-              </p>
-            )}
-          />
-        </div>
-
-        {/** Message Field */}
-        <div className="group">
-          <div className="relative">
-            <textarea
-              {...register("message")}
-              id="message"
-              className="w-full p-4 bg-gray-800/80 text-white rounded-xl border border-gray-700/60 focus:outline-none focus:border-gold focus:ring-2 focus:ring-gold/20 transition-all duration-300 font-inter placeholder-gray-400 hover:bg-gray-800 peer backdrop-blur-sm resize-none"
-              placeholder="Type your message..."
-              rows={5}
-            />
-            <div className="absolute inset-0 rounded-xl bg-gradient-to-r from-gold/0 via-gold/5 to-gold/0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"></div>
-          </div>
-          <ErrorMessage
-            errors={errors}
-            name="message"
-            render={({ message }) => (
-              <p className="text-red-400 text-sm mt-2 font-inter animate-pulse flex items-center">
-                <span className="w-1 h-1 bg-red-400 rounded-full mr-2"></span>
-                {message}
-              </p>
-            )}
-          />
-        </div>
-
-        {/** Marketing Consent Checkbox */}
-        <div className="group">
-          <label className="flex items-start space-x-3 cursor-pointer hover:bg-gray-800/30 p-3 rounded-lg transition-all duration-200">
-            <div className="flex items-center h-5 mt-1">
+          {/** Name Field */}
+          <div className="group">
+            <div className="relative">
               <input
-                {...register("marketingConsent")}
-                type="checkbox"
-                className="w-5 h-5 bg-gray-800/80 border-2 border-gray-700/60 rounded text-gold focus:ring-2 focus:ring-gold/20 focus:ring-offset-0 focus:ring-offset-gray-900 checked:bg-gold checked:border-gold cursor-pointer transition-all duration-200 hover:border-gold/50"
+                {...register("name")}
+                type="text"
+                id="name"
+                className="w-full p-4 bg-gray-800/80 text-white rounded-xl border border-gray-700/60 focus:outline-none focus:border-gold focus:ring-2 focus:ring-gold/20 transition-all duration-300 font-inter placeholder-gray-400 hover:bg-gray-800 peer backdrop-blur-sm"
+                placeholder="Full Name"
               />
+              <div className="absolute inset-0 rounded-xl bg-gradient-to-r from-gold/0 via-gold/5 to-gold/0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"></div>
             </div>
-            <div className="flex-1">
-              <span className="text-sm text-gray-300 font-inter leading-relaxed">
-                I would like to receive promotional emails and SMS messages from RC Web Solutions LLC about services, updates, and special offers.
-                <span className="text-gray-500 block mt-1 text-xs">
-                  Message & data rates may apply. Reply STOP to opt-out. Consent is not a condition of purchase or service. You can unsubscribe at any time.
-                </span>
-              </span>
-            </div>
-          </label>
-        </div>
+            <ErrorMessage
+              errors={errors}
+              name="name"
+              render={({ message }) => (
+                <p className="text-red-400 text-sm mt-2 font-inter animate-pulse flex items-center">
+                  <span className="w-1 h-1 bg-red-400 rounded-full mr-2"></span>
+                  {message}
+                </p>
+              )}
+            />
+          </div>
 
-        {/** Submit Button */}
-        <div className="pt-2">
-          <button
-            disabled={isPending}
-            type="submit"
-            className="relative w-full py-4 text-lg font-semibold text-black bg-gradient-to-r from-gold via-yellow-200 to-gold hover:from-yellow-200 hover:via-gold hover:to-yellow-200 rounded-xl transition-all duration-300 shadow-lg hover:shadow-gold/25 font-inter group overflow-hidden transform hover:scale-[1.02] active:scale-[0.98]"
-          >
-            <div className="absolute inset-0 bg-white/20 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700 skew-x-12"></div>
-            <span className="relative flex items-center justify-center">
-              {isPending ? <p>Sending...</p> : <p>Send Message</p>}
-              <svg
-                className="ml-2 w-5 h-5 transform group-hover:translate-x-1 transition-transform duration-300"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"
+          {/** Email Field */}
+          <div className="group">
+            <div className="relative">
+              <input
+                {...register("email")}
+                type="email"
+                id="email"
+                className="w-full p-4 bg-gray-800/80 text-white rounded-xl border border-gray-700/60 focus:outline-none focus:border-gold focus:ring-2 focus:ring-gold/20 transition-all duration-300 font-inter placeholder-gray-400 hover:bg-gray-800 peer backdrop-blur-sm"
+                placeholder="Email"
+              />
+              <div className="absolute inset-0 rounded-xl bg-gradient-to-r from-gold/0 via-gold/5 to-gold/0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"></div>
+            </div>
+            <ErrorMessage
+              errors={errors}
+              name="email"
+              render={({ message }) => (
+                <p className="text-red-400 text-sm mt-2 font-inter animate-pulse flex items-center">
+                  <span className="w-1 h-1 bg-red-400 rounded-full mr-2"></span>
+                  {message}
+                </p>
+              )}
+            />
+          </div>
+
+          {/** Phone Field */}
+          <div className="group">
+            <div className="relative">
+              <input
+                {...register("phone")}
+                type="tel"
+                id="phone"
+                className="w-full p-4 bg-gray-800/80 text-white rounded-xl border border-gray-700/60 focus:outline-none focus:border-gold focus:ring-2 focus:ring-gold/20 transition-all duration-300 font-inter placeholder-gray-400 hover:bg-gray-800 peer backdrop-blur-sm"
+                placeholder="Phone Number"
+              />
+              <div className="absolute inset-0 rounded-xl bg-gradient-to-r from-gold/0 via-gold/5 to-gold/0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"></div>
+            </div>
+            <ErrorMessage
+              errors={errors}
+              name="phone"
+              render={({ message }) => (
+                <p className="text-red-400 text-sm mt-2 font-inter animate-pulse flex items-center">
+                  <span className="w-1 h-1 bg-red-400 rounded-full mr-2"></span>
+                  {message}
+                </p>
+              )}
+            />
+          </div>
+
+          {/** Message Field */}
+          <div className="group">
+            <div className="relative">
+              <textarea
+                {...register("message")}
+                id="message"
+                className="w-full p-4 bg-gray-800/80 text-white rounded-xl border border-gray-700/60 focus:outline-none focus:border-gold focus:ring-2 focus:ring-gold/20 transition-all duration-300 font-inter placeholder-gray-400 hover:bg-gray-800 peer backdrop-blur-sm resize-none"
+                placeholder="Type your message..."
+                rows={5}
+              />
+              <div className="absolute inset-0 rounded-xl bg-gradient-to-r from-gold/0 via-gold/5 to-gold/0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"></div>
+            </div>
+            <ErrorMessage
+              errors={errors}
+              name="message"
+              render={({ message }) => (
+                <p className="text-red-400 text-sm mt-2 font-inter animate-pulse flex items-center">
+                  <span className="w-1 h-1 bg-red-400 rounded-full mr-2"></span>
+                  {message}
+                </p>
+              )}
+            />
+          </div>
+
+          {/** Marketing Consent Checkbox */}
+          <div className="group">
+            <label className="flex items-start space-x-3 cursor-pointer hover:bg-gray-800/30 p-3 rounded-lg transition-all duration-200">
+              <div className="flex items-center h-5 mt-1">
+                <input
+                  {...register("marketingConsent")}
+                  type="checkbox"
+                  className="w-5 h-5 bg-gray-800/80 border-2 border-gray-700/60 rounded text-gold focus:ring-2 focus:ring-gold/20 focus:ring-offset-0 focus:ring-offset-gray-900 checked:bg-gold checked:border-gold cursor-pointer transition-all duration-200 hover:border-gold/50"
                 />
-              </svg>
-            </span>
-          </button>
+              </div>
+              <div className="flex-1">
+                <span className="text-sm text-gray-300 font-inter leading-relaxed">
+                  I would like to receive promotional emails and SMS messages
+                  from RC Web Solutions LLC about services, updates, and special
+                  offers.
+                  <span className="text-gray-500 block mt-1 text-xs">
+                    Message & data rates may apply. Reply STOP to opt-out.
+                    Consent is not a condition of purchase or service. You can
+                    unsubscribe at any time.
+                  </span>
+                </span>
+              </div>
+            </label>
+          </div>
 
-          {/* reCAPTCHA disclosure (required when hiding badge) */}
-          <p className="text-white/40 font-inter text-xs mt-3 text-center">
-            This site is protected by reCAPTCHA and the Google{" "}
-            <a
-              href="https://policies.google.com/privacy"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-gold/60 hover:text-gold/80 transition-colors underline"
+          {/** Submit Button */}
+          <div className="pt-2">
+            <button
+              disabled={isPending}
+              type="submit"
+              className="relative w-full py-4 text-lg font-semibold text-black bg-gradient-to-r from-gold via-yellow-200 to-gold hover:from-yellow-200 hover:via-gold hover:to-yellow-200 rounded-xl transition-all duration-300 shadow-lg hover:shadow-gold/25 font-inter group overflow-hidden transform hover:scale-[1.02] active:scale-[0.98]"
             >
-              Privacy Policy
-            </a>{" "}
-            and{" "}
-            <a
-              href="https://policies.google.com/terms"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-gold/60 hover:text-gold/80 transition-colors underline"
-            >
-              Terms of Service
-            </a>{" "}
-            apply.
-          </p>
-        </div>
-      </form>
-    </div>
+              <div className="absolute inset-0 bg-white/20 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700 skew-x-12"></div>
+              <span className="relative flex items-center justify-center">
+                {isPending ? <p>Sending...</p> : <p>Send Message</p>}
+                <svg
+                  className="ml-2 w-5 h-5 transform group-hover:translate-x-1 transition-transform duration-300"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"
+                  />
+                </svg>
+              </span>
+            </button>
+
+            {/* reCAPTCHA disclosure (required when hiding badge) */}
+            <p className="text-white/40 font-inter text-xs mt-3 text-center">
+              This site is protected by reCAPTCHA and the Google{" "}
+              <a
+                href="https://policies.google.com/privacy"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-gold/60 hover:text-gold/80 transition-colors underline"
+              >
+                Privacy Policy
+              </a>{" "}
+              and{" "}
+              <a
+                href="https://policies.google.com/terms"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-gold/60 hover:text-gold/80 transition-colors underline"
+              >
+                Terms of Service
+              </a>{" "}
+              apply.
+            </p>
+          </div>
+        </form>
+      </div>
     </>
   );
 };
