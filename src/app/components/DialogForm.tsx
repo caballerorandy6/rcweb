@@ -1,4 +1,4 @@
-import { useTransition } from "react";
+import { useTransition, useRef, useState } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { ErrorMessage } from "@hookform/error-message";
@@ -7,13 +7,20 @@ import { toast } from "sonner";
 import { createContactAction } from "@/actions/createContactAction";
 import { trackContactFormSubmit } from "@/lib/analytics";
 import { trackFBLead } from "@/app/components/FacebookPixel";
+import Script from "next/script";
 
-// Extend Window interface for gtag
+// Extend Window interface for gtag and grecaptcha
 declare global {
   interface Window {
     gtag?: (command: string, ...args: unknown[]) => void;
+    grecaptcha?: {
+      ready: (callback: () => void) => void;
+      execute: (siteKey: string, options: { action: string }) => Promise<string>;
+    };
   }
 }
+
+const RECAPTCHA_SITE_KEY = process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY || "";
 
 interface DialogFormProps {
   closeModal: () => void;
@@ -21,6 +28,8 @@ interface DialogFormProps {
 
 const DialogForm = ({ closeModal }: DialogFormProps) => {
   const [isPending, startTransition] = useTransition();
+  const formMountTime = useRef<number>(Date.now());
+  const [honeypot, setHoneypot] = useState("");
 
   const {
     register,
@@ -39,12 +48,41 @@ const DialogForm = ({ closeModal }: DialogFormProps) => {
   });
 
   const onSubmit: SubmitHandler<FormData> = async (data) => {
+    // Anti-Bot Protection Layer 1: Honeypot check
+    if (honeypot) {
+      console.warn("🚫 Bot detected: Honeypot filled");
+      toast.error("Something went wrong. Please try again.");
+      return;
+    }
+
+    // Anti-Bot Protection Layer 2: Minimum time check (3 seconds)
+    const timeSpent = Date.now() - formMountTime.current;
+    if (timeSpent < 3000) {
+      console.warn("🚫 Bot detected: Form submitted too quickly");
+      toast.error("Please take a moment to review your message.");
+      return;
+    }
+
+    // Anti-Bot Protection Layer 3: reCAPTCHA v3
+    let recaptchaToken = "";
+    if (RECAPTCHA_SITE_KEY && window.grecaptcha) {
+      try {
+        recaptchaToken = await window.grecaptcha.execute(RECAPTCHA_SITE_KEY, {
+          action: "submit_contact_form",
+        });
+      } catch (error) {
+        console.error("reCAPTCHA error:", error);
+        toast.error("Verification failed. Please refresh and try again.");
+        return;
+      }
+    }
+
     // Mostrar toast de carga y guardar su ID
     const toastId = toast.loading("Sending message...");
 
     try {
       startTransition(async () => {
-        const contact = await createContactAction(data);
+        const contact = await createContactAction(data, recaptchaToken, timeSpent);
 
         if (contact.success) {
           // Track successful contact form submission
@@ -82,22 +120,43 @@ const DialogForm = ({ closeModal }: DialogFormProps) => {
   };
 
   return (
-    <div className="relative">
-      <div className="absolute inset-0 bg-gradient-to-br from-gold/5 via-transparent to-purple-500/5 rounded-2xl blur-xl"></div>
+    <>
+      {/* Load reCAPTCHA v3 */}
+      {RECAPTCHA_SITE_KEY && (
+        <Script
+          src={`https://www.google.com/recaptcha/api.js?render=${RECAPTCHA_SITE_KEY}`}
+          strategy="lazyOnload"
+        />
+      )}
 
-      <form
-        onSubmit={handleSubmit(onSubmit)}
-        className="relative space-y-6 bg-gradient-to-br from-gray-900/95 to-gray-800/95 p-8 rounded-2xl shadow-2xl backdrop-blur-sm border border-gray-700/50 hover:border-gold/30 transition-all duration-500"
-      >
-        <div className="absolute top-0 left-0 w-20 h-20 bg-gold/10 rounded-full blur-2xl"></div>
-        <div className="absolute bottom-0 right-0 w-16 h-16 bg-purple-500/10 rounded-full blur-2xl"></div>
+      <div className="relative">
+        <div className="absolute inset-0 bg-gradient-to-br from-gold/5 via-transparent to-purple-500/5 rounded-2xl blur-xl"></div>
 
-        <div className="relative">
-          <h2 className="text-4xl md:text-5xl text-gold  font-bold text-center font-iceland tracking-wide">
-            Let&apos;s Connect
-          </h2>
-          <div className="w-24 h-1 bg-gradient-to-r from-transparent via-gold to-transparent mx-auto mt-4 rounded-full"></div>
-        </div>
+        <form
+          onSubmit={handleSubmit(onSubmit)}
+          className="relative space-y-6 bg-gradient-to-br from-gray-900/95 to-gray-800/95 p-8 rounded-2xl shadow-2xl backdrop-blur-sm border border-gray-700/50 hover:border-gold/30 transition-all duration-500"
+        >
+          <div className="absolute top-0 left-0 w-20 h-20 bg-gold/10 rounded-full blur-2xl"></div>
+          <div className="absolute bottom-0 right-0 w-16 h-16 bg-purple-500/10 rounded-full blur-2xl"></div>
+
+          <div className="relative">
+            <h2 className="text-4xl md:text-5xl text-gold  font-bold text-center font-iceland tracking-wide">
+              Let&apos;s Connect
+            </h2>
+            <div className="w-24 h-1 bg-gradient-to-r from-transparent via-gold to-transparent mx-auto mt-4 rounded-full"></div>
+          </div>
+
+          {/* Honeypot field - hidden from users, visible to bots */}
+          <input
+            type="text"
+            name="website"
+            value={honeypot}
+            onChange={(e) => setHoneypot(e.target.value)}
+            autoComplete="off"
+            tabIndex={-1}
+            style={{ position: "absolute", left: "-9999px", opacity: 0 }}
+            aria-hidden="true"
+          />
 
         {/** Name Field */}
         <div className="group">
@@ -244,6 +303,7 @@ const DialogForm = ({ closeModal }: DialogFormProps) => {
         </div>
       </form>
     </div>
+    </>
   );
 };
 

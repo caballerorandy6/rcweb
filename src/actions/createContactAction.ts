@@ -13,9 +13,66 @@ export interface CreateContactAction {
 
 const resend = new Resend(process.env.RESEND_API_KEY!);
 
+async function verifyRecaptcha(token: string): Promise<boolean> {
+  const secretKey = process.env.RECAPTCHA_SECRET_KEY;
+
+  if (!secretKey || !token) {
+    console.warn("⚠️ reCAPTCHA not configured or no token provided");
+    return true; // Allow submission if reCAPTCHA not configured
+  }
+
+  try {
+    const response = await fetch("https://www.google.com/recaptcha/api/siteverify", {
+      method: "POST",
+      headers: { "Content-Type": "application/x-www-form-urlencoded" },
+      body: `secret=${secretKey}&response=${token}`,
+    });
+
+    const data = await response.json();
+
+    // Score ranges from 0.0 (bot) to 1.0 (human)
+    // We require a minimum score of 0.5
+    if (data.success && data.score >= 0.5) {
+      console.log(`✅ reCAPTCHA passed with score: ${data.score}`);
+      return true;
+    }
+
+    console.warn(`🚫 reCAPTCHA failed. Score: ${data.score}, Success: ${data.success}`);
+    return false;
+  } catch (error) {
+    console.error("❌ reCAPTCHA verification error:", error);
+    return true; // Allow submission on error to not block real users
+  }
+}
+
 export const createContactAction = async (
-  data: FormData
+  data: FormData,
+  recaptchaToken?: string,
+  timeSpent?: number
 ): Promise<CreateContactAction> => {
+  // Anti-Bot Validation: Verify reCAPTCHA
+  if (recaptchaToken) {
+    const isHuman = await verifyRecaptcha(recaptchaToken);
+    if (!isHuman) {
+      console.warn("🚫 Bot detected: reCAPTCHA failed");
+      return {
+        success: false,
+        message: "Verification failed. Please try again.",
+        errors: {},
+      };
+    }
+  }
+
+  // Anti-Bot Validation: Check minimum time (3 seconds)
+  if (timeSpent && timeSpent < 3000) {
+    console.warn(`🚫 Bot detected: Form submitted too quickly (${timeSpent}ms)`);
+    return {
+      success: false,
+      message: "Please take a moment to review your message.",
+      errors: {},
+    };
+  }
+
   const parsed = FormSchema.safeParse(data);
 
   if (!parsed.success) {
