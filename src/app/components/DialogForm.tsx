@@ -300,6 +300,29 @@ const DialogForm = ({ closeModal }: DialogFormProps) => {
               </svg>
             </span>
           </button>
+
+          {/* reCAPTCHA disclosure (required when hiding badge) */}
+          <p className="text-white/40 font-inter text-xs mt-3 text-center">
+            This site is protected by reCAPTCHA and the Google{" "}
+            <a
+              href="https://policies.google.com/privacy"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-gold/60 hover:text-gold/80 transition-colors underline"
+            >
+              Privacy Policy
+            </a>{" "}
+            and{" "}
+            <a
+              href="https://policies.google.com/terms"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-gold/60 hover:text-gold/80 transition-colors underline"
+            >
+              Terms of Service
+            </a>{" "}
+            apply.
+          </p>
         </div>
       </form>
     </div>
