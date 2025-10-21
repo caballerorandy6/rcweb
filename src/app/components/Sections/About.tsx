@@ -2,9 +2,10 @@
 
 import Image from "next/image";
 import Heading from "@/app/components/Heading";
-import { UserPlusIcon } from "@heroicons/react/24/outline";
+import { UserPlusIcon, MapPinIcon } from "@heroicons/react/24/outline";
 import useSectionObserver from "@/hooks/useSectionObserver";
 import { motion, Variants } from "framer-motion";
+import Script from "next/script";
 
 const About = () => {
   const ref = useSectionObserver({ sectionName: "About" });
@@ -41,8 +42,45 @@ const About = () => {
   };
 
   return (
-    <section ref={ref} id="about" className="pt-24 sm:pt-32">
-      <div className="mx-auto max-w-7xl px-6 lg:px-8">
+    <>
+      {/* Schema Markup para SEO */}
+      <Script
+        id="about-schema"
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "Person",
+            "name": "Randy Caballero",
+            "jobTitle": "Full-Stack Web Developer",
+            "description": "React and Next.js Developer with over 5 years of experience building high-performance, scalable web applications",
+            "image": "https://rcwebsolutionsllc.com/randy-caballero-web-developer.avif",
+            "url": "https://rcwebsolutionsllc.com",
+            "address": {
+              "@type": "PostalAddress",
+              "addressLocality": "Houston",
+              "addressRegion": "TX",
+              "addressCountry": "US"
+            },
+            "worksFor": {
+              "@type": "Organization",
+              "name": "RC Web Solutions LLC"
+            },
+            "knowsAbout": [
+              "React",
+              "Next.js",
+              "TypeScript",
+              "Full-Stack Development",
+              "Web Development",
+              "Digital Marketing",
+              "WordPress"
+            ]
+          })
+        }}
+      />
+
+      <section ref={ref} id="about" className="pt-24 sm:pt-32">
+        <div className="mx-auto max-w-7xl px-6 lg:px-8">
         <Heading
           icon={<UserPlusIcon className="w-8 text-gold" />}
           text="Who I Am and What I Do"
@@ -102,25 +140,46 @@ const About = () => {
             </motion.p>
           </motion.div>
 
-          <motion.figure
+          <motion.div
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true, amount: 0.3 }}
             variants={imageVariants}
-            className="flex justify-center lg:justify-end"
+            className="flex flex-col items-center lg:items-end"
           >
-            <Image
-              src="/background.avif"
-              alt="About Image"
-              width={500}
-              height={500}
-              className="image-gradient rounded-lg shadow-lg shadow-gray-900/50 hover:scale-105 transition-transform duration-300 ease-in-out border-2 border-gold/50 sepia w-full max-w-md lg:max-w-full animateProjectCard"
-              priority={false}
-            />
-          </motion.figure>
+            <motion.figure className="relative">
+              <Image
+                src="/randy-caballero-web-developer.avif"
+                alt="Randy Caballero - Full-Stack Web Developer in Houston, TX"
+                width={500}
+                height={500}
+                className="image-gradient rounded-lg shadow-lg shadow-gray-900/50 hover:scale-105 transition-transform duration-300 ease-in-out border-2 border-gold/50 sepia w-full max-w-md lg:max-w-full animateProjectCard"
+                priority={false}
+              />
+
+              {/* Badge de ubicación */}
+              <div className="absolute bottom-4 left-4 bg-gray-900/90 backdrop-blur-sm px-4 py-2 rounded-lg border border-gold/30 shadow-lg">
+                <div className="flex items-center gap-2">
+                  <MapPinIcon className="w-4 h-4 text-gold" />
+                  <span className="text-white text-sm font-inter font-medium">Houston, TX</span>
+                </div>
+              </div>
+            </motion.figure>
+
+            {/* Texto de ubicación debajo de la foto */}
+            <div className="text-center lg:text-right mt-6 space-y-1">
+              <p className="text-gold font-inter text-sm font-semibold">
+                Based in Houston, TX 🤠
+              </p>
+              <p className="text-gray-400 font-inter text-xs">
+                Serving clients nationwide
+              </p>
+            </div>
+          </motion.div>
         </div>
       </div>
     </section>
+    </>
   );
 };
 
