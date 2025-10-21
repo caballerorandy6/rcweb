@@ -293,10 +293,10 @@ export const certifications = [
     description: "Learn modern JavaScript from the beginning.",
     tutor: "Brad Traversy",
     image:
-      "https://res.cloudinary.com/caballerorandy/image/upload/v1755197584/RC%20Web/Modern_JavaScript_from_the_beginning_iegcou.jpg",
-    url: "https://res.cloudinary.com/caballerorandy/image/upload/v1755197584/RC%20Web/Modern_JavaScript_from_the_beginning_iegcou.jpg",
+      "https://res.cloudinary.com/caballerorandy/image/upload/v1761020506/RC%20Web/Modern_JavaScript_from_the_beginning_s1lmqm.jpg",
+    url: "https://res.cloudinary.com/caballerorandy/image/upload/v1761020506/RC%20Web/Modern_JavaScript_from_the_beginning_s1lmqm.jpg",
     pdfThumbnail:
-      "https://res.cloudinary.com/caballerorandy/image/upload/v1755197584/RC%20Web/Modern_JavaScript_from_the_beginning_iegcou.avif",
+      "https://res.cloudinary.com/caballerorandy/image/upload/c_thumb,w_200,g_face/v1761020506/RC%20Web/Modern_JavaScript_from_the_beginning_s1lmqm.jpg",
   },
   {
     name: "HTML and CSS from the Beginning Including SASS",
@@ -304,10 +304,10 @@ export const certifications = [
     description: "Learn HTML and CSS from the beginning, including SASS.",
     tutor: "Brad Traversy",
     image:
-      "https://res.cloudinary.com/caballerorandy/image/upload/v1755197571/RC%20Web/HTML_and_CSS_From_The_Beginning_Including_Sass_nadww4.webp",
-    url: "https://res.cloudinary.com/caballerorandy/image/upload/v1755197571/RC%20Web/HTML_and_CSS_From_The_Beginning_Including_Sass_nadww4.jpg",
+      "https://res.cloudinary.com/caballerorandy/image/upload/v1761020530/RC%20Web/HTML_and_CSS_From_The_Beginning_Including_Sass_ijoey5.jpg",
+    url: "https://res.cloudinary.com/caballerorandy/image/upload/v1761020530/RC%20Web/HTML_and_CSS_From_The_Beginning_Including_Sass_ijoey5.jpg",
     pdfThumbnail:
-      "https://res.cloudinary.com/caballerorandy/image/upload/v1755197571/RC%20Web/HTML_and_CSS_From_The_Beginning_Including_Sass_nadww4.avif",
+      "https://res.cloudinary.com/caballerorandy/image/upload/c_thumb,w_200,g_face/v1761020530/RC%20Web/HTML_and_CSS_From_The_Beginning_Including_Sass_ijoey5.jpg",
   },
   {
     name: "Git + GitHub todo un Sistea de Control de Versiones",
@@ -316,10 +316,10 @@ export const certifications = [
       "Aprende a utilizar Git y GitHub para el control de versiones.",
     tutor: "Fernando Herrera",
     image:
-      "https://res.cloudinary.com/caballerorandy/image/upload/v1755197551/RC%20Web/Git_GitHub_sosdeb.webp",
-    url: "https://res.cloudinary.com/caballerorandy/image/upload/v1755197551/RC%20Web/Git_GitHub_sosdeb.jpg",
+      "https://res.cloudinary.com/caballerorandy/image/upload/v1761020549/RC%20Web/Git_GitHub_gj28lk.jpg",
+    url: "https://res.cloudinary.com/caballerorandy/image/upload/v1761020549/RC%20Web/Git_GitHub_gj28lk.jpg",
     pdfThumbnail:
-      "https://res.cloudinary.com/caballerorandy/image/upload/pg_1,w_200,h_200,c_fill/v1755197551/RC%20Web/Git_GitHub_sosdeb.avif",
+      "https://res.cloudinary.com/caballerorandy/image/upload/c_thumb,w_200,g_face/v1761020549/RC%20Web/Git_GitHub_gj28lk.jpg",
   },
   {
     name: "React Basics",
