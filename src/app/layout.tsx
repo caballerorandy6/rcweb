@@ -17,12 +17,14 @@ const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
   display: "swap",
+  preload: true,
 });
 
 const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
   subsets: ["latin"],
   display: "swap",
+  preload: false, // Not critical
 });
 
 const iceland = Iceland({
@@ -30,12 +32,14 @@ const iceland = Iceland({
   subsets: ["latin"],
   variable: "--font-iceland",
   display: "swap",
+  preload: true, // Used in headings
 });
 
 const inter = Inter({
   subsets: ["latin"],
   variable: "--font-inter",
   display: "swap",
+  preload: true, // Primary body font
 });
 
 export const metadata: Metadata = {
@@ -107,7 +111,10 @@ export default function RootLayout({
   return (
     <html lang="en" className="!scroll-smooth" data-scroll-behavior="smooth" suppressHydrationWarning>
       <head>
-        {/* Note: Preconnects moved to body to be conditional based on consent */}
+        {/* Critical preconnects for fonts - always needed regardless of consent */}
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+
+        {/* Note: Tracking preconnects moved to CookieConsentProvider (conditional based on consent) */}
       </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} ${iceland.variable} ${inter.variable} antialiased text-pretty bg-gray-950`}
