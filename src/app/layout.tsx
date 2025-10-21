@@ -108,7 +108,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className="!scroll-smooth" suppressHydrationWarning>
+    <html lang="en" className="!scroll-smooth" data-scroll-behavior="smooth" suppressHydrationWarning>
       <head>
         {/* Google Tag Manager */}
         {GTM_ID && (
@@ -168,7 +168,6 @@ export default function RootLayout({
                   b.type = "text/javascript";b.async = true;
                   b.src = "https://snap.licdn.com/li.lms-analytics/insight.min.js";
                   s.parentNode.insertBefore(b, s);
-                  console.log("✅ LinkedIn Insight script injected.");
                 })(window.lintrk);
               `}
             </Script>
