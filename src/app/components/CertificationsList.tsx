@@ -35,7 +35,7 @@ const CertificationsList = ({
               key={certification.name}
               className="flex-[0_0_100%] sm:flex-[0_0_50%] lg:flex-[0_0_33.333%] min-w-0"
             >
-              <div className="h-full bg-gray-900 text-center border border-gold/50 rounded-lg shadow-md hover:shadow-lg hover:scale-[1.03] hover:border-gold/80 transition-all duration-200 animateProjectCard">
+              <div className="w-full h-[420px] bg-gray-900 text-center border border-gold/50 rounded-lg shadow-md hover:shadow-lg hover:scale-[1.03] hover:border-gold/80 transition-all duration-200 animateProjectCard flex flex-col">
                 <Certification
                   name={certification.name}
                   platform={certification.platform}

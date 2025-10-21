@@ -20,4 +20,8 @@ export default {
     },
   },
   plugins: [],
+  // Optimize for production
+  future: {
+    hoverOnlyWhenSupported: true,
+  },
 } satisfies Config;

@@ -23,22 +23,26 @@ const GOOGLE_ADS_ID = process.env.NEXT_PUBLIC_GOOGLE_ADS_ID;
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
+  display: "swap",
 });
 
 const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
   subsets: ["latin"],
+  display: "swap",
 });
 
 const iceland = Iceland({
   weight: "400",
   subsets: ["latin"],
   variable: "--font-iceland",
+  display: "swap",
 });
 
 const inter = Inter({
   subsets: ["latin"],
   variable: "--font-inter",
+  display: "swap",
 });
 
 export const metadata: Metadata = {
@@ -110,6 +114,37 @@ export default function RootLayout({
   return (
     <html lang="en" className="!scroll-smooth" data-scroll-behavior="smooth" suppressHydrationWarning>
       <head>
+        {/* Preconnect to critical third-party origins */}
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        <link rel="dns-prefetch" href="https://fonts.googleapis.com" />
+        <link rel="dns-prefetch" href="https://fonts.gstatic.com" />
+
+        <link rel="preconnect" href="https://www.googletagmanager.com" />
+        <link rel="dns-prefetch" href="https://www.googletagmanager.com" />
+
+        {/* Conditional preconnects for analytics/ads */}
+        {GOOGLE_ADS_ID && (
+          <>
+            <link rel="preconnect" href="https://googleads.g.doubleclick.net" />
+            <link rel="dns-prefetch" href="https://googleads.g.doubleclick.net" />
+          </>
+        )}
+        {FACEBOOK_PIXEL_ID && (
+          <>
+            <link rel="preconnect" href="https://connect.facebook.net" />
+            <link rel="dns-prefetch" href="https://connect.facebook.net" />
+            <link rel="preconnect" href="https://www.facebook.com" />
+            <link rel="dns-prefetch" href="https://www.facebook.com" />
+          </>
+        )}
+        {LINKEDIN_PARTNER_ID && (
+          <>
+            <link rel="preconnect" href="https://snap.licdn.com" />
+            <link rel="dns-prefetch" href="https://snap.licdn.com" />
+          </>
+        )}
+
         {/* Google Tag Manager */}
         {GTM_ID && (
           <Script id="google-tag-manager" strategy="afterInteractive">
@@ -126,7 +161,7 @@ export default function RootLayout({
         {/* Facebook Pixel */}
         {FACEBOOK_PIXEL_ID && (
           <>
-            <Script id="facebook-pixel" strategy="afterInteractive">
+            <Script id="facebook-pixel" strategy="lazyOnload">
               {`
                 !function(f,b,e,v,n,t,s)
                 {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
@@ -155,7 +190,7 @@ export default function RootLayout({
         {/* LinkedIn Insight Tag */}
         {LINKEDIN_PARTNER_ID && (
           <>
-            <Script id="linkedin-insight" strategy="afterInteractive">
+            <Script id="linkedin-insight" strategy="lazyOnload">
               {`
                 _linkedin_partner_id = "${LINKEDIN_PARTNER_ID}";
                 window._linkedin_data_partner_ids = window._linkedin_data_partner_ids || [];

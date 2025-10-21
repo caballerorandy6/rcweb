@@ -13,10 +13,8 @@ export interface CertificationProps {
 
 const Certification = ({
   name,
-  platform,
   description,
   image,
-  tutor,
   url,
   pdfThumbnail,
 }: CertificationProps) => {
@@ -79,8 +77,8 @@ const Certification = ({
   };
 
   return (
-    <>
-      <div className="overflow-hidden rounded-t-lg bg-gray-800 relative group">
+    <div className="flex flex-col h-full">
+      <div className="overflow-hidden rounded-t-lg bg-gray-800 relative group flex-shrink-0">
         {renderPreview()}
 
         {isPDF && (
@@ -90,22 +88,14 @@ const Certification = ({
         )}
       </div>
 
-      <div className="p-5 flex-grow flex flex-col">
-        <h3 className="text-2xl font-iceland text-gold">{name}</h3>
-
-        <p className="mt-2 text-base text-white/80 font-inter">{description}</p>
-
-        <div className="flex flex-wrap justify-center gap-1 mt-4">
-          <span className="inline-flex gap-2 items-center rounded-full px-2 py-0.5 text-xs font-inter bg-gold/10 text-gold/90 border border-gold/30">
-            {platform}
-          </span>
-          <span className="inline-flex gap-2 items-center rounded-full px-2 py-0.5 text-xs font-inter bg-blue-500/20 text-blue-300 border border-blue-500/30">
-            {tutor}
-          </span>
+      <div className="p-5 flex-grow flex flex-col justify-between">
+        <div>
+          <h3 className="text-2xl font-iceland text-gold line-clamp-2">{name}</h3>
+          <p className="mt-3 text-sm text-white/80 font-inter line-clamp-4">{description}</p>
         </div>
       </div>
 
-      <div className="flex divide-gray-700 border-t border-gold/50 mt-auto">
+      <div className="flex divide-gray-700 border-t border-gold/50 flex-shrink-0">
         <a
           href={url}
           target="_blank"
@@ -158,7 +148,7 @@ const Certification = ({
           Download
         </button>
       </div>
-    </>
+    </div>
   );
 };
 

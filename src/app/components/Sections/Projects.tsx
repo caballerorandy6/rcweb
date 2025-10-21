@@ -65,6 +65,7 @@ const Projects = () => {
               onClick={handleClickProjectsDialog}
               aria-expanded={isExpanded}
               aria-controls={contentId}
+              aria-label={isExpanded ? "Collapse projects list" : `View all ${projects.length} projects`}
               whileTap={{ scale: 0.95 }}
             >
               <span>

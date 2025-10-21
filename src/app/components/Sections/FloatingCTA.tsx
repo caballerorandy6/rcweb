@@ -166,9 +166,11 @@ const FloatingCTA = () => {
             >
               <Image
                 src="/chat.avif"
-                alt="Chat"
-                fill
+                alt="AI Chat Assistant - Maria"
+                width={128}
+                height={128}
                 className="object-cover"
+                sizes="(max-width: 768px) 56px, 64px"
               />
             </button>
           </motion.div>

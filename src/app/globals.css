@@ -2,65 +2,73 @@
 @tailwind components;
 @tailwind utilities;
 
-p {
-  max-width: 65ch;
+/* Critical styles only - everything else moved to components */
+
+/* Hide reCAPTCHA v3 badge - critical for layout */
+.grecaptcha-badge {
+  visibility: hidden !important;
 }
 
-body .image-gradient {
-  mask-image: linear-gradient(black 50%, transparent);
-  scrollbar-color: "#CBB26A";
-}
-
-@keyframes show {
-  from {
-    opacity: 0;
-    scale: 90%;
-  }
-
-  to {
-    opacity: 1;
-    scale: 100%;
+/* Typography - critical for readability */
+@layer base {
+  p {
+    max-width: 65ch;
   }
 }
 
-.animateProjectCard {
-  view-timeline-name: --image;
-  view-timeline-axis: block;
+/* Utility classes */
+@layer utilities {
+  .image-gradient {
+    mask-image: linear-gradient(black 50%, transparent);
+  }
 
-  animation-timeline: --image;
-  animation-fill-mode: block;
-  animation-name: show;
+  .javascript-color {
+    color: #f7df1e;
+  }
 }
 
-.animateHeadingDialog {
-  animation: blur linear both;
-  animation-timeline: scroll();
-  animation-range: 0 500px;
-}
+/* Below-the-fold animations - defer loaded */
+@layer components {
+  @keyframes show {
+    from {
+      opacity: 0;
+      scale: 90%;
+    }
+    to {
+      opacity: 1;
+      scale: 100%;
+    }
+  }
 
-@keyframes blur {
-  to {
+  .animateProjectCard {
+    view-timeline-name: --image;
+    view-timeline-axis: block;
+    animation-timeline: --image;
+    animation-fill-mode: both;
+    animation-name: show;
+  }
+
+  @keyframes blur {
+    to {
+      box-shadow:
+        0px 5px 50px -5px hsla(0, 0%, 100%, 0.2),
+        0px 0px 0px 1px hsla(0, 0%, 100%, 0.1);
+      background: rgba(0, 0, 0, 0.4);
+      backdrop-filter: blur(10px);
+    }
+  }
+
+  .animateHeadingDialog {
+    animation: blur linear both;
+    animation-timeline: scroll();
+    animation-range: 0 500px;
+  }
+
+  .animateFloatingLinks {
     box-shadow:
       0px 5px 50px -5px hsla(0, 0%, 100%, 0.2),
       0px 0px 0px 1px hsla(0, 0%, 100%, 0.1);
     background: rgba(0, 0, 0, 0.4);
     backdrop-filter: blur(10px);
   }
-}
-
-/* Hide reCAPTCHA v3 badge */
-.grecaptcha-badge {
-  visibility: hidden !important;
-}
-
-.animateFloatingLinks {
-  box-shadow:
-    0px 5px 50px -5px hsla(0, 0%, 100%, 0.2),
-    0px 0px 0px 1px hsla(0, 0%, 100%, 0.1);
-  background: rgba(0, 0, 0, 0.4);
-  backdrop-filter: blur(10px);
-}
-
-.javascript-color {
-  color: #f7df1e;
 }
