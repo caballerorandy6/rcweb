@@ -20,6 +20,7 @@
     "@hookform/resolvers": "^3.10.0",
     "@prisma/client": "^6.15.0",
     "@react-email/components": "^0.0.32",
+    "@vercel/analytics": "^1.5.0",
     "bcryptjs": "^3.0.2",
     "canvas-confetti": "^1.9.3",
     "clsx": "^2.1.1",

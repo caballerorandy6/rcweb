@@ -13,6 +13,7 @@ import FacebookPixel from "@/app/components/FacebookPixel";
 import LinkedInInsightTag from "@/app/components/LinkedInInsightTag";
 import { siteConfig } from "@/config/site";
 import { GA_MEASUREMENT_ID } from "@/lib/analytics";
+import { Analytics as VercelAnalytics } from "@vercel/analytics/next";
 
 const GTM_ID = process.env.NEXT_PUBLIC_GTM_ID;
 const FACEBOOK_PIXEL_ID = process.env.NEXT_PUBLIC_FACEBOOK_PIXEL_ID;
@@ -241,6 +242,7 @@ export default function RootLayout({
           <FacebookPixel />
           <LinkedInInsightTag />
         </Suspense>
+        <VercelAnalytics />
         <Toaster position="bottom-right" richColors closeButton={true} />
         <ConditionalLayout>{children}</ConditionalLayout>
       </body>
