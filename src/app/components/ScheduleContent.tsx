@@ -87,7 +87,7 @@ export default function ScheduleContent() {
               transition={{ type: "spring", stiffness: 400, damping: 17 }}
             >
               <div className="text-gold mb-4">{benefit.icon}</div>
-              <h3 className="text-xl font-bold text-gold font-iceland mb-2">{benefit.title}</h3>
+              <h2 className="text-xl font-bold text-gold font-iceland mb-2">{benefit.title}</h2>
               <p className="text-gray-300 text-sm font-inter">{benefit.description}</p>
             </motion.div>
           ))}

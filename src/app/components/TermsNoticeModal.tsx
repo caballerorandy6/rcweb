@@ -23,9 +23,9 @@ export const TermsNoticeModal = ({
       >
         <div className="flex flex-col items-center text-center space-y-4">
           <ShieldCheckIcon className="w-12 h-12 text-gold" />
-          <h3 className="text-4xl font-iceland text-gold font-bold">
+          <h2 className="text-4xl font-iceland text-gold font-bold">
             Before you continue
-          </h3>
+          </h2>
           <p className="text-white/80 font-inter text-sm">
             To proceed with the payment, you must scroll and read our{" "}
             <span className="text-gold font-semibold">Terms of Service</span>{" "}

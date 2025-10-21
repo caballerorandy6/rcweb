@@ -60,10 +60,10 @@ export default function Footer() {
 
             {/* Columnas de navegación - Cada una ocupa 1 columna */}
             <div className="text-center sm:text-left sm:col-span-1">
-              <h3 className="text-gold font-inter font-semibold text-sm uppercase tracking-wider mb-4 flex items-center justify-center sm:justify-start gap-2">
+              <h2 className="text-gold font-inter font-semibold text-sm uppercase tracking-wider mb-4 flex items-center justify-center sm:justify-start gap-2">
                 <span className="w-8 h-px bg-gradient-to-r from-gold/50 to-transparent hidden sm:block" />
                 Navigation
-              </h3>
+              </h2>
               <ul className="space-y-2">
                 {primaryLinks.map((item) => (
                   <li key={item.name}>
@@ -80,10 +80,10 @@ export default function Footer() {
             </div>
 
             <div className="text-center sm:text-left sm:col-span-1">
-              <h3 className="text-gold font-inter font-semibold text-sm uppercase tracking-wider mb-4 flex items-center justify-center sm:justify-start gap-2">
+              <h2 className="text-gold font-inter font-semibold text-sm uppercase tracking-wider mb-4 flex items-center justify-center sm:justify-start gap-2">
                 <span className="w-8 h-px bg-gradient-to-r from-gold/50 to-transparent hidden sm:block" />
                 More
-              </h3>
+              </h2>
               <ul className="space-y-2">
                 {secondaryLinks.map((item) => (
                   <li key={item.name}>
@@ -100,10 +100,10 @@ export default function Footer() {
             </div>
 
             <div className="text-center sm:text-left sm:col-span-1">
-              <h3 className="text-gold font-inter font-semibold text-sm uppercase tracking-wider mb-4 flex items-center justify-center sm:justify-start gap-2">
+              <h2 className="text-gold font-inter font-semibold text-sm uppercase tracking-wider mb-4 flex items-center justify-center sm:justify-start gap-2">
                 <span className="w-8 h-px bg-gradient-to-r from-gold/50 to-transparent hidden sm:block" />
                 Connect
-              </h3>
+              </h2>
               <div className="space-y-3">
                 <p className="text-white/60 font-inter text-sm">
                   Ready to start your project?

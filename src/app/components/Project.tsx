@@ -37,7 +37,7 @@ const Project = ({
 
       {/* Technologies */}
       <div className="p-5 flex-grow flex flex-col">
-        <h3 className="text-2xl font-iceland text-gold">{name}</h3>
+        <h2 className="text-2xl font-iceland text-gold">{name}</h2>
         <p className="mt-2 text-base text-white/80 font-inter">{description}</p>
 
         <div className="flex flex-wrap justify-center gap-1 mt-4">
