@@ -165,7 +165,7 @@ const FloatingCTA = () => {
               aria-label="Open AI Chat Assistant - Maria"
             >
               <Image
-                src="/chat.avif"
+                src="/chat.png"
                 alt="AI Chat Assistant - Maria"
                 width={128}
                 height={128}
