@@ -24,9 +24,7 @@ export default function FacebookPixel() {
 
     // Track page views
     if (window.fbq) {
-      const url = pathname + (searchParams?.toString() ? `?${searchParams.toString()}` : "");
       window.fbq("track", "PageView");
-      console.log("FB Pixel PageView:", url);
     }
   }, [pathname, searchParams]);
 

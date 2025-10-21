@@ -21,16 +21,8 @@ export default function LinkedInInsightTag() {
     // Track page views
     if (window.lintrk) {
       window.lintrk("track", { conversion_id: LINKEDIN_PARTNER_ID });
-      console.log("LinkedIn Insight PageView:", pathname);
     }
   }, [pathname]);
-
-  useEffect(() => {
-    console.log(
-      "✅ LinkedIn Insight Tag loaded with Partner ID:",
-      process.env.NEXT_PUBLIC_LINKEDIN_PARTNER_ID
-    );
-  }, []);
 
   // Don't render if no partner ID
   if (!LINKEDIN_PARTNER_ID) return null;
