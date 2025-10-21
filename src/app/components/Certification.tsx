@@ -90,7 +90,7 @@ const Certification = ({
 
       <div className="p-5 flex-grow flex flex-col justify-between">
         <div>
-          <h3 className="text-2xl font-iceland text-gold line-clamp-2">{name}</h3>
+          <h2 className="text-2xl font-iceland text-gold line-clamp-2">{name}</h2>
           <p className="mt-3 text-sm text-white/80 font-inter line-clamp-4">{description}</p>
         </div>
       </div>

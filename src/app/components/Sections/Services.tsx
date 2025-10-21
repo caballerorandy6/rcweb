@@ -43,9 +43,9 @@ const Services = () => {
                 <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-gold/10 ring-1 ring-gold/30">
                   <service.icon className="h-6 w-6 text-gold" />
                 </div>
-                <h3 className="text-xl font-iceland text-white">
+                <h2 className="text-xl font-iceland text-white">
                   {service.title}
-                </h3>
+                </h2>
               </div>
 
               <p className="text-base font-inter text-white/70">

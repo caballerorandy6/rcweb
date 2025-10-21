@@ -22,6 +22,7 @@ const TechMarquee = () => {
             key={`${id}-${item.name}-${index}`}
             href={item.href}
             className="flex items-center justify-center text-gray-100 hover:text-gold transition-all duration-200 ease-in-out hover:scale-105 mx-12"
+            aria-label={`Learn more about ${item.name}`}
           >
             {item.icon}
           </a>

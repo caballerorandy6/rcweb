@@ -162,9 +162,9 @@ export default function PrivacyPolicy() {
                   <div className="p-2 bg-gold/10 rounded-lg text-gold group-hover:bg-gold/20 transition-colors">
                     {section.icon}
                   </div>
-                  <h3 className="text-xl font-bold text-gold font-iceland tracking-wide">
+                  <h2 className="text-xl font-bold text-gold font-iceland tracking-wide">
                     {section.title}
-                  </h3>
+                  </h2>
                 </div>
 
                 {/* Content */}
@@ -185,9 +185,9 @@ export default function PrivacyPolicy() {
           transition={{ type: "spring", stiffness: 200, damping: 20 }}
         >
           <div className="bg-gray-900/60 backdrop-blur-md rounded-xl border border-gold/20 p-8">
-            <h3 className="text-xl font-bold text-gold font-iceland mb-6 text-center">
+            <h2 className="text-xl font-bold text-gold font-iceland mb-6 text-center">
               Third-Party Service Privacy Policies
-            </h3>
+            </h2>
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
               {thirdPartyLinks.map((link, index) => (
                 <motion.a
@@ -220,9 +220,9 @@ export default function PrivacyPolicy() {
           transition={{ type: "spring", stiffness: 200, damping: 20 }}
         >
           <div className="bg-gradient-to-r from-gold/10 to-transparent backdrop-blur-md rounded-xl border border-gold/20 p-8">
-            <h3 className="text-xl font-bold text-gold font-iceland mb-6">
+            <h2 className="text-xl font-bold text-gold font-iceland mb-6">
               Contact Us About Privacy
-            </h3>
+            </h2>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4 font-inter">
               <a
                 href="mailto:contactus@rcweb.dev"

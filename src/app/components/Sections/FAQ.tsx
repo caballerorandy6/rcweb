@@ -87,9 +87,9 @@ const FAQ = () => {
                   }
                   className="flex w-full items-center justify-between px-6 py-4 text-left"
                 >
-                  <h3 className="text-lg font-iceland text-gold">
+                  <h2 className="text-lg font-iceland text-gold">
                     {faq.question}
-                  </h3>
+                  </h2>
                   <ChevronDownIcon
                     className={`h-5 w-5 text-gold transition-transform duration-200 ${
                       openIndex === index ? "rotate-180" : ""

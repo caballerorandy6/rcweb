@@ -91,9 +91,9 @@ const Process = () => {
                         })}
                     </div>
                     <div>
-                      <h3 className="text-2xl font-iceland text-white">
+                      <h2 className="text-2xl font-iceland text-white">
                         Step {activeStep + 1}: {currentStep.title}
-                      </h3>
+                      </h2>
                       <p className="text-sm font-inter text-gold/70">
                         {currentStep.week}
                       </p>
@@ -178,7 +178,7 @@ const Process = () => {
                       {index + 1}
                     </span>
                     <div className="text-left">
-                      <h3 className="font-iceland text-white">{step.title}</h3>
+                      <h2 className="font-iceland text-white">{step.title}</h2>
                       <p className="text-xs font-inter text-gold/70">
                         {step.week}
                       </p>

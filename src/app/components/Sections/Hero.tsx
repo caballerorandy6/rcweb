@@ -48,10 +48,11 @@ const Hero = () => {
           muted
           playsInline
           preload="metadata"
-          aria-label="Background video showcasing web development work"
+          aria-hidden="true"
           className="inset-0 -z-10 size-full object-cover object-right md:object-center opacity-35"
         >
           <source src="/hero.webm" type="video/webm" />
+          <track kind="captions" label="No audio" />
           Your browser does not support the video tag.
         </video>
         <div className="absolute inset-0 bg-gradient-to-b from-black/50 via-black/30 to-black/70"></div>

@@ -123,9 +123,9 @@ const TermsOfService = () => {
                 <ExclamationTriangleIcon className="w-10 h-10 text-amber-500" />
               </div>
               <div className="flex-grow">
-                <h3 className="text-amber-500 font-bold text-2xl mb-1 font-iceland">
+                <h2 className="text-amber-500 font-bold text-2xl mb-1 font-iceland">
                   Important: Review Required
-                </h3>
+                </h2>
                 <p className="text-white/80 text-sm sm:text-base font-inter">
                   Please carefully review and accept our Terms of Service before
                   proceeding to payment. This legal agreement outlines the
@@ -191,9 +191,9 @@ const TermsOfService = () => {
                   <div className="p-2 bg-gold/10 rounded-lg text-gold group-hover:bg-gold/20 transition-colors">
                     {section.icon}
                   </div>
-                  <h3 className="text-xl font-bold text-gold font-iceland tracking-wide">
+                  <h2 className="text-xl font-bold text-gold font-iceland tracking-wide">
                     {section.title}
-                  </h3>
+                  </h2>
                 </div>
                 <p className="text-gray-100 leading-relaxed text-sm font-inter">
                   {section.content}

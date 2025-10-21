@@ -123,8 +123,9 @@ const Navbar = () => {
                 type="button"
                 onClick={handleClickModal}
                 className="text-white/80 hover:text-gold transition-colors"
+                aria-label="Open navigation menu"
               >
-                <Bars3Icon className="w-6 h-6" />
+                <Bars3Icon className="w-6 h-6" aria-hidden="true" />
               </button>
             </div>
 
@@ -133,6 +134,7 @@ const Navbar = () => {
               type="button"
               onClick={handleClickModal}
               className="lg:hidden inline-flex items-center justify-center rounded-md text-white/80 hover:text-gold transition-colors"
+              aria-label="Open mobile menu"
             >
               <Bars3Icon aria-hidden="true" className="w-6 h-6" />
             </button>
@@ -163,6 +165,7 @@ const Navbar = () => {
                       type="button"
                       onClick={() => setIsOpen(false)}
                       className="rounded-md text-white/80 hover:text-gold transition-colors"
+                      aria-label="Close menu"
                     >
                       <XMarkIcon aria-hidden="true" className="w-6 h-6" />
                     </button>

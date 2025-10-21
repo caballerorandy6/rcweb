@@ -101,9 +101,9 @@ const Pricing = () => {
               )}
 
               <div>
-                <h3 className="text-2xl font-iceland text-white">
+                <h2 className="text-2xl font-iceland text-white">
                   {plan.name}
-                </h3>
+                </h2>
                 <p className="mt-4 flex items-baseline gap-x-2">
                   <span className="text-4xl font-iceland text-gold">
                     {plan.price}
@@ -157,9 +157,9 @@ const Pricing = () => {
               transition={{ type: "spring", stiffness: 300, damping: 25 }}
               className="bg-gray-900/95 rounded-2xl p-8 max-w-md w-full border border-gold/20 shadow-2xl shadow-gold/10"
             >
-              <h3 className="text-4xl font-bold text-gold mb-6 font-iceland">
+              <h2 className="text-4xl font-bold text-gold mb-6 font-iceland">
                 Complete Your Order
-              </h3>
+              </h2>
 
               <div className="bg-gray-800/50 rounded-lg p-4 mb-6 border border-gold/10 font-inter">
                 <div className="flex justify-between items-center mb-2">

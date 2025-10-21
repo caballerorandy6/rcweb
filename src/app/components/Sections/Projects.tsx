@@ -35,6 +35,7 @@ const Projects = () => {
         </Heading>
         {/* Projects with smooth height animation */}
         <motion.div
+          id={contentId}
           className="relative"
           initial={false}
           animate={{

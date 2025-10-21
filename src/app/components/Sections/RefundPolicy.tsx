@@ -113,9 +113,9 @@ const RefundPolicy = () => {
                   <div className="p-2 bg-gold/10 rounded-lg text-gold group-hover:bg-gold/20 transition-colors">
                     {section.icon}
                   </div>
-                  <h3 className="text-xl font-bold text-gold font-iceland tracking-wide">
+                  <h2 className="text-xl font-bold text-gold font-iceland tracking-wide">
                     {section.title}
-                  </h3>
+                  </h2>
                 </div>
                 <p className="text-gray-100 leading-relaxed text-sm font-inter">
                   {section.content}
