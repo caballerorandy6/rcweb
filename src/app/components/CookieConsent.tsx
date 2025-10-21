@@ -77,17 +77,26 @@ const CookieConsent = ({ onAccept, onReject }: CookieConsentProps) => {
                       Cookie Settings
                     </h2>
                   </div>
-                  <p className="text-sm sm:text-base font-inter text-white/70 leading-relaxed">
-                    We use cookies to improve your experience, analyze site
-                    traffic, and for marketing purposes. You can accept all
-                    cookies or manage your preferences.{" "}
-                    <a
-                      href="/privacy-policy"
-                      className="text-gold hover:text-gold/80 underline transition-colors"
-                    >
-                      Learn more
-                    </a>
-                  </p>
+                  <div className="space-y-2">
+                    <p className="text-sm sm:text-base font-inter text-white/70 leading-relaxed">
+                      We use cookies to improve your experience. Essential cookies
+                      (reCAPTCHA for form protection) are required. Optional
+                      cookies help us analyze traffic and improve our marketing.{" "}
+                      <a
+                        href="/privacy-policy"
+                        className="text-gold hover:text-gold/80 underline transition-colors"
+                      >
+                        Learn more
+                      </a>
+                    </p>
+                    <div className="text-xs font-inter text-white/50 bg-gray-800/50 p-2 rounded">
+                      <strong className="text-white/70">Essential:</strong> Google
+                      reCAPTCHA (anti-bot protection)
+                      <br />
+                      <strong className="text-white/70">Optional:</strong> Google
+                      Analytics, Google Ads, Facebook Pixel, LinkedIn Ads
+                    </div>
+                  </div>
                 </div>
 
                 {/* Buttons */}
@@ -95,14 +104,14 @@ const CookieConsent = ({ onAccept, onReject }: CookieConsentProps) => {
                   <button
                     onClick={handleReject}
                     className="px-6 py-2.5 rounded-lg font-inter text-sm text-white/80 border-2 border-gold/30 hover:border-gold/50 hover:bg-gold/5 transition-all duration-200"
-                    aria-label="Reject non-essential cookies"
+                    aria-label="Reject optional cookies (essential cookies will remain active)"
                   >
-                    Reject
+                    Essential Only
                   </button>
                   <button
                     onClick={handleAccept}
                     className="px-6 py-2.5 rounded-lg font-inter text-sm bg-gold text-gray-900 hover:bg-gold/90 transition-all duration-200 font-semibold"
-                    aria-label="Accept all cookies"
+                    aria-label="Accept all cookies including marketing and analytics"
                   >
                     Accept All
                   </button>
