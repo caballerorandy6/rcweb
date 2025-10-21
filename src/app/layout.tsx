@@ -114,35 +114,24 @@ export default function RootLayout({
   return (
     <html lang="en" className="!scroll-smooth" data-scroll-behavior="smooth" suppressHydrationWarning>
       <head>
-        {/* Preconnect to critical third-party origins */}
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-        <link rel="dns-prefetch" href="https://fonts.googleapis.com" />
-        <link rel="dns-prefetch" href="https://fonts.gstatic.com" />
-
+        {/* Preconnect only to most critical origins (max 4 per Lighthouse) */}
+        {/* Next.js already handles fonts, so we only preconnect to analytics/ads */}
         <link rel="preconnect" href="https://www.googletagmanager.com" />
-        <link rel="dns-prefetch" href="https://www.googletagmanager.com" />
 
-        {/* Conditional preconnects for analytics/ads */}
         {GOOGLE_ADS_ID && (
-          <>
-            <link rel="preconnect" href="https://googleads.g.doubleclick.net" />
-            <link rel="dns-prefetch" href="https://googleads.g.doubleclick.net" />
-          </>
+          <link rel="preconnect" href="https://googleads.g.doubleclick.net" />
         )}
+
         {FACEBOOK_PIXEL_ID && (
-          <>
-            <link rel="preconnect" href="https://connect.facebook.net" />
-            <link rel="dns-prefetch" href="https://connect.facebook.net" />
-            <link rel="preconnect" href="https://www.facebook.com" />
-            <link rel="dns-prefetch" href="https://www.facebook.com" />
-          </>
+          <link rel="preconnect" href="https://connect.facebook.net" />
+        )}
+
+        {/* DNS-prefetch for lower priority origins (lighter than preconnect) */}
+        {FACEBOOK_PIXEL_ID && (
+          <link rel="dns-prefetch" href="https://www.facebook.com" />
         )}
         {LINKEDIN_PARTNER_ID && (
-          <>
-            <link rel="preconnect" href="https://snap.licdn.com" />
-            <link rel="dns-prefetch" href="https://snap.licdn.com" />
-          </>
+          <link rel="dns-prefetch" href="https://snap.licdn.com" />
         )}
 
         {/* Google Tag Manager */}
