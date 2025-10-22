@@ -16,18 +16,33 @@ export default function OfferContent() {
   });
 
   useEffect(() => {
-    const timer = setInterval(() => {
-      const now = new Date().getTime();
-      const endDate = new Date(now + 7 * 24 * 60 * 60 * 1000).getTime();
-      const distance = endDate - now;
+    // Set end date to 7 days from now (fixed)
+    const endDate = new Date();
+    endDate.setDate(endDate.getDate() + 7);
+    const endTime = endDate.getTime();
 
-      setTimeLeft({
-        days: Math.floor(distance / (1000 * 60 * 60 * 24)),
-        hours: Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)),
-        minutes: Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60)),
-        seconds: Math.floor((distance % (1000 * 60)) / 1000),
-      });
-    }, 1000);
+    const updateTimer = () => {
+      const now = new Date().getTime();
+      const distance = endTime - now;
+
+      if (distance > 0) {
+        const newTimeLeft = {
+          days: Math.floor(distance / (1000 * 60 * 60 * 24)),
+          hours: Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)),
+          minutes: Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60)),
+          seconds: Math.floor((distance % (1000 * 60)) / 1000),
+        };
+        setTimeLeft(newTimeLeft);
+      } else {
+        setTimeLeft({ days: 0, hours: 0, minutes: 0, seconds: 0 });
+      }
+    };
+
+    // Update immediately
+    updateTimer();
+
+    // Update every second
+    const timer = setInterval(updateTimer, 1000);
 
     return () => clearInterval(timer);
   }, []);

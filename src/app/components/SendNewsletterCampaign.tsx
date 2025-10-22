@@ -142,6 +142,148 @@ export default function SendNewsletterCampaign({
     }
   };
 
+  const useOfferTemplate = () => {
+    setSubject("🎉 Special Offer Just For You - 20% OFF Web Development | RC Web Solutions");
+    setContent(`<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Iceland&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Iceland&family=Inter:wght@400;600;700&display=swap');
+
+        .heading-font {
+            font-family: 'Iceland', 'Arial', sans-serif;
+        }
+        .body-font {
+            font-family: 'Inter', 'Arial', sans-serif;
+        }
+    </style>
+</head>
+<body style="margin: 0; padding: 0; font-family: 'Inter', Arial, sans-serif; background-color: #f4f4f4;">
+    <table width="100%" cellpadding="0" cellspacing="0" style="background-color: #f4f4f4; padding: 20px;">
+        <tr>
+            <td align="center">
+                <table width="600" cellpadding="0" cellspacing="0" style="background-color: #ffffff; border-radius: 8px; overflow: hidden; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
+
+                    <!-- Header with Logo -->
+                    <tr>
+                        <td style="background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%); padding: 40px 20px; text-align: center;">
+                            <h1 style="color: #D4AF37; margin: 0; font-size: 32px; font-weight: bold; font-family: 'Iceland', Arial, sans-serif; letter-spacing: 1px;">RC WEB SOLUTIONS</h1>
+                            <p style="color: #ffffff; margin: 10px 0 0 0; font-size: 14px; font-family: 'Inter', Arial, sans-serif;">Professional Web Development</p>
+                        </td>
+                    </tr>
+
+                    <!-- Limited Time Badge -->
+                    <tr>
+                        <td style="background-color: #FEF3C7; padding: 15px; text-align: center; border-bottom: 2px solid #D4AF37;">
+                            <p style="margin: 0; color: #B45309; font-weight: bold; font-size: 14px; font-family: 'Inter', Arial, sans-serif; letter-spacing: 0.5px;">
+                                ⏰ LIMITED TIME OFFER - 7 DAYS ONLY
+                            </p>
+                        </td>
+                    </tr>
+
+                    <!-- Main Content -->
+                    <tr>
+                        <td style="padding: 40px 30px; text-align: center;">
+                            <h2 style="color: #1a1a1a; margin: 0 0 20px 0; font-size: 48px; text-align: center; font-family: 'Iceland', Arial, sans-serif; letter-spacing: 1px; line-height: 1.2;">
+                                GET <span style="color: #D4AF37;">20% OFF</span>
+                            </h2>
+                            <h3 style="color: #4a5568; margin: 0 0 40px 0; font-size: 22px; text-align: center; font-weight: 600; font-family: 'Inter', Arial, sans-serif; line-height: 1.4;">
+                                Professional Web Development Services
+                            </h3>
+
+                            <div style="text-align: left; max-width: 540px; margin: 0 auto;">
+                                <p style="color: #4a5568; line-height: 1.8; margin: 0 0 20px 0; font-size: 16px; font-family: 'Inter', Arial, sans-serif;">
+                                    Hi there! 👋
+                                </p>
+
+                                <p style="color: #4a5568; line-height: 1.8; margin: 0 0 20px 0; font-size: 16px; font-family: 'Inter', Arial, sans-serif;">
+                                    I wanted to reach out personally because I'm offering an exclusive <strong style="color: #D4AF37;">20% discount</strong> on all web development projects for the next 7 days.
+                                </p>
+
+                                <p style="color: #4a5568; line-height: 1.8; margin: 0 0 30px 0; font-size: 16px; font-family: 'Inter', Arial, sans-serif;">
+                                    Whether you've been thinking about launching a new website, redesigning your current one, or building a custom web application - this is the perfect opportunity to get started.
+                                </p>
+                            </div>
+
+                            <!-- What's Included Box -->
+                            <div style="background-color: #F9FAFB; border-left: 4px solid #D4AF37; padding: 25px; margin: 0 0 35px 0; text-align: left; border-radius: 8px;">
+                                <h4 style="color: #1a1a1a; margin: 0 0 20px 0; font-size: 22px; font-family: 'Iceland', Arial, sans-serif; letter-spacing: 0.5px; text-align: center;">THIS OFFER INCLUDES</h4>
+                                <ul style="color: #4a5568; line-height: 2; margin: 0; padding-left: 30px; font-family: 'Inter', Arial, sans-serif; font-size: 15px;">
+                                    <li style="margin-bottom: 8px;">Full-Stack Web Applications</li>
+                                    <li style="margin-bottom: 8px;">E-Commerce Websites</li>
+                                    <li style="margin-bottom: 8px;">Landing Pages</li>
+                                    <li style="margin-bottom: 8px;">Custom CMS Development</li>
+                                    <li style="margin-bottom: 8px;">Website Redesign Projects</li>
+                                    <li style="margin-bottom: 8px;">Mobile-Responsive Design</li>
+                                </ul>
+                            </div>
+
+                            <!-- CTA Button -->
+                            <table width="100%" cellpadding="0" cellspacing="0" style="margin: 0 0 35px 0;">
+                                <tr>
+                                    <td align="center">
+                                        <a href="https://rcweb.dev/offer" style="display: inline-block; background-color: #D4AF37; color: #1a1a1a; text-decoration: none; padding: 20px 45px; border-radius: 10px; font-weight: bold; font-size: 18px; box-shadow: 0 6px 12px rgba(212, 175, 55, 0.4); font-family: 'Inter', Arial, sans-serif; letter-spacing: 0.5px;">
+                                            🚀 CLAIM YOUR 20% DISCOUNT
+                                        </a>
+                                    </td>
+                                </tr>
+                            </table>
+
+                            <div style="text-align: center; max-width: 540px; margin: 0 auto;">
+                                <p style="color: #4a5568; line-height: 1.8; margin: 0 0 20px 0; font-size: 16px; font-family: 'Inter', Arial, sans-serif;">
+                                    Simply reply to this email or give me a call at <strong style="color: #D4AF37;">(346) 375-7534</strong> to get started.
+                                </p>
+
+                                <p style="color: #4a5568; line-height: 1.8; margin: 0; font-size: 16px; font-family: 'Inter', Arial, sans-serif;">
+                                    Looking forward to working with you!
+                                </p>
+
+                                <p style="color: #D4AF37; line-height: 1.8; margin: 20px 0 0 0; font-size: 16px; font-family: 'Inter', Arial, sans-serif; font-weight: 600;">
+                                    Best regards,<br>
+                                    Randy Caballero<br>
+                                    <span style="font-size: 14px; color: #9CA3AF;">Founder, RC Web Solutions LLC</span>
+                                </p>
+                            </div>
+                        </td>
+                    </tr>
+
+                    <!-- Footer -->
+                    <tr>
+                        <td style="background-color: #1a1a1a; padding: 35px 20px; text-align: center;">
+                            <p style="color: #D4AF37; margin: 0 0 10px 0; font-weight: bold; font-size: 20px; font-family: 'Iceland', Arial, sans-serif; letter-spacing: 1px;">
+                                RC WEB SOLUTIONS LLC
+                            </p>
+                            <p style="color: #9CA3AF; margin: 0 0 20px 0; font-size: 14px; font-family: 'Inter', Arial, sans-serif;">
+                                Houston, TX 77085
+                            </p>
+                            <p style="margin: 0 0 20px 0; line-height: 2;">
+                                <a href="tel:3463757534" style="color: #D4AF37; text-decoration: none; margin: 0 15px; font-family: 'Inter', Arial, sans-serif; font-size: 14px;">📞 (346) 375-7534</a><br>
+                                <a href="mailto:contactus@rcweb.dev" style="color: #D4AF37; text-decoration: none; margin: 0 15px; font-family: 'Inter', Arial, sans-serif; font-size: 14px;">✉️ contactus@rcweb.dev</a><br>
+                                <a href="https://rcweb.dev" style="color: #D4AF37; text-decoration: none; margin: 0 15px; font-family: 'Inter', Arial, sans-serif; font-size: 14px;">🌐 rcweb.dev</a>
+                            </p>
+                            <div style="border-top: 1px solid #4a5568; padding-top: 20px; margin-top: 20px;">
+                                <p style="color: #6B7280; margin: 0 0 10px 0; font-size: 12px; font-family: 'Inter', Arial, sans-serif; line-height: 1.6;">
+                                    Offer valid for 7 days. Cannot be combined with other promotions.
+                                </p>
+                                <p style="color: #6B7280; margin: 0; font-size: 11px; font-family: 'Inter', Arial, sans-serif;">
+                                    © 2025 RC Web Solutions LLC. All rights reserved.
+                                </p>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </table>
+</body>
+</html>`);
+  };
+
   const useTemplate = () => {
     setSubject("🎃 Halloween Special - Professional Web Development Services");
     setContent(`<!DOCTYPE html>
@@ -471,10 +613,17 @@ export default function SendNewsletterCampaign({
             </button>
 
             <button
+              onClick={useOfferTemplate}
+              className="px-6 py-3 bg-gradient-to-r from-gold to-gold/80 text-black rounded-lg hover:from-gold/90 hover:to-gold/70 transition-all font-inter font-semibold"
+            >
+              🎉 20% OFF Template
+            </button>
+
+            <button
               onClick={useTemplate}
               className="px-6 py-3 border border-gold/50 text-gold rounded-lg hover:bg-gold/10 transition-colors font-inter"
             >
-              Use Template
+              🎃 Halloween Template
             </button>
           </div>
         </div>
