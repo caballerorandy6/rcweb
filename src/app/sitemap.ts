@@ -14,6 +14,7 @@
 
 import { MetadataRoute } from "next";
 import { siteConfig } from "@/config/site";
+import { getAllPosts } from "@/lib/blog";
 
 type SitemapRoute = {
   route: string;
@@ -89,10 +90,25 @@ const sitemapConfig: SitemapConfig = {
 };
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  return sitemapConfig.manualRoutes.map((route) => ({
+  // Get all blog posts
+  const posts = getAllPosts();
+
+  // Generate blog post entries
+  const blogPostEntries = posts.map((post) => ({
+    url: `${sitemapConfig.baseUrl}/blog/${post.slug}`,
+    lastModified: post.date || new Date().toISOString().split("T")[0],
+    changeFrequency: "monthly" as const,
+    priority: 0.7,
+  }));
+
+  // Generate manual route entries
+  const manualRouteEntries = sitemapConfig.manualRoutes.map((route) => ({
     url: `${sitemapConfig.baseUrl}${route.route}`,
     lastModified: route.lastModified || new Date().toISOString().split("T")[0],
     changeFrequency: route.changeFrequency || "monthly",
     priority: route.priority || 0.8,
   }));
+
+  // Combine all entries
+  return [...manualRouteEntries, ...blogPostEntries];
 }
