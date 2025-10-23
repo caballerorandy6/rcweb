@@ -72,7 +72,7 @@ export default function BlogPost({ post }: BlogPostProps) {
                 {post.tags.map((tag) => (
                   <span
                     key={tag}
-                    className="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold bg-gold/10 text-gold border border-gold/20"
+                    className="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold bg-gold/10 text-gold border border-gold/20 font-inter"
                   >
                     {tag}
                   </span>
@@ -113,7 +113,7 @@ export default function BlogPost({ post }: BlogPostProps) {
             </div>
 
             {/* Article Content */}
-            <div className="prose prose-invert prose-lg max-w-none mt-8 font-inter">
+            <div className="prose prose-invert prose-lg max-w-none mt-8">
               <ReactMarkdown
                 remarkPlugins={[remarkGfm]}
                 components={{
@@ -132,15 +132,20 @@ export default function BlogPost({ post }: BlogPostProps) {
                       {children}
                     </h3>
                   ),
+                  h4: ({ children }) => (
+                    <h4 className="text-lg font-bold text-gold/80 font-iceland mt-4 mb-2">
+                      {children}
+                    </h4>
+                  ),
                   p: ({ children }) => (
-                    <p className="text-white/80 leading-relaxed mb-4">
+                    <p className="text-white/80 leading-relaxed mb-4 font-inter">
                       {children}
                     </p>
                   ),
                   a: ({ href, children }) => (
                     <a
                       href={href}
-                      className="text-gold hover:text-gold/80 underline transition-colors"
+                      className="text-gold hover:text-gold/80 underline transition-colors font-inter"
                       target={href?.startsWith("http") ? "_blank" : undefined}
                       rel={href?.startsWith("http") ? "noopener noreferrer" : undefined}
                     >
@@ -148,17 +153,22 @@ export default function BlogPost({ post }: BlogPostProps) {
                     </a>
                   ),
                   ul: ({ children }) => (
-                    <ul className="list-disc list-inside text-white/80 mb-4 space-y-2">
+                    <ul className="list-disc list-inside text-white/80 mb-4 space-y-2 font-inter">
                       {children}
                     </ul>
                   ),
                   ol: ({ children }) => (
-                    <ol className="list-decimal list-inside text-white/80 mb-4 space-y-2">
+                    <ol className="list-decimal list-inside text-white/80 mb-4 space-y-2 font-inter">
                       {children}
                     </ol>
                   ),
+                  li: ({ children }) => (
+                    <li className="text-white/80 font-inter">
+                      {children}
+                    </li>
+                  ),
                   blockquote: ({ children }) => (
-                    <blockquote className="border-l-4 border-gold/50 pl-4 py-2 my-4 bg-gold/5 rounded-r-lg italic text-white/70">
+                    <blockquote className="border-l-4 border-gold/50 pl-4 py-2 my-4 bg-gold/5 rounded-r-lg italic text-white/70 font-inter">
                       {children}
                     </blockquote>
                   ),
@@ -171,6 +181,19 @@ export default function BlogPost({ post }: BlogPostProps) {
                     <pre className="bg-gray-800 p-4 rounded-lg overflow-x-auto mb-4 border border-gray-700">
                       {children}
                     </pre>
+                  ),
+                  strong: ({ children }) => (
+                    <strong className="font-bold text-white font-inter">
+                      {children}
+                    </strong>
+                  ),
+                  em: ({ children }) => (
+                    <em className="italic text-white/90 font-inter">
+                      {children}
+                    </em>
+                  ),
+                  hr: () => (
+                    <hr className="border-gray-700 my-8" />
                   ),
                 }}
               >

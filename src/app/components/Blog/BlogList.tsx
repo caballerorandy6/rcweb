@@ -75,7 +75,7 @@ export default function BlogList({ posts }: BlogListProps) {
                       {post.tags.slice(0, 3).map((tag) => (
                         <span
                           key={tag}
-                          className="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold bg-gold/10 text-gold border border-gold/20"
+                          className="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold bg-gold/10 text-gold border border-gold/20 font-inter"
                         >
                           {tag}
                         </span>
