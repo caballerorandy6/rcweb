@@ -446,7 +446,7 @@ export default function PrivacyPolicy() {
                 <ul className="space-y-2 text-white/80 font-inter list-disc list-inside">
                   <li>
                     Your phone number will not be shared with third parties for
-                    their marketing purposes without your explicit consent
+                    their marketing purposes
                   </li>
                   <li>
                     We use secure systems to transmit and store your phone
