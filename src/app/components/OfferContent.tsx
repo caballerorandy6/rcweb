@@ -16,9 +16,9 @@ export default function OfferContent() {
   });
 
   useEffect(() => {
-    // Set end date to 7 days from now (fixed)
-    const endDate = new Date();
-    endDate.setDate(endDate.getDate() + 7);
+    // Set fixed end date for the offer (YYYY, MM-1, DD, HH, MM, SS)
+    // Note: Month is 0-indexed (0 = January, 9 = October)
+    const endDate = new Date(2025, 9, 31, 23, 59, 59); // October 31, 2025 at 11:59:59 PM
     const endTime = endDate.getTime();
 
     const updateTimer = () => {
