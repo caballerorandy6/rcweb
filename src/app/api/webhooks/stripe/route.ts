@@ -5,6 +5,7 @@ import Stripe from "stripe";
 import { prisma } from "@/lib/prisma";
 import { Resend } from "resend";
 import { trackPaymentComplete } from "@/lib/analytics";
+import { createInvoiceAndSendEmail } from "@/lib/invoice/createInvoiceAndSendEmail";
 
 // Environment variables validation
 if (!process.env.STRIPE_SECRET_KEY) {
@@ -22,6 +23,10 @@ const endpointSecret = process.env.STRIPE_WEBHOOK_SECRET;
 const TERMS_VERSION = "2025-09-25"; // Centralized terms version
 
 export async function POST(req: Request) {
+  console.log("=" .repeat(80));
+  console.log("🚨🚨🚨 WEBHOOK RECEIVED AT:", new Date().toISOString());
+  console.log("=" .repeat(80));
+
   const isDev = process.env.NODE_ENV === "development";
 
   if (isDev) {
@@ -112,73 +117,116 @@ export async function POST(req: Request) {
           console.log("💾 Creating new Payment with projectCode:", projectCode);
         }
 
-        // CREATE Payment and TermsAcceptance in transaction with duplicate verification
-        const payment = await prisma.$transaction(async (tx) => {
-          // Verify duplicates inside transaction to avoid race conditions
-          const existingByCode = await tx.payment.findUnique({
-            where: { projectCode },
-          });
-
-          if (existingByCode) {
-            console.log("⚠️ Payment already exists with projectCode:", projectCode);
-            throw new Error("DUPLICATE_PROJECT_CODE");
-          }
-
-          const existingBySession = await tx.payment.findFirst({
-            where: { firstSessionId: session.id },
-          });
-
-          if (existingBySession) {
-            console.log("⚠️ Payment already exists with sessionId:", session.id);
-            throw new Error("DUPLICATE_SESSION_ID");
-          }
-
-          const newPayment = await tx.payment.create({
-            data: {
-              projectCode,
-              email: customerEmail,
-              name: customerName || "Client",
-              planName: planName || "Unknown Plan",
-              totalAmount,
-              firstPayment: firstPaymentAmount,
-              secondPayment: secondPaymentAmount,
-              firstPaid: true,
-              firstPaidAt: new Date(),
-              firstSessionId: session.id,
-              projectStatus: "in_progress",
-            },
-          });
-
-          if (metadata.termsAcceptedAt) {
-            await tx.termsAcceptance.create({
-              data: {
-                paymentId: newPayment.id,
-                acceptedAt: new Date(metadata.termsAcceptedAt),
-                termsVersion: TERMS_VERSION,
-                plan: planName,
-                ipAddress: "stripe-checkout",
-                userAgent: "stripe-checkout",
-              },
-            });
-            if (isDev) {
-              console.log(
-                "✅ TermsAcceptance created for paymentId:",
-                newPayment.id
-              );
-            }
-          }
-
-          return newPayment;
+        // CHECK if Payment already exists (created by fallback)
+        let payment = await prisma.payment.findFirst({
+          where: {
+            OR: [
+              { projectCode },
+              { firstSessionId: session.id },
+            ],
+          },
+          include: {
+            invoices: true,
+          },
         });
 
-        console.log("✅ Payment created successfully with ID:", payment.id);
+        // If payment exists but has no invoices, we'll create the invoice below
+        if (payment) {
+          console.log("⚠️ Payment already exists (probably from fallback):", payment.projectCode);
+          console.log("📋 Existing invoices:", payment.invoices.length);
 
-        // Track payment completion in Google Analytics
-        trackPaymentComplete(firstPaymentAmount / 100, "initial_deposit");
+          // If payment doesn't have the session ID, update it
+          if (!payment.firstSessionId) {
+            payment = await prisma.payment.update({
+              where: { id: payment.id },
+              data: { firstSessionId: session.id },
+              include: { invoices: true },
+            });
+            console.log("✅ Updated payment with session ID");
+          }
+        }
 
-        // ============= CLIENT EMAIL =============
+        // CREATE Payment and TermsAcceptance if it doesn't exist
+        if (!payment) {
+          payment = await prisma.$transaction(async (tx) => {
+            const newPayment = await tx.payment.create({
+              data: {
+                projectCode,
+                email: customerEmail,
+                name: customerName || "Client",
+                planName: planName || "Unknown Plan",
+                totalAmount,
+                firstPayment: firstPaymentAmount,
+                secondPayment: secondPaymentAmount,
+                firstPaid: true,
+                firstPaidAt: new Date(),
+                firstSessionId: session.id,
+                projectStatus: "in_progress",
+              },
+              include: {
+                invoices: true,
+              },
+            });
+
+            if (metadata.termsAcceptedAt) {
+              await tx.termsAcceptance.create({
+                data: {
+                  paymentId: newPayment.id,
+                  acceptedAt: new Date(metadata.termsAcceptedAt),
+                  termsVersion: TERMS_VERSION,
+                  plan: planName,
+                  ipAddress: "stripe-checkout",
+                  userAgent: "stripe-checkout",
+                },
+              });
+              if (isDev) {
+                console.log(
+                  "✅ TermsAcceptance created for paymentId:",
+                  newPayment.id
+                );
+              }
+            }
+
+            return newPayment;
+          });
+
+          console.log("✅ Payment created successfully with ID:", payment.id);
+
+          // Track payment completion in Google Analytics
+          trackPaymentComplete(firstPaymentAmount / 100, "initial_deposit");
+        }
+
+        // ============= CREATE INVOICE AND SEND EMAIL =============
         const emailErrors: string[] = [];
 
+        // Check if initial invoice already exists
+        const hasInitialInvoice = payment.invoices.some(inv => inv.type === "initial");
+
+        if (!hasInitialInvoice) {
+          try {
+            console.log("🔄 Intentando crear invoice inicial...");
+            const invoiceResult = await createInvoiceAndSendEmail({
+              payment,
+              type: "initial",
+              resend,
+              stripeSessionId: session.id,
+            });
+            console.log("✅ Initial invoice created and sent to client:", invoiceResult);
+          } catch (invoiceError) {
+            const errorMsg = `Error creating invoice: ${invoiceError instanceof Error ? invoiceError.message : String(invoiceError)}`;
+            console.error("❌ INVOICE ERROR:", errorMsg);
+            console.error("❌ INVOICE ERROR STACK:", invoiceError instanceof Error ? invoiceError.stack : 'No stack');
+            emailErrors.push(errorMsg);
+          }
+        } else {
+          console.log("ℹ️ Initial invoice already exists, skipping creation");
+        }
+
+        // ============= CLIENT EMAIL (OLD - COMMENTED OUT) =============
+        // NOTE: The email with invoice PDF is now sent by createInvoiceAndSendEmail above
+        // The old email code has been commented out to avoid duplicate emails
+
+        /*
         try {
           await resend.emails.send({
             from: "RC Web <no-reply@rcweb.dev>",
@@ -271,8 +319,9 @@ export async function POST(req: Request) {
         } catch (emailError) {
           const errorMsg = `Error sending email to client: ${emailError instanceof Error ? emailError.message : String(emailError)}`;
           console.error("❌", errorMsg);
-          emailErrors.push(errorMsg);
+          // emailErrors.push(errorMsg);
         }
+        */
 
         // ============= ADMIN EMAIL =============
         try {
@@ -348,33 +397,20 @@ export async function POST(req: Request) {
       const paymentId = metadata.paymentId;
 
       try {
-        // Use transaction for complete idempotency
-        const payment = await prisma.$transaction(async (tx) => {
-          const existingPayment = await tx.payment.findUnique({
-            where: { id: paymentId },
-          });
+        // Check if payment exists and get current state
+        let payment = await prisma.payment.findUnique({
+          where: { id: paymentId },
+          include: { invoices: true },
+        });
 
-          if (!existingPayment) {
-            console.error("❌ Payment not found:", paymentId);
-            throw new Error("PAYMENT_NOT_FOUND");
-          }
+        if (!payment) {
+          console.error("❌ Payment not found:", paymentId);
+          throw new Error("PAYMENT_NOT_FOUND");
+        }
 
-          // Check if already processed with this sessionId
-          if (existingPayment.secondSessionId === session.id) {
-            console.log(
-              "⚠️ Final payment already processed with this sessionId:",
-              session.id
-            );
-            throw new Error("DUPLICATE_FINAL_SESSION");
-          }
-
-          // Check if already processed (with another sessionId)
-          if (existingPayment.secondPaid) {
-            console.log("⚠️ Final payment already processed previously");
-            throw new Error("ALREADY_PAID");
-          }
-
-          const updatedPayment = await tx.payment.update({
+        // If payment not marked as secondPaid yet, update it
+        if (!payment.secondPaid) {
+          payment = await prisma.payment.update({
             where: { id: paymentId },
             data: {
               secondPaid: true,
@@ -382,18 +418,80 @@ export async function POST(req: Request) {
               secondSessionId: session.id,
               projectStatus: "completed",
             },
+            include: { invoices: true },
           });
+          console.log("✅ Payment updated - Project completed");
 
-          return updatedPayment;
-        });
+          // Track final payment completion in Google Analytics
+          trackPaymentComplete(payment.secondPayment / 100, "final_payment");
+        } else {
+          console.log("⚠️ Payment already marked as secondPaid (probably from fallback)");
 
-        console.log("✅ Payment updated - Project completed");
+          // Update session ID if not set
+          if (!payment.secondSessionId) {
+            payment = await prisma.payment.update({
+              where: { id: paymentId },
+              data: { secondSessionId: session.id },
+              include: { invoices: true },
+            });
+            console.log("✅ Updated payment with session ID");
+          }
+        }
 
-        // Track final payment completion in Google Analytics
-        trackPaymentComplete(payment.secondPayment / 100, "final_payment");
-
-        // ============= PROJECT COMPLETION EMAIL =============
+        // ============= CREATE INVOICES AND SEND EMAILS =============
         const emailErrors: string[] = [];
+
+        // Check if invoices already exist
+        const hasFinalInvoice = payment.invoices.some(inv => inv.type === "final");
+        const hasSummaryInvoice = payment.invoices.some(inv => inv.type === "summary");
+
+        // Create and send FINAL invoice if it doesn't exist
+        if (!hasFinalInvoice) {
+          try {
+            console.log("🔄 Intentando crear invoice final...");
+            const finalInvoiceResult = await createInvoiceAndSendEmail({
+              payment,
+              type: "final",
+              resend,
+              stripeSessionId: session.id,
+            });
+            console.log("✅ Final invoice created and sent to client:", finalInvoiceResult);
+          } catch (invoiceError) {
+            const errorMsg = `Error creating final invoice: ${invoiceError instanceof Error ? invoiceError.message : String(invoiceError)}`;
+            console.error("❌ FINAL INVOICE ERROR:", errorMsg);
+            console.error("❌ FINAL INVOICE ERROR STACK:", invoiceError instanceof Error ? invoiceError.stack : 'No stack');
+            emailErrors.push(errorMsg);
+          }
+        } else {
+          console.log("ℹ️ Final invoice already exists, skipping creation");
+        }
+
+        // Create and send SUMMARY invoice if it doesn't exist
+        if (!hasSummaryInvoice) {
+          try {
+            console.log("🔄 Intentando crear invoice summary...");
+            const summaryInvoiceResult = await createInvoiceAndSendEmail({
+              payment,
+              type: "summary",
+              resend,
+            });
+            console.log("✅ Summary invoice created and sent to client:", summaryInvoiceResult);
+          } catch (invoiceError) {
+            const errorMsg = `Error creating summary invoice: ${invoiceError instanceof Error ? invoiceError.message : String(invoiceError)}`;
+            console.error("❌ SUMMARY INVOICE ERROR:", errorMsg);
+            console.error("❌ SUMMARY INVOICE ERROR STACK:", invoiceError instanceof Error ? invoiceError.stack : 'No stack');
+            emailErrors.push(errorMsg);
+          }
+        } else {
+          console.log("ℹ️ Summary invoice already exists, skipping creation");
+        }
+
+        // ============= PROJECT COMPLETION EMAIL (OLD - COMMENTED OUT) =============
+        // NOTE: Emails with invoice PDFs are now sent by createInvoiceAndSendEmail above
+        // The old email code has been commented out to avoid duplicate emails
+
+        /*
+        const oldEmailErrors: string[] = [];
 
         try {
           await resend.emails.send({
@@ -445,8 +543,9 @@ export async function POST(req: Request) {
         } catch (emailError) {
           const errorMsg = `Error sending completion email: ${emailError instanceof Error ? emailError.message : String(emailError)}`;
           console.error("❌", errorMsg);
-          emailErrors.push(errorMsg);
+          // oldEmailErrors.push(errorMsg);
         }
+        */
 
         // ============= ADMIN EMAIL =============
         try {

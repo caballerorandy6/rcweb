@@ -32,7 +32,7 @@ export async function handlePaymentSuccessAction(
     // AUMENTAR el tiempo de espera para dar más tiempo al webhook
     let payment = null;
     let attempts = 0;
-    const maxAttempts = 3; // 15 intentos × 1s = 15 segundos (era 5)
+    const maxAttempts = 30; // 30 intentos × 1s = 30 segundos
     const delayMs = 1000;
 
     console.log(`🔄 Esperando a que webhook procese: ${finalProjectCode}`);
@@ -67,9 +67,9 @@ export async function handlePaymentSuccessAction(
       }
     }
 
-    // FALLBACK: Solo si el webhook definitivamente no procesó después de 15 segundos
+    // FALLBACK: Solo si el webhook definitivamente no procesó después de 30 segundos
     console.log(
-      "⚠️ Webhook no procesó después de 15 segundos, usando fallback..."
+      "⚠️ Webhook no procesó después de 30 segundos, usando fallback..."
     );
 
     // Última verificación antes de crear
@@ -224,7 +224,7 @@ export async function handlePaymentSuccessAction(
           subject: `💰 New payment (FALLBACK) - ${finalProjectCode}`,
           html: `
             <h2>New Initial Payment (Created via Fallback)</h2>
-            <p><strong>⚠️ WEBHOOK NO PROCESÓ EN 15 SEGUNDOS - Payment creado desde fallback</strong></p>
+            <p><strong>⚠️ WEBHOOK NO PROCESÓ EN 30 SEGUNDOS - Payment creado desde fallback</strong></p>
             <p><strong>Project Code:</strong> ${finalProjectCode}</p>
             <p><strong>Client:</strong> ${customerName}</p>
             <p><strong>Email:</strong> ${customerEmail}</p>

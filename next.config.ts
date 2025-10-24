@@ -17,9 +17,11 @@ const nextConfig: NextConfig = {
 
   // Eliminar console.log en producción para reducir bundle size
   compiler: {
-    removeConsole: {
-      exclude: ["error", "warn"], // Mantener console.error y console.warn para debugging
-    },
+    removeConsole: process.env.NODE_ENV === "production"
+      ? {
+          exclude: ["error", "warn"], // Mantener console.error y console.warn para debugging
+        }
+      : false, // NO eliminar console.log en desarrollo
   },
 
   // Rutas tipadas (movido de experimental en Next.js 15.5+)
