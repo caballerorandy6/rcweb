@@ -299,7 +299,11 @@ export async function generateInvoicesForPayment(projectCode: string) {
 
     console.log(`✅ Pago encontrado: ${payment.email}`);
 
-    const results: any[] = [];
+    type InvoiceResult =
+      | { type: string; success: true; invoice: { invoiceId: string; invoiceNumber: string; pdfUrl: string } }
+      | { type: string; success: false; error: string };
+
+    const results: InvoiceResult[] = [];
 
     // 2. Verificar si ya existen invoices
     const existingInvoices = await prisma.invoice.findMany({
