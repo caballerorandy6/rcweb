@@ -12,6 +12,9 @@ export const metadata = genPageMetadata({
   pageRoute: "/contacts",
 });
 
+export const dynamic = "force-dynamic";
+export const revalidate = 0;
+
 async function ContactManagementWrapper() {
   const result = await getContactsAction();
   const contacts = result.success ? result.contacts || [] : [];
