@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import useSectionObserver from "@/hooks/useSectionObserver";
 import { CheckIcon } from "@heroicons/react/24/outline";
 import { pricingPlans } from "@/lib/data";
-import Heading from "../Heading";
+import Heading from "../ui/Heading";
 import { motion, Variants } from "framer-motion";
 import { toast } from "sonner";
 

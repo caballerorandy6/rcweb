@@ -7,7 +7,7 @@ import {
   QuestionMarkCircleIcon,
 } from "@heroicons/react/24/outline";
 import { faqs } from "@/lib/data";
-import Heading from "../Heading";
+import Heading from "../ui/Heading";
 import { motion, Variants, AnimatePresence } from "framer-motion";
 
 const FAQ = () => {

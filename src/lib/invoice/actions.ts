@@ -196,9 +196,7 @@ export async function createInvoiceSummary(
       },
     });
 
-    console.log(`✅ Invoice summary created: ${invoiceNumber}`);
-
-    return {
+        return {
       invoiceId: invoice.id,
       invoiceNumber: invoice.invoiceNumber,
       pdfUrl: invoice.pdfUrl!,
@@ -286,9 +284,7 @@ export async function getInvoiceByNumber(invoiceNumber: string) {
  */
 export async function generateInvoicesForPayment(projectCode: string) {
   try {
-    console.log(`🔍 Buscando pago con código: ${projectCode}`);
-
-    // 1. Buscar el pago
+        // 1. Buscar el pago
     const payment = await prisma.payment.findUnique({
       where: { projectCode },
     });
@@ -297,9 +293,7 @@ export async function generateInvoicesForPayment(projectCode: string) {
       throw new Error(`Payment not found with code: ${projectCode}`);
     }
 
-    console.log(`✅ Pago encontrado: ${payment.email}`);
-
-    type InvoiceResult =
+        type InvoiceResult =
       | { type: string; success: true; invoice: { invoiceId: string; invoiceNumber: string; pdfUrl: string } }
       | { type: string; success: false; error: string };
 
@@ -311,8 +305,7 @@ export async function generateInvoicesForPayment(projectCode: string) {
     });
 
     if (existingInvoices.length > 0) {
-      console.log(`⚠️ Ya existen ${existingInvoices.length} invoices para este pago`);
-      return {
+            return {
         success: false,
         error: `Ya existen ${existingInvoices.length} invoices para este pago`,
         existingInvoices: existingInvoices.map(inv => ({
@@ -326,8 +319,7 @@ export async function generateInvoicesForPayment(projectCode: string) {
     // 3. Crear invoice inicial (si el primer pago está completado)
     if (payment.firstPaid) {
       try {
-        console.log('📄 Creando invoice inicial...');
-        const initialInvoice = await createInvoice({
+                const initialInvoice = await createInvoice({
           paymentId: payment.id,
           type: 'initial',
           customerName: payment.name,
@@ -340,8 +332,7 @@ export async function generateInvoicesForPayment(projectCode: string) {
           stripeSessionId: payment.firstSessionId || undefined,
         });
         results.push({ type: 'initial', success: true, invoice: initialInvoice });
-        console.log(`✅ Invoice inicial creado: ${initialInvoice.invoiceNumber}`);
-      } catch (error) {
+              } catch (error) {
         const errorMsg = error instanceof Error ? error.message : String(error);
         console.error('❌ Error creando invoice inicial:', errorMsg);
         results.push({ type: 'initial', success: false, error: errorMsg });
@@ -351,8 +342,7 @@ export async function generateInvoicesForPayment(projectCode: string) {
     // 4. Crear invoice final (si el segundo pago está completado)
     if (payment.secondPaid) {
       try {
-        console.log('📄 Creando invoice final...');
-        const finalInvoice = await createInvoice({
+                const finalInvoice = await createInvoice({
           paymentId: payment.id,
           type: 'final',
           customerName: payment.name,
@@ -365,8 +355,7 @@ export async function generateInvoicesForPayment(projectCode: string) {
           stripeSessionId: payment.secondSessionId || undefined,
         });
         results.push({ type: 'final', success: true, invoice: finalInvoice });
-        console.log(`✅ Invoice final creado: ${finalInvoice.invoiceNumber}`);
-      } catch (error) {
+              } catch (error) {
         const errorMsg = error instanceof Error ? error.message : String(error);
         console.error('❌ Error creando invoice final:', errorMsg);
         results.push({ type: 'final', success: false, error: errorMsg });
@@ -374,20 +363,16 @@ export async function generateInvoicesForPayment(projectCode: string) {
 
       // 5. Crear invoice summary (solo si ambos pagos están completados)
       try {
-        console.log('📄 Creando invoice summary...');
-        const summaryInvoice = await createInvoiceSummary(payment.id);
+                const summaryInvoice = await createInvoiceSummary(payment.id);
         results.push({ type: 'summary', success: true, invoice: summaryInvoice });
-        console.log(`✅ Invoice summary creado: ${summaryInvoice.invoiceNumber}`);
-      } catch (error) {
+              } catch (error) {
         const errorMsg = error instanceof Error ? error.message : String(error);
         console.error('❌ Error creando invoice summary:', errorMsg);
         results.push({ type: 'summary', success: false, error: errorMsg });
       }
     }
 
-    console.log('✅ Proceso completado');
-
-    return {
+        return {
       success: true,
       payment: {
         projectCode: payment.projectCode,

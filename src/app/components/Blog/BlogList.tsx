@@ -5,7 +5,7 @@ import Link from "next/link";
 import Image from "next/image";
 import type { Route } from "next";
 import { BookOpenIcon, CalendarIcon, ClockIcon } from "@heroicons/react/24/outline";
-import Heading from "@/app/components/Heading";
+import Heading from "@/app/components/ui/Heading";
 import type { BlogPost } from "@/lib/blog";
 
 interface BlogListProps {

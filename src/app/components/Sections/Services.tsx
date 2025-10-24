@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 import useSectionObserver from "@/hooks/useSectionObserver";
 import { Cog6ToothIcon } from "@heroicons/react/24/outline";
 import { services } from "@/lib/data";
-import Heading from "@/app/components/Heading";
+import Heading from "@/app/components/ui/Heading";
 
 const Services = () => {
   const ref = useSectionObserver({ sectionName: "Services" });

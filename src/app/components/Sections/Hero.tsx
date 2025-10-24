@@ -3,11 +3,11 @@
 import { useEffect, useRef } from "react";
 import Link from "next/link";
 import type { Route } from "next";
-import CustomBadge from "@/app/components/CustomBadge";
+import CustomBadge from "@/app/components/ui/CustomBadge";
 import useSectionObserver from "@/hooks/useSectionObserver";
 import { motion } from "framer-motion";
 import { PhoneIcon } from "@heroicons/react/24/outline";
-import { trackFBPhoneCall } from "@/app/components/FacebookPixel";
+import { trackFBPhoneCall } from "@/app/components/tracking/FacebookPixel";
 
 // Phone Conversion Tracking (Google Ads + Facebook)
 const trackPhoneConversion = () => {

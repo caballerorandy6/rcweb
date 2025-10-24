@@ -1,4 +1,4 @@
-import FinalPayment from "@/app/components/FinalPayment";
+import FinalPayment from "@/app/components/payment/FinalPayment";
 import { genPageMetadata } from "@/utils/genPageMetadata";
 
 export const metadata = genPageMetadata({

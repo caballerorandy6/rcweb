@@ -4,13 +4,13 @@ import { useId } from "react";
 import { motion } from "framer-motion";
 import { useRCWebStore } from "@/store/rcweb-store";
 import { CodeBracketIcon, ChevronDownIcon } from "@heroicons/react/24/outline";
-import Heading from "@/app/components/Heading";
+import Heading from "@/app/components/ui/Heading";
 
 import useSectionObserver from "@/hooks/useSectionObserver";
 import { projects } from "@/lib/data";
-import ProjectsList from "@/app/components/ProjectsList";
+import ProjectsList from "@/app/components/Sections/ProjectsList";
 
-import TechMarquee from "@/app/components/TechMarquee";
+import TechMarquee from "@/app/components/ui/TechMarquee";
 
 const Projects = () => {
   const { isExpanded, handleClickProjectsDialog } = useRCWebStore();

@@ -2,7 +2,7 @@
 
 import { motion } from "framer-motion";
 import { useRouter } from "next/navigation";
-import Heading from "@/app/components/Heading";
+import Heading from "@/app/components/ui/Heading";
 import {
   CurrencyDollarIcon,
   CalendarIcon,

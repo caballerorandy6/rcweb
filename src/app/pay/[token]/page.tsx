@@ -1,7 +1,7 @@
 import { prisma } from "@/lib/prisma";
 import { redirect } from "next/navigation";
 import type { Route } from "next";
-import { createFinalPaymentSessionAction } from "@/actions/createFinalPaymentSessionAction";
+import { createFinalPaymentSessionAction } from "@/actions/payments/createFinalPaymentSessionAction";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {

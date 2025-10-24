@@ -1,4 +1,4 @@
-import AdminLoginForm from "@/app/components/AdminLoginForm";
+import AdminLoginForm from "@/app/components/admin/AdminLoginForm";
 import { genPageMetadata } from "@/utils/genPageMetadata";
 
 export const metadata = genPageMetadata({

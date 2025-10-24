@@ -1,4 +1,4 @@
-import AdminDashboard from "@/app/components/AdminDashboard";
+import AdminDashboard from "@/app/components/admin/AdminDashboard";
 import { genPageMetadata } from "@/utils/genPageMetadata";
 
 export const metadata = genPageMetadata({

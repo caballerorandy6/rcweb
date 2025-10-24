@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import Heading from "@/app/components/Heading";
+import Heading from "@/app/components/ui/Heading";
 import { UserPlusIcon, MapPinIcon } from "@heroicons/react/24/outline";
 import useSectionObserver from "@/hooks/useSectionObserver";
 import { motion, Variants } from "framer-motion";

@@ -1,9 +1,9 @@
 import { auth } from "@/lib/auth";
 import { redirect } from "next/navigation";
 import { Suspense } from "react";
-import ContactManagement from "@/app/components/ContactManagement";
-import ContactManagementSkeleton from "@/app/components/ContactManagementSkeleton";
-import { getContactsAction } from "@/actions/getContactsAction";
+import ContactManagement from "@/app/components/admin/ContactManagement";
+import ContactManagementSkeleton from "@/app/components/skeletons/ContactManagementSkeleton";
+import { getContactsAction } from "@/actions/contacts/getContactsAction";
 import { genPageMetadata } from "@/utils/genPageMetadata";
 
 export const metadata = genPageMetadata({

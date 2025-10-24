@@ -5,11 +5,11 @@ import { Suspense } from "react";
 import "./globals.css";
 import { Toaster } from "sonner";
 
-import ConditionalLayout from "@/app/components/ConditionalLayout";
-import CookieConsentProvider from "@/app/components/CookieConsentProvider";
-import Analytics from "@/app/components/Analytics";
-import FacebookPixel from "@/app/components/FacebookPixel";
-import LinkedInInsightTag from "@/app/components/LinkedInInsightTag";
+import ConditionalLayout from "@/app/components/layout/ConditionalLayout";
+import CookieConsentProvider from "@/app/components/forms/CookieConsentProvider";
+import Analytics from "@/app/components/tracking/Analytics";
+import FacebookPixel from "@/app/components/tracking/FacebookPixel";
+import LinkedInInsightTag from "@/app/components/tracking/LinkedInInsightTag";
 import { siteConfig } from "@/config/site";
 import { Analytics as VercelAnalytics } from "@vercel/analytics/next";
 

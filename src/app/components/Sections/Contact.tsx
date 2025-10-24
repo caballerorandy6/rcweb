@@ -1,9 +1,9 @@
 "use client";
 
 import { useRCWebStore } from "@/store/rcweb-store";
-import Heading from "@/app/components/Heading";
+import Heading from "@/app/components/ui/Heading";
 import { EnvelopeIcon } from "@heroicons/react/24/outline";
-import DialogForm from "@/app/components/DialogForm";
+import DialogForm from "@/app/components/forms/DialogForm";
 import useSectionObserver from "@/hooks/useSectionObserver";
 
 const Contact = () => {

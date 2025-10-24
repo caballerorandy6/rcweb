@@ -1,6 +1,6 @@
-import { handlePaymentSuccessAction } from "@/actions/handlePaymentSuccessAction";
-import PaymentSuccess from "@/app/components/PaymentSuccess";
-import PaymentSuccessSkeleton from "@/app/components/PaymentSuccessSkeleton";
+import { handlePaymentSuccessAction } from "@/actions/payments/handlePaymentSuccessAction";
+import PaymentSuccess from "@/app/components/payment/PaymentSuccess";
+import PaymentSuccessSkeleton from "@/app/components/skeletons/PaymentSuccessSkeleton";
 import { genPageMetadata } from "@/utils/genPageMetadata";
 import { Suspense } from "react";
 

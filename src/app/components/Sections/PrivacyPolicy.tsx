@@ -2,7 +2,7 @@
 
 import { motion } from "framer-motion";
 import { useRouter } from "next/navigation";
-import Heading from "@/app/components/Heading";
+import Heading from "@/app/components/ui/Heading";
 import {
   ShieldCheckIcon,
   EnvelopeIcon,
@@ -11,7 +11,7 @@ import {
   ArrowLeftIcon,
 } from "@heroicons/react/24/outline";
 import useSectionObserver from "@/hooks/useSectionObserver";
-import { trackFBPhoneCall } from "@/app/components/FacebookPixel";
+import { trackFBPhoneCall } from "@/app/components/tracking/FacebookPixel";
 
 // Phone Conversion Tracking (Google Ads + Facebook)
 const trackPhoneConversion = () => {

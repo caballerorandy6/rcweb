@@ -1,14 +1,14 @@
 import { Suspense } from "react";
-import Newsletter from "@/app/components/SendNewsletterCampaign";
-import CampaignSkeleton from "@/app/components/CampaignSkeleton";
+import Newsletter from "@/app/components/admin/SendNewsletterCampaign";
+import CampaignSkeleton from "@/app/components/skeletons/CampaignSkeleton";
 import { auth } from "@/lib/auth";
 import { redirect } from "next/navigation";
 import { genPageMetadata } from "@/utils/genPageMetadata";
 import {
   getNumberOfEligibleContactsAction,
   getNumberOfEligibleEmailsAction,
-} from "@/actions/getNewsletterStatsAction";
-import { getAllCampaigns } from "@/actions/sendBatchNewsletterAction";
+} from "@/actions/stats/getNewsletterStatsAction";
+import { getAllCampaigns } from "@/actions/campaigns/sendBatchNewsletterAction";
 
 export const metadata = genPageMetadata({
   title: "Newsletter Campaigns",

@@ -1,4 +1,4 @@
-import { ProjectProps } from "@/app/components/Project";
+import { ProjectProps } from "@/app/components/Sections/Project";
 import React from "react";
 import JavaScriptIcon from "@/app/components/icons/Javascript";
 import ReactIcon from "@/app/components/icons/React";
@@ -15,9 +15,9 @@ import SASS from "@/app/components/icons/SASS";
 import Jira from "@/app/components/icons/Jira";
 import Wordpress from "@/app/components/icons/Wordpress";
 import NodeJS from "@/app/components/icons/NodeJS";
-import { TeachMarqueeProps } from "@/app/components/TechMarquee";
+import { TeachMarqueeProps } from "@/app/components/ui/TechMarquee";
 import { BriefcaseIcon, AcademicCapIcon } from "@heroicons/react/24/outline";
-import { NavigationProps } from "@/app/components/Navbar";
+import { NavigationProps } from "@/app/components/layout/Navbar";
 import { ExperienceProps } from "@/app/components/Sections/Experience";
 import {
   ChatBubbleLeftRightIcon,
@@ -670,24 +670,6 @@ export const pricingPlans = [
     ideal: "Ideal for: Established SMBs, E-commerce, Multi-location businesses",
     featured: false,
     cta: "Transform Your Business",
-  },
-  {
-    id: "test",
-    name: "Test Plan",
-    price: "$1.00",
-    priceInCents: 100, // $1.00
-    range: "$1.00",
-    duration: "Instant",
-    description: "Test plan for development and invoice system testing",
-    features: [
-      "Test invoice generation",
-      "Test email with PDF",
-      "Test payment flow",
-      "Instant activation",
-    ],
-    ideal: "Ideal for: Testing invoice system only",
-    featured: false,
-    cta: "Test for $1",
   },
 ];
 

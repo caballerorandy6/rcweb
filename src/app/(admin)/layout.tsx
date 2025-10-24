@@ -1,7 +1,7 @@
 import { auth } from "@/lib/auth";
 import { redirect } from "next/navigation";
-import AdminSidebar from "@/app/components/AdminSidebar";
-import SignOutButton from "@/app/components/SignOutButton";
+import AdminSidebar from "@/app/components/admin/AdminSidebar";
+import SignOutButton from "@/app/components/ui/SignOutButton";
 
 export default async function AdminLayout({
   children,

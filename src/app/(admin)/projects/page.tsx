@@ -1,10 +1,10 @@
-import ProjectManagement from "@/app/components/ProjectManagement";
-import ProjectManagementSkeleton from "@/app/components/ProjectManagementSkeleton";
+import ProjectManagement from "@/app/components/admin/ProjectManagement";
+import ProjectManagementSkeleton from "@/app/components/skeletons/ProjectManagementSkeleton";
 import { auth } from "@/lib/auth";
 import { redirect } from "next/navigation";
 import { Suspense } from "react";
-import { getAllProjectsAction } from "@/actions/getAllProjectsAction";
-import { getProjectStatsAction } from "@/actions/getProjectStatsAction";
+import { getAllProjectsAction } from "@/actions/projects/getAllProjectsAction";
+import { getProjectStatsAction } from "@/actions/projects/getProjectStatsAction";
 import { genPageMetadata } from "@/utils/genPageMetadata";
 
 export const metadata = genPageMetadata({

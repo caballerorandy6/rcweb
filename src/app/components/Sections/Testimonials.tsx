@@ -2,7 +2,7 @@
 
 import useSectionObserver from "@/hooks/useSectionObserver";
 import { StarIcon } from "@heroicons/react/24/solid";
-import Heading from "../Heading";
+import Heading from "../ui/Heading";
 import { motion } from "framer-motion";
 import { testimonials } from "@/lib/data";
 

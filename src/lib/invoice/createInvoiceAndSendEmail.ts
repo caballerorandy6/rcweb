@@ -99,11 +99,7 @@ export async function createInvoiceAndSendEmail({
       ],
     });
 
-    console.log(
-      `✅ Invoice ${invoiceResult.invoiceNumber} created and sent to ${payment.email}`
-    );
-
-    return invoiceResult;
+        return invoiceResult;
   } catch (error) {
     console.error("Error creating invoice and sending email:", error);
     throw new Error(

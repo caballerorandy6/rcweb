@@ -9,7 +9,7 @@ import Phone from "@/app/components/icons/Phone";
 import Instagram from "@/app/components/icons/Instagram";
 import X from "@/app/components/icons/X";
 import TikTok from "@/app/components/icons/TikTok";
-import Chat from "@/app/components/Chat";
+import Chat from "@/app/components/ui/Chat";
 import Image from "next/image";
 
 const getIconComponent = (name: string, iconSize?: string) => {

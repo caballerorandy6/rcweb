@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import { useSearchParams } from "next/navigation";
 import { motion } from "framer-motion";
 import { toast } from "sonner";
-import Heading from "@/app/components/Heading";
+import Heading from "@/app/components/ui/Heading";
 import {
   DocumentTextIcon,
   ShieldCheckIcon,
@@ -14,7 +14,7 @@ import {
   ExclamationTriangleIcon,
 } from "@heroicons/react/24/outline";
 import useSectionObserver from "@/hooks/useSectionObserver";
-import { createStripeCheckoutAction } from "@/actions/createStripeCheckoutAction";
+import { createStripeCheckoutAction } from "@/actions/payments/createStripeCheckoutAction";
 
 const TermsOfService = () => {
   const router = useRouter();

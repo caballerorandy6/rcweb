@@ -31,25 +31,19 @@ export async function POST(req: Request) {
 
   if (isDev) {
     console.log("🚨 WEBHOOK RECEIVED:", new Date().toISOString());
-    console.log("🚀 Webhook endpoint reached");
-    console.log("🌐 Full URL:", req.url);
-  }
+          }
 
   const body = await req.text();
   const signature = req.headers.get("stripe-signature") as string;
 
   if (isDev) {
-    console.log("📦 Body length:", body.length);
-    console.log("🔑 Signature present:", !!signature);
-  }
+          }
 
   let event: Stripe.Event;
 
   try {
     event = stripe.webhooks.constructEvent(body, signature, endpointSecret);
-    console.log("✅ Signature verified, event:", event.type);
-    console.log("✅ Event verified successfully");
-  } catch (err) {
+          } catch (err) {
     console.error("❌ Error verifying webhook signature:", err);
     return NextResponse.json(
       { error: `Webhook Error: ${err}` },
@@ -57,9 +51,7 @@ export async function POST(req: Request) {
     );
   }
 
-  console.log("🔔 Webhook received:", event.type);
-
-  if (event.type === "checkout.session.completed") {
+    if (event.type === "checkout.session.completed") {
     const session = event.data.object as Stripe.Checkout.Session;
     const metadata = session.metadata || {};
 
@@ -70,23 +62,14 @@ export async function POST(req: Request) {
     const customerEmail = session.customer_email || metadata.customerEmail;
 
     if (isDev) {
-      console.log("📋 Metadata received:", {
-        paymentType,
-        projectCode,
-        customerEmail,
-        planName,
-        sessionId: session.id,
-      });
-    }
+          }
 
     const resend = new Resend(process.env.RESEND_API_KEY!);
 
     // ============= INITIAL PAYMENT =============
     if (paymentType === "initial" && projectCode && customerEmail) {
       try {
-        console.log("💰 Processing INITIAL PAYMENT for:", projectCode);
-
-        // Extract and validate amounts from metadata
+                // Extract and validate amounts from metadata
         const totalAmount = parseInt(metadata.totalAmount || "0");
         const firstPaymentAmount = parseInt(metadata.firstPaymentAmount || "0");
         const secondPaymentAmount = parseInt(
@@ -114,8 +97,7 @@ export async function POST(req: Request) {
         }
 
         if (isDev) {
-          console.log("💾 Creating new Payment with projectCode:", projectCode);
-        }
+                  }
 
         // CHECK if Payment already exists (created by fallback)
         let payment = await prisma.payment.findFirst({
@@ -133,17 +115,14 @@ export async function POST(req: Request) {
         // If payment exists but has no invoices, we'll create the invoice below
         if (payment) {
           console.log("⚠️ Payment already exists (probably from fallback):", payment.projectCode);
-          console.log("📋 Existing invoices:", payment.invoices.length);
-
-          // If payment doesn't have the session ID, update it
+                    // If payment doesn't have the session ID, update it
           if (!payment.firstSessionId) {
             payment = await prisma.payment.update({
               where: { id: payment.id },
               data: { firstSessionId: session.id },
               include: { invoices: true },
             });
-            console.log("✅ Updated payment with session ID");
-          }
+                      }
         }
 
         // CREATE Payment and TermsAcceptance if it doesn't exist
@@ -180,19 +159,13 @@ export async function POST(req: Request) {
                 },
               });
               if (isDev) {
-                console.log(
-                  "✅ TermsAcceptance created for paymentId:",
-                  newPayment.id
-                );
-              }
+                              }
             }
 
             return newPayment;
           });
 
-          console.log("✅ Payment created successfully with ID:", payment.id);
-
-          // Track payment completion in Google Analytics
+                    // Track payment completion in Google Analytics
           trackPaymentComplete(firstPaymentAmount / 100, "initial_deposit");
         }
 
@@ -204,23 +177,20 @@ export async function POST(req: Request) {
 
         if (!hasInitialInvoice) {
           try {
-            console.log("🔄 Intentando crear invoice inicial...");
-            const invoiceResult = await createInvoiceAndSendEmail({
+                        await createInvoiceAndSendEmail({
               payment,
               type: "initial",
               resend,
               stripeSessionId: session.id,
             });
-            console.log("✅ Initial invoice created and sent to client:", invoiceResult);
-          } catch (invoiceError) {
+                      } catch (invoiceError) {
             const errorMsg = `Error creating invoice: ${invoiceError instanceof Error ? invoiceError.message : String(invoiceError)}`;
             console.error("❌ INVOICE ERROR:", errorMsg);
             console.error("❌ INVOICE ERROR STACK:", invoiceError instanceof Error ? invoiceError.stack : 'No stack');
             emailErrors.push(errorMsg);
           }
         } else {
-          console.log("ℹ️ Initial invoice already exists, skipping creation");
-        }
+                  }
 
         // ============= CLIENT EMAIL (OLD - COMMENTED OUT) =============
         // NOTE: The email with invoice PDF is now sent by createInvoiceAndSendEmail above
@@ -315,8 +285,7 @@ export async function POST(req: Request) {
               </html>
             `,
           });
-          console.log("✅ Initial email sent to client");
-        } catch (emailError) {
+                  } catch (emailError) {
           const errorMsg = `Error sending email to client: ${emailError instanceof Error ? emailError.message : String(emailError)}`;
           console.error("❌", errorMsg);
           // emailErrors.push(errorMsg);
@@ -342,8 +311,7 @@ export async function POST(req: Request) {
               <p>Remember to contact the client within 24 hours to discuss project details.</p>
             `,
           });
-          console.log("✅ Email sent to admin");
-        } catch (emailError) {
+                  } catch (emailError) {
           const errorMsg = `Error sending email to admin: ${emailError instanceof Error ? emailError.message : String(emailError)}`;
           console.error("❌", errorMsg);
           emailErrors.push(errorMsg);
@@ -392,9 +360,7 @@ export async function POST(req: Request) {
 
     // ============= FINAL PAYMENT =============
     else if (paymentType === "final" && metadata.paymentId && customerEmail) {
-      console.log("💰 Processing FINAL PAYMENT");
-
-      const paymentId = metadata.paymentId;
+            const paymentId = metadata.paymentId;
 
       try {
         // Check if payment exists and get current state
@@ -420,9 +386,7 @@ export async function POST(req: Request) {
             },
             include: { invoices: true },
           });
-          console.log("✅ Payment updated - Project completed");
-
-          // Track final payment completion in Google Analytics
+                    // Track final payment completion in Google Analytics
           trackPaymentComplete(payment.secondPayment / 100, "final_payment");
         } else {
           console.log("⚠️ Payment already marked as secondPaid (probably from fallback)");
@@ -434,8 +398,7 @@ export async function POST(req: Request) {
               data: { secondSessionId: session.id },
               include: { invoices: true },
             });
-            console.log("✅ Updated payment with session ID");
-          }
+                      }
         }
 
         // ============= CREATE INVOICES AND SEND EMAILS =============
@@ -448,43 +411,37 @@ export async function POST(req: Request) {
         // Create and send FINAL invoice if it doesn't exist
         if (!hasFinalInvoice) {
           try {
-            console.log("🔄 Intentando crear invoice final...");
-            const finalInvoiceResult = await createInvoiceAndSendEmail({
+                        await createInvoiceAndSendEmail({
               payment,
               type: "final",
               resend,
               stripeSessionId: session.id,
             });
-            console.log("✅ Final invoice created and sent to client:", finalInvoiceResult);
-          } catch (invoiceError) {
+                      } catch (invoiceError) {
             const errorMsg = `Error creating final invoice: ${invoiceError instanceof Error ? invoiceError.message : String(invoiceError)}`;
             console.error("❌ FINAL INVOICE ERROR:", errorMsg);
             console.error("❌ FINAL INVOICE ERROR STACK:", invoiceError instanceof Error ? invoiceError.stack : 'No stack');
             emailErrors.push(errorMsg);
           }
         } else {
-          console.log("ℹ️ Final invoice already exists, skipping creation");
-        }
+                  }
 
         // Create and send SUMMARY invoice if it doesn't exist
         if (!hasSummaryInvoice) {
           try {
-            console.log("🔄 Intentando crear invoice summary...");
-            const summaryInvoiceResult = await createInvoiceAndSendEmail({
+                        await createInvoiceAndSendEmail({
               payment,
               type: "summary",
               resend,
             });
-            console.log("✅ Summary invoice created and sent to client:", summaryInvoiceResult);
-          } catch (invoiceError) {
+                      } catch (invoiceError) {
             const errorMsg = `Error creating summary invoice: ${invoiceError instanceof Error ? invoiceError.message : String(invoiceError)}`;
             console.error("❌ SUMMARY INVOICE ERROR:", errorMsg);
             console.error("❌ SUMMARY INVOICE ERROR STACK:", invoiceError instanceof Error ? invoiceError.stack : 'No stack');
             emailErrors.push(errorMsg);
           }
         } else {
-          console.log("ℹ️ Summary invoice already exists, skipping creation");
-        }
+                  }
 
         // ============= PROJECT COMPLETION EMAIL (OLD - COMMENTED OUT) =============
         // NOTE: Emails with invoice PDFs are now sent by createInvoiceAndSendEmail above
@@ -539,8 +496,7 @@ export async function POST(req: Request) {
               </html>
             `,
           });
-          console.log("✅ Project completion email sent");
-        } catch (emailError) {
+                  } catch (emailError) {
           const errorMsg = `Error sending completion email: ${emailError instanceof Error ? emailError.message : String(emailError)}`;
           console.error("❌", errorMsg);
           // oldEmailErrors.push(errorMsg);
@@ -563,8 +519,7 @@ export async function POST(req: Request) {
               <p><strong>Project Status:</strong> COMPLETED</p>
             `,
           });
-          console.log("✅ Email sent to admin about final payment");
-        } catch (emailError) {
+                  } catch (emailError) {
           const errorMsg = `Error sending email to admin: ${emailError instanceof Error ? emailError.message : String(emailError)}`;
           console.error("❌", errorMsg);
           emailErrors.push(errorMsg);
@@ -591,12 +546,7 @@ export async function POST(req: Request) {
             err.message === "DUPLICATE_FINAL_SESSION" ||
             err.message === "ALREADY_PAID"
           ) {
-            console.log(
-              "⚠️ Final payment already processed:",
-              err.message,
-              "- Returning idempotent response"
-            );
-            return NextResponse.json({
+                        return NextResponse.json({
               received: true,
               duplicate: err.message,
             });
@@ -611,8 +561,7 @@ export async function POST(req: Request) {
         throw err; // Re-throw for Stripe to retry
       }
     } else {
-      console.log("⚠️ Conditions not met to process payment");
-      return NextResponse.json({
+            return NextResponse.json({
         received: true,
         warning: "Conditions not met",
       });

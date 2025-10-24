@@ -38,8 +38,7 @@ export async function uploadInvoicePDF(
 export async function deleteInvoicePDF(url: string): Promise<void> {
   try {
     await del(url);
-    console.log('Invoice PDF deleted successfully:', url);
-  } catch (error) {
+      } catch (error) {
     console.error('Error deleting PDF from Vercel Blob:', error);
     throw new Error(`Failed to delete invoice PDF: ${error instanceof Error ? error.message : 'Unknown error'}`);
   }

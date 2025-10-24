@@ -14,11 +14,11 @@ import FAQ from "@/app/components/Sections/FAQ";
 import Contact from "@/app/components/Sections/Contact";
 import CTA from "@/app/components/Sections/FloatingCTA";
 import Certifications from "@/app/components/Sections/Certifications";
-import ScrollSpy from "@/app/components/ScrollSpy";
-import { JsonLdForFaq } from "@/app/components/JsonLdForFaq";
-import { JsonLdForProduct } from "@/app/components/JsonLdForProduct";
-import { JsonLdForOrganization } from "@/app/components/JsonLdForOrganization";
-import { JsonLdForLocalBusiness } from "@/app/components/JsonLdForLocalBusiness";
+import ScrollSpy from "@/app/components/ui/ScrollSpy";
+import { JsonLdForFaq } from "@/app/components/seo/JsonLdForFaq";
+import { JsonLdForProduct } from "@/app/components/seo/JsonLdForProduct";
+import { JsonLdForOrganization } from "@/app/components/seo/JsonLdForOrganization";
+import { JsonLdForLocalBusiness } from "@/app/components/seo/JsonLdForLocalBusiness";
 import { faqs, pricingPlans } from "@/lib/data";
 
 export const metadata: Metadata = {

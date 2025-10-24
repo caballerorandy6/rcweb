@@ -14,11 +14,7 @@ export async function POST(request: NextRequest) {
     const body = (formData.get("Body") as string)?.trim().toUpperCase();
     const messageSid = formData.get("MessageSid") as string;
 
-    console.log(`📨 Incoming SMS from ${from}:`);
-    console.log(`  Message: "${body}"`);
-    console.log(`  SID: ${messageSid}`);
-
-    // Initialize TwiML response
+                // Initialize TwiML response
     const twiml = new twilio.twiml.MessagingResponse();
 
     // Normalize phone number to E.164 format
@@ -93,9 +89,7 @@ export async function POST(request: NextRequest) {
  */
 async function handleOptIn(phoneNumber: string) {
   try {
-    console.log(`✅ Processing OPT-IN for ${phoneNumber}`);
-
-    // Check if contact exists with this phone number
+        // Check if contact exists with this phone number
     const existingPhone = await prisma.contactPhone.findFirst({
       where: { phone: phoneNumber },
       include: { contact: true },
@@ -110,10 +104,9 @@ async function handleOptIn(phoneNumber: string) {
           updatedAt: new Date(),
         },
       });
-      console.log(`  ✓ Opted in existing contact: ${existingPhone.contact.name || "Unknown"}`);
-    } else {
+          } else {
       // Create new contact with opt-in
-      const newContact = await prisma.contact.create({
+      await prisma.contact.create({
         data: {
           name: `SMS Subscriber ${phoneNumber.slice(-4)}`,
           marketingConsent: true,
@@ -126,8 +119,7 @@ async function handleOptIn(phoneNumber: string) {
           },
         },
       });
-      console.log(`  ✓ Created new contact with opt-in: ${newContact.id}`);
-    }
+          }
   } catch (error) {
     console.error("❌ Error handling opt-in:", error);
     throw error;
@@ -139,9 +131,7 @@ async function handleOptIn(phoneNumber: string) {
  */
 async function handleOptOut(phoneNumber: string) {
   try {
-    console.log(`🛑 Processing OPT-OUT for ${phoneNumber}`);
-
-    // Find contact with this phone number
+        // Find contact with this phone number
     const existingPhone = await prisma.contactPhone.findFirst({
       where: { phone: phoneNumber },
       include: { contact: true },
@@ -156,8 +146,7 @@ async function handleOptOut(phoneNumber: string) {
           updatedAt: new Date(),
         },
       });
-      console.log(`  ✓ Opted out contact: ${existingPhone.contact.name || "Unknown"}`);
-    } else {
+          } else {
       // Create contact record with opt-out to prevent future messages
       await prisma.contact.create({
         data: {
@@ -172,8 +161,7 @@ async function handleOptOut(phoneNumber: string) {
           },
         },
       });
-      console.log(`  ✓ Created opt-out record for ${phoneNumber}`);
-    }
+          }
   } catch (error) {
     console.error("❌ Error handling opt-out:", error);
     throw error;
@@ -190,9 +178,7 @@ async function logSmsInteraction(
   twilioSid?: string
 ) {
   try {
-    console.log(`📝 Logging ${direction} SMS: ${phoneNumber} - "${message}"`);
-
-    // Detect command
+        // Detect command
     const upperMessage = message.toUpperCase();
     let command: string | null = null;
 
@@ -216,8 +202,7 @@ async function logSmsInteraction(
       },
     });
 
-    console.log(`  ✓ SMS interaction logged successfully`);
-  } catch (error) {
+      } catch (error) {
     console.error("❌ Error logging SMS interaction:", error);
     // Don't throw - logging shouldn't break the flow
   }

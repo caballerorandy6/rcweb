@@ -1,6 +1,6 @@
 import TermsOfService from "@/app/components/Sections/TermsOfService";
-import TermsOfServiceSkeleton from "@/app/components/TermsOfServiceSkeleton";
-import { JsonLdForBreadcrumb } from "@/app/components/JsonLdForBreadcrumb";
+import TermsOfServiceSkeleton from "@/app/components/skeletons/TermsOfServiceSkeleton";
+import { JsonLdForBreadcrumb } from "@/app/components/seo/JsonLdForBreadcrumb";
 import { genPageMetadata } from "@/utils/genPageMetadata";
 import { siteConfig } from "@/config/site";
 import { Suspense } from "react";

@@ -1,6 +1,6 @@
 import { notFound } from "next/navigation";
 import { genPageMetadata } from "@/utils/genPageMetadata";
-import { JsonLdForBreadcrumb } from "@/app/components/JsonLdForBreadcrumb";
+import { JsonLdForBreadcrumb } from "@/app/components/seo/JsonLdForBreadcrumb";
 import { siteConfig } from "@/config/site";
 import { getPostBySlug, getAllSlugs } from "@/lib/blog";
 import BlogPost from "@/app/components/Blog/BlogPost";

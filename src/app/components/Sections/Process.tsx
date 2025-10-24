@@ -6,7 +6,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import useSectionObserver from "@/hooks/useSectionObserver";
 import { ChevronRightIcon } from "@heroicons/react/24/outline";
 import { processSteps } from "@/lib/data";
-import Heading from "@/app/components/Heading";
+import Heading from "@/app/components/ui/Heading";
 
 const Process = () => {
   const ref = useSectionObserver({ sectionName: "Process" });
