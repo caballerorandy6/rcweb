@@ -28,9 +28,9 @@ export const getNumberOfEligibleContactsAction = async () => {
   } catch (error) {
     console.error("Error getting contact stats:", error);
     return {
-      eligibleContacts: 0,
-      totalContacts: 0,
-      contactsPercentage: 0,
+      eligible: 0,
+      total: 0,
+      percentage: 0,
     };
   }
 };
@@ -63,7 +63,7 @@ export const getNumberOfEligibleEmailsAction = async () => {
     return {
       eligibleEmails: 0,
       totalEmails: 0,
-      emailsPercentage: 0,
+      consentPercentage: 0,
     };
   }
 };
