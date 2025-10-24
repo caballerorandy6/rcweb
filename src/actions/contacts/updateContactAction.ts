@@ -10,10 +10,6 @@ export async function updateContactAction(
   }
 ) {
   try {
-    console.log("=== UPDATE CONTACT DEBUG ===");
-    console.log("Contact ID:", id);
-    console.log("Data to update:", JSON.stringify(data, null, 2));
-
     const contact = await prisma.contact.update({
       where: { id },
       data,
@@ -22,13 +18,6 @@ export async function updateContactAction(
         phones: true,
       },
     });
-
-    console.log("Updated contact:", JSON.stringify({
-      id: contact.id,
-      name: contact.name,
-      marketingConsent: contact.marketingConsent
-    }, null, 2));
-    console.log("=== END DEBUG ===");
 
     return { success: true, contact };
   } catch (error) {
