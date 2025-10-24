@@ -10,6 +10,7 @@ import Instagram from "@/app/components/icons/Instagram";
 import X from "@/app/components/icons/X";
 import TikTok from "@/app/components/icons/TikTok";
 import Chat from "@/app/components/ui/Chat";
+import ClientOnly from "@/app/components/ui/ClientOnly";
 import Image from "next/image";
 
 const getIconComponent = (name: string, iconSize?: string) => {
@@ -59,7 +60,8 @@ const FloatingCTA = () => {
   };
 
   return (
-    <motion.div
+    <ClientOnly>
+      <motion.div
       ref={ctaRef}
       style={{
         position: "fixed",
@@ -214,6 +216,7 @@ const FloatingCTA = () => {
       {/* Chat Component */}
       {isChatOpen && <Chat onClose={() => setIsChatOpen(false)} />}
     </motion.div>
+    </ClientOnly>
   );
 };
 

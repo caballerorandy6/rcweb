@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import Script from "next/script";
 import Image from "next/image";
 import CookieConsent from "./CookieConsent";
+import ClientOnly from "@/app/components/ui/ClientOnly";
 import { GA_MEASUREMENT_ID } from "@/lib/analytics";
 
 const GTM_ID = process.env.NEXT_PUBLIC_GTM_ID;
@@ -38,7 +39,7 @@ export default function CookieConsentProvider() {
   };
 
   return (
-    <>
+    <ClientOnly>
       {/* Cookie Consent Banner */}
       {showBanner && (
         <CookieConsent onAccept={handleAccept} onReject={handleReject} />
@@ -184,6 +185,6 @@ export default function CookieConsentProvider() {
           )}
         </>
       )}
-    </>
+    </ClientOnly>
   );
 }
