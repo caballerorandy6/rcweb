@@ -1,7 +1,12 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { SparklesIcon, ClockIcon, RocketLaunchIcon, CheckCircleIcon } from "@heroicons/react/24/outline";
+import {
+  SparklesIcon,
+  ClockIcon,
+  RocketLaunchIcon,
+  CheckCircleIcon,
+} from "@heroicons/react/24/outline";
 import Link from "next/link";
 import Heading from "@/app/components/Heading";
 import { useState, useEffect } from "react";
@@ -28,7 +33,9 @@ export default function OfferContent() {
       if (distance > 0) {
         const newTimeLeft = {
           days: Math.floor(distance / (1000 * 60 * 60 * 24)),
-          hours: Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)),
+          hours: Math.floor(
+            (distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
+          ),
           minutes: Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60)),
           seconds: Math.floor((distance % (1000 * 60)) / 1000),
         };
@@ -105,8 +112,9 @@ export default function OfferContent() {
             </div>
 
             <p className="text-white/90 text-xl md:text-2xl leading-relaxed font-inter text-center max-w-3xl mx-auto mb-8">
-              Get <span className="text-gold font-bold">20% discount</span> on professional web development services.
-              Perfect timing to launch that project you&apos;ve been planning!
+              Get <span className="text-gold font-bold">20% discount</span> on
+              professional web development services. Perfect timing to launch
+              that project you&apos;ve been planning!
             </p>
 
             {/* Countdown Timer */}
@@ -117,9 +125,12 @@ export default function OfferContent() {
                 { label: "Minutes", value: timeLeft.minutes },
                 { label: "Seconds", value: timeLeft.seconds },
               ].map((item, index) => (
-                <div key={index} className="bg-gray-900/60 backdrop-blur-md rounded-xl border border-gold/20 p-4">
+                <div
+                  key={index}
+                  className="bg-gray-900/60 backdrop-blur-md rounded-xl border border-gold/20 p-4"
+                >
                   <div className="text-3xl md:text-4xl font-black text-gold font-iceland text-center">
-                    {item.value.toString().padStart(2, '0')}
+                    {item.value.toString().padStart(2, "0")}
                   </div>
                   <div className="text-xs md:text-sm text-white/60 font-inter text-center mt-1">
                     {item.label}
@@ -164,7 +175,7 @@ export default function OfferContent() {
                 "API Development & Integration",
                 "Website Redesign Projects",
                 "Progressive Web Apps (PWA)",
-                "Mobile-Responsive Websites"
+                "Mobile-Responsive Websites",
               ].map((service, index) => (
                 <motion.div
                   key={index}
@@ -191,7 +202,9 @@ export default function OfferContent() {
           transition={{ delay: 0.3 }}
         >
           <div className="bg-gray-900/40 backdrop-blur-sm rounded-lg border border-gold/10 p-6">
-            <h3 className="text-lg font-bold text-gold font-iceland mb-3">Offer Terms:</h3>
+            <h3 className="text-lg font-bold text-gold font-iceland mb-3">
+              Offer Terms:
+            </h3>
             <ul className="space-y-2 text-sm text-gray-400 font-inter">
               <li>• Valid for new projects only</li>
               <li>• 20% discount applied to total project cost</li>
@@ -204,16 +217,20 @@ export default function OfferContent() {
 
         {/* Social Proof */}
         <motion.div
-          className="mt-12 text-center"
+          className="mt-12 text-center flex justify-center flex-col items-center gap-4"
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
           viewport={{ once: true }}
           transition={{ delay: 0.4 }}
         >
           <p className="text-white/70 font-inter text-sm">
-            Join 50+ satisfied clients who&apos;ve transformed their digital presence with RC Web Solutions
+            Join 50+ satisfied clients who&apos;ve transformed their digital
+            presence with RC Web Solutions
           </p>
-          <Link href="/#testimonials" className="text-gold hover:text-gold/80 transition-colors font-bold text-sm">
+          <Link
+            href="/#testimonials"
+            className="text-gold hover:text-gold/80 transition-colors font-bold text-sm font-inter"
+          >
             Read testimonials →
           </Link>
         </motion.div>

@@ -27,6 +27,12 @@ export const quickActions = [
     description: "Manage all projects",
     iconColor: "text-gray-400",
   },
+  {
+    href: "/manage-invoices",
+    title: "Manage Invoices",
+    description: "View all invoices",
+    iconColor: "text-gray-400",
+  },
 ];
 
 export default function QuickActions() {

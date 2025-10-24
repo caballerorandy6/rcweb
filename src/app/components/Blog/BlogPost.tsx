@@ -5,7 +5,12 @@ import Link from "next/link";
 import Image from "next/image";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
-import { ArrowLeftIcon, CalendarIcon, ClockIcon, UserIcon } from "@heroicons/react/24/outline";
+import {
+  ArrowLeftIcon,
+  CalendarIcon,
+  ClockIcon,
+  UserIcon,
+} from "@heroicons/react/24/outline";
 import type { BlogPost as BlogPostType } from "@/lib/blog";
 
 interface BlogPostProps {
@@ -147,7 +152,11 @@ export default function BlogPost({ post }: BlogPostProps) {
                       href={href}
                       className="text-gold hover:text-gold/80 underline transition-colors font-inter"
                       target={href?.startsWith("http") ? "_blank" : undefined}
-                      rel={href?.startsWith("http") ? "noopener noreferrer" : undefined}
+                      rel={
+                        href?.startsWith("http")
+                          ? "noopener noreferrer"
+                          : undefined
+                      }
                     >
                       {children}
                     </a>
@@ -163,9 +172,7 @@ export default function BlogPost({ post }: BlogPostProps) {
                     </ol>
                   ),
                   li: ({ children }) => (
-                    <li className="text-white/80 font-inter">
-                      {children}
-                    </li>
+                    <li className="text-white/80 font-inter">{children}</li>
                   ),
                   blockquote: ({ children }) => (
                     <blockquote className="border-l-4 border-gold/50 pl-4 py-2 my-4 bg-gold/5 rounded-r-lg italic text-white/70 font-inter">
@@ -192,9 +199,7 @@ export default function BlogPost({ post }: BlogPostProps) {
                       {children}
                     </em>
                   ),
-                  hr: () => (
-                    <hr className="border-gray-700 my-8" />
-                  ),
+                  hr: () => <hr className="border-gray-700 my-8" />,
                 }}
               >
                 {post.content}
@@ -207,11 +212,12 @@ export default function BlogPost({ post }: BlogPostProps) {
                 Ready to Start Your Project?
               </h3>
               <p className="text-white/70 font-inter mb-6">
-                Let&apos;s bring your vision to life. Contact us today for a free consultation.
+                Let&apos;s bring your vision to life. Contact us today for a
+                free consultation.
               </p>
               <Link
                 href="/#contact"
-                className="inline-flex items-center gap-2 px-6 py-3 bg-gold text-gray-900 font-semibold rounded-lg hover:bg-gold/90 transition-colors"
+                className="inline-flex items-center gap-2 px-6 py-3 bg-gold text-gray-900 font-semibold rounded-lg hover:bg-gold/90 transition-colors font-inter"
               >
                 Get Started
               </Link>

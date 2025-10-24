@@ -10,6 +10,7 @@ import {
   FolderIcon,
   EnvelopeIcon,
   ChatBubbleLeftRightIcon,
+  DocumentTextIcon,
   Bars3Icon,
   XMarkIcon,
   ArrowLeftIcon,
@@ -20,6 +21,7 @@ import {
   FolderIcon as FolderIconSolid,
   EnvelopeIcon as EnvelopeIconSolid,
   ChatBubbleLeftRightIcon as ChatBubbleLeftRightIconSolid,
+  DocumentTextIcon as DocumentTextIconSolid,
   ArrowLeftIcon as ArrowLeftIconSolid,
 } from "@heroicons/react/24/solid";
 
@@ -42,6 +44,12 @@ const navigation: NavItem[] = [
     href: "/projects",
     icon: FolderIcon,
     iconSolid: FolderIconSolid,
+  },
+  {
+    name: "Invoices",
+    href: "/manage-invoices",
+    icon: DocumentTextIcon,
+    iconSolid: DocumentTextIconSolid,
   },
   {
     name: "Contacts",

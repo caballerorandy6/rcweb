@@ -134,11 +134,11 @@ model Payment {
   secondPaid      Boolean   @default(false)
   firstSessionId  String?   // Stripe session ID del primer pago
   secondSessionId String?   // Stripe session ID del segundo pago
-  
+
   // Datos del proyecto
   projectStatus   String    @default("pending") // pending, in_progress, ready_for_payment, completed
   projectNotes    String?   // Notas internas
-  
+
   // Fechas importantes
   firstPaidAt     DateTime?
   secondPaidAt    DateTime?
@@ -148,6 +148,7 @@ model Payment {
   updatedAt       DateTime  @updatedAt
 
   termsAcceptance TermsAcceptance?
+  invoices        Invoice[]
 
   @@index([email])
   @@index([projectCode])
@@ -181,4 +182,51 @@ model SmsLog {
   @@index([phoneNumber])
   @@index([direction])
   @@index([createdAt])
+}
+
+model Invoice {
+  id              String    @id @default(uuid())
+  invoiceNumber   String    @unique // "INV-2025-001"
+  paymentId       String
+  payment         Payment   @relation(fields: [paymentId], references: [id], onDelete: Cascade)
+
+  // Tipo de invoice
+  type            String    // "initial", "final", "summary"
+
+  // Datos del cliente (snapshot histórico)
+  customerName    String
+  customerEmail   String
+  projectCode     String    // Denormalizado para fácil búsqueda
+  planName        String
+
+  // Detalles financieros (en centavos)
+  description     String    @db.Text
+  subtotal        Int       // Subtotal en centavos
+  taxRate         Float     @default(0) // Porcentaje de impuestos (ej: 8.5 para 8.5%)
+  taxAmount       Int       @default(0) // Monto de impuestos en centavos
+  total           Int       // Total final en centavos (subtotal + tax)
+  currency        String    @default("USD")
+
+  // Almacenamiento del PDF
+  pdfUrl          String?   // URL en Vercel Blob
+  pdfBlobKey      String?   // Key para eliminar de Vercel Blob si es necesario
+
+  // Metadata de Stripe
+  stripeSessionId String?
+
+  // Status y fechas
+  status          String    @default("paid") // paid, pending, cancelled
+  issueDate       DateTime  @default(now())
+  dueDate         DateTime?
+  paidDate        DateTime?
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+
+  @@index([paymentId])
+  @@index([invoiceNumber])
+  @@index([type])
+  @@index([customerEmail])
+  @@index([projectCode])
+  @@index([status])
+  @@index([issueDate])
 }

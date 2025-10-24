@@ -37,6 +37,8 @@ export default function robots(): MetadataRoute.Robots {
           "/newsletter",
           "/projects",
           "/sms",
+          "/manage-invoices",
+          "/api/invoice/*",
           "/final-payment",
           "/payment-complete",
           "/payment-success",
