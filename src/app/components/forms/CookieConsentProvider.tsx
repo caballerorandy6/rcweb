@@ -5,9 +5,7 @@ import Script from "next/script";
 import Image from "next/image";
 import CookieConsent from "./CookieConsent";
 import ClientOnly from "@/app/components/ui/ClientOnly";
-import { GA_MEASUREMENT_ID } from "@/lib/analytics";
 
-const GTM_ID = process.env.NEXT_PUBLIC_GTM_ID;
 const FACEBOOK_PIXEL_ID = process.env.NEXT_PUBLIC_FACEBOOK_PIXEL_ID;
 const LINKEDIN_PARTNER_ID = process.env.NEXT_PUBLIC_LINKEDIN_PARTNER_ID;
 const GOOGLE_ADS_ID = process.env.NEXT_PUBLIC_GOOGLE_ADS_ID;
@@ -22,6 +20,18 @@ export default function CookieConsentProvider() {
     if (consent === "accepted") {
       setHasConsent(true);
       setShowBanner(false);
+
+      // Update consent mode for returning visitors
+      if (typeof window !== 'undefined' && window.gtag) {
+        window.gtag('consent', 'update', {
+          'ad_storage': 'granted',
+          'ad_user_data': 'granted',
+          'ad_personalization': 'granted',
+          'analytics_storage': 'granted',
+          'functionality_storage': 'granted',
+          'personalization_storage': 'granted'
+        });
+      }
     } else if (consent === "rejected") {
       setHasConsent(false);
       setShowBanner(false);
@@ -31,11 +41,35 @@ export default function CookieConsentProvider() {
   const handleAccept = () => {
     setHasConsent(true);
     setShowBanner(false);
+
+    // Update Google Consent Mode to allow tracking
+    if (typeof window !== 'undefined' && window.gtag) {
+      window.gtag('consent', 'update', {
+        'ad_storage': 'granted',
+        'ad_user_data': 'granted',
+        'ad_personalization': 'granted',
+        'analytics_storage': 'granted',
+        'functionality_storage': 'granted',
+        'personalization_storage': 'granted'
+      });
+    }
   };
 
   const handleReject = () => {
     setHasConsent(false);
     setShowBanner(false);
+
+    // Keep consent denied (already set as default)
+    if (typeof window !== 'undefined' && window.gtag) {
+      window.gtag('consent', 'update', {
+        'ad_storage': 'denied',
+        'ad_user_data': 'denied',
+        'ad_personalization': 'denied',
+        'analytics_storage': 'denied',
+        'functionality_storage': 'denied',
+        'personalization_storage': 'denied'
+      });
+    }
   };
 
   return (
@@ -61,29 +95,6 @@ export default function CookieConsentProvider() {
           )}
           {LINKEDIN_PARTNER_ID && (
             <link rel="dns-prefetch" href="https://snap.licdn.com" />
-          )}
-
-          {/* Google Tag Manager */}
-          {GTM_ID && (
-            <>
-              <Script id="google-tag-manager" strategy="afterInteractive">
-                {`
-                  (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-                  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-                  j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-                  'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-                  })(window,document,'script','dataLayer','${GTM_ID}');
-                `}
-              </Script>
-              <noscript>
-                <iframe
-                  src={`https://www.googletagmanager.com/ns.html?id=${GTM_ID}`}
-                  height="0"
-                  width="0"
-                  style={{ display: "none", visibility: "hidden" }}
-                />
-              </noscript>
-            </>
           )}
 
           {/* Facebook Pixel */}
@@ -164,25 +175,6 @@ export default function CookieConsentProvider() {
             </>
           )}
 
-          {/* Google Analytics */}
-          {GA_MEASUREMENT_ID && (
-            <>
-              <Script
-                src={`https://www.googletagmanager.com/gtag/js?id=${GA_MEASUREMENT_ID}`}
-                strategy="afterInteractive"
-              />
-              <Script id="google-analytics" strategy="afterInteractive">
-                {`
-                  window.dataLayer = window.dataLayer || [];
-                  function gtag(){dataLayer.push(arguments);}
-                  gtag('js', new Date());
-                  gtag('config', '${GA_MEASUREMENT_ID}', {
-                    page_path: window.location.pathname,
-                  });
-                `}
-              </Script>
-            </>
-          )}
         </>
       )}
     </ClientOnly>

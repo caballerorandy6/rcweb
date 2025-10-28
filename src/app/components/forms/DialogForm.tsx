@@ -9,10 +9,9 @@ import { trackContactFormSubmit } from "@/lib/analytics";
 import { trackFBLead } from "@/app/components/tracking/FacebookPixel";
 import Script from "next/script";
 
-// Extend Window interface for gtag and grecaptcha
+// Extend Window interface for grecaptcha
 declare global {
   interface Window {
-    gtag?: (command: string, ...args: unknown[]) => void;
     grecaptcha?: {
       ready: (callback: () => void) => void;
       execute: (
