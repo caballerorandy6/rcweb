@@ -35,7 +35,11 @@ const nextConfig: NextConfig = {
     },
   },
 
-  // Para manejar videos estáticos
+  // Turbopack configuration (Next.js 16+)
+  // Turbopack maneja archivos de medios automáticamente
+  turbopack: {},
+
+  // Para manejar videos estáticos (usado cuando se compila con webpack)
   webpack: (config) => {
     config.module.rules.push({
       test: /\.(webm|mp4)$/,
