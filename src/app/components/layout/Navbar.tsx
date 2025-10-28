@@ -10,6 +10,7 @@ import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
 import Logo from "@/app/components/layout/Logo";
 import { navigation } from "@/lib/data";
 import { usePathname } from "next/navigation";
+import { useEffect } from "react";
 
 export interface NavigationProps {
   name: string;
@@ -27,6 +28,23 @@ const Navbar = () => {
 
   const pathname = usePathname();
   const isHomePage = pathname === "/";
+
+  // Sincronizar activeSection con pathname para rutas completas como /blog
+  useEffect(() => {
+    // Encontrar el item de navegación que coincide con el pathname actual
+    const matchingItem = navigation.find((item) => {
+      // Para rutas completas como /blog
+      if (item.hash.startsWith("/") && !item.hash.includes("#")) {
+        return pathname === item.hash;
+      }
+      return false;
+    });
+
+    // Si encontramos un match y no es el activeSection actual, actualizarlo
+    if (matchingItem && matchingItem.name !== activeSection) {
+      setActiveSection(matchingItem.name);
+    }
+  }, [pathname, activeSection, setActiveSection]);
 
   // Función helper para obtener el href correcto
   const getHref = (hash: string): Route => {
@@ -56,43 +74,46 @@ const Navbar = () => {
 
             {/* Desktop Navigation - Hidden on smaller screens */}
             <div className="hidden 2xl:flex items-center gap-x-1">
-              {mainNavigation.map((item) => (
-                <Link
-                  key={item.name}
-                  href={getHref(item.hash)}
-                  onClick={() => setActiveSection(item.name)}
-                  className={clsx(
-                    "px-3 py-2 text-sm font-inter text-white/80 hover:text-gold transition-all duration-200 relative",
-                    {
-                      "text-gold": activeSection === item.name,
-                    }
-                  )}
-                >
-                  {item.name}
-                  {item.name === activeSection && (
-                    <motion.span
-                      className="bg-gold/20 rounded-full absolute inset-0 -z-10"
-                      layoutId="navbar-active-indicator"
-                      initial={{ opacity: 0 }}
-                      animate={{ opacity: 1 }}
-                      exit={{ opacity: 0 }}
-                      transition={{
-                        type: "spring",
-                        stiffness: 500,
-                        damping: 35,
-                        mass: 0.5,
-                      }}
-                    />
-                  )}
-                </Link>
-              ))}
+              {mainNavigation.map((item) => {
+                const isActive = activeSection === item.name;
+
+                return (
+                  <Link
+                    key={item.name}
+                    href={getHref(item.hash)}
+                    onClick={() => setActiveSection(item.name)}
+                    className="px-3 py-2 text-sm font-inter transition-colors duration-300 relative group"
+                  >
+                    <span
+                      className={clsx(
+                        "relative z-10",
+                        isActive ? "text-gold" : "text-white/80 group-hover:text-gold"
+                      )}
+                    >
+                      {item.name}
+                    </span>
+                    {isActive && (
+                      <motion.span
+                        className="bg-gold/20 rounded-full absolute inset-0 -z-10"
+                        layoutId="navbar-active-tab"
+                        transition={{
+                          type: "spring",
+                          stiffness: 500,
+                          damping: 35,
+                          mass: 0.8,
+                        }}
+                      />
+                    )}
+                  </Link>
+                );
+              })}
 
               {/* Contact as CTA Button */}
               {contactItem && (
                 <Link
-                  href={contactItem.hash as Route}
+                  href={getHref(contactItem.hash)}
                   onClick={() => setActiveSection(contactItem.name)}
-                  className="ml-4 px-4 py-2 bg-gold text-gray-900 rounded-lg text-sm font-inter font-medium hover:bg-gold/90 transition-all duration-200"
+                  className="ml-4 px-4 py-2 bg-gold text-gray-900 rounded-lg text-sm font-inter font-medium hover:bg-gold/90 transition-all duration-300"
                 >
                   {contactItem.name}
                 </Link>
@@ -105,12 +126,16 @@ const Navbar = () => {
               {["Services", "Projects", "Pricing"].map((itemName) => {
                 const item = navigation.find((n) => n.name === itemName);
                 if (!item) return null;
+                const isActive = activeSection === item.name;
                 return (
                   <Link
                     key={item.name}
-                    href={item.hash as Route}
+                    href={getHref(item.hash)}
                     onClick={() => setActiveSection(item.name)}
-                    className="text-sm font-inter text-white/80 hover:text-gold transition-colors"
+                    className={clsx(
+                      "text-sm font-inter transition-colors duration-300",
+                      isActive ? "text-gold" : "text-white/80 hover:text-gold"
+                    )}
                   >
                     {item.name}
                   </Link>
@@ -120,9 +145,9 @@ const Navbar = () => {
               {/* Contact Button */}
               {contactItem && (
                 <Link
-                  href={contactItem.hash as Route}
+                  href={getHref(contactItem.hash)}
                   onClick={() => setActiveSection(contactItem.name)}
-                  className="px-4 py-2 bg-gold text-gray-900 rounded-lg text-sm font-inter font-medium hover:bg-gold/90 transition-all duration-200"
+                  className="px-4 py-2 bg-gold text-gray-900 rounded-lg text-sm font-inter font-medium hover:bg-gold/90 transition-all duration-300"
                 >
                   Let&#39;s Talk
                 </Link>
@@ -188,17 +213,19 @@ const Navbar = () => {
                         // Skip CTA from regular menu
                         if (item.name === "CTA") return null;
 
+                        const isActive = activeSection === item.name;
+
                         // Style Contact differently
                         if (item.name === "Contact") {
                           return (
                             <Link
                               key={item.name}
-                              href={item.hash as Route}
+                              href={getHref(item.hash)}
                               onClick={() => {
                                 setActiveSection(item.name);
                                 handleClickModal();
                               }}
-                              className="block w-full mt-4 px-4 py-3 bg-gold text-gray-900 rounded-lg text-center font-inter font-medium hover:bg-gold/90 transition-all duration-200"
+                              className="block w-full mt-4 px-4 py-3 bg-gold text-gray-900 rounded-lg text-center font-inter font-medium hover:bg-gold/90 transition-all duration-300"
                             >
                               Get In Touch
                             </Link>
@@ -208,19 +235,16 @@ const Navbar = () => {
                         return (
                           <Link
                             key={item.name}
-                            href={item.hash as Route}
+                            href={getHref(item.hash)}
                             onClick={() => {
                               setActiveSection(item.name);
                               handleClickModal();
                             }}
                             className={clsx(
-                              "block px-4 py-3 rounded-lg text-base font-inter transition-all duration-200",
-                              {
-                                "bg-gold/20 text-gold":
-                                  activeSection === item.name,
-                                "text-white/80 hover:text-gold hover:bg-gold/5":
-                                  activeSection !== item.name,
-                              }
+                              "block px-4 py-3 rounded-lg text-base font-inter transition-all duration-300",
+                              isActive
+                                ? "bg-gold/20 text-gold"
+                                : "text-white/80 hover:text-gold hover:bg-gold/5"
                             )}
                           >
                             {item.name}
