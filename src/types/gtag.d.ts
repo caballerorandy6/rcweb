@@ -1,6 +1,5 @@
 // Google Tag (gtag.js) TypeScript definitions
 
-type GtagCommand = 'config' | 'set' | 'event' | 'consent' | 'js';
 type ConsentAction = 'default' | 'update';
 
 interface ConsentParams {
