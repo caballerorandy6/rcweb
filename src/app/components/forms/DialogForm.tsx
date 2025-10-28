@@ -5,7 +5,7 @@ import { ErrorMessage } from "@hookform/error-message";
 import { FormSchema, FormData } from "@/lib/zod";
 import { toast } from "sonner";
 import { createContactAction } from "@/actions/contacts/createContactAction";
-import { trackContactFormSubmit } from "@/lib/analytics";
+import { trackContactFormSubmit, trackSubmitLeadForm } from "@/lib/analytics";
 import { trackFBLead } from "@/app/components/tracking/FacebookPixel";
 import Script from "next/script";
 
@@ -94,12 +94,7 @@ const DialogForm = ({ closeModal }: DialogFormProps) => {
           trackContactFormSubmit("homepage_dialog");
 
           // Track Google Ads conversion with Enhanced Conversions
-          if (typeof window !== "undefined" && window.gtag) {
-            window.gtag("event", "conversion_event_submit_lead_form", {
-              email: data.email,
-              phone_number: data.phone,
-            });
-          }
+          trackSubmitLeadForm(data.email, data.phone);
 
           // Track Facebook Lead conversion
           trackFBLead();

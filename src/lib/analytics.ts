@@ -128,3 +128,30 @@ export const trackSMSCampaignSent = (recipientCount: number) => {
     value: recipientCount,
   });
 };
+
+// Google Ads Conversion Events
+// These events match the conversion actions created in Google Ads
+
+// 1. Manual Contact Event (for phone calls, direct contact)
+export const trackManualContact = () => {
+  if (typeof window !== 'undefined' && window.gtag) {
+    window.gtag('event', 'manual_event_CONTACT', {});
+  }
+};
+
+// 2. Lead Conversion Event (when a lead is closed/converted)
+export const trackLeadConversion = () => {
+  if (typeof window !== 'undefined' && window.gtag) {
+    window.gtag('event', 'close_convert_lead', {});
+  }
+};
+
+// 3. Submit Lead Form Event (already implemented in DialogForm)
+export const trackSubmitLeadForm = (email?: string, phone?: string) => {
+  if (typeof window !== 'undefined' && window.gtag) {
+    window.gtag('event', 'conversion_event_submit_lead_form', {
+      email,
+      phone_number: phone,
+    });
+  }
+};

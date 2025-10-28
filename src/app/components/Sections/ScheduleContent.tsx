@@ -5,10 +5,14 @@ import { CalendarDaysIcon, ClockIcon, VideoCameraIcon, PhoneIcon } from "@heroic
 import Link from "next/link";
 import Heading from "@/app/components/ui/Heading";
 import { trackFBPhoneCall } from "@/app/components/tracking/FacebookPixel";
+import { trackManualContact } from "@/lib/analytics";
 
 // Phone Conversion Tracking (Google Ads + Facebook)
 const trackPhoneConversion = () => {
-  // Google Ads conversion
+  // Google Ads manual contact conversion
+  trackManualContact();
+
+  // Legacy conversion tracking (keeping for backward compatibility)
   if (typeof window !== 'undefined' && window.gtag) {
     window.gtag('event', 'conversion', {
       'send_to': 'AW-17661176254/wW9-CKCVjLAbEL7TwOVB',

@@ -11,6 +11,7 @@ import {
 import { toast } from "sonner";
 import confetti from "canvas-confetti";
 import type { Payment } from "@prisma/client";
+import { trackLeadConversion } from "@/lib/analytics";
 
 interface PaymentSuccessClientProps {
   payment?: Payment | null;
@@ -34,6 +35,9 @@ export default function PaymentSuccess({
         spread: 70,
         origin: { y: 0.6 },
       });
+
+      // Track lead conversion (payment completed = lead converted to customer)
+      trackLeadConversion();
 
       if (fallbackUsed) {
         toast.warning("Payment processed with fallback method", {
