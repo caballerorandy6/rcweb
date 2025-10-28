@@ -59,7 +59,7 @@ export const trackQuoteRequest = (packageType: string) => {
   });
 };
 
-// 3. Payment complete
+// 3. Payment complete (Legacy - kept for backward compatibility)
 export const trackPaymentComplete = (amount: number, paymentType: string) => {
   pushToDataLayer("purchase", {
     value: amount,
@@ -131,27 +131,60 @@ export const trackSMSCampaignSent = (recipientCount: number) => {
 
 // Google Ads Conversion Events
 // These events match the conversion actions created in Google Ads
+// Events are sent to GA4 which then reports to Google Ads
 
 // 1. Manual Contact Event (for phone calls, direct contact)
 export const trackManualContact = () => {
   if (typeof window !== 'undefined' && window.gtag) {
-    window.gtag('event', 'manual_event_CONTACT', {});
+    // Send to GA4 (which Google Ads listens to)
+    window.gtag('event', 'manual_event_CONTACT', {
+      send_to: GA_MEASUREMENT_ID,
+    });
   }
 };
 
 // 2. Lead Conversion Event (when a lead is closed/converted)
 export const trackLeadConversion = () => {
   if (typeof window !== 'undefined' && window.gtag) {
-    window.gtag('event', 'close_convert_lead', {});
+    // Send to GA4 (which Google Ads listens to)
+    window.gtag('event', 'close_convert_lead', {
+      send_to: GA_MEASUREMENT_ID,
+    });
   }
 };
 
-// 3. Submit Lead Form Event (already implemented in DialogForm)
+// 3. Submit Lead Form Event
 export const trackSubmitLeadForm = (email?: string, phone?: string) => {
   if (typeof window !== 'undefined' && window.gtag) {
-    window.gtag('event', 'conversion_event_submit_lead_form', {
+    // Send to GA4 (which Google Ads listens to)
+    // Event name must match exactly what's in Google Ads: "SUBMIT_LEAD_FORM"
+    window.gtag('event', 'SUBMIT_LEAD_FORM', {
+      send_to: GA_MEASUREMENT_ID,
       email,
       phone_number: phone,
+    });
+  }
+};
+
+// 4. Purchase Event (for completed payments)
+export const trackPurchase = (value: number, currency: string = 'USD', transactionId?: string) => {
+  if (typeof window !== 'undefined' && window.gtag) {
+    // Send to GA4 (which Google Ads listens to)
+    window.gtag('event', 'purchase', {
+      send_to: GA_MEASUREMENT_ID,
+      value,
+      currency,
+      transaction_id: transactionId,
+    });
+  }
+};
+
+// 5. Qualify Lead Event (when a lead is qualified)
+export const trackQualifyLead = () => {
+  if (typeof window !== 'undefined' && window.gtag) {
+    // Send to GA4 (which Google Ads listens to)
+    window.gtag('event', 'qualify_lead', {
+      send_to: GA_MEASUREMENT_ID,
     });
   }
 };

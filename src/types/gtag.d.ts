@@ -13,13 +13,23 @@ interface ConsentParams {
   wait_for_update?: number;
 }
 
+interface EventParams {
+  send_to?: string;
+  value?: number;
+  currency?: string;
+  transaction_id?: string;
+  email?: string;
+  phone_number?: string;
+  [key: string]: unknown;
+}
+
 declare global {
   interface Window {
     dataLayer?: unknown[];
     gtag?: {
       (command: 'consent', action: ConsentAction, params: ConsentParams): void;
       (command: 'config', targetId: string, config?: Record<string, unknown>): void;
-      (command: 'event', eventName: string, params?: Record<string, unknown>): void;
+      (command: 'event', eventName: string, params?: EventParams): void;
       (command: 'set', params: Record<string, unknown>): void;
       (command: 'js', date: Date): void;
       (command: string, ...args: unknown[]): void;

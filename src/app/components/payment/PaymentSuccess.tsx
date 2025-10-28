@@ -11,7 +11,7 @@ import {
 import { toast } from "sonner";
 import confetti from "canvas-confetti";
 import type { Payment } from "@prisma/client";
-import { trackLeadConversion } from "@/lib/analytics";
+import { trackLeadConversion, trackPurchase } from "@/lib/analytics";
 
 interface PaymentSuccessClientProps {
   payment?: Payment | null;
@@ -35,6 +35,19 @@ export default function PaymentSuccess({
         spread: 70,
         origin: { y: 0.6 },
       });
+
+      // Track purchase conversion (payment completed)
+      const paymentAmount = payment.firstPaid && payment.secondPaid
+        ? payment.totalAmount
+        : payment.firstPaid
+          ? payment.firstPayment
+          : payment.secondPayment;
+
+      trackPurchase(
+        paymentAmount / 100, // Convert cents to dollars
+        'USD',
+        payment.firstSessionId || payment.secondSessionId || undefined
+      );
 
       // Track lead conversion (payment completed = lead converted to customer)
       trackLeadConversion();
