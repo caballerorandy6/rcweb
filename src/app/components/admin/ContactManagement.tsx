@@ -6,6 +6,7 @@ import { getContactsAction } from "@/actions/contacts/getContactsAction";
 import { createContactAction } from "@/actions/contacts/createContactAction";
 import { deleteContactAction } from "@/actions/contacts/deleteContactAction";
 import { updateContactAction } from "@/actions/contacts/updateContactAction";
+import BusinessContactFinder from "./BusinessContactFinder";
 
 type Contact = {
   id: string;
@@ -26,6 +27,7 @@ export default function ContactManagement({
 }: ContactManagementProps) {
   const [contacts, setContacts] = useState<Contact[]>(initialContacts);
   const [showAddModal, setShowAddModal] = useState(false);
+  const [showBusinessFinder, setShowBusinessFinder] = useState(false);
   const [editingContact, setEditingContact] = useState<Contact | null>(null);
   const [searchTerm, setSearchTerm] = useState("");
   const [isPending, startTransition] = useTransition();
@@ -116,7 +118,7 @@ export default function ContactManagement({
   return (
     <div className="space-y-6">
       {/* Header */}
-      <div className="flex justify-between items-center">
+      <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
         <div>
           <h1 className="text-4xl font-bold text-gold font-iceland">
             Contact Management
@@ -125,13 +127,26 @@ export default function ContactManagement({
             Manage all your contacts and marketing consents
           </p>
         </div>
-        <button
-          onClick={() => setShowAddModal(true)}
-          className="bg-gold text-gray-900 px-4 py-2 rounded-lg font-semibold font-inter hover:bg-gold/90 transition-colors"
-        >
-          + Add Contact
-        </button>
+        <div className="flex gap-3">
+          <button
+            onClick={() => setShowBusinessFinder(!showBusinessFinder)}
+            className="bg-blue-600 text-white px-4 py-2 rounded-lg font-semibold font-inter hover:bg-blue-700 transition-colors"
+          >
+            {showBusinessFinder ? "Hide" : "Find"} Businesses
+          </button>
+          <button
+            onClick={() => setShowAddModal(true)}
+            className="bg-gold text-gray-900 px-4 py-2 rounded-lg font-semibold font-inter hover:bg-gold/90 transition-colors"
+          >
+            + Add Contact
+          </button>
+        </div>
       </div>
+
+      {/* Business Contact Finder */}
+      {showBusinessFinder && (
+        <BusinessContactFinder onImportComplete={loadContacts} />
+      )}
 
       {/* Search */}
       <div className="font-inter">
