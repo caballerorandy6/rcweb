@@ -30,6 +30,12 @@ const Navbar = () => {
 
   // Función helper para obtener el href correcto
   const getHref = (hash: string): Route => {
+    // Si el hash ya empieza con /, es una ruta completa
+    if (hash.startsWith("/")) {
+      return hash as Route;
+    }
+    // Si estamos en homepage, retorna el hash tal cual
+    // Si no, construye la ruta completa
     return (isHomePage ? hash : `/${hash}`) as Route;
   };
 
@@ -66,11 +72,15 @@ const Navbar = () => {
                   {item.name === activeSection && (
                     <motion.span
                       className="bg-gold/20 rounded-full absolute inset-0 -z-10"
-                      layoutId="activeSection"
+                      layoutId="navbar-active-indicator"
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 1 }}
+                      exit={{ opacity: 0 }}
                       transition={{
                         type: "spring",
-                        stiffness: 400,
-                        damping: 30,
+                        stiffness: 500,
+                        damping: 35,
+                        mass: 0.5,
                       }}
                     />
                   )}

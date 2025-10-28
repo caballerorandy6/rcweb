@@ -43,7 +43,7 @@ export const navigation: NavigationProps[] = [
   { name: "Services", hash: "/#services" }, // Lo más importante primero
   { name: "Projects", hash: "/#projects" }, // Muestras tu trabajo
   { name: "Testimonials", hash: "/#testimonials" }, // Respaldas con pruebas sociales
-  { name: "Blog", hash: "/blog" }, // Insights y contenido
+  { name: "Blog", hash: "/blog" }, // Ruta completa para página separada
   { name: "Process", hash: "/#process" }, // Explicas cómo trabajas
   { name: "Pricing", hash: "/#pricing" }, // El cliente ya confía, ahora ve el costo
   { name: "FAQ", hash: "/#faq" }, // Resuelves dudas comunes
@@ -51,7 +51,7 @@ export const navigation: NavigationProps[] = [
   { name: "Certifications", hash: "/#certifications" },
   { name: "About", hash: "/#about" }, // Quién eres (menos prioridad que lo anterior)
   { name: "Contact", hash: "/#contact" }, // Punto de conversión
-  { name: "CTA", hash: "#cta" }, // Botón extra destacado
+  { name: "CTA", hash: "/#cta" }, // Botón extra destacado
 ];
 
 export const experience: ExperienceProps[] = [
