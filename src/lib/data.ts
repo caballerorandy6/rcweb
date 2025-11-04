@@ -671,16 +671,16 @@ export const pricingPlans = [
     featured: false,
     cta: "Transform Your Business",
   },
-  {
-    id: "test",
-    name: "Test Plan",
-    price: "$1.00",
-    priceInCents: 100, // $1.00
-    range: "$1 - $10",
-    duration: "1 day",
-    description: "This is a test plan for demonstration purposes.",
-    features: ["Feature 1", "Feature 2"],
-  },
+  // {
+  //   id: "test",
+  //   name: "Test Plan",
+  //   price: "$1.00",
+  //   priceInCents: 100, // $1.00
+  //   range: "$1 - $10",
+  //   duration: "1 day",
+  //   description: "This is a test plan for demonstration purposes.",
+  //   features: ["Feature 1", "Feature 2"],
+  // },
 ];
 
 export const deliverables = {
