@@ -103,96 +103,94 @@ export const sendSmsCampaignAction = async (
       },
     });
 
-    // 4. Modo de prueba - enviar solo al primer número
+    // 4. Modo de prueba - enviar a números específicos de prueba
     if (testMode) {
-      const testSms = smsToSend[0];
+      // Números de prueba hardcodeados
+      const TEST_NUMBERS = [
+        "+18325465983",  // Número de prueba 1
+        "+13464417386",  // Yani Cruz
+      ];
 
-      try {
-        const messageParams: {
-          body: string;
-          to: string;
-          messagingServiceSid?: string;
-          from?: string;
-        } = {
-          body: `[TEST] ${testSms.body}`,
-          to: testSms.to,
-        };
+      let successCount = 0;
+      let failedCount = 0;
+      const sentNumbers: string[] = [];
+      const errors: string[] = [];
 
-        // Use Messaging Service if available (required for A2P 10DLC compliance)
-        if (TWILIO_MESSAGING_SERVICE_SID) {
-          messageParams.messagingServiceSid = TWILIO_MESSAGING_SERVICE_SID;
-                  } else {
-          messageParams.from = TWILIO_PHONE_NUMBER;
-                  }
-
-        const message = await twilioClient.messages.create(messageParams);
-
-                                                        await prisma.smsCampaign.update({
-          where: { id: smsCampaign.id },
-          data: { smsSent: 1 },
-        });
-
-        // Check if message has delivery issues
-        if (message.status === "failed" || message.status === "undelivered") {
-          return {
-            success: false,
-            message: `SMS was not delivered to ${testSms.to}. Status: ${message.status}. ${message.errorMessage ? `Error: ${message.errorMessage}` : "Check Twilio logs for details."}`,
-            sentCount: 0,
+      for (const testNumber of TEST_NUMBERS) {
+        try {
+          const messageParams: {
+            body: string;
+            to: string;
+            messagingServiceSid?: string;
+            from?: string;
+          } = {
+            body: `[TEST] ${messageContent}`,
+            to: testNumber,
           };
+
+          // Use Messaging Service if available (required for A2P 10DLC compliance)
+          if (TWILIO_MESSAGING_SERVICE_SID) {
+            messageParams.messagingServiceSid = TWILIO_MESSAGING_SERVICE_SID;
+          } else {
+            messageParams.from = TWILIO_PHONE_NUMBER;
+          }
+
+          const message = await twilioClient.messages.create(messageParams);
+
+          // Check if message has delivery issues
+          if (message.status === "failed" || message.status === "undelivered") {
+            errors.push(`${testNumber}: ${message.errorMessage || "Failed to deliver"}`);
+            failedCount++;
+          } else {
+            sentNumbers.push(`${testNumber} (${message.sid})`);
+            successCount++;
+          }
+
+          // Pequeña pausa entre mensajes
+          await new Promise((resolve) => setTimeout(resolve, 1000));
+        } catch (error) {
+          console.error("Twilio error:", error);
+          const twilioError = error as { message?: string; code?: number };
+          const errorMessage = twilioError?.message || "Unknown error";
+          const errorCode = twilioError?.code || 0;
+
+          // Handle Twilio errors
+          if (errorCode === 21608) {
+            errors.push(`${testNumber}: Unverified number (trial account)`);
+          } else if (errorCode === 21211) {
+            errors.push(`${testNumber}: Invalid phone format`);
+          } else if (errorCode === 21606) {
+            errors.push(`${testNumber}: Not SMS capable`);
+          } else if (errorCode === 30034) {
+            errors.push(`${testNumber}: Blocked by carrier`);
+          } else {
+            errors.push(`${testNumber}: ${errorMessage}`);
+          }
+          failedCount++;
         }
+      }
 
-        return {
-          success: true,
-          message: `Test SMS sent to ${testSms.to} (SID: ${message.sid}, Status: ${message.status}). Check Twilio logs if not received.`,
-          sentCount: 1,
-        };
-      } catch (error) {
-        console.error("Twilio error:", error);
-        const twilioError = error as { message?: string; code?: number };
-        const errorMessage = twilioError?.message || "Unknown error";
-        const errorCode = twilioError?.code || 0;
+      // Update campaign
+      await prisma.smsCampaign.update({
+        where: { id: smsCampaign.id },
+        data: { smsSent: successCount },
+      });
 
-        // Handle Twilio trial account restrictions
-        if (errorCode === 21608) {
-          return {
-            success: false,
-            message: "Cannot send SMS to unverified numbers with trial account. Please upgrade your Twilio account or verify the recipient number.",
-          };
-        }
-
-        if (errorCode === 21211) {
-          return {
-            success: false,
-            message: `Invalid phone number format: ${testSms.to}. Please use E.164 format (+1XXXXXXXXXX)`,
-          };
-        }
-
-        if (errorCode === 21606) {
-          return {
-            success: false,
-            message: `The number ${testSms.to} is not capable of receiving SMS messages.`,
-          };
-        }
-
-        if (errorCode === 30034) {
-          return {
-            success: false,
-            message: `Message blocked by carrier to ${testSms.to}. This number may have blocked your Twilio number, opted out, or the carrier is filtering messages as spam. Check Twilio logs for details.`,
-          };
-        }
-
-        if (errorCode === 30007) {
-          return {
-            success: false,
-            message: `Message filtered by carrier to ${testSms.to}. The carrier detected the message as spam or violated their policies.`,
-          };
-        }
-
+      if (successCount === 0) {
         return {
           success: false,
-          message: `Failed to send test SMS: ${errorMessage} (Code: ${errorCode})`,
+          message: `Test SMS failed for all numbers. Errors: ${errors.join(", ")}`,
+          sentCount: 0,
+          failedCount,
         };
       }
+
+      return {
+        success: true,
+        message: `Test SMS sent to ${successCount} number(s): ${sentNumbers.join(", ")}${failedCount > 0 ? `. Failed: ${errors.join(", ")}` : ""}`,
+        sentCount: successCount,
+        failedCount: failedCount > 0 ? failedCount : undefined,
+      };
     }
 
     // 5. Envío masivo con manejo de errores individual
