@@ -5,14 +5,15 @@ import twilio from "twilio";
 import dotenv from "dotenv";
 
 // Cargar variables de entorno
-dotenv.config({ path: ".env.local" });
+dotenv.config({ path: ".env" });
 
 const accountSid = process.env.TWILIO_ACCOUNT_SID;
 const authToken = process.env.TWILIO_AUTH_TOKEN;
 const fromNumber = process.env.TWILIO_PHONE_NUMBER;
+const messagingServiceSid = process.env.TWILIO_MESSAGING_SERVICE_SID;
 
 if (!accountSid || !authToken || !fromNumber) {
-  console.error("❌ Missing Twilio credentials in .env.local");
+  console.error("❌ Missing Twilio credentials in .env");
   process.exit(1);
 }
 
@@ -20,23 +21,66 @@ const client = twilio(accountSid, authToken);
 
 async function testSMS() {
   try {
-    // Reemplaza con tu número de teléfono
-    const TO_NUMBER = "+18325465983"; // Tu número con código de país
+    // Números de prueba
+    const TEST_NUMBERS = [
+      "+18325465983",  // Número 1
+      "+13464417386",  // Yani Cruz
+    ];
 
-    console.log("📱 Sending test SMS...");
+    console.log("📱 Sending test SMS to multiple numbers...");
     console.log(`From: ${fromNumber}`);
-    console.log(`To: ${TO_NUMBER}`);
+    if (messagingServiceSid) {
+      console.log(`Using Messaging Service: ${messagingServiceSid}`);
+    }
+    console.log(`Recipients: ${TEST_NUMBERS.length} numbers\n`);
 
-    const message = await client.messages.create({
-      body: "Test from RC Web! Your Twilio integration is working correctly. Reply STOP to unsubscribe.",
-      from: fromNumber,
-      to: TO_NUMBER,
-    });
+    let successCount = 0;
+    let failedCount = 0;
 
-    console.log("✅ SMS sent successfully!");
-    console.log("Message SID:", message.sid);
-    console.log("Status:", message.status);
-    console.log("Price:", message.price || "Pending");
+    for (const TO_NUMBER of TEST_NUMBERS) {
+      try {
+        console.log(`📤 Sending to: ${TO_NUMBER}...`);
+
+        const messageParams: {
+          body: string;
+          to: string;
+          messagingServiceSid?: string;
+          from?: string;
+        } = {
+          body: "RC Web: Test message! Your Twilio A2P campaign is working correctly. Reply STOP to unsubscribe. Msg&data rates apply.",
+          to: TO_NUMBER,
+        };
+
+        // Use Messaging Service if available (required for A2P 10DLC compliance)
+        if (messagingServiceSid) {
+          messageParams.messagingServiceSid = messagingServiceSid;
+        } else {
+          messageParams.from = fromNumber;
+        }
+
+        const message = await client.messages.create(messageParams);
+
+        console.log(`✅ SMS sent successfully to ${TO_NUMBER}`);
+        console.log(`   Message SID: ${message.sid}`);
+        console.log(`   Status: ${message.status}`);
+        console.log(`   Price: ${message.price || "Pending"}\n`);
+
+        successCount++;
+
+        // Pausa de 1 segundo entre mensajes
+        await new Promise(resolve => setTimeout(resolve, 1000));
+
+      } catch (error: unknown) {
+        failedCount++;
+        if (typeof error === "object" && error !== null && "message" in error) {
+          console.error(`❌ Failed to send to ${TO_NUMBER}: ${error.message}\n`);
+        }
+      }
+    }
+
+    console.log("\n📊 Summary:");
+    console.log(`   ✅ Successful: ${successCount}`);
+    console.log(`   ❌ Failed: ${failedCount}`);
 
     // Verificar balance de cuenta (opcional)
     const balance = await client.balance.fetch();
