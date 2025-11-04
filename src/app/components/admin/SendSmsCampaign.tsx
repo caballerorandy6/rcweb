@@ -66,6 +66,10 @@ export default function SendSmsCampaign({ initialStats }: SendSmsCampaignProps) 
   // Templates predefinidos
   const templates = [
     {
+      name: "Small Business Pro",
+      text: "RC Web Solutions: Get more customers online! Professional websites for small businesses. FREE consult: rcweb.dev (346)375-7534 Reply STOP",
+    },
+    {
       name: "Small Business",
       text: "RC Web: Get more customers online! We build websites that help small businesses grow. FREE consultation: rcweb.dev or call (346)375-7534. Reply STOP to opt-out",
     },
