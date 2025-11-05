@@ -87,49 +87,41 @@ export default function SendSmsCampaign({ initialStats }: SendSmsCampaignProps) 
   const segmentCost = 0.0079 * smsSegments;
 
   return (
-    <div className="min-h-screen bg-gray-900 pb-8 px-8 py-24 lg:py-32">
-      <div className="max-w-4xl mx-auto">
-        {/* Header */}
-        <div className="mb-8">
-          <h1 className="text-4xl font-bold text-gold mb-4 font-iceland">
-            Send SMS Campaign
-          </h1>
-
-          {/* Stats */}
-          <div className="bg-gray-800/50 p-4 rounded-lg font-inter">
-            <p className="text-white mb-2">
-              <span className="text-gold font-bold">
-                {stats.eligibleContacts}
-              </span>{" "}
-              phone numbers will receive this SMS
-            </p>
-            <div className="grid grid-cols-2 gap-4 mt-3 text-sm">
-              <div>
-                <span className="text-gray-400">Total phones in database:</span>
-                <span className="text-white ml-2">{stats.totalPhones}</span>
-              </div>
-              <div>
-                <span className="text-gray-400">With consent:</span>
-                <span className="text-green-400 ml-2">
-                  {stats.consentPercentage}%
-                </span>
-              </div>
-              <div>
-                <span className="text-gray-400">Cost per SMS:</span>
-                <span className="text-yellow-400 ml-2">$0.0079</span>
-              </div>
-              <div>
-                <span className="text-gray-400">Estimated total cost:</span>
-                <span className="text-green-400 ml-2 font-bold">
-                  ${(segmentCost * stats.eligibleContacts).toFixed(2)}
-                </span>
-              </div>
-            </div>
+    <div className="space-y-6">
+      {/* Stats */}
+      <div className="bg-gray-800/50 p-4 rounded-lg font-inter">
+        <p className="text-white mb-2">
+          <span className="text-gold font-bold">
+            {stats.eligibleContacts}
+          </span>{" "}
+          phone numbers will receive this SMS
+        </p>
+        <div className="grid grid-cols-2 gap-4 mt-3 text-sm">
+          <div>
+            <span className="text-gray-400">Total phones in database:</span>
+            <span className="text-white ml-2">{stats.totalPhones}</span>
+          </div>
+          <div>
+            <span className="text-gray-400">With consent:</span>
+            <span className="text-green-400 ml-2">
+              {stats.consentPercentage}%
+            </span>
+          </div>
+          <div>
+            <span className="text-gray-400">Cost per SMS:</span>
+            <span className="text-yellow-400 ml-2">$0.0079</span>
+          </div>
+          <div>
+            <span className="text-gray-400">Estimated total cost:</span>
+            <span className="text-green-400 ml-2 font-bold">
+              ${(segmentCost * stats.eligibleContacts).toFixed(2)}
+            </span>
           </div>
         </div>
+      </div>
 
-        {/* Form */}
-        <div className="space-y-6">
+      {/* Form */}
+      <div className="space-y-6">
           {/* Message Input */}
           <div>
             <div className="flex justify-between items-center mb-2">

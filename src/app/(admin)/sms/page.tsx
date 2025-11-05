@@ -1,10 +1,12 @@
 import { Suspense } from "react";
 import SendSmsCampaign from "@/app/components/admin/SendSmsCampaign";
+import SmsDeliveryStats from "@/app/components/admin/SmsDeliveryStats";
 import CampaignSkeleton from "@/app/components/skeletons/CampaignSkeleton";
 import { auth } from "@/lib/auth";
 import { redirect } from "next/navigation";
 import { genPageMetadata } from "@/utils/genPageMetadata";
 import { getSmsStatsAction } from "@/actions/stats/getSmsStatsAction";
+import SmsTabs from "@/app/components/admin/SmsTabs";
 
 export const metadata = genPageMetadata({
   title: "SMS Campaigns",
@@ -14,7 +16,12 @@ export const metadata = genPageMetadata({
 
 async function SMSContent() {
   const stats = await getSmsStatsAction();
-  return <SendSmsCampaign initialStats={stats} />;
+  return (
+    <SmsTabs>
+      <SendSmsCampaign initialStats={stats} />
+      <SmsDeliveryStats />
+    </SmsTabs>
+  );
 }
 
 export default async function SMSPage() {
