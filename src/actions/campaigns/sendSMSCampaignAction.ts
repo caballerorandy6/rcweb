@@ -22,17 +22,19 @@ export interface SmsActionResponse {
 
 /**
  * Check if current time is within allowed hours for sending SMS
- * Allowed: 9 AM - 8 PM local time
+ * Allowed: 9 AM - 8 PM Central Time (Houston, TX)
  */
 function isWithinAllowedHours(): { allowed: boolean; message?: string } {
+  // Get current time in Houston/Central Time Zone
   const now = new Date();
-  const hour = now.getHours();
+  const houstonTime = new Date(now.toLocaleString("en-US", { timeZone: "America/Chicago" }));
+  const hour = houstonTime.getHours();
 
-  // Allow sending between 9 AM and 8 PM
+  // Allow sending between 9 AM and 8 PM Central Time
   if (hour < 9 || hour >= 20) {
     return {
       allowed: false,
-      message: `SMS campaigns can only be sent between 9:00 AM and 8:00 PM. Current time: ${now.toLocaleTimeString()}`,
+      message: `SMS campaigns can only be sent between 9:00 AM and 8:00 PM Central Time. Current Houston time: ${houstonTime.toLocaleTimeString("en-US", { timeZone: "America/Chicago", hour: "2-digit", minute: "2-digit", hour12: true })}`,
     };
   }
 
