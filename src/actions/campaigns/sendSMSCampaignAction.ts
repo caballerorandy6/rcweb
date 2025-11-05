@@ -200,7 +200,9 @@ export const sendSmsCampaignAction = async (
     let failedCount = 0;
     const errors: string[] = [];
 
-        for (const sms of smsToSend) {
+    console.log(`📤 Sending ${smsToSend.length} SMS messages...`);
+
+    for (const sms of smsToSend) {
       try {
         const messageParams: {
           body: string;
@@ -230,8 +232,8 @@ export const sendSmsCampaignAction = async (
           successCount++;
         }
 
-        // Pequeña pausa entre mensajes para evitar límites de rate
-        await new Promise((resolve) => setTimeout(resolve, 1000));
+        // Pequeña pausa entre mensajes para evitar límites de rate (100ms)
+        await new Promise((resolve) => setTimeout(resolve, 100));
       } catch (error) {
         const twilioError = error as { message?: string; code?: number };
         const errorMessage = twilioError?.message || "Unknown error";
