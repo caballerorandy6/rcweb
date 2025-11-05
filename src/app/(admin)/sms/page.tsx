@@ -8,6 +8,9 @@ import { genPageMetadata } from "@/utils/genPageMetadata";
 import { getSmsStatsAction } from "@/actions/stats/getSmsStatsAction";
 import SmsTabs from "@/app/components/admin/SmsTabs";
 
+// Increase timeout for large SMS campaigns (5 minutes)
+export const maxDuration = 300;
+
 export const metadata = genPageMetadata({
   title: "SMS Campaigns",
   description: "Send SMS campaigns for RC Web Solutions LLC.",
