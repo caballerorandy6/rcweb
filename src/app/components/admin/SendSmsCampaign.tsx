@@ -264,6 +264,5 @@ export default function SendSmsCampaign({ initialStats }: SendSmsCampaignProps) 
           </div>
         </div>
       </div>
-    </div>
   );
 }
