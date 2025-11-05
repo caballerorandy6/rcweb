@@ -15,38 +15,42 @@ export async function deleteFailedPhonesAction(
 
     console.log("📥 Received phones to delete:", phoneNumbers);
 
-    // Normalizar números (asegurar formato consistente)
-    const normalizedNumbers = phoneNumbers.map((phone) => {
-      // Remover espacios, guiones, paréntesis
+    // Función para normalizar números (quitar espacios, guiones, paréntesis)
+    const normalize = (phone: string) => {
       let cleaned = phone.replace(/[\s\-\(\)]/g, "");
-      // Asegurar que tenga +
       if (!cleaned.startsWith("+")) {
         cleaned = `+${cleaned}`;
       }
       return cleaned;
-    });
+    };
 
-    console.log("🔍 Attempting to delete phones:", normalizedNumbers);
+    // Normalizar números recibidos
+    const normalizedNumbers = phoneNumbers.map(normalize);
+    console.log("🔍 Normalized phones from Twilio:", normalizedNumbers);
 
-    // Buscar teléfonos en la BD para ver qué formato tienen
-    const existingPhones = await prisma.contactPhone.findMany({
-      where: {
-        phone: {
-          in: normalizedNumbers,
-        },
-      },
+    // Obtener TODOS los teléfonos de la BD y buscar coincidencias normalizadas
+    const allPhones = await prisma.contactPhone.findMany({
       select: {
+        id: true,
         phone: true,
       },
     });
 
-    console.log("📱 Found phones in database:", existingPhones);
+    // Encontrar IDs de teléfonos que coinciden después de normalizar
+    const phoneIdsToDelete = allPhones
+      .filter((dbPhone) => {
+        const normalizedDbPhone = normalize(dbPhone.phone);
+        return normalizedNumbers.includes(normalizedDbPhone);
+      })
+      .map((p) => p.id);
 
-    // Eliminar teléfonos
+    console.log("📱 Found matching phone IDs:", phoneIdsToDelete);
+
+    // Eliminar teléfonos por ID
     const result = await prisma.contactPhone.deleteMany({
       where: {
-        phone: {
-          in: normalizedNumbers,
+        id: {
+          in: phoneIdsToDelete,
         },
       },
     });
