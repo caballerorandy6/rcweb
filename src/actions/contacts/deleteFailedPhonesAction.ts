@@ -13,6 +13,8 @@ export async function deleteFailedPhonesAction(
       };
     }
 
+    console.log("📥 Received phones to delete:", phoneNumbers);
+
     // Normalizar números (asegurar formato consistente)
     const normalizedNumbers = phoneNumbers.map((phone) => {
       // Remover espacios, guiones, paréntesis
@@ -24,6 +26,22 @@ export async function deleteFailedPhonesAction(
       return cleaned;
     });
 
+    console.log("🔍 Attempting to delete phones:", normalizedNumbers);
+
+    // Buscar teléfonos en la BD para ver qué formato tienen
+    const existingPhones = await prisma.contactPhone.findMany({
+      where: {
+        phone: {
+          in: normalizedNumbers,
+        },
+      },
+      select: {
+        phone: true,
+      },
+    });
+
+    console.log("📱 Found phones in database:", existingPhones);
+
     // Eliminar teléfonos
     const result = await prisma.contactPhone.deleteMany({
       where: {
@@ -32,6 +50,8 @@ export async function deleteFailedPhonesAction(
         },
       },
     });
+
+    console.log("✅ Deleted count:", result.count);
 
     return {
       success: true,
