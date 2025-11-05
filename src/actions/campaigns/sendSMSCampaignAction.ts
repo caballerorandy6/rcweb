@@ -27,14 +27,28 @@ export interface SmsActionResponse {
 function isWithinAllowedHours(): { allowed: boolean; message?: string } {
   // Get current time in Houston/Central Time Zone
   const now = new Date();
-  const houstonTime = new Date(now.toLocaleString("en-US", { timeZone: "America/Chicago" }));
-  const hour = houstonTime.getHours();
+
+  // Get hour in Houston/Central Time Zone using Intl (more reliable)
+  const formatter = new Intl.DateTimeFormat("en-US", {
+    timeZone: "America/Chicago",
+    hour: "numeric",
+    hour12: false,
+  });
+
+  const houstonHour = parseInt(formatter.format(now));
 
   // Allow sending between 9 AM and 8 PM Central Time
-  if (hour < 9 || hour >= 20) {
+  if (houstonHour < 9 || houstonHour >= 20) {
+    const timeFormatter = new Intl.DateTimeFormat("en-US", {
+      timeZone: "America/Chicago",
+      hour: "2-digit",
+      minute: "2-digit",
+      hour12: true,
+    });
+
     return {
       allowed: false,
-      message: `SMS campaigns can only be sent between 9:00 AM and 8:00 PM Central Time. Current Houston time: ${houstonTime.toLocaleTimeString("en-US", { timeZone: "America/Chicago", hour: "2-digit", minute: "2-digit", hour12: true })}`,
+      message: `SMS campaigns can only be sent between 9:00 AM and 8:00 PM Central Time. Current Houston time: ${timeFormatter.format(now)}`,
     };
   }
 
