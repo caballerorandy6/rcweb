@@ -8,6 +8,7 @@ import { createContactAction } from "@/actions/contacts/createContactAction";
 import { trackContactFormSubmit, trackSubmitLeadForm } from "@/lib/analytics";
 import { trackFBLead } from "@/app/components/tracking/FacebookPixel";
 import Script from "next/script";
+import { useRouter } from "next/navigation";
 
 // Extend Window interface for grecaptcha
 declare global {
@@ -29,6 +30,7 @@ interface DialogFormProps {
 }
 
 const DialogForm = ({ closeModal }: DialogFormProps) => {
+  const router = useRouter();
   const [isPending, startTransition] = useTransition();
   const formMountTime = useRef<number>(Date.now());
   const [honeypot, setHoneypot] = useState("");
@@ -102,6 +104,9 @@ const DialogForm = ({ closeModal }: DialogFormProps) => {
           toast.success(contact.message, { id: toastId });
           reset();
           closeModal();
+
+          // Redirect to thank-you page
+          router.push("/thank-you");
         } else {
           const errorMessages = Object.values(contact.errors)
             .flat()
