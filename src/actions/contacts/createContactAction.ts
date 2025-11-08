@@ -15,10 +15,17 @@ const resend = new Resend(process.env.RESEND_API_KEY!);
 
 async function verifyRecaptcha(token: string): Promise<boolean> {
   const secretKey = process.env.RECAPTCHA_SECRET_KEY;
+  const isDevelopment = process.env.NODE_ENV === 'development';
 
   if (!secretKey || !token) {
     console.warn("⚠️ reCAPTCHA not configured or no token provided");
     return true; // Allow submission if reCAPTCHA not configured
+  }
+
+  // Skip reCAPTCHA verification in development
+  if (isDevelopment) {
+    console.log("🔧 Development mode: Skipping reCAPTCHA verification");
+    return true;
   }
 
   try {
@@ -236,9 +243,9 @@ export const createContactAction = async (
         // Email de confirmación al usuario
         email
           ? resend.emails.send({
-              from: "RC Web <no-reply@rcweb.dev>",
+              from: "RC Web Solution <contactus@rcweb.dev>",
               to: [email],
-              subject: "Thanks for contacting RC Web Solutions!",
+              subject: "Got your message! - RC Web Solution",
               html: `
             <!DOCTYPE html>
             <html>
@@ -251,19 +258,77 @@ export const createContactAction = async (
                   <tr>
                     <td align="center">
                       <table width="600" cellpadding="0" cellspacing="0" style="background:#ffffff;border-radius:16px;box-shadow:0 4px 6px rgba(0,0,0,0.1);overflow:hidden;">
+
+                        <!-- Header -->
                         <tr>
-                          <td style="background:linear-gradient(135deg,#f59e0b 0%,#d97706 100%);padding:40px 32px;text-align:center;">
-                            <h1 style="color:#fff;margin:0;font-size:28px;font-weight:700;">Thank You!</h1>
-                            <p style="color:rgba(255,255,255,0.9);margin:8px 0 0;font-size:16px;">We received your message</p>
+                          <td style="background:linear-gradient(135deg,#6366f1 0%,#7c3aed 100%);padding:40px 32px;text-align:center;">
+                            <h1 style="color:#fff;margin:0;font-size:28px;font-weight:700;">Thanks for reaching out!</h1>
+                            <p style="color:rgba(255,255,255,0.9);margin:8px 0 0;font-size:16px;">RC Web Solution</p>
                           </td>
                         </tr>
+
+                        <!-- Body -->
                         <tr>
                           <td style="padding:32px;">
-                            <p style="font-size:16px;color:#374151;margin:0 0 16px;">Hi ${name},</p>
-                            <p style="font-size:16px;color:#374151;margin:0 0 24px;">Thank you for reaching out to RC Web Solutions. We've received your message and will get back to you within 24 hours.</p>
-                            <p style="font-size:14px;color:#6b7280;margin:0;">Best regards,<br><strong>Randy Caballero</strong><br>RC Web Solutions LLC</p>
+                            <p style="font-size:16px;color:#374151;margin:0 0 24px;line-height:1.6;">
+                              Hi there,
+                            </p>
+
+                            <p style="font-size:16px;color:#374151;margin:0 0 24px;line-height:1.6;">
+                              Thanks for reaching out to <strong>RC Web Solution</strong>!
+                            </p>
+
+                            <p style="font-size:16px;color:#374151;margin:0 0 24px;line-height:1.6;">
+                              I've received your email and will respond within <strong>24 hours</strong> (usually much sooner).
+                            </p>
+
+                            <!-- Contact Options -->
+                            <div style="background-color:#f9fafb;border-radius:12px;padding:24px;margin-bottom:24px;">
+                              <p style="font-size:16px;color:#374151;margin:0 0 16px;font-weight:600;">In the meantime, feel free to:</p>
+                              <table style="width:100%;font-size:14px;">
+                                <tr>
+                                  <td style="padding:8px 0;">
+                                    <span style="font-size:18px;margin-right:8px;">📱</span>
+                                    <span style="color:#374151;">Call/text me directly: <a href="tel:+13463757534" style="color:#7c3aed;text-decoration:none;font-weight:600;">+1 346 375 7534</a></span>
+                                  </td>
+                                </tr>
+                                <tr>
+                                  <td style="padding:8px 0;">
+                                    <span style="font-size:18px;margin-right:8px;">🌐</span>
+                                    <span style="color:#374151;">Check out my portfolio: <a href="https://rcweb.dev" style="color:#7c3aed;text-decoration:none;font-weight:600;">https://rcweb.dev</a></span>
+                                  </td>
+                                </tr>
+                              </table>
+                            </div>
+
+                            <!-- Availability Badge -->
+                            <div style="background:linear-gradient(135deg,#dcfce7 0%,#bbf7d0 100%);border-left:4px solid #22c55e;border-radius:8px;padding:20px;margin-bottom:32px;">
+                              <p style="color:#166534;font-weight:600;font-size:16px;margin:0;">
+                                <span style="font-size:18px;margin-right:8px;">🟢</span>
+                                Good news: I'm currently available and can start new projects immediately.
+                              </p>
+                            </div>
+
+                            <p style="font-size:16px;color:#374151;margin:0 0 8px;">Talk soon,</p>
+                            <p style="font-size:16px;color:#374151;margin:0;font-weight:600;">Randy Caballero</p>
+                            <p style="font-size:14px;color:#6b7280;margin:0;">RC Web Solution LLC</p>
+
+                            <!-- Footer -->
+                            <hr style="border:none;border-top:1px solid #e5e7eb;margin:32px 0;">
+                            <table style="width:100%;font-size:14px;color:#6b7280;">
+                              <tr>
+                                <td style="padding:4px 0;">📧 <a href="mailto:contactus@rcweb.dev" style="color:#7c3aed;text-decoration:none;">contactus@rcweb.dev</a></td>
+                              </tr>
+                              <tr>
+                                <td style="padding:4px 0;">📱 <a href="tel:+13463757534" style="color:#7c3aed;text-decoration:none;">+1 346 375 7534</a></td>
+                              </tr>
+                              <tr>
+                                <td style="padding:4px 0;">🌐 <a href="https://rcweb.dev" style="color:#7c3aed;text-decoration:none;">https://rcweb.dev</a></td>
+                              </tr>
+                            </table>
                           </td>
                         </tr>
+
                       </table>
                     </td>
                   </tr>
@@ -274,8 +339,7 @@ export const createContactAction = async (
             })
           : Promise.resolve(),
       ]);
-
-          } catch (emailError) {
+    } catch (emailError) {
       console.error("❌ Failed to send emails:", emailError);
       // Release quota on email send failure
       await releaseEmailQuota(emailCount);

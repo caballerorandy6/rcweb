@@ -102,11 +102,11 @@ export default function ThankYouPage() {
               </a>
               <span className="hidden sm:inline text-gray-600">|</span>
               <a
-                href="mailto:randy@rcweb.dev"
+                href="mailto:contactus@rcweb.dev"
                 className="text-gold hover:text-yellow-200 transition-colors flex items-center"
               >
                 <span className="mr-2">✉️</span>
-                randy@rcweb.dev
+                contactus@rcweb.dev
               </a>
             </div>
           </div>
