@@ -26,23 +26,12 @@ export async function POST() {
     );
 
     // Forward the call to your personal number
-    twiml.dial(
-      {
-        callerId: "+13463757534", // Shows your Twilio number on caller ID
-        timeout: 30, // Ring for 30 seconds
-        action: "/api/twilio/voice/completed", // Optional: track call completion
-      },
-      FORWARD_TO_NUMBER
-    );
-
-    // If call is not answered, play voicemail message
-    twiml.say(
-      {
-        voice: "Polly.Joanna",
-        language: "en-US",
-      },
-      "Sorry, we are unable to take your call right now. Please visit our website at R C Web dot dev or try calling again later. Goodbye."
-    );
+    const dial = twiml.dial({
+      callerId: "+13463757534", // Shows your Twilio number on caller ID
+      timeout: 30, // Ring for 30 seconds
+      action: "/api/twilio/voice/dialed", // Check if call was answered
+    });
+    dial.number(FORWARD_TO_NUMBER);
 
     // Return TwiML response
     return new NextResponse(twiml.toString(), {
