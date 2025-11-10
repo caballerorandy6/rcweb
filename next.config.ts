@@ -1,6 +1,9 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
+  // React Compiler (Next.js 16+)
+  reactCompiler: true,
+
   // Configuraciones para Next.js 15
   images: {
     unoptimized: true,

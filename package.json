@@ -58,6 +58,7 @@
     "@types/react-dom": "^19",
     "@types/react-pdf": "^6.2.0",
     "@types/react-vertical-timeline-component": "^3.3.6",
+    "babel-plugin-react-compiler": "^1.0.0",
     "eslint": "^9",
     "eslint-config-next": "^16.0.1",
     "postcss": "^8",
