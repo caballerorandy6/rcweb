@@ -357,41 +357,41 @@ export default function SendNewsletterCampaign({
         </div>
         <div class="pricing-section">
           <div class="pricing-card">
-            <div class="plan-name">👻 Starter Package</div>
-            <div class="plan-price">Starting at $1,499</div>
-            <div class="price-range">Price Range: $1,499 - $2,999</div>
-            <div class="plan-duration">2-3 weeks delivery</div>
-            <div class="plan-description">Perfect for small businesses starting their digital journey</div>
+            <div class="plan-name">👻 Landing Pages</div>
+            <div class="plan-price">Starting at $800</div>
+            <div class="price-range">Price Range: $800 - $1,500</div>
+            <div class="plan-duration">1-2 weeks delivery</div>
+            <div class="plan-description">Single page focused on conversions</div>
             <ul class="features-list">
-              <li>5-7 page responsive website</li>
+              <li>Lead generation</li>
+              <li>Service showcase</li>
+              <li>Event promotion</li>
+              <li>Quick online presence</li>
               <li>Mobile-optimized design</li>
-              <li>Basic SEO setup</li>
               <li>Contact form integration</li>
-              <li>Social media links</li>
-              <li>Google Analytics setup</li>
-              <li>1 month free support</li>
+              <li>Basic SEO setup</li>
             </ul>
-            <div class="ideal-for">✨ Ideal for: Local businesses, freelancers, personal brands</div>
+            <div class="ideal-for">✨ Perfect for: New businesses, product launches, event promotion</div>
             <center><a href="https://rcweb.dev/#pricing" class="cta-button">View Details 🚀</a></center>
           </div>
           <div class="pricing-card" style="border-color: #ffa500; border-width: 3px">
             <div style="background: #ffa500; color: #000; display: inline-block; padding: 5px 15px; border-radius: 20px; font-size: 12px; font-weight: bold; margin-bottom: 10px;">⭐ MOST POPULAR</div>
-            <div class="plan-name">🎃 Growth Package</div>
-            <div class="plan-price">Starting at $3,499</div>
-            <div class="price-range">Price Range: $3,499 - $5,999</div>
-            <div class="plan-duration">3-5 weeks delivery</div>
-            <div class="plan-description">Scale your business with advanced features and premium functionality</div>
+            <div class="plan-name">🎃 Professional Websites</div>
+            <div class="plan-price">Starting at $2,500</div>
+            <div class="price-range">Price Range: $2,500 - $5,000</div>
+            <div class="plan-duration">3-4 weeks delivery</div>
+            <div class="plan-description">5-10 pages with custom design</div>
             <ul class="features-list">
-              <li>10-15 page dynamic website</li>
-              <li>Custom animations & interactions</li>
-              <li>Advanced SEO optimization</li>
-              <li>CMS integration (blog/news)</li>
-              <li>Email marketing integration</li>
-              <li>Lead capture & automation</li>
-              <li>Google My Business setup</li>
-              <li>3 months free support</li>
+              <li>Small businesses</li>
+              <li>Professional services</li>
+              <li>Portfolios</li>
+              <li>Company websites</li>
+              <li>Responsive design</li>
+              <li>SEO optimization</li>
+              <li>Analytics integration</li>
+              <li>30-day support</li>
             </ul>
-            <div class="ideal-for">✨ Ideal for: Growing startups, service businesses, B2B companies</div>
+            <div class="ideal-for">✨ Perfect for: Established businesses, professional services, portfolios</div>
             <center><a href="https://rcweb.dev/#pricing" class="cta-button">Get Started! 🔥</a></center>
           </div>
         </div>
