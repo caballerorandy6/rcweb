@@ -160,23 +160,85 @@ export default function ContactManagement({
       </div>
 
       {/* Stats */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4 font-inter">
-        <div className="bg-gray-800 p-4 rounded-lg">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 font-inter">
+        {/* Total Contacts */}
+        <div className="bg-gray-800 p-4 rounded-lg border-l-4 border-gold">
           <h3 className="text-gray-400 text-sm mb-1">Total Contacts</h3>
           <p className="text-2xl font-bold text-white">{contacts.length}</p>
         </div>
-        <div className="bg-gray-800 p-4 rounded-lg">
+
+        {/* With Marketing Consent */}
+        <div className="bg-gray-800 p-4 rounded-lg border-l-4 border-green-500">
           <h3 className="text-gray-400 text-sm mb-1">
             With Marketing Consent
           </h3>
           <p className="text-2xl font-bold text-green-500">
             {contacts.filter((c) => c.marketingConsent).length}
           </p>
+          <p className="text-xs text-gray-500 mt-1">
+            {contacts.length > 0
+              ? `${Math.round((contacts.filter((c) => c.marketingConsent).length / contacts.length) * 100)}%`
+              : "0%"}
+          </p>
         </div>
-        <div className="bg-gray-800 p-4 rounded-lg">
-          <h3 className="text-gray-400 text-sm mb-1">Total Emails</h3>
+
+        {/* Without Marketing Consent */}
+        <div className="bg-gray-800 p-4 rounded-lg border-l-4 border-red-500">
+          <h3 className="text-gray-400 text-sm mb-1">
+            Without Marketing Consent
+          </h3>
+          <p className="text-2xl font-bold text-red-500">
+            {contacts.filter((c) => !c.marketingConsent).length}
+          </p>
+          <p className="text-xs text-gray-500 mt-1">
+            {contacts.length > 0
+              ? `${Math.round((contacts.filter((c) => !c.marketingConsent).length / contacts.length) * 100)}%`
+              : "0%"}
+          </p>
+        </div>
+
+        {/* Total Emails */}
+        <div className="bg-gray-800 p-4 rounded-lg border-l-4 border-blue-500">
+          <h3 className="text-gray-400 text-sm mb-1">Total Email Addresses</h3>
           <p className="text-2xl font-bold text-blue-500">
             {contacts.reduce((acc, c) => acc + c.emails.length, 0)}
+          </p>
+          <p className="text-xs text-gray-500 mt-1">
+            {contacts.length > 0
+              ? `${(contacts.reduce((acc, c) => acc + c.emails.length, 0) / contacts.length).toFixed(1)} avg per contact`
+              : "0 avg"}
+          </p>
+        </div>
+
+        {/* Total Phone Numbers */}
+        <div className="bg-gray-800 p-4 rounded-lg border-l-4 border-purple-500">
+          <h3 className="text-gray-400 text-sm mb-1">Total Phone Numbers</h3>
+          <p className="text-2xl font-bold text-purple-500">
+            {contacts.reduce((acc, c) => acc + c.phones.length, 0)}
+          </p>
+          <p className="text-xs text-gray-500 mt-1">
+            {contacts.length > 0
+              ? `${(contacts.reduce((acc, c) => acc + c.phones.length, 0) / contacts.length).toFixed(1)} avg per contact`
+              : "0 avg"}
+          </p>
+        </div>
+
+        {/* Contacts with Both */}
+        <div className="bg-gray-800 p-4 rounded-lg border-l-4 border-yellow-500">
+          <h3 className="text-gray-400 text-sm mb-1">
+            With Email & Phone
+          </h3>
+          <p className="text-2xl font-bold text-yellow-500">
+            {
+              contacts.filter(
+                (c) => c.emails.length > 0 && c.phones.length > 0
+              ).length
+            }
+          </p>
+          <p className="text-xs text-gray-500 mt-1">
+            {contacts.length > 0
+              ? `${Math.round((contacts.filter((c) => c.emails.length > 0 && c.phones.length > 0).length / contacts.length) * 100)}% complete`
+              : "0%"}
           </p>
         </div>
       </div>
