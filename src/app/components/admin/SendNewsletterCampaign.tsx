@@ -434,6 +434,249 @@ export default function SendNewsletterCampaign({
 </html>`);
   };
 
+  const useWhyWebsiteTemplate = () => {
+    setSubject("¿Por qué tu negocio necesita un sitio web profesional en 2025?");
+    setContent(`<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Iceland&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <title>¿Por qué tu negocio necesita un sitio web?</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Iceland&family=Inter:wght@400;600;700&display=swap');
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Inter', Arial, sans-serif; background-color: #f4f4f4; line-height: 1.6; }
+        .container { max-width: 600px; margin: 0 auto; background-color: #ffffff; }
+        .header { background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%); padding: 40px 20px; text-align: center; }
+        .logo { font-family: 'Iceland', Arial, sans-serif; font-size: 32px; color: #D4AF37; margin: 0; letter-spacing: 1px; }
+        .tagline { color: #ffffff; font-size: 14px; margin-top: 10px; }
+        .hero { background: linear-gradient(135deg, #D4AF37 0%, #B8941F 100%); padding: 30px 20px; text-align: center; color: #1a1a1a; }
+        .hero-title { font-family: 'Iceland', Arial, sans-serif; font-size: 28px; margin-bottom: 10px; line-height: 1.2; }
+        .hero-subtitle { font-size: 16px; line-height: 1.5; }
+        .content { padding: 40px 30px; }
+        .section-title { font-family: 'Iceland', Arial, sans-serif; font-size: 24px; color: #D4AF37; margin: 30px 0 20px 0; text-align: center; letter-spacing: 0.5px; }
+        .reason-card { background: #f9fafb; border-left: 4px solid #D4AF37; padding: 20px; margin-bottom: 20px; border-radius: 8px; }
+        .reason-icon { font-size: 32px; margin-bottom: 10px; }
+        .reason-title { font-size: 18px; font-weight: 700; color: #1a1a1a; margin-bottom: 10px; }
+        .reason-text { color: #4a5568; font-size: 15px; line-height: 1.7; }
+        .stat-box { background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%); padding: 25px; margin: 30px 0; border-radius: 12px; text-align: center; }
+        .stat-number { font-family: 'Iceland', Arial, sans-serif; font-size: 48px; color: #D4AF37; margin-bottom: 5px; }
+        .stat-text { color: #ffffff; font-size: 14px; }
+        .cta-section { background: #f9fafb; padding: 30px; text-align: center; margin: 30px 0; border-radius: 12px; }
+        .cta-button { display: inline-block; background: linear-gradient(135deg, #D4AF37 0%, #B8941F 100%); color: #1a1a1a; padding: 18px 40px; text-decoration: none; border-radius: 30px; font-weight: 700; font-size: 16px; box-shadow: 0 4px 15px rgba(212, 175, 55, 0.3); margin-top: 15px; }
+        .footer { background: #1a1a1a; padding: 30px 20px; text-align: center; color: #9CA3AF; }
+        .footer-logo { color: #D4AF37; font-family: 'Iceland', Arial, sans-serif; font-size: 20px; margin-bottom: 15px; }
+        .footer-links { margin: 20px 0; }
+        .footer-links a { color: #D4AF37; text-decoration: none; margin: 0 10px; font-size: 14px; }
+        .checklist { margin: 20px 0; }
+        .checklist-item { display: flex; align-items: flex-start; margin-bottom: 12px; color: #4a5568; }
+        .checklist-icon { color: #10B981; font-size: 20px; margin-right: 10px; flex-shrink: 0; }
+        @media only screen and (max-width: 600px) {
+            .content { padding: 30px 20px; }
+            .hero-title { font-size: 24px; }
+            .stat-number { font-size: 40px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <h1 class="logo">RC WEB SOLUTIONS</h1>
+            <p class="tagline">Transformando Negocios Digitalmente</p>
+        </div>
+
+        <!-- Hero -->
+        <div class="hero">
+            <h2 class="hero-title">¿Tu Negocio Aún No Tiene Sitio Web?</h2>
+            <p class="hero-subtitle">Estás perdiendo clientes todos los días</p>
+        </div>
+
+        <!-- Main Content -->
+        <div class="content">
+            <p style="color: #4a5568; font-size: 16px; margin-bottom: 25px; line-height: 1.7;">
+                Hola,
+            </p>
+            <p style="color: #4a5568; font-size: 16px; margin-bottom: 25px; line-height: 1.7;">
+                En pleno 2025, <strong>el 97% de los consumidores buscan negocios locales en línea antes de visitarlos</strong>.
+                Si tu negocio no aparece, simplemente no existes para la mayoría de tus clientes potenciales.
+            </p>
+
+            <!-- Stats -->
+            <div class="stat-box">
+                <div class="stat-number">81%</div>
+                <div class="stat-text">de los consumidores investigan en línea antes de comprar</div>
+            </div>
+
+            <h3 class="section-title">📈 POR QUÉ TU NEGOCIO NECESITA UN SITIO WEB</h3>
+
+            <!-- Reason 1 -->
+            <div class="reason-card">
+                <div class="reason-icon">🎯</div>
+                <div class="reason-title">1. Credibilidad Instantánea</div>
+                <div class="reason-text">
+                    Los clientes confían más en negocios con presencia web profesional. Un sitio web bien diseñado
+                    transmite profesionalismo y legitimidad. Sin uno, pierdes credibilidad frente a tu competencia.
+                </div>
+            </div>
+
+            <!-- Reason 2 -->
+            <div class="reason-card">
+                <div class="reason-icon">🚀</div>
+                <div class="reason-title">2. Abierto 24/7 Sin Días Libres</div>
+                <div class="reason-text">
+                    Tu sitio web trabaja mientras duermes. Los clientes pueden conocer tus servicios, ver tus productos
+                    y contactarte a cualquier hora. Es como tener un vendedor que nunca descansa.
+                </div>
+            </div>
+
+            <!-- Reason 3 -->
+            <div class="reason-card">
+                <div class="reason-icon">💰</div>
+                <div class="reason-title">3. Marketing Más Económico</div>
+                <div class="reason-text">
+                    Comparado con publicidad tradicional (radio, TV, volantes), un sitio web es la forma más
+                    económica de promocionar tu negocio. Una inversión única que genera resultados por años.
+                </div>
+            </div>
+
+            <!-- Reason 4 -->
+            <div class="reason-card">
+                <div class="reason-icon">📱</div>
+                <div class="reason-title">4. Te Encuentran en Google</div>
+                <div class="reason-text">
+                    Sin sitio web, no apareces en búsquedas de Google. Tus clientes potenciales te están buscando
+                    ahora mismo, pero están encontrando a tu competencia en su lugar.
+                </div>
+            </div>
+
+            <!-- Reason 5 -->
+            <div class="reason-card">
+                <div class="reason-icon">🎨</div>
+                <div class="reason-title">5. Control Total de Tu Imagen</div>
+                <div class="reason-text">
+                    Facebook e Instagram pueden cerrar o limitar tu cuenta en cualquier momento. Tu sitio web
+                    es TUYO. Nadie puede quitártelo ni cambiar las reglas del juego.
+                </div>
+            </div>
+
+            <!-- Reason 6 -->
+            <div class="reason-card">
+                <div class="reason-icon">📊</div>
+                <div class="reason-title">6. Datos y Análisis Valiosos</div>
+                <div class="reason-text">
+                    Con tu sitio web puedes saber exactamente cuántas personas te visitan, qué servicios les
+                    interesan más y de dónde vienen. Información valiosa para tomar mejores decisiones de negocio.
+                </div>
+            </div>
+
+            <!-- Real Impact Section -->
+            <h3 class="section-title">💡 EL IMPACTO REAL EN TU NEGOCIO</h3>
+
+            <div class="checklist">
+                <div class="checklist-item">
+                    <span class="checklist-icon">✓</span>
+                    <span><strong>Más Clientes:</strong> Llega a personas que nunca hubieran conocido tu negocio</span>
+                </div>
+                <div class="checklist-item">
+                    <span class="checklist-icon">✓</span>
+                    <span><strong>Menos Preguntas Repetitivas:</strong> Tu sitio responde horarios, precios, servicios</span>
+                </div>
+                <div class="checklist-item">
+                    <span class="checklist-icon">✓</span>
+                    <span><strong>Ventas Mientras Duermes:</strong> Sistema de cotizaciones automático</span>
+                </div>
+                <div class="checklist-item">
+                    <span class="checklist-icon">✓</span>
+                    <span><strong>Competir con Grandes:</strong> Imagen profesional sin importar el tamaño</span>
+                </div>
+                <div class="checklist-item">
+                    <span class="checklist-icon">✓</span>
+                    <span><strong>Expandir sin Límites:</strong> Vende en toda tu ciudad, estado o país</span>
+                </div>
+            </div>
+
+            <!-- Myth Busting -->
+            <div style="background: #FEF3C7; border-left: 4px solid #F59E0B; padding: 20px; margin: 30px 0; border-radius: 8px;">
+                <h4 style="color: #92400E; margin-bottom: 15px; font-size: 18px;">
+                    ⚠️ Mitos Comunes Que Te Están Frenando
+                </h4>
+                <div style="color: #78350F; font-size: 14px; line-height: 1.8;">
+                    <p style="margin-bottom: 10px;"><strong>"Es muy caro"</strong> → Desde $800, menos que un stand en una feria</p>
+                    <p style="margin-bottom: 10px;"><strong>"No sé de tecnología"</strong> → Nosotros nos encargamos de todo</p>
+                    <p style="margin-bottom: 10px;"><strong>"Tengo Facebook"</strong> → Facebook complementa, no reemplaza tu sitio</p>
+                    <p style="margin-bottom: 0;"><strong>"Mi negocio es pequeño"</strong> → Por eso necesitas más visibilidad</p>
+                </div>
+            </div>
+
+            <!-- CTA Section -->
+            <div class="cta-section">
+                <h3 style="font-family: 'Iceland', Arial, sans-serif; font-size: 24px; color: #1a1a1a; margin-bottom: 15px;">
+                    ¿Listo para Llevar Tu Negocio al Siguiente Nivel?
+                </h3>
+                <p style="color: #4a5568; margin-bottom: 20px; font-size: 15px;">
+                    Agenda una consulta GRATUITA de 30 minutos y descubre cómo un sitio web
+                    puede transformar tu negocio.
+                </p>
+                <a href="https://rcweb.dev/#contact" class="cta-button">
+                    📞 AGENDA TU CONSULTA GRATIS
+                </a>
+                <p style="color: #6B7280; margin-top: 20px; font-size: 13px;">
+                    O llámanos directamente: <strong style="color: #D4AF37;">(346) 375-7534</strong>
+                </p>
+            </div>
+
+            <!-- Pricing Preview -->
+            <div style="text-align: center; margin: 30px 0;">
+                <p style="color: #4a5568; margin-bottom: 15px; font-size: 15px;">
+                    <strong>Paquetes desde $800</strong> • <strong>Planes de Pago 50/50</strong>
+                </p>
+                <p style="color: #6B7280; font-size: 13px; line-height: 1.6;">
+                    Landing Pages | Sitios Corporativos | Tiendas en Línea<br>
+                    Diseño Responsive | SEO Incluido | Soporte 30 Días
+                </p>
+            </div>
+
+            <p style="color: #4a5568; font-size: 16px; margin-top: 30px; line-height: 1.7;">
+                No esperes más. Cada día sin sitio web es un día donde tus competidores
+                están ganando los clientes que deberían ser tuyos.
+            </p>
+
+            <p style="color: #D4AF37; font-size: 16px; margin-top: 25px; line-height: 1.7; font-weight: 600;">
+                Saludos,<br>
+                Randy Caballero<br>
+                <span style="font-size: 14px; color: #9CA3AF; font-weight: 400;">Founder, RC Web Solutions LLC</span>
+            </p>
+        </div>
+
+        <!-- Footer -->
+        <div class="footer">
+            <div class="footer-logo">RC WEB SOLUTIONS LLC</div>
+            <p style="margin-bottom: 15px; font-size: 14px;">Houston, TX 77085</p>
+
+            <div class="footer-links">
+                <a href="tel:3463757534">📞 (346) 375-7534</a><br>
+                <a href="mailto:contactus@rcweb.dev">✉️ contactus@rcweb.dev</a><br>
+                <a href="https://rcweb.dev">🌐 rcweb.dev</a>
+            </div>
+
+            <div style="margin-top: 25px; padding-top: 20px; border-top: 1px solid #4a5568;">
+                <p style="font-size: 12px; line-height: 1.6; margin-bottom: 10px;">
+                    Transformamos pequeños y medianos negocios con soluciones web profesionales
+                </p>
+                <p style="font-size: 11px; color: #6B7280;">
+                    © 2025 RC Web Solutions LLC. Todos los derechos reservados.
+                </p>
+            </div>
+        </div>
+    </div>
+</body>
+</html>`);
+  };
+
   return (
     <div className="min-h-screen bg-gray-900 pb-8 px-8 pt-24 sm:pt-32">
       <div className="max-w-4xl mx-auto">
@@ -624,6 +867,13 @@ export default function SendNewsletterCampaign({
               className="px-6 py-3 border border-gold/50 text-gold rounded-lg hover:bg-gold/10 transition-colors font-inter"
             >
               🎃 Halloween Template
+            </button>
+
+            <button
+              onClick={useWhyWebsiteTemplate}
+              className="px-6 py-3 bg-gradient-to-r from-blue-600 to-blue-800 text-white rounded-lg hover:from-blue-700 hover:to-blue-900 transition-all font-inter font-semibold"
+            >
+              🌐 Why Website Template
             </button>
           </div>
         </div>
