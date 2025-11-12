@@ -3,6 +3,7 @@
 import { prisma } from "@/lib/prisma";
 import twilio from "twilio";
 import { trackSMSCampaignSent } from "@/lib/analytics";
+import { deleteFailedPhonesAction } from "@/actions/contacts/deleteFailedPhonesAction";
 
 // Inicializar cliente Twilio
 const twilioClient = twilio(
@@ -213,6 +214,7 @@ export const sendSmsCampaignAction = async (
     let successCount = 0;
     let failedCount = 0;
     const errors: string[] = [];
+    const failedPhones: string[] = [];
 
     console.log(`📤 Sending ${smsToSend.length} SMS messages...`);
 
@@ -237,10 +239,11 @@ export const sendSmsCampaignAction = async (
 
         const message = await twilioClient.messages.create(messageParams);
 
-                                        // Check initial status
+        // Check initial status
         if (message.status === "failed" || message.status === "undelivered") {
           console.error(`  ⚠️ SMS not delivered: ${message.errorMessage || "Unknown reason"}`);
           errors.push(`${sms.to}: ${message.errorMessage || "Failed to deliver"}`);
+          failedPhones.push(sms.to);
           failedCount++;
         } else {
           successCount++;
@@ -278,15 +281,24 @@ export const sendSmsCampaignAction = async (
           errors.push(`${sms.to}: ${errorMessage} (Code: ${errorCode})`);
         }
 
+        failedPhones.push(sms.to);
         failedCount++;
       }
     }
 
-        // 6. Actualizar registro de campaña
+    // 6. Actualizar registro de campaña
     await prisma.smsCampaign.update({
       where: { id: smsCampaign.id },
       data: { smsSent: successCount },
     });
+
+    // 7. Automatically delete failed phones from contacts
+    if (failedPhones.length > 0) {
+      console.log(
+        `🗑️  Auto-deleting ${failedPhones.length} failed phone(s) from contacts...`
+      );
+      await deleteFailedPhonesAction(failedPhones);
+    }
 
     // Track SMS campaign sent in Google Analytics
     if (successCount > 0) {
@@ -296,7 +308,7 @@ export const sendSmsCampaignAction = async (
     // 8. Preparar mensaje de respuesta
     let responseMessage = `Campaign sent: ${successCount} successful`;
     if (failedCount > 0) {
-      responseMessage += `, ${failedCount} failed`;
+      responseMessage += `, ${failedCount} failed (deleted from contacts)`;
     }
 
     return {

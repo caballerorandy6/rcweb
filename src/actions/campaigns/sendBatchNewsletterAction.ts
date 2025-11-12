@@ -8,6 +8,7 @@ import {
   canSendTodayForCampaign,
   getCurrentQuota,
 } from "@/lib/emailQuota";
+import { deleteFailedEmailsAction } from "@/actions/contacts/deleteFailedEmailsAction";
 
 const resend = new Resend(process.env.RESEND_API_KEY!);
 
@@ -234,6 +235,20 @@ export const createAndSendBatchCampaign = async (
         errorMessage: result.success ? null : "Failed to send",
       })),
     });
+
+    // Automatically delete failed emails from contacts
+    if (failedCount > 0) {
+      const failedEmails = results
+        .filter((r) => !r.success)
+        .map((r) => r.email.to);
+
+      if (failedEmails.length > 0) {
+        console.log(
+          `🗑️  Auto-deleting ${failedEmails.length} failed email(s) from contacts...`
+        );
+        await deleteFailedEmailsAction(failedEmails);
+      }
+    }
 
     // Update campaign status
     const newStatus =
@@ -505,6 +520,20 @@ export const continueBatchCampaign = async (
         errorMessage: result.success ? null : "Failed to send",
       })),
     });
+
+    // Automatically delete failed emails from contacts
+    if (failedCount > 0) {
+      const failedEmails = results
+        .filter((r) => !r.success)
+        .map((r) => r.email.to);
+
+      if (failedEmails.length > 0) {
+        console.log(
+          `🗑️  Auto-deleting ${failedEmails.length} failed email(s) from contacts...`
+        );
+        await deleteFailedEmailsAction(failedEmails);
+      }
+    }
 
     // Update campaign
     const totalSent = campaign.emailsSent + successCount;
