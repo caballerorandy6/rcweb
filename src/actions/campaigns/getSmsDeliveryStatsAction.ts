@@ -13,6 +13,12 @@ export interface SmsDeliveryStats {
   sent: number;
   failed: number;
   undelivered: number;
+  queued: number;
+  accepted: number;
+  sending: number;
+  receiving: number;
+  received: number;
+  canceled: number;
   deliveryRate: number;
   failedMessages: Array<{
     to: string;
@@ -22,6 +28,7 @@ export interface SmsDeliveryStats {
     dateSent: string;
     sid: string;
   }>;
+  errorCodes: Record<number, number>; // errorCode -> count
 }
 
 export async function getSmsDeliveryStatsAction(
@@ -45,8 +52,15 @@ export async function getSmsDeliveryStatsAction(
       sent: 0,
       failed: 0,
       undelivered: 0,
+      queued: 0,
+      accepted: 0,
+      sending: 0,
+      receiving: 0,
+      received: 0,
+      canceled: 0,
       deliveryRate: 0,
       failedMessages: [],
+      errorCodes: {},
     };
 
     messages.forEach((msg) => {
@@ -56,6 +70,24 @@ export async function getSmsDeliveryStatsAction(
           break;
         case "sent":
           stats.sent++;
+          break;
+        case "queued":
+          stats.queued++;
+          break;
+        case "accepted":
+          stats.accepted++;
+          break;
+        case "sending":
+          stats.sending++;
+          break;
+        case "receiving":
+          stats.receiving++;
+          break;
+        case "received":
+          stats.received++;
+          break;
+        case "canceled":
+          stats.canceled++;
           break;
         case "failed":
           stats.failed++;
@@ -67,6 +99,11 @@ export async function getSmsDeliveryStatsAction(
             dateSent: msg.dateSent?.toISOString() || "",
             sid: msg.sid,
           });
+          // Track error codes
+          if (msg.errorCode) {
+            stats.errorCodes[msg.errorCode] =
+              (stats.errorCodes[msg.errorCode] || 0) + 1;
+          }
           break;
         case "undelivered":
           stats.undelivered++;
@@ -78,6 +115,11 @@ export async function getSmsDeliveryStatsAction(
             dateSent: msg.dateSent?.toISOString() || "",
             sid: msg.sid,
           });
+          // Track error codes
+          if (msg.errorCode) {
+            stats.errorCodes[msg.errorCode] =
+              (stats.errorCodes[msg.errorCode] || 0) + 1;
+          }
           break;
       }
     });

@@ -12,6 +12,7 @@ export default function SmsDeliveryStats() {
   const [stats, setStats] = useState<SmsDeliveryStats | null>(null);
   const [hoursAgo, setHoursAgo] = useState(24);
   const [selectedPhones, setSelectedPhones] = useState<Set<string>>(new Set());
+  const [selectedErrorCode, setSelectedErrorCode] = useState<string>("all");
 
   const fetchStats = async () => {
     setIsLoading(true);
@@ -47,10 +48,17 @@ export default function SmsDeliveryStats() {
   const handleSelectAll = () => {
     if (!stats) return;
 
-    if (selectedPhones.size === stats.failedMessages.length) {
+    const filteredMessages =
+      selectedErrorCode === "all"
+        ? stats.failedMessages
+        : stats.failedMessages.filter(
+            (m) => m.errorCode?.toString() === selectedErrorCode
+          );
+
+    if (selectedPhones.size === filteredMessages.length) {
       setSelectedPhones(new Set());
     } else {
-      setSelectedPhones(new Set(stats.failedMessages.map(m => m.to)));
+      setSelectedPhones(new Set(filteredMessages.map((m) => m.to)));
     }
   };
 
@@ -135,14 +143,14 @@ export default function SmsDeliveryStats() {
       {/* Stats Cards */}
       {stats && (
         <>
-          <div className="grid grid-cols-1 md:grid-cols-5 gap-4">
-            <div className="bg-gray-800 rounded-lg p-4">
-              <div className="text-gray-400 text-sm mb-1">Total Sent</div>
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
+            <div className="bg-gray-800 rounded-lg p-4 border-l-4 border-gold">
+              <div className="text-gray-400 text-sm mb-1">Total</div>
               <div className="text-2xl font-bold text-white">{stats.total}</div>
             </div>
 
             <div className="bg-green-900/20 border border-green-500/30 rounded-lg p-4">
-              <div className="text-green-400 text-sm mb-1">Delivered</div>
+              <div className="text-green-400 text-sm mb-1">✅ Delivered</div>
               <div className="text-2xl font-bold text-green-400">
                 {stats.delivered}
               </div>
@@ -152,35 +160,126 @@ export default function SmsDeliveryStats() {
             </div>
 
             <div className="bg-blue-900/20 border border-blue-500/30 rounded-lg p-4">
-              <div className="text-blue-400 text-sm mb-1">Sent</div>
+              <div className="text-blue-400 text-sm mb-1">📤 Sent</div>
               <div className="text-2xl font-bold text-blue-400">{stats.sent}</div>
             </div>
 
             <div className="bg-red-900/20 border border-red-500/30 rounded-lg p-4">
-              <div className="text-red-400 text-sm mb-1">Failed</div>
+              <div className="text-red-400 text-sm mb-1">❌ Failed</div>
               <div className="text-2xl font-bold text-red-400">{stats.failed}</div>
             </div>
 
             <div className="bg-yellow-900/20 border border-yellow-500/30 rounded-lg p-4">
-              <div className="text-yellow-400 text-sm mb-1">Undelivered</div>
+              <div className="text-yellow-400 text-sm mb-1">⚠️ Undelivered</div>
               <div className="text-2xl font-bold text-yellow-400">
                 {stats.undelivered}
               </div>
             </div>
           </div>
 
+          {/* Additional Stats */}
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
+            <div className="bg-gray-800/50 border border-gray-700 rounded-lg p-4">
+              <div className="text-gray-400 text-xs mb-1">⏳ Queued</div>
+              <div className="text-xl font-bold text-gray-300">{stats.queued}</div>
+            </div>
+
+            <div className="bg-gray-800/50 border border-gray-700 rounded-lg p-4">
+              <div className="text-gray-400 text-xs mb-1">✓ Accepted</div>
+              <div className="text-xl font-bold text-gray-300">{stats.accepted}</div>
+            </div>
+
+            <div className="bg-gray-800/50 border border-gray-700 rounded-lg p-4">
+              <div className="text-gray-400 text-xs mb-1">📡 Sending</div>
+              <div className="text-xl font-bold text-gray-300">{stats.sending}</div>
+            </div>
+
+            <div className="bg-gray-800/50 border border-gray-700 rounded-lg p-4">
+              <div className="text-gray-400 text-xs mb-1">📥 Receiving</div>
+              <div className="text-xl font-bold text-gray-300">{stats.receiving}</div>
+            </div>
+
+            <div className="bg-gray-800/50 border border-gray-700 rounded-lg p-4">
+              <div className="text-gray-400 text-xs mb-1">✉️ Received</div>
+              <div className="text-xl font-bold text-gray-300">{stats.received}</div>
+            </div>
+
+            <div className="bg-gray-800/50 border border-gray-700 rounded-lg p-4">
+              <div className="text-gray-400 text-xs mb-1">🚫 Canceled</div>
+              <div className="text-xl font-bold text-gray-300">{stats.canceled}</div>
+            </div>
+          </div>
+
+          {/* Error Codes Summary */}
+          {Object.keys(stats.errorCodes).length > 0 && (
+            <div className="bg-gray-800/50 border border-gray-700 rounded-lg p-6">
+              <h3 className="text-lg font-bold text-white mb-4">
+                📊 Error Codes Summary
+              </h3>
+              <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
+                {Object.entries(stats.errorCodes)
+                  .sort((a, b) => b[1] - a[1])
+                  .map(([code, count]) => (
+                    <div
+                      key={code}
+                      className="bg-gray-700/50 rounded-lg p-3 text-center"
+                    >
+                      <div className="text-red-400 font-mono text-sm">
+                        Code {code}
+                      </div>
+                      <div className="text-white font-bold text-xl mt-1">
+                        {count}
+                      </div>
+                    </div>
+                  ))}
+              </div>
+            </div>
+          )}
+
           {/* Failed Messages Table */}
           {stats.failedMessages.length > 0 && (
             <div className="bg-gray-800 rounded-lg p-6 space-y-4">
-              <div className="flex justify-between items-center">
+              <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
                 <div>
                   <h3 className="text-xl font-bold text-white">
                     Failed & Undelivered Messages
                   </h3>
                   <p className="text-sm text-gray-400 mt-1">
-                    {selectedPhones.size} of {stats.failedMessages.length} selected
+                    {selectedPhones.size} of {
+                      selectedErrorCode === "all"
+                        ? stats.failedMessages.length
+                        : stats.failedMessages.filter(
+                            (m) => m.errorCode?.toString() === selectedErrorCode
+                          ).length
+                    }{" "}
+                    selected
                   </p>
                 </div>
+
+                {/* Error Code Filter */}
+                <div className="flex items-center gap-3">
+                  <label className="text-sm text-gray-400">Filter by Error:</label>
+                  <select
+                    value={selectedErrorCode}
+                    onChange={(e) => {
+                      setSelectedErrorCode(e.target.value);
+                      setSelectedPhones(new Set());
+                    }}
+                    className="px-3 py-2 bg-gray-700 text-white rounded-lg border border-gray-600 focus:border-gold focus:outline-none text-sm"
+                  >
+                    <option value="all">All Errors</option>
+                    {Object.keys(stats.errorCodes)
+                      .sort((a, b) => parseInt(a) - parseInt(b))
+                      .map((code) => (
+                        <option key={code} value={code}>
+                          Error {code} ({stats.errorCodes[parseInt(code)]})
+                        </option>
+                      ))}
+                  </select>
+                </div>
+              </div>
+
+              <div className="flex justify-between items-center">
 
                 <div className="flex gap-3">
                   <button
@@ -237,7 +336,12 @@ export default function SmsDeliveryStats() {
                     </tr>
                   </thead>
                   <tbody className="divide-y divide-gray-700">
-                    {stats.failedMessages.map((msg) => (
+                    {(selectedErrorCode === "all"
+                      ? stats.failedMessages
+                      : stats.failedMessages.filter(
+                          (m) => m.errorCode?.toString() === selectedErrorCode
+                        )
+                    ).map((msg) => (
                       <tr
                         key={msg.sid}
                         className={`hover:bg-gray-750 ${
