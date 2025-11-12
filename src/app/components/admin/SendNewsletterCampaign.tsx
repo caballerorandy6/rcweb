@@ -434,7 +434,7 @@ export default function SendNewsletterCampaign({
 </html>`);
   };
 
-  const useWhyWebsiteTemplate = () => {
+  const useWhyWebsiteTemplateES = () => {
     setSubject("¿Por qué tu negocio necesita un sitio web profesional en 2025?");
     setContent(`<!DOCTYPE html>
 <html lang="es">
@@ -677,6 +677,249 @@ export default function SendNewsletterCampaign({
 </html>`);
   };
 
+  const useWhyWebsiteTemplateEN = () => {
+    setSubject("Why Your Business Needs a Professional Website in 2025");
+    setContent(`<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Iceland&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <title>Why Your Business Needs a Website</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Iceland&family=Inter:wght@400;600;700&display=swap');
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Inter', Arial, sans-serif; background-color: #f4f4f4; line-height: 1.6; }
+        .container { max-width: 600px; margin: 0 auto; background-color: #ffffff; }
+        .header { background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%); padding: 40px 20px; text-align: center; }
+        .logo { font-family: 'Iceland', Arial, sans-serif; font-size: 32px; color: #D4AF37; margin: 0; letter-spacing: 1px; }
+        .tagline { color: #ffffff; font-size: 14px; margin-top: 10px; }
+        .hero { background: linear-gradient(135deg, #D4AF37 0%, #B8941F 100%); padding: 30px 20px; text-align: center; color: #1a1a1a; }
+        .hero-title { font-family: 'Iceland', Arial, sans-serif; font-size: 28px; margin-bottom: 10px; line-height: 1.2; }
+        .hero-subtitle { font-size: 16px; line-height: 1.5; }
+        .content { padding: 40px 30px; }
+        .section-title { font-family: 'Iceland', Arial, sans-serif; font-size: 24px; color: #D4AF37; margin: 30px 0 20px 0; text-align: center; letter-spacing: 0.5px; }
+        .reason-card { background: #f9fafb; border-left: 4px solid #D4AF37; padding: 20px; margin-bottom: 20px; border-radius: 8px; }
+        .reason-icon { font-size: 32px; margin-bottom: 10px; }
+        .reason-title { font-size: 18px; font-weight: 700; color: #1a1a1a; margin-bottom: 10px; }
+        .reason-text { color: #4a5568; font-size: 15px; line-height: 1.7; }
+        .stat-box { background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%); padding: 25px; margin: 30px 0; border-radius: 12px; text-align: center; }
+        .stat-number { font-family: 'Iceland', Arial, sans-serif; font-size: 48px; color: #D4AF37; margin-bottom: 5px; }
+        .stat-text { color: #ffffff; font-size: 14px; }
+        .cta-section { background: #f9fafb; padding: 30px; text-align: center; margin: 30px 0; border-radius: 12px; }
+        .cta-button { display: inline-block; background: linear-gradient(135deg, #D4AF37 0%, #B8941F 100%); color: #1a1a1a; padding: 18px 40px; text-decoration: none; border-radius: 30px; font-weight: 700; font-size: 16px; box-shadow: 0 4px 15px rgba(212, 175, 55, 0.3); margin-top: 15px; }
+        .footer { background: #1a1a1a; padding: 30px 20px; text-align: center; color: #9CA3AF; }
+        .footer-logo { color: #D4AF37; font-family: 'Iceland', Arial, sans-serif; font-size: 20px; margin-bottom: 15px; }
+        .footer-links { margin: 20px 0; }
+        .footer-links a { color: #D4AF37; text-decoration: none; margin: 0 10px; font-size: 14px; }
+        .checklist { margin: 20px 0; }
+        .checklist-item { display: flex; align-items: flex-start; margin-bottom: 12px; color: #4a5568; }
+        .checklist-icon { color: #10B981; font-size: 20px; margin-right: 10px; flex-shrink: 0; }
+        @media only screen and (max-width: 600px) {
+            .content { padding: 30px 20px; }
+            .hero-title { font-size: 24px; }
+            .stat-number { font-size: 40px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <h1 class="logo">RC WEB SOLUTIONS</h1>
+            <p class="tagline">Transforming Businesses Digitally</p>
+        </div>
+
+        <!-- Hero -->
+        <div class="hero">
+            <h2 class="hero-title">Your Business Still Doesn't Have a Website?</h2>
+            <p class="hero-subtitle">You're losing customers every day</p>
+        </div>
+
+        <!-- Main Content -->
+        <div class="content">
+            <p style="color: #4a5568; font-size: 16px; margin-bottom: 25px; line-height: 1.7;">
+                Hello,
+            </p>
+            <p style="color: #4a5568; font-size: 16px; margin-bottom: 25px; line-height: 1.7;">
+                In 2025, <strong>97% of consumers search for local businesses online before visiting them</strong>.
+                If your business doesn't show up, you simply don't exist for the majority of your potential customers.
+            </p>
+
+            <!-- Stats -->
+            <div class="stat-box">
+                <div class="stat-number">81%</div>
+                <div class="stat-text">of consumers research online before making a purchase</div>
+            </div>
+
+            <h3 class="section-title">📈 WHY YOUR BUSINESS NEEDS A WEBSITE</h3>
+
+            <!-- Reason 1 -->
+            <div class="reason-card">
+                <div class="reason-icon">🎯</div>
+                <div class="reason-title">1. Instant Credibility</div>
+                <div class="reason-text">
+                    Customers trust businesses with a professional web presence more. A well-designed website
+                    conveys professionalism and legitimacy. Without one, you lose credibility against your competition.
+                </div>
+            </div>
+
+            <!-- Reason 2 -->
+            <div class="reason-card">
+                <div class="reason-icon">🚀</div>
+                <div class="reason-title">2. Open 24/7 Without Days Off</div>
+                <div class="reason-text">
+                    Your website works while you sleep. Customers can learn about your services, view your products,
+                    and contact you at any time. It's like having a salesperson who never rests.
+                </div>
+            </div>
+
+            <!-- Reason 3 -->
+            <div class="reason-card">
+                <div class="reason-icon">💰</div>
+                <div class="reason-title">3. Most Cost-Effective Marketing</div>
+                <div class="reason-text">
+                    Compared to traditional advertising (radio, TV, flyers), a website is the most
+                    economical way to promote your business. A one-time investment that generates results for years.
+                </div>
+            </div>
+
+            <!-- Reason 4 -->
+            <div class="reason-card">
+                <div class="reason-icon">📱</div>
+                <div class="reason-title">4. They Find You on Google</div>
+                <div class="reason-text">
+                    Without a website, you don't appear in Google searches. Your potential customers are searching for you
+                    right now, but they're finding your competition instead.
+                </div>
+            </div>
+
+            <!-- Reason 5 -->
+            <div class="reason-card">
+                <div class="reason-icon">🎨</div>
+                <div class="reason-title">5. Full Control of Your Image</div>
+                <div class="reason-text">
+                    Facebook and Instagram can close or limit your account at any time. Your website
+                    is YOURS. No one can take it away or change the rules of the game.
+                </div>
+            </div>
+
+            <!-- Reason 6 -->
+            <div class="reason-card">
+                <div class="reason-icon">📊</div>
+                <div class="reason-title">6. Valuable Data & Analytics</div>
+                <div class="reason-text">
+                    With your website, you can know exactly how many people visit you, which services they're
+                    most interested in, and where they come from. Valuable information to make better business decisions.
+                </div>
+            </div>
+
+            <!-- Real Impact Section -->
+            <h3 class="section-title">💡 THE REAL IMPACT ON YOUR BUSINESS</h3>
+
+            <div class="checklist">
+                <div class="checklist-item">
+                    <span class="checklist-icon">✓</span>
+                    <span><strong>More Customers:</strong> Reach people who would never have known about your business</span>
+                </div>
+                <div class="checklist-item">
+                    <span class="checklist-icon">✓</span>
+                    <span><strong>Fewer Repetitive Questions:</strong> Your site answers hours, prices, services</span>
+                </div>
+                <div class="checklist-item">
+                    <span class="checklist-icon">✓</span>
+                    <span><strong>Sales While You Sleep:</strong> Automatic quote system</span>
+                </div>
+                <div class="checklist-item">
+                    <span class="checklist-icon">✓</span>
+                    <span><strong>Compete with the Big Players:</strong> Professional image regardless of size</span>
+                </div>
+                <div class="checklist-item">
+                    <span class="checklist-icon">✓</span>
+                    <span><strong>Expand Without Limits:</strong> Sell in your entire city, state, or country</span>
+                </div>
+            </div>
+
+            <!-- Myth Busting -->
+            <div style="background: #FEF3C7; border-left: 4px solid #F59E0B; padding: 20px; margin: 30px 0; border-radius: 8px;">
+                <h4 style="color: #92400E; margin-bottom: 15px; font-size: 18px;">
+                    ⚠️ Common Myths Holding You Back
+                </h4>
+                <div style="color: #78350F; font-size: 14px; line-height: 1.8;">
+                    <p style="margin-bottom: 10px;"><strong>"It's too expensive"</strong> → Starting at $800, less than a trade show booth</p>
+                    <p style="margin-bottom: 10px;"><strong>"I don't know tech"</strong> → We handle everything for you</p>
+                    <p style="margin-bottom: 10px;"><strong>"I have Facebook"</strong> → Facebook complements, doesn't replace your site</p>
+                    <p style="margin-bottom: 0;"><strong>"My business is small"</strong> → That's why you need more visibility</p>
+                </div>
+            </div>
+
+            <!-- CTA Section -->
+            <div class="cta-section">
+                <h3 style="font-family: 'Iceland', Arial, sans-serif; font-size: 24px; color: #1a1a1a; margin-bottom: 15px;">
+                    Ready to Take Your Business to the Next Level?
+                </h3>
+                <p style="color: #4a5568; margin-bottom: 20px; font-size: 15px;">
+                    Schedule a FREE 30-minute consultation and discover how a website
+                    can transform your business.
+                </p>
+                <a href="https://rcweb.dev/#contact" class="cta-button">
+                    📞 SCHEDULE YOUR FREE CONSULTATION
+                </a>
+                <p style="color: #6B7280; margin-top: 20px; font-size: 13px;">
+                    Or call us directly: <strong style="color: #D4AF37;">(346) 375-7534</strong>
+                </p>
+            </div>
+
+            <!-- Pricing Preview -->
+            <div style="text-align: center; margin: 30px 0;">
+                <p style="color: #4a5568; margin-bottom: 15px; font-size: 15px;">
+                    <strong>Packages starting at $800</strong> • <strong>50/50 Payment Plans</strong>
+                </p>
+                <p style="color: #6B7280; font-size: 13px; line-height: 1.6;">
+                    Landing Pages | Corporate Websites | Online Stores<br>
+                    Responsive Design | SEO Included | 30-Day Support
+                </p>
+            </div>
+
+            <p style="color: #4a5568; font-size: 16px; margin-top: 30px; line-height: 1.7;">
+                Don't wait any longer. Every day without a website is a day where your competitors
+                are winning the customers who should be yours.
+            </p>
+
+            <p style="color: #D4AF37; font-size: 16px; margin-top: 25px; line-height: 1.7; font-weight: 600;">
+                Best regards,<br>
+                Randy Caballero<br>
+                <span style="font-size: 14px; color: #9CA3AF; font-weight: 400;">Founder, RC Web Solutions LLC</span>
+            </p>
+        </div>
+
+        <!-- Footer -->
+        <div class="footer">
+            <div class="footer-logo">RC WEB SOLUTIONS LLC</div>
+            <p style="margin-bottom: 15px; font-size: 14px;">Houston, TX 77085</p>
+
+            <div class="footer-links">
+                <a href="tel:3463757534">📞 (346) 375-7534</a><br>
+                <a href="mailto:contactus@rcweb.dev">✉️ contactus@rcweb.dev</a><br>
+                <a href="https://rcweb.dev">🌐 rcweb.dev</a>
+            </div>
+
+            <div style="margin-top: 25px; padding-top: 20px; border-top: 1px solid #4a5568;">
+                <p style="font-size: 12px; line-height: 1.6; margin-bottom: 10px;">
+                    Transforming small and medium businesses with professional web solutions
+                </p>
+                <p style="font-size: 11px; color: #6B7280;">
+                    © 2025 RC Web Solutions LLC. All rights reserved.
+                </p>
+            </div>
+        </div>
+    </div>
+</body>
+</html>`);
+  };
+
   return (
     <div className="min-h-screen bg-gray-900 pb-8 px-8 pt-24 sm:pt-32">
       <div className="max-w-4xl mx-auto">
@@ -870,10 +1113,17 @@ export default function SendNewsletterCampaign({
             </button>
 
             <button
-              onClick={useWhyWebsiteTemplate}
+              onClick={useWhyWebsiteTemplateES}
               className="px-6 py-3 bg-gradient-to-r from-blue-600 to-blue-800 text-white rounded-lg hover:from-blue-700 hover:to-blue-900 transition-all font-inter font-semibold"
             >
-              🌐 Why Website Template
+              🌐 Why Website (ES)
+            </button>
+
+            <button
+              onClick={useWhyWebsiteTemplateEN}
+              className="px-6 py-3 bg-gradient-to-r from-purple-600 to-purple-800 text-white rounded-lg hover:from-purple-700 hover:to-purple-900 transition-all font-inter font-semibold"
+            >
+              🌐 Why Website (EN)
             </button>
           </div>
         </div>
