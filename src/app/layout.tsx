@@ -101,6 +101,9 @@ export const metadata: Metadata = {
   },
   verification: {
     // google: "your-google-verification-code", // Not needed - already verified via another method
+    other: {
+      "p:domain_verify": "0340a7e019235de2546885b39d869e08",
+    },
   },
 };
 
