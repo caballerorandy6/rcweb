@@ -51,134 +51,137 @@ const About = () => {
           __html: JSON.stringify({
             "@context": "https://schema.org",
             "@type": "Person",
-            "name": "Randy Caballero",
-            "jobTitle": "Full-Stack Web Developer",
-            "description": "React and Next.js Developer with over 5 years of experience building high-performance, scalable web applications",
-            "image": "https://rcwebsolutionsllc.com/randy-caballero-web-developer.avif",
-            "url": "https://rcwebsolutionsllc.com",
-            "address": {
+            name: "Randy Caballero",
+            jobTitle: "Full-Stack Web Developer",
+            description:
+              "React and Next.js Developer with over 5 years of experience building high-performance, scalable web applications",
+            image:
+              "https://rcwebsolutionsllc.com/randy-caballero-web-developer.avif",
+            url: "https://rcwebsolutionsllc.com",
+            address: {
               "@type": "PostalAddress",
-              "addressLocality": "Houston",
-              "addressRegion": "TX",
-              "addressCountry": "US"
+              addressLocality: "Houston",
+              addressRegion: "TX",
+              addressCountry: "US",
             },
-            "worksFor": {
+            worksFor: {
               "@type": "Organization",
-              "name": "RC Web Solutions LLC"
+              name: "RC Web Solutions LLC",
             },
-            "knowsAbout": [
+            knowsAbout: [
               "React",
               "Next.js",
               "TypeScript",
               "Full-Stack Development",
               "Web Development",
               "Digital Marketing",
-              "WordPress"
-            ]
-          })
+              // "WordPress",
+            ],
+          }),
         }}
       />
 
       <section ref={ref} id="about" className="pt-24 sm:pt-32">
         <div className="mx-auto max-w-7xl px-6 lg:px-8">
-        <Heading
-          icon={<UserPlusIcon className="w-8 text-gold" />}
-          text="Who I Am and What I Do"
-        >
-          About Me
-        </Heading>
-
-        <div className="mt-16 grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center">
-          <motion.div
-            className="text-base font-inter max-w-xl mx-auto lg:mx-0 lg:max-w-none w-full"
-            variants={containerVariants}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, amount: 0.3 }}
+          <Heading
+            icon={<UserPlusIcon className="w-8 text-gold" />}
+            text="Who I Am and What I Do"
           >
-            <motion.p
-              className="text-gray-100 leading-relaxed pb-10 text-justify lg:text-left"
-              variants={paragraphVariants}
+            About Me
+          </Heading>
+
+          <div className="mt-16 grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center">
+            <motion.div
+              className="text-base font-inter max-w-xl mx-auto lg:mx-0 lg:max-w-none w-full"
+              variants={containerVariants}
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true, amount: 0.3 }}
             >
-              React and Next.js Developer with over{" "}
-              <strong className="text-gold font-semibold">
-                5 years of experience
-              </strong>{" "}
-              building high-performance, scalable web applications. I have
-              worked as a freelancer for diverse clients, delivering full-cycle
-              solutions focused on{" "}
-              <strong className="text-gold font-semibold">
-                speed, resource optimization, accessibility, and outstanding
-                user experience
-              </strong>
-              . My professional experience also includes roles at Atser Systems
-              Inc. and Revature, where I contributed to{" "}
-              <strong className="text-gold font-semibold">
-                full-stack application development
-              </strong>{" "}
-              in collaborative Agile environments.
-            </motion.p>
+              <motion.p
+                className="text-gray-100 leading-relaxed pb-10 text-justify lg:text-left"
+                variants={paragraphVariants}
+              >
+                React and Next.js Developer with over{" "}
+                <strong className="text-gold font-semibold">
+                  5 years of experience
+                </strong>{" "}
+                building high-performance, scalable web applications. I have
+                worked as a freelancer for diverse clients, delivering
+                full-cycle solutions focused on{" "}
+                <strong className="text-gold font-semibold">
+                  speed, resource optimization, accessibility, and outstanding
+                  user experience
+                </strong>
+                . My professional experience also includes roles at Atser
+                Systems Inc. and Revature, where I contributed to{" "}
+                <strong className="text-gold font-semibold">
+                  full-stack application development
+                </strong>{" "}
+                in collaborative Agile environments.
+              </motion.p>
 
-            <motion.p
-              className="text-gray-100 leading-relaxed text-justify lg:text-left"
-              variants={paragraphVariants}
+              <motion.p
+                className="text-gray-100 leading-relaxed text-justify lg:text-left"
+                variants={paragraphVariants}
+              >
+                I specialize in{" "}
+                <span className="text-gold font-medium">
+                  modern frontend development
+                </span>{" "}
+                using React and Next.js, and have hands-on experience{" "}
+                <span className="text-gold font-medium">
+                  integrating RESTful APIs
+                </span>
+                , working with PostgreSQL databases, and managing state with
+                tools like Zustand. Additionally, I bring valuable knowledge in{" "}
+                <span className="text-gold font-medium">digital marketing</span>
+                , allowing me to align technical execution with business
+                strategy and user engagement goals.
+              </motion.p>
+            </motion.div>
+
+            <motion.div
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true, amount: 0.3 }}
+              variants={imageVariants}
+              className="flex flex-col items-center lg:items-end"
             >
-              I specialize in{" "}
-              <span className="text-gold font-medium">
-                modern frontend development
-              </span>{" "}
-              using React and Next.js, and have hands-on experience{" "}
-              <span className="text-gold font-medium">
-                integrating RESTful APIs
-              </span>
-              , working with PostgreSQL databases, and managing state with tools
-              like Zustand. Additionally, I bring valuable knowledge in{" "}
-              <span className="text-gold font-medium">digital marketing</span>{" "}
-              and <span className="text-gold font-medium">WordPress</span>,
-              allowing me to align technical execution with business strategy
-              and user engagement goals.
-            </motion.p>
-          </motion.div>
+              <motion.figure className="relative">
+                <Image
+                  src="/randy-caballero-web-developer.avif"
+                  alt="Randy Caballero - Full-Stack Web Developer in Houston, TX"
+                  width={500}
+                  height={500}
+                  className="image-gradient rounded-lg shadow-lg shadow-gray-900/50 hover:scale-105 transition-transform duration-300 ease-in-out border-2 border-gold/50 sepia w-full max-w-md lg:max-w-full animateProjectCard"
+                  priority={false}
+                />
 
-          <motion.div
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, amount: 0.3 }}
-            variants={imageVariants}
-            className="flex flex-col items-center lg:items-end"
-          >
-            <motion.figure className="relative">
-              <Image
-                src="/randy-caballero-web-developer.avif"
-                alt="Randy Caballero - Full-Stack Web Developer in Houston, TX"
-                width={500}
-                height={500}
-                className="image-gradient rounded-lg shadow-lg shadow-gray-900/50 hover:scale-105 transition-transform duration-300 ease-in-out border-2 border-gold/50 sepia w-full max-w-md lg:max-w-full animateProjectCard"
-                priority={false}
-              />
-
-              {/* Badge de ubicación */}
-              <div className="absolute bottom-4 left-4 bg-gray-900/90 backdrop-blur-sm px-4 py-2 rounded-lg border border-gold/30 shadow-lg">
-                <div className="flex items-center gap-2">
-                  <MapPinIcon className="w-4 h-4 text-gold" />
-                  <span className="text-white text-sm font-inter font-medium">Houston, TX</span>
+                {/* Badge de ubicación */}
+                <div className="absolute bottom-4 left-4 bg-gray-900/90 backdrop-blur-sm px-4 py-2 rounded-lg border border-gold/30 shadow-lg">
+                  <div className="flex items-center gap-2">
+                    <MapPinIcon className="w-4 h-4 text-gold" />
+                    <span className="text-white text-sm font-inter font-medium">
+                      Houston, TX
+                    </span>
+                  </div>
                 </div>
-              </div>
-            </motion.figure>
+              </motion.figure>
 
-            {/* Texto de ubicación debajo de la foto */}
-            <div className="text-center lg:text-right mt-6 space-y-1">
-              <p className="text-gold font-inter text-sm font-semibold">
-                Based in Houston, TX 🤠
-              </p>
-              <p className="text-gray-400 font-inter text-xs">
-                Serving clients nationwide
-              </p>
-            </div>
-          </motion.div>
+              {/* Texto de ubicación debajo de la foto */}
+              <div className="text-center lg:text-right mt-6 space-y-1">
+                <p className="text-gold font-inter text-sm font-semibold">
+                  Based in Houston, TX 🤠
+                </p>
+                <p className="text-gray-400 font-inter text-xs">
+                  Serving clients nationwide
+                </p>
+              </div>
+            </motion.div>
+          </div>
         </div>
-      </div>
-    </section>
+      </section>
     </>
   );
 };

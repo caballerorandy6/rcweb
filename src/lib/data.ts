@@ -13,7 +13,7 @@ import Prisma from "@/app/components/icons/Prisma";
 import MongoDB from "@/app/components/icons/MongoDB";
 import SASS from "@/app/components/icons/SASS";
 import Jira from "@/app/components/icons/Jira";
-import Wordpress from "@/app/components/icons/Wordpress";
+//import Wordpress from "@/app/components/icons/Wordpress";
 import NodeJS from "@/app/components/icons/NodeJS";
 import { TeachMarqueeProps } from "@/app/components/ui/TechMarquee";
 import { BriefcaseIcon, AcademicCapIcon } from "@heroicons/react/24/outline";
@@ -254,11 +254,11 @@ export const teachMarqueeData: TeachMarqueeProps[] = [
     name: "Jira",
     icon: React.createElement(Jira),
   },
-  {
-    href: "https://wordpress.org/",
-    name: "WordPress",
-    icon: React.createElement(Wordpress),
-  },
+  // {
+  //   href: "https://wordpress.org/",
+  //   name: "WordPress",
+  //   icon: React.createElement(Wordpress),
+  // },
 ];
 
 export const repeatedIcons = [...teachMarqueeData, ...teachMarqueeData];
@@ -473,7 +473,7 @@ export const services = [
     title: "Digital Consulting",
     description:
       "Web strategy and optimization with 3+ years of digital marketing experience.",
-    features: ["Web Audit", "SEO", "WordPress", "Performance"],
+    features: ["Web Audit", "SEO", "Performance"],
     highlight: "60% more organic traffic",
   },
 ];
@@ -497,7 +497,7 @@ export const faqs = [
   {
     question: "Do you work with technologies besides Next.js?",
     answer:
-      "My specialty is the React/Next.js ecosystem with TypeScript, Node.js, and PostgreSQL - enterprise technology at small business pricing. I also have experience with WordPress, vanilla JavaScript, and can adapt to project needs. I always recommend the best technology for each case.",
+      "My specialty is the React/Next.js ecosystem with TypeScript, Node.js, and PostgreSQL - enterprise technology at small business pricing. I also have experience with vanilla JavaScript, and can adapt to project needs. I always recommend the best technology for each case.",
   },
   {
     question: "How does the payment process work?",
@@ -812,7 +812,7 @@ export const sections = [
     icon: React.createElement(BriefcaseIcon, { className: "w-6 h-6" }),
     title: "Our Services",
     content:
-      "RC Web Solutions LLC specializes in Full-Stack Web Applications (Next.js 14+, TypeScript, React, PostgreSQL), High-Converting Landing Pages, Custom Management Systems (dashboards, analytics, user management), API Development (RESTful, authentication, third-party integrations), and Digital Consulting (web audits, SEO optimization, performance enhancement, WordPress solutions). All services include responsive design, security best practices, and scalable architecture.",
+      "RC Web Solutions LLC specializes in Full-Stack Web Applications (Next.js 14+, TypeScript, React, PostgreSQL), High-Converting Landing Pages, Custom Management Systems (dashboards, analytics, user management), API Development (RESTful, authentication, third-party integrations), and Digital Consulting (web audits, SEO optimization, performance enhancement). All services include responsive design, security best practices, and scalable architecture.",
     color: "from-purple-500/20 to-purple-600/20",
   },
   {
