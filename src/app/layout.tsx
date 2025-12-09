@@ -50,16 +50,6 @@ export const metadata: Metadata = {
     template: `%s | ${siteConfig.siteNameShort}`,
   },
   description: siteConfig.description,
-  keywords: [
-    "web development",
-    "Next.js developer",
-    "React developer",
-    "full-stack developer",
-    "freelance web developer",
-    "custom web applications",
-    siteConfig.author.name,
-    "web development services",
-  ],
   authors: [{ name: siteConfig.author.name }],
   creator: siteConfig.author.name,
   publisher: siteConfig.siteName,
@@ -104,6 +94,26 @@ export const metadata: Metadata = {
     other: {
       "p:domain_verify": "0340a7e019235de2546885b39d869e08",
     },
+  },
+  other: {
+    "theme-color": "#030712",
+    "apple-mobile-web-app-capable": "yes",
+    "apple-mobile-web-app-status-bar-style": "black-translucent",
+  },
+  appleWebApp: {
+    capable: true,
+    statusBarStyle: "black-translucent",
+    title: siteConfig.siteNameShort,
+  },
+  icons: {
+    icon: [
+      { url: "/favicon.ico", sizes: "any" },
+      { url: "/icon-192x192.png", sizes: "192x192", type: "image/png" },
+      { url: "/icon-512x512.png", sizes: "512x512", type: "image/png" },
+    ],
+    apple: [
+      { url: "/apple-touch-icon.png", sizes: "180x180", type: "image/png" },
+    ],
   },
 };
 

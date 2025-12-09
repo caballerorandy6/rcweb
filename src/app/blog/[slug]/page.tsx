@@ -1,6 +1,7 @@
 import { notFound } from "next/navigation";
 import { genPageMetadata } from "@/utils/genPageMetadata";
 import { JsonLdForBreadcrumb } from "@/app/components/seo/JsonLdForBreadcrumb";
+import { JsonLdForArticle } from "@/app/components/seo/JsonLdForArticle";
 import { siteConfig } from "@/config/site";
 import { getPostBySlug, getAllSlugs } from "@/lib/blog";
 import BlogPost from "@/app/components/Blog/BlogPost";
@@ -53,6 +54,18 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
           { name: "Blog", item: `${siteConfig.baseUrl}/blog` },
           { name: post.title, item: `${siteConfig.baseUrl}/blog/${slug}` },
         ]}
+      />
+      <JsonLdForArticle
+        url={`${siteConfig.baseUrl}/blog/${slug}`}
+        headline={post.title}
+        description={post.description}
+        image={post.image ? `${siteConfig.baseUrl}${post.image}` : `${siteConfig.baseUrl}${siteConfig.defaultOgImg}`}
+        datePublished={post.date}
+        dateModified={post.date}
+        author={{
+          name: siteConfig.author.name,
+          url: siteConfig.baseUrl,
+        }}
       />
       <BlogPost post={post} />
     </>

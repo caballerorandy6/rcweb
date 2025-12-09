@@ -86,7 +86,7 @@ const CookieConsent = ({ onAccept, onReject }: CookieConsentProps) => {
                         href="/privacy-policy"
                         className="text-gold hover:text-gold/80 underline transition-colors"
                       >
-                        Learn more
+                        Read our Privacy Policy
                       </a>
                     </p>
                     <div className="text-xs font-inter text-white/50 bg-gray-800/50 p-2 rounded">
