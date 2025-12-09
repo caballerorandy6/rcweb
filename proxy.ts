@@ -1,5 +1,3 @@
-// middleware.ts
-
 import { auth } from "@/lib/auth";
 import { NextResponse } from "next/server";
 
@@ -7,13 +5,14 @@ export default auth((req) => {
   const isLoggedIn = !!req.auth;
   const { pathname } = req.nextUrl;
 
-  // Definir rutas protegidas (todas las que están en carpeta (admin))
+  // Protected routes (all routes in (admin) folder)
   const protectedRoutes = [
     "/admin-dashboard",
     "/newsletter",
     "/contacts",
     "/sms",
-    // Agregar más rutas protegidas aquí cuando las crees
+    "/manage-invoices",
+    "/projects",
   ];
 
   const isProtectedRoute = protectedRoutes.some(
@@ -22,17 +21,17 @@ export default auth((req) => {
 
   const isLoginPage = pathname === "/login";
 
-  // Si está logueado e intenta acceder a login, redirigir
+  // If logged in and trying to access login, redirect to dashboard
   if (isLoginPage && isLoggedIn) {
     return NextResponse.redirect(new URL("/admin-dashboard", req.url));
   }
 
-  // Si no está logueado e intenta acceder a ruta protegida
+  // If not logged in and trying to access protected route
   if (isProtectedRoute && !isLoggedIn) {
     return NextResponse.redirect(new URL("/login", req.url));
   }
 
-  // Verificar rol ADMIN para rutas protegidas
+  // Verify ADMIN role for protected routes
   if (isProtectedRoute && isLoggedIn && req.auth?.user?.role !== "ADMIN") {
     return NextResponse.redirect(new URL("/", req.url));
   }
@@ -41,5 +40,7 @@ export default auth((req) => {
 });
 
 export const config = {
-  matcher: ["/((?!api|_next/static|_next/image|favicon.ico|.*\\..*|public).*)"],
+  matcher: [
+    "/((?!api|_next/static|_next/image|favicon.ico|sitemap.xml|robots.txt|.*\\.png$|.*\\.jpg$|.*\\.webp$|.*\\.ico$).*)",
+  ],
 };
