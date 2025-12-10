@@ -1,7 +1,12 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { CalendarDaysIcon, ClockIcon, VideoCameraIcon, PhoneIcon } from "@heroicons/react/24/outline";
+import {
+  CalendarDaysIcon,
+  ClockIcon,
+  VideoCameraIcon,
+  PhoneIcon,
+} from "@heroicons/react/24/outline";
 import Link from "next/link";
 import Heading from "@/app/components/ui/Heading";
 import { trackFBPhoneCall } from "@/app/components/tracking/FacebookPixel";
@@ -13,11 +18,11 @@ const trackPhoneConversion = () => {
   trackManualContact();
 
   // Legacy conversion tracking (keeping for backward compatibility)
-  if (typeof window !== 'undefined' && window.gtag) {
-    window.gtag('event', 'conversion', {
-      'send_to': 'AW-17661176254/wW9-CKCVjLAbEL7TwOVB',
-      'value': 1.0,
-      'currency': 'USD'
+  if (typeof window !== "undefined" && window.gtag) {
+    window.gtag("event", "conversion", {
+      send_to: "AW-17661176254/wW9-CKCVjLAbEL7TwOVB",
+      value: 1.0,
+      currency: "USD",
     });
   }
 
@@ -53,8 +58,13 @@ export default function ScheduleContent() {
         >
           <div className="bg-gradient-to-r from-gold/10 to-gold/5 backdrop-blur-lg rounded-2xl p-8 border border-gold/20 shadow-xl shadow-black/50">
             <p className="text-white/90 text-lg leading-relaxed font-inter text-center">
-              Book a <span className="text-gold font-bold">free 30-minute consultation</span> to discuss your web development project.
-              No commitment required – just an opportunity to explore how we can help bring your vision to life.
+              Book a{" "}
+              <span className="text-gold font-bold">
+                free 30-minute consultation
+              </span>{" "}
+              to discuss your web development project. No commitment required –
+              just an opportunity to explore how we can help bring your vision
+              to life.
             </p>
           </div>
         </motion.div>
@@ -71,18 +81,21 @@ export default function ScheduleContent() {
             {
               icon: <ClockIcon className="w-8 h-8" />,
               title: "30 Minutes",
-              description: "Dedicated time to understand your project needs and goals"
+              description:
+                "Dedicated time to understand your project needs and goals",
             },
             {
               icon: <VideoCameraIcon className="w-8 h-8" />,
               title: "Video or Phone",
-              description: "Choose your preferred method – Zoom, Google Meet, or phone call"
+              description:
+                "Choose your preferred method – Zoom, Google Meet, or phone call",
             },
             {
               icon: <PhoneIcon className="w-8 h-8" />,
               title: "No Obligation",
-              description: "100% free consultation with zero commitment required"
-            }
+              description:
+                "100% free consultation with zero commitment required",
+            },
           ].map((benefit, index) => (
             <motion.div
               key={index}
@@ -91,8 +104,12 @@ export default function ScheduleContent() {
               transition={{ type: "spring", stiffness: 400, damping: 17 }}
             >
               <div className="text-gold mb-4">{benefit.icon}</div>
-              <h2 className="text-xl font-bold text-gold font-iceland mb-2">{benefit.title}</h2>
-              <p className="text-gray-300 text-sm font-inter">{benefit.description}</p>
+              <h2 className="text-xl font-bold text-gold font-iceland mb-2">
+                {benefit.title}
+              </h2>
+              <p className="text-gray-300 text-sm font-inter">
+                {benefit.description}
+              </p>
             </motion.div>
           ))}
         </motion.div>
@@ -115,7 +132,7 @@ export default function ScheduleContent() {
                 "Technical requirements and stack recommendations",
                 "Timeline and milestones",
                 "Budget and pricing options",
-                "Next steps and project roadmap"
+                "Next steps and project roadmap",
               ].map((item, index) => (
                 <motion.li
                   key={index}
@@ -142,7 +159,7 @@ export default function ScheduleContent() {
           transition={{ delay: 0.4 }}
         >
           <motion.a
-            href="https://calendly.com/rcwebsolutionsllc/30min"
+            href="https://calendly.com/rcwebsolutions"
             target="_blank"
             rel="noopener noreferrer"
             whileHover={{ scale: 1.05 }}
@@ -173,9 +190,12 @@ export default function ScheduleContent() {
           viewport={{ once: true }}
           transition={{ delay: 0.5 }}
         >
-          <p className="text-white/70 font-inter">
+          <p className="text-white/70 font-inter mx-auto">
             Prefer to send a message first?{" "}
-            <Link href="/#contact" className="text-gold hover:text-gold/80 transition-colors font-bold">
+            <Link
+              href="/#contact"
+              className="text-gold hover:text-gold/80 transition-colors font-bold"
+            >
               Contact us here
             </Link>
           </p>

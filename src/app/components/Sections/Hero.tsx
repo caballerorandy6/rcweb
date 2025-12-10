@@ -189,7 +189,7 @@ const Hero = () => {
               }}
             >
               <Link
-                href={"#contact" as Route}
+                href={"/schedule" as Route}
                 className="text-sm/6 font-inter text-white/80 hover:bg-gold/20 p-3 px-6 rounded-md flex items-center gap-x-1 border-2 border-gold/50 transition-colors duration-200"
               >
                 Schedule a Call

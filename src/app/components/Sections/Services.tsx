@@ -18,8 +18,7 @@ const Services = () => {
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
         <Heading
           icon={<Cog6ToothIcon className="w-8 text-gold" />}
-          text="Transform ideas into high-performance web applications that drive
-            your business forward"
+          text="Transform ideas into high-performance web applications that drive your business forward"
         >
           How I Can Help You
         </Heading>
