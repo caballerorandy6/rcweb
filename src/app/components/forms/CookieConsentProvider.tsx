@@ -1,14 +1,16 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import Script from "next/script";
-import Image from "next/image";
+// COMMENTED: Not using ads - uncomment if running ad campaigns
+// import Script from "next/script";
+// import Image from "next/image";
 import CookieConsent from "./CookieConsent";
 import ClientOnly from "@/app/components/ui/ClientOnly";
 
-const FACEBOOK_PIXEL_ID = process.env.NEXT_PUBLIC_FACEBOOK_PIXEL_ID;
-const LINKEDIN_PARTNER_ID = process.env.NEXT_PUBLIC_LINKEDIN_PARTNER_ID;
-const GOOGLE_ADS_ID = process.env.NEXT_PUBLIC_GOOGLE_ADS_ID;
+// COMMENTED: Not using ads - uncomment if running ad campaigns
+// const FACEBOOK_PIXEL_ID = process.env.NEXT_PUBLIC_FACEBOOK_PIXEL_ID;
+// const LINKEDIN_PARTNER_ID = process.env.NEXT_PUBLIC_LINKEDIN_PARTNER_ID;
+// const GOOGLE_ADS_ID = process.env.NEXT_PUBLIC_GOOGLE_ADS_ID;
 
 export default function CookieConsentProvider() {
   const [hasConsent, setHasConsent] = useState(false);
@@ -80,10 +82,11 @@ export default function CookieConsentProvider() {
       )}
 
       {/* Only load tracking scripts if user has consented */}
+      {/* COMMENTED: Not using ads - uncomment if running ad campaigns
       {hasConsent && (
         <>
           {/* Preconnect to tracking domains for better performance */}
-          <link rel="preconnect" href="https://www.googletagmanager.com" />
+          {/* <link rel="preconnect" href="https://www.googletagmanager.com" />
           {GOOGLE_ADS_ID && (
             <link rel="preconnect" href="https://googleads.g.doubleclick.net" />
           )}
@@ -98,7 +101,7 @@ export default function CookieConsentProvider() {
           )}
 
           {/* Facebook Pixel */}
-          {FACEBOOK_PIXEL_ID && (
+          {/* {FACEBOOK_PIXEL_ID && (
             <>
               <Script id="facebook-pixel" strategy="lazyOnload">
                 {`
@@ -127,7 +130,7 @@ export default function CookieConsentProvider() {
           )}
 
           {/* LinkedIn Insight Tag */}
-          {LINKEDIN_PARTNER_ID && (
+          {/* {LINKEDIN_PARTNER_ID && (
             <>
               <Script id="linkedin-insight" strategy="lazyOnload">
                 {`
@@ -158,7 +161,7 @@ export default function CookieConsentProvider() {
           )}
 
           {/* Google Ads Conversion Tracking */}
-          {GOOGLE_ADS_ID && (
+          {/* {GOOGLE_ADS_ID && (
             <>
               <Script
                 src={`https://www.googletagmanager.com/gtag/js?id=${GOOGLE_ADS_ID}`}
@@ -177,6 +180,7 @@ export default function CookieConsentProvider() {
 
         </>
       )}
+      */}
     </ClientOnly>
   );
 }

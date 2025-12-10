@@ -9,8 +9,9 @@ import { Toaster } from "sonner";
 import ConditionalLayout from "@/app/components/layout/ConditionalLayout";
 import CookieConsentProvider from "@/app/components/forms/CookieConsentProvider";
 import Analytics from "@/app/components/tracking/Analytics";
-import FacebookPixel from "@/app/components/tracking/FacebookPixel";
-import LinkedInInsightTag from "@/app/components/tracking/LinkedInInsightTag";
+// COMMENTED: Not using ads - uncomment if running ad campaigns
+// import FacebookPixel from "@/app/components/tracking/FacebookPixel";
+// import LinkedInInsightTag from "@/app/components/tracking/LinkedInInsightTag";
 import { siteConfig } from "@/config/site";
 import { Analytics as VercelAnalytics } from "@vercel/analytics/next";
 
@@ -173,7 +174,7 @@ export default function RootLayout({
           }}
         />
 
-        {/* Google Tag Manager */}
+        {/* COMMENTED: Google Tag Manager - Not using ads, uncomment if running ad campaigns
         {process.env.NEXT_PUBLIC_GTM_ID && (
           <Script
             id="google-tag-manager"
@@ -189,6 +190,7 @@ export default function RootLayout({
             }}
           />
         )}
+        */}
 
         {/* Note: Tracking preconnects moved to CookieConsentProvider (conditional based on consent) */}
       </head>
@@ -201,8 +203,10 @@ export default function RootLayout({
         {/* Client-side tracking for route changes (only fires if user consented) */}
         <Suspense fallback={null}>
           <Analytics />
+          {/* COMMENTED: Not using ads - uncomment if running ad campaigns
           <FacebookPixel />
           <LinkedInInsightTag />
+          */}
         </Suspense>
 
         {/* Vercel Analytics (essential, no personal data) */}
