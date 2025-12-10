@@ -48,6 +48,7 @@ const Hero = () => {
           muted
           playsInline
           preload="none"
+          poster="/background.avif"
           aria-hidden="true"
           className="inset-0 -z-10 size-full object-cover object-right md:object-center opacity-35"
         >
@@ -73,7 +74,7 @@ const Hero = () => {
               type: "spring",
               stiffness: 180,
               damping: 20,
-              delay: 0.2,
+              delay: 0.1,
             }}
           >
             Randy Caballero
@@ -86,7 +87,7 @@ const Hero = () => {
               type: "spring",
               stiffness: 200,
               damping: 10,
-              delay: 0.5,
+              delay: 0.2,
             }}
           >
             <CustomBadge>Available for Projects</CustomBadge>
@@ -100,7 +101,7 @@ const Hero = () => {
               type: "spring",
               stiffness: 220,
               damping: 22,
-              delay: 0.7,
+              delay: 0.3,
             }}
           >
             Full-Stack Developer specializing in Next.js with 5+ years creating
@@ -116,7 +117,7 @@ const Hero = () => {
               type: "spring",
               stiffness: 200,
               damping: 20,
-              delay: 0.9,
+              delay: 0.4,
             }}
           >
             <motion.span
@@ -147,7 +148,7 @@ const Hero = () => {
               type: "spring",
               stiffness: 200,
               damping: 20,
-              delay: 1.1,
+              delay: 0.5,
             }}
           >
             <motion.div
@@ -162,7 +163,7 @@ const Hero = () => {
                 type: "spring",
                 stiffness: 200,
                 damping: 20,
-                delay: 1.2,
+                delay: 0.55,
               }}
             >
               <Link
@@ -185,7 +186,7 @@ const Hero = () => {
                 type: "spring",
                 stiffness: 200,
                 damping: 20,
-                delay: 1.3,
+                delay: 0.6,
               }}
             >
               <Link
@@ -208,7 +209,7 @@ const Hero = () => {
                 type: "spring",
                 stiffness: 200,
                 damping: 20,
-                delay: 1.4,
+                delay: 0.65,
               }}
             >
               <a
@@ -232,7 +233,7 @@ const Hero = () => {
               type: "spring",
               stiffness: 200,
               damping: 20,
-              delay: 1.5,
+              delay: 0.7,
             }}
           >
             <p className="text-white/60 font-inter text-sm mb-2 text-center">
