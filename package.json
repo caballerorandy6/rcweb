@@ -33,7 +33,7 @@
     "embla-carousel-react": "^8.6.0",
     "framer-motion": "^12.23.22",
     "gray-matter": "^4.0.3",
-    "next": "16.0.7",
+    "next": "16.0.10",
     "next-auth": "^5.0.0-beta.30",
     "openai": "^6.1.0",
     "pg": "^8.16.3",
