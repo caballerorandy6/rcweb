@@ -145,9 +145,24 @@ export const createContactAction = async (
       });
     }
 
-    // 5. Verificar y reservar cuota (2 emails: admin + confirmación)
-    const emailCount = email ? 2 : 1; // 1 para admin, +1 si hay confirmación
-    const quotaCheck = await checkAndReserveEmailQuota(emailCount);
+    // 5. Trigger n8n Lead Nurturing workflow (only if marketingConsent)
+    if (marketingConsent && email) {
+      try {
+        const n8nWebhookUrl = process.env.N8N_WEBHOOK_URL || "http://localhost:5678/webhook/new-contact";
+        await fetch(n8nWebhookUrl, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ body: { name, email, phone } }),
+        });
+        console.log("✅ n8n webhook triggered for lead nurturing");
+      } catch (webhookError) {
+        // Don't fail the request if webhook fails
+        console.error("⚠️ Failed to trigger n8n webhook:", webhookError);
+      }
+    }
+
+    // 6. Verificar y reservar cuota (1 email al admin, confirmación va por n8n)
+    const quotaCheck = await checkAndReserveEmailQuota(1);
 
     if (!quotaCheck.canSend) {
       console.warn(`⚠️ Quota limit reached: ${quotaCheck.message}`);
@@ -159,11 +174,9 @@ export const createContactAction = async (
       };
     }
 
-    // 6. Enviar ambos emails en paralelo
+    // 6. Enviar email al admin (el email de confirmación al usuario se envía via n8n)
     try {
-      await Promise.all([
-        // Email al admin
-        resend.emails.send({
+      await resend.emails.send({
           from: "RC Web <no-reply@rcweb.dev>",
           to: ["admin@rcweb.dev"],
           subject: `📩 New message from ${name}`,
@@ -238,111 +251,110 @@ export const createContactAction = async (
               </body>
             </html>
           `,
-        }),
+      });
 
-        // Email de confirmación al usuario
-        email
-          ? resend.emails.send({
-              from: "RC Web Solution <contactus@rcweb.dev>",
-              to: [email],
-              subject: "Got your message! - RC Web Solution",
-              html: `
-            <!DOCTYPE html>
-            <html>
-              <head>
-                <meta charset="utf-8">
-                <meta name="viewport" content="width=device-width, initial-scale=1.0">
-              </head>
-              <body style="margin:0;padding:0;background-color:#f3f4f6;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;">
-                <table width="100%" cellpadding="0" cellspacing="0" style="background-color:#f3f4f6;padding:40px 20px;">
-                  <tr>
-                    <td align="center">
-                      <table width="600" cellpadding="0" cellspacing="0" style="background:#ffffff;border-radius:16px;box-shadow:0 4px 6px rgba(0,0,0,0.1);overflow:hidden;">
+      // Email de confirmación al usuario (DESACTIVADO - Ahora se envía via n8n Lead Nurturing)
+        // email
+        //   ? resend.emails.send({
+        //       from: "RC Web Solution <contactus@rcweb.dev>",
+        //       to: [email],
+        //       subject: "Got your message! - RC Web Solution",
+        //       html: `
+        //     <!DOCTYPE html>
+        //     <html>
+        //       <head>
+        //         <meta charset="utf-8">
+        //         <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        //       </head>
+        //       <body style="margin:0;padding:0;background-color:#f3f4f6;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;">
+        //         <table width="100%" cellpadding="0" cellspacing="0" style="background-color:#f3f4f6;padding:40px 20px;">
+        //           <tr>
+        //             <td align="center">
+        //               <table width="600" cellpadding="0" cellspacing="0" style="background:#ffffff;border-radius:16px;box-shadow:0 4px 6px rgba(0,0,0,0.1);overflow:hidden;">
 
-                        <!-- Header -->
-                        <tr>
-                          <td style="background:linear-gradient(135deg,#6366f1 0%,#7c3aed 100%);padding:40px 32px;text-align:center;">
-                            <h1 style="color:#fff;margin:0;font-size:28px;font-weight:700;">Thanks for reaching out!</h1>
-                            <p style="color:rgba(255,255,255,0.9);margin:8px 0 0;font-size:16px;">RC Web Solution</p>
-                          </td>
-                        </tr>
+        //                 <!-- Header -->
+        //                 <tr>
+        //                   <td style="background:linear-gradient(135deg,#6366f1 0%,#7c3aed 100%);padding:40px 32px;text-align:center;">
+        //                     <h1 style="color:#fff;margin:0;font-size:28px;font-weight:700;">Thanks for reaching out!</h1>
+        //                     <p style="color:rgba(255,255,255,0.9);margin:8px 0 0;font-size:16px;">RC Web Solution</p>
+        //                   </td>
+        //                 </tr>
 
-                        <!-- Body -->
-                        <tr>
-                          <td style="padding:32px;">
-                            <p style="font-size:16px;color:#374151;margin:0 0 24px;line-height:1.6;">
-                              Hi there,
-                            </p>
+        //                 <!-- Body -->
+        //                 <tr>
+        //                   <td style="padding:32px;">
+        //                     <p style="font-size:16px;color:#374151;margin:0 0 24px;line-height:1.6;">
+        //                       Hi there,
+        //                     </p>
 
-                            <p style="font-size:16px;color:#374151;margin:0 0 24px;line-height:1.6;">
-                              Thanks for reaching out to <strong>RC Web Solution</strong>!
-                            </p>
+        //                     <p style="font-size:16px;color:#374151;margin:0 0 24px;line-height:1.6;">
+        //                       Thanks for reaching out to <strong>RC Web Solution</strong>!
+        //                     </p>
 
-                            <p style="font-size:16px;color:#374151;margin:0 0 24px;line-height:1.6;">
-                              I've received your email and will respond within <strong>24 hours</strong> (usually much sooner).
-                            </p>
+        //                     <p style="font-size:16px;color:#374151;margin:0 0 24px;line-height:1.6;">
+        //                       I've received your email and will respond within <strong>24 hours</strong> (usually much sooner).
+        //                     </p>
 
-                            <!-- Contact Options -->
-                            <div style="background-color:#f9fafb;border-radius:12px;padding:24px;margin-bottom:24px;">
-                              <p style="font-size:16px;color:#374151;margin:0 0 16px;font-weight:600;">In the meantime, feel free to:</p>
-                              <table style="width:100%;font-size:14px;">
-                                <tr>
-                                  <td style="padding:8px 0;">
-                                    <span style="font-size:18px;margin-right:8px;">📱</span>
-                                    <span style="color:#374151;">Call/text me directly: <a href="tel:+13463757534" style="color:#7c3aed;text-decoration:none;font-weight:600;">+1 346 375 7534</a></span>
-                                  </td>
-                                </tr>
-                                <tr>
-                                  <td style="padding:8px 0;">
-                                    <span style="font-size:18px;margin-right:8px;">🌐</span>
-                                    <span style="color:#374151;">Check out my portfolio: <a href="https://rcweb.dev" style="color:#7c3aed;text-decoration:none;font-weight:600;">https://rcweb.dev</a></span>
-                                  </td>
-                                </tr>
-                              </table>
-                            </div>
+        //                     <!-- Contact Options -->
+        //                     <div style="background-color:#f9fafb;border-radius:12px;padding:24px;margin-bottom:24px;">
+        //                       <p style="font-size:16px;color:#374151;margin:0 0 16px;font-weight:600;">In the meantime, feel free to:</p>
+        //                       <table style="width:100%;font-size:14px;">
+        //                         <tr>
+        //                           <td style="padding:8px 0;">
+        //                             <span style="font-size:18px;margin-right:8px;">📱</span>
+        //                             <span style="color:#374151;">Call/text me directly: <a href="tel:+13463757534" style="color:#7c3aed;text-decoration:none;font-weight:600;">+1 346 375 7534</a></span>
+        //                           </td>
+        //                         </tr>
+        //                         <tr>
+        //                           <td style="padding:8px 0;">
+        //                             <span style="font-size:18px;margin-right:8px;">🌐</span>
+        //                             <span style="color:#374151;">Check out my portfolio: <a href="https://rcweb.dev" style="color:#7c3aed;text-decoration:none;font-weight:600;">https://rcweb.dev</a></span>
+        //                           </td>
+        //                         </tr>
+        //                       </table>
+        //                     </div>
 
-                            <!-- Availability Badge -->
-                            <div style="background:linear-gradient(135deg,#dcfce7 0%,#bbf7d0 100%);border-left:4px solid #22c55e;border-radius:8px;padding:20px;margin-bottom:32px;">
-                              <p style="color:#166534;font-weight:600;font-size:16px;margin:0;">
-                                <span style="font-size:18px;margin-right:8px;">🟢</span>
-                                Good news: I'm currently available and can start new projects immediately.
-                              </p>
-                            </div>
+        //                     <!-- Availability Badge -->
+        //                     <div style="background:linear-gradient(135deg,#dcfce7 0%,#bbf7d0 100%);border-left:4px solid #22c55e;border-radius:8px;padding:20px;margin-bottom:32px;">
+        //                       <p style="color:#166534;font-weight:600;font-size:16px;margin:0;">
+        //                         <span style="font-size:18px;margin-right:8px;">🟢</span>
+        //                         Good news: I'm currently available and can start new projects immediately.
+        //                       </p>
+        //                     </div>
 
-                            <p style="font-size:16px;color:#374151;margin:0 0 8px;">Talk soon,</p>
-                            <p style="font-size:16px;color:#374151;margin:0;font-weight:600;">Randy Caballero</p>
-                            <p style="font-size:14px;color:#6b7280;margin:0;">RC Web Solution LLC</p>
+        //                     <p style="font-size:16px;color:#374151;margin:0 0 8px;">Talk soon,</p>
+        //                     <p style="font-size:16px;color:#374151;margin:0;font-weight:600;">Randy Caballero</p>
+        //                     <p style="font-size:14px;color:#6b7280;margin:0;">RC Web Solution LLC</p>
 
-                            <!-- Footer -->
-                            <hr style="border:none;border-top:1px solid #e5e7eb;margin:32px 0;">
-                            <table style="width:100%;font-size:14px;color:#6b7280;">
-                              <tr>
-                                <td style="padding:4px 0;">📧 <a href="mailto:contactus@rcweb.dev" style="color:#7c3aed;text-decoration:none;">contactus@rcweb.dev</a></td>
-                              </tr>
-                              <tr>
-                                <td style="padding:4px 0;">📱 <a href="tel:+13463757534" style="color:#7c3aed;text-decoration:none;">+1 346 375 7534</a></td>
-                              </tr>
-                              <tr>
-                                <td style="padding:4px 0;">🌐 <a href="https://rcweb.dev" style="color:#7c3aed;text-decoration:none;">https://rcweb.dev</a></td>
-                              </tr>
-                            </table>
-                          </td>
-                        </tr>
+        //                     <!-- Footer -->
+        //                     <hr style="border:none;border-top:1px solid #e5e7eb;margin:32px 0;">
+        //                     <table style="width:100%;font-size:14px;color:#6b7280;">
+        //                       <tr>
+        //                         <td style="padding:4px 0;">📧 <a href="mailto:contactus@rcweb.dev" style="color:#7c3aed;text-decoration:none;">contactus@rcweb.dev</a></td>
+        //                       </tr>
+        //                       <tr>
+        //                         <td style="padding:4px 0;">📱 <a href="tel:+13463757534" style="color:#7c3aed;text-decoration:none;">+1 346 375 7534</a></td>
+        //                       </tr>
+        //                       <tr>
+        //                         <td style="padding:4px 0;">🌐 <a href="https://rcweb.dev" style="color:#7c3aed;text-decoration:none;">https://rcweb.dev</a></td>
+        //                       </tr>
+        //                     </table>
+        //                   </td>
+        //                 </tr>
 
-                      </table>
-                    </td>
-                  </tr>
-                </table>
-              </body>
-            </html>
-          `,
-            })
-          : Promise.resolve(),
-      ]);
+        //               </table>
+        //             </td>
+        //           </tr>
+        //         </table>
+        //       </body>
+        //     </html>
+        //   `,
+        //     })
+        //   : Promise.resolve(),
     } catch (emailError) {
-      console.error("❌ Failed to send emails:", emailError);
+      console.error("❌ Failed to send email:", emailError);
       // Release quota on email send failure
-      await releaseEmailQuota(emailCount);
+      await releaseEmailQuota(1);
       throw emailError;
     }
 

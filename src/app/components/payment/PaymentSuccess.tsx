@@ -10,7 +10,7 @@ import {
 } from "@heroicons/react/24/outline";
 import { toast } from "sonner";
 import confetti from "canvas-confetti";
-import type { Payment } from "@prisma/client";
+import type { Payment } from "@/generated/prisma/client";
 import { trackLeadConversion, trackPurchase } from "@/lib/analytics";
 
 interface PaymentSuccessClientProps {

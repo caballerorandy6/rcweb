@@ -1,13 +1,12 @@
 // prisma/schema.prisma
 
 generator client {
-  provider = "prisma-client-js"
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
 }
 
 datasource db {
-  provider  = "postgresql"
-  url       = env("DATABASE_URL")
-  directUrl = env("DIRECT_URL")
+  provider = "postgresql"
 }
 
 model Contact {
@@ -18,9 +17,40 @@ model Contact {
   createdAt        DateTime        @default(now())
   updatedAt        DateTime        @updatedAt
 
+  // Lead Nurturing fields
+  leadStatus       String          @default("NEW") // NEW, CONTACTED, INTERESTED, PROPOSAL_SENT, WON, LOST
+  leadScore        Int             @default(0)
+  nurturingStatus  String?         // ACTIVE, PAUSED, COMPLETED, NONE
+  nurturingStep    Int             @default(0)
+  lastContactedAt  DateTime?
+  nextFollowUpAt   DateTime?
+  interestedIn     String?         // web, ecommerce, app, marketing
+  notes            String?         @db.Text
+
   // Relaciones
   emails           ContactEmail[]
   phones           ContactPhone[]
+  activities       ContactActivity[]
+
+  @@index([leadStatus])
+  @@index([nurturingStatus])
+}
+
+// Lead Nurturing Activity Log
+model ContactActivity {
+  id          String   @id @default(uuid())
+  contactId   String
+  contact     Contact  @relation(fields: [contactId], references: [id], onDelete: Cascade)
+
+  type        String   // EMAIL_SENT, EMAIL_OPENED, SEQUENCE_STARTED, SEQUENCE_COMPLETED, STATUS_CHANGED, NOTE_ADDED
+  description String
+  metadata    Json?    // Additional data (email subject, step number, etc.)
+
+  createdAt   DateTime @default(now())
+
+  @@index([contactId])
+  @@index([type])
+  @@index([createdAt])
 }
 
 model ContactEmail {

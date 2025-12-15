@@ -2,7 +2,7 @@
 // Función helper para crear invoices y enviar emails con PDFs adjuntos
 
 import { Resend } from "resend";
-import { Payment } from "@prisma/client";
+import { Payment } from "@/generated/prisma/client";
 import { createInvoice, createInvoiceSummary } from "./actions";
 import { InvoiceType, DEFAULT_TAX_RATE } from "./types";
 
