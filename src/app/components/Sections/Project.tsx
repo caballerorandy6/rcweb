@@ -50,7 +50,7 @@ const Project = ({
                   "bg-black/50 text-white": item === "NextJS",
                   "bg-blue-500 text-white": item === "TypeScript",
                   "bg-indigo-500 text-white": item === "TailwindCSS",
-                  "bg-gray-500 text-white": item === "ShadcnUi",
+                  "bg-gray-500 text-white": item === "Shadcn UI",
                   "bg-yellow-500 text-black": item === "JavaScript",
                   "bg-cyan-500 text-white": item === "React",
                   "bg-violet-500 text-white": item === "Vite",

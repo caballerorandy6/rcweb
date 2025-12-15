@@ -97,7 +97,7 @@ export const projects: ProjectProps[] = [
       "NextJS",
       "TypeScript",
       "TailwindCSS",
-      "ShadcnUi",
+      "Shadcn UI",
       "Zod",
       "Zustand",
     ],
@@ -106,6 +106,24 @@ export const projects: ProjectProps[] = [
     image: "/limo-renting.avif",
     github: "https://github.com/caballerorandy6/Limo-Renting-NextJS",
     url: "https://limo-renting-next-js-nu.vercel.app/",
+  },
+  {
+    name: "RC Beauty Salon",
+    tecnologies: [
+      "NextJS",
+      "TypeScript",
+      "TailwindCSS",
+      "Shadcn UI",
+      "Zod",
+      "Zustand",
+      "Prisma",
+      "PostgreSQL",
+    ],
+    description:
+      "A modern website for a beauty salon that showcases services, allows online bookings, and provides contact information, built with Next.js and Tailwind CSS.",
+    image: "/rcbeautysalon.avif",
+    github: "https://github.com/caballerorandy6/rcbeautysalon",
+    url: "https://www.rcbeautysalon.org/",
   },
   {
     name: "GSM AC ",
@@ -132,7 +150,7 @@ export const projects: ProjectProps[] = [
       "NextJS",
       "TypeScript",
       "TailwindCSS",
-      "ShadcnUi",
+      "Shadcn UI",
       "Zod",
       "Zustand",
       "Prisma",
@@ -172,15 +190,15 @@ export const projects: ProjectProps[] = [
     url: "https://photographerportfolio1.netlify.app",
   },
 
-  {
-    name: "Search Drinks",
-    tecnologies: ["React", "Vite"],
-    description:
-      "The website allows users to search for and explore various drinks, providing details about their ingredients and preparation methods.",
-    image: "/searchdrinks.avif",
-    github: "https://github.com/caballerorandy6/seachdrinks",
-    url: "https://seachdrinks.netlify.app/",
-  },
+  // {
+  //   name: "Search Drinks",
+  //   tecnologies: ["React", "Vite"],
+  //   description:
+  //     "The website allows users to search for and explore various drinks, providing details about their ingredients and preparation methods.",
+  //   image: "/searchdrinks.avif",
+  //   github: "https://github.com/caballerorandy6/seachdrinks",
+  //   url: "https://seachdrinks.netlify.app/",
+  // },
 ];
 
 export const teachMarqueeData: TeachMarqueeProps[] = [
@@ -578,7 +596,8 @@ export const additionalServices = [
   {
     service: "Monthly Maintenance",
     price: "$150-$500/month",
-    description: "Security updates, content changes, performance monitoring, priority support",
+    description:
+      "Security updates, content changes, performance monitoring, priority support",
   },
   {
     service: "Content Creation",
@@ -644,7 +663,8 @@ export const pricingPlans = [
       "Analytics integration",
       "30-day support",
     ],
-    ideal: "Perfect for: Established businesses, professional services, portfolios",
+    ideal:
+      "Perfect for: Established businesses, professional services, portfolios",
     featured: true,
     cta: "Most Popular Choice",
   },
@@ -666,7 +686,8 @@ export const pricingPlans = [
       "Email automation",
       "60-day support",
     ],
-    ideal: "Perfect for: Growing businesses, custom requirements, advanced features",
+    ideal:
+      "Perfect for: Growing businesses, custom requirements, advanced features",
     featured: false,
     cta: "Build Advanced Features",
   },
@@ -688,7 +709,8 @@ export const pricingPlans = [
       "Admin dashboard",
       "90-day support",
     ],
-    ideal: "Perfect for: Retail businesses, online stores, product-based companies",
+    ideal:
+      "Perfect for: Retail businesses, online stores, product-based companies",
     featured: false,
     cta: "Launch Your Store",
   },
