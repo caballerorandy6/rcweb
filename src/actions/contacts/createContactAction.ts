@@ -152,7 +152,7 @@ export const createContactAction = async (
         await fetch(n8nWebhookUrl, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ body: { name, email, phone } }),
+          body: JSON.stringify({ name, email, phone }),
         });
         console.log("✅ n8n webhook triggered for lead nurturing");
       } catch (webhookError) {
