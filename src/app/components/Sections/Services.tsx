@@ -63,15 +63,20 @@ const Services = () => {
               </div>
 
               <div className="mt-auto pt-4 border-t border-gold/10">
-                <p className="text-sm font-inter text-gold/70 italic">
-                  {service.highlight}
-                </p>
+                <div className="flex items-center justify-between">
+                  <p className="text-sm font-inter text-gold/70 italic">
+                    {service.highlight}
+                  </p>
+                  <p className="text-sm font-inter font-semibold text-gold">
+                    {service.price}
+                  </p>
+                </div>
               </div>
 
               <button
                 onClick={() => {
                   document
-                    .getElementById("contact")
+                    .getElementById("pricing")
                     ?.scrollIntoView({ behavior: "smooth" });
                 }}
                 className="mt-4 text-sm font-inter text-white/80 hover:bg-gold/20 p-2 rounded-md border border-gold/50 transition-all duration-200 ease-in-out hover:scale-105"

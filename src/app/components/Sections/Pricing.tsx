@@ -50,6 +50,7 @@ const Pricing = () => {
     // Solo redirigir a términos con los datos necesarios
     startTransition(() => {
       const params = new URLSearchParams({
+        planId: plan.id,
         planName: plan.name,
         planPrice: plan.priceInCents.toString(),
         planDescription: plan.description,
@@ -170,16 +171,28 @@ const Pricing = () => {
                 </div>
                 <div className="flex justify-between items-center">
                   <span className="text-gray-400 text-sm">
-                    Initial Payment (50%):
+                    {selectedPlan === "website-maintenance"
+                      ? "Monthly Payment:"
+                      : "Initial Payment (50%):"}
                   </span>
                   <span className="text-2xl font-bold text-gold">
                     $
-                    {(
-                      ((pricingPlans.find((p) => p.id === selectedPlan)
-                        ?.priceInCents || 0) *
-                        0.5) /
-                      100
-                    ).toFixed(2)}
+                    {selectedPlan === "website-maintenance"
+                      ? (
+                          (pricingPlans.find((p) => p.id === selectedPlan)
+                            ?.priceInCents || 0) / 100
+                        ).toFixed(2)
+                      : (
+                          ((pricingPlans.find((p) => p.id === selectedPlan)
+                            ?.priceInCents || 0) *
+                            0.5) /
+                          100
+                        ).toFixed(2)}
+                    {selectedPlan === "website-maintenance" && (
+                      <span className="text-sm font-normal text-gold/70">
+                        /month
+                      </span>
+                    )}
                   </span>
                 </div>
               </div>

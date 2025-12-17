@@ -464,35 +464,66 @@ export const processSteps = [
 export const services = [
   {
     icon: RocketLaunchIcon,
-    title: "Full-Stack Web Applications",
+    title: "Professional Landing Page Development",
     description:
-      "Complete applications built with Next.js 14, TypeScript, and scalable databases.",
-    features: ["SPA/SSR", "Admin Panel", "RESTful APIs", "Authentication"],
-    highlight: "Like GSM AC, Limo Renting & Little Lemon Restaurant",
-  },
-  {
-    icon: CodeBracketIcon,
-    title: "High-Converting Landing Pages",
-    description:
-      "Optimized websites designed to convert visitors into customers with modern design.",
-    features: ["Responsive", "SEO", "Analytics", "Animations"],
+      "Single-page websites optimized for conversions and lead generation. Perfect for product launches, event promotion, and quick online presence.",
+    features: ["Responsive", "SEO", "Fast Loading", "Contact Forms"],
     highlight: "95+ Lighthouse Score",
+    price: "$800",
   },
   {
-    icon: CubeTransparentIcon,
-    title: "Management Systems",
+    icon: BriefcaseIcon,
+    title: "Professional Business Website",
     description:
-      "Custom dashboards to automate and manage your business efficiently.",
-    features: ["Dashboard", "Reports", "Bulk Email", "User Management"],
-    highlight: "15 hours/week saved",
+      "Complete 5-10 page websites with custom design tailored to your brand. Ideal for established businesses, professional services, and portfolios.",
+    features: ["Custom Design", "SEO Optimization", "Analytics", "30-day Support"],
+    highlight: "Like GSM AC & RC Beauty Salon",
+    price: "$2,500",
   },
   {
     icon: ChartBarIcon,
-    title: "Digital Consulting",
+    title: "Custom Business Management Dashboard",
     description:
-      "Web strategy and optimization with 3+ years of digital marketing experience.",
-    features: ["Web Audit", "SEO", "Performance"],
-    highlight: "60% more organic traffic",
+      "Tailored admin dashboards to automate and streamline your business operations. Perfect for service businesses.",
+    features: ["Custom Forms", "Data Visualization", "Email Automation", "User Management"],
+    highlight: "Save 15 hours/week",
+    price: "$5,000",
+  },
+  {
+    icon: CurrencyDollarIcon,
+    title: "E-Commerce Website Development",
+    description:
+      "Full-featured online stores with secure payment processing, inventory management, and admin dashboard.",
+    features: ["Payment Integration", "Shopping Cart", "Admin Dashboard", "Order Management"],
+    highlight: "90-day Support Included",
+    price: "$6,000",
+  },
+  {
+    icon: CodeBracketIcon,
+    title: "Website Redesign and Modernization",
+    description:
+      "Transform your outdated website into a modern, high-performance platform. We rebuild with current technology replacing legacy code.",
+    features: ["Modern Design", "Performance Boost", "Mobile Optimization", "Content Migration"],
+    highlight: "From Outdated to Outstanding",
+    price: "$3,000",
+  },
+  {
+    icon: CubeTransparentIcon,
+    title: "Custom Web Application Development",
+    description:
+      "Full-stack custom web applications built with Next.js, React, and TypeScript. Specialized functionality for booking systems and platforms.",
+    features: ["Database Integration", "User Authentication", "API Development", "6-month Support"],
+    highlight: "Built for scalability",
+    price: "$8,000",
+  },
+  {
+    icon: ShieldCheckIcon,
+    title: "Monthly Website Maintenance and Support",
+    description:
+      "Ongoing maintenance, security updates, and technical support to keep your website secure, fast, and up-to-date.",
+    features: ["Security Updates", "Performance Optimization", "Content Updates", "Priority Support"],
+    highlight: "Peace of mind guaranteed",
+    price: "$200/month",
   },
 ];
 
@@ -626,7 +657,7 @@ export const paymentTerms = {
 export const pricingPlans = [
   {
     id: "landing-page",
-    name: "Landing Pages",
+    name: "Professional Landing Page Development",
     price: "$800",
     priceInCents: 80000, // $800.00
     range: "$800 - $1,500",
@@ -647,7 +678,7 @@ export const pricingPlans = [
   },
   {
     id: "professional-website",
-    name: "Professional Websites",
+    name: "Professional Business Website",
     price: "$2,500",
     priceInCents: 250000, // $2,500.00
     range: "$2,500 - $5,000",
@@ -669,31 +700,30 @@ export const pricingPlans = [
     cta: "Most Popular Choice",
   },
   {
-    id: "advanced-website",
-    name: "Advanced Websites",
+    id: "business-dashboard",
+    name: "Custom Business Management Dashboard",
     price: "$5,000",
     priceInCents: 500000, // $5,000.00
-    range: "$5,000 - $8,000",
+    range: "$5,000 - $10,000",
     duration: "5-6 weeks",
-    description: "Complex functionality and integrations",
+    description: "Tailored admin dashboards for business operations",
     features: [
-      "Custom features",
-      "Database integration",
-      "User authentication",
-      "API integrations",
-      "Advanced SEO",
-      "Content management",
+      "Custom forms & workflows",
+      "Data visualization",
+      "User management",
       "Email automation",
+      "Database integration",
+      "API integrations",
       "60-day support",
     ],
     ideal:
-      "Perfect for: Growing businesses, custom requirements, advanced features",
+      "Perfect for: Service businesses, operations management, automation",
     featured: false,
-    cta: "Build Advanced Features",
+    cta: "Automate Your Business",
   },
   {
     id: "ecommerce",
-    name: "Custom E-commerce",
+    name: "E-Commerce Website Development",
     price: "$6,000",
     priceInCents: 600000, // $6,000.00
     range: "$6,000 - $15,000",
@@ -715,8 +745,30 @@ export const pricingPlans = [
     cta: "Launch Your Store",
   },
   {
+    id: "website-redesign",
+    name: "Website Redesign and Modernization",
+    price: "$3,000",
+    priceInCents: 300000, // $3,000.00
+    range: "$3,000 - $8,000",
+    duration: "4-6 weeks",
+    description: "Transform your outdated website",
+    features: [
+      "Modern design & aesthetics",
+      "Performance optimization",
+      "Mobile responsive upgrade",
+      "Content migration",
+      "SEO enhancement",
+      "Technology modernization",
+      "45-day support",
+    ],
+    ideal:
+      "Perfect for: Businesses with old websites, legacy code, poor performance",
+    featured: false,
+    cta: "Redesign My Site",
+  },
+  {
     id: "web-application",
-    name: "Web Applications",
+    name: "Custom Web Application Development",
     price: "$8,000",
     priceInCents: 800000, // $8,000.00
     range: "Starting at $8,000",
@@ -735,6 +787,27 @@ export const pricingPlans = [
     ideal: "Perfect for: Startups, enterprise solutions, custom applications",
     featured: false,
     cta: "Build Your Platform",
+  },
+  {
+    id: "website-maintenance",
+    name: "Monthly Website Maintenance and Support",
+    price: "$200/mo",
+    priceInCents: 20000, // $200.00/month
+    range: "$200 - $500/month",
+    duration: "Ongoing",
+    description: "Monthly maintenance and support",
+    features: [
+      "Security patches & updates",
+      "Performance monitoring",
+      "Content updates",
+      "Backup management",
+      "Technical support",
+      "Uptime monitoring",
+      "Same-day response for urgent issues",
+    ],
+    ideal: "Perfect for: All businesses wanting peace of mind",
+    featured: false,
+    cta: "Start Maintenance Plan",
   },
 ];
 

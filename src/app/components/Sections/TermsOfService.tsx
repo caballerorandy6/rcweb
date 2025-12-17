@@ -23,6 +23,7 @@ const TermsOfService = () => {
   const [isPending, startTransition] = useTransition();
 
   // Obtener datos de URL
+  const planId = searchParams.get("planId");
   const planName = searchParams.get("planName");
   const planPrice = searchParams.get("planPrice");
   const planDescription = searchParams.get("planDescription");
@@ -55,6 +56,7 @@ const TermsOfService = () => {
             name: customerName,
           },
           termsAcceptedAt,
+          planId: planId || undefined,
         });
 
         toast.dismiss();

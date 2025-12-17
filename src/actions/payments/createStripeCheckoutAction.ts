@@ -3,6 +3,9 @@
 import Stripe from "stripe";
 import { generateProjectCode } from "@/lib/utils";
 
+// Stripe Price ID for Monthly Maintenance Subscription
+const MAINTENANCE_PRICE_ID = "price_1SfCtoB3Dz9FSHGQ4h0t4xs5";
+
 export interface StripeCheckoutResponse {
   success: boolean;
   sessionUrl?: string;
@@ -14,6 +17,7 @@ export async function createStripeCheckoutAction({
   plan,
   customer,
   termsAcceptedAt,
+  planId,
 }: {
   plan: {
     name: string;
@@ -25,15 +29,51 @@ export async function createStripeCheckoutAction({
     name: string;
   };
   termsAcceptedAt: string;
+  planId?: string;
 }): Promise<StripeCheckoutResponse> {
   try {
     const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
       apiVersion: "2025-08-27.basil",
     });
 
+    // Check if this is the maintenance subscription plan
+    const isSubscription = planId === "website-maintenance";
+
+    if (isSubscription) {
+      // Create SUBSCRIPTION session for maintenance plan
+      const session = await stripe.checkout.sessions.create({
+        payment_method_types: ["card"],
+        mode: "subscription",
+        customer_email: customer.email,
+        billing_address_collection: "required",
+        metadata: {
+          planName: plan.name,
+          customerName: customer.name,
+          customerEmail: customer.email,
+          termsAcceptedAt,
+          paymentType: "subscription",
+        },
+        line_items: [
+          {
+            price: MAINTENANCE_PRICE_ID,
+            quantity: 1,
+          },
+        ],
+        automatic_tax: { enabled: true },
+        success_url: `${process.env.NEXT_PUBLIC_BASE_URL}/payment-success?session_id={CHECKOUT_SESSION_ID}&subscription=true`,
+        cancel_url: `${process.env.NEXT_PUBLIC_BASE_URL}/#pricing`,
+      });
+
+      return {
+        success: true,
+        sessionUrl: session.url!,
+      };
+    }
+
+    // ONE-TIME PAYMENT for all other plans
     // Generar projectCode único
     const projectCode = generateProjectCode();
-    
+
     // Calcular montos
     const firstPaymentAmount = Math.round(plan.price * 0.5);
     const secondPaymentAmount = plan.price - firstPaymentAmount;
