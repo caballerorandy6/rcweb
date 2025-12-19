@@ -1,0 +1,50 @@
+"use server";
+
+import Stripe from "stripe";
+import { prisma } from "@/lib/prisma";
+
+const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!);
+
+export interface CancelSubscriptionResult {
+  success: boolean;
+  error?: string;
+}
+
+/**
+ * Cancels a subscription immediately via Stripe API
+ * Updates local database after successful cancellation
+ */
+export async function cancelSubscriptionAction(
+  subscriptionId: string
+): Promise<CancelSubscriptionResult> {
+  try {
+    // Find subscription in database
+    const subscription = await prisma.subscription.findUnique({
+      where: { id: subscriptionId },
+    });
+
+    if (!subscription) {
+      return { success: false, error: "Subscription not found" };
+    }
+
+    // Cancel in Stripe
+    await stripe.subscriptions.cancel(subscription.stripeSubscriptionId);
+
+    // Update local database
+    await prisma.subscription.update({
+      where: { id: subscriptionId },
+      data: {
+        status: "cancelled",
+        cancelledAt: new Date(),
+      },
+    });
+
+    return { success: true };
+  } catch (error) {
+    console.error("❌ Error cancelling subscription:", error);
+    return {
+      success: false,
+      error: error instanceof Error ? error.message : "Failed to cancel subscription",
+    };
+  }
+}

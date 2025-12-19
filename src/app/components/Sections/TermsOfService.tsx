@@ -3,6 +3,8 @@
 import { useTransition } from "react";
 import { useRouter } from "next/navigation";
 import { useSearchParams } from "next/navigation";
+import Link from "next/link";
+import type { Route } from "next";
 import { motion } from "framer-motion";
 import { toast } from "sonner";
 import Heading from "@/app/components/ui/Heading";
@@ -263,6 +265,14 @@ const TermsOfService = () => {
                   <li>
                     <strong className="text-gold">No Refunds:</strong>{" "}
                     Partial month refunds are not provided upon cancellation
+                  </li>
+                  <li>
+                    <strong className="text-gold">How to Manage:</strong>{" "}
+                    You can manage your subscription, update payment methods, or cancel at any time by visiting{" "}
+                    <Link href={"/manage-subscription" as Route} className="text-gold hover:text-gold/80 underline">
+                      rcweb.dev/manage-subscription
+                    </Link>{" "}
+                    or contacting us directly
                   </li>
                 </ul>
 

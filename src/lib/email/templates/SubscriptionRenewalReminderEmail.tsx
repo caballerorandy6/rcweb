@@ -1,4 +1,4 @@
-// src/lib/email/templates/SubscriptionConfirmationEmail.tsx
+// src/lib/email/templates/SubscriptionRenewalReminderEmail.tsx
 
 import {
   Html,
@@ -10,22 +10,24 @@ import {
   Heading,
   Hr,
   Link,
+  Button,
 } from "@react-email/components";
 import * as React from "react";
 import { EMAIL_COLORS } from "../colors";
 
-export interface SubscriptionConfirmationEmailProps {
+export interface SubscriptionRenewalReminderEmailProps {
   customerName: string;
   planName: string;
   amount: number; // in cents
-  nextBillingDate: Date;
+  renewalDate: Date;
+  manageUrl: string;
 }
 
-export const SubscriptionConfirmationEmail: React.FC<
-  SubscriptionConfirmationEmailProps
-> = ({ customerName, planName, amount, nextBillingDate }) => {
+export const SubscriptionRenewalReminderEmail: React.FC<
+  SubscriptionRenewalReminderEmailProps
+> = ({ customerName, planName, amount, renewalDate, manageUrl }) => {
   const formattedAmount = (amount / 100).toFixed(2);
-  const formattedDate = nextBillingDate.toLocaleDateString("en-US", {
+  const formattedDate = renewalDate.toLocaleDateString("en-US", {
     year: "numeric",
     month: "long",
     day: "numeric",
@@ -36,28 +38,24 @@ export const SubscriptionConfirmationEmail: React.FC<
       <Head />
       <Body style={styles.body}>
         <Container style={styles.container}>
-          {/* Header - Gold gradient with dark text for readability */}
+          {/* Header */}
           <Section style={styles.header}>
-            <Heading style={styles.headerTitle}>Subscription Activated!</Heading>
+            <Heading style={styles.headerTitle}>Upcoming Renewal</Heading>
             <Text style={styles.headerSubtitle}>{planName}</Text>
           </Section>
 
-          {/* Content - White background with dark text */}
+          {/* Content */}
           <Section style={styles.content}>
             <Text style={styles.greeting}>
               Hi <strong>{customerName}</strong>,
             </Text>
             <Text style={styles.paragraph}>
-              Thank you for subscribing to our{" "}
-              <strong style={{ color: EMAIL_COLORS.gold }}>{planName}</strong> service!
-              Your subscription is now active.
+              This is a friendly reminder that your subscription will
+              automatically renew soon.
             </Text>
 
-            {/* Subscription Details - Light gray background */}
+            {/* Renewal Details */}
             <Section style={styles.detailsBox}>
-              <Heading as="h3" style={styles.detailsTitle}>
-                Subscription Details
-              </Heading>
               <table style={styles.detailsTable}>
                 <tbody>
                   <tr>
@@ -65,34 +63,35 @@ export const SubscriptionConfirmationEmail: React.FC<
                     <td style={styles.detailValue}>{planName}</td>
                   </tr>
                   <tr>
-                    <td style={styles.detailLabel}>Monthly Amount:</td>
+                    <td style={styles.detailLabel}>Amount:</td>
                     <td style={styles.detailValueHighlight}>
                       ${formattedAmount}/month
                     </td>
                   </tr>
                   <tr>
-                    <td style={styles.detailLabel}>Next Billing Date:</td>
+                    <td style={styles.detailLabel}>Renewal Date:</td>
                     <td style={styles.detailValue}>{formattedDate}</td>
                   </tr>
                 </tbody>
               </table>
             </Section>
 
-            {/* What's Included - Green tinted background */}
-            <Section style={styles.includedBox}>
-              <Heading as="h3" style={styles.includedTitle}>
-                What&apos;s Included
-              </Heading>
-              <ul style={styles.includedList}>
-                <li style={styles.listItem}>Security patches and updates</li>
-                <li style={styles.listItem}>Performance monitoring and optimization</li>
-                <li style={styles.listItem}>Content updates (text, images, minor changes)</li>
-                <li style={styles.listItem}>Backup management</li>
-                <li style={styles.listItem}>Uptime monitoring</li>
-                <li style={styles.listItem}>Same-day response for urgent issues</li>
-                <li style={styles.listItem}>Technical support via email/chat</li>
-              </ul>
+            <Text style={styles.paragraph}>
+              No action is needed if you wish to continue your subscription. Your
+              payment method on file will be charged automatically.
+            </Text>
+
+            {/* CTA Button */}
+            <Section style={styles.buttonContainer}>
+              <Button href={manageUrl} style={styles.button}>
+                Manage Subscription
+              </Button>
             </Section>
+
+            <Text style={styles.smallText}>
+              If you wish to cancel or update your payment method, click the
+              button above before the renewal date.
+            </Text>
 
             <Hr style={styles.divider} />
 
@@ -100,12 +99,6 @@ export const SubscriptionConfirmationEmail: React.FC<
               Questions? Contact us at{" "}
               <Link href="mailto:contactus@rcweb.dev" style={styles.link}>
                 contactus@rcweb.dev
-              </Link>
-            </Text>
-            <Text style={styles.smallText}>
-              You can manage or cancel your subscription at any time by visiting{" "}
-              <Link href="https://rcweb.dev/manage-subscription" style={styles.link}>
-                rcweb.dev/manage-subscription
               </Link>
             </Text>
           </Section>
@@ -141,7 +134,7 @@ const styles: Record<string, React.CSSProperties> = {
     padding: "48px 32px",
     textAlign: "center" as const,
     borderRadius: "16px 16px 0 0",
-    borderBottom: `4px solid ${EMAIL_COLORS.gold}`,
+    borderBottom: `4px solid ${EMAIL_COLORS.blue}`,
   },
   headerTitle: {
     color: EMAIL_COLORS.white,
@@ -150,7 +143,7 @@ const styles: Record<string, React.CSSProperties> = {
     fontWeight: 700,
   },
   headerSubtitle: {
-    color: EMAIL_COLORS.gold,
+    color: EMAIL_COLORS.blue,
     margin: "12px 0 0 0",
     fontSize: "16px",
     fontWeight: 500,
@@ -170,20 +163,14 @@ const styles: Record<string, React.CSSProperties> = {
     color: EMAIL_COLORS.gray,
     fontSize: "16px",
     lineHeight: "1.6",
-    margin: "0 0 32px 0",
+    margin: "0 0 24px 0",
   },
   detailsBox: {
     backgroundColor: EMAIL_COLORS.lightGray,
     borderRadius: "12px",
     padding: "24px",
-    margin: "0 0 32px 0",
-    border: `1px solid #e5e7eb`,
-  },
-  detailsTitle: {
-    color: EMAIL_COLORS.dark,
-    fontSize: "18px",
-    fontWeight: 600,
-    margin: "0 0 16px 0",
+    margin: "0 0 24px 0",
+    border: "1px solid #e5e7eb",
   },
   detailsTable: {
     width: "100%",
@@ -205,33 +192,30 @@ const styles: Record<string, React.CSSProperties> = {
   detailValueHighlight: {
     padding: "10px 0",
     textAlign: "right" as const,
-    color: EMAIL_COLORS.green,
+    color: EMAIL_COLORS.blue,
     fontWeight: 700,
     fontSize: "16px",
     borderBottom: "1px solid #e5e7eb",
   },
-  includedBox: {
-    backgroundColor: EMAIL_COLORS.greenLight,
-    borderRadius: "12px",
-    padding: "24px",
-    margin: "0 0 32px 0",
-    border: `1px solid ${EMAIL_COLORS.green}`,
+  buttonContainer: {
+    textAlign: "center" as const,
+    margin: "32px 0",
   },
-  includedTitle: {
-    color: EMAIL_COLORS.greenDark,
-    fontSize: "18px",
+  button: {
+    backgroundColor: EMAIL_COLORS.gold,
+    color: EMAIL_COLORS.dark,
+    padding: "16px 32px",
+    borderRadius: "8px",
+    fontSize: "16px",
     fontWeight: 600,
-    margin: "0 0 16px 0",
+    textDecoration: "none",
+    display: "inline-block",
   },
-  includedList: {
-    color: EMAIL_COLORS.greenDark,
-    fontSize: "14px",
-    lineHeight: "1.8",
-    margin: 0,
-    paddingLeft: "20px",
-  },
-  listItem: {
-    marginBottom: "8px",
+  smallText: {
+    color: EMAIL_COLORS.grayLight,
+    fontSize: "13px",
+    textAlign: "center" as const,
+    margin: "0 0 24px 0",
   },
   divider: {
     border: "none",
@@ -243,12 +227,6 @@ const styles: Record<string, React.CSSProperties> = {
     color: EMAIL_COLORS.gray,
     fontSize: "14px",
     margin: 0,
-  },
-  smallText: {
-    textAlign: "center" as const,
-    color: "#9ca3af",
-    fontSize: "12px",
-    margin: "16px 0 0 0",
   },
   link: {
     color: EMAIL_COLORS.gold,
@@ -268,10 +246,10 @@ const styles: Record<string, React.CSSProperties> = {
     margin: "0 0 4px 0",
   },
   footerInfo: {
-    color: "#9ca3af",
+    color: EMAIL_COLORS.grayLight,
     fontSize: "12px",
     margin: 0,
   },
 };
 
-export default SubscriptionConfirmationEmail;
+export default SubscriptionRenewalReminderEmail;

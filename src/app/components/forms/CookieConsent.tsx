@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import Link from "next/link";
 
 interface CookieConsentProps {
   onAccept: () => void;
@@ -82,12 +83,12 @@ const CookieConsent = ({ onAccept, onReject }: CookieConsentProps) => {
                       We use cookies to improve your experience. Essential cookies
                       (reCAPTCHA for form protection) are required. Optional
                       cookies help us analyze traffic and improve our marketing.{" "}
-                      <a
+                      <Link
                         href="/privacy-policy"
                         className="text-gold hover:text-gold/80 underline transition-colors"
                       >
                         Read our Privacy Policy
-                      </a>
+                      </Link>
                     </p>
                     <div className="text-xs font-inter text-white/50 bg-gray-800/50 p-2 rounded">
                       <strong className="text-white/70">Essential:</strong> Google

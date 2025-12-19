@@ -912,6 +912,7 @@ export const extraFooterLinks = [
   { name: "Privacy Policy", hash: "/privacy-policy" },
   { name: "Terms of Service", hash: "/terms-of-service" },
   { name: "Refund Policy", hash: "/refund-policy" },
+  { name: "Manage Subscription", hash: "/manage-subscription" },
   { name: "Free Guide", hash: "/guide" },
 ];
 

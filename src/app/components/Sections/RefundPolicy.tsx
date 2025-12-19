@@ -2,6 +2,8 @@
 
 import { motion } from "framer-motion";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
+import type { Route } from "next";
 import Heading from "@/app/components/ui/Heading";
 import {
   CurrencyDollarIcon,
@@ -233,8 +235,12 @@ const RefundPolicy = () => {
                   </li>
                   <li>
                     <strong className="text-gold">Cancellation:</strong>{" "}
-                    You may cancel your subscription at any time by contacting us.
-                    Cancellation takes effect at the end of your current billing period
+                    You may cancel your subscription at any time. Cancellation takes
+                    effect at the end of your current billing period. To cancel, visit{" "}
+                    <Link href={"/manage-subscription" as Route} className="text-gold hover:text-gold/80 underline">
+                      rcweb.dev/manage-subscription
+                    </Link>{" "}
+                    or contact us directly
                   </li>
                   <li>
                     <strong className="text-gold">No Prorated Refunds:</strong>{" "}

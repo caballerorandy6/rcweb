@@ -12,19 +12,7 @@ import {
   Link,
 } from "@react-email/components";
 import * as React from "react";
-
-// Brand colors
-const COLORS = {
-  gold: "#CBB26A",
-  goldDark: "#A89048",
-  goldLight: "#f5f0e1",
-  dark: "#1a1a1a",
-  gray: "#4b5563",
-  lightGray: "#f3f4f6",
-  white: "#ffffff",
-  green: "#059669",
-  purple: "#7c3aed",
-};
+import { EMAIL_COLORS } from "../colors";
 
 export interface InitialPaymentConfirmationEmailProps {
   customerName: string;
@@ -69,7 +57,7 @@ export const InitialPaymentConfirmationEmail: React.FC<
             </Text>
             <Text style={styles.paragraph}>
               Thank you for your initial payment. We&apos;ve started working on your{" "}
-              <strong style={{ color: COLORS.gold }}>{planName}</strong> project!
+              <strong style={{ color: EMAIL_COLORS.gold }}>{planName}</strong> project!
             </Text>
 
             {/* Project Code Box */}
@@ -167,51 +155,51 @@ const styles: Record<string, React.CSSProperties> = {
     padding: "40px 20px",
   },
   header: {
-    backgroundColor: COLORS.dark,
+    backgroundColor: EMAIL_COLORS.dark,
     padding: "48px 32px",
     textAlign: "center" as const,
     borderRadius: "16px 16px 0 0",
-    borderBottom: `4px solid ${COLORS.gold}`,
+    borderBottom: `4px solid ${EMAIL_COLORS.gold}`,
   },
   headerTitle: {
-    color: COLORS.white,
+    color: EMAIL_COLORS.white,
     margin: 0,
     fontSize: "28px",
     fontWeight: 700,
   },
   headerSubtitle: {
-    color: COLORS.gold,
+    color: EMAIL_COLORS.gold,
     margin: "12px 0 0 0",
     fontSize: "16px",
     fontWeight: 500,
   },
   content: {
-    backgroundColor: COLORS.white,
+    backgroundColor: EMAIL_COLORS.white,
     padding: "40px 32px",
     boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)",
   },
   greeting: {
-    color: COLORS.dark,
+    color: EMAIL_COLORS.dark,
     fontSize: "16px",
     lineHeight: "1.6",
     margin: "0 0 24px 0",
   },
   paragraph: {
-    color: COLORS.gray,
+    color: EMAIL_COLORS.gray,
     fontSize: "16px",
     lineHeight: "1.6",
     margin: "0 0 32px 0",
   },
   projectCodeBox: {
-    backgroundColor: COLORS.goldLight,
-    border: `2px solid ${COLORS.gold}`,
+    backgroundColor: EMAIL_COLORS.goldLight,
+    border: `2px solid ${EMAIL_COLORS.gold}`,
     borderRadius: "12px",
     padding: "24px",
     margin: "0 0 32px 0",
     textAlign: "center" as const,
   },
   projectCodeLabel: {
-    color: COLORS.goldDark,
+    color: EMAIL_COLORS.goldDark,
     fontSize: "12px",
     fontWeight: 600,
     textTransform: "uppercase" as const,
@@ -219,7 +207,7 @@ const styles: Record<string, React.CSSProperties> = {
     margin: "0 0 8px 0",
   },
   projectCode: {
-    color: COLORS.gold,
+    color: EMAIL_COLORS.gold,
     fontSize: "32px",
     fontWeight: 700,
     letterSpacing: "4px",
@@ -227,25 +215,25 @@ const styles: Record<string, React.CSSProperties> = {
     margin: "8px 0",
   },
   projectCodeNote: {
-    color: COLORS.goldDark,
+    color: EMAIL_COLORS.goldDark,
     fontSize: "13px",
     margin: "8px 0 0 0",
   },
   nextStepsBox: {
-    backgroundColor: COLORS.lightGray,
+    backgroundColor: EMAIL_COLORS.lightGray,
     borderRadius: "12px",
     padding: "24px",
     margin: "0 0 32px 0",
     border: "1px solid #e5e7eb",
   },
   nextStepsTitle: {
-    color: COLORS.dark,
+    color: EMAIL_COLORS.dark,
     fontSize: "18px",
     fontWeight: 600,
     margin: "0 0 16px 0",
   },
   nextStepsList: {
-    color: COLORS.gray,
+    color: EMAIL_COLORS.gray,
     fontSize: "15px",
     lineHeight: "1.8",
     margin: 0,
@@ -255,14 +243,14 @@ const styles: Record<string, React.CSSProperties> = {
     marginBottom: "8px",
   },
   summaryBox: {
-    backgroundColor: COLORS.lightGray,
+    backgroundColor: EMAIL_COLORS.lightGray,
     borderRadius: "12px",
     padding: "24px",
     margin: "0 0 32px 0",
     border: "1px solid #e5e7eb",
   },
   summaryTitle: {
-    color: COLORS.dark,
+    color: EMAIL_COLORS.dark,
     fontSize: "18px",
     fontWeight: 600,
     margin: "0 0 16px 0",
@@ -274,32 +262,32 @@ const styles: Record<string, React.CSSProperties> = {
   },
   summaryLabel: {
     padding: "10px 0",
-    color: COLORS.gray,
+    color: EMAIL_COLORS.gray,
     borderBottom: "1px solid #e5e7eb",
   },
   summaryValuePaid: {
     padding: "10px 0",
     textAlign: "right" as const,
-    color: COLORS.green,
+    color: EMAIL_COLORS.green,
     fontWeight: 600,
     borderBottom: "1px solid #e5e7eb",
   },
   summaryValuePending: {
     padding: "10px 0",
     textAlign: "right" as const,
-    color: COLORS.gray,
+    color: EMAIL_COLORS.gray,
     fontWeight: 600,
     borderBottom: "1px solid #e5e7eb",
   },
   summaryLabelTotal: {
     padding: "12px 0 0 0",
-    color: COLORS.dark,
+    color: EMAIL_COLORS.dark,
     fontWeight: 600,
   },
   summaryValueTotal: {
     padding: "12px 0 0 0",
     textAlign: "right" as const,
-    color: COLORS.dark,
+    color: EMAIL_COLORS.dark,
     fontWeight: 700,
     fontSize: "16px",
   },
@@ -310,23 +298,23 @@ const styles: Record<string, React.CSSProperties> = {
   },
   footerText: {
     textAlign: "center" as const,
-    color: COLORS.gray,
+    color: EMAIL_COLORS.gray,
     fontSize: "14px",
     margin: 0,
   },
   link: {
-    color: COLORS.gold,
+    color: EMAIL_COLORS.gold,
     textDecoration: "none",
     fontWeight: 600,
   },
   footer: {
-    backgroundColor: COLORS.dark,
+    backgroundColor: EMAIL_COLORS.dark,
     padding: "24px 32px",
     textAlign: "center" as const,
     borderRadius: "0 0 16px 16px",
   },
   footerBrand: {
-    color: COLORS.gold,
+    color: EMAIL_COLORS.gold,
     fontSize: "16px",
     fontWeight: 700,
     margin: "0 0 4px 0",

@@ -21,6 +21,21 @@ export {
   type SendProjectReadyEmailParams,
 } from "./sendProjectReadyEmail";
 
+export {
+  sendSubscriptionPortalLink,
+  type SendSubscriptionPortalLinkParams,
+} from "./sendSubscriptionPortalLink";
+
+export {
+  sendSubscriptionRenewalReminder,
+  type SendSubscriptionRenewalReminderParams,
+} from "./sendSubscriptionRenewalReminder";
+
+export {
+  sendSubscriptionPaymentFailed,
+  type SendSubscriptionPaymentFailedParams,
+} from "./sendSubscriptionPaymentFailed";
+
 // Admin email senders
 export {
   sendAdminSubscriptionNotification,

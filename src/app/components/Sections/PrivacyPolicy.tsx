@@ -2,6 +2,8 @@
 
 import { motion } from "framer-motion";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
+import type { Route } from "next";
 import Heading from "@/app/components/ui/Heading";
 import {
   ShieldCheckIcon,
@@ -476,6 +478,52 @@ export default function PrivacyPolicy() {
                   <li>Federal Communications Commission (FCC) regulations</li>
                   <li>State-specific regulations including CCPA/CPRA</li>
                 </ul>
+              </section>
+
+              {/* Subscription Data */}
+              <section className="pt-8 border-t border-gold/20">
+                <h2 className="text-2xl font-bold text-gold font-iceland mb-4">
+                  Subscription and Payment Data
+                </h2>
+                <p className="text-white/80 leading-relaxed font-inter mb-3">
+                  When You subscribe to Our services, We collect and store the
+                  following information:
+                </p>
+                <ul className="space-y-2 text-white/80 font-inter list-disc list-inside mb-4">
+                  <li>Your name and email address</li>
+                  <li>Subscription plan details and billing cycle</li>
+                  <li>Payment history and invoice records</li>
+                  <li>Subscription status (active, cancelled, past due)</li>
+                </ul>
+                <p className="text-white/80 leading-relaxed font-inter mb-3">
+                  <strong className="text-gold">Important:</strong> We do not
+                  store your full credit card number. All payment processing is
+                  handled securely by Stripe, which stores your payment details
+                  in compliance with PCI-DSS standards.
+                </p>
+
+                <h3 className="text-xl font-semibold text-gold/90 font-iceland mt-6 mb-3">
+                  Stripe Customer Portal
+                </h3>
+                <p className="text-white/80 leading-relaxed font-inter mb-3">
+                  We use the Stripe Customer Portal to allow You to manage Your
+                  subscription. Through the portal, You can:
+                </p>
+                <ul className="space-y-2 text-white/80 font-inter list-disc list-inside mb-4">
+                  <li>Update Your payment method</li>
+                  <li>View billing history and download invoices</li>
+                  <li>Cancel Your subscription</li>
+                </ul>
+                <p className="text-white/80 leading-relaxed font-inter">
+                  You can access the Customer Portal at any time by visiting{" "}
+                  <Link
+                    href={"/manage-subscription" as Route}
+                    className="text-gold hover:text-gold/80 underline"
+                  >
+                    rcweb.dev/manage-subscription
+                  </Link>
+                  .
+                </p>
               </section>
 
               {/* Use of Your Personal Data */}

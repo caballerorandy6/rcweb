@@ -10,6 +10,7 @@ import {
   Link,
 } from "@react-email/components";
 import * as React from "react";
+import { EMAIL_COLORS } from "../colors";
 
 export type InvoiceEmailType = "initial" | "final" | "summary";
 
@@ -23,18 +24,8 @@ export interface InvoiceEmailProps {
   totalAmount: number;
 }
 
-const colors = {
-  gold: "#CBB26A",
-  dark: "#1a1a1a",
-  gray: "#374151",
-  grayLight: "#6b7280",
-  green: "#10b981",
-  greenDark: "#059669",
-  purple: "#8b5cf6",
-  amber: "#f59e0b",
-  amberDark: "#d97706",
-  amberLight: "#fef3c7",
-};
+// Alias for backward compatibility in this file
+const colors = EMAIL_COLORS;
 
 const headerGradients = {
   initial: "linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%)",

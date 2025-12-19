@@ -11,6 +11,8 @@ import {
   sendAdminSubscriptionNotification,
   sendAdminInitialPaymentNotification,
   sendAdminFinalPaymentNotification,
+  sendSubscriptionRenewalReminder,
+  sendSubscriptionPaymentFailed,
 } from "@/lib/email";
 
 // Environment variables validation
@@ -29,27 +31,14 @@ const endpointSecret = process.env.STRIPE_WEBHOOK_SECRET;
 const TERMS_VERSION = "2025-09-25"; // Centralized terms version
 
 export async function POST(req: Request) {
-  console.log("=" .repeat(80));
-  console.log("🚨🚨🚨 WEBHOOK RECEIVED AT:", new Date().toISOString());
-  console.log("=" .repeat(80));
-
-  const isDev = process.env.NODE_ENV === "development";
-
-  if (isDev) {
-    console.log("🚨 WEBHOOK RECEIVED:", new Date().toISOString());
-          }
-
   const body = await req.text();
   const signature = req.headers.get("stripe-signature") as string;
-
-  if (isDev) {
-          }
 
   let event: Stripe.Event;
 
   try {
     event = stripe.webhooks.constructEvent(body, signature, endpointSecret);
-          } catch (err) {
+  } catch (err) {
     console.error("❌ Error verifying webhook signature:", err);
     return NextResponse.json(
       { error: `Webhook Error: ${err}` },
@@ -57,7 +46,7 @@ export async function POST(req: Request) {
     );
   }
 
-    if (event.type === "checkout.session.completed") {
+  if (event.type === "checkout.session.completed") {
     const session = event.data.object as Stripe.Checkout.Session;
     const metadata = session.metadata || {};
 
@@ -66,9 +55,6 @@ export async function POST(req: Request) {
     const customerName = metadata.customerName;
     const planName = metadata.planName;
     const customerEmail = session.customer_email || metadata.customerEmail;
-
-    if (isDev) {
-          }
 
     const resend = new Resend(process.env.RESEND_API_KEY!);
 
@@ -102,9 +88,6 @@ export async function POST(req: Request) {
           );
         }
 
-        if (isDev) {
-                  }
-
         // CHECK if Payment already exists (created by fallback)
         let payment = await prisma.payment.findFirst({
           where: {
@@ -120,15 +103,14 @@ export async function POST(req: Request) {
 
         // If payment exists but has no invoices, we'll create the invoice below
         if (payment) {
-          console.log("⚠️ Payment already exists (probably from fallback):", payment.projectCode);
-                    // If payment doesn't have the session ID, update it
+          // If payment doesn't have the session ID, update it
           if (!payment.firstSessionId) {
             payment = await prisma.payment.update({
               where: { id: payment.id },
               data: { firstSessionId: session.id },
               include: { invoices: true },
             });
-                      }
+          }
         }
 
         // CREATE Payment and TermsAcceptance if it doesn't exist
@@ -164,14 +146,12 @@ export async function POST(req: Request) {
                   userAgent: "stripe-checkout",
                 },
               });
-              if (isDev) {
-                              }
             }
 
             return newPayment;
           });
 
-                    // Track payment completion in Google Analytics
+          // Track payment completion in Google Analytics
           trackPaymentComplete(firstPaymentAmount / 100, "initial_deposit");
         }
 
@@ -183,20 +163,18 @@ export async function POST(req: Request) {
 
         if (!hasInitialInvoice) {
           try {
-                        await createInvoiceAndSendEmail({
+            await createInvoiceAndSendEmail({
               payment,
               type: "initial",
               resend,
               stripeSessionId: session.id,
             });
-                      } catch (invoiceError) {
+          } catch (invoiceError) {
             const errorMsg = `Error creating invoice: ${invoiceError instanceof Error ? invoiceError.message : String(invoiceError)}`;
-            console.error("❌ INVOICE ERROR:", errorMsg);
-            console.error("❌ INVOICE ERROR STACK:", invoiceError instanceof Error ? invoiceError.stack : 'No stack');
+            console.error("❌ Invoice error:", errorMsg);
             emailErrors.push(errorMsg);
           }
-        } else {
-                  }
+        }
 
         // ============= CLIENT EMAIL (OLD - COMMENTED OUT) =============
         // NOTE: The email with invoice PDF is now sent by createInvoiceAndSendEmail above
@@ -326,7 +304,6 @@ export async function POST(req: Request) {
             err.message === "DUPLICATE_PROJECT_CODE" ||
             err.message === "DUPLICATE_SESSION_ID"
           ) {
-            console.log("⚠️ Payment already processed (duplicate detected)");
             return NextResponse.json({
               received: true,
               duplicate: err.message,
@@ -341,22 +318,17 @@ export async function POST(req: Request) {
           "code" in err &&
           (err as { code?: string }).code === "P2002"
         ) {
-          console.log("⚠️ Payment already processed (P2002 constraint)");
           return NextResponse.json({ received: true, duplicate: "constraint" });
         }
 
-        console.error("❌ Error processing initial payment:", {
-          error: err instanceof Error ? err.message : String(err),
-          projectCode,
-          sessionId: session.id,
-        });
-        throw err; // Re-throw for Stripe to retry
+        console.error("❌ Error processing initial payment:", err);
+        throw err;
       }
     }
 
     // ============= FINAL PAYMENT =============
     else if (paymentType === "final" && metadata.paymentId && customerEmail) {
-            const paymentId = metadata.paymentId;
+      const paymentId = metadata.paymentId;
 
       try {
         // Check if payment exists and get current state
@@ -366,7 +338,6 @@ export async function POST(req: Request) {
         });
 
         if (!payment) {
-          console.error("❌ Payment not found:", paymentId);
           throw new Error("PAYMENT_NOT_FOUND");
         }
 
@@ -382,11 +353,9 @@ export async function POST(req: Request) {
             },
             include: { invoices: true },
           });
-                    // Track final payment completion in Google Analytics
+          // Track final payment completion in Google Analytics
           trackPaymentComplete(payment.secondPayment / 100, "final_payment");
         } else {
-          console.log("⚠️ Payment already marked as secondPaid (probably from fallback)");
-
           // Update session ID if not set
           if (!payment.secondSessionId) {
             payment = await prisma.payment.update({
@@ -394,7 +363,7 @@ export async function POST(req: Request) {
               data: { secondSessionId: session.id },
               include: { invoices: true },
             });
-                      }
+          }
         }
 
         // ============= CREATE INVOICES AND SEND EMAILS =============
@@ -407,37 +376,33 @@ export async function POST(req: Request) {
         // Create and send FINAL invoice if it doesn't exist
         if (!hasFinalInvoice) {
           try {
-                        await createInvoiceAndSendEmail({
+            await createInvoiceAndSendEmail({
               payment,
               type: "final",
               resend,
               stripeSessionId: session.id,
             });
-                      } catch (invoiceError) {
+          } catch (invoiceError) {
             const errorMsg = `Error creating final invoice: ${invoiceError instanceof Error ? invoiceError.message : String(invoiceError)}`;
-            console.error("❌ FINAL INVOICE ERROR:", errorMsg);
-            console.error("❌ FINAL INVOICE ERROR STACK:", invoiceError instanceof Error ? invoiceError.stack : 'No stack');
+            console.error("❌ Final invoice error:", errorMsg);
             emailErrors.push(errorMsg);
           }
-        } else {
-                  }
+        }
 
         // Create and send SUMMARY invoice if it doesn't exist
         if (!hasSummaryInvoice) {
           try {
-                        await createInvoiceAndSendEmail({
+            await createInvoiceAndSendEmail({
               payment,
               type: "summary",
               resend,
             });
-                      } catch (invoiceError) {
+          } catch (invoiceError) {
             const errorMsg = `Error creating summary invoice: ${invoiceError instanceof Error ? invoiceError.message : String(invoiceError)}`;
-            console.error("❌ SUMMARY INVOICE ERROR:", errorMsg);
-            console.error("❌ SUMMARY INVOICE ERROR STACK:", invoiceError instanceof Error ? invoiceError.stack : 'No stack');
+            console.error("❌ Summary invoice error:", errorMsg);
             emailErrors.push(errorMsg);
           }
-        } else {
-                  }
+        }
 
         // ============= PROJECT COMPLETION EMAIL (OLD - COMMENTED OUT) =============
         // NOTE: Emails with invoice PDFs are now sent by createInvoiceAndSendEmail above
@@ -551,8 +516,6 @@ export async function POST(req: Request) {
     }
     // ============= SUBSCRIPTION PAYMENT =============
     else if (paymentType === "subscription" && customerEmail) {
-      console.log("📦 Processing subscription payment...");
-
       try {
         const resend = new Resend(process.env.RESEND_API_KEY!);
 
@@ -560,7 +523,6 @@ export async function POST(req: Request) {
         const subscriptionId = session.subscription as string;
 
         if (!subscriptionId) {
-          console.error("❌ No subscription ID found in session");
           return NextResponse.json(
             { error: "No subscription ID in session" },
             { status: 400 }
@@ -573,7 +535,6 @@ export async function POST(req: Request) {
         });
 
         if (existingSubscription) {
-          console.log("⚠️ Subscription already exists:", subscriptionId);
           return NextResponse.json({
             received: true,
             duplicate: "SUBSCRIPTION_EXISTS",
@@ -626,13 +587,10 @@ export async function POST(req: Request) {
                 userAgent: "stripe-checkout",
               },
             });
-            console.log("✅ TermsAcceptance created for subscription");
           }
 
           return newSubscription;
         });
-
-        console.log("✅ Subscription created:", subscription.id);
 
         // ============= SEND EMAILS =============
         const emailErrors: string[] = [];
@@ -678,26 +636,232 @@ export async function POST(req: Request) {
           "code" in err &&
           (err as { code?: string }).code === "P2002"
         ) {
-          console.log("⚠️ Subscription already processed (P2002 constraint)");
           return NextResponse.json({ received: true, duplicate: "constraint" });
         }
 
-        console.error("❌ Error processing subscription:", {
-          error: err instanceof Error ? err.message : String(err),
-          sessionId: session.id,
-        });
-        throw err; // Re-throw for Stripe to retry
+        console.error("❌ Error processing subscription:", err);
+        throw err;
       }
     } else {
-      console.log("⚠️ Conditions not met:", {
-        paymentType,
-        projectCode,
-        customerEmail,
-      });
       return NextResponse.json({
         received: true,
         warning: "Conditions not met",
       });
+    }
+  }
+
+  // ============= INVOICE PAID (Subscription Renewal) =============
+  if (event.type === "invoice.paid") {
+    const invoice = event.data.object as Stripe.Invoice;
+    const subscriptionId = typeof invoice.parent?.subscription_details?.subscription === 'string'
+      ? invoice.parent.subscription_details.subscription
+      : null;
+
+    // Only process subscription invoices (not the first one)
+    if (subscriptionId && invoice.billing_reason !== "subscription_create") {
+
+      try {
+        const stripeSubscription = await stripe.subscriptions.retrieve(
+          subscriptionId,
+          { expand: ["items.data.price"] }
+        );
+
+        const subscriptionItem = stripeSubscription.items.data[0];
+        const currentPeriodEnd = subscriptionItem?.current_period_end;
+        const currentPeriodStart = subscriptionItem?.current_period_start;
+
+        await prisma.subscription.update({
+          where: { stripeSubscriptionId: subscriptionId },
+          data: {
+            status: stripeSubscription.status,
+            currentPeriodStart: currentPeriodStart
+              ? new Date(currentPeriodStart * 1000)
+              : undefined,
+            currentPeriodEnd: currentPeriodEnd
+              ? new Date(currentPeriodEnd * 1000)
+              : undefined,
+          },
+        });
+
+        return NextResponse.json({ received: true, renewed: true });
+      } catch (err) {
+        console.error("❌ Error processing subscription renewal:", err);
+        return NextResponse.json({ received: true, warning: "Subscription not found in DB" });
+      }
+    }
+  }
+
+  // ============= INVOICE UPCOMING (Renewal Reminder) =============
+  if (event.type === "invoice.upcoming") {
+    const invoice = event.data.object as Stripe.Invoice;
+    const subscriptionId = typeof invoice.parent?.subscription_details?.subscription === 'string'
+      ? invoice.parent.subscription_details.subscription
+      : null;
+
+    if (subscriptionId) {
+      try {
+        const subscription = await prisma.subscription.findUnique({
+          where: { stripeSubscriptionId: subscriptionId },
+        });
+
+        if (subscription && subscription.status === "active") {
+          const resend = new Resend(process.env.RESEND_API_KEY!);
+          const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "https://rcweb.dev";
+
+          // Calculate renewal date (from invoice or current period end)
+          const renewalDate = invoice.next_payment_attempt
+            ? new Date(invoice.next_payment_attempt * 1000)
+            : subscription.currentPeriodEnd || new Date();
+
+          await sendSubscriptionRenewalReminder(resend, {
+            customerEmail: subscription.email,
+            customerName: subscription.name,
+            planName: subscription.planName,
+            amount: subscription.amount,
+            renewalDate,
+            manageUrl: `${baseUrl}/manage-subscription`,
+          });
+
+          console.log("✅ Renewal reminder sent to:", subscription.email);
+        }
+
+        return NextResponse.json({ received: true, reminderSent: true });
+      } catch (err) {
+        console.error("❌ Error sending renewal reminder:", err);
+        return NextResponse.json({ received: true, warning: "Error sending renewal reminder" });
+      }
+    }
+  }
+
+  // ============= INVOICE PAYMENT FAILED =============
+  if (event.type === "invoice.payment_failed") {
+    const invoice = event.data.object as Stripe.Invoice;
+    const subscriptionId = typeof invoice.parent?.subscription_details?.subscription === 'string'
+      ? invoice.parent.subscription_details.subscription
+      : null;
+
+    if (subscriptionId) {
+      try {
+        const subscription = await prisma.subscription.findUnique({
+          where: { stripeSubscriptionId: subscriptionId },
+        });
+
+        if (subscription) {
+          await prisma.subscription.update({
+            where: { id: subscription.id },
+            data: { status: "past_due" },
+          });
+
+          const resend = new Resend(process.env.RESEND_API_KEY!);
+          const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "https://rcweb.dev";
+
+          // Email to customer with update payment link
+          await sendSubscriptionPaymentFailed(resend, {
+            customerEmail: subscription.email,
+            customerName: subscription.name,
+            planName: subscription.planName,
+            amount: subscription.amount,
+            updatePaymentUrl: `${baseUrl}/manage-subscription`,
+          });
+
+          // Email to admin
+          await resend.emails.send({
+            from: "RC Web <no-reply@rcweb.dev>",
+            to: "admin@rcweb.dev",
+            subject: `Payment Failed - ${subscription.email}`,
+            html: `
+              <h2>Subscription Payment Failed</h2>
+              <p><strong>Customer:</strong> ${subscription.name}</p>
+              <p><strong>Email:</strong> ${subscription.email}</p>
+              <p><strong>Plan:</strong> ${subscription.planName}</p>
+              <p><strong>Amount:</strong> $${(subscription.amount / 100).toFixed(2)}/month</p>
+            `,
+          });
+        }
+
+        return NextResponse.json({ received: true, paymentFailed: true });
+      } catch (err) {
+        console.error("❌ Error handling payment failure:", err);
+        return NextResponse.json({ received: true, warning: "Error processing payment failure" });
+      }
+    }
+  }
+
+  // ============= SUBSCRIPTION DELETED (Cancelled) =============
+  if (event.type === "customer.subscription.deleted") {
+    const stripeSubscription = event.data.object as Stripe.Subscription;
+    const subscriptionId = stripeSubscription.id;
+
+    try {
+      const subscription = await prisma.subscription.update({
+        where: { stripeSubscriptionId: subscriptionId },
+        data: {
+          status: "cancelled",
+          cancelledAt: new Date(),
+        },
+      });
+
+      const resend = new Resend(process.env.RESEND_API_KEY!);
+
+      await resend.emails.send({
+        from: "RC Web <no-reply@rcweb.dev>",
+        to: subscription.email,
+        subject: "Subscription Cancelled",
+        html: `
+          <h2>Subscription Cancelled</h2>
+          <p>Hi ${subscription.name},</p>
+          <p>Your <strong>${subscription.planName}</strong> subscription has been cancelled.</p>
+          <p>We're sorry to see you go. If you change your mind, you can always resubscribe.</p>
+          <p>Questions? Contact us at <a href="mailto:contactus@rcweb.dev">contactus@rcweb.dev</a></p>
+        `,
+      });
+
+      await resend.emails.send({
+        from: "RC Web <no-reply@rcweb.dev>",
+        to: "admin@rcweb.dev",
+        subject: `Subscription Cancelled - ${subscription.email}`,
+        html: `
+          <h2>Subscription Cancelled</h2>
+          <p><strong>Customer:</strong> ${subscription.name}</p>
+          <p><strong>Email:</strong> ${subscription.email}</p>
+          <p><strong>Plan:</strong> ${subscription.planName}</p>
+        `,
+      });
+
+      return NextResponse.json({ received: true, cancelled: true });
+    } catch (err) {
+      console.error("❌ Error processing subscription cancellation:", err);
+      return NextResponse.json({ received: true, warning: "Subscription not found" });
+    }
+  }
+
+  // ============= SUBSCRIPTION UPDATED =============
+  if (event.type === "customer.subscription.updated") {
+    const stripeSubscription = event.data.object as Stripe.Subscription;
+    const subscriptionId = stripeSubscription.id;
+
+    try {
+      const subscriptionItem = stripeSubscription.items.data[0];
+      const currentPeriodEnd = subscriptionItem?.current_period_end;
+      const currentPeriodStart = subscriptionItem?.current_period_start;
+
+      await prisma.subscription.update({
+        where: { stripeSubscriptionId: subscriptionId },
+        data: {
+          status: stripeSubscription.status,
+          currentPeriodStart: currentPeriodStart
+            ? new Date(currentPeriodStart * 1000)
+            : undefined,
+          currentPeriodEnd: currentPeriodEnd
+            ? new Date(currentPeriodEnd * 1000)
+            : undefined,
+        },
+      });
+
+      return NextResponse.json({ received: true, updated: true });
+    } catch (err) {
+      console.error("❌ Error updating subscription:", err);
+      return NextResponse.json({ received: true, warning: "Subscription not found" });
     }
   }
 

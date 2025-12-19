@@ -9,7 +9,15 @@ export default {
   theme: {
     extend: {
       colors: {
-        gold: "#CBB26A",
+        // Brand colors
+        gold: {
+          DEFAULT: "#CBB26A",
+          dark: "#A89048",
+          light: "#D9C98A",
+        },
+        // UI colors
+        dark: "#1a1a1a",
+        // Status colors are already in Tailwind (green, red, blue, etc.)
       },
       fontFamily: {
         sans: ["var(--font-geist-sans)", "sans-serif"],

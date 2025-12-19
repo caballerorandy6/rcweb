@@ -42,5 +42,15 @@ export const LoginSchema = z.object({
 
 export type LoginData = z.infer<typeof LoginSchema>;
 
+// Manage Subscription Schema
+export const ManageSubscriptionSchema = z.object({
+  email: z
+    .string()
+    .email({ message: "Please enter a valid email address" })
+    .nonempty({ message: "Email is required" }),
+});
+
+export type ManageSubscriptionData = z.infer<typeof ManageSubscriptionSchema>;
+
 // Infer the type
 export type FormData = z.infer<typeof FormSchema>;

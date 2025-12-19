@@ -22,6 +22,21 @@ export {
   type ProjectReadyEmailProps,
 } from "./ProjectReadyEmail";
 
+export {
+  SubscriptionPortalLinkEmail,
+  type SubscriptionPortalLinkEmailProps,
+} from "./SubscriptionPortalLinkEmail";
+
+export {
+  SubscriptionRenewalReminderEmail,
+  type SubscriptionRenewalReminderEmailProps,
+} from "./SubscriptionRenewalReminderEmail";
+
+export {
+  SubscriptionPaymentFailedEmail,
+  type SubscriptionPaymentFailedEmailProps,
+} from "./SubscriptionPaymentFailedEmail";
+
 // Admin email templates (React components)
 export {
   AdminNotificationEmail,

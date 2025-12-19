@@ -11,6 +11,8 @@ import Link from "next/link";
 import Heading from "@/app/components/ui/Heading";
 import { useState, useEffect } from "react";
 
+const MotionLink = motion(Link);
+
 export default function OfferContent() {
   // Countdown timer (7 days from now)
   const [timeLeft, setTimeLeft] = useState({
@@ -22,8 +24,8 @@ export default function OfferContent() {
 
   useEffect(() => {
     // Set fixed end date for the offer (YYYY, MM-1, DD, HH, MM, SS)
-    // Note: Month is 0-indexed (0 = January, 9 = October)
-    const endDate = new Date(2025, 9, 31, 23, 59, 59); // October 31, 2025 at 11:59:59 PM
+    // Note: Month is 0-indexed (0 = January)
+    const endDate = new Date(2026, 0, 31, 23, 59, 59); // January 31, 2026 at 11:59:59 PM
     const endTime = endDate.getTime();
 
     const updateTimer = () => {
@@ -71,19 +73,19 @@ export default function OfferContent() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ type: "spring", stiffness: 200, damping: 20 }}
         >
-          <div className="inline-flex items-center gap-2 px-6 py-3 bg-red-600/20 border border-red-500/50 rounded-full">
-            <ClockIcon className="w-5 h-5 text-red-400 animate-pulse" />
-            <span className="text-red-400 font-bold font-inter text-sm uppercase tracking-wide">
-              Limited Time Offer
+          <div className="inline-flex items-center gap-2 px-6 py-3 bg-gold/20 border border-gold/50 rounded-full">
+            <SparklesIcon className="w-5 h-5 text-gold animate-pulse" />
+            <span className="text-gold font-bold font-inter text-sm uppercase tracking-wide">
+              New Year Special 2026
             </span>
           </div>
         </motion.div>
 
         <Heading
           icon={<SparklesIcon className="w-8 text-gold" />}
-          text="Save Big on Professional Web Development"
+          text="Start 2026 with a New Website"
         >
-          20% OFF All Projects
+          15% OFF All Projects
         </Heading>
 
         {/* Main Offer Card */}
@@ -103,7 +105,7 @@ export default function OfferContent() {
                 transition={{ duration: 0.5, repeat: Infinity, repeatDelay: 3 }}
               >
                 <div className="text-8xl md:text-9xl font-black text-gold font-iceland">
-                  20<span className="text-6xl md:text-7xl">%</span>
+                  15<span className="text-6xl md:text-7xl">%</span>
                 </div>
                 <div className="text-3xl md:text-4xl font-bold text-white font-iceland -mt-4">
                   OFF
@@ -112,9 +114,8 @@ export default function OfferContent() {
             </div>
 
             <p className="text-white/90 text-xl md:text-2xl leading-relaxed font-inter text-center max-w-3xl mx-auto mb-8">
-              Get <span className="text-gold font-bold">20% discount</span> on
-              professional web development services. Perfect timing to launch
-              that project you&apos;ve been planning!
+              Kick off the new year with a <span className="text-gold font-bold">15% discount</span> on
+              professional web development services. Start 2026 with the website your business deserves!
             </p>
 
             {/* Countdown Timer */}
@@ -141,15 +142,15 @@ export default function OfferContent() {
 
             {/* CTA Button */}
             <div className="text-center">
-              <motion.a
+              <MotionLink
                 href="/#contact"
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
                 className="inline-flex items-center justify-center gap-3 px-10 py-5 bg-gold text-gray-900 font-black rounded-xl hover:bg-gold/90 transition-colors font-inter text-xl shadow-xl shadow-gold/30"
               >
                 <RocketLaunchIcon className="w-7 h-7" />
-                Claim Your 20% Discount Now
-              </motion.a>
+                Claim Your 15% Discount Now
+              </MotionLink>
             </div>
           </div>
         </motion.div>
@@ -207,7 +208,8 @@ export default function OfferContent() {
             </h3>
             <ul className="space-y-2 text-sm text-gray-400 font-inter">
               <li>• Valid for new projects only</li>
-              <li>• 20% discount applied to total project cost</li>
+              <li>• 15% discount applied to total project cost</li>
+              <li>• Offer valid until January 31, 2026</li>
               <li>• Must mention this offer when contacting us</li>
               <li>• Cannot be combined with other promotions</li>
               <li>• Project must be started within 30 days of agreement</li>

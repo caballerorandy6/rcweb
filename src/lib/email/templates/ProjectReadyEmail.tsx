@@ -11,6 +11,7 @@ import {
   Button,
 } from "@react-email/components";
 import * as React from "react";
+import { EMAIL_COLORS } from "../colors";
 
 export interface ProjectReadyEmailProps {
   customerName: string;
@@ -20,17 +21,8 @@ export interface ProjectReadyEmailProps {
   customerEmail: string;
 }
 
-const colors = {
-  gold: "#CBB26A",
-  dark: "#1a1a1a",
-  gray: "#374151",
-  grayLight: "#6b7280",
-  green: "#10b981",
-  greenDark: "#059669",
-  purple: "#7c3aed",
-  amber: "#f59e0b",
-  amberDark: "#92400e",
-};
+// Alias for backward compatibility in this file
+const colors = EMAIL_COLORS;
 
 export const ProjectReadyEmail = ({
   customerName,

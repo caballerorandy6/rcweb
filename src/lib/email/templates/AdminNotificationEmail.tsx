@@ -12,21 +12,7 @@ import {
   Hr,
 } from "@react-email/components";
 import * as React from "react";
-
-// Brand colors
-const COLORS = {
-  gold: "#CBB26A",
-  dark: "#1a1a1a",
-  gray: "#4b5563",
-  lightGray: "#f3f4f6",
-  white: "#ffffff",
-  green: "#059669",
-  greenLight: "#d1fae5",
-  orange: "#f59e0b",
-  orangeLight: "#fef3c7",
-  red: "#dc2626",
-  redLight: "#fee2e2",
-};
+import { EMAIL_COLORS } from "../colors";
 
 type NotificationType =
   | "initial_payment"
@@ -83,37 +69,37 @@ export const AdminNotificationEmail: React.FC<AdminNotificationEmailProps> = ({
           title: isFallback
             ? "New Initial Payment (FALLBACK)"
             : "New Initial Payment Received",
-          bgColor: isFallback ? COLORS.orangeLight : COLORS.greenLight,
-          borderColor: isFallback ? COLORS.orange : COLORS.green,
-          textColor: isFallback ? COLORS.orange : COLORS.green,
+          bgColor: isFallback ? EMAIL_COLORS.orangeLight : EMAIL_COLORS.greenLight,
+          borderColor: isFallback ? EMAIL_COLORS.orange : EMAIL_COLORS.green,
+          textColor: isFallback ? EMAIL_COLORS.orange : EMAIL_COLORS.green,
         };
       case "final_payment":
         return {
           title: "Final Payment Completed",
-          bgColor: COLORS.greenLight,
-          borderColor: COLORS.green,
-          textColor: COLORS.green,
+          bgColor: EMAIL_COLORS.greenLight,
+          borderColor: EMAIL_COLORS.green,
+          textColor: EMAIL_COLORS.green,
         };
       case "subscription":
         return {
           title: "New Subscription Activated",
-          bgColor: COLORS.greenLight,
-          borderColor: COLORS.green,
-          textColor: COLORS.green,
+          bgColor: EMAIL_COLORS.greenLight,
+          borderColor: EMAIL_COLORS.green,
+          textColor: EMAIL_COLORS.green,
         };
       case "fallback":
         return {
           title: "Payment Created via Fallback",
-          bgColor: COLORS.orangeLight,
-          borderColor: COLORS.orange,
-          textColor: COLORS.orange,
+          bgColor: EMAIL_COLORS.orangeLight,
+          borderColor: EMAIL_COLORS.orange,
+          textColor: EMAIL_COLORS.orange,
         };
       default:
         return {
           title: "Payment Notification",
-          bgColor: COLORS.lightGray,
-          borderColor: COLORS.gray,
-          textColor: COLORS.gray,
+          bgColor: EMAIL_COLORS.lightGray,
+          borderColor: EMAIL_COLORS.gray,
+          textColor: EMAIL_COLORS.gray,
         };
     }
   };
@@ -325,33 +311,33 @@ const styles: Record<string, React.CSSProperties> = {
     fontWeight: 700,
   },
   warningBox: {
-    backgroundColor: COLORS.orangeLight,
+    backgroundColor: EMAIL_COLORS.orangeLight,
     padding: "16px 24px",
-    borderLeft: `4px solid ${COLORS.orange}`,
+    borderLeft: `4px solid ${EMAIL_COLORS.orange}`,
   },
   warningText: {
-    color: COLORS.orange,
+    color: EMAIL_COLORS.orange,
     fontSize: "14px",
     margin: "0 0 4px 0",
   },
   warningSubtext: {
-    color: COLORS.gray,
+    color: EMAIL_COLORS.gray,
     fontSize: "13px",
     margin: 0,
   },
   content: {
-    backgroundColor: COLORS.white,
+    backgroundColor: EMAIL_COLORS.white,
     padding: "24px",
   },
   infoBox: {
     marginBottom: "24px",
   },
   sectionTitle: {
-    color: COLORS.dark,
+    color: EMAIL_COLORS.dark,
     fontSize: "16px",
     fontWeight: 600,
     margin: "0 0 12px 0",
-    borderBottom: `2px solid ${COLORS.gold}`,
+    borderBottom: `2px solid ${EMAIL_COLORS.gold}`,
     paddingBottom: "8px",
   },
   infoTable: {
@@ -361,30 +347,30 @@ const styles: Record<string, React.CSSProperties> = {
   },
   infoLabel: {
     padding: "8px 0",
-    color: COLORS.gray,
+    color: EMAIL_COLORS.gray,
     width: "40%",
     verticalAlign: "top" as const,
   },
   infoValue: {
     padding: "8px 0",
-    color: COLORS.dark,
+    color: EMAIL_COLORS.dark,
     fontWeight: 500,
   },
   infoValueHighlight: {
     padding: "8px 0",
-    color: COLORS.gold,
+    color: EMAIL_COLORS.gold,
     fontWeight: 700,
     fontFamily: "'Courier New', monospace",
     letterSpacing: "2px",
   },
   infoValueGreen: {
     padding: "8px 0",
-    color: COLORS.green,
+    color: EMAIL_COLORS.green,
     fontWeight: 600,
   },
   infoValueSmall: {
     padding: "8px 0",
-    color: COLORS.gray,
+    color: EMAIL_COLORS.gray,
     fontSize: "12px",
     wordBreak: "break-all" as const,
   },
@@ -394,39 +380,39 @@ const styles: Record<string, React.CSSProperties> = {
     margin: "24px 0",
   },
   reminderText: {
-    color: COLORS.gray,
+    color: EMAIL_COLORS.gray,
     fontSize: "14px",
     fontStyle: "italic" as const,
     textAlign: "center" as const,
     margin: 0,
   },
   checklistBox: {
-    backgroundColor: COLORS.orangeLight,
+    backgroundColor: EMAIL_COLORS.orangeLight,
     padding: "16px",
     borderRadius: "8px",
-    border: `1px solid ${COLORS.orange}`,
+    border: `1px solid ${EMAIL_COLORS.orange}`,
   },
   checklistTitle: {
-    color: COLORS.orange,
+    color: EMAIL_COLORS.orange,
     fontSize: "14px",
     fontWeight: 600,
     margin: "0 0 8px 0",
   },
   checklistList: {
-    color: COLORS.gray,
+    color: EMAIL_COLORS.gray,
     fontSize: "13px",
     margin: 0,
     paddingLeft: "20px",
     lineHeight: "1.6",
   },
   footer: {
-    backgroundColor: COLORS.dark,
+    backgroundColor: EMAIL_COLORS.dark,
     padding: "16px 24px",
     borderRadius: "0 0 8px 8px",
     textAlign: "center" as const,
   },
   footerText: {
-    color: COLORS.gold,
+    color: EMAIL_COLORS.gold,
     fontSize: "12px",
     margin: 0,
   },
