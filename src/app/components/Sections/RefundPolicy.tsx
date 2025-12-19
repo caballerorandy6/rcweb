@@ -203,6 +203,50 @@ const RefundPolicy = () => {
                     cancellation request
                   </li>
                   <li>Completed projects or delivered milestones</li>
+                  <li>Monthly subscription payments for maintenance services</li>
+                </ul>
+              </section>
+
+              {/* Subscription Services */}
+              <section className="pt-8 border-t border-gold/20">
+                <h2 className="text-2xl font-bold text-gold font-iceland mb-4">
+                  Subscription Services (Monthly Maintenance)
+                </h2>
+                <p className="text-white/80 leading-relaxed font-inter mb-4">
+                  The Monthly Website Maintenance and Support service operates
+                  on a subscription basis with automatic recurring payments of
+                  $200 USD per month.
+                </p>
+
+                <div className="bg-amber-500/10 border border-amber-500/30 rounded-lg p-6 mb-4">
+                  <p className="text-white/90 font-semibold font-inter">
+                    ⚠️ Subscription Refund Policy: No partial month refunds are
+                    provided upon cancellation.
+                  </p>
+                </div>
+
+                <ul className="space-y-3 text-white/80 font-inter list-disc list-inside">
+                  <li>
+                    <strong className="text-gold">Billing:</strong>{" "}
+                    Your card will be charged $200 USD automatically on the same
+                    day each month from your subscription start date
+                  </li>
+                  <li>
+                    <strong className="text-gold">Cancellation:</strong>{" "}
+                    You may cancel your subscription at any time by contacting us.
+                    Cancellation takes effect at the end of your current billing period
+                  </li>
+                  <li>
+                    <strong className="text-gold">No Prorated Refunds:</strong>{" "}
+                    If you cancel mid-month, you will continue to receive service
+                    until the end of your paid period, but no refund will be issued
+                    for the remaining days
+                  </li>
+                  <li>
+                    <strong className="text-gold">Failed Payments:</strong>{" "}
+                    If a payment fails, we will attempt to charge your card again.
+                    After multiple failed attempts, your subscription may be suspended
+                  </li>
                 </ul>
               </section>
 

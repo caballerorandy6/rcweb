@@ -6,6 +6,12 @@ import { prisma } from "@/lib/prisma";
 import { Resend } from "resend";
 import { trackPaymentComplete } from "@/lib/analytics";
 import { createInvoiceAndSendEmail } from "@/lib/invoice/createInvoiceAndSendEmail";
+import {
+  sendSubscriptionConfirmation,
+  sendAdminSubscriptionNotification,
+  sendAdminInitialPaymentNotification,
+  sendAdminFinalPaymentNotification,
+} from "@/lib/email";
 
 // Environment variables validation
 if (!process.env.STRIPE_SECRET_KEY) {
@@ -293,28 +299,18 @@ export async function POST(req: Request) {
         */
 
         // ============= ADMIN EMAIL =============
-        try {
-          await resend.emails.send({
-            from: "RC Web <no-reply@rcweb.dev>",
-            to: "admin@rcweb.dev",
-            subject: `💰 New advance payment received - Project ${projectCode}`,
-            html: `
-              <h2>New Initial Payment Received</h2>
-              <p><strong>Project Code:</strong> ${projectCode}</p>
-              <p><strong>Client:</strong> ${customerName || "Unknown"}</p>
-              <p><strong>Email:</strong> ${customerEmail}</p>
-              <p><strong>Plan:</strong> ${planName}</p>
-              <p><strong>Initial Payment:</strong> $${(firstPaymentAmount / 100).toFixed(2)}</p>
-              <p><strong>Pending Payment:</strong> $${(secondPaymentAmount / 100).toFixed(2)}</p>
-              <p><strong>Payment ID:</strong> ${payment.id}</p>
-              <hr>
-              <p>Remember to contact the client within 24 hours to discuss project details.</p>
-            `,
-          });
-                  } catch (emailError) {
-          const errorMsg = `Error sending email to admin: ${emailError instanceof Error ? emailError.message : String(emailError)}`;
-          console.error("❌", errorMsg);
-          emailErrors.push(errorMsg);
+        const adminResult = await sendAdminInitialPaymentNotification(resend, {
+          projectCode,
+          customerName: customerName || "Unknown",
+          customerEmail,
+          planName: planName || "Unknown Plan",
+          firstPaymentAmount,
+          secondPaymentAmount,
+          paymentId: payment.id,
+        });
+
+        if (!adminResult.success && adminResult.error) {
+          emailErrors.push(adminResult.error);
         }
 
         // If there were email errors, include them in response (but don't fail)
@@ -504,25 +500,17 @@ export async function POST(req: Request) {
         */
 
         // ============= ADMIN EMAIL =============
-        try {
-          await resend.emails.send({
-            from: "RC Web <no-reply@rcweb.dev>",
-            to: "admin@rcweb.dev",
-            subject: `💰 Final Payment Received - ${payment.planName} - ${payment.projectCode}`,
-            html: `
-              <h2>Final Payment Completed ✅</h2>
-              <p><strong>Project Code:</strong> ${payment.projectCode}</p>
-              <p><strong>Client:</strong> ${payment.name} (${customerEmail})</p>
-              <p><strong>Plan:</strong> ${payment.planName}</p>
-              <p><strong>Final Payment:</strong> $${(payment.secondPayment / 100).toFixed(2)}</p>
-              <p><strong>Total Project Value:</strong> $${(payment.totalAmount / 100).toFixed(2)}</p>
-              <p><strong>Project Status:</strong> COMPLETED</p>
-            `,
-          });
-                  } catch (emailError) {
-          const errorMsg = `Error sending email to admin: ${emailError instanceof Error ? emailError.message : String(emailError)}`;
-          console.error("❌", errorMsg);
-          emailErrors.push(errorMsg);
+        const adminResult = await sendAdminFinalPaymentNotification(resend, {
+          projectCode: payment.projectCode,
+          customerName: payment.name,
+          customerEmail,
+          planName: payment.planName,
+          finalPaymentAmount: payment.secondPayment,
+          totalAmount: payment.totalAmount,
+        });
+
+        if (!adminResult.success && adminResult.error) {
+          emailErrors.push(adminResult.error);
         }
 
         // If there were email errors, include them in response (but don't fail)
@@ -560,8 +548,153 @@ export async function POST(req: Request) {
         });
         throw err; // Re-throw for Stripe to retry
       }
+    }
+    // ============= SUBSCRIPTION PAYMENT =============
+    else if (paymentType === "subscription" && customerEmail) {
+      console.log("📦 Processing subscription payment...");
+
+      try {
+        const resend = new Resend(process.env.RESEND_API_KEY!);
+
+        // Get subscription ID from the session
+        const subscriptionId = session.subscription as string;
+
+        if (!subscriptionId) {
+          console.error("❌ No subscription ID found in session");
+          return NextResponse.json(
+            { error: "No subscription ID in session" },
+            { status: 400 }
+          );
+        }
+
+        // Check if subscription already exists (idempotency)
+        const existingSubscription = await prisma.subscription.findUnique({
+          where: { stripeSubscriptionId: subscriptionId },
+        });
+
+        if (existingSubscription) {
+          console.log("⚠️ Subscription already exists:", subscriptionId);
+          return NextResponse.json({
+            received: true,
+            duplicate: "SUBSCRIPTION_EXISTS",
+          });
+        }
+
+        // Get subscription details from Stripe (with items expanded)
+        const stripeSubscription = await stripe.subscriptions.retrieve(
+          subscriptionId,
+          { expand: ["items.data.price"] }
+        );
+        const customerId = stripeSubscription.customer as string;
+        const subscriptionItem = stripeSubscription.items.data[0];
+        const amount = subscriptionItem?.price?.unit_amount || 20000;
+        // In Stripe SDK v18+, current_period_end is on SubscriptionItem, not Subscription
+        const currentPeriodEnd = subscriptionItem?.current_period_end;
+        const currentPeriodStart = subscriptionItem?.current_period_start;
+        const nextBillingDate = currentPeriodEnd
+          ? new Date(currentPeriodEnd * 1000)
+          : new Date(Date.now() + 30 * 24 * 60 * 60 * 1000); // Default 30 days from now
+
+        // Create Subscription and TermsAcceptance in transaction
+        const subscription = await prisma.$transaction(async (tx) => {
+          const newSubscription = await tx.subscription.create({
+            data: {
+              stripeSubscriptionId: subscriptionId,
+              stripeCustomerId: customerId,
+              email: customerEmail,
+              name: customerName || "Client",
+              planName: planName || "Monthly Website Maintenance",
+              amount: amount,
+              status: stripeSubscription.status,
+              currentPeriodStart: currentPeriodStart
+                ? new Date(currentPeriodStart * 1000)
+                : new Date(),
+              currentPeriodEnd: nextBillingDate,
+              stripeSessionId: session.id,
+            },
+          });
+
+          // Create TermsAcceptance if termsAcceptedAt is provided
+          if (metadata.termsAcceptedAt) {
+            await tx.termsAcceptance.create({
+              data: {
+                subscriptionId: newSubscription.id,
+                acceptedAt: new Date(metadata.termsAcceptedAt),
+                termsVersion: TERMS_VERSION,
+                plan: planName,
+                ipAddress: "stripe-checkout",
+                userAgent: "stripe-checkout",
+              },
+            });
+            console.log("✅ TermsAcceptance created for subscription");
+          }
+
+          return newSubscription;
+        });
+
+        console.log("✅ Subscription created:", subscription.id);
+
+        // ============= SEND EMAILS =============
+        const emailErrors: string[] = [];
+
+        // Send customer confirmation email
+        const customerResult = await sendSubscriptionConfirmation(resend, {
+          customerEmail,
+          customerName: customerName || "Client",
+          planName: planName || "Monthly Website Maintenance",
+          amount,
+          nextBillingDate,
+        });
+
+        if (!customerResult.success && customerResult.error) {
+          emailErrors.push(customerResult.error);
+        }
+
+        // Send admin notification email
+        const adminResult = await sendAdminSubscriptionNotification(resend, {
+          customerName: customerName || "Unknown",
+          customerEmail,
+          planName: planName || "Monthly Website Maintenance",
+          amount,
+          status: stripeSubscription.status,
+          stripeSubscriptionId: subscriptionId,
+          nextBillingDate,
+        });
+
+        if (!adminResult.success && adminResult.error) {
+          emailErrors.push(adminResult.error);
+        }
+
+        return NextResponse.json({
+          received: true,
+          subscriptionId: subscription.id,
+          ...(emailErrors.length > 0 && { emailErrors }),
+        });
+      } catch (err: unknown) {
+        // Handle Prisma unique constraint error (already processed)
+        if (
+          typeof err === "object" &&
+          err !== null &&
+          "code" in err &&
+          (err as { code?: string }).code === "P2002"
+        ) {
+          console.log("⚠️ Subscription already processed (P2002 constraint)");
+          return NextResponse.json({ received: true, duplicate: "constraint" });
+        }
+
+        console.error("❌ Error processing subscription:", {
+          error: err instanceof Error ? err.message : String(err),
+          sessionId: session.id,
+        });
+        throw err; // Re-throw for Stripe to retry
+      }
     } else {
-            return NextResponse.json({
+      console.log("⚠️ Conditions not met:", {
+        paymentType,
+        projectCode,
+        customerEmail,
+      });
+      return NextResponse.json({
         received: true,
         warning: "Conditions not met",
       });

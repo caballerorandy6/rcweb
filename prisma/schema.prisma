@@ -186,16 +186,54 @@ model Payment {
 }
 
 model TermsAcceptance {
-  id           String   @id @default(cuid())
-  userId       String?
-  paymentId    String?   @unique // opcional si quieres ligarlo a un pago
-  plan         String?
-  acceptedAt   DateTime
-  ipAddress    String?
-  userAgent    String?
-  termsVersion String
+  id             String        @id @default(cuid())
+  userId         String?
+  paymentId      String?       @unique // opcional si quieres ligarlo a un pago
+  subscriptionId String?       @unique // para suscripciones
+  plan           String?
+  acceptedAt     DateTime
+  ipAddress      String?
+  userAgent      String?
+  termsVersion   String
 
-  payment      Payment?  @relation(fields: [paymentId], references: [id], onDelete: Cascade)
+  payment        Payment?      @relation(fields: [paymentId], references: [id], onDelete: Cascade)
+  subscription   Subscription? @relation(fields: [subscriptionId], references: [id], onDelete: Cascade)
+}
+
+model Subscription {
+  id                    String    @id @default(uuid())
+  stripeSubscriptionId  String    @unique
+  stripeCustomerId      String
+  email                 String
+  name                  String
+  planName              String
+  amount                Int       // Amount in cents ($200 = 20000)
+  currency              String    @default("USD")
+
+  // Status
+  status                String    @default("active") // active, cancelled, past_due, unpaid
+
+  // Billing cycle
+  currentPeriodStart    DateTime?
+  currentPeriodEnd      DateTime?
+
+  // Cancellation
+  cancelledAt           DateTime?
+  cancelAtPeriodEnd     Boolean   @default(false)
+
+  // Stripe session/checkout info
+  stripeSessionId       String?
+
+  // Timestamps
+  createdAt             DateTime  @default(now())
+  updatedAt             DateTime  @updatedAt
+
+  termsAcceptance       TermsAcceptance?
+
+  @@index([email])
+  @@index([stripeSubscriptionId])
+  @@index([stripeCustomerId])
+  @@index([status])
 }
 
 

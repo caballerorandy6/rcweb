@@ -72,32 +72,31 @@ export default function PaymentSuccess({
 
   if (error) {
     return (
-      // <div className="min-h-screen flex items-center justify-center bg-gray-900 px-4">
-      //   <motion.div
-      //     initial={{ opacity: 0, scale: 0.95 }}
-      //     animate={{ opacity: 1, scale: 1 }}
-      //     className="max-w-md w-full bg-red-900/20 border border-red-500/50 rounded-2xl p-8 text-center"
-      //   >
-      //     <div className="text-red-500 mb-4">
-      //       <ExclamationTriangleIcon className="w-16 h-16 mx-auto" />
-      //     </div>
-      //     <h2 className="text-2xl font-bold text-white mb-2">
-      //       Payment Processing Issue
-      //     </h2>
-      //     <p className="text-gray-300 mb-6">{error}</p>
-      //     <p className="text-sm text-gray-400 mb-6">
-      //       Don&#39;t worry! If your payment was successful in Stripe, we&#39;ll
-      //       process it shortly. Please save your confirmation email.
-      //     </p>
-      //     <a
-      //       href="mailto:contactus@rcweb.dev"
-      //       className="inline-block px-6 py-3 bg-gold text-gray-900 rounded-lg hover:bg-gold/90 transition-colors"
-      //     >
-      //       Contact Support
-      //     </a>
-      //   </motion.div>
-      // </div>
-      <>{console.log("Payment Processing Issue, fallback used:", error)}</>
+      <div className="min-h-screen flex items-center justify-center bg-gray-900 px-4 py-24 sm:py-32">
+        <motion.div
+          initial={{ opacity: 0, scale: 0.95 }}
+          animate={{ opacity: 1, scale: 1 }}
+          className="max-w-md w-full bg-red-900/20 border border-red-500/50 rounded-2xl p-8 text-center"
+        >
+          <div className="text-red-500 mb-4">
+            <ExclamationTriangleIcon className="w-16 h-16 mx-auto" />
+          </div>
+          <h2 className="text-2xl font-bold text-white mb-2">
+            Payment Processing Issue
+          </h2>
+          <p className="text-gray-300 mb-6">{error}</p>
+          <p className="text-sm text-gray-400 mb-6">
+            Don&apos;t worry! If your payment was successful in Stripe, we&apos;ll
+            process it shortly. Please save your confirmation email.
+          </p>
+          <a
+            href="mailto:contactus@rcweb.dev"
+            className="inline-block px-6 py-3 bg-gold text-gray-900 rounded-lg hover:bg-gold/90 transition-colors"
+          >
+            Contact Support
+          </a>
+        </motion.div>
+      </div>
     );
   }
 

@@ -789,6 +789,19 @@ export const pricingPlans = [
     cta: "Build Your Platform",
   },
   {
+    id: "test-plan",
+    name: "Test Plan (Development Only)",
+    price: "$1",
+    priceInCents: 100, // $1.00
+    range: "$1",
+    duration: "Testing",
+    description: "For testing payment flow only",
+    features: ["Test feature 1", "Test feature 2"],
+    ideal: "For development testing only",
+    featured: false,
+    cta: "Test Payment",
+  },
+  {
     id: "website-maintenance",
     name: "Monthly Website Maintenance and Support",
     price: "$200/mo",

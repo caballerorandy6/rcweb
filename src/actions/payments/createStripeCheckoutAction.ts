@@ -4,7 +4,11 @@ import Stripe from "stripe";
 import { generateProjectCode } from "@/lib/utils";
 
 // Stripe Price ID for Monthly Maintenance Subscription
-const MAINTENANCE_PRICE_ID = "price_1SfCtoB3Dz9FSHGQ4h0t4xs5";
+// 🟡 PRODUCCIÓN - Live Price ID (Comentado)
+// const MAINTENANCE_PRICE_ID = "price_1SfCtoB3Dz9FSHGQ4h0t4xs5";
+
+// 🟢 TEST/DEV - Test Price ID (Activo)
+const MAINTENANCE_PRICE_ID = "price_1SfN0uBo0mhGuaPyi5VPLrfp";
 
 export interface StripeCheckoutResponse {
   success: boolean;

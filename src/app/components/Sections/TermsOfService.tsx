@@ -241,7 +241,33 @@ const TermsOfService = () => {
                 </ul>
 
                 <h3 className="text-xl font-semibold text-gold/90 font-iceland mt-6 mb-3">
-                  3.2 Payment Methods
+                  3.2 Subscription Services (Recurring Payments)
+                </h3>
+                <p className="text-white/80 leading-relaxed font-inter mb-3">
+                  The Monthly Website Maintenance and Support service operates on a
+                  subscription basis with automatic recurring payments:
+                </p>
+                <ul className="space-y-2 text-white/80 font-inter list-disc list-inside mb-4">
+                  <li>
+                    <strong className="text-gold">Monthly Fee:</strong>{" "}
+                    $200 USD charged automatically each month
+                  </li>
+                  <li>
+                    <strong className="text-gold">Billing Cycle:</strong>{" "}
+                    Your card will be charged on the same day each month from your initial subscription date
+                  </li>
+                  <li>
+                    <strong className="text-gold">Cancellation:</strong>{" "}
+                    You may cancel your subscription at any time. Cancellation takes effect at the end of the current billing period
+                  </li>
+                  <li>
+                    <strong className="text-gold">No Refunds:</strong>{" "}
+                    Partial month refunds are not provided upon cancellation
+                  </li>
+                </ul>
+
+                <h3 className="text-xl font-semibold text-gold/90 font-iceland mt-6 mb-3">
+                  3.3 Payment Methods
                 </h3>
                 <p className="text-white/80 leading-relaxed font-inter mb-3">
                   We accept the following payment methods:
@@ -253,7 +279,7 @@ const TermsOfService = () => {
                 </ul>
 
                 <h3 className="text-xl font-semibold text-gold/90 font-iceland mt-6 mb-3">
-                  3.3 Late Payments
+                  3.4 Late Payments
                 </h3>
                 <p className="text-white/80 leading-relaxed font-inter">
                   If payment is not received within 30 days of the due date, we
