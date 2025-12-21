@@ -91,6 +91,7 @@ const BlogSubscriptionForm = () => {
                   {...register("preferredLanguage")}
                   type="radio"
                   value="en"
+                  defaultChecked
                   className="w-4 h-4 text-gold bg-gray-800 border-gray-600 focus:ring-gold/20 focus:ring-2"
                 />
                 <span className="text-white font-inter text-sm group-hover:text-gold transition-colors">
