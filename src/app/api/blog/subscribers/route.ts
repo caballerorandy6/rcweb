@@ -4,7 +4,8 @@ import { NextResponse } from "next/server";
 export async function GET() {
   try {
     const subscribers = await prisma.blogSubscriber.findMany({
-      select: { isActive: true, preferredLanguage: true },
+      where: { isActive: true },
+      select: { email: true, preferredLanguage: true },
     });
 
     if (!subscribers) {
