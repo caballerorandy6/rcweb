@@ -8,3 +8,5 @@ tags: ["Test"]
 ---
 
 Test content for workflow verification.
+
+Updated: Testing n8n email notification workflow.
