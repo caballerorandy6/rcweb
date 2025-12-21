@@ -1,4 +1,4 @@
-import RefundPolicy from "@/app/components/Sections/RefundPolicy";
+import RefundPolicy from "@/app/components/sections/RefundPolicy";
 import { JsonLdForBreadcrumb } from "@/app/components/seo/JsonLdForBreadcrumb";
 import { genPageMetadata } from "@/utils/genPageMetadata";
 import { siteConfig } from "@/config/site";

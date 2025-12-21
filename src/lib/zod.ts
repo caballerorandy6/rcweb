@@ -1,5 +1,6 @@
 import z from "zod";
 
+// Schema de validación para formularios de contacto
 export const FormSchema = z.object({
   name: z
     .string()
@@ -50,7 +51,17 @@ export const ManageSubscriptionSchema = z.object({
     .nonempty({ message: "Email is required" }),
 });
 
-export type ManageSubscriptionData = z.infer<typeof ManageSubscriptionSchema>;
+// Blog Subscription Schema
+export const BlogSubscriptionSchema = z.object({
+  email: z
+    .string()
+    .email({ message: "Please enter a valid email address" })
+    .min(1, { message: "Email is required" }),
+  preferredLanguage: z.enum(["en", "es"], {
+    required_error: "Please select a language",
+  }),
+});
 
-// Infer the type
+export type BlogSubscriptionData = z.infer<typeof BlogSubscriptionSchema>;
+export type ManageSubscriptionData = z.infer<typeof ManageSubscriptionSchema>;
 export type FormData = z.infer<typeof FormSchema>;

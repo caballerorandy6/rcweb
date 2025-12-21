@@ -12,6 +12,7 @@ import {
   UserIcon,
 } from "@heroicons/react/24/outline";
 import type { BlogPost as BlogPostType } from "@/lib/blog";
+import BlogSubscriptionForm from "@/app/components/blog/BlogSubscriptionForm";
 
 interface BlogPostProps {
   post: BlogPostType;
@@ -221,6 +222,11 @@ export default function BlogPost({ post }: BlogPostProps) {
               >
                 Get Started
               </Link>
+            </div>
+
+            {/* Blog Subscription */}
+            <div className="mt-8">
+              <BlogSubscriptionForm />
             </div>
           </div>
         </motion.article>

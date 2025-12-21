@@ -1,6 +1,6 @@
 import { CheckCircleIcon } from "@heroicons/react/24/outline";
 import Heading from "@/app/components/ui/Heading";
-import CertificationsList from "@/app/components/Sections/CertificationsList";
+import CertificationsList from "@/app/components/sections/CertificationsList";
 import { certifications } from "@/lib/data";
 
 const Certifications = () => {

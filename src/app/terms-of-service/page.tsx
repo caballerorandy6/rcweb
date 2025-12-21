@@ -1,4 +1,4 @@
-import TermsOfService from "@/app/components/Sections/TermsOfService";
+import TermsOfService from "@/app/components/sections/TermsOfService";
 import TermsOfServiceSkeleton from "@/app/components/skeletons/TermsOfServiceSkeleton";
 import { JsonLdForBreadcrumb } from "@/app/components/seo/JsonLdForBreadcrumb";
 import { genPageMetadata } from "@/utils/genPageMetadata";

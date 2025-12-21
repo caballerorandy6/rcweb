@@ -8,7 +8,7 @@ import Heading from "@/app/components/ui/Heading";
 
 import useSectionObserver from "@/hooks/useSectionObserver";
 import { projects } from "@/lib/data";
-import ProjectsList from "@/app/components/Sections/ProjectsList";
+import ProjectsList from "@/app/components/sections/ProjectsList";
 
 import TechMarquee from "@/app/components/ui/TechMarquee";
 

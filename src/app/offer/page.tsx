@@ -1,7 +1,7 @@
 import { genPageMetadata } from "@/utils/genPageMetadata";
 import { JsonLdForBreadcrumb } from "@/app/components/seo/JsonLdForBreadcrumb";
 import { siteConfig } from "@/config/site";
-import OfferContent from "@/app/components/Sections/OfferContent";
+import OfferContent from "@/app/components/sections/OfferContent";
 
 export const metadata = genPageMetadata({
   title: "20% OFF Web Development Services - Limited Time Offer",

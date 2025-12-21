@@ -1,7 +1,7 @@
 "use client";
 
-import Project from "@/app/components/Sections/Project";
-import { ProjectProps } from "@/app/components/Sections/Project";
+import Project from "@/app/components/sections/Project";
+import { ProjectProps } from "@/app/components/sections/Project";
 import { motion, AnimatePresence, Variants } from "framer-motion";
 import { useId } from "react";
 

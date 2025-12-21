@@ -252,6 +252,19 @@ model SmsLog {
   @@index([createdAt])
 }
 
+model BlogSubscriber {
+  id                String    @id @default(uuid())
+  email             String    @unique
+  preferredLanguage String    @default("en")
+  isActive          Boolean   @default(true)
+  subscribedAt      DateTime  @default(now())
+  unsubscribedAt    DateTime?
+
+  @@index([email])
+  @@index([isActive])
+  @@index([preferredLanguage])
+}
+
 model Invoice {
   id              String    @id @default(uuid())
   invoiceNumber   String    @unique // "INV-2025-001"

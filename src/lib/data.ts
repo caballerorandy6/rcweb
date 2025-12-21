@@ -1,4 +1,4 @@
-import { ProjectProps } from "@/app/components/Sections/Project";
+import { ProjectProps } from "@/app/components/sections/Project";
 import React from "react";
 import JavaScriptIcon from "@/app/components/icons/Javascript";
 import ReactIcon from "@/app/components/icons/React";
@@ -18,7 +18,7 @@ import NodeJS from "@/app/components/icons/NodeJS";
 import { TeachMarqueeProps } from "@/app/components/ui/TechMarquee";
 import { BriefcaseIcon, AcademicCapIcon } from "@heroicons/react/24/outline";
 import { NavigationProps } from "@/app/components/layout/Navbar";
-import { ExperienceProps } from "@/app/components/Sections/Experience";
+import { ExperienceProps } from "@/app/components/sections/Experience";
 import {
   ChatBubbleLeftRightIcon,
   PencilSquareIcon,

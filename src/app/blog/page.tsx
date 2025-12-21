@@ -2,7 +2,7 @@ import { genPageMetadata } from "@/utils/genPageMetadata";
 import { JsonLdForBreadcrumb } from "@/app/components/seo/JsonLdForBreadcrumb";
 import { siteConfig } from "@/config/site";
 import { getAllPosts } from "@/lib/blog";
-import BlogList from "@/app/components/Blog/BlogList";
+import BlogList from "@/app/components/blog/BlogList";
 
 export const metadata = genPageMetadata({
   title: "Blog - Web Development Insights & Tips",

@@ -4,7 +4,7 @@ import { JsonLdForBreadcrumb } from "@/app/components/seo/JsonLdForBreadcrumb";
 import { JsonLdForArticle } from "@/app/components/seo/JsonLdForArticle";
 import { siteConfig } from "@/config/site";
 import { getPostBySlug, getAllSlugs } from "@/lib/blog";
-import BlogPost from "@/app/components/Blog/BlogPost";
+import BlogPost from "@/app/components/blog/BlogPost";
 
 interface BlogPostPageProps {
   params: Promise<{
