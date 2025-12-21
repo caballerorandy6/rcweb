@@ -118,6 +118,18 @@ export default function BlogPost({ post }: BlogPostProps) {
               </div>
             </div>
 
+            {/* Mid-Post Subscription CTA */}
+            <div className="mt-8 p-6 bg-gray-800/50 border border-gold/20 rounded-xl">
+              <p className="text-gold font-bold font-iceland text-lg mb-2">
+                Enjoying this article?
+              </p>
+              <p className="text-gray-400 text-sm font-inter mb-4">
+                Get notified when I publish new posts about web development,
+                automation, and business growth.
+              </p>
+              <BlogSubscriptionForm />
+            </div>
+
             {/* Article Content */}
             <div className="prose prose-invert prose-lg max-w-none mt-8">
               <ReactMarkdown
