@@ -1,6 +1,6 @@
 "use client";
 
-import { useTransition } from "react";
+import { useState } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { ErrorMessage } from "@hookform/error-message";
@@ -10,7 +10,7 @@ import { EnvelopeIcon } from "@heroicons/react/24/outline";
 import { subscribeToBlogAction } from "@/actions/subscriptions/subscribeToBlogAction";
 
 const BlogSubscriptionForm = () => {
-  const [isPending, startTransition] = useTransition();
+  const [isLoading, setIsLoading] = useState(false);
 
   const {
     register,
@@ -26,22 +26,23 @@ const BlogSubscriptionForm = () => {
   });
 
   const onSubmit: SubmitHandler<BlogSubscriptionData> = async (data) => {
+    setIsLoading(true);
     const toastId = toast.loading("Subscribing...");
 
     try {
-      startTransition(async () => {
-        const result = await subscribeToBlogAction(data);
+      const result = await subscribeToBlogAction(data);
 
-        if (result.success) {
-          toast.success(result.message, { id: toastId });
-          reset();
-        } else {
-          toast.error(result.message, { id: toastId });
-        }
-      });
+      if (result.success) {
+        toast.success(result.message, { id: toastId });
+        reset();
+      } else {
+        toast.error(result.message, { id: toastId });
+      }
     } catch (error) {
       console.error(error);
       toast.error("Something went wrong. Please try again.", { id: toastId });
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -91,7 +92,6 @@ const BlogSubscriptionForm = () => {
                   {...register("preferredLanguage")}
                   type="radio"
                   value="en"
-                  defaultChecked
                   className="w-4 h-4 text-gold bg-gray-800 border-gray-600 focus:ring-gold/20 focus:ring-2"
                 />
                 <span className="text-white font-inter text-sm group-hover:text-gold transition-colors">
@@ -128,10 +128,10 @@ const BlogSubscriptionForm = () => {
           {/* Submit Button */}
           <button
             type="submit"
-            disabled={isPending}
+            disabled={isLoading}
             className="w-full py-3 bg-gold text-gray-900 font-bold rounded-xl hover:bg-gold/90 transition-all duration-300 font-inter disabled:opacity-50 disabled:cursor-not-allowed"
           >
-            {isPending ? "Subscribing..." : "Subscribe"}
+            {isLoading ? "Subscribing..." : "Subscribe"}
           </button>
 
           <p className="text-gray-500 text-xs font-inter text-center">

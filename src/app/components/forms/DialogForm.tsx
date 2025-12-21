@@ -154,12 +154,12 @@ const DialogForm = ({ closeModal }: DialogFormProps) => {
           {/* Honeypot field - hidden from users, visible to bots */}
           <input
             type="text"
-            name="website"
+            name="address_confirm"
             value={honeypot}
             onChange={(e) => setHoneypot(e.target.value)}
-            autoComplete="off"
+            autoComplete="new-password"
             tabIndex={-1}
-            style={{ position: "absolute", left: "-9999px", opacity: 0 }}
+            className="absolute -left-[9999px] opacity-0 h-0 w-0 pointer-events-none"
             aria-hidden="true"
           />
 
