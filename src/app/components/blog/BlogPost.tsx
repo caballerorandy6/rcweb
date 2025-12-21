@@ -213,6 +213,34 @@ export default function BlogPost({ post }: BlogPostProps) {
                     </em>
                   ),
                   hr: () => <hr className="border-gray-700 my-8" />,
+                  table: ({ children }) => (
+                    <div className="overflow-x-auto my-6">
+                      <table className="min-w-full border border-gray-700 rounded-lg overflow-hidden">
+                        {children}
+                      </table>
+                    </div>
+                  ),
+                  thead: ({ children }) => (
+                    <thead className="bg-gray-800">{children}</thead>
+                  ),
+                  tbody: ({ children }) => (
+                    <tbody className="divide-y divide-gray-700">{children}</tbody>
+                  ),
+                  tr: ({ children }) => (
+                    <tr className="bg-gray-800/50 hover:bg-gray-800/70 transition-colors">
+                      {children}
+                    </tr>
+                  ),
+                  th: ({ children }) => (
+                    <th className="px-4 py-3 text-left text-gold font-semibold font-inter border-b border-gray-700">
+                      {children}
+                    </th>
+                  ),
+                  td: ({ children }) => (
+                    <td className="px-4 py-3 text-white/80 font-inter">
+                      {children}
+                    </td>
+                  ),
                 }}
               >
                 {post.content}

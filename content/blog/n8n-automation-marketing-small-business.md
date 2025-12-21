@@ -1,35 +1,23 @@
 ---
-title: "How I Cut 15+ Hours of Marketing Work Monthly with n8n Automation"
-description: "A practical guide to automating Google Business Profile posts, social media updates, and repetitive marketing tasks using n8n - saving time and scaling your business."
+title: "Automating Repetitive Tasks with n8n: A Developer's Practical Guide"
+description: "How I'm using n8n to automate lead notifications, blog subscriber emails, and other repetitive tasks - freeing up time for actual development work."
 date: "2025-12-22"
 author: "Randy Caballero"
-image: "/blog/n8n-automation-marketing.jpg"
+image: "/og-image.jpg"
 tags: ["n8n", "Automation", "Marketing", "Small Business", "Productivity"]
 ---
 
-Last month, I was spending 15-20 hours updating our Google Business Profile, scheduling posts, and managing repetitive marketing tasks. Today, that's down to 4-5 hours.
+As a developer, I love building web applications. What I don't love? The repetitive tasks that come with running a business.
 
-The difference? **n8n automation.**
+Sending follow-up emails. Notifying myself about new leads. Emailing subscribers when I publish new content.
 
-If you're a developer, freelancer, or business owner drowning in manual marketing work, this guide shows exactly how I built workflows that run while I sleep.
+These tasks are important—they drive leads and engagement. But they steal time from actual development work.
 
-## The Problem: Marketing Work That Never Ends
+**I needed a solution that didn't require hiring someone or paying for expensive enterprise tools.**
 
-As the founder of RC Web Solutions, I love building web applications. What I don't love? The endless cycle of:
+## Why n8n?
 
-- Creating Google Business Profile posts
-- Scheduling social media updates
-- Sending follow-up emails
-- Updating product listings
-- Managing review responses
-
-These tasks are important. They drive leads. But they're repetitive and steal time from actual development work.
-
-**I needed a solution that didn't require hiring someone or learning complex enterprise tools.**
-
-## Why n8n Over Zapier or Make?
-
-I evaluated several automation platforms before choosing n8n:
+I evaluated several automation platforms:
 
 | Platform | Pros | Cons |
 |----------|------|------|
@@ -43,59 +31,39 @@ I evaluated several automation platforms before choosing n8n:
 2. **Unlimited workflows.** Zapier charges per "zap." n8n doesn't.
 3. **Developer-friendly.** I can write JavaScript inside workflows when needed.
 
-## My Google Business Automation Workflow
+## My First Real Workflow: Blog Subscriber Notification System
 
-Here's the workflow I built for automated posting:
+The first workflow I built solves a real problem: notifying subscribers when I publish new content.
+
+### How It Works:
+
+```
+GitHub Push → Webhook → Fetch New Posts → Loop Subscribers → Send Email (EN/ES) → Mark as Notified
+```
 
 ### The Flow:
 
-```
-Webhook Trigger → Fetch Content → Format Post → Google Business API → Slack Notification
-```
+1. **GitHub webhook triggers** when I push code to my repository
+2. **n8n fetches new blog posts** from my Next.js API
+3. **Checks if subscribers need to be notified**
+4. **Loops through each subscriber**
+5. **Sends personalized email** in their preferred language (English or Spanish)
+6. **Marks the post as notified** to prevent duplicate emails
 
-### What It Does:
+### What I Learned Building This:
 
-1. **Webhook receives content** from my CMS or a simple form
-2. **Formats the post** with proper structure and call-to-action
-3. **Posts to Google Business Profile** via API
-4. **Notifies me on Slack** with confirmation
+- How webhooks work in n8n
+- Using HTTP Request nodes to call my own API
+- Loop nodes for iterating through data
+- Switch nodes for conditional logic (language routing)
+- Error handling when things go wrong
 
-### Time Saved:
+### The Stack
 
-- **Before:** 45 minutes per post (writing, formatting, logging in, posting)
-- **After:** 5 minutes to submit content, automation handles the rest
-
-## Beyond Google Business: Other Workflows I Built
-
-Once I understood n8n, I automated everything:
-
-### Lead Notification System
-- New contact form → Instant Slack alert + Email + CRM update
-- No more missed leads
-
-### Blog Subscriber Notifications
-- New blog post deployed → Automatic email to all subscribers
-- Zero manual work
-
-### Invoice Generation
-- Payment received → Generate PDF → Email to client
-- Previously took 20 minutes per invoice
-
-## The Real Numbers: Time Investment vs. Return
-
-Let's be honest about the investment:
-
-### Initial Setup:
-- **Learning n8n:** ~8 hours (more on this in my next post)
-- **Building workflows:** ~12 hours
-- **Total:** 20 hours upfront
-
-### Monthly Savings:
-- **Before automation:** 15-20 hours/month
-- **After automation:** 4-5 hours/month
-- **Saved:** 10-15 hours/month
-
-**ROI Timeline:** The automation paid for itself in the second month.
+- **n8n** on Railway (~$5/month)
+- **PostgreSQL** for data storage
+- **Resend** for transactional emails
+- **GitHub webhooks** for triggers
 
 ## Getting Started: Your First Workflow
 
@@ -104,28 +72,20 @@ If you want to try n8n, here's my recommendation:
 ### Start Simple:
 1. **Sign up at n8n.io** (cloud) or self-host
 2. **Create a webhook** that receives data
-3. **Send a Slack message** when triggered
+3. **Send an email notification** when triggered
 4. **Test it** and celebrate
 
 Don't try to automate everything on day one. Start with one painful task and expand from there.
 
-### My Stack:
-- **n8n** on Railway (~$5/month)
-- **PostgreSQL** for data storage
-- **Resend** for emails
-- **Slack** for notifications
-
-## Common Mistakes to Avoid
-
-After building 15+ workflows, here's what I learned:
+## Lessons Learned
 
 1. **Don't over-engineer.** Simple workflows are easier to debug.
 2. **Add error handling.** Workflows will fail. Plan for it.
 3. **Document everything.** Future you will thank present you.
-4. **Start with low-stakes tasks.** Don't automate invoicing before you've mastered the basics.
+4. **Start with low-stakes tasks.** Master the basics before automating critical processes.
 
 ## What's Next?
 
-In my next post, I'll share how I learned n8n in days instead of weeks—using Claude AI as my learning assistant. No courses, no tutorials, just practical AI-assisted learning.
+I'm continuing to learn n8n through real practice, using AI as a learning assistant to solve problems as they come up. It's a different approach to learning—building first, asking questions when stuck, and iterating.
 
-**The combination of n8n + AI changed how I approach learning new tools.**
+**The combination of learning by doing + AI assistance has changed how I approach new tools.**
