@@ -265,6 +265,15 @@ model BlogSubscriber {
   @@index([preferredLanguage])
 }
 
+model NotifiedBlogPost {
+  id        String   @id @default(uuid())
+  slug      String   @unique
+  title     String
+  notifiedAt DateTime @default(now())
+
+  @@index([slug])
+}
+
 model Invoice {
   id              String    @id @default(uuid())
   invoiceNumber   String    @unique // "INV-2025-001"
