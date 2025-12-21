@@ -8,18 +8,12 @@ export async function GET() {
       select: { email: true, preferredLanguage: true },
     });
 
-    if (!subscribers) {
-      return NextResponse.json(
-        { success: false, error: "No subscribers found" },
-        { status: 404 }
-      );
-    }
-    const count = subscribers.length;
-    return NextResponse.json({ success: true, subscribers, count });
+    // Return array directly for n8n compatibility
+    return NextResponse.json(subscribers);
   } catch (error) {
     console.error(error);
     return NextResponse.json(
-      { success: false, error: "Failed to fetch subscribers" },
+      { error: "Failed to fetch subscribers" },
       { status: 500 }
     );
   }
