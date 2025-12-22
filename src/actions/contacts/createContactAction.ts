@@ -4,6 +4,7 @@ import { prisma } from "@/lib/prisma";
 import { FormSchema, type FormData } from "@/lib/zod";
 import { Resend } from "resend";
 import { checkAndReserveEmailQuota, releaseEmailQuota } from "@/lib/emailQuota";
+import { escapeHtml, sanitizeEmail, sanitizePhone } from "@/lib/sanitize";
 
 export interface CreateContactAction {
   success: boolean;
@@ -92,6 +93,12 @@ export const createContactAction = async (
   try {
     const { name, email, phone, marketingConsent, message } = parsed.data;
 
+    // Sanitize user inputs for HTML email rendering (prevents XSS)
+    const safeName = escapeHtml(name);
+    const safeEmail = sanitizeEmail(email);
+    const safePhone = sanitizePhone(phone);
+    const safeMessage = escapeHtml(message);
+
     // 1. Buscar contacto por email
     let contact = email
       ? await prisma.contact.findFirst({
@@ -179,7 +186,7 @@ export const createContactAction = async (
       await resend.emails.send({
           from: "RC Web <no-reply@rcweb.dev>",
           to: ["admin@rcweb.dev"],
-          subject: `📩 New message from ${name}`,
+          subject: `📩 New message from ${safeName}`,
           html: `
             <!DOCTYPE html>
             <html>
@@ -217,15 +224,15 @@ export const createContactAction = async (
                               <table style="width:100%;font-size:14px;">
                                 <tr>
                                   <td style="color:#6b7280;padding:6px 0;">Name:</td>
-                                  <td style="text-align:right;font-weight:600;color:#374151;">${name}</td>
+                                  <td style="text-align:right;font-weight:600;color:#374151;">${safeName}</td>
                                 </tr>
                                 <tr>
                                   <td style="color:#6b7280;padding:6px 0;">Email:</td>
-                                  <td style="text-align:right;font-weight:600;color:#374151;">${email}</td>
+                                  <td style="text-align:right;font-weight:600;color:#374151;">${safeEmail}</td>
                                 </tr>
                                 <tr>
                                   <td style="color:#6b7280;padding:6px 0;">Phone:</td>
-                                  <td style="text-align:right;font-weight:600;color:#374151;">${phone || "Not provided"}</td>
+                                  <td style="text-align:right;font-weight:600;color:#374151;">${safePhone || "Not provided"}</td>
                                 </tr>
                               </table>
                             </div>
@@ -233,13 +240,13 @@ export const createContactAction = async (
                             <!-- Message -->
                             <div style="background:linear-gradient(135deg,#ede9fe 0%,#ddd6fe 100%);border-left:4px solid #7c3aed;border-radius:8px;padding:20px;margin-bottom:32px;">
                               <p style="color:#5b21b6;font-weight:600;font-size:16px;margin:0 0 12px;">Message:</p>
-                              <p style="color:#374151;font-size:14px;line-height:1.6;margin:0;">${message}</p>
+                              <p style="color:#374151;font-size:14px;line-height:1.6;margin:0;">${safeMessage}</p>
                             </div>
 
                             <!-- Footer -->
                             <hr style="border:none;border-top:1px solid #e5e7eb;margin:32px 0;">
                             <p style="text-align:center;color:#6b7280;font-size:14px;margin:0;">
-                              Reply directly to <a href="mailto:${email}" style="color:#7c3aed;text-decoration:none;">${email}</a> to respond to this message.
+                              Reply directly to <a href="mailto:${safeEmail}" style="color:#7c3aed;text-decoration:none;">${safeEmail}</a> to respond to this message.
                             </p>
                           </td>
                         </tr>
