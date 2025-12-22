@@ -27,10 +27,18 @@ export async function GET(request: NextRequest) {
       (post) => !post.isNotified
     );
 
+    // Sort by date descending and get only the most recent post
+    const sortedPosts = pendingPosts.sort((a, b) =>
+      new Date(b.date).getTime() - new Date(a.date).getTime()
+    );
+
+    // Return only the most recent unnotified post (or empty array if none)
+    const latestPost = sortedPosts.length > 0 ? [sortedPosts[0]] : [];
+
     return NextResponse.json({
       success: true,
-      posts: pendingPosts,
-      count: pendingPosts.length,
+      posts: latestPost,
+      count: latestPost.length,
     });
   } catch (error) {
     console.error("Error in /api/blog/posts:", error);
