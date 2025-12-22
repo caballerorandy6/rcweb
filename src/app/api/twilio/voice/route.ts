@@ -3,16 +3,30 @@
  * Handles incoming calls to +1 346 375 7534 and forwards them to your personal number
  */
 
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import twilio from "twilio";
+import { validateTwilioSignature, forbiddenTwilioResponse } from "@/lib/twilioAuth";
 
 const VoiceResponse = twilio.twiml.VoiceResponse;
 
 // Your personal phone number where calls will be forwarded
 const FORWARD_TO_NUMBER = "+18325465983";
 
-export async function POST() {
+export async function POST(request: NextRequest) {
   try {
+    const formData = await request.formData();
+
+    // Convert FormData to object for signature validation
+    const params: Record<string, string> = {};
+    formData.forEach((value, key) => {
+      params[key] = value.toString();
+    });
+
+    // Validate Twilio signature
+    const isValid = await validateTwilioSignature(request, params);
+    if (!isValid) {
+      return forbiddenTwilioResponse();
+    }
     // Create TwiML response
     const twiml = new VoiceResponse();
 

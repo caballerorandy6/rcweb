@@ -5,12 +5,26 @@
 
 import { NextRequest, NextResponse } from "next/server";
 import twilio from "twilio";
+import { validateTwilioSignature, forbiddenTwilioResponse } from "@/lib/twilioAuth";
 
 const VoiceResponse = twilio.twiml.VoiceResponse;
 
 export async function POST(request: NextRequest) {
   try {
     const formData = await request.formData();
+
+    // Convert FormData to object for signature validation
+    const params: Record<string, string> = {};
+    formData.forEach((value, key) => {
+      params[key] = value.toString();
+    });
+
+    // Validate Twilio signature
+    const isValid = await validateTwilioSignature(request, params);
+    if (!isValid) {
+      return forbiddenTwilioResponse();
+    }
+
     const dialCallStatus = formData.get("DialCallStatus");
 
     const twiml = new VoiceResponse();

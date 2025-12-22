@@ -1,11 +1,17 @@
 import { NextResponse } from "next/server";
 import { Resend } from "resend";
+import { escapeHtml, sanitizeEmail, sanitizePhone } from "@/lib/sanitize";
 
 export async function POST(request: Request) {
   const resend = new Resend(process.env.RESEND_API_KEY);
 
   const body = await request.json();
-  const { name, email, phone, message } = body;
+
+  // Sanitize all user inputs to prevent XSS
+  const name = escapeHtml(body.name);
+  const email = sanitizeEmail(body.email);
+  const phone = sanitizePhone(body.phone);
+  const message = escapeHtml(body.message);
 
   try {
     // Send notification email to admin

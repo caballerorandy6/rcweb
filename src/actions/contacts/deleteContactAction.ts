@@ -1,8 +1,14 @@
 "use server";
 
 import { prisma } from "@/lib/prisma";
+import { requireAdmin } from "@/lib/authGuard";
 
 export async function deleteContactAction(id: string) {
+  const authCheck = await requireAdmin();
+  if (!authCheck.authorized) {
+    return { success: false, error: authCheck.error };
+  }
+
   try {
     await prisma.contact.delete({
       where: { id },

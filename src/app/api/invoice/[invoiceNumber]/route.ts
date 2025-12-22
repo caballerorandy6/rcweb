@@ -3,6 +3,8 @@
 
 import { NextRequest, NextResponse } from "next/server";
 import { getInvoiceByNumber } from "@/lib/invoice/actions";
+import { validateApiKey } from "@/lib/apiAuth";
+import { auth } from "@/lib/auth";
 
 // Configuración para prevenir indexación
 export const dynamic = "force-dynamic";
@@ -13,7 +15,10 @@ export const revalidate = 0;
  * Descarga un invoice PDF por su número
  * Ejemplo: /api/invoice/INV-2025-001
  *
- * Security: This endpoint is private and should not be indexed by search engines
+ * Security: Requires one of:
+ * - Valid API key (for internal/admin access)
+ * - Admin session
+ * - Email query param matching invoice customer email
  */
 export async function GET(
   request: NextRequest,
@@ -40,6 +45,37 @@ export async function GET(
       );
     }
 
+    // Authorization check
+    let authorized = false;
+
+    // Option 1: Valid API key
+    if (validateApiKey(request)) {
+      authorized = true;
+    }
+
+    // Option 2: Admin session
+    if (!authorized) {
+      const session = await auth();
+      if (session?.user?.role === "ADMIN") {
+        authorized = true;
+      }
+    }
+
+    // Option 3: Email verification (for customer access via email link)
+    if (!authorized) {
+      const email = request.nextUrl.searchParams.get("email");
+      if (email && email.toLowerCase() === invoice.customerEmail.toLowerCase()) {
+        authorized = true;
+      }
+    }
+
+    if (!authorized) {
+      return NextResponse.json(
+        { error: "Unauthorized: Invalid credentials or email mismatch" },
+        { status: 401 }
+      );
+    }
+
     if (!invoice.pdfUrl) {
       return NextResponse.json(
         { error: "Invoice PDF not available" },
@@ -56,19 +92,6 @@ export async function GET(
     response.headers.set("Pragma", "no-cache");
 
     return response;
-
-    // Opción 2: Fetch y devolver el PDF (más control pero más lento)
-    /*
-    const pdfResponse = await fetch(invoice.pdfUrl);
-    const pdfBuffer = await pdfResponse.arrayBuffer();
-
-    return new NextResponse(pdfBuffer, {
-      headers: {
-        "Content-Type": "application/pdf",
-        "Content-Disposition": `inline; filename="${invoiceNumber}.pdf"`,
-      },
-    });
-    */
   } catch (error) {
     console.error("Error fetching invoice:", error);
     return NextResponse.json(

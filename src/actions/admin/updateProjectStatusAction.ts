@@ -4,6 +4,7 @@
 import { prisma } from "@/lib/prisma";
 import { Resend } from "resend";
 import { sendProjectReadyEmail } from "@/lib/email/senders";
+import { requireAdmin } from "@/lib/authGuard";
 
 type ProjectStatus = "in_progress" | "ready_for_payment" | "completed";
 
@@ -21,6 +22,11 @@ export async function updateProjectStatusAction(
   projectCode: string,
   status: ProjectStatus
 ): Promise<UpdateStatusResult> {
+  const authCheck = await requireAdmin();
+  if (!authCheck.authorized) {
+    return { success: false, error: authCheck.error };
+  }
+
   try {
     const resend = new Resend(process.env.RESEND_API_KEY!);
 

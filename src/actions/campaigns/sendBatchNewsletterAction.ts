@@ -9,6 +9,7 @@ import {
   getCurrentQuota,
 } from "@/lib/emailQuota";
 import { deleteFailedEmailsAction } from "@/actions/contacts/deleteFailedEmailsAction";
+import { requireAdmin } from "@/lib/authGuard";
 
 const resend = new Resend(process.env.RESEND_API_KEY!);
 
@@ -53,6 +54,11 @@ export const createAndSendBatchCampaign = async (
   htmlContent: string,
   testMode = false
 ): Promise<BatchNewsletterResponse> => {
+  const authCheck = await requireAdmin();
+  if (!authCheck.authorized) {
+    return { success: false, message: authCheck.error };
+  }
+
   try {
     // Check campaign lock
     const lockCheck = await checkCampaignLock();
@@ -306,6 +312,11 @@ export const createAndSendBatchCampaign = async (
 export const continueBatchCampaign = async (
   campaignId: string
 ): Promise<BatchNewsletterResponse> => {
+  const authCheck = await requireAdmin();
+  if (!authCheck.authorized) {
+    return { success: false, message: authCheck.error };
+  }
+
   try {
     // Check campaign lock
     const lockCheck = await checkCampaignLock();

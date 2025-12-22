@@ -4,10 +4,23 @@
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import twilio from "twilio";
+import { validateTwilioSignature, forbiddenTwilioSmsResponse } from "@/lib/twilioAuth";
 
 export async function POST(request: NextRequest) {
   try {
     const formData = await request.formData();
+
+    // Convert FormData to object for signature validation
+    const params: Record<string, string> = {};
+    formData.forEach((value, key) => {
+      params[key] = value.toString();
+    });
+
+    // Validate Twilio signature
+    const isValid = await validateTwilioSignature(request, params);
+    if (!isValid) {
+      return forbiddenTwilioSmsResponse();
+    }
 
     // Extract Twilio parameters
     const from = formData.get("From") as string; // User's phone number

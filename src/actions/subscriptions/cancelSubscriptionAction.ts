@@ -2,6 +2,7 @@
 
 import Stripe from "stripe";
 import { prisma } from "@/lib/prisma";
+import { requireAdmin } from "@/lib/authGuard";
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!);
 
@@ -17,6 +18,11 @@ export interface CancelSubscriptionResult {
 export async function cancelSubscriptionAction(
   subscriptionId: string
 ): Promise<CancelSubscriptionResult> {
+  const authCheck = await requireAdmin();
+  if (!authCheck.authorized) {
+    return { success: false, error: authCheck.error };
+  }
+
   try {
     // Find subscription in database
     const subscription = await prisma.subscription.findUnique({

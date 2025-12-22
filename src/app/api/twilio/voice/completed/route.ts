@@ -4,10 +4,23 @@
  */
 
 import { NextRequest, NextResponse } from "next/server";
+import { validateTwilioSignature } from "@/lib/twilioAuth";
 
 export async function POST(request: NextRequest) {
   try {
     const formData = await request.formData();
+
+    // Convert FormData to object for signature validation
+    const params: Record<string, string> = {};
+    formData.forEach((value, key) => {
+      params[key] = value.toString();
+    });
+
+    // Validate Twilio signature
+    const isValid = await validateTwilioSignature(request, params);
+    if (!isValid) {
+      return NextResponse.json({ error: "Unauthorized" }, { status: 403 });
+    }
 
     // Extract call details
     const callSid = formData.get("CallSid");

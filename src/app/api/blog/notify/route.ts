@@ -1,7 +1,13 @@
 import { NextResponse, NextRequest } from "next/server";
 import { prisma } from "@/lib/prisma";
+import { validateApiKey, unauthorizedResponse } from "@/lib/apiAuth";
 
 export async function POST(request: NextRequest) {
+  // Validate API key for n8n access
+  if (!validateApiKey(request)) {
+    return unauthorizedResponse("Invalid or missing API key");
+  }
+
   try {
     const { slug, title } = await request.json();
 
