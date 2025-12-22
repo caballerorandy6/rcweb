@@ -1,8 +1,15 @@
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import { Resend } from "resend";
 import { escapeHtml, sanitizeEmail, sanitizePhone } from "@/lib/sanitize";
+import { rateLimiters, checkRateLimit } from "@/lib/rateLimit";
 
-export async function POST(request: Request) {
+export async function POST(request: NextRequest) {
+  // Rate limiting: 5 requests per minute
+  const rateLimitResult = await checkRateLimit(request, rateLimiters.contact);
+  if (!rateLimitResult.success) {
+    return rateLimitResult.response;
+  }
+
   const resend = new Resend(process.env.RESEND_API_KEY);
 
   const body = await request.json();
