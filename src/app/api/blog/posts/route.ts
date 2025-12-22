@@ -1,8 +1,14 @@
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import { getAllPosts } from "@/lib/blog";
+import { validateApiKey, unauthorizedResponse } from "@/lib/apiAuth";
 
-export async function GET() {
+export async function GET(request: NextRequest) {
+  // Validate API key for n8n access
+  if (!validateApiKey(request)) {
+    return unauthorizedResponse("Invalid or missing API key");
+  }
+
   try {
     const posts = getAllPosts();
 
