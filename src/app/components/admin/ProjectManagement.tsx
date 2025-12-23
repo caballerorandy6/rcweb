@@ -5,6 +5,10 @@ import { toast } from "sonner";
 import { getAllProjectsAction } from "@/actions/projects/getAllProjectsAction";
 import { getProjectStatsAction } from "@/actions/projects/getProjectStatsAction";
 import { updateProjectStatusAction } from "@/actions/projects/updateProjectStatusAction";
+import { getMilestonesAction } from "@/actions/milestones/getMilestonesAction";
+import MilestoneManager from "./MilestoneManager";
+import { Milestone } from "@/types/milestone";
+import { FlagIcon } from "@heroicons/react/24/outline";
 
 type Project = {
   id: string;
@@ -38,6 +42,27 @@ export default function ProjectManagement({
   const [projects, setProjects] = useState<Project[]>(initialProjects);
   const [stats, setStats] = useState<Stats | null>(initialStats);
   const [isPending, startTransition] = useTransition();
+
+  // Milestone modal state
+  const [selectedProject, setSelectedProject] = useState<{
+    id: string;
+    projectCode: string;
+    milestones: Milestone[];
+  } | null>(null);
+
+  const handleOpenMilestones = async (project: Project) => {
+    const result = await getMilestonesAction(project.id);
+
+    if (result.success) {
+      setSelectedProject({
+        id: project.id,
+        projectCode: project.projectCode,
+        milestones: result.milestones,
+      });
+    } else {
+      toast.error("Failed to load milestones");
+    }
+  };
 
   const loadData = async () => {
     try {
@@ -237,26 +262,38 @@ export default function ProjectManagement({
                     </span>
                   </td>
                   <td className="px-6 py-4">
-                    {getNextStatus(project.projectStatus) &&
-                      project.firstPaid && (
-                        <button
-                          onClick={() =>
-                            handleStatusUpdate(
-                              project.projectCode,
-                              getNextStatus(project.projectStatus)!
-                            )
-                          }
-                          disabled={isPending}
-                          className="px-4 py-2 bg-gold text-gray-900 rounded text-sm font-medium hover:bg-gold/90 transition-colors disabled:opacity-50"
-                        >
-                          {isPending
-                            ? "..."
-                            : getNextStatus(project.projectStatus) ===
-                                "ready_for_payment"
-                              ? "📧 Mark Ready"
-                              : `→ ${getNextStatus(project.projectStatus)?.replace("_", " ")}`}
-                        </button>
-                      )}
+                    <div className="flex items-center gap-2">
+                      {/* Milestones Button */}
+                      <button
+                        onClick={() => handleOpenMilestones(project)}
+                        className="p-2 bg-purple-500/20 text-purple-400 rounded hover:bg-purple-500/30 transition-colors"
+                        title="Manage Milestones"
+                      >
+                        <FlagIcon className="w-4 h-4" />
+                      </button>
+
+                      {/* Status Update Button */}
+                      {getNextStatus(project.projectStatus) &&
+                        project.firstPaid && (
+                          <button
+                            onClick={() =>
+                              handleStatusUpdate(
+                                project.projectCode,
+                                getNextStatus(project.projectStatus)!
+                              )
+                            }
+                            disabled={isPending}
+                            className="px-4 py-2 bg-gold text-gray-900 rounded text-sm font-medium hover:bg-gold/90 transition-colors disabled:opacity-50"
+                          >
+                            {isPending
+                              ? "..."
+                              : getNextStatus(project.projectStatus) ===
+                                  "ready_for_payment"
+                                ? "📧 Mark Ready"
+                                : `→ ${getNextStatus(project.projectStatus)?.replace("_", " ")}`}
+                          </button>
+                        )}
+                    </div>
                   </td>
                 </tr>
               ))}
@@ -264,6 +301,16 @@ export default function ProjectManagement({
           </table>
         </div>
       </div>
+
+      {/* Milestone Manager Modal */}
+      {selectedProject && (
+        <MilestoneManager
+          paymentId={selectedProject.id}
+          projectCode={selectedProject.projectCode}
+          initialMilestones={selectedProject.milestones}
+          onClose={() => setSelectedProject(null)}
+        />
+      )}
     </div>
   );
 }

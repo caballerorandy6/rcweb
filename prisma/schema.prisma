@@ -275,21 +275,28 @@ model NotifiedBlogPost {
   @@index([slug])
 }
 
+// Milestone status enum
+enum MilestoneStatus {
+  pending
+  in_progress
+  completed
+}
+
 // Project Milestones for tracking detailed progress
 model Milestone {
-  id          String    @id @default(uuid())
+  id          String          @id @default(uuid())
   paymentId   String
-  payment     Payment   @relation(fields: [paymentId], references: [id], onDelete: Cascade)
+  payment     Payment         @relation(fields: [paymentId], references: [id], onDelete: Cascade)
 
-  title       String    // "Design Mockups", "Frontend Development", etc.
-  description String?   @db.Text
-  order       Int       @default(0) // For sorting milestones
-  status      String    @default("pending") // pending, in_progress, completed
+  title       String          // "Design Mockups", "Frontend Development", etc.
+  description String?         @db.Text
+  order       Int             @default(0) // For sorting milestones
+  status      MilestoneStatus @default(pending)
   dueDate     DateTime?
   completedAt DateTime?
 
-  createdAt   DateTime  @default(now())
-  updatedAt   DateTime  @updatedAt
+  createdAt   DateTime        @default(now())
+  updatedAt   DateTime        @updatedAt
 
   @@index([paymentId])
   @@index([status])
