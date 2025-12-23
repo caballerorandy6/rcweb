@@ -298,9 +298,33 @@ model Milestone {
   createdAt   DateTime        @default(now())
   updatedAt   DateTime        @updatedAt
 
+  notifications MilestoneNotification[]
+
   @@index([paymentId])
   @@index([status])
   @@index([order])
+}
+
+// Notifications for milestone updates (consumed by n8n)
+model MilestoneNotification {
+  id          String    @id @default(uuid())
+  milestoneId String
+  milestone   Milestone @relation(fields: [milestoneId], references: [id], onDelete: Cascade)
+
+  type        String    // "completed", "started", "updated"
+
+  // Denormalized data for n8n (avoids extra queries)
+  projectCode   String
+  clientName    String
+  clientEmail   String
+  milestoneTitle String
+  accessToken   String  // For building the project URL
+
+  sentAt      DateTime? // null = pending, date = sent
+  createdAt   DateTime  @default(now())
+
+  @@index([sentAt])
+  @@index([createdAt])
 }
 
 model Invoice {

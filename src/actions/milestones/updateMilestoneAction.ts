@@ -26,10 +26,45 @@ export async function updateMilestoneAction(
   }
 
   try {
+    // Get current milestone to check status change
+    const currentMilestone = await prisma.milestone.findUnique({
+      where: { id },
+      select: { status: true },
+    });
+
     const data = await prisma.milestone.update({
       where: { id },
       data: updateData,
+      include: {
+        payment: {
+          select: {
+            projectCode: true,
+            name: true,
+            email: true,
+            accessToken: true,
+          },
+        },
+      },
     });
+
+    // Create notification if status changed to completed or in_progress
+    if (
+      updateData.status &&
+      currentMilestone?.status !== updateData.status &&
+      (updateData.status === "completed" || updateData.status === "in_progress")
+    ) {
+      await prisma.milestoneNotification.create({
+        data: {
+          milestoneId: data.id,
+          type: updateData.status === "completed" ? "completed" : "started",
+          projectCode: data.payment.projectCode,
+          clientName: data.payment.name,
+          clientEmail: data.payment.email,
+          milestoneTitle: data.title,
+          accessToken: data.payment.accessToken,
+        },
+      });
+    }
 
     const milestone: Milestone = {
       id: data.id,
