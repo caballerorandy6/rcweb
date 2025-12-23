@@ -6,7 +6,7 @@ import type { Route } from "next";
 import CustomBadge from "@/app/components/ui/CustomBadge";
 import useSectionObserver from "@/hooks/useSectionObserver";
 import { motion } from "framer-motion";
-import { PhoneIcon } from "@heroicons/react/24/outline";
+import { PhoneIcon, CalendarDaysIcon } from "@heroicons/react/24/outline";
 import { trackFBPhoneCall } from "@/app/components/tracking/FacebookPixel";
 
 // Phone Conversion Tracking (Google Ads + Facebook)
@@ -224,7 +224,7 @@ const Hero = () => {
             </motion.div>
           </motion.div>
 
-          {/* Phone Number CTA */}
+          {/* Quick Contact Options */}
           <motion.div
             className="mt-8 text-center mx-auto flex flex-col items-center"
             initial={{ opacity: 0, y: 20 }}
@@ -236,19 +236,29 @@ const Hero = () => {
               delay: 0.7,
             }}
           >
-            <p className="text-white/60 font-inter text-sm mb-2 text-center">
-              Or call us directly:
+            <p className="text-white/60 font-inter text-sm mb-3 text-center">
+              Ready to start? Choose your preferred way:
             </p>
-            <motion.a
-              href="tel:+13463757534"
-              onClick={trackPhoneConversion}
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              className="inline-flex items-center gap-2 text-gold hover:text-gold/80 transition-colors font-inter text-lg font-semibold"
-            >
-              <PhoneIcon className="w-5 h-5" />
-              +1 (346) 375-7534
-            </motion.a>
+            <div className="flex flex-col sm:flex-row gap-3 items-center">
+              <motion.a
+                href="tel:+13463757534"
+                onClick={trackPhoneConversion}
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                className="inline-flex items-center gap-2 text-gold hover:text-gold/80 transition-colors font-inter text-base font-semibold"
+              >
+                <PhoneIcon className="w-5 h-5" />
+                +1 (346) 375-7534
+              </motion.a>
+              <span className="text-white/40 hidden sm:inline">|</span>
+              <Link
+                href={"/schedule" as Route}
+                className="inline-flex items-center gap-2 text-gold hover:text-gold/80 transition-colors font-inter text-base font-semibold"
+              >
+                <CalendarDaysIcon className="w-5 h-5" />
+                Book on Calendly
+              </Link>
+            </div>
           </motion.div>
         </motion.div>
       </div>

@@ -50,6 +50,7 @@ export const navigation: NavigationProps[] = [
   { name: "Experience", hash: "/#experience" }, // Refuerzas credibilidad
   { name: "Certifications", hash: "/#certifications" },
   { name: "About", hash: "/#about" }, // Quién eres (menos prioridad que lo anterior)
+  { name: "Schedule", hash: "/schedule" }, // Agendar consulta gratuita
   { name: "Contact", hash: "/#contact" }, // Punto de conversión
   { name: "CTA", hash: "/#cta" }, // Botón extra destacado
 ];

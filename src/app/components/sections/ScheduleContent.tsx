@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect } from "react";
 import { motion } from "framer-motion";
 import {
   CalendarDaysIcon,
@@ -11,6 +12,9 @@ import Link from "next/link";
 import Heading from "@/app/components/ui/Heading";
 import { trackFBPhoneCall } from "@/app/components/tracking/FacebookPixel";
 import { trackManualContact } from "@/lib/analytics";
+
+// Calendly configuration
+const CALENDLY_URL = process.env.NEXT_PUBLIC_CALENDLY_URL || "https://calendly.com/rcwebsolutions/30min";
 
 // Phone Conversion Tracking (Google Ads + Facebook)
 const trackPhoneConversion = () => {
@@ -31,6 +35,22 @@ const trackPhoneConversion = () => {
 };
 
 export default function ScheduleContent() {
+  // Load Calendly widget script
+  useEffect(() => {
+    const script = document.createElement("script");
+    script.src = "https://assets.calendly.com/assets/external/widget.js";
+    script.async = true;
+    document.body.appendChild(script);
+
+    return () => {
+      // Cleanup script on unmount
+      const existingScript = document.querySelector('script[src="https://assets.calendly.com/assets/external/widget.js"]');
+      if (existingScript) {
+        existingScript.remove();
+      }
+    };
+  }, []);
+
   return (
     <section className="relative isolate overflow-hidden py-24 sm:py-32 bg-gradient-to-b from-gray-900 via-gray-900/95 to-gray-900">
       {/* Background decoration */}
@@ -150,54 +170,66 @@ export default function ScheduleContent() {
           </div>
         </motion.div>
 
-        {/* CTA Buttons */}
+        {/* Embedded Calendly Widget */}
         <motion.div
-          className="flex flex-col sm:flex-row gap-4 mt-12 justify-center"
+          className="mt-16 max-w-4xl mx-auto"
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ delay: 0.4 }}
         >
-          <motion.a
-            href="https://calendly.com/rcwebsolutions"
-            target="_blank"
-            rel="noopener noreferrer"
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-            className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-gold text-gray-900 font-bold rounded-lg hover:bg-gold/90 transition-colors font-inter text-lg"
-          >
-            <CalendarDaysIcon className="w-6 h-6" />
-            Schedule Now
-          </motion.a>
+          <div className="bg-gray-900/60 backdrop-blur-md rounded-xl border border-gold/20 p-4 overflow-hidden">
+            <div
+              className="calendly-inline-widget"
+              data-url={`${CALENDLY_URL}?hide_gdpr_banner=1&background_color=111827&text_color=ffffff&primary_color=d4af37`}
+              style={{ minWidth: "320px", height: "700px" }}
+            />
+          </div>
+        </motion.div>
 
+        {/* Alternative Contact Options */}
+        <motion.div
+          className="flex flex-col sm:flex-row gap-4 mt-12 justify-center"
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ delay: 0.5 }}
+        >
           <motion.a
             href="tel:+13463757534"
             onClick={trackPhoneConversion}
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
-            className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-transparent border-2 border-gold text-gold font-bold rounded-lg hover:bg-gold/10 transition-colors font-inter text-lg"
+            className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-gold text-gray-900 font-bold rounded-lg hover:bg-gold/90 transition-colors font-inter text-lg"
           >
             <PhoneIcon className="w-6 h-6" />
             Call (346) 375-7534
           </motion.a>
+
+          <Link
+            href="/#contact"
+            className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-transparent border-2 border-gold text-gold font-bold rounded-lg hover:bg-gold/10 transition-colors font-inter text-lg"
+          >
+            Send a Message
+          </Link>
         </motion.div>
 
         {/* Contact Alternative */}
         <motion.div
-          className="mt-12 text-center"
+          className="mt-8 text-center"
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
           viewport={{ once: true }}
-          transition={{ delay: 0.5 }}
+          transition={{ delay: 0.6 }}
         >
-          <p className="text-white/70 font-inter mx-auto">
-            Prefer to send a message first?{" "}
-            <Link
-              href="/#contact"
+          <p className="text-white/70 font-inter mx-auto text-sm">
+            Can&apos;t find a time that works?{" "}
+            <a
+              href="mailto:contactus@rcweb.dev"
               className="text-gold hover:text-gold/80 transition-colors font-bold"
             >
-              Contact us here
-            </Link>
+              Email us directly
+            </a>
           </p>
         </motion.div>
       </div>
