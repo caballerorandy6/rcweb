@@ -789,19 +789,20 @@ export const pricingPlans = [
     featured: false,
     cta: "Build Your Platform",
   },
-  {
-    id: "test-plan",
-    name: "Test Plan (Development Only)",
-    price: "$1",
-    priceInCents: 100, // $1.00
-    range: "$1",
-    duration: "Testing",
-    description: "For testing payment flow only",
-    features: ["Test feature 1", "Test feature 2"],
-    ideal: "For development testing only",
-    featured: false,
-    cta: "Test Payment",
-  },
+  // 🟡 TEST/DEV ONLY - Comentar para producción
+  // {
+  //   id: "test-plan",
+  //   name: "Test Plan (Development Only)",
+  //   price: "$1",
+  //   priceInCents: 100, // $1.00
+  //   range: "$1",
+  //   duration: "Testing",
+  //   description: "For testing payment flow only",
+  //   features: ["Test feature 1", "Test feature 2"],
+  //   ideal: "For development testing only",
+  //   featured: false,
+  //   cta: "Test Payment",
+  // },
   {
     id: "website-maintenance",
     name: "Monthly Website Maintenance and Support",

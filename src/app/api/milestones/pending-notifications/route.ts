@@ -47,7 +47,7 @@ export async function GET(request: NextRequest) {
         clientEmail: n.clientEmail,
         milestoneTitle: n.milestoneTitle,
         accessToken: n.accessToken,
-        projectUrl: `${process.env.NEXT_PUBLIC_SITE_URL}/project/${n.accessToken}`,
+        projectUrl: `${process.env.NEXT_PUBLIC_BASE_URL}/project/${n.accessToken}`,
         progress: {
           completed: completedCount,
           total: allMilestones.length,
