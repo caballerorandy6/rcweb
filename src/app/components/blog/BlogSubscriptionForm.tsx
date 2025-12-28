@@ -47,7 +47,7 @@ const BlogSubscriptionForm = () => {
   };
 
   return (
-    <div className="w-full max-w-md mx-auto">
+    <div id="newsletter" className="w-full max-w-md mx-auto">
       <div className="bg-gray-900/80 backdrop-blur-sm border border-gray-700/50 rounded-2xl p-6">
         <div className="flex items-center gap-2 mb-4">
           <EnvelopeIcon className="w-6 h-6 text-gold" />
