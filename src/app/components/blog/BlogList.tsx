@@ -6,6 +6,7 @@ import Image from "next/image";
 import type { Route } from "next";
 import { BookOpenIcon, CalendarIcon, ClockIcon } from "@heroicons/react/24/outline";
 import Heading from "@/app/components/ui/Heading";
+import BlogSubscriptionForm from "@/app/components/blog/BlogSubscriptionForm";
 import type { BlogPost } from "@/lib/blog";
 
 interface BlogListProps {
@@ -36,6 +37,11 @@ export default function BlogList({ posts }: BlogListProps) {
         >
           Web Development Blog
         </Heading>
+
+        {/* Newsletter Subscription */}
+        <div className="mt-12 mb-8">
+          <BlogSubscriptionForm />
+        </div>
 
         {/* Blog Posts Grid */}
         {posts.length > 0 ? (
