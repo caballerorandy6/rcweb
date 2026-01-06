@@ -36,3 +36,15 @@ export type UpdateableProjectStatus =
   | "ready_for_payment"
   | "completed";
 
+/**
+ * Verified project access information
+ * Used for final payment verification
+ */
+export type VerifiedProjectAccess = {
+  id: string;
+  projectCode: string;
+  planName: string;
+  secondPayment: number;
+  accessToken: string;
+};
+

@@ -50,8 +50,9 @@ const SetupPasswordForm = ({ token }: SetupPasswordFormProps) => {
         return;
       }
 
-      const errorMessage =
-        !result.success ? result.error : "Failed to set up password. Please try again.";
+      const errorMessage = !result.success
+        ? result.error
+        : "Failed to set up password. Please try again.";
       toast.error(errorMessage, { id: toastId });
     } catch (error) {
       console.error("Setup password error:", error);
