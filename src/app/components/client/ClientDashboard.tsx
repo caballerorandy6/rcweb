@@ -108,245 +108,251 @@ export default function ClientDashboard({
                 </p>
               </div>
             </div>
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-            {/* Projects List */}
-            <div className="lg:col-span-1 space-y-4">
-              <h2 className="text-2xl text-gold font-bold font-iceland mb-4">
-                Your Projects
-              </h2>
-              <div className="space-y-3">
-                {projects.map((project) => {
-                  const statusInfo = getProjectStatusLabel(
-                    project.projectStatus
-                  );
-                  const progress = getPaymentProgress(project);
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+              {/* Projects List */}
+              <div className="lg:col-span-1 space-y-4">
+                <h2 className="text-2xl text-gold font-bold font-iceland mb-4">
+                  Your Projects
+                </h2>
+                <div className="space-y-3">
+                  {projects.map((project) => {
+                    const statusInfo = getProjectStatusLabel(
+                      project.projectStatus
+                    );
+                    const progress = getPaymentProgress(project);
 
-                  return (
-                    <button
-                      key={project.id}
-                      onClick={() => setSelectedProject(project)}
-                      className={`w-full text-left p-4 rounded-xl border transition-all duration-300 ${
-                        selectedProject?.id === project.id
-                          ? "border-gold bg-gold/10"
-                          : "border-gray-700/60 bg-gray-800/80 hover:border-gold/50"
-                      }`}
-                    >
-                      <div className="flex items-start justify-between mb-2">
+                    return (
+                      <button
+                        key={project.id}
+                        onClick={() => setSelectedProject(project)}
+                        className={`w-full text-left p-4 rounded-xl border transition-all duration-300 ${
+                          selectedProject?.id === project.id
+                            ? "border-gold bg-gold/10"
+                            : "border-gray-700/60 bg-gray-800/80 hover:border-gold/50"
+                        }`}
+                      >
+                        <div className="flex items-start justify-between mb-2">
+                          <div>
+                            <h3 className="text-white font-semibold font-inter">
+                              {project.planName}
+                            </h3>
+                            <p className="text-gray-400 text-sm font-inter">
+                              {project.projectCode}
+                            </p>
+                          </div>
+                          <span
+                            className={`px-2 py-1 rounded text-xs font-inter ${statusInfo.color}`}
+                          >
+                            {statusInfo.label}
+                          </span>
+                        </div>
+                        <div className="mt-2">
+                          <div className="flex items-center justify-between text-xs text-gray-400 mb-1">
+                            <span>Payment Progress</span>
+                            <span>{progress}%</span>
+                          </div>
+                          <div className="w-full bg-gray-700/50 rounded-full h-2">
+                            <div
+                              className="bg-gold h-2 rounded-full transition-all duration-300"
+                              style={{ width: `${progress}%` }}
+                            ></div>
+                          </div>
+                        </div>
+                      </button>
+                    );
+                  })}
+                </div>
+              </div>
+
+              {/* Project Details */}
+              {selectedProject && (
+                <div className="lg:col-span-2">
+                  <div className="bg-gradient-to-br from-gray-900/95 to-gray-800/95 p-6 rounded-2xl shadow-2xl backdrop-blur-sm border border-gray-700/50">
+                    <div className="flex items-start justify-between mb-6">
+                      <div>
+                        <h2 className="text-3xl text-gold font-bold font-iceland mb-2">
+                          {selectedProject.planName}
+                        </h2>
+                        <p className="text-gray-400 font-inter">
+                          Project Code: {selectedProject.projectCode}
+                        </p>
+                      </div>
+                      <span
+                        className={`px-3 py-1 rounded text-sm font-inter ${getProjectStatusLabel(selectedProject.projectStatus).color}`}
+                      >
+                        {
+                          getProjectStatusLabel(selectedProject.projectStatus)
+                            .label
+                        }
+                      </span>
+                    </div>
+
+                    {/* Payment Information */}
+                    <div className="mb-6 p-4 bg-gray-800/50 rounded-xl border border-gray-700/50">
+                      <h3 className="text-xl text-gold font-semibold font-inter mb-4">
+                        Payment Information
+                      </h3>
+                      <div className="grid grid-cols-2 gap-4 mb-4">
                         <div>
-                          <h3 className="text-white font-semibold font-inter">
-                            {project.planName}
-                          </h3>
                           <p className="text-gray-400 text-sm font-inter">
-                            {project.projectCode}
+                            Total Amount
+                          </p>
+                          <p className="text-white text-lg font-semibold font-inter">
+                            {formatCurrency(selectedProject.totalAmount)}
                           </p>
                         </div>
-                        <span
-                          className={`px-2 py-1 rounded text-xs font-inter ${statusInfo.color}`}
-                        >
-                          {statusInfo.label}
-                        </span>
-                      </div>
-                      <div className="mt-2">
-                        <div className="flex items-center justify-between text-xs text-gray-400 mb-1">
-                          <span>Payment Progress</span>
-                          <span>{progress}%</span>
+                        <div>
+                          <p className="text-gray-400 text-sm font-inter">
+                            First Payment
+                          </p>
+                          <p className="text-white text-lg font-semibold font-inter">
+                            {formatCurrency(selectedProject.firstPayment)}
+                          </p>
+                          <p
+                            className={`text-xs font-inter mt-1 ${
+                              selectedProject.firstPaid
+                                ? "text-green-400"
+                                : "text-yellow-400"
+                            }`}
+                          >
+                            {selectedProject.firstPaid
+                              ? `Paid on ${formatDate(selectedProject.firstPaidAt)}`
+                              : "Pending"}
+                          </p>
                         </div>
-                        <div className="w-full bg-gray-700/50 rounded-full h-2">
-                          <div
-                            className="bg-gold h-2 rounded-full transition-all duration-300"
-                            style={{ width: `${progress}%` }}
-                          ></div>
-                        </div>
                       </div>
-                    </button>
-                  );
-                })}
-              </div>
-            </div>
-
-            {/* Project Details */}
-            {selectedProject && (
-              <div className="lg:col-span-2">
-                <div className="bg-gradient-to-br from-gray-900/95 to-gray-800/95 p-6 rounded-2xl shadow-2xl backdrop-blur-sm border border-gray-700/50">
-                  <div className="flex items-start justify-between mb-6">
-                    <div>
-                      <h2 className="text-3xl text-gold font-bold font-iceland mb-2">
-                        {selectedProject.planName}
-                      </h2>
-                      <p className="text-gray-400 font-inter">
-                        Project Code: {selectedProject.projectCode}
-                      </p>
-                    </div>
-                    <span
-                      className={`px-3 py-1 rounded text-sm font-inter ${getProjectStatusLabel(selectedProject.projectStatus).color}`}
-                    >
-                      {
-                        getProjectStatusLabel(selectedProject.projectStatus)
-                          .label
-                      }
-                    </span>
-                  </div>
-
-                  {/* Payment Information */}
-                  <div className="mb-6 p-4 bg-gray-800/50 rounded-xl border border-gray-700/50">
-                    <h3 className="text-xl text-gold font-semibold font-inter mb-4">
-                      Payment Information
-                    </h3>
-                    <div className="grid grid-cols-2 gap-4 mb-4">
-                      <div>
-                        <p className="text-gray-400 text-sm font-inter">
-                          Total Amount
+                      <div className="mb-4">
+                        <p className="text-gray-400 text-sm font-inter mb-1">
+                          Second Payment
                         </p>
                         <p className="text-white text-lg font-semibold font-inter">
-                          {formatCurrency(selectedProject.totalAmount)}
-                        </p>
-                      </div>
-                      <div>
-                        <p className="text-gray-400 text-sm font-inter">
-                          First Payment
-                        </p>
-                        <p className="text-white text-lg font-semibold font-inter">
-                          {formatCurrency(selectedProject.firstPayment)}
+                          {formatCurrency(selectedProject.secondPayment)}
                         </p>
                         <p
                           className={`text-xs font-inter mt-1 ${
-                            selectedProject.firstPaid
+                            selectedProject.secondPaid
                               ? "text-green-400"
                               : "text-yellow-400"
                           }`}
                         >
-                          {selectedProject.firstPaid
-                            ? `Paid on ${formatDate(selectedProject.firstPaidAt)}`
+                          {selectedProject.secondPaid
+                            ? `Paid on ${formatDate(selectedProject.secondPaidAt)}`
                             : "Pending"}
                         </p>
-                      </div>
-                    </div>
-                    <div className="mb-4">
-                      <p className="text-gray-400 text-sm font-inter mb-1">
-                        Second Payment
-                      </p>
-                      <p className="text-white text-lg font-semibold font-inter">
-                        {formatCurrency(selectedProject.secondPayment)}
-                      </p>
-                      <p
-                        className={`text-xs font-inter mt-1 ${
-                          selectedProject.secondPaid
-                            ? "text-green-400"
-                            : "text-yellow-400"
-                        }`}
-                      >
-                        {selectedProject.secondPaid
-                          ? `Paid on ${formatDate(selectedProject.secondPaidAt)}`
-                          : "Pending"}
-                      </p>
-                      {!selectedProject.secondPaid &&
-                        selectedProject.projectStatus === "ready_for_payment" && (
-                          <div className="mt-4">
-                            <Link
-                              href={`/pay/${selectedProject.accessToken}` as Route}
-                              className="inline-block w-full text-center px-4 py-2 bg-gold text-black rounded-lg font-semibold font-inter hover:bg-yellow-200 transition-colors"
-                            >
-                              Pay Final Payment
-                            </Link>
-                          </div>
-                        )}
-                    </div>
-                  </div>
-
-                  {/* Milestones */}
-                  {selectedProject.milestones.length > 0 && (
-                    <div className="mb-6">
-                      <h3 className="text-xl text-gold font-semibold font-inter mb-4">
-                        Project Milestones
-                      </h3>
-                      <div className="space-y-3">
-                        {selectedProject.milestones.map((milestone) => {
-                          const milestoneStatus = getMilestoneStatusLabel(
-                            milestone.status
-                          );
-                          return (
-                            <div
-                              key={milestone.id}
-                              className="p-4 bg-gray-800/50 rounded-xl border border-gray-700/50"
-                            >
-                              <div className="flex items-start justify-between mb-2">
-                                <h4 className="text-white font-semibold font-inter">
-                                  {milestone.title}
-                                </h4>
-                                <span
-                                  className={`px-2 py-1 rounded text-xs font-inter ${milestoneStatus.color}`}
-                                >
-                                  {milestoneStatus.label}
-                                </span>
-                              </div>
-                              {milestone.description && (
-                                <p className="text-gray-400 text-sm font-inter mb-2">
-                                  {milestone.description}
-                                </p>
-                              )}
-                              {milestone.completedAt && (
-                                <p className="text-green-400 text-xs font-inter">
-                                  Completed on{" "}
-                                  {formatDate(milestone.completedAt)}
-                                </p>
-                              )}
-                            </div>
-                          );
-                        })}
-                      </div>
-                    </div>
-                  )}
-
-                  {/* Invoices */}
-                  {selectedProject.invoices.length > 0 && (
-                    <div className="mb-6">
-                      <h3 className="text-xl text-gold font-semibold font-inter mb-4">
-                        Invoices
-                      </h3>
-                      <div className="space-y-3">
-                        {selectedProject.invoices.map((invoice) => (
-                          <div
-                            key={invoice.id}
-                            className="flex items-center justify-between p-4 bg-gray-800/50 rounded-xl border border-gray-700/50"
-                          >
-                            <div>
-                              <p className="text-white font-semibold font-inter">
-                                {invoice.invoiceNumber}
-                              </p>
-                              <p className="text-gray-400 text-sm font-inter">
-                                {formatCurrency(invoice.total)} •{" "}
-                                {formatDate(invoice.issueDate)}
-                              </p>
-                            </div>
-                            {invoice.pdfUrl && (
-                              <a
-                                href={invoice.pdfUrl}
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                className="px-4 py-2 bg-gold text-black rounded-lg font-semibold font-inter hover:bg-yellow-200 transition-colors"
+                        {!selectedProject.secondPaid &&
+                          selectedProject.projectStatus ===
+                            "ready_for_payment" && (
+                            <div className="mt-4">
+                              <Link
+                                href={
+                                  `/pay/${selectedProject.accessToken}` as Route
+                                }
+                                className="inline-block w-full text-center px-4 py-2 bg-gold text-black rounded-lg font-semibold font-inter hover:bg-yellow-200 transition-colors"
                               >
-                                Download
-                              </a>
-                            )}
-                          </div>
-                        ))}
+                                Pay Final Payment
+                              </Link>
+                            </div>
+                          )}
                       </div>
                     </div>
-                  )}
 
-                  {/* View Project Link */}
-                  <div className="mt-6">
-                    <Link
-                      href={`/project/${selectedProject.accessToken}` as Route}
-                      className="inline-block px-6 py-3 bg-gold text-black rounded-xl font-semibold font-inter hover:bg-yellow-200 transition-colors"
-                    >
-                      View Full Project Details
-                    </Link>
+                    {/* Milestones */}
+                    {selectedProject.milestones.length > 0 && (
+                      <div className="mb-6">
+                        <h3 className="text-xl text-gold font-semibold font-inter mb-4">
+                          Project Milestones
+                        </h3>
+                        <div className="space-y-3">
+                          {selectedProject.milestones.map((milestone) => {
+                            const milestoneStatus = getMilestoneStatusLabel(
+                              milestone.status
+                            );
+                            return (
+                              <div
+                                key={milestone.id}
+                                className="p-4 bg-gray-800/50 rounded-xl border border-gray-700/50"
+                              >
+                                <div className="flex items-start justify-between mb-2">
+                                  <h4 className="text-white font-semibold font-inter">
+                                    {milestone.title}
+                                  </h4>
+                                  <span
+                                    className={`px-2 py-1 rounded text-xs font-inter ${milestoneStatus.color}`}
+                                  >
+                                    {milestoneStatus.label}
+                                  </span>
+                                </div>
+                                {milestone.description && (
+                                  <p className="text-gray-400 text-sm font-inter mb-2">
+                                    {milestone.description}
+                                  </p>
+                                )}
+                                {milestone.completedAt && (
+                                  <p className="text-green-400 text-xs font-inter">
+                                    Completed on{" "}
+                                    {formatDate(milestone.completedAt)}
+                                  </p>
+                                )}
+                              </div>
+                            );
+                          })}
+                        </div>
+                      </div>
+                    )}
+
+                    {/* Invoices */}
+                    {selectedProject.invoices.length > 0 && (
+                      <div className="mb-6">
+                        <h3 className="text-xl text-gold font-semibold font-inter mb-4">
+                          Invoices
+                        </h3>
+                        <div className="space-y-3">
+                          {selectedProject.invoices.map((invoice) => (
+                            <div
+                              key={invoice.id}
+                              className="flex items-center justify-between p-4 bg-gray-800/50 rounded-xl border border-gray-700/50"
+                            >
+                              <div>
+                                <p className="text-white font-semibold font-inter">
+                                  {invoice.invoiceNumber}
+                                </p>
+                                <p className="text-gray-400 text-sm font-inter">
+                                  {formatCurrency(invoice.total)} •{" "}
+                                  {formatDate(invoice.issueDate)}
+                                </p>
+                              </div>
+                              {invoice.pdfUrl && (
+                                <a
+                                  href={invoice.pdfUrl}
+                                  target="_blank"
+                                  rel="noopener noreferrer"
+                                  className="px-4 py-2 bg-gold text-black rounded-lg font-semibold font-inter hover:bg-yellow-200 transition-colors"
+                                >
+                                  Download
+                                </a>
+                              )}
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                    )}
+
+                    {/* View Project Link */}
+                    <div className="mt-6">
+                      <Link
+                        href={
+                          `/project/${selectedProject.accessToken}` as Route
+                        }
+                        className="inline-block px-6 py-3 bg-gold text-black rounded-xl font-semibold font-inter hover:bg-yellow-200 transition-colors"
+                      >
+                        View Full Project Details
+                      </Link>
+                    </div>
                   </div>
                 </div>
-              </div>
-            )}
-          </div>
+              )}
+            </div>
+          </>
         )}
       </div>
     </div>
