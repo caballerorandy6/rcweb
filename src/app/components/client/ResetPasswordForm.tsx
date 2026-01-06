@@ -8,10 +8,7 @@ import { ErrorMessage } from "@hookform/error-message";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 import type { Route } from "next";
-import {
-  ResetPasswordSchema,
-  type ResetPasswordData,
-} from "@/lib/zod";
+import { ResetPasswordSchema, type ResetPasswordData } from "@/lib/zod";
 import { resetPasswordAction } from "@/actions/auth/resetPasswordAction";
 
 interface ResetPasswordFormProps {
@@ -53,8 +50,9 @@ export default function ResetPasswordForm({ token }: ResetPasswordFormProps) {
         return;
       }
 
-      const errorMessage =
-        result.error ?? "Failed to reset password. Please try again.";
+      const errorMessage = !result.success
+        ? result.error
+        : "Failed to reset password. Please try again.";
       toast.error(errorMessage, { id: toastId });
     } catch (error) {
       console.error("Reset password error:", error);
@@ -98,7 +96,9 @@ export default function ResetPasswordForm({ token }: ResetPasswordFormProps) {
                     type="button"
                     onClick={() => setShowPassword(!showPassword)}
                     className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gold transition-colors"
-                    aria-label={showPassword ? "Hide password" : "Show password"}
+                    aria-label={
+                      showPassword ? "Hide password" : "Show password"
+                    }
                   >
                     {showPassword ? (
                       <svg
@@ -271,4 +271,3 @@ export default function ResetPasswordForm({ token }: ResetPasswordFormProps) {
     </div>
   );
 }
-

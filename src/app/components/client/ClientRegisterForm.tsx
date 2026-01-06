@@ -53,8 +53,9 @@ export default function ClientRegisterForm() {
         return;
       }
 
-      const errorMessage =
-        result.error ?? "Failed to create account. Please try again.";
+      const errorMessage = !result.success
+        ? result.error
+        : "Failed to create account. Please try again.";
       toast.error(errorMessage, { id: toastId });
     } catch (error) {
       console.error("Registration error:", error);

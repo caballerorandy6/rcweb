@@ -18,20 +18,23 @@ export async function createFinalPaymentSessionAction(
   projectCode: string
 ): Promise<SplitPaymentResponse> {
   try {
-                // Verificar acceso
+    // Verificar acceso
     const verification = await verifyProjectAccessAction(email, projectCode);
 
     if (!verification.success || !verification.data) {
-      console.error("❌ Verificación fallida:", verification.error);
+      const errorMessage = !verification.success
+        ? verification.error
+        : "Access denied";
+      console.error("❌ Verificación fallida:", errorMessage);
       return {
         success: false,
-        error: verification.error || "Access denied",
+        error: errorMessage,
       };
     }
 
     const payment = verification.data.payment;
 
-        // IMPORTANTE: Incluir TODOS los campos necesarios en metadata
+    // IMPORTANTE: Incluir TODOS los campos necesarios en metadata
     const metadata = {
       paymentId: payment.id,
       projectCode: payment.projectCode,
@@ -40,7 +43,7 @@ export async function createFinalPaymentSessionAction(
       customerEmail: email, // Incluir el email también
     };
 
-        // Crear sesión de Stripe para pago final
+    // Crear sesión de Stripe para pago final
     const session = await stripe.checkout.sessions.create({
       payment_method_types: ["card"],
       mode: "payment",
@@ -64,7 +67,7 @@ export async function createFinalPaymentSessionAction(
       cancel_url: `${process.env.NEXT_PUBLIC_BASE_URL}/final-payment`,
     });
 
-            return {
+    return {
       success: true,
       sessionUrl: session.url!,
     };
