@@ -31,7 +31,7 @@ export default function FinalPayment() {
         setProjectInfo(result.data.payment);
         setVerified(true);
         toast.success("Project verified successfully!");
-      } else {
+      } else if (!result.success) {
         toast.error(result.error || "Verification failed");
       }
     });
@@ -50,7 +50,7 @@ export default function FinalPayment() {
 
       if (result.success && result.sessionUrl) {
         stripeTab.location.href = result.sessionUrl;
-      } else {
+      } else if (!result.success) {
         toast.error(result.error || "Failed to create payment session");
         stripeTab.close();
       }

@@ -25,16 +25,46 @@ interface SubscriptionManagementProps {
   initialSubscriptions: SubscriptionData[];
 }
 
-const statusConfig: Record<string, { label: string; color: string; icon: React.ComponentType<React.SVGProps<SVGSVGElement>> }> = {
-  active: { label: "Active", color: "text-green-400 bg-green-400/10", icon: CheckCircleIcon },
-  cancelled: { label: "Cancelled", color: "text-red-400 bg-red-400/10", icon: XCircleIcon },
-  past_due: { label: "Past Due", color: "text-yellow-400 bg-yellow-400/10", icon: ExclamationTriangleIcon },
-  unpaid: { label: "Unpaid", color: "text-orange-400 bg-orange-400/10", icon: ExclamationTriangleIcon },
-  trialing: { label: "Trial", color: "text-blue-400 bg-blue-400/10", icon: ClockIcon },
+const statusConfig: Record<
+  string,
+  {
+    label: string;
+    color: string;
+    icon: React.ComponentType<React.SVGProps<SVGSVGElement>>;
+  }
+> = {
+  active: {
+    label: "Active",
+    color: "text-green-400 bg-green-400/10",
+    icon: CheckCircleIcon,
+  },
+  cancelled: {
+    label: "Cancelled",
+    color: "text-red-400 bg-red-400/10",
+    icon: XCircleIcon,
+  },
+  past_due: {
+    label: "Past Due",
+    color: "text-yellow-400 bg-yellow-400/10",
+    icon: ExclamationTriangleIcon,
+  },
+  unpaid: {
+    label: "Unpaid",
+    color: "text-orange-400 bg-orange-400/10",
+    icon: ExclamationTriangleIcon,
+  },
+  trialing: {
+    label: "Trial",
+    color: "text-blue-400 bg-blue-400/10",
+    icon: ClockIcon,
+  },
 };
 
-export default function SubscriptionManagement({ initialSubscriptions }: SubscriptionManagementProps) {
-  const [subscriptions, setSubscriptions] = useState<SubscriptionData[]>(initialSubscriptions);
+export default function SubscriptionManagement({
+  initialSubscriptions,
+}: SubscriptionManagementProps) {
+  const [subscriptions, setSubscriptions] =
+    useState<SubscriptionData[]>(initialSubscriptions);
   const [filter, setFilter] = useState<string>("all");
   const [search, setSearch] = useState<string>("");
   const [cancellingId, setCancellingId] = useState<string | null>(null);
@@ -55,7 +85,8 @@ export default function SubscriptionManagement({ initialSubscriptions }: Subscri
 
   const filteredSubscriptions = subscriptions.filter((sub) => {
     const matchesFilter = filter === "all" || sub.status === filter;
-    const matchesSearch = search === "" ||
+    const matchesSearch =
+      search === "" ||
       sub.name.toLowerCase().includes(search.toLowerCase()) ||
       sub.email.toLowerCase().includes(search.toLowerCase());
     return matchesFilter && matchesSearch;
@@ -66,11 +97,11 @@ export default function SubscriptionManagement({ initialSubscriptions }: Subscri
     active: subscriptions.filter((s) => s.status === "active").length,
     cancelled: subscriptions.filter((s) => s.status === "cancelled").length,
     pastDue: subscriptions.filter((s) => s.status === "past_due").length,
-    mrr: subscriptions
-      .filter((s) => s.status === "active")
-      .reduce((sum, s) => sum + s.amount, 0) / 100,
+    mrr:
+      subscriptions
+        .filter((s) => s.status === "active")
+        .reduce((sum, s) => sum + s.amount, 0) / 100,
   };
-
 
   const handleCancel = async (subscription: SubscriptionData) => {
     setCancellingId(subscription.id);
@@ -82,12 +113,16 @@ export default function SubscriptionManagement({ initialSubscriptions }: Subscri
       setSubscriptions((prev) =>
         prev.map((s) =>
           s.id === subscription.id
-            ? { ...s, status: "cancelled", cancelledAt: new Date().toISOString() }
+            ? {
+                ...s,
+                status: "cancelled",
+                cancelledAt: new Date().toISOString(),
+              }
             : s
         )
       );
       toast.success("Subscription cancelled successfully");
-    } else {
+    } else if (!result.success) {
       toast.error(result.error || "Failed to cancel subscription");
     }
 
@@ -119,7 +154,7 @@ export default function SubscriptionManagement({ initialSubscriptions }: Subscri
         invoices: result.data.invoices,
         loading: false,
       }));
-    } else {
+    } else if (!result.success) {
       toast.error(result.error || "Failed to load invoices");
       setInvoicesModal((prev) => ({ ...prev, loading: false }));
     }
@@ -140,20 +175,30 @@ export default function SubscriptionManagement({ initialSubscriptions }: Subscri
       {/* Stats Grid */}
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
         <div className="bg-gray-800/50 rounded-lg p-4 border border-gray-700/50">
-          <p className="text-gray-400 text-sm font-inter">Total Subscriptions</p>
-          <p className="text-2xl font-bold text-white font-iceland">{stats.total}</p>
+          <p className="text-gray-400 text-sm font-inter">
+            Total Subscriptions
+          </p>
+          <p className="text-2xl font-bold text-white font-iceland">
+            {stats.total}
+          </p>
         </div>
         <div className="bg-gray-800/50 rounded-lg p-4 border border-gray-700/50">
           <p className="text-gray-400 text-sm font-inter">Active</p>
-          <p className="text-2xl font-bold text-green-400 font-iceland">{stats.active}</p>
+          <p className="text-2xl font-bold text-green-400 font-iceland">
+            {stats.active}
+          </p>
         </div>
         <div className="bg-gray-800/50 rounded-lg p-4 border border-gray-700/50">
           <p className="text-gray-400 text-sm font-inter">Cancelled</p>
-          <p className="text-2xl font-bold text-red-400 font-iceland">{stats.cancelled}</p>
+          <p className="text-2xl font-bold text-red-400 font-iceland">
+            {stats.cancelled}
+          </p>
         </div>
         <div className="bg-gray-800/50 rounded-lg p-4 border border-gray-700/50">
           <p className="text-gray-400 text-sm font-inter">Monthly Revenue</p>
-          <p className="text-2xl font-bold text-gold font-iceland">${stats.mrr.toFixed(2)}</p>
+          <p className="text-2xl font-bold text-gold font-iceland">
+            ${stats.mrr.toFixed(2)}
+          </p>
         </div>
       </div>
 
@@ -183,7 +228,10 @@ export default function SubscriptionManagement({ initialSubscriptions }: Subscri
                   : "bg-gray-800/50 text-gray-300 hover:bg-gray-700/50"
               }`}
             >
-              {status === "all" ? "All" : status.charAt(0).toUpperCase() + status.slice(1).replace("_", " ")}
+              {status === "all"
+                ? "All"
+                : status.charAt(0).toUpperCase() +
+                  status.slice(1).replace("_", " ")}
             </button>
           ))}
         </div>
@@ -218,30 +266,45 @@ export default function SubscriptionManagement({ initialSubscriptions }: Subscri
             <tbody className="divide-y divide-gray-700/50 font-inter">
               {filteredSubscriptions.length === 0 ? (
                 <tr>
-                  <td colSpan={6} className="px-4 py-8 text-center text-gray-400">
+                  <td
+                    colSpan={6}
+                    className="px-4 py-8 text-center text-gray-400"
+                  >
                     No subscriptions found
                   </td>
                 </tr>
               ) : (
                 filteredSubscriptions.map((subscription) => {
-                  const status = statusConfig[subscription.status] || statusConfig.active;
+                  const status =
+                    statusConfig[subscription.status] || statusConfig.active;
                   const StatusIcon = status.icon;
                   const isActive = subscription.status === "active";
 
                   return (
-                    <tr key={subscription.id} className="hover:bg-gray-700/30 transition-colors">
+                    <tr
+                      key={subscription.id}
+                      className="hover:bg-gray-700/30 transition-colors"
+                    >
                       <td className="px-4 py-4">
                         <div>
-                          <p className="text-white font-medium">{subscription.name}</p>
-                          <p className="text-gray-400 text-sm">{subscription.email}</p>
+                          <p className="text-white font-medium">
+                            {subscription.name}
+                          </p>
+                          <p className="text-gray-400 text-sm">
+                            {subscription.email}
+                          </p>
                         </div>
                       </td>
-                      <td className="px-4 py-4 text-gray-300">{subscription.planName}</td>
+                      <td className="px-4 py-4 text-gray-300">
+                        {subscription.planName}
+                      </td>
                       <td className="px-4 py-4 text-gold font-medium">
                         {formatCurrency(subscription.amount)}/mo
                       </td>
                       <td className="px-4 py-4">
-                        <span className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium ${status.color}`}>
+                        <span
+                          className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium ${status.color}`}
+                        >
                           <StatusIcon className="h-3.5 w-3.5" />
                           {status.label}
                         </span>
@@ -264,7 +327,9 @@ export default function SubscriptionManagement({ initialSubscriptions }: Subscri
 
                           {/* Stripe Link */}
                           <a
-                            href={getStripeUrl(subscription.stripeSubscriptionId)}
+                            href={getStripeUrl(
+                              subscription.stripeSubscriptionId
+                            )}
                             target="_blank"
                             rel="noopener noreferrer"
                             className="p-2 text-gray-400 hover:text-gold transition-colors"
@@ -283,7 +348,9 @@ export default function SubscriptionManagement({ initialSubscriptions }: Subscri
                                     disabled={cancellingId === subscription.id}
                                     className="px-2 py-1 text-xs bg-red-500/20 text-red-400 rounded hover:bg-red-500/30 transition-colors disabled:opacity-50"
                                   >
-                                    {cancellingId === subscription.id ? "..." : "Confirm"}
+                                    {cancellingId === subscription.id
+                                      ? "..."
+                                      : "Confirm"}
                                   </button>
                                   <button
                                     onClick={() => setConfirmCancel(null)}
@@ -294,7 +361,9 @@ export default function SubscriptionManagement({ initialSubscriptions }: Subscri
                                 </div>
                               ) : (
                                 <button
-                                  onClick={() => setConfirmCancel(subscription.id)}
+                                  onClick={() =>
+                                    setConfirmCancel(subscription.id)
+                                  }
                                   className="px-2 py-1 text-xs bg-gray-700/50 text-gray-300 rounded hover:bg-red-500/20 hover:text-red-400 transition-colors"
                                 >
                                   Cancel
@@ -371,8 +440,8 @@ export default function SubscriptionManagement({ initialSubscriptions }: Subscri
                                 invoice.status === "paid"
                                   ? "bg-green-400/10 text-green-400"
                                   : invoice.status === "open"
-                                  ? "bg-yellow-400/10 text-yellow-400"
-                                  : "bg-gray-400/10 text-gray-400"
+                                    ? "bg-yellow-400/10 text-yellow-400"
+                                    : "bg-gray-400/10 text-gray-400"
                               }`}
                             >
                               {invoice.status}

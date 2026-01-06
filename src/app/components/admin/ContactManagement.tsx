@@ -43,7 +43,7 @@ export default function ContactManagement({
     const result = await getContactsAction();
     if (result.success && result.data) {
       setContacts(result.data.contacts);
-    } else {
+    } else if (!result.success) {
       toast.error(result.error || "Failed to load contacts");
     }
   };
@@ -169,9 +169,7 @@ export default function ContactManagement({
 
         {/* With Marketing Consent */}
         <div className="bg-gray-800 p-4 rounded-lg border-l-4 border-green-500">
-          <h3 className="text-gray-400 text-sm mb-1">
-            With Marketing Consent
-          </h3>
+          <h3 className="text-gray-400 text-sm mb-1">With Marketing Consent</h3>
           <p className="text-2xl font-bold text-green-500">
             {contacts.filter((c) => c.marketingConsent).length}
           </p>
@@ -225,14 +223,11 @@ export default function ContactManagement({
 
         {/* Contacts with Both */}
         <div className="bg-gray-800 p-4 rounded-lg border-l-4 border-yellow-500">
-          <h3 className="text-gray-400 text-sm mb-1">
-            With Email & Phone
-          </h3>
+          <h3 className="text-gray-400 text-sm mb-1">With Email & Phone</h3>
           <p className="text-2xl font-bold text-yellow-500">
             {
-              contacts.filter(
-                (c) => c.emails.length > 0 && c.phones.length > 0
-              ).length
+              contacts.filter((c) => c.emails.length > 0 && c.phones.length > 0)
+                .length
             }
           </p>
           <p className="text-xs text-gray-500 mt-1">
@@ -247,178 +242,176 @@ export default function ContactManagement({
       <div className="bg-gray-800 rounded-lg overflow-hidden font-inter">
         <div className="overflow-x-auto">
           <table className="w-full">
-              <thead>
-                <tr className="bg-gray-700 text-left">
-                  <th className="px-6 py-3 text-sm font-medium text-gray-300">
-                    Name
-                  </th>
-                  <th className="px-6 py-3 text-sm font-medium text-gray-300">
-                    Emails
-                  </th>
-                  <th className="px-6 py-3 text-sm font-medium text-gray-300">
-                    Phones
-                  </th>
-                  <th className="px-6 py-3 text-sm font-medium text-gray-300">
-                    Marketing
-                  </th>
-                  <th className="px-6 py-3 text-sm font-medium text-gray-300">
-                    Created
-                  </th>
-                  <th className="px-6 py-3 text-sm font-medium text-gray-300">
-                    Actions
-                  </th>
-                </tr>
-              </thead>
-              <tbody className="divide-y divide-gray-700">
-                {filteredContacts.map((contact) => (
-                  <tr key={contact.id} className="hover:bg-gray-750">
-                    {/* Name */}
-                    <td className="px-6 py-4">
-                      {editingContact?.id === contact.id ? (
+            <thead>
+              <tr className="bg-gray-700 text-left">
+                <th className="px-6 py-3 text-sm font-medium text-gray-300">
+                  Name
+                </th>
+                <th className="px-6 py-3 text-sm font-medium text-gray-300">
+                  Emails
+                </th>
+                <th className="px-6 py-3 text-sm font-medium text-gray-300">
+                  Phones
+                </th>
+                <th className="px-6 py-3 text-sm font-medium text-gray-300">
+                  Marketing
+                </th>
+                <th className="px-6 py-3 text-sm font-medium text-gray-300">
+                  Created
+                </th>
+                <th className="px-6 py-3 text-sm font-medium text-gray-300">
+                  Actions
+                </th>
+              </tr>
+            </thead>
+            <tbody className="divide-y divide-gray-700">
+              {filteredContacts.map((contact) => (
+                <tr key={contact.id} className="hover:bg-gray-750">
+                  {/* Name */}
+                  <td className="px-6 py-4">
+                    {editingContact?.id === contact.id ? (
+                      <input
+                        type="text"
+                        value={editingContact.name}
+                        onChange={(e) =>
+                          setEditingContact({
+                            ...editingContact,
+                            name: e.target.value,
+                          })
+                        }
+                        className="bg-gray-700 text-white px-2 py-1 rounded"
+                      />
+                    ) : (
+                      <span className="text-white font-medium">
+                        {contact.name}
+                      </span>
+                    )}
+                  </td>
+
+                  {/* Emails */}
+                  <td className="px-6 py-4">
+                    <div className="space-y-1">
+                      {contact.emails.map((email) => (
+                        <div
+                          key={email.id}
+                          className="flex items-center group text-sm text-gray-300"
+                        >
+                          <span>{email.email}</span>
+                          {contact.marketingConsent && (
+                            <a
+                              href={`/unsubscribe?email=${encodeURIComponent(email.email)}`}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="ml-2 opacity-0 group-hover:opacity-100 transition-opacity"
+                              title="Unsubscribe this email"
+                            >
+                              <svg
+                                className="w-4 h-4 text-red-400 hover:text-red-500"
+                                fill="none"
+                                stroke="currentColor"
+                                viewBox="0 0 24 24"
+                              >
+                                <path
+                                  strokeLinecap="round"
+                                  strokeLinejoin="round"
+                                  strokeWidth={2}
+                                  d="M18.364 18.364A9 9 0 005.636 5.636m12.728 12.728A9 9 0 015.636 5.636m12.728 12.728L5.636 5.636"
+                                />
+                              </svg>
+                            </a>
+                          )}
+                        </div>
+                      ))}
+                    </div>
+                  </td>
+
+                  {/* Phones */}
+                  <td className="px-6 py-4">
+                    <div className="space-y-1">
+                      {contact.phones.map((phone) => (
+                        <div key={phone.id} className="text-sm text-gray-300">
+                          {phone.phone}
+                        </div>
+                      ))}
+                    </div>
+                  </td>
+
+                  {/* Marketing */}
+                  <td className="px-6 py-4">
+                    {editingContact?.id === contact.id ? (
+                      <label className="flex items-center cursor-pointer">
                         <input
-                          type="text"
-                          value={editingContact.name}
+                          type="checkbox"
+                          checked={editingContact.marketingConsent}
                           onChange={(e) =>
                             setEditingContact({
                               ...editingContact,
-                              name: e.target.value,
+                              marketingConsent: e.target.checked,
                             })
                           }
-                          className="bg-gray-700 text-white px-2 py-1 rounded"
+                          className="mr-2"
                         />
-                      ) : (
-                        <span className="text-white font-medium">
-                          {contact.name}
+                        <span className="text-sm text-gray-300">
+                          {editingContact.marketingConsent ? "Yes" : "No"}
                         </span>
-                      )}
-                    </td>
+                      </label>
+                    ) : (
+                      <span
+                        className={`px-2 py-1 rounded text-xs ${
+                          contact.marketingConsent
+                            ? "bg-green-500/20 text-green-500"
+                            : "bg-gray-500/20 text-gray-500"
+                        }`}
+                      >
+                        {contact.marketingConsent ? "Yes" : "No"}
+                      </span>
+                    )}
+                  </td>
 
-                    {/* Emails */}
-                    <td className="px-6 py-4">
-                      <div className="space-y-1">
-                        {contact.emails.map((email) => (
-                          <div
-                            key={email.id}
-                            className="flex items-center group text-sm text-gray-300"
-                          >
-                            <span>{email.email}</span>
-                            {contact.marketingConsent && (
-                              <a
-                                href={`/unsubscribe?email=${encodeURIComponent(email.email)}`}
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                className="ml-2 opacity-0 group-hover:opacity-100 transition-opacity"
-                                title="Unsubscribe this email"
-                              >
-                                <svg
-                                  className="w-4 h-4 text-red-400 hover:text-red-500"
-                                  fill="none"
-                                  stroke="currentColor"
-                                  viewBox="0 0 24 24"
-                                >
-                                  <path
-                                    strokeLinecap="round"
-                                    strokeLinejoin="round"
-                                    strokeWidth={2}
-                                    d="M18.364 18.364A9 9 0 005.636 5.636m12.728 12.728A9 9 0 015.636 5.636m12.728 12.728L5.636 5.636"
-                                  />
-                                </svg>
-                              </a>
-                            )}
-                          </div>
-                        ))}
-                      </div>
-                    </td>
+                  {/* Created */}
+                  <td className="px-6 py-4 text-sm text-gray-400">
+                    {new Date(contact.createdAt).toLocaleDateString()}
+                  </td>
 
-                    {/* Phones */}
-                    <td className="px-6 py-4">
-                      <div className="space-y-1">
-                        {contact.phones.map((phone) => (
-                          <div key={phone.id} className="text-sm text-gray-300">
-                            {phone.phone}
-                          </div>
-                        ))}
-                      </div>
-                    </td>
-
-                    {/* Marketing */}
-                    <td className="px-6 py-4">
+                  {/* Actions */}
+                  <td className="px-6 py-4">
+                    <div className="flex gap-2">
                       {editingContact?.id === contact.id ? (
-                        <label className="flex items-center cursor-pointer">
-                          <input
-                            type="checkbox"
-                            checked={editingContact.marketingConsent}
-                            onChange={(e) =>
-                              setEditingContact({
-                                ...editingContact,
-                                marketingConsent: e.target.checked,
-                              })
-                            }
-                            className="mr-2"
-                          />
-                          <span className="text-sm text-gray-300">
-                            {editingContact.marketingConsent ? "Yes" : "No"}
-                          </span>
-                        </label>
+                        <>
+                          <button
+                            onClick={() => handleUpdateContact(editingContact)}
+                            className="text-green-500 hover:text-green-400"
+                          >
+                            Save
+                          </button>
+                          <button
+                            onClick={() => setEditingContact(null)}
+                            className="text-gray-500 hover:text-gray-400"
+                          >
+                            Cancel
+                          </button>
+                        </>
                       ) : (
-                        <span
-                          className={`px-2 py-1 rounded text-xs ${
-                            contact.marketingConsent
-                              ? "bg-green-500/20 text-green-500"
-                              : "bg-gray-500/20 text-gray-500"
-                          }`}
-                        >
-                          {contact.marketingConsent ? "Yes" : "No"}
-                        </span>
+                        <>
+                          <button
+                            onClick={() => setEditingContact(contact)}
+                            className="text-blue-500 hover:text-blue-400"
+                          >
+                            Edit
+                          </button>
+                          <button
+                            onClick={() => handleDeleteContact(contact.id)}
+                            className="text-red-500 hover:text-red-400"
+                          >
+                            Delete
+                          </button>
+                        </>
                       )}
-                    </td>
-
-                    {/* Created */}
-                    <td className="px-6 py-4 text-sm text-gray-400">
-                      {new Date(contact.createdAt).toLocaleDateString()}
-                    </td>
-
-                    {/* Actions */}
-                    <td className="px-6 py-4">
-                      <div className="flex gap-2">
-                        {editingContact?.id === contact.id ? (
-                          <>
-                            <button
-                              onClick={() =>
-                                handleUpdateContact(editingContact)
-                              }
-                              className="text-green-500 hover:text-green-400"
-                            >
-                              Save
-                            </button>
-                            <button
-                              onClick={() => setEditingContact(null)}
-                              className="text-gray-500 hover:text-gray-400"
-                            >
-                              Cancel
-                            </button>
-                          </>
-                        ) : (
-                          <>
-                            <button
-                              onClick={() => setEditingContact(contact)}
-                              className="text-blue-500 hover:text-blue-400"
-                            >
-                              Edit
-                            </button>
-                            <button
-                              onClick={() => handleDeleteContact(contact.id)}
-                              className="text-red-500 hover:text-red-400"
-                            >
-                              Delete
-                            </button>
-                          </>
-                        )}
-                      </div>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
+                    </div>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
           </table>
         </div>
       </div>
