@@ -21,7 +21,7 @@ export async function createFinalPaymentSessionAction(
                 // Verificar acceso
     const verification = await verifyProjectAccessAction(email, projectCode);
 
-    if (!verification.success || !verification.payment) {
+    if (!verification.success || !verification.data) {
       console.error("❌ Verificación fallida:", verification.error);
       return {
         success: false,
@@ -29,7 +29,7 @@ export async function createFinalPaymentSessionAction(
       };
     }
 
-    const payment = verification.payment;
+    const payment = verification.data.payment;
 
         // IMPORTANTE: Incluir TODOS los campos necesarios en metadata
     const metadata = {
