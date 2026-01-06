@@ -41,10 +41,10 @@ export default function ContactManagement({
 
   const loadContacts = async () => {
     const result = await getContactsAction();
-    if (result.success) {
-      setContacts(result.contacts || []);
+    if (result.success && result.data) {
+      setContacts(result.data.contacts);
     } else {
-      toast.error("Failed to load contacts");
+      toast.error(result.error || "Failed to load contacts");
     }
   };
 

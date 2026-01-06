@@ -4,6 +4,7 @@
 import { prisma } from "@/lib/prisma";
 import { Resend } from "resend";
 import { createInvoiceAndSendEmail } from "@/lib/invoice/createInvoiceAndSendEmail";
+import type { ActionResult } from "@/types/common";
 
 type InvoiceResult = {
   projectCode: string;
@@ -12,18 +13,18 @@ type InvoiceResult = {
   error?: string;
 };
 
-type ProcessInvoicesResult = {
-  success: boolean;
+type ProcessResult = {
   processed: number;
   results: InvoiceResult[];
-  error?: string;
 };
 
 /**
  * Server action to process pending invoices
  * Finds all payments without invoices and creates them
  */
-export async function processPendingInvoicesAction(): Promise<ProcessInvoicesResult> {
+export async function processPendingInvoicesAction(): Promise<
+  ActionResult<ProcessResult>
+> {
   try {
     const resend = new Resend(process.env.RESEND_API_KEY!);
 
@@ -70,15 +71,15 @@ export async function processPendingInvoicesAction(): Promise<ProcessInvoicesRes
 
     return {
       success: true,
-      processed: results.length,
-      results,
+      data: {
+        processed: results.length,
+        results,
+      },
     };
   } catch (error) {
     console.error("❌ Error processing pending invoices:", error);
     return {
       success: false,
-      processed: 0,
-      results: [],
       error: error instanceof Error ? error.message : String(error),
     };
   }

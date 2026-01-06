@@ -1,4 +1,5 @@
 "use server";
+import type { ActionResult } from "@/types/common";
 
 export interface BusinessContact {
   name: string;
@@ -7,13 +8,6 @@ export interface BusinessContact {
   website?: string;
   address?: string;
   placeId: string;
-}
-
-export interface SearchBusinessContactsResult {
-  success: boolean;
-  businesses?: BusinessContact[];
-  count?: number;
-  message?: string;
 }
 
 /**
@@ -29,21 +23,22 @@ export async function searchBusinessContactsAction(
   location: string,
   radius: number = 5000,
   maxResults: number = 20
-): Promise<SearchBusinessContactsResult> {
+): Promise<ActionResult<{ businesses: BusinessContact[]; count: number }>> {
   try {
     const GOOGLE_PLACES_API_KEY = process.env.GOOGLE_PLACES_API_KEY;
 
     if (!GOOGLE_PLACES_API_KEY) {
       return {
         success: false,
-        message: "Google Places API key is not configured. Add GOOGLE_PLACES_API_KEY to your .env file",
+        error:
+          "Google Places API key is not configured. Add GOOGLE_PLACES_API_KEY to your .env file",
       };
     }
 
     if (!businessType || !location) {
       return {
         success: false,
-        message: "Business type and location are required",
+        error: "Business type and location are required",
       };
     }
 
@@ -60,7 +55,7 @@ export async function searchBusinessContactsAction(
       } else {
         return {
           success: false,
-          message: `Could not find location: ${location}. Please verify it's spelled correctly.`,
+          error: `Could not find location: ${location}. Please verify it's spelled correctly.`,
         };
       }
     }
@@ -74,9 +69,7 @@ export async function searchBusinessContactsAction(
     if (searchData.status === "ZERO_RESULTS") {
       return {
         success: true,
-        businesses: [],
-        count: 0,
-        message: `No businesses of type "${businessType}" found in ${location}`,
+        data: { businesses: [], count: 0 },
       };
     }
 
@@ -84,7 +77,7 @@ export async function searchBusinessContactsAction(
       console.error("Google Places API error:", searchData);
       return {
         success: false,
-        message: `Google Places API error: ${searchData.status}. ${searchData.error_message || ""}`,
+        error: `Google Places API error: ${searchData.status}. ${searchData.error_message || ""}`,
       };
     }
 
@@ -106,7 +99,10 @@ export async function searchBusinessContactsAction(
           let inferredEmail: string | undefined;
           if (result.website) {
             try {
-              const domain = new URL(result.website).hostname.replace("www.", "");
+              const domain = new URL(result.website).hostname.replace(
+                "www.",
+                ""
+              );
               // Infer generic email - NOTE: This does NOT guarantee it's valid
               inferredEmail = `info@${domain}`;
             } catch {
@@ -116,7 +112,9 @@ export async function searchBusinessContactsAction(
 
           businesses.push({
             name: result.name || place.name,
-            phone: result.international_phone_number || result.formatted_phone_number,
+            phone:
+              result.international_phone_number ||
+              result.formatted_phone_number,
             email: inferredEmail,
             website: result.website,
             address: result.formatted_address,
@@ -134,14 +132,16 @@ export async function searchBusinessContactsAction(
 
     return {
       success: true,
-      businesses,
-      count: businesses.length,
+      data: {
+        businesses,
+        count: businesses.length,
+      },
     };
   } catch (error) {
     console.error("Error in searchBusinessContactsAction:", error);
     return {
       success: false,
-      message: "Error searching for businesses. Please try again.",
+      error: "Error searching for businesses. Please try again.",
     };
   }
 }

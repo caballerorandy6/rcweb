@@ -2,6 +2,7 @@
 
 import { prisma } from "@/lib/prisma";
 import type { Milestone } from "@/types/milestone";
+import type { ActionResult } from "@/types/common";
 
 type ProjectInfo = {
   projectCode: string;
@@ -10,15 +11,11 @@ type ProjectInfo = {
   projectStatus: string;
 };
 
-type GetPublicMilestonesResult =
-  | { success: true; project: ProjectInfo; milestones: Milestone[] }
-  | { success: false; message: string };
-
 export async function getPublicMilestonesAction(
   accessToken: string
-): Promise<GetPublicMilestonesResult> {
+): Promise<ActionResult<{ project: ProjectInfo; milestones: Milestone[] }>> {
   if (!accessToken) {
-    return { success: false, message: "Access token is required" };
+    return { success: false, error: "Access token is required" };
   }
 
   try {
@@ -32,7 +29,7 @@ export async function getPublicMilestonesAction(
     });
 
     if (!payment) {
-      return { success: false, message: "Project not found" };
+      return { success: false, error: "Project not found" };
     }
 
     const milestones: Milestone[] = payment.milestones.map((m) => ({
@@ -50,16 +47,18 @@ export async function getPublicMilestonesAction(
 
     return {
       success: true,
-      project: {
-        projectCode: payment.projectCode,
-        name: payment.name,
-        planName: payment.planName,
-        projectStatus: payment.projectStatus,
+      data: {
+        project: {
+          projectCode: payment.projectCode,
+          name: payment.name,
+          planName: payment.planName,
+          projectStatus: payment.projectStatus,
+        },
+        milestones,
       },
-      milestones,
     };
   } catch (error) {
     console.error("Error fetching public milestones:", error);
-    return { success: false, message: "Failed to fetch project data" };
+    return { success: false, error: "Failed to fetch project data" };
   }
 }

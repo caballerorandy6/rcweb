@@ -4,6 +4,7 @@ import { NextResponse } from "next/server";
 import Stripe from "stripe";
 import { prisma } from "@/lib/prisma";
 import { Resend } from "resend";
+import crypto from "crypto";
 import { trackPaymentComplete } from "@/lib/analytics";
 import { createInvoiceAndSendEmail } from "@/lib/invoice/createInvoiceAndSendEmail";
 import {
@@ -13,6 +14,7 @@ import {
   sendAdminFinalPaymentNotification,
   sendSubscriptionRenewalReminder,
   sendSubscriptionPaymentFailed,
+  sendSetupPasswordEmail,
 } from "@/lib/email";
 
 // Environment variables validation
@@ -61,7 +63,7 @@ export async function POST(req: Request) {
     // ============= INITIAL PAYMENT =============
     if (paymentType === "initial" && projectCode && customerEmail) {
       try {
-                // Extract and validate amounts from metadata
+        // Extract and validate amounts from metadata
         const totalAmount = parseInt(metadata.totalAmount || "0");
         const firstPaymentAmount = parseInt(metadata.firstPaymentAmount || "0");
         const secondPaymentAmount = parseInt(
@@ -91,10 +93,7 @@ export async function POST(req: Request) {
         // CHECK if Payment already exists (created by fallback)
         let payment = await prisma.payment.findFirst({
           where: {
-            OR: [
-              { projectCode },
-              { firstSessionId: session.id },
-            ],
+            OR: [{ projectCode }, { firstSessionId: session.id }],
           },
           include: {
             invoices: true,
@@ -114,8 +113,38 @@ export async function POST(req: Request) {
         }
 
         // CREATE Payment and TermsAcceptance if it doesn't exist
+        let clientWasCreated = false;
+        let clientSetupToken: string | null = null;
+
         if (!payment) {
           payment = await prisma.$transaction(async (tx) => {
+            // Try to find existing client by email (in case they registered before paying)
+            let existingClient = await tx.client.findUnique({
+              where: { email: customerEmail },
+            });
+
+            // If client doesn't exist, create it automatically (Opción 1)
+            if (!existingClient) {
+              const setupToken = crypto.randomBytes(32).toString("hex");
+              const setupTokenExpiry = new Date();
+              setupTokenExpiry.setDate(setupTokenExpiry.getDate() + 30); // 30 días de validez
+
+              existingClient = await tx.client.create({
+                data: {
+                  email: customerEmail,
+                  name: customerName || "Client",
+                  password: null, // Sin contraseña hasta que la establezca
+                  emailVerified: new Date(),
+                  isActive: true,
+                  setupToken,
+                  setupTokenExpiry,
+                },
+              });
+
+              clientWasCreated = true;
+              clientSetupToken = setupToken;
+            }
+
             const newPayment = await tx.payment.create({
               data: {
                 projectCode,
@@ -129,6 +158,8 @@ export async function POST(req: Request) {
                 firstPaidAt: new Date(),
                 firstSessionId: session.id,
                 projectStatus: "in_progress",
+                // Link to client (ya existe o fue creado arriba)
+                clientId: existingClient.id,
               },
               include: {
                 invoices: true,
@@ -159,7 +190,9 @@ export async function POST(req: Request) {
         const emailErrors: string[] = [];
 
         // Check if initial invoice already exists
-        const hasInitialInvoice = payment.invoices.some(inv => inv.type === "initial");
+        const hasInitialInvoice = payment.invoices.some(
+          (inv) => inv.type === "initial"
+        );
 
         if (!hasInitialInvoice) {
           try {
@@ -172,6 +205,34 @@ export async function POST(req: Request) {
           } catch (invoiceError) {
             const errorMsg = `Error creating invoice: ${invoiceError instanceof Error ? invoiceError.message : String(invoiceError)}`;
             console.error("❌ Invoice error:", errorMsg);
+            emailErrors.push(errorMsg);
+          }
+        }
+
+        // ============= SEND SETUP PASSWORD EMAIL =============
+        // If client was created automatically, send setup password email
+        if (clientWasCreated && clientSetupToken && payment.accessToken) {
+          try {
+            const baseUrl =
+              process.env.NEXT_PUBLIC_BASE_URL || "https://rcweb.dev";
+            const setupPasswordUrl = `${baseUrl}/client/setup-password?token=${clientSetupToken}`;
+
+            const setupEmailResult = await sendSetupPasswordEmail({
+              customerEmail,
+              customerName: customerName || "Client",
+              setupPasswordUrl,
+              projectCode: payment.projectCode,
+              accessToken: payment.accessToken,
+            });
+
+            if (!setupEmailResult.success && setupEmailResult.error) {
+              emailErrors.push(
+                `Setup password email error: ${setupEmailResult.error}`
+              );
+            }
+          } catch (setupEmailError) {
+            const errorMsg = `Error sending setup password email: ${setupEmailError instanceof Error ? setupEmailError.message : String(setupEmailError)}`;
+            console.error("❌ Setup password email error:", errorMsg);
             emailErrors.push(errorMsg);
           }
         }
@@ -370,8 +431,12 @@ export async function POST(req: Request) {
         const emailErrors: string[] = [];
 
         // Check if invoices already exist
-        const hasFinalInvoice = payment.invoices.some(inv => inv.type === "final");
-        const hasSummaryInvoice = payment.invoices.some(inv => inv.type === "summary");
+        const hasFinalInvoice = payment.invoices.some(
+          (inv) => inv.type === "final"
+        );
+        const hasSummaryInvoice = payment.invoices.some(
+          (inv) => inv.type === "summary"
+        );
 
         // Create and send FINAL invoice if it doesn't exist
         if (!hasFinalInvoice) {
@@ -499,7 +564,7 @@ export async function POST(req: Request) {
             err.message === "DUPLICATE_FINAL_SESSION" ||
             err.message === "ALREADY_PAID"
           ) {
-                        return NextResponse.json({
+            return NextResponse.json({
               received: true,
               duplicate: err.message,
             });
@@ -653,13 +718,13 @@ export async function POST(req: Request) {
   // ============= INVOICE PAID (Subscription Renewal) =============
   if (event.type === "invoice.paid") {
     const invoice = event.data.object as Stripe.Invoice;
-    const subscriptionId = typeof invoice.parent?.subscription_details?.subscription === 'string'
-      ? invoice.parent.subscription_details.subscription
-      : null;
+    const subscriptionId =
+      typeof invoice.parent?.subscription_details?.subscription === "string"
+        ? invoice.parent.subscription_details.subscription
+        : null;
 
     // Only process subscription invoices (not the first one)
     if (subscriptionId && invoice.billing_reason !== "subscription_create") {
-
       try {
         const stripeSubscription = await stripe.subscriptions.retrieve(
           subscriptionId,
@@ -686,7 +751,10 @@ export async function POST(req: Request) {
         return NextResponse.json({ received: true, renewed: true });
       } catch (err) {
         console.error("❌ Error processing subscription renewal:", err);
-        return NextResponse.json({ received: true, warning: "Subscription not found in DB" });
+        return NextResponse.json({
+          received: true,
+          warning: "Subscription not found in DB",
+        });
       }
     }
   }
@@ -694,9 +762,10 @@ export async function POST(req: Request) {
   // ============= INVOICE UPCOMING (Renewal Reminder) =============
   if (event.type === "invoice.upcoming") {
     const invoice = event.data.object as Stripe.Invoice;
-    const subscriptionId = typeof invoice.parent?.subscription_details?.subscription === 'string'
-      ? invoice.parent.subscription_details.subscription
-      : null;
+    const subscriptionId =
+      typeof invoice.parent?.subscription_details?.subscription === "string"
+        ? invoice.parent.subscription_details.subscription
+        : null;
 
     if (subscriptionId) {
       try {
@@ -706,7 +775,8 @@ export async function POST(req: Request) {
 
         if (subscription && subscription.status === "active") {
           const resend = new Resend(process.env.RESEND_API_KEY!);
-          const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "https://rcweb.dev";
+          const baseUrl =
+            process.env.NEXT_PUBLIC_BASE_URL || "https://rcweb.dev";
 
           // Calculate renewal date (from invoice or current period end)
           const renewalDate = invoice.next_payment_attempt
@@ -728,7 +798,10 @@ export async function POST(req: Request) {
         return NextResponse.json({ received: true, reminderSent: true });
       } catch (err) {
         console.error("❌ Error sending renewal reminder:", err);
-        return NextResponse.json({ received: true, warning: "Error sending renewal reminder" });
+        return NextResponse.json({
+          received: true,
+          warning: "Error sending renewal reminder",
+        });
       }
     }
   }
@@ -736,9 +809,10 @@ export async function POST(req: Request) {
   // ============= INVOICE PAYMENT FAILED =============
   if (event.type === "invoice.payment_failed") {
     const invoice = event.data.object as Stripe.Invoice;
-    const subscriptionId = typeof invoice.parent?.subscription_details?.subscription === 'string'
-      ? invoice.parent.subscription_details.subscription
-      : null;
+    const subscriptionId =
+      typeof invoice.parent?.subscription_details?.subscription === "string"
+        ? invoice.parent.subscription_details.subscription
+        : null;
 
     if (subscriptionId) {
       try {
@@ -753,7 +827,8 @@ export async function POST(req: Request) {
           });
 
           const resend = new Resend(process.env.RESEND_API_KEY!);
-          const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "https://rcweb.dev";
+          const baseUrl =
+            process.env.NEXT_PUBLIC_BASE_URL || "https://rcweb.dev";
 
           // Email to customer with update payment link
           await sendSubscriptionPaymentFailed(resend, {
@@ -782,7 +857,10 @@ export async function POST(req: Request) {
         return NextResponse.json({ received: true, paymentFailed: true });
       } catch (err) {
         console.error("❌ Error handling payment failure:", err);
-        return NextResponse.json({ received: true, warning: "Error processing payment failure" });
+        return NextResponse.json({
+          received: true,
+          warning: "Error processing payment failure",
+        });
       }
     }
   }
@@ -831,7 +909,10 @@ export async function POST(req: Request) {
       return NextResponse.json({ received: true, cancelled: true });
     } catch (err) {
       console.error("❌ Error processing subscription cancellation:", err);
-      return NextResponse.json({ received: true, warning: "Subscription not found" });
+      return NextResponse.json({
+        received: true,
+        warning: "Subscription not found",
+      });
     }
   }
 
@@ -861,7 +942,10 @@ export async function POST(req: Request) {
       return NextResponse.json({ received: true, updated: true });
     } catch (err) {
       console.error("❌ Error updating subscription:", err);
-      return NextResponse.json({ received: true, warning: "Subscription not found" });
+      return NextResponse.json({
+        received: true,
+        warning: "Subscription not found",
+      });
     }
   }
 

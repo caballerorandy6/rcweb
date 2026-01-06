@@ -2,10 +2,13 @@
 
 import { prisma } from "@/lib/prisma";
 import { Resend } from "resend";
+import type { ActionResultSimple } from "@/types/common";
 
 const resend = new Resend(process.env.RESEND_API_KEY!);
 
-export async function sendFinalPaymentEmail(projectCode: string) {
+export async function sendFinalPaymentEmail(
+  projectCode: string
+): Promise<ActionResultSimple> {
   try {
     const payment = await prisma.payment.findUnique({
       where: { projectCode },

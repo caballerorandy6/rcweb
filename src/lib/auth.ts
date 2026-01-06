@@ -21,7 +21,7 @@ export const authConfig: NextAuthConfig = {
         const password = credentials.password as string;
 
         try {
-          // Buscar admin por email
+          // Primero intentar buscar admin
           const admin = await prisma.admin.findFirst({
             where: {
               email: email,
@@ -29,14 +29,52 @@ export const authConfig: NextAuthConfig = {
             },
           });
 
-          if (!admin) {
+          if (admin) {
+            // Verificar contraseña de admin
+            const isPasswordValid = await bcrypt.compare(
+              password,
+              admin.password
+            );
+
+            if (!isPasswordValid) {
+              return null;
+            }
+
+            // Actualizar último login
+            await prisma.admin.update({
+              where: { id: admin.id },
+              data: { lastLogin: new Date() },
+            });
+
+            // Retornar datos del admin para la sesión
+            return {
+              id: admin.id,
+              email: admin.email,
+              name: admin.name,
+              role: "ADMIN",
+            };
+          }
+
+          // Si no es admin, buscar cliente
+          const client = await prisma.client.findUnique({
+            where: {
+              email: email,
+            },
+          });
+
+          if (!client) {
             return null;
           }
 
-          // Verificar contraseña
+          // Cliente debe tener contraseña y estar activo
+          if (!client.password || !client.isActive) {
+            return null;
+          }
+
+          // Verificar contraseña de cliente
           const isPasswordValid = await bcrypt.compare(
             password,
-            admin.password
+            client.password
           );
 
           if (!isPasswordValid) {
@@ -44,17 +82,17 @@ export const authConfig: NextAuthConfig = {
           }
 
           // Actualizar último login
-          await prisma.admin.update({
-            where: { id: admin.id },
+          await prisma.client.update({
+            where: { id: client.id },
             data: { lastLogin: new Date() },
           });
 
-          // Retornar datos del usuario para la sesión
+          // Retornar datos del cliente para la sesión
           return {
-            id: admin.id,
-            email: admin.email,
-            name: admin.name,
-            role: admin.isActive ? "ADMIN" : "USER",
+            id: client.id,
+            email: client.email,
+            name: client.name,
+            role: "CLIENT",
           };
         } catch (error) {
           console.error("Auth error:", error);

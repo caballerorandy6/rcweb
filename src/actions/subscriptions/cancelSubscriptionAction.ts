@@ -3,13 +3,9 @@
 import Stripe from "stripe";
 import { prisma } from "@/lib/prisma";
 import { requireAdmin } from "@/lib/authGuard";
+import type { ActionResultSimple } from "@/types/common";
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!);
-
-export interface CancelSubscriptionResult {
-  success: boolean;
-  error?: string;
-}
 
 /**
  * Cancels a subscription immediately via Stripe API
@@ -17,7 +13,7 @@ export interface CancelSubscriptionResult {
  */
 export async function cancelSubscriptionAction(
   subscriptionId: string
-): Promise<CancelSubscriptionResult> {
+): Promise<ActionResultSimple> {
   const authCheck = await requireAdmin();
   if (!authCheck.authorized) {
     return { success: false, error: authCheck.error };
@@ -50,7 +46,10 @@ export async function cancelSubscriptionAction(
     console.error("❌ Error cancelling subscription:", error);
     return {
       success: false,
-      error: error instanceof Error ? error.message : "Failed to cancel subscription",
+      error:
+        error instanceof Error
+          ? error.message
+          : "Failed to cancel subscription",
     };
   }
 }

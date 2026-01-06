@@ -2,21 +2,15 @@ import z from "zod";
 
 // Schema de validación para formularios de contacto
 export const FormSchema = z.object({
-  name: z
-    .string()
-    .min(2, { message: "Name is too short" })
-    .nonempty({ message: "Full Name is required" }),
+  name: z.string().min(2, { message: "Name is too short" }),
   email: z
     .string()
     .email({ message: "Invalid email address" })
-    .nonempty({ message: "Email is required" }),
+    .min(1, { message: "Email is required" }),
   phone: z
     .string()
     .min(10, { message: "Phone number is too short" })
-    .max(15, { message: "Phone number is too long" })
-    .nonempty({
-      message: "Phone number is required",
-    }),
+    .max(15, { message: "Phone number is too long" }),
   message: z
     .string()
     .min(2, { message: "Message is too short" })
@@ -33,12 +27,10 @@ export const LoginSchema = z.object({
   email: z
     .string()
     .email({ message: "Invalid email address" })
-    .min(3, { message: "Email must be at least 3 characters" })
-    .nonempty({ message: "Email is required" }),
+    .min(1, { message: "Email is required" }),
   password: z
     .string()
-    .min(6, { message: "Password must be at least 6 characters" })
-    .nonempty({ message: "Password is required" }),
+    .min(8, { message: "Password must be at least 8 characters" }),
 });
 
 export type LoginData = z.infer<typeof LoginSchema>;
@@ -48,7 +40,7 @@ export const ManageSubscriptionSchema = z.object({
   email: z
     .string()
     .email({ message: "Please enter a valid email address" })
-    .nonempty({ message: "Email is required" }),
+    .min(1, { message: "Email is required" }),
 });
 
 // Blog Subscription Schema
@@ -62,6 +54,87 @@ export const BlogSubscriptionSchema = z.object({
   }),
 });
 
+// Client Registration Schema (for form validation - includes confirmPassword)
+export const ClientRegisterFormSchema = z
+  .object({
+    email: z
+      .string()
+      .email({ message: "Invalid email address" })
+      .min(1, { message: "Email is required" }),
+    password: z
+      .string()
+      .min(8, { message: "Password must be at least 8 characters" }),
+    name: z.string().min(2, { message: "Name must be at least 2 characters" }),
+    confirmPassword: z
+      .string()
+      .min(8, { message: "Password must be at least 8 characters" }),
+  })
+  .refine((data) => data.password === data.confirmPassword, {
+    message: "Passwords don't match",
+    path: ["confirmPassword"],
+  });
+
+// Client Registration Schema (for action - excludes confirmPassword)
+export const ClientRegisterSchema = z.object({
+  email: z
+    .string()
+    .email({ message: "Invalid email address" })
+    .min(1, { message: "Email is required" }),
+  password: z
+    .string()
+    .min(8, { message: "Password must be at least 8 characters" }),
+  name: z.string().min(2, { message: "Name must be at least 2 characters" }),
+});
+
+export type ClientRegisterFormData = z.infer<typeof ClientRegisterFormSchema>;
+export type ClientRegisterData = z.infer<typeof ClientRegisterSchema>;
+
+// Reset Password Request Schema
+export const ResetPasswordRequestSchema = z.object({
+  email: z
+    .string()
+    .email({ message: "Invalid email address" })
+    .min(1, { message: "Email is required" }),
+});
+
+// Reset Password Schema
+export const ResetPasswordSchema = z
+  .object({
+    token: z.string().min(1, { message: "Token is required" }),
+    password: z
+      .string()
+      .min(8, { message: "Password must be at least 8 characters" }),
+    confirmPassword: z
+      .string()
+      .min(8, { message: "Password must be at least 8 characters" }),
+  })
+  .refine((data) => data.password === data.confirmPassword, {
+    message: "Passwords don't match",
+    path: ["confirmPassword"],
+  });
+
+// Setup Password Schema (for initial password setup)
+export const SetupPasswordSchema = z
+  .object({
+    token: z.string().min(1, { message: "Token is required" }),
+    password: z
+      .string()
+      .min(8, { message: "Password must be at least 8 characters" }),
+    confirmPassword: z
+      .string()
+      .min(8, { message: "Password must be at least 8 characters" }),
+  })
+  .refine((data) => data.password === data.confirmPassword, {
+    message: "Passwords don't match",
+    path: ["confirmPassword"],
+  });
+
 export type BlogSubscriptionData = z.infer<typeof BlogSubscriptionSchema>;
 export type ManageSubscriptionData = z.infer<typeof ManageSubscriptionSchema>;
 export type FormData = z.infer<typeof FormSchema>;
+// ClientRegisterData is already defined above
+export type ResetPasswordRequestData = z.infer<
+  typeof ResetPasswordRequestSchema
+>;
+export type ResetPasswordData = z.infer<typeof ResetPasswordSchema>;
+export type SetupPasswordData = z.infer<typeof SetupPasswordSchema>;

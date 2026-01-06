@@ -1,7 +1,11 @@
 "use server";
 import { prisma } from "@/lib/prisma";
+import type { ProjectStats } from "@/types/stats";
+import type { ActionResult } from "@/types/common";
 
-export async function getProjectStatsAction() {
+export async function getProjectStatsAction(): Promise<
+  ActionResult<{ stats: ProjectStats }>
+> {
   try {
     const [total, pending, completed, awaitingPayment] = await Promise.all([
       prisma.payment.count(),
@@ -17,7 +21,9 @@ export async function getProjectStatsAction() {
 
     return {
       success: true,
-      stats: { total, pending, completed, awaitingPayment },
+      data: {
+        stats: { total, pending, completed, awaitingPayment },
+      },
     };
   } catch (error) {
     console.error("Error fetching stats:", error);

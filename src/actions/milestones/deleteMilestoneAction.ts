@@ -2,18 +2,15 @@
 
 import { prisma } from "@/lib/prisma";
 import { requireAdmin } from "@/lib/authGuard";
-
-type DeleteMilestoneResult =
-  | { success: true }
-  | { success: false; message: string };
+import type { ActionResultSimple } from "@/types/common";
 
 export async function deleteMilestoneAction(
   id: string
-): Promise<DeleteMilestoneResult> {
+): Promise<ActionResultSimple> {
   const auth = await requireAdmin();
 
   if (!auth.authorized) {
-    return { success: false, message: auth.error || "Unauthorized" };
+    return { success: false, error: auth.error || "Unauthorized" };
   }
 
   try {
@@ -21,6 +18,6 @@ export async function deleteMilestoneAction(
     return { success: true };
   } catch (error) {
     console.error("Error deleting milestone:", error);
-    return { success: false, message: "Failed to delete milestone" };
+    return { success: false, error: "Failed to delete milestone" };
   }
 }

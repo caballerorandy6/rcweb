@@ -2,11 +2,20 @@
 
 import { prisma } from "@/lib/prisma";
 import { sendFinalPaymentEmail } from "@/actions/campaigns/sendFinalPaymentEmailAction";
+import type { ProjectStatus } from "@/types/project";
+import type { ActionResult } from "@/types/common";
+
+type PaymentInfo = {
+  id: string;
+  projectCode: string;
+  planName: string;
+  projectStatus: string;
+};
 
 export async function updateProjectStatusAction(
   projectCode: string,
-  status: "pending" | "in_progress" | "ready_for_payment" | "completed"
-) {
+  status: ProjectStatus
+): Promise<ActionResult<{ payment: PaymentInfo }>> {
   try {
     const payment = await prisma.payment.update({
       where: { projectCode },
@@ -22,7 +31,17 @@ export async function updateProjectStatusAction(
       await sendFinalPaymentEmail(projectCode);
     }
 
-    return { success: true, payment };
+    return {
+      success: true,
+      data: {
+        payment: {
+          id: payment.id,
+          projectCode: payment.projectCode,
+          planName: payment.planName,
+          projectStatus: payment.projectStatus,
+        },
+      },
+    };
   } catch (error) {
     console.error("Error updating project status:", error);
     return { success: false, error: "Failed to update status" };

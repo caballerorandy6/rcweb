@@ -13,6 +13,7 @@ import { toast } from "sonner";
 import confetti from "canvas-confetti";
 import type { Subscription } from "@/generated/prisma/client";
 import { trackLeadConversion, trackPurchase } from "@/lib/analytics";
+import { formatDate as formatDateUtil } from "@/lib/utils";
 
 interface SubscriptionSuccessProps {
   subscription?: Subscription | null;
@@ -52,11 +53,7 @@ export default function SubscriptionSuccess({
 
   const formatDate = (date: Date | null) => {
     if (!date) return "In approximately 30 days";
-    return new Date(date).toLocaleDateString("en-US", {
-      year: "numeric",
-      month: "long",
-      day: "numeric",
-    });
+    return formatDateUtil(date, { month: "long" });
   };
 
   if (error) {

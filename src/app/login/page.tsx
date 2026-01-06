@@ -1,5 +1,6 @@
-import AdminLoginForm from "@/app/components/admin/AdminLoginForm";
+import LoginForm from "@/app/components/auth/LoginForm";
 import { genPageMetadata } from "@/utils/genPageMetadata";
+import type { Route } from "next";
 
 export const metadata = genPageMetadata({
   title: "Admin Login",
@@ -10,7 +11,12 @@ export const metadata = genPageMetadata({
 const LoginPage = () => {
   return (
     <section id="login">
-      <AdminLoginForm />
+      <LoginForm
+        title="Admin Login"
+        subtitle="Access to admin dashboard"
+        redirectPath={"/admin-dashboard" as Route}
+        footerText="Protected area • RC Web Admin"
+      />
     </section>
   );
 };

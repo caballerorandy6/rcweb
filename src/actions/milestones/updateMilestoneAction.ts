@@ -3,10 +3,7 @@
 import { prisma } from "@/lib/prisma";
 import { requireAdmin } from "@/lib/authGuard";
 import type { Milestone, MilestoneStatus } from "@/types/milestone";
-
-type UpdateMilestoneResult =
-  | { success: true; milestone: Milestone }
-  | { success: false; message: string };
+import type { ActionResult } from "@/types/common";
 
 type UpdateMilestoneData = {
   title?: string;
@@ -18,11 +15,11 @@ type UpdateMilestoneData = {
 export async function updateMilestoneAction(
   id: string,
   updateData: UpdateMilestoneData
-): Promise<UpdateMilestoneResult> {
+): Promise<ActionResult<{ milestone: Milestone }>> {
   const auth = await requireAdmin();
 
   if (!auth.authorized) {
-    return { success: false, message: auth.error || "Unauthorized" };
+    return { success: false, error: auth.error || "Unauthorized" };
   }
 
   try {
@@ -79,9 +76,9 @@ export async function updateMilestoneAction(
       updatedAt: data.updatedAt.toISOString(),
     };
 
-    return { success: true, milestone };
+    return { success: true, data: { milestone } };
   } catch (error) {
     console.error("Error updating milestone:", error);
-    return { success: false, message: "Failed to update milestone" };
+    return { success: false, error: "Failed to update milestone" };
   }
 }

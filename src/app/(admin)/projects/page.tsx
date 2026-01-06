@@ -19,17 +19,19 @@ async function ProjectManagementWrapper() {
     getProjectStatsAction(),
   ]);
 
-  const projects = projectsResult.success
-    ? projectsResult.projects!.map((project) => ({
-        ...project,
-        createdAt:
-          typeof project.createdAt === "string"
-            ? project.createdAt
-            : project.createdAt.toISOString(),
-      }))
-    : [];
+  const projects =
+    projectsResult.success && projectsResult.data
+      ? projectsResult.data.projects.map((project) => ({
+          ...project,
+          createdAt:
+            typeof project.createdAt === "string"
+              ? project.createdAt
+              : project.createdAt.toISOString(),
+        }))
+      : [];
 
-  const stats = statsResult.success ? statsResult.stats! : null;
+  const stats =
+    statsResult.success && statsResult.data ? statsResult.data.stats : null;
 
   return <ProjectManagement initialProjects={projects} initialStats={stats} />;
 }

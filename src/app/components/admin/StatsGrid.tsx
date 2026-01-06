@@ -32,7 +32,10 @@ export default async function StatsGrid() {
     totalMarketingConsent,
     totalEmailsSent,
     totalSMSsent,
-    totalProjects: projectStats?.stats?.total || 0,
+    totalProjects:
+      projectStats?.success && projectStats.data
+        ? projectStats.data.stats.total
+        : 0,
   };
 
   const statsCards = [

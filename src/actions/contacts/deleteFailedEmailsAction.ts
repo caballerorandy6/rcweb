@@ -1,15 +1,21 @@
 "use server";
 
 import { prisma } from "@/lib/prisma";
+import type { ActionResult } from "@/types/common";
+
+type DeleteResult = {
+  deletedCount: number;
+  cleanedContactsCount: number;
+};
 
 export async function deleteFailedEmailsAction(
   emailAddresses: string[]
-): Promise<{ success: boolean; message: string; deletedCount?: number }> {
+): Promise<ActionResult<DeleteResult>> {
   try {
     if (emailAddresses.length === 0) {
       return {
         success: false,
-        message: "No email addresses provided",
+        error: "No email addresses provided",
       };
     }
 
@@ -90,15 +96,17 @@ export async function deleteFailedEmailsAction(
 
     return {
       success: true,
-      message: `Deleted ${result.count} email address(es) and cleaned up ${contactsWithoutEmailsOrPhones.length} empty contacts`,
-      deletedCount: result.count,
+      data: {
+        deletedCount: result.count,
+        cleanedContactsCount: contactsWithoutEmailsOrPhones.length,
+      },
     };
   } catch (error) {
     console.error("Error deleting failed emails:", error);
     const errorObj = error as { message?: string };
     return {
       success: false,
-      message: errorObj?.message || "Failed to delete email addresses",
+      error: errorObj?.message || "Failed to delete email addresses",
     };
   }
 }
@@ -106,11 +114,9 @@ export async function deleteFailedEmailsAction(
 /**
  * Delete emails that have failed status in campaign logs
  */
-export async function deleteFailedEmailsFromCampaignsAction(): Promise<{
-  success: boolean;
-  message: string;
-  deletedCount?: number;
-}> {
+export async function deleteFailedEmailsFromCampaignsAction(): Promise<
+  ActionResult<DeleteResult>
+> {
   try {
     // Get all emails with failed, bounced, or undelivered status from campaign logs
     const failedEmailLogs = await prisma.campaignEmailLog.findMany({
@@ -129,8 +135,10 @@ export async function deleteFailedEmailsFromCampaignsAction(): Promise<{
     if (failedEmailLogs.length === 0) {
       return {
         success: true,
-        message: "No failed emails found in campaign logs",
-        deletedCount: 0,
+        data: {
+          deletedCount: 0,
+          cleanedContactsCount: 0,
+        },
       };
     }
 
@@ -161,8 +169,7 @@ export async function deleteFailedEmailsFromCampaignsAction(): Promise<{
     const errorObj = error as { message?: string };
     return {
       success: false,
-      message:
-        errorObj?.message || "Failed to delete emails from campaign logs",
+      error: errorObj?.message || "Failed to delete emails from campaign logs",
     };
   }
 }

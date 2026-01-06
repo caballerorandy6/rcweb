@@ -27,18 +27,12 @@ export default function FinalPayment() {
     startTransition(async () => {
       const result = await verifyProjectAccessAction(email, projectCode);
 
-      if (result.success && result.payment) {
-        setProjectInfo(result.payment);
+      if (result.success && result.data) {
+        setProjectInfo(result.data.payment);
         setVerified(true);
         toast.success("Project verified successfully!");
       } else {
         toast.error(result.error || "Verification failed");
-
-        if (result.status === "in_progress") {
-          toast.info(
-            "Your project is still in progress. We'll notify you when it's ready!"
-          );
-        }
       }
     });
   };

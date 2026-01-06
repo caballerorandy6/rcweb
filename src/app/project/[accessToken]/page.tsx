@@ -7,6 +7,7 @@ import {
   UserIcon,
   DocumentTextIcon,
 } from "@heroicons/react/24/outline";
+import { getProjectStatusLabel } from "@/lib/utils";
 
 export const metadata: Metadata = {
   title: "Project Progress - RC Web Solutions",
@@ -25,26 +26,11 @@ export default async function ProjectPage(props: { params: Params }) {
 
   const result = await getPublicMilestonesAction(accessToken);
 
-  if (!result.success) {
+  if (!result.success || !result.data) {
     notFound();
   }
 
-  const { project, milestones } = result;
-
-  const getProjectStatusLabel = (status: string) => {
-    switch (status) {
-      case "pending":
-        return { label: "Pending Start", color: "text-yellow-500 bg-yellow-500/20" };
-      case "in_progress":
-        return { label: "In Progress", color: "text-blue-500 bg-blue-500/20" };
-      case "ready_for_payment":
-        return { label: "Ready for Final Payment", color: "text-orange-500 bg-orange-500/20" };
-      case "completed":
-        return { label: "Completed", color: "text-green-500 bg-green-500/20" };
-      default:
-        return { label: status, color: "text-gray-500 bg-gray-500/20" };
-    }
-  };
+  const { project, milestones } = result.data;
 
   const status = getProjectStatusLabel(project.projectStatus);
 

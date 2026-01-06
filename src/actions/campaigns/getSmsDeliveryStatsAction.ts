@@ -1,6 +1,7 @@
 "use server";
 
 import twilio from "twilio";
+import type { ActionResult } from "@/types/common";
 
 const twilioClient = twilio(
   process.env.TWILIO_ACCOUNT_SID!,
@@ -33,7 +34,7 @@ export interface SmsDeliveryStats {
 
 export async function getSmsDeliveryStatsAction(
   hoursAgo: number = 24
-): Promise<{ success: boolean; data?: SmsDeliveryStats; message?: string }> {
+): Promise<ActionResult<SmsDeliveryStats>> {
   try {
     // Calcular fecha de inicio
     const startDate = new Date();
@@ -138,7 +139,7 @@ export async function getSmsDeliveryStatsAction(
     const errorObj = error as { message?: string };
     return {
       success: false,
-      message: errorObj?.message || "Failed to fetch delivery stats",
+      error: errorObj?.message || "Failed to fetch delivery stats",
     };
   }
 }

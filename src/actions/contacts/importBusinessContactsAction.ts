@@ -2,14 +2,13 @@
 
 import { prisma } from "@/lib/prisma";
 import type { BusinessContact } from "./searchBusinessContactsAction";
+import type { ActionResult } from "@/types/common";
 
-export interface ImportBusinessContactsResult {
-  success: boolean;
-  imported?: number;
-  skipped?: number;
+type ImportResult = {
+  imported: number;
+  skipped: number;
   errors?: string[];
-  message?: string;
-}
+};
 
 /**
  * Server Action to import business contacts into the database
@@ -20,12 +19,12 @@ export interface ImportBusinessContactsResult {
 export async function importBusinessContactsAction(
   businesses: BusinessContact[],
   marketingConsent: boolean = false
-): Promise<ImportBusinessContactsResult> {
+): Promise<ActionResult<ImportResult>> {
   try {
     if (!businesses || businesses.length === 0) {
       return {
         success: false,
-        message: "No businesses provided to import",
+        error: "No businesses provided to import",
       };
     }
 
@@ -101,16 +100,17 @@ export async function importBusinessContactsAction(
 
     return {
       success: true,
-      imported,
-      skipped,
-      errors: errors.length > 0 ? errors : undefined,
-      message: `Imported ${imported} contacts, skipped ${skipped}`,
+      data: {
+        imported,
+        skipped,
+        errors: errors.length > 0 ? errors : undefined,
+      },
     };
   } catch (error) {
     console.error("Error in importBusinessContactsAction:", error);
     return {
       success: false,
-      message: "Error importing contacts. Please try again.",
+      error: "Error importing contacts. Please try again.",
     };
   }
 }

@@ -2,10 +2,13 @@
 
 import { prisma } from "@/lib/prisma";
 import { Resend } from "resend";
+import type { ActionResultSimple } from "@/types/common";
 
 const resend = new Resend(process.env.RESEND_API_KEY!);
 
-export async function unsubscribeFromEmailAction(email: string) {
+export async function unsubscribeFromEmailAction(
+  email: string
+): Promise<ActionResultSimple> {
   try {
     const contact = await prisma.contact.findFirst({
       where: {
@@ -43,10 +46,7 @@ export async function unsubscribeFromEmailAction(email: string) {
       `,
     });
 
-    return {
-      success: true,
-      message: `${email} has been unsubscribed from marketing emails.`,
-    };
+    return { success: true };
   } catch (error) {
     console.error("Error unsubscribing:", error);
     return { success: false, error: "Failed to unsubscribe" };

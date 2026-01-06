@@ -37,6 +37,18 @@ export {
   type SubscriptionPaymentFailedEmailProps,
 } from "./SubscriptionPaymentFailedEmail";
 
+export { WelcomeEmail, type WelcomeEmailProps } from "./WelcomeEmail";
+
+export {
+  SetupPasswordEmail,
+  type SetupPasswordEmailProps,
+} from "./SetupPasswordEmail";
+
+export {
+  ResetPasswordEmail,
+  type ResetPasswordEmailProps,
+} from "./ResetPasswordEmail";
+
 // Admin email templates (React components)
 export {
   AdminNotificationEmail,

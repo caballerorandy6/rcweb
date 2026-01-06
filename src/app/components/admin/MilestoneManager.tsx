@@ -56,8 +56,8 @@ export default function MilestoneManager({
       newDescription || null,
       milestones.length
     );
-    if (result.success && result.milestone) {
-      setMilestones([...milestones, result.milestone]);
+    if (result.success && result.data) {
+      setMilestones([...milestones, result.data.milestone]);
       setNewTitle("");
       setNewDescription("");
       setIsAdding(false);
@@ -77,9 +77,9 @@ export default function MilestoneManager({
       completedAt: newStatus === "completed" ? new Date() : null,
     });
 
-    if (result.success) {
+    if (result.success && result.data) {
       setMilestones(
-        milestones.map((m) => (m.id === id ? result.milestone : m))
+        milestones.map((m) => (m.id === id ? result.data.milestone : m))
       );
     }
 
@@ -105,9 +105,9 @@ export default function MilestoneManager({
 
     const result = await updateMilestoneAction(id, { title });
 
-    if (result.success) {
+    if (result.success && result.data) {
       setMilestones(
-        milestones.map((m) => (m.id === id ? result.milestone : m))
+        milestones.map((m) => (m.id === id ? result.data.milestone : m))
       );
     }
 

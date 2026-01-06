@@ -1,8 +1,16 @@
 "use server";
 
 import { prisma } from "@/lib/prisma";
+import type { ActionResult } from "@/types/common";
 
-export async function markProjectAsCompleteAction(projectCode: string) {
+type PaymentSummary = {
+  planName: string;
+  totalAmount: number;
+};
+
+export async function markProjectAsCompleteAction(
+  projectCode: string
+): Promise<ActionResult<{ payment: PaymentSummary }>> {
   try {
     const payment = await prisma.payment.update({
       where: { projectCode },
@@ -15,9 +23,11 @@ export async function markProjectAsCompleteAction(projectCode: string) {
 
     return {
       success: true,
-      payment: {
-        planName: payment.planName,
-        totalAmount: payment.totalAmount,
+      data: {
+        payment: {
+          planName: payment.planName,
+          totalAmount: payment.totalAmount,
+        },
       },
     };
   } catch (error) {

@@ -1,15 +1,16 @@
 "use server";
 
 import { prisma } from "@/lib/prisma";
+import type { ActionResult } from "@/types/common";
 
 export async function deleteFailedPhonesAction(
   phoneNumbers: string[]
-): Promise<{ success: boolean; message: string; deletedCount?: number }> {
+): Promise<ActionResult<{ deletedCount: number }>> {
   try {
     if (phoneNumbers.length === 0) {
       return {
         success: false,
-        message: "No phone numbers provided",
+        error: "No phone numbers provided",
       };
     }
 
@@ -59,15 +60,16 @@ export async function deleteFailedPhonesAction(
 
     return {
       success: true,
-      message: `Deleted ${result.count} phone number(s)`,
-      deletedCount: result.count,
+      data: {
+        deletedCount: result.count,
+      },
     };
   } catch (error) {
     console.error("Error deleting failed phones:", error);
     const errorObj = error as { message?: string };
     return {
       success: false,
-      message: errorObj?.message || "Failed to delete phone numbers",
+      error: errorObj?.message || "Failed to delete phone numbers",
     };
   }
 }

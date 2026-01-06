@@ -36,6 +36,21 @@ export {
   type SendSubscriptionPaymentFailedParams,
 } from "./sendSubscriptionPaymentFailed";
 
+export {
+  sendWelcomeEmail,
+  type SendWelcomeEmailParams,
+} from "./sendWelcomeEmail";
+
+export {
+  sendSetupPasswordEmail,
+  type SendSetupPasswordEmailParams,
+} from "./sendSetupPasswordEmail";
+
+export {
+  sendResetPasswordEmail,
+  type SendResetPasswordEmailParams,
+} from "./sendResetPasswordEmail";
+
 // Admin email senders
 export {
   sendAdminSubscriptionNotification,

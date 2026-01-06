@@ -181,6 +181,9 @@ model Payment {
   invoices        Invoice[]
   milestones      Milestone[]
 
+  clientId  String?
+  client    Client? @relation(fields: [clientId], references: [id])
+
   @@index([email])
   @@index([projectCode])
   @@index([accessToken])
@@ -373,3 +376,25 @@ model Invoice {
   @@index([status])
   @@index([issueDate])
 }
+
+model Client {
+    id              String    @id @default(uuid())
+    email           String    @unique
+    password        String?   // Nullable hasta que establezcan contraseña
+    name            String
+    phone           String?
+    emailVerified   DateTime?
+    resetToken      String?   // Para reset de contraseña (cuando ya tiene una)
+    resetTokenExpiry DateTime?
+    setupToken      String?   // Para establecer contraseña inicial (cuando no tiene)
+    setupTokenExpiry DateTime? // Expira en 30 días
+    createdAt       DateTime  @default(now())
+    updatedAt       DateTime  @updatedAt
+    lastLogin       DateTime?
+    isActive        Boolean   @default(true)
+
+    // Relación con Payment
+    payments        Payment[]
+
+    @@index([email])
+  }

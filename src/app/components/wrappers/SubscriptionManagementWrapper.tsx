@@ -3,7 +3,8 @@ import { getAllSubscriptionsAction } from "@/actions/subscriptions/getAllSubscri
 
 export default async function SubscriptionManagementWrapper() {
   const result = await getAllSubscriptionsAction();
-  const subscriptions = result.success ? result.subscriptions! : [];
+  const subscriptions =
+    result.success && result.data ? result.data.subscriptions : [];
 
   return <SubscriptionManagement initialSubscriptions={subscriptions} />;
 }

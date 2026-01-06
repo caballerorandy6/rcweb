@@ -4,14 +4,10 @@ import Stripe from "stripe";
 import { Resend } from "resend";
 import { prisma } from "@/lib/prisma";
 import { sendSubscriptionPortalLink } from "@/lib/email/senders";
+import type { ActionResultSimple } from "@/types/common";
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!);
 const resend = new Resend(process.env.RESEND_API_KEY);
-
-export interface SendPortalLinkResult {
-  success: boolean;
-  error?: string;
-}
 
 /**
  * Sends a magic link email to the customer to access their Stripe Customer Portal
@@ -19,7 +15,7 @@ export interface SendPortalLinkResult {
  */
 export async function sendPortalLinkAction(
   email: string
-): Promise<SendPortalLinkResult> {
+): Promise<ActionResultSimple> {
   try {
     // Validate email format
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;

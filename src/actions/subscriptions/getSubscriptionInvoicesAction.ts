@@ -2,6 +2,7 @@
 
 import Stripe from "stripe";
 import { prisma } from "@/lib/prisma";
+import type { ActionResult } from "@/types/common";
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!);
 
@@ -17,18 +18,12 @@ export interface InvoiceData {
   invoicePdf: string | null;
 }
 
-export interface GetSubscriptionInvoicesResult {
-  success: boolean;
-  invoices?: InvoiceData[];
-  error?: string;
-}
-
 /**
  * Fetches invoices from Stripe for a given subscription
  */
 export async function getSubscriptionInvoicesAction(
   subscriptionId: string
-): Promise<GetSubscriptionInvoicesResult> {
+): Promise<ActionResult<{ invoices: InvoiceData[] }>> {
   try {
     // Find subscription in database to get Stripe customer ID
     const subscription = await prisma.subscription.findUnique({
@@ -46,7 +41,9 @@ export async function getSubscriptionInvoicesAction(
     });
 
     const invoiceData: InvoiceData[] = invoices.data
-      .filter((invoice): invoice is Stripe.Invoice & { id: string } => !!invoice.id)
+      .filter(
+        (invoice): invoice is Stripe.Invoice & { id: string } => !!invoice.id
+      )
       .map((invoice) => ({
         id: invoice.id,
         number: invoice.number,
@@ -61,12 +58,13 @@ export async function getSubscriptionInvoicesAction(
         invoicePdf: invoice.invoice_pdf || null,
       }));
 
-    return { success: true, invoices: invoiceData };
+    return { success: true, data: { invoices: invoiceData } };
   } catch (error) {
     console.error("❌ Error fetching invoices:", error);
     return {
       success: false,
-      error: error instanceof Error ? error.message : "Failed to fetch invoices",
+      error:
+        error instanceof Error ? error.message : "Failed to fetch invoices",
     };
   }
 }

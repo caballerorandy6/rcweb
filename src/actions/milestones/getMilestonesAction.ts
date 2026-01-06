@@ -3,18 +3,15 @@
 import { prisma } from "@/lib/prisma";
 import { requireAdmin } from "@/lib/authGuard";
 import type { Milestone } from "@/types/milestone";
-
-type GetMilestonesResult =
-  | { success: true; milestones: Milestone[] }
-  | { success: false; message: string };
+import type { ActionResult } from "@/types/common";
 
 export async function getMilestonesAction(
   paymentId: string
-): Promise<GetMilestonesResult> {
+): Promise<ActionResult<{ milestones: Milestone[] }>> {
   const auth = await requireAdmin();
 
   if (!auth.authorized) {
-    return { success: false, message: auth.error || "Unauthorized" };
+    return { success: false, error: auth.error || "Unauthorized" };
   }
 
   try {
@@ -36,9 +33,9 @@ export async function getMilestonesAction(
       updatedAt: m.updatedAt.toISOString(),
     }));
 
-    return { success: true, milestones };
+    return { success: true, data: { milestones } };
   } catch (error) {
     console.error("Error fetching milestones:", error);
-    return { success: false, message: "Failed to fetch milestones" };
+    return { success: false, error: "Failed to fetch milestones" };
   }
 }

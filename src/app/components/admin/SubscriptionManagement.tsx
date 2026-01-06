@@ -19,6 +19,7 @@ import {
   ArrowDownTrayIcon,
 } from "@heroicons/react/24/outline";
 import { toast } from "sonner";
+import { formatCurrency, formatDate } from "@/lib/utils";
 
 interface SubscriptionManagementProps {
   initialSubscriptions: SubscriptionData[];
@@ -70,21 +71,6 @@ export default function SubscriptionManagement({ initialSubscriptions }: Subscri
       .reduce((sum, s) => sum + s.amount, 0) / 100,
   };
 
-  const formatDate = (dateStr: string | null) => {
-    if (!dateStr) return "N/A";
-    return new Date(dateStr).toLocaleDateString("en-US", {
-      year: "numeric",
-      month: "short",
-      day: "numeric",
-    });
-  };
-
-  const formatCurrency = (amount: number) => {
-    return new Intl.NumberFormat("en-US", {
-      style: "currency",
-      currency: "USD",
-    }).format(amount / 100);
-  };
 
   const handleCancel = async (subscription: SubscriptionData) => {
     setCancellingId(subscription.id);
@@ -127,10 +113,10 @@ export default function SubscriptionManagement({ initialSubscriptions }: Subscri
 
     const result = await getSubscriptionInvoicesAction(subscription.id);
 
-    if (result.success && result.invoices) {
+    if (result.success && result.data) {
       setInvoicesModal((prev) => ({
         ...prev,
-        invoices: result.invoices!,
+        invoices: result.data.invoices,
         loading: false,
       }));
     } else {

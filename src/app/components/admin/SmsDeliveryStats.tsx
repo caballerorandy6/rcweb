@@ -1,7 +1,10 @@
 "use client";
 
 import { useState, useTransition } from "react";
-import { getSmsDeliveryStatsAction, type SmsDeliveryStats } from "@/actions/campaigns/getSmsDeliveryStatsAction";
+import {
+  getSmsDeliveryStatsAction,
+  type SmsDeliveryStats,
+} from "@/actions/campaigns/getSmsDeliveryStatsAction";
 import { deleteFailedPhonesAction } from "@/actions/contacts/deleteFailedPhonesAction";
 import { toast } from "sonner";
 
@@ -23,8 +26,8 @@ export default function SmsDeliveryStats() {
         if (result.success && result.data) {
           setStats(result.data);
           toast.success("Delivery stats loaded");
-        } else {
-          toast.error(result.message || "Failed to load stats");
+        } else if (!result.success) {
+          toast.error(result.error || "Failed to load stats");
         }
       } catch (error) {
         toast.error("Error loading delivery stats");
@@ -77,15 +80,17 @@ export default function SmsDeliveryStats() {
     setIsDeleting(true);
     startTransition(async () => {
       try {
-        const result = await deleteFailedPhonesAction(Array.from(selectedPhones));
+        const result = await deleteFailedPhonesAction(
+          Array.from(selectedPhones)
+        );
 
-        if (result.success) {
-          toast.success(result.message);
+        if (result.success && result.data) {
+          toast.success(`Deleted ${result.data.deletedCount} phone number(s)`);
           setSelectedPhones(new Set());
           // Refresh stats
           await fetchStats();
-        } else {
-          toast.error(result.message);
+        } else if (!result.success) {
+          toast.error(result.error || "Failed to delete phones");
         }
       } catch (error) {
         toast.error("Error deleting phone numbers");
@@ -161,12 +166,16 @@ export default function SmsDeliveryStats() {
 
             <div className="bg-blue-900/20 border border-blue-500/30 rounded-lg p-4">
               <div className="text-blue-400 text-sm mb-1">📤 Sent</div>
-              <div className="text-2xl font-bold text-blue-400">{stats.sent}</div>
+              <div className="text-2xl font-bold text-blue-400">
+                {stats.sent}
+              </div>
             </div>
 
             <div className="bg-red-900/20 border border-red-500/30 rounded-lg p-4">
               <div className="text-red-400 text-sm mb-1">❌ Failed</div>
-              <div className="text-2xl font-bold text-red-400">{stats.failed}</div>
+              <div className="text-2xl font-bold text-red-400">
+                {stats.failed}
+              </div>
             </div>
 
             <div className="bg-yellow-900/20 border border-yellow-500/30 rounded-lg p-4">
@@ -181,32 +190,44 @@ export default function SmsDeliveryStats() {
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
             <div className="bg-gray-800/50 border border-gray-700 rounded-lg p-4">
               <div className="text-gray-400 text-xs mb-1">⏳ Queued</div>
-              <div className="text-xl font-bold text-gray-300">{stats.queued}</div>
+              <div className="text-xl font-bold text-gray-300">
+                {stats.queued}
+              </div>
             </div>
 
             <div className="bg-gray-800/50 border border-gray-700 rounded-lg p-4">
               <div className="text-gray-400 text-xs mb-1">✓ Accepted</div>
-              <div className="text-xl font-bold text-gray-300">{stats.accepted}</div>
+              <div className="text-xl font-bold text-gray-300">
+                {stats.accepted}
+              </div>
             </div>
 
             <div className="bg-gray-800/50 border border-gray-700 rounded-lg p-4">
               <div className="text-gray-400 text-xs mb-1">📡 Sending</div>
-              <div className="text-xl font-bold text-gray-300">{stats.sending}</div>
+              <div className="text-xl font-bold text-gray-300">
+                {stats.sending}
+              </div>
             </div>
 
             <div className="bg-gray-800/50 border border-gray-700 rounded-lg p-4">
               <div className="text-gray-400 text-xs mb-1">📥 Receiving</div>
-              <div className="text-xl font-bold text-gray-300">{stats.receiving}</div>
+              <div className="text-xl font-bold text-gray-300">
+                {stats.receiving}
+              </div>
             </div>
 
             <div className="bg-gray-800/50 border border-gray-700 rounded-lg p-4">
               <div className="text-gray-400 text-xs mb-1">✉️ Received</div>
-              <div className="text-xl font-bold text-gray-300">{stats.received}</div>
+              <div className="text-xl font-bold text-gray-300">
+                {stats.received}
+              </div>
             </div>
 
             <div className="bg-gray-800/50 border border-gray-700 rounded-lg p-4">
               <div className="text-gray-400 text-xs mb-1">🚫 Canceled</div>
-              <div className="text-xl font-bold text-gray-300">{stats.canceled}</div>
+              <div className="text-xl font-bold text-gray-300">
+                {stats.canceled}
+              </div>
             </div>
           </div>
 
@@ -245,20 +266,21 @@ export default function SmsDeliveryStats() {
                     Failed & Undelivered Messages
                   </h3>
                   <p className="text-sm text-gray-400 mt-1">
-                    {selectedPhones.size} of {
-                      selectedErrorCode === "all"
-                        ? stats.failedMessages.length
-                        : stats.failedMessages.filter(
-                            (m) => m.errorCode?.toString() === selectedErrorCode
-                          ).length
-                    }{" "}
+                    {selectedPhones.size} of{" "}
+                    {selectedErrorCode === "all"
+                      ? stats.failedMessages.length
+                      : stats.failedMessages.filter(
+                          (m) => m.errorCode?.toString() === selectedErrorCode
+                        ).length}{" "}
                     selected
                   </p>
                 </div>
 
                 {/* Error Code Filter */}
                 <div className="flex items-center gap-3">
-                  <label className="text-sm text-gray-400">Filter by Error:</label>
+                  <label className="text-sm text-gray-400">
+                    Filter by Error:
+                  </label>
                   <select
                     value={selectedErrorCode}
                     onChange={(e) => {
@@ -280,7 +302,6 @@ export default function SmsDeliveryStats() {
               </div>
 
               <div className="flex justify-between items-center">
-
                 <div className="flex gap-3">
                   <button
                     onClick={handleSelectAll}
@@ -311,7 +332,8 @@ export default function SmsDeliveryStats() {
                         <input
                           type="checkbox"
                           checked={
-                            selectedPhones.size === stats.failedMessages.length &&
+                            selectedPhones.size ===
+                              stats.failedMessages.length &&
                             stats.failedMessages.length > 0
                           }
                           onChange={handleSelectAll}
@@ -392,8 +414,8 @@ export default function SmsDeliveryStats() {
                   <div className="text-sm text-red-200">
                     <p className="font-semibold mb-1">Warning:</p>
                     <p>
-                      Deleting phone numbers will permanently remove them from your
-                      database. This action cannot be undone.
+                      Deleting phone numbers will permanently remove them from
+                      your database. This action cannot be undone.
                     </p>
                   </div>
                 </div>

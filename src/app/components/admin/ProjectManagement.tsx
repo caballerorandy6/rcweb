@@ -8,39 +8,21 @@ import { updateProjectStatusAction } from "@/actions/projects/updateProjectStatu
 import { getMilestonesAction } from "@/actions/milestones/getMilestonesAction";
 import MilestoneManager from "./MilestoneManager";
 import { Milestone } from "@/types/milestone";
+import { AdminProject, ProjectStatus } from "@/types/project";
+import { ProjectStats } from "@/types/stats";
 import { FlagIcon } from "@heroicons/react/24/outline";
 
-type Project = {
-  id: string;
-  projectCode: string;
-  email: string;
-  name: string;
-  planName: string;
-  totalAmount: number;
-  firstPaid: boolean;
-  secondPaid: boolean;
-  projectStatus: string;
-  createdAt: string;
-};
-
-type Stats = {
-  total: number;
-  pending: number;
-  completed: number;
-  awaitingPayment: number;
-};
-
 type ProjectManagementProps = {
-  initialProjects: Project[];
-  initialStats: Stats | null;
+  initialProjects: AdminProject[];
+  initialStats: ProjectStats | null;
 };
 
 export default function ProjectManagement({
   initialProjects,
   initialStats,
 }: ProjectManagementProps) {
-  const [projects, setProjects] = useState<Project[]>(initialProjects);
-  const [stats, setStats] = useState<Stats | null>(initialStats);
+  const [projects, setProjects] = useState<AdminProject[]>(initialProjects);
+  const [stats, setStats] = useState<ProjectStats | null>(initialStats);
   const [isPending, startTransition] = useTransition();
 
   // Milestone modal state
@@ -50,17 +32,17 @@ export default function ProjectManagement({
     milestones: Milestone[];
   } | null>(null);
 
-  const handleOpenMilestones = async (project: Project) => {
+  const handleOpenMilestones = async (project: AdminProject) => {
     const result = await getMilestonesAction(project.id);
 
-    if (result.success) {
+    if (result.success && result.data) {
       setSelectedProject({
         id: project.id,
         projectCode: project.projectCode,
-        milestones: result.milestones,
+        milestones: result.data.milestones,
       });
-    } else {
-      toast.error("Failed to load milestones");
+    } else if (!result.success) {
+      toast.error(result.error || "Failed to load milestones");
     }
   };
 
@@ -71,9 +53,9 @@ export default function ProjectManagement({
         getProjectStatsAction(),
       ]);
 
-      if (projectsResult.success) {
+      if (projectsResult.success && projectsResult.data) {
         setProjects(
-          projectsResult.projects!.map((project) => ({
+          projectsResult.data.projects.map((project) => ({
             ...project,
             createdAt:
               typeof project.createdAt === "string"
@@ -81,12 +63,12 @@ export default function ProjectManagement({
                 : project.createdAt.toISOString(),
           }))
         );
-      } else {
-        toast.error("Failed to load projects");
+      } else if (!projectsResult.success) {
+        toast.error(projectsResult.error || "Failed to load projects");
       }
 
-      if (statsResult.success) {
-        setStats(statsResult.stats!);
+      if (statsResult.success && statsResult.data) {
+        setStats(statsResult.data.stats);
       }
     } catch (error) {
       toast.error("Failed to load data");
@@ -98,11 +80,7 @@ export default function ProjectManagement({
     startTransition(async () => {
       const result = await updateProjectStatusAction(
         projectCode,
-        newStatus as
-          | "pending"
-          | "in_progress"
-          | "ready_for_payment"
-          | "completed"
+        newStatus as ProjectStatus
       );
 
       if (result.success) {

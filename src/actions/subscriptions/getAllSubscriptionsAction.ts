@@ -1,6 +1,7 @@
 "use server";
 
 import { prisma } from "@/lib/prisma";
+import type { ActionResult } from "@/types/common";
 
 export interface SubscriptionData {
   id: string;
@@ -18,13 +19,9 @@ export interface SubscriptionData {
   createdAt: string;
 }
 
-export interface GetAllSubscriptionsResult {
-  success: boolean;
-  subscriptions?: SubscriptionData[];
-  error?: string;
-}
-
-export async function getAllSubscriptionsAction(): Promise<GetAllSubscriptionsResult> {
+export async function getAllSubscriptionsAction(): Promise<
+  ActionResult<{ subscriptions: SubscriptionData[] }>
+> {
   try {
     const subscriptions = await prisma.subscription.findMany({
       orderBy: { createdAt: "desc" },
@@ -32,27 +29,32 @@ export async function getAllSubscriptionsAction(): Promise<GetAllSubscriptionsRe
 
     return {
       success: true,
-      subscriptions: subscriptions.map((sub) => ({
-        id: sub.id,
-        stripeSubscriptionId: sub.stripeSubscriptionId,
-        stripeCustomerId: sub.stripeCustomerId,
-        email: sub.email,
-        name: sub.name,
-        planName: sub.planName,
-        amount: sub.amount,
-        currency: sub.currency,
-        status: sub.status,
-        currentPeriodStart: sub.currentPeriodStart?.toISOString() || null,
-        currentPeriodEnd: sub.currentPeriodEnd?.toISOString() || null,
-        cancelledAt: sub.cancelledAt?.toISOString() || null,
+      data: {
+        subscriptions: subscriptions.map((sub) => ({
+          id: sub.id,
+          stripeSubscriptionId: sub.stripeSubscriptionId,
+          stripeCustomerId: sub.stripeCustomerId,
+          email: sub.email,
+          name: sub.name,
+          planName: sub.planName,
+          amount: sub.amount,
+          currency: sub.currency,
+          status: sub.status,
+          currentPeriodStart: sub.currentPeriodStart?.toISOString() || null,
+          currentPeriodEnd: sub.currentPeriodEnd?.toISOString() || null,
+          cancelledAt: sub.cancelledAt?.toISOString() || null,
         createdAt: sub.createdAt.toISOString(),
       })),
+      },
     };
   } catch (error) {
     console.error("❌ Error fetching subscriptions:", error);
     return {
       success: false,
-      error: error instanceof Error ? error.message : "Failed to fetch subscriptions",
+      error:
+        error instanceof Error
+          ? error.message
+          : "Failed to fetch subscriptions",
     };
   }
 }

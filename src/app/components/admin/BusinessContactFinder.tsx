@@ -2,7 +2,10 @@
 
 import { useState, useTransition } from "react";
 import { toast } from "sonner";
-import { searchBusinessContactsAction, type BusinessContact } from "@/actions/contacts/searchBusinessContactsAction";
+import {
+  searchBusinessContactsAction,
+  type BusinessContact,
+} from "@/actions/contacts/searchBusinessContactsAction";
 import { importBusinessContactsAction } from "@/actions/contacts/importBusinessContactsAction";
 
 const BUSINESS_CATEGORIES = [
@@ -32,7 +35,9 @@ interface BusinessContactFinderProps {
   onImportComplete?: () => void;
 }
 
-export default function BusinessContactFinder({ onImportComplete }: BusinessContactFinderProps) {
+export default function BusinessContactFinder({
+  onImportComplete,
+}: BusinessContactFinderProps) {
   const [isPending, startTransition] = useTransition();
   const [isSearching, setIsSearching] = useState(false);
   const [isImporting, setIsImporting] = useState(false);
@@ -43,7 +48,9 @@ export default function BusinessContactFinder({ onImportComplete }: BusinessCont
   const [maxResults, setMaxResults] = useState(20);
 
   const [businesses, setBusinesses] = useState<BusinessContact[]>([]);
-  const [selectedBusinesses, setSelectedBusinesses] = useState<Set<string>>(new Set());
+  const [selectedBusinesses, setSelectedBusinesses] = useState<Set<string>>(
+    new Set()
+  );
   const [marketingConsent, setMarketingConsent] = useState(false);
 
   const handleSearch = async () => {
@@ -65,11 +72,11 @@ export default function BusinessContactFinder({ onImportComplete }: BusinessCont
           maxResults
         );
 
-        if (result.success && result.businesses) {
-          setBusinesses(result.businesses);
-          toast.success(`Found ${result.count} businesses`);
-        } else {
-          toast.error(result.message || "No businesses found");
+        if (result.success && result.data) {
+          setBusinesses(result.data.businesses);
+          toast.success(`Found ${result.data.count} businesses`);
+        } else if (!result.success) {
+          toast.error(result.error || "No businesses found");
         }
       } catch (error) {
         toast.error("Error searching for businesses");
@@ -94,7 +101,7 @@ export default function BusinessContactFinder({ onImportComplete }: BusinessCont
     if (selectedBusinesses.size === businesses.length) {
       setSelectedBusinesses(new Set());
     } else {
-      setSelectedBusinesses(new Set(businesses.map(b => b.placeId)));
+      setSelectedBusinesses(new Set(businesses.map((b) => b.placeId)));
     }
   };
 
@@ -104,7 +111,9 @@ export default function BusinessContactFinder({ onImportComplete }: BusinessCont
       return;
     }
 
-    const selectedContacts = businesses.filter(b => selectedBusinesses.has(b.placeId));
+    const selectedContacts = businesses.filter((b) =>
+      selectedBusinesses.has(b.placeId)
+    );
 
     setIsImporting(true);
 
@@ -115,24 +124,28 @@ export default function BusinessContactFinder({ onImportComplete }: BusinessCont
           marketingConsent
         );
 
-        if (result.success) {
-          toast.success(result.message);
+        if (result.success && result.data) {
+          toast.success(
+            `Imported ${result.data.imported} contacts, skipped ${result.data.skipped}`
+          );
 
           // Remove imported businesses from the list
-          setBusinesses(prev => prev.filter(b => !selectedBusinesses.has(b.placeId)));
+          setBusinesses((prev) =>
+            prev.filter((b) => !selectedBusinesses.has(b.placeId))
+          );
           setSelectedBusinesses(new Set());
 
           // Show errors if any
-          if (result.errors && result.errors.length > 0) {
-            console.log("Import errors:", result.errors);
+          if (result.data.errors && result.data.errors.length > 0) {
+            console.log("Import errors:", result.data.errors);
           }
 
           // Refresh the contacts list
           if (onImportComplete) {
             onImportComplete();
           }
-        } else {
-          toast.error(result.message || "Failed to import contacts");
+        } else if (!result.success) {
+          toast.error(result.error || "Failed to import contacts");
         }
       } catch (error) {
         toast.error("Error importing contacts");
@@ -257,16 +270,16 @@ export default function BusinessContactFinder({ onImportComplete }: BusinessCont
                   onChange={(e) => setMarketingConsent(e.target.checked)}
                   className="mr-2"
                 />
-                <span className="text-sm text-gray-300">
-                  Marketing consent
-                </span>
+                <span className="text-sm text-gray-300">Marketing consent</span>
               </label>
 
               <button
                 onClick={handleSelectAll}
                 className="bg-gray-700 text-white px-4 py-2 rounded-lg hover:bg-gray-600 transition-colors"
               >
-                {selectedBusinesses.size === businesses.length ? "Deselect All" : "Select All"}
+                {selectedBusinesses.size === businesses.length
+                  ? "Deselect All"
+                  : "Select All"}
               </button>
 
               <button
@@ -274,7 +287,9 @@ export default function BusinessContactFinder({ onImportComplete }: BusinessCont
                 disabled={selectedBusinesses.size === 0 || isImporting}
                 className="bg-gold text-gray-900 px-6 py-2 rounded-lg font-semibold hover:bg-gold/90 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
               >
-                {isImporting ? "Importing..." : `Import ${selectedBusinesses.size} Selected`}
+                {isImporting
+                  ? "Importing..."
+                  : `Import ${selectedBusinesses.size} Selected`}
               </button>
             </div>
           </div>
@@ -287,7 +302,10 @@ export default function BusinessContactFinder({ onImportComplete }: BusinessCont
                   <th className="px-4 py-3 text-sm font-medium text-gray-300">
                     <input
                       type="checkbox"
-                      checked={selectedBusinesses.size === businesses.length && businesses.length > 0}
+                      checked={
+                        selectedBusinesses.size === businesses.length &&
+                        businesses.length > 0
+                      }
                       onChange={handleSelectAll}
                       className="cursor-pointer"
                     />
@@ -345,7 +363,10 @@ export default function BusinessContactFinder({ onImportComplete }: BusinessCont
                         {business.email || "—"}
                       </span>
                       {business.email && (
-                        <span className="ml-2 text-yellow-500 text-xs" title="This email is inferred and may not be valid">
+                        <span
+                          className="ml-2 text-yellow-500 text-xs"
+                          title="This email is inferred and may not be valid"
+                        >
                           ⚠️
                         </span>
                       )}
@@ -366,9 +387,19 @@ export default function BusinessContactFinder({ onImportComplete }: BusinessCont
               <div className="text-sm text-yellow-200">
                 <p className="font-semibold mb-1">Important:</p>
                 <ul className="list-disc list-inside space-y-1 text-yellow-200/90">
-                  <li>Inferred emails may not be valid - verify before sending campaigns</li>
-                  <li>Marketing consent is {marketingConsent ? "ENABLED" : "DISABLED"} for imported contacts</li>
-                  <li>Always comply with CAN-SPAM, TCPA, and other marketing regulations</li>
+                  <li>
+                    Inferred emails may not be valid - verify before sending
+                    campaigns
+                  </li>
+                  <li>
+                    Marketing consent is{" "}
+                    {marketingConsent ? "ENABLED" : "DISABLED"} for imported
+                    contacts
+                  </li>
+                  <li>
+                    Always comply with CAN-SPAM, TCPA, and other marketing
+                    regulations
+                  </li>
                   <li>Review Google Places API Terms of Service</li>
                 </ul>
               </div>

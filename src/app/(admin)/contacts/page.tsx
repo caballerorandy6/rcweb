@@ -17,7 +17,8 @@ export const revalidate = 0;
 
 async function ContactManagementWrapper() {
   const result = await getContactsAction();
-  const contacts = result.success ? result.contacts || [] : [];
+  const contacts =
+    result.success && result.data ? result.data.contacts : [];
 
   return <ContactManagement initialContacts={contacts} />;
 }

@@ -3,21 +3,18 @@
 import { prisma } from "@/lib/prisma";
 import { requireAdmin } from "@/lib/authGuard";
 import type { Milestone } from "@/types/milestone";
-
-type CreateMilestoneResult =
-  | { success: true; milestone: Milestone }
-  | { success: false; message: string };
+import type { ActionResult } from "@/types/common";
 
 export async function createMilestoneAction(
   paymentId: string,
   title: string,
   description: string | null,
   order: number
-): Promise<CreateMilestoneResult> {
+): Promise<ActionResult<{ milestone: Milestone }>> {
   const auth = await requireAdmin();
 
   if (!auth.authorized) {
-    return { success: false, message: auth.error || "Unauthorized" };
+    return { success: false, error: auth.error || "Unauthorized" };
   }
 
   try {
@@ -38,9 +35,9 @@ export async function createMilestoneAction(
       updatedAt: data.updatedAt.toISOString(),
     };
 
-    return { success: true, milestone };
+    return { success: true, data: { milestone } };
   } catch (error) {
     console.error("Error creating milestone:", error);
-    return { success: false, message: "Failed to create milestone" };
+    return { success: false, error: "Failed to create milestone" };
   }
 }

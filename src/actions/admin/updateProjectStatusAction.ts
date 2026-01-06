@@ -5,13 +5,8 @@ import { prisma } from "@/lib/prisma";
 import { Resend } from "resend";
 import { sendProjectReadyEmail } from "@/lib/email/senders";
 import { requireAdmin } from "@/lib/authGuard";
-
-type ProjectStatus = "in_progress" | "ready_for_payment" | "completed";
-
-type UpdateStatusResult = {
-  success: boolean;
-  error?: string;
-};
+import type { UpdateableProjectStatus } from "@/types/project";
+import type { ActionResultSimple } from "@/types/common";
 
 /**
  * Server action to update project status and send notification email when ready
@@ -20,11 +15,11 @@ type UpdateStatusResult = {
  */
 export async function updateProjectStatusAction(
   projectCode: string,
-  status: ProjectStatus
-): Promise<UpdateStatusResult> {
+  status: UpdateableProjectStatus
+): Promise<ActionResultSimple> {
   const authCheck = await requireAdmin();
   if (!authCheck.authorized) {
-    return { success: false, error: authCheck.error };
+    return { success: false, error: authCheck.error || "Unauthorized" };
   }
 
   try {
