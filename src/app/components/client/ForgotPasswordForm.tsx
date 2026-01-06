@@ -18,7 +18,6 @@ export default function ForgotPasswordForm() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const error = searchParams.get("error");
-  const [isLoading, setIsLoading] = useState(false);
   const [emailSent, setEmailSent] = useState(false);
 
   useEffect(() => {
@@ -41,7 +40,7 @@ export default function ForgotPasswordForm() {
   const {
     register,
     handleSubmit,
-    formState: { errors },
+    formState: { errors, isSubmitting },
   } = useForm<ResetPasswordRequestData>({
     resolver: zodResolver(ResetPasswordRequestSchema),
     defaultValues: {
@@ -50,7 +49,6 @@ export default function ForgotPasswordForm() {
   });
 
   const onSubmit: SubmitHandler<ResetPasswordRequestData> = async (data) => {
-    setIsLoading(true);
     const toastId = toast.loading("Sending reset link...");
 
     try {
@@ -71,8 +69,6 @@ export default function ForgotPasswordForm() {
     } catch (error) {
       console.error("Forgot password error:", error);
       toast.error("Something went wrong. Please try again.", { id: toastId });
-    } finally {
-      setIsLoading(false);
     }
   };
 
@@ -172,14 +168,14 @@ export default function ForgotPasswordForm() {
               {/* Submit Button */}
               <div className="pt-2">
                 <button
-                  disabled={isLoading}
+                  disabled={isSubmitting}
                   type="submit"
                   className="relative w-full py-4 text-lg font-semibold text-black bg-gradient-to-r from-gold via-yellow-200 to-gold hover:from-yellow-200 hover:via-gold hover:to-yellow-200 rounded-xl transition-all duration-300 shadow-lg hover:shadow-gold/25 font-inter group overflow-hidden transform hover:scale-[1.02] active:scale-[0.98] disabled:opacity-50 disabled:cursor-not-allowed"
                 >
                   <div className="absolute inset-0 bg-white/20 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700 skew-x-12"></div>
                   <span className="relative flex items-center justify-center">
-                    {isLoading ? "Sending..." : "Send Reset Link"}
-                    {!isLoading && (
+                    {isSubmitting ? "Sending..." : "Send Reset Link"}
+                    {!isSubmitting && (
                       <svg
                         className="ml-2 w-5 h-5 transform group-hover:translate-x-1 transition-transform duration-300"
                         fill="none"

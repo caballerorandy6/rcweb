@@ -20,14 +20,13 @@ interface ResetPasswordFormProps {
 
 export default function ResetPasswordForm({ token }: ResetPasswordFormProps) {
   const router = useRouter();
-  const [isLoading, setIsLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
   const {
     register,
     handleSubmit,
-    formState: { errors },
+    formState: { errors, isSubmitting },
   } = useForm<ResetPasswordData>({
     resolver: zodResolver(ResetPasswordSchema),
     defaultValues: {
@@ -38,7 +37,6 @@ export default function ResetPasswordForm({ token }: ResetPasswordFormProps) {
   });
 
   const onSubmit: SubmitHandler<ResetPasswordData> = async (data) => {
-    setIsLoading(true);
     const toastId = toast.loading("Resetting your password...");
 
     try {
@@ -58,11 +56,9 @@ export default function ResetPasswordForm({ token }: ResetPasswordFormProps) {
       const errorMessage =
         result.error ?? "Failed to reset password. Please try again.";
       toast.error(errorMessage, { id: toastId });
-      setIsLoading(false);
     } catch (error) {
       console.error("Reset password error:", error);
       toast.error("Something went wrong. Please try again.", { id: toastId });
-      setIsLoading(false);
     }
   };
 
@@ -230,14 +226,14 @@ export default function ResetPasswordForm({ token }: ResetPasswordFormProps) {
               {/* Submit Button */}
               <div className="pt-2">
                 <button
-                  disabled={isLoading}
+                  disabled={isSubmitting}
                   type="submit"
                   className="relative w-full py-4 text-lg font-semibold text-black bg-gradient-to-r from-gold via-yellow-200 to-gold hover:from-yellow-200 hover:via-gold hover:to-yellow-200 rounded-xl transition-all duration-300 shadow-lg hover:shadow-gold/25 font-inter group overflow-hidden transform hover:scale-[1.02] active:scale-[0.98] disabled:opacity-50 disabled:cursor-not-allowed"
                 >
                   <div className="absolute inset-0 bg-white/20 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700 skew-x-12"></div>
                   <span className="relative flex items-center justify-center">
-                    {isLoading ? "Resetting..." : "Reset Password"}
-                    {!isLoading && (
+                    {isSubmitting ? "Resetting..." : "Reset Password"}
+                    {!isSubmitting && (
                       <svg
                         className="ml-2 w-5 h-5 transform group-hover:translate-x-1 transition-transform duration-300"
                         fill="none"

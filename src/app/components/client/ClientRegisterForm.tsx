@@ -11,20 +11,18 @@ import type { Route } from "next";
 import {
   ClientRegisterFormSchema,
   type ClientRegisterFormData,
-  type ClientRegisterData,
 } from "@/lib/zod";
 import { clientRegisterAction } from "@/actions/auth/clientRegisterAction";
 
 export default function ClientRegisterForm() {
   const router = useRouter();
-  const [isLoading, setIsLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
   const {
     register,
     handleSubmit,
-    formState: { errors },
+    formState: { errors, isSubmitting },
   } = useForm<ClientRegisterFormData>({
     resolver: zodResolver(ClientRegisterFormSchema),
     defaultValues: {
@@ -36,7 +34,6 @@ export default function ClientRegisterForm() {
   });
 
   const onSubmit: SubmitHandler<ClientRegisterFormData> = async (data) => {
-    setIsLoading(true);
     const toastId = toast.loading("Creating your account...");
 
     try {
@@ -59,11 +56,9 @@ export default function ClientRegisterForm() {
       const errorMessage =
         result.error ?? "Failed to create account. Please try again.";
       toast.error(errorMessage, { id: toastId });
-      setIsLoading(false);
     } catch (error) {
       console.error("Registration error:", error);
       toast.error("Something went wrong. Please try again.", { id: toastId });
-      setIsLoading(false);
     }
   };
 
@@ -102,7 +97,7 @@ export default function ClientRegisterForm() {
                   id="name"
                   className="w-full px-4 py-3 bg-gray-800/50 border border-gray-700/50 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-gold/50 focus:border-transparent transition-all font-inter"
                   placeholder="Enter your full name"
-                  disabled={isLoading}
+                  disabled={isSubmitting}
                 />
                 <ErrorMessage
                   errors={errors}
@@ -129,7 +124,7 @@ export default function ClientRegisterForm() {
                   id="email"
                   className="w-full px-4 py-3 bg-gray-800/50 border border-gray-700/50 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-gold/50 focus:border-transparent transition-all font-inter"
                   placeholder="Enter your email"
-                  disabled={isLoading}
+                  disabled={isSubmitting}
                 />
                 <ErrorMessage
                   errors={errors}
@@ -157,13 +152,13 @@ export default function ClientRegisterForm() {
                     id="password"
                     className="w-full px-4 py-3 bg-gray-800/50 border border-gray-700/50 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-gold/50 focus:border-transparent transition-all font-inter pr-12"
                     placeholder="Enter your password"
-                    disabled={isLoading}
+                    disabled={isSubmitting}
                   />
                   <button
                     type="button"
                     onClick={() => setShowPassword(!showPassword)}
                     className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gold transition-colors"
-                    disabled={isLoading}
+                    disabled={isSubmitting}
                   >
                     {showPassword ? (
                       <svg
@@ -228,13 +223,13 @@ export default function ClientRegisterForm() {
                     id="confirmPassword"
                     className="w-full px-4 py-3 bg-gray-800/50 border border-gray-700/50 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-gold/50 focus:border-transparent transition-all font-inter pr-12"
                     placeholder="Confirm your password"
-                    disabled={isLoading}
+                    disabled={isSubmitting}
                   />
                   <button
                     type="button"
                     onClick={() => setShowConfirmPassword(!showConfirmPassword)}
                     className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gold transition-colors"
-                    disabled={isLoading}
+                    disabled={isSubmitting}
                   >
                     {showConfirmPassword ? (
                       <svg
@@ -287,10 +282,10 @@ export default function ClientRegisterForm() {
               {/* Submit Button */}
               <button
                 type="submit"
-                disabled={isLoading}
+                disabled={isSubmitting}
                 className="w-full py-3 px-4 bg-gold text-black rounded-lg font-semibold font-inter hover:bg-yellow-200 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
               >
-                {isLoading ? "Creating Account..." : "Create Account"}
+                {isSubmitting ? "Creating Account..." : "Create Account"}
               </button>
             </form>
 

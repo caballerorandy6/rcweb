@@ -75,6 +75,7 @@ export async function getClientProjectsAction(): Promise<
             completedAt: milestone.completedAt?.toISOString() || null,
           })),
         })),
+      },
     };
   } catch (error) {
     console.error("Error fetching client projects:", error);

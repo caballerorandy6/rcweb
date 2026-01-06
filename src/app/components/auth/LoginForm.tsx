@@ -25,13 +25,12 @@ export default function LoginForm({
   footerText,
   onSuccess,
 }: LoginFormProps) {
-  const [isLoading, setIsLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
 
   const {
     register,
     handleSubmit,
-    formState: { errors },
+    formState: { errors, isSubmitting },
   } = useForm<LoginData>({
     resolver: zodResolver(LoginSchema),
     defaultValues: {
@@ -41,7 +40,6 @@ export default function LoginForm({
   });
 
   const onSubmit: SubmitHandler<LoginData> = async (data) => {
-    setIsLoading(true);
     const toastId = toast.loading("Signing in...");
 
     try {
@@ -53,7 +51,6 @@ export default function LoginForm({
 
       if (result?.error) {
         toast.error("Invalid email or password", { id: toastId });
-        setIsLoading(false);
         return;
       }
 
@@ -71,11 +68,9 @@ export default function LoginForm({
       }
 
       toast.error("Something went wrong. Please try again.", { id: toastId });
-      setIsLoading(false);
     } catch (error) {
       console.error("Login error:", error);
       toast.error("Something went wrong. Please try again.", { id: toastId });
-      setIsLoading(false);
     }
   };
 
@@ -199,14 +194,14 @@ export default function LoginForm({
               {/* Submit Button */}
               <div className="pt-2">
                 <button
-                  disabled={isLoading}
+                  disabled={isSubmitting}
                   type="submit"
                   className="relative w-full py-4 text-lg font-semibold text-black bg-gradient-to-r from-gold via-yellow-200 to-gold hover:from-yellow-200 hover:via-gold hover:to-yellow-200 rounded-xl transition-all duration-300 shadow-lg hover:shadow-gold/25 font-inter group overflow-hidden transform hover:scale-[1.02] active:scale-[0.98] disabled:opacity-50 disabled:cursor-not-allowed"
                 >
                   <div className="absolute inset-0 bg-white/20 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700 skew-x-12"></div>
                   <span className="relative flex items-center justify-center">
-                    {isLoading ? "Signing in..." : "Sign In"}
-                    {!isLoading && (
+                    {isSubmitting ? "Signing in..." : "Sign In"}
+                    {!isSubmitting && (
                       <svg
                         className="ml-2 w-5 h-5 transform group-hover:translate-x-1 transition-transform duration-300"
                         fill="none"

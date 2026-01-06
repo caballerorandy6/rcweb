@@ -1,6 +1,5 @@
 "use client";
 
-import { useState } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { ErrorMessage } from "@hookform/error-message";
@@ -10,12 +9,10 @@ import { EnvelopeIcon } from "@heroicons/react/24/outline";
 import { subscribeToBlogAction } from "@/actions/subscriptions/subscribeToBlogAction";
 
 const BlogSubscriptionForm = () => {
-  const [isLoading, setIsLoading] = useState(false);
-
   const {
     register,
     handleSubmit,
-    formState: { errors },
+    formState: { errors, isSubmitting },
     reset,
   } = useForm<BlogSubscriptionData>({
     resolver: zodResolver(BlogSubscriptionSchema),
@@ -26,7 +23,6 @@ const BlogSubscriptionForm = () => {
   });
 
   const onSubmit: SubmitHandler<BlogSubscriptionData> = async (data) => {
-    setIsLoading(true);
     const toastId = toast.loading("Subscribing...");
 
     try {
@@ -41,8 +37,6 @@ const BlogSubscriptionForm = () => {
     } catch (error) {
       console.error(error);
       toast.error("Something went wrong. Please try again.", { id: toastId });
-    } finally {
-      setIsLoading(false);
     }
   };
 
@@ -128,10 +122,10 @@ const BlogSubscriptionForm = () => {
           {/* Submit Button */}
           <button
             type="submit"
-            disabled={isLoading}
+            disabled={isSubmitting}
             className="w-full py-3 bg-gold text-gray-900 font-bold rounded-xl hover:bg-gold/90 transition-all duration-300 font-inter disabled:opacity-50 disabled:cursor-not-allowed"
           >
-            {isLoading ? "Subscribing..." : "Subscribe"}
+            {isSubmitting ? "Subscribing..." : "Subscribe"}
           </button>
 
           <p className="text-gray-500 text-xs font-inter text-center">
