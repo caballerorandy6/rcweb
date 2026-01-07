@@ -2,7 +2,6 @@
 
 import { Resend } from "resend";
 import { render } from "@react-email/components";
-import * as React from "react";
 import {
   SubscriptionPortalLinkEmail,
   type SubscriptionPortalLinkEmailProps,
@@ -38,8 +37,7 @@ export async function sendSubscriptionPortalLink(
     console.log("✅ Subscription portal link email sent to:", customerEmail);
     return { success: true };
   } catch (error) {
-    const errorMessage =
-      error instanceof Error ? error.message : String(error);
+    const errorMessage = error instanceof Error ? error.message : String(error);
     console.error("❌ Error sending subscription portal link:", errorMessage);
     return { success: false, error: errorMessage };
   }

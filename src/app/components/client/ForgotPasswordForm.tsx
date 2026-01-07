@@ -60,7 +60,7 @@ export default function ForgotPasswordForm() {
           { id: toastId }
         );
         setEmailSent(true);
-      } else {
+      } else if (!result.success) {
         toast.error(
           result.error || "Failed to send reset link. Please try again.",
           { id: toastId }

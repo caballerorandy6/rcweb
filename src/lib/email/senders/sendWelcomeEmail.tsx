@@ -1,8 +1,6 @@
 // src/lib/email/senders/sendWelcomeEmail.tsx
 
-import { Resend } from "resend";
 import { render } from "@react-email/components";
-import * as React from "react";
 import { WelcomeEmail, type WelcomeEmailProps } from "../templates";
 import { sendEmailWithQuota } from "@/lib/sendEmailWithQuota";
 

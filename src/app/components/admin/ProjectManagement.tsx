@@ -89,7 +89,7 @@ export default function ProjectManagement({
           toast.info("Email notification will be sent to client");
         }
         loadData(); // Recargar datos
-      } else {
+      } else if (!result.success) {
         toast.error(result.error || "Failed to update project");
       }
     });

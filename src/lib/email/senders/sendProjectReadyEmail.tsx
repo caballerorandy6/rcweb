@@ -2,7 +2,6 @@
 
 import { Resend } from "resend";
 import { render } from "@react-email/components";
-import * as React from "react";
 import { ProjectReadyEmail } from "../templates";
 
 export interface SendProjectReadyEmailParams {
@@ -43,8 +42,7 @@ export async function sendProjectReadyEmail(
     console.log(`✅ Project ready email sent to ${customerEmail}`);
     return { success: true };
   } catch (error) {
-    const errorMessage =
-      error instanceof Error ? error.message : String(error);
+    const errorMessage = error instanceof Error ? error.message : String(error);
     console.error("❌ Error sending project ready email:", errorMessage);
     return { success: false, error: errorMessage };
   }

@@ -33,7 +33,7 @@ export default function ManageSubscription() {
       toast.success("Check your email for the management link!", { id: toastId });
       setIsSuccess(true);
       reset();
-    } else {
+    } else if (!result.success) {
       toast.error(result.error || "An error occurred. Please try again.", { id: toastId });
     }
   };

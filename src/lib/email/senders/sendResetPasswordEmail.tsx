@@ -1,5 +1,4 @@
 import { render } from "@react-email/components";
-import * as React from "react";
 import { ResetPasswordEmail, type ResetPasswordEmailProps } from "../templates";
 import { sendEmailWithQuota } from "@/lib/sendEmailWithQuota";
 
@@ -13,7 +12,7 @@ export async function sendResetPasswordEmail(
   const { customerEmail, customerName, resetPasswordUrl } = params;
 
   try {
-    const html = render(
+    const html = await render(
       <ResetPasswordEmail
         customerName={customerName}
         resetPasswordUrl={resetPasswordUrl}
@@ -43,4 +42,3 @@ export async function sendResetPasswordEmail(
     return { success: false, error: errorMessage };
   }
 }
-

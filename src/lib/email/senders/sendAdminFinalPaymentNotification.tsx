@@ -2,7 +2,6 @@
 
 import { Resend } from "resend";
 import { render } from "@react-email/components";
-import * as React from "react";
 import { AdminNotificationEmail } from "../templates";
 
 const ADMIN_EMAIL = "admin@rcweb.dev";
@@ -52,8 +51,7 @@ export async function sendAdminFinalPaymentNotification(
     console.log("✅ Admin final payment notification sent");
     return { success: true };
   } catch (error) {
-    const errorMessage =
-      error instanceof Error ? error.message : String(error);
+    const errorMessage = error instanceof Error ? error.message : String(error);
     console.error(
       "❌ Error sending admin final payment notification:",
       errorMessage

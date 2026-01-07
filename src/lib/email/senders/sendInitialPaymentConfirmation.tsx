@@ -2,7 +2,6 @@
 
 import { Resend } from "resend";
 import { render } from "@react-email/components";
-import * as React from "react";
 import {
   InitialPaymentConfirmationEmail,
   type InitialPaymentConfirmationEmailProps,
@@ -52,8 +51,7 @@ export async function sendInitialPaymentConfirmation(
     );
     return { success: true };
   } catch (error) {
-    const errorMessage =
-      error instanceof Error ? error.message : String(error);
+    const errorMessage = error instanceof Error ? error.message : String(error);
     console.error(
       "❌ Error sending initial payment confirmation:",
       errorMessage

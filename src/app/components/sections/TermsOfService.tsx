@@ -73,7 +73,7 @@ const TermsOfService = () => {
 
           // Redirigir a Stripe
           window.location.href = result.sessionUrl;
-        } else {
+        } else if (!result.success) {
           toast.error(result.error || "Failed to process");
         }
       } catch (error) {

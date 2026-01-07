@@ -1,16 +1,10 @@
 // src/lib/email/senders/sendSetupPasswordEmail.tsx
 
-import { Resend } from "resend";
 import { render } from "@react-email/components";
-import * as React from "react";
-import {
-  SetupPasswordEmail,
-  type SetupPasswordEmailProps,
-} from "../templates";
+import { SetupPasswordEmail, type SetupPasswordEmailProps } from "../templates";
 import { sendEmailWithQuota } from "@/lib/sendEmailWithQuota";
 
-export interface SendSetupPasswordEmailParams
-  extends SetupPasswordEmailProps {
+export interface SendSetupPasswordEmailParams extends SetupPasswordEmailProps {
   customerEmail: string;
 }
 
@@ -54,4 +48,3 @@ export async function sendSetupPasswordEmail(
     return { success: false, error: errorMessage };
   }
 }
-

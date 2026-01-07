@@ -2,7 +2,6 @@
 
 import { Resend } from "resend";
 import { render } from "@react-email/components";
-import * as React from "react";
 import {
   SubscriptionRenewalReminderEmail,
   type SubscriptionRenewalReminderEmailProps,
@@ -17,7 +16,14 @@ export async function sendSubscriptionRenewalReminder(
   resend: Resend,
   params: SendSubscriptionRenewalReminderParams
 ): Promise<{ success: boolean; error?: string }> {
-  const { customerEmail, customerName, planName, amount, renewalDate, manageUrl } = params;
+  const {
+    customerEmail,
+    customerName,
+    planName,
+    amount,
+    renewalDate,
+    manageUrl,
+  } = params;
 
   try {
     const html = await render(
@@ -40,8 +46,7 @@ export async function sendSubscriptionRenewalReminder(
     console.log("✅ Subscription renewal reminder sent to:", customerEmail);
     return { success: true };
   } catch (error) {
-    const errorMessage =
-      error instanceof Error ? error.message : String(error);
+    const errorMessage = error instanceof Error ? error.message : String(error);
     console.error("❌ Error sending renewal reminder:", errorMessage);
     return { success: false, error: errorMessage };
   }

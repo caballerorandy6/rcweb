@@ -2,7 +2,6 @@
 
 import { Resend } from "resend";
 import { render } from "@react-email/components";
-import * as React from "react";
 import {
   SubscriptionPaymentFailedEmail,
   type SubscriptionPaymentFailedEmailProps,
@@ -17,7 +16,8 @@ export async function sendSubscriptionPaymentFailed(
   resend: Resend,
   params: SendSubscriptionPaymentFailedParams
 ): Promise<{ success: boolean; error?: string }> {
-  const { customerEmail, customerName, planName, amount, updatePaymentUrl } = params;
+  const { customerEmail, customerName, planName, amount, updatePaymentUrl } =
+    params;
 
   try {
     const html = await render(
@@ -39,8 +39,7 @@ export async function sendSubscriptionPaymentFailed(
     console.log("✅ Payment failed email sent to:", customerEmail);
     return { success: true };
   } catch (error) {
-    const errorMessage =
-      error instanceof Error ? error.message : String(error);
+    const errorMessage = error instanceof Error ? error.message : String(error);
     console.error("❌ Error sending payment failed email:", errorMessage);
     return { success: false, error: errorMessage };
   }
