@@ -102,8 +102,8 @@ export const authConfig: NextAuthConfig = {
     }),
   ],
   pages: {
-    signIn: "/login",
-    error: "/login",
+    signIn: "/admin/login",
+    error: "/admin/login",
   },
   callbacks: {
     async jwt({ token, user }) {

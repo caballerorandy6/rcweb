@@ -19,7 +19,7 @@ export default auth((req) => {
     (route) => pathname === route || pathname.startsWith(`${route}/`)
   );
 
-  const isLoginPage = pathname === "/login";
+  const isLoginPage = pathname === "/admin/login";
 
   // If logged in and trying to access login, redirect to dashboard
   if (isLoginPage && isLoggedIn) {
@@ -28,7 +28,7 @@ export default auth((req) => {
 
   // If not logged in and trying to access protected route
   if (isProtectedRoute && !isLoggedIn) {
-    return NextResponse.redirect(new URL("/login", req.url));
+    return NextResponse.redirect(new URL("/admin/login", req.url));
   }
 
   // Verify ADMIN role for protected routes

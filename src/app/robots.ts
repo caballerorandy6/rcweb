@@ -31,7 +31,7 @@ export default function robots(): MetadataRoute.Robots {
           "/refund-policy",
         ],
         disallow: [
-          "/login",
+          "/admin/login",
           "/admin-dashboard",
           "/contacts",
           "/newsletter",

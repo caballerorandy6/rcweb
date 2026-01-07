@@ -13,6 +13,11 @@ export type ClientInvoice = {
   pdfUrl: string | null;
 };
 
+export type ClientInvoiceWithProject = ClientInvoice & {
+  projectCode: string;
+  planName: string;
+};
+
 export type ClientMilestone = {
   id: string;
   title: string;

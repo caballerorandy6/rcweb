@@ -41,7 +41,7 @@ export default function ClientDashboard({
   ).length;
 
   return (
-    <div className="min-h-screen bg-gray-900 py-8 px-4">
+    <div className="min-h-screen bg-gray-900 pt-24 sm:pt-32 pb-8 px-4">
       <div className="max-w-7xl mx-auto">
         {/* Header with Logout */}
         <div className="mb-8 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
@@ -55,6 +55,12 @@ export default function ClientDashboard({
           </div>
           <div className="flex items-center gap-4">
             <Link
+              href="/client/invoices"
+              className="px-4 py-2 text-sm text-gray-300 hover:text-gold transition-colors font-inter"
+            >
+              My Invoices
+            </Link>
+            <Link
               href="/"
               className="px-4 py-2 text-sm text-gray-300 hover:text-gold transition-colors font-inter"
             >
@@ -65,9 +71,9 @@ export default function ClientDashboard({
         </div>
 
         {projects.length === 0 ? (
-          <div className="bg-gradient-to-br from-gray-900/95 to-gray-800/95 p-8 rounded-2xl shadow-2xl backdrop-blur-sm border border-gray-700/50">
-            <div className="text-center">
-              <p className="text-gray-400 font-inter mb-4">
+          <div className="flex items-center justify-center min-h-[60vh]">
+            <div className="bg-gradient-to-br from-gray-900/95 to-gray-800/95 p-8 lg:p-12 rounded-2xl shadow-2xl backdrop-blur-sm border border-gray-700/50 max-w-md w-full text-center">
+              <p className="text-gray-400 font-inter mb-6 text-lg">
                 You don't have any projects yet. Once you make a payment, your
                 projects will appear here.
               </p>
@@ -82,7 +88,7 @@ export default function ClientDashboard({
         ) : (
           <>
             {/* Statistics Summary */}
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
               <div className="bg-gradient-to-br from-gray-900/95 to-gray-800/95 p-6 rounded-xl border border-gray-700/50">
                 <p className="text-gray-400 text-sm font-inter mb-1">
                   Total Projects
@@ -110,8 +116,8 @@ export default function ClientDashboard({
             </div>
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
               {/* Projects List */}
-              <div className="lg:col-span-1 space-y-4">
-                <h2 className="text-2xl text-gold font-bold font-iceland mb-4">
+              <div className="lg:col-span-1">
+                <h2 className="text-2xl text-gold font-bold font-iceland mb-6">
                   Your Projects
                 </h2>
                 <div className="space-y-3">
@@ -167,7 +173,7 @@ export default function ClientDashboard({
               {/* Project Details */}
               {selectedProject && (
                 <div className="lg:col-span-2">
-                  <div className="bg-gradient-to-br from-gray-900/95 to-gray-800/95 p-6 rounded-2xl shadow-2xl backdrop-blur-sm border border-gray-700/50">
+                  <div className="bg-gradient-to-br from-gray-900/95 to-gray-800/95 p-6 lg:p-8 rounded-2xl shadow-2xl backdrop-blur-sm border border-gray-700/50">
                     <div className="flex items-start justify-between mb-6">
                       <div>
                         <h2 className="text-3xl text-gold font-bold font-iceland mb-2">

@@ -32,7 +32,7 @@ export default async function SMSPage() {
 
   // Doble verificación (el middleware ya lo hace, pero por seguridad)
   if (!session || session.user.role !== "ADMIN") {
-    redirect("/login");
+    redirect("/admin/login");
   }
 
   return (

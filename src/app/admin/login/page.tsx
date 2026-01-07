@@ -5,12 +5,12 @@ import type { Route } from "next";
 export const metadata = genPageMetadata({
   title: "Admin Login",
   description: "Admin login page for RC Web Solutions LLC dashboard access.",
-  pageRoute: "/login",
+  pageRoute: "/admin/login",
 });
 
 const LoginPage = () => {
   return (
-    <section id="login">
+    <section id="admin-login">
       <LoginForm
         title="Admin Login"
         subtitle="Access to admin dashboard"
@@ -22,3 +22,4 @@ const LoginPage = () => {
 };
 
 export default LoginPage;
+

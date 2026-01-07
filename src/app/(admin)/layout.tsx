@@ -11,7 +11,7 @@ export default async function AdminLayout({
 
   // Verificar autenticación y rol de admin
   if (!session || session.user.role !== "ADMIN") {
-    redirect("/login");
+    redirect("/admin/login");
   }
 
   return (

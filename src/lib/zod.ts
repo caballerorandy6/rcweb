@@ -129,6 +129,49 @@ export const SetupPasswordSchema = z
     path: ["confirmPassword"],
   });
 
+// Update Client Profile Schema
+export const UpdateClientProfileSchema = z.object({
+  name: z.string().min(2, { message: "Name must be at least 2 characters" }),
+  email: z
+    .string()
+    .email({ message: "Invalid email address" })
+    .min(1, { message: "Email is required" }),
+  phone: z
+    .string()
+    .min(10, { message: "Phone number is too short" })
+    .max(15, { message: "Phone number is too long" })
+    .optional()
+    .or(z.literal("")),
+});
+
+// Change Password Schema (for form validation - includes confirmPassword)
+export const ChangePasswordFormSchema = z
+  .object({
+    currentPassword: z
+      .string()
+      .min(8, { message: "Password must be at least 8 characters" }),
+    password: z
+      .string()
+      .min(8, { message: "Password must be at least 8 characters" }),
+    confirmPassword: z
+      .string()
+      .min(8, { message: "Password must be at least 8 characters" }),
+  })
+  .refine((data) => data.password === data.confirmPassword, {
+    message: "Passwords don't match",
+    path: ["confirmPassword"],
+  });
+
+// Change Password Schema (for action - excludes confirmPassword)
+export const ChangePasswordSchema = z.object({
+  currentPassword: z
+    .string()
+    .min(8, { message: "Password must be at least 8 characters" }),
+  password: z
+    .string()
+    .min(8, { message: "Password must be at least 8 characters" }),
+});
+
 export type BlogSubscriptionData = z.infer<typeof BlogSubscriptionSchema>;
 export type ManageSubscriptionData = z.infer<typeof ManageSubscriptionSchema>;
 export type FormData = z.infer<typeof FormSchema>;
@@ -138,3 +181,6 @@ export type ResetPasswordRequestData = z.infer<
 >;
 export type ResetPasswordData = z.infer<typeof ResetPasswordSchema>;
 export type SetupPasswordData = z.infer<typeof SetupPasswordSchema>;
+export type UpdateClientProfileData = z.infer<typeof UpdateClientProfileSchema>;
+export type ChangePasswordFormData = z.infer<typeof ChangePasswordFormSchema>;
+export type ChangePasswordData = z.infer<typeof ChangePasswordSchema>;
