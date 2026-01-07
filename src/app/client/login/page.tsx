@@ -1,5 +1,7 @@
 import { Metadata } from "next";
+import { Suspense } from "react";
 import ClientLoginForm from "@/app/components/client/ClientLoginForm";
+import ClientLoginSkeleton from "@/app/components/skeletons/ClientLoginSkeleton";
 import { genPageMetadata } from "@/utils/genPageMetadata";
 
 export const metadata: Metadata = genPageMetadata({
@@ -11,7 +13,9 @@ export const metadata: Metadata = genPageMetadata({
 export default function ClientLoginPage() {
   return (
     <section id="client-login">
-      <ClientLoginForm />
+      <Suspense fallback={<ClientLoginSkeleton />}>
+        <ClientLoginForm />
+      </Suspense>
     </section>
   );
 }
