@@ -78,10 +78,11 @@ const Pricing = () => {
 
         <motion.div
           variants={containerVariants}
-          initial="hidden"
+          initial={false}
           whileInView="show"
-          viewport={{ once: true, amount: 0.2 }}
+          viewport={{ once: true, amount: 0.1 }}
           className="mx-auto mt-16 grid max-w-lg grid-cols-1 gap-8 lg:max-w-none lg:grid-cols-3"
+          style={{ opacity: 1 }}
         >
           {pricingPlans.map((plan) => (
             <motion.div
