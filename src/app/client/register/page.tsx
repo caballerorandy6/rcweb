@@ -11,7 +11,7 @@ export const metadata: Metadata = genPageMetadata({
 
 export default function ClientRegisterPage() {
   return (
-    <section id="client-register">
+    <section id="client-register" className="pt-24 sm:pt-32">
       <ClientRegisterForm />
     </section>
   );

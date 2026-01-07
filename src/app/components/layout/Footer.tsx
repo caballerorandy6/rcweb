@@ -1,6 +1,6 @@
 import Link from "next/link";
 import type { Route } from "next";
-import { navigation, extraFooterLinks } from "@/lib/data";
+import { navigation, secondaryNavigation, footerNavigation, extraFooterLinks } from "@/lib/data";
 import Logo from "@/app/components/layout/Logo";
 
 export default function Footer() {
@@ -8,8 +8,8 @@ export default function Footer() {
   const contactItem = navigation.find((item) => item.name === "Contact");
 
   // Dividir en grupos para mejor organización
-  const primaryLinks = mainNavigation.slice(0, 4);
-  const secondaryLinks = mainNavigation.slice(4);
+  const primaryLinks = mainNavigation;
+  const secondaryLinks = secondaryNavigation;
 
   return (
     <footer className="relative bg-gradient-to-b from-gray-900/95 to-black overflow-hidden">
@@ -86,6 +86,17 @@ export default function Footer() {
               </h2>
               <ul className="space-y-2">
                 {secondaryLinks.map((item) => (
+                  <li key={item.name}>
+                    <Link
+                      href={item.hash as Route}
+                      className="text-white/60 hover:text-gold transition-all duration-200 font-inter text-sm inline-flex items-center justify-center sm:justify-start w-full sm:w-auto group"
+                    >
+                      <span className="w-1 h-1 bg-gold/50 rounded-full mr-2 opacity-0 group-hover:opacity-100 transition-opacity duration-200" />
+                      {item.name}
+                    </Link>
+                  </li>
+                ))}
+                {footerNavigation.map((item) => (
                   <li key={item.name}>
                     <Link
                       href={item.hash as Route}

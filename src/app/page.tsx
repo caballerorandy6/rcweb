@@ -47,13 +47,13 @@ export default function Home() {
       <Hero />
       <Services />
       <Projects />
-      <Testimonials />
       <Process />
-      <Pricing />
-      <FAQ />
+      <About />
       <Experience />
       <Certifications />
-      <About />
+      <Testimonials />
+      <Pricing />
+      <FAQ />
       <Contact />
       <CTA />
     </main>

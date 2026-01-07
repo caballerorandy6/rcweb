@@ -8,7 +8,7 @@ import { Dialog, DialogPanel } from "@headlessui/react";
 import { useRCWebStore } from "@/store/rcweb-store";
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
 import Logo from "@/app/components/layout/Logo";
-import { navigation } from "@/lib/data";
+import { navigation, secondaryNavigation } from "@/lib/data";
 import { usePathname } from "next/navigation";
 import { useEffect } from "react";
 
@@ -57,9 +57,12 @@ const Navbar = () => {
     return (isHomePage ? hash : `/${hash}`) as Route;
   };
 
-  // Separar Contact como CTA
-  const mainNavigation = navigation.slice(0, -2); // Todos menos Contact y CTA
+  // Separate Contact as CTA button
+  const mainNavigation = navigation.slice(0, -2); // All except Contact and CTA
   const contactItem = navigation.find((item) => item.name === "Contact");
+  
+  // Combine main and secondary navigation for mobile menu
+  const allNavigationItems = [...navigation.slice(0, -1), ...secondaryNavigation];
 
   return (
     <>
@@ -118,10 +121,19 @@ const Navbar = () => {
                   {contactItem.name}
                 </Link>
               )}
+
+              {/* Client Portal - Discreet button */}
+              <Link
+                href="/client/login"
+                className="ml-4 px-3 py-2 text-xs text-white/60 hover:text-gold transition-colors duration-300 font-inter border border-white/10 hover:border-gold/30 rounded-lg"
+                aria-label="Client Portal"
+              >
+                Client Portal
+              </Link>
             </div>
 
             {/* Tablet/Large Screen Compact Menu */}
-            <div className="hidden lg:flex 2xl:hidden items-center gap-x-6">
+            <div className="hidden lg:flex 2xl:hidden items-center gap-x-4">
               {/* Show only key items */}
               {["Services", "Projects", "Pricing"].map((itemName) => {
                 const item = navigation.find((n) => n.name === itemName);
@@ -152,6 +164,15 @@ const Navbar = () => {
                   Let&#39;s Talk
                 </Link>
               )}
+
+              {/* Client Portal - Discreet button */}
+              <Link
+                href="/client/login"
+                className="px-3 py-2 text-xs text-white/60 hover:text-gold transition-colors duration-300 font-inter border border-white/10 hover:border-gold/30 rounded-lg"
+                aria-label="Client Portal"
+              >
+                Client Portal
+              </Link>
 
               {/* More Menu */}
               <button
@@ -209,7 +230,7 @@ const Navbar = () => {
                   {/* Navigation Items */}
                   <div className="flex-1 overflow-y-auto px-6 py-6">
                     <nav className="space-y-1">
-                      {navigation.map((item) => {
+                      {allNavigationItems.map((item) => {
                         // Skip CTA from regular menu
                         if (item.name === "CTA") return null;
 
@@ -251,6 +272,17 @@ const Navbar = () => {
                           </Link>
                         );
                       })}
+
+                      {/* Client Portal - At the end of mobile menu */}
+                      <div className="mt-4 pt-4 border-t border-gold/10">
+                        <Link
+                          href="/client/login"
+                          onClick={handleClickModal}
+                          className="block px-4 py-3 rounded-lg text-base font-inter transition-all duration-300 text-white/60 hover:text-gold hover:bg-gold/5"
+                        >
+                          Client Portal
+                        </Link>
+                      </div>
                     </nav>
                   </div>
 

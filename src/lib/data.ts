@@ -38,21 +38,29 @@ import {
   DevicePhoneMobileIcon,
 } from "@heroicons/react/24/outline";
 
+// Main navigation - Only essential links (5 max for optimal UX)
 export const navigation: NavigationProps[] = [
-  { name: "Home", hash: "/#home" },
-  { name: "Services", hash: "/#services" }, // Lo más importante primero
-  { name: "Projects", hash: "/#projects" }, // Muestras tu trabajo
-  { name: "Testimonials", hash: "/#testimonials" }, // Respaldas con pruebas sociales
-  { name: "Blog", hash: "/blog" }, // Ruta completa para página separada
-  { name: "Process", hash: "/#process" }, // Explicas cómo trabajas
-  { name: "Pricing", hash: "/#pricing" }, // El cliente ya confía, ahora ve el costo
-  { name: "FAQ", hash: "/#faq" }, // Resuelves dudas comunes
-  { name: "Experience", hash: "/#experience" }, // Refuerzas credibilidad
+  { name: "Services", hash: "/#services" },
+  { name: "Projects", hash: "/#projects" },
+  { name: "Pricing", hash: "/#pricing" },
+  { name: "Blog", hash: "/blog" },
+  { name: "Contact", hash: "/#contact" },
+  { name: "CTA", hash: "/#cta" }, // Hidden, used for scroll behavior
+];
+
+// Secondary navigation - For footer or "More" menu
+export const secondaryNavigation: NavigationProps[] = [
+  { name: "Process", hash: "/#process" },
+  { name: "FAQ", hash: "/#faq" },
+];
+
+// Footer-only navigation
+export const footerNavigation: NavigationProps[] = [
+  { name: "About", hash: "/#about" },
+  { name: "Experience", hash: "/#experience" },
   { name: "Certifications", hash: "/#certifications" },
-  { name: "About", hash: "/#about" }, // Quién eres (menos prioridad que lo anterior)
-  { name: "Schedule", hash: "/schedule" }, // Agendar consulta gratuita
-  { name: "Contact", hash: "/#contact" }, // Punto de conversión
-  { name: "CTA", hash: "/#cta" }, // Botón extra destacado
+  { name: "Testimonials", hash: "/#testimonials" },
+  { name: "Schedule", hash: "/schedule" },
 ];
 
 export const experience: ExperienceProps[] = [
@@ -916,6 +924,7 @@ export const extraFooterLinks = [
   { name: "Refund Policy", hash: "/refund-policy" },
   { name: "Manage Subscription", hash: "/manage-subscription" },
   { name: "Free Guide", hash: "/guide" },
+  { name: "Client Portal", hash: "/client/login" },
 ];
 
 export const sections = [
