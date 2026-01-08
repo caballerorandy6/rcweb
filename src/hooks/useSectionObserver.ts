@@ -11,8 +11,8 @@ export default function useSectionObserver({
   const { setActiveSection } = useRCWebStore();
 
   const { ref, inView } = useInView({
-    threshold: 0.2,
-    rootMargin: "-20% 0px -20% 0px", // Activate when section is near center of viewport
+    threshold: 0.1,
+    rootMargin: "-10% 0px -10% 0px", // More permissive detection
   });
 
   useEffect(() => {

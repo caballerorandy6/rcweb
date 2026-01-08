@@ -38,7 +38,7 @@ const Hero = () => {
     <section
       id="home"
       ref={ref}
-      className="relative isolate overflow-hidden pt-14 h-screen"
+      className="relative isolate overflow-hidden pt-24 sm:pt-32 pb-16 sm:pb-24 h-screen"
     >
       <div className="absolute inset-0 -z-10 h-full w-full">
         <video
@@ -168,9 +168,12 @@ const Hero = () => {
             >
               <Link
                 href={"#services" as Route}
-                className="inline-block text-sm/6 font-inter text-gray-900 bg-gold hover:bg-gold/90 p-3 px-6 rounded-md transition-colors duration-200"
+                className="relative inline-flex items-center justify-center px-6 py-4 text-lg font-semibold text-black bg-gradient-to-r from-gold via-yellow-200 to-gold hover:from-yellow-200 hover:via-gold hover:to-yellow-200 rounded-xl transition-all duration-300 shadow-lg hover:shadow-gold/25 font-inter group overflow-hidden transform hover:scale-[1.02] active:scale-[0.98]"
               >
-                View Services
+                <div className="absolute inset-0 bg-white/20 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700 skew-x-12"></div>
+                <span className="relative flex items-center justify-center">
+                  View Services
+                </span>
               </Link>
             </motion.div>
 
@@ -191,7 +194,7 @@ const Hero = () => {
             >
               <Link
                 href={"/schedule" as Route}
-                className="text-sm/6 font-inter text-white/80 hover:bg-gold/20 p-3 px-6 rounded-md flex items-center gap-x-1 border-2 border-gold/50 transition-colors duration-200"
+                className="inline-flex items-center justify-center gap-2 px-6 py-3 text-sm sm:text-base font-inter font-semibold text-gold border-2 border-gold/50 hover:bg-gold/10 hover:border-gold/60 rounded-lg transition-all duration-200"
               >
                 Schedule a Call
               </Link>
@@ -217,7 +220,7 @@ const Hero = () => {
                 download="Randy Caballero - Resume.pdf"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-sm/6 font-inter text-white/80 hover:bg-gold/20 p-3 px-6 rounded-md flex items-center gap-x-1 border-2 border-gold/50 transition-colors duration-200"
+                className="inline-flex items-center justify-center gap-2 px-6 py-3 text-sm sm:text-base font-inter font-semibold text-gold border-2 border-gold/50 hover:bg-gold/10 hover:border-gold/60 rounded-lg transition-all duration-200"
               >
                 Download CV
               </a>
@@ -245,7 +248,7 @@ const Hero = () => {
                 onClick={trackPhoneConversion}
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
-                className="inline-flex items-center gap-2 text-gold hover:text-gold/80 transition-colors font-inter text-base font-semibold"
+                className="inline-flex items-center gap-2 text-gold hover:text-gold/80 transition-colors duration-200 font-inter text-sm sm:text-base font-semibold"
               >
                 <PhoneIcon className="w-5 h-5" />
                 +1 (346) 375-7534
@@ -253,7 +256,7 @@ const Hero = () => {
               <span className="text-white/40 hidden sm:inline">|</span>
               <Link
                 href={"/schedule" as Route}
-                className="inline-flex items-center gap-2 text-gold hover:text-gold/80 transition-colors font-inter text-base font-semibold"
+                className="inline-flex items-center gap-2 text-gold hover:text-gold/80 transition-colors duration-200 font-inter text-sm sm:text-base font-semibold"
               >
                 <CalendarDaysIcon className="w-5 h-5" />
                 Book on Calendly

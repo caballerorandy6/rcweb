@@ -81,7 +81,7 @@ const About = () => {
         }}
       />
 
-      <section ref={ref} id="about" className="pt-24 sm:pt-32">
+      <section ref={ref} id="about" className="pt-24 sm:pt-32 pb-16 sm:pb-24">
         <div className="mx-auto max-w-7xl px-6 lg:px-8">
           <Heading
             icon={<UserPlusIcon className="w-8 text-gold" />}
@@ -94,12 +94,13 @@ const About = () => {
             <motion.div
               className="text-base font-inter max-w-xl mx-auto lg:mx-0 lg:max-w-none w-full"
               variants={containerVariants}
-              initial="hidden"
+              initial={false}
               whileInView="visible"
               viewport={{ once: true, amount: 0.3 }}
+              style={{ opacity: 1 }}
             >
               <motion.p
-                className="text-gray-100 leading-relaxed pb-10 text-justify lg:text-left"
+                className="text-sm sm:text-base text-gray-100 leading-relaxed pb-10 text-justify lg:text-left"
                 variants={paragraphVariants}
               >
                 React and Next.js Developer with over{" "}
@@ -122,7 +123,7 @@ const About = () => {
               </motion.p>
 
               <motion.p
-                className="text-gray-100 leading-relaxed text-justify lg:text-left"
+                className="text-sm sm:text-base text-gray-100 leading-relaxed text-justify lg:text-left"
                 variants={paragraphVariants}
               >
                 I specialize in{" "}
@@ -142,10 +143,11 @@ const About = () => {
             </motion.div>
 
             <motion.div
-              initial="hidden"
+              initial={false}
               whileInView="visible"
               viewport={{ once: true, amount: 0.3 }}
               variants={imageVariants}
+              style={{ opacity: 1 }}
               className="flex flex-col items-center lg:items-end"
             >
               <motion.figure className="relative">

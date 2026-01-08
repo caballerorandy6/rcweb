@@ -66,7 +66,7 @@ const Pricing = () => {
     <section
       id="pricing"
       ref={ref}
-      className="relative isolate overflow-hidden pt-24 sm:pt-32"
+      className="relative isolate overflow-hidden pt-24 sm:pt-32 pb-16 sm:pb-24"
     >
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
         <Heading
@@ -110,12 +110,12 @@ const Pricing = () => {
                   <span className="text-4xl font-iceland text-gold">
                     {plan.price}
                   </span>
-                  <span className="text-sm font-inter text-white/50">USD</span>
+                  <span className="text-sm font-inter text-white/60">USD</span>
                 </p>
-                <p className="mt-2 text-sm font-inter text-gold/70">
+                <p className="mt-2 text-sm font-inter text-gold/80">
                   {plan.range} • {plan.duration}
                 </p>
-                <p className="mt-4 text-base font-inter text-white/70">
+                <p className="mt-4 text-sm sm:text-base font-inter text-white/80 leading-relaxed">
                   {plan.description}
                 </p>
               </div>
@@ -124,26 +124,31 @@ const Pricing = () => {
                 {plan.features.map((feature) => (
                   <li key={feature} className="flex gap-x-3">
                     <CheckIcon className="h-5 w-5 flex-none text-gold" />
-                    <span className="text-sm font-inter text-white/70">
+                    <span className="text-sm font-inter text-white/80">
                       {feature}
                     </span>
                   </li>
                 ))}
               </ul>
 
-              <p className="mt-6 text-sm font-inter text-gold/50 italic">
+              <p className="mt-6 text-sm font-inter text-gold/70 italic">
                 {plan.ideal}
               </p>
 
               <button
                 onClick={() => handlePlanSelection(plan.id)}
-                className={`mt-8 w-full text-sm font-inter p-3 rounded-md transition-all duration-200 ease-in-out hover:scale-105 ${
+                className={`mt-8 w-full relative inline-flex items-center justify-center py-4 text-lg font-semibold rounded-xl transition-all duration-300 font-inter group overflow-hidden transform hover:scale-[1.02] active:scale-[0.98] ${
                   plan.featured
-                    ? "bg-gold text-gray-900 hover:bg-gold/90"
-                    : "text-white/80 hover:bg-gold/20 border border-gold/50"
+                    ? "text-black bg-gradient-to-r from-gold via-yellow-200 to-gold hover:from-yellow-200 hover:via-gold hover:to-yellow-200 shadow-lg hover:shadow-gold/25"
+                    : "text-gold border-2 border-gold/50 hover:bg-gold/10 hover:border-gold/60"
                 }`}
               >
-                {plan.cta}
+                {plan.featured && (
+                  <div className="absolute inset-0 bg-white/20 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700 skew-x-12"></div>
+                )}
+                <span className="relative flex items-center justify-center">
+                  {plan.cta}
+                </span>
               </button>
             </motion.div>
           ))}
@@ -229,14 +234,17 @@ const Pricing = () => {
                 <button
                   onClick={handleGoToTerms}
                   disabled={isPending}
-                  className="flex-1 bg-gradient-to-r from-gold to-yellow-500 text-gray-900 py-3 rounded-lg font-semibold hover:from-gold/90 hover:to-yellow-500/90 transition-all disabled:opacity-50 shadow-lg shadow-gold/20"
+                  className="relative flex-1 inline-flex items-center justify-center py-4 text-lg font-semibold text-black bg-gradient-to-r from-gold via-yellow-200 to-gold hover:from-yellow-200 hover:via-gold hover:to-yellow-200 rounded-xl transition-all duration-300 shadow-lg hover:shadow-gold/25 font-inter group overflow-hidden transform hover:scale-[1.02] active:scale-[0.98] disabled:opacity-50 disabled:cursor-not-allowed"
                 >
-                  {isPending ? "Loading..." : "Go to Terms & Pay"}
+                  <div className="absolute inset-0 bg-white/20 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700 skew-x-12"></div>
+                  <span className="relative flex items-center justify-center">
+                    {isPending ? "Loading..." : "Go to Terms & Pay"}
+                  </span>
                 </button>
                 <button
                   onClick={() => setShowModal(false)}
                   disabled={isPending}
-                  className={`flex-1 border border-gold/50 text-gold py-3 rounded-lg hover:bg-gold/10 transition-all disabled:opacity-50 ${
+                  className={`flex-1 inline-flex items-center justify-center px-6 py-3 text-sm sm:text-base font-semibold text-gold border-2 border-gold/50 hover:bg-gold/10 hover:border-gold/60 rounded-lg transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed ${
                     isPending ? "cursor-wait" : ""
                   }`}
                 >

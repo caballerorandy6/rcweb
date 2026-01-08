@@ -49,6 +49,11 @@ export {
   type ResetPasswordEmailProps,
 } from "./ResetPasswordEmail";
 
+export {
+  BlogUnsubscribeEmail,
+  type BlogUnsubscribeEmailProps,
+} from "./BlogUnsubscribeEmail";
+
 // Admin email templates (React components)
 export {
   AdminNotificationEmail,

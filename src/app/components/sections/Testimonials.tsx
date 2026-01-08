@@ -37,7 +37,7 @@ const Testimonials = () => {
     <section
       id="testimonials"
       ref={ref}
-      className="relative isolate overflow-hidden pt-24 sm:pt-32"
+      className="relative isolate overflow-hidden pt-24 sm:pt-32 pb-16 sm:pb-24"
     >
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
         <Heading
@@ -49,16 +49,17 @@ const Testimonials = () => {
 
         <motion.div
           variants={containerVariants}
-          initial="hidden"
+          initial={false}
           whileInView="show"
           viewport={{ once: true, amount: 0.2 }}
-          className="mx-auto mt-16 grid max-w-2xl grid-cols-1 gap-8 lg:max-w-none lg:grid-cols-3"
+          style={{ opacity: 1 }}
+          className="mx-auto mt-16 grid max-w-2xl grid-cols-1 gap-6 lg:max-w-none lg:grid-cols-3 lg:gap-8"
         >
           {testimonials.map((testimonial, index) => (
             <motion.div
               key={index}
               variants={cardVariants}
-              className="group relative rounded-2xl border border-gold/20 bg-gray-950/50 p-8 backdrop-blur-sm transition-all duration-200 hover:border-gold/50 hover:bg-gold/5 hover:scale-105"
+              className="group relative rounded-2xl border border-gold/20 bg-gray-900/50 p-6 lg:p-8 backdrop-blur-sm transition-all duration-200 hover:border-gold/50 hover:bg-gold/5 hover:scale-105 shadow-lg shadow-black/20"
             >
               <div className="flex gap-1">
                 {[...Array(testimonial.rating)].map((_, i) => (
@@ -67,7 +68,7 @@ const Testimonials = () => {
               </div>
 
               <blockquote className="mt-6">
-                <p className="text-base font-inter text-white/70 italic">
+                <p className="text-sm sm:text-base font-inter text-white/80 italic leading-relaxed">
                   &quot;{testimonial.content}&quot;
                 </p>
               </blockquote>
@@ -82,7 +83,7 @@ const Testimonials = () => {
                   <p className="text-sm font-iceland text-white">
                     {testimonial.author}
                   </p>
-                  <p className="text-xs font-inter text-white/50">
+                  <p className="text-xs font-inter text-white/60">
                     {testimonial.role}
                   </p>
                 </div>

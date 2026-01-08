@@ -7,7 +7,7 @@ const Certifications = () => {
   return (
     <section
       id="certifications"
-      className="pt-24 sm:pt-32 mt-20 w-10/12 mx-auto"
+      className="pt-24 sm:pt-32 pb-16 sm:pb-24 w-10/12 mx-auto"
     >
       <Heading
         icon={<CheckCircleIcon className="w-8 text-gold" />}

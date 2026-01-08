@@ -51,6 +51,11 @@ export {
   type SendResetPasswordEmailParams,
 } from "./sendResetPasswordEmail";
 
+export {
+  sendBlogUnsubscribeEmail,
+  type SendBlogUnsubscribeEmailParams,
+} from "./sendBlogUnsubscribeEmail";
+
 // Admin email senders
 export {
   sendAdminSubscriptionNotification,

@@ -17,7 +17,7 @@ const Process = () => {
   const currentStep = processSteps[activeStep] || processSteps[0];
 
   return (
-    <section id="process" ref={ref} className="pt-24 sm:pt-32">
+    <section id="process" ref={ref} className="pt-24 sm:pt-32 pb-16 sm:pb-24">
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
         <Heading
           icon={<ChevronRightIcon className="w-8 text-gold" />}
@@ -38,7 +38,11 @@ const Process = () => {
                     <motion.div
                       initial={{ width: "0%" }}
                       animate={{ width: activeStep > index ? "100%" : "0%" }}
-                      transition={{ type: "spring", stiffness: 200, damping: 25 }}
+                      transition={{
+                        type: "spring",
+                        stiffness: 200,
+                        damping: 25,
+                      }}
                       className="h-full bg-gold"
                     />
                   </div>
@@ -50,7 +54,14 @@ const Process = () => {
                   className="relative z-10 mx-auto flex"
                 >
                   <motion.div
-                    whileHover={{ scale: 1.1, transition: { type: "spring", stiffness: 400, damping: 17 } }}
+                    whileHover={{
+                      scale: 1.1,
+                      transition: {
+                        type: "spring",
+                        stiffness: 400,
+                        damping: 17,
+                      },
+                    }}
                     whileTap={{ scale: 0.95 }}
                     className={`w-12 h-12 rounded-full flex items-center justify-center transition-all duration-300 ${
                       activeStep >= index
@@ -63,7 +74,7 @@ const Process = () => {
                 </button>
 
                 {/* Step Title */}
-                <p className="mt-3 text-xs font-inter text-center text-white/50">
+                <p className="mt-3 text-xs sm:text-sm font-inter text-center text-white/60">
                   {step.week}
                 </p>
               </div>
@@ -81,7 +92,7 @@ const Process = () => {
                 transition={{ type: "spring", stiffness: 260, damping: 25 }}
                 className="max-w-3xl mx-auto"
               >
-                <div className="bg-gray-950/50 backdrop-blur-sm rounded-2xl p-8 border border-gold/20">
+                <div className="bg-gray-900/50 backdrop-blur-sm rounded-2xl p-6 lg:p-8 border border-gold/20 shadow-lg shadow-black/20">
                   {/* Icon and Title */}
                   <div className="flex items-center gap-4 mb-6">
                     <div className="w-14 h-14 bg-gold/10 rounded-xl flex items-center justify-center">
@@ -94,14 +105,14 @@ const Process = () => {
                       <h2 className="text-2xl font-iceland text-white">
                         Step {activeStep + 1}: {currentStep.title}
                       </h2>
-                      <p className="text-sm font-inter text-gold/70">
+                      <p className="text-sm font-inter text-gold/80">
                         {currentStep.week}
                       </p>
                     </div>
                   </div>
 
                   {/* Description */}
-                  <p className="text-base font-inter text-white/80 mb-6">
+                  <p className="text-sm sm:text-base font-inter text-white/80 mb-6 leading-relaxed">
                     {currentStep.description}
                   </p>
 
@@ -112,7 +123,12 @@ const Process = () => {
                         key={idx}
                         initial={{ opacity: 0, x: -10 }}
                         animate={{ opacity: 1, x: 0 }}
-                        transition={{ type: "spring", stiffness: 260, damping: 22, delay: idx * 0.1 }}
+                        transition={{
+                          type: "spring",
+                          stiffness: 260,
+                          damping: 22,
+                          delay: idx * 0.1,
+                        }}
                         className="flex items-center text-sm font-inter text-white/60"
                       >
                         <ChevronRightIcon className="w-4 h-4 text-gold mr-2 flex-shrink-0" />
@@ -126,10 +142,10 @@ const Process = () => {
                     <button
                       onClick={() => setActiveStep(Math.max(0, activeStep - 1))}
                       disabled={activeStep === 0}
-                      className={`px-4 py-2 rounded-lg font-inter text-sm transition-all ${
+                      className={`px-6 py-3 rounded-lg font-inter text-sm sm:text-base font-semibold transition-all ${
                         activeStep === 0
                           ? "bg-gray-800 text-gray-600 cursor-not-allowed"
-                          : "bg-gold/10 text-gold hover:bg-gold/20"
+                          : "text-gold border-2 border-gold/50 hover:bg-gold/10 hover:border-gold/60"
                       }`}
                     >
                       Previous
@@ -141,13 +157,18 @@ const Process = () => {
                         )
                       }
                       disabled={activeStep === processSteps.length - 1}
-                      className={`px-4 py-2 rounded-lg font-inter text-sm transition-all ${
+                      className={`relative px-6 py-4 rounded-xl font-inter text-lg font-semibold transition-all group overflow-hidden transform hover:scale-[1.02] active:scale-[0.98] ${
                         activeStep === processSteps.length - 1
                           ? "bg-gray-800 text-gray-600 cursor-not-allowed"
-                          : "bg-gold text-gray-900 hover:bg-gold/90"
+                          : "text-black bg-gradient-to-r from-gold via-yellow-200 to-gold hover:from-yellow-200 hover:via-gold hover:to-yellow-200 shadow-lg hover:shadow-gold/25"
                       }`}
                     >
-                      Next Step
+                      {activeStep !== processSteps.length - 1 && (
+                        <div className="absolute inset-0 bg-white/20 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700 skew-x-12"></div>
+                      )}
+                      <span className="relative flex items-center justify-center">
+                        Next Step
+                      </span>
                     </button>
                   </div>
                 </div>
@@ -161,16 +182,22 @@ const Process = () => {
           {processSteps.map((step, index) => (
             <motion.div
               key={index}
-              initial={{ opacity: 0, y: 20 }}
+              initial={false}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ type: "spring", stiffness: 200, damping: 20, delay: index * 0.1 }}
+              transition={{
+                type: "spring",
+                stiffness: 200,
+                damping: 20,
+                delay: index * 0.1,
+              }}
+              style={{ opacity: 1 }}
             >
               <button
                 onClick={() =>
                   setMobileActiveStep(mobileActiveStep === index ? null : index)
                 }
-                className="w-full bg-gray-950/50 rounded-xl p-4 border border-gold/20 hover:border-gold/40 transition-all"
+                className="w-full bg-gray-900/50 rounded-xl p-4 lg:p-6 border border-gold/20 hover:border-gold/50 transition-all shadow-lg shadow-black/20"
               >
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-3">
@@ -179,7 +206,7 @@ const Process = () => {
                     </span>
                     <div className="text-left">
                       <h2 className="font-iceland text-white">{step.title}</h2>
-                      <p className="text-xs font-inter text-gold/70">
+                      <p className="text-xs sm:text-sm font-inter text-gold/80">
                         {step.week}
                       </p>
                     </div>
@@ -197,18 +224,22 @@ const Process = () => {
                       initial={{ height: 0, opacity: 0 }}
                       animate={{ height: "auto", opacity: 1 }}
                       exit={{ height: 0, opacity: 0 }}
-                      transition={{ type: "spring", stiffness: 260, damping: 25 }}
+                      transition={{
+                        type: "spring",
+                        stiffness: 260,
+                        damping: 25,
+                      }}
                       className="overflow-hidden"
                     >
                       <div className="pt-4 mt-4 border-t border-gold/10">
-                        <p className="text-sm font-inter text-white/70 mb-4">
+                        <p className="text-sm sm:text-base font-inter text-white/80 mb-4 leading-relaxed">
                           {step.description}
                         </p>
                         <div className="space-y-2">
                           {step.details?.map((detail, idx) => (
                             <div
                               key={idx}
-                              className="flex items-start text-xs font-inter text-white/50"
+                              className="flex items-start text-sm font-inter text-white/70"
                             >
                               <span className="text-gold mr-2">•</span>
                               {detail}

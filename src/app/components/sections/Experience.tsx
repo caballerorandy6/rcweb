@@ -19,7 +19,11 @@ const Experience = () => {
   const ref = useSectionObserver({ sectionName: "Experience" });
 
   return (
-    <section ref={ref} id="experience" className="pt-24 sm:pt-32">
+    <section
+      ref={ref}
+      id="experience"
+      className="pt-24 sm:pt-32 pb-16 sm:pb-24"
+    >
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
         <Heading
           icon={<BriefcaseIcon className="w-8 text-gold" />}
@@ -36,10 +40,16 @@ const Experience = () => {
           {experience.map((item, index) => (
             <motion.div
               key={index}
-              initial={{ opacity: 0, x: index % 2 === 0 ? -50 : 50 }}
+              initial={false}
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
-              transition={{ type: "spring", stiffness: 200, damping: 20, delay: index * 0.1 }}
+              transition={{
+                type: "spring",
+                stiffness: 200,
+                damping: 20,
+                delay: index * 0.1,
+              }}
+              style={{ opacity: 1 }}
               className={`relative flex items-center mb-12 lg:mb-16 ${
                 index % 2 === 0 ? "lg:flex-row" : "lg:flex-row-reverse"
               }`}
@@ -55,7 +65,7 @@ const Experience = () => {
               <div
                 className={`w-full lg:w-5/12 ${index % 2 === 0 ? "lg:pr-12 lg:text-right" : "lg:pl-12"}`}
               >
-                <div className="group bg-gray-900/50 backdrop-blur-sm rounded-2xl p-6 border border-gold/20 hover:border-gold/40 hover:bg-gold/5 transition-all duration-300">
+                <div className="group bg-gray-900/50 backdrop-blur-sm rounded-2xl p-6 lg:p-8 border border-gold/20 hover:border-gold/50 hover:bg-gold/5 transition-all duration-300 shadow-lg shadow-black/20">
                   {/* Icon */}
                   <div
                     className={`flex items-center gap-4 mb-4 ${index % 2 === 0 ? "lg:flex-row-reverse" : ""}`}
@@ -69,7 +79,7 @@ const Experience = () => {
                       <h2 className="text-xl font-iceland text-white">
                         {item.title}
                       </h2>
-                      <p className="text-sm font-inter text-gold/70">
+                      <p className="text-sm font-inter text-gold/80">
                         {item.company} • {item.location}
                       </p>
                     </div>
@@ -84,7 +94,7 @@ const Experience = () => {
 
                   {/* Description */}
                   <p
-                    className={`text-sm font-inter text-white/70 ${index % 2 === 0 ? "lg:text-right" : ""}`}
+                    className={`text-sm sm:text-base font-inter text-white/80 leading-relaxed ${index % 2 === 0 ? "lg:text-right" : ""}`}
                   >
                     {item.description}
                   </p>

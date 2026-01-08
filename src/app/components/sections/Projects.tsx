@@ -24,7 +24,7 @@ const Projects = () => {
   });
 
   return (
-    <section ref={ref} id="projects" className="pt-24 sm:pt-32">
+    <section ref={ref} id="projects" className="pt-24 sm:pt-32 pb-16 sm:pb-24">
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
         <Heading
           icon={<CodeBracketIcon className="w-8 text-gold" />}
@@ -61,11 +61,15 @@ const Projects = () => {
           >
             <motion.button
               type="button"
-              className="group text-sm font-inter text-white/80 hover:bg-gold/20 px-6 py-2.5 rounded-lg flex items-center gap-x-2 border border-gold/50 transition-all duration-200 ease-in-out hover:scale-105"
+              className="group inline-flex items-center justify-center gap-2 px-6 py-3 text-sm sm:text-base font-inter font-semibold text-gold border-2 border-gold/50 hover:bg-gold/10 hover:border-gold/60 rounded-lg transition-all duration-200 hover:scale-105"
               onClick={handleClickProjectsDialog}
               aria-expanded={isExpanded}
               aria-controls={contentId}
-              aria-label={isExpanded ? "Collapse projects list" : `View all ${projects.length} projects`}
+              aria-label={
+                isExpanded
+                  ? "Collapse projects list"
+                  : `View all ${projects.length} projects`
+              }
               whileTap={{ scale: 0.95 }}
             >
               <span>
@@ -84,7 +88,7 @@ const Projects = () => {
         )}
 
         <motion.div
-          className="mt-20 pt-12"
+          className="mt-16 sm:mt-20 pt-12"
           layout
           transition={{ type: "spring", stiffness: 200, damping: 20 }}
         >

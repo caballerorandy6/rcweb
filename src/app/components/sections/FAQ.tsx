@@ -50,14 +50,18 @@ const FAQ = () => {
         damping: 25,
       },
     },
-    exit: { opacity: 0, height: 0, transition: { type: "spring", stiffness: 300, damping: 30 } },
+    exit: {
+      opacity: 0,
+      height: 0,
+      transition: { type: "spring", stiffness: 300, damping: 30 },
+    },
   };
 
   return (
     <section
       id="faq"
       ref={ref}
-      className="relative isolate overflow-hidden pt-24 sm:pt-32"
+      className="relative isolate overflow-hidden pt-24 sm:pt-32 pb-16 sm:pb-24"
     >
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
         <Heading
@@ -69,9 +73,10 @@ const FAQ = () => {
 
         <motion.div
           variants={containerVariants}
-          initial="hidden"
+          initial={false}
           whileInView="show"
           viewport={{ once: true, amount: 0.2 }}
+          style={{ opacity: 1 }}
           className="mx-auto mt-16 max-w-3xl"
         >
           <div className="space-y-4">
@@ -79,7 +84,7 @@ const FAQ = () => {
               <motion.div
                 key={index}
                 variants={cardVariants}
-                className="rounded-lg border border-gold/20 bg-gray-900/50 backdrop-blur-sm transition-all duration-200 hover:border-gold/50"
+                className="rounded-lg border border-gold/20 bg-gray-900/50 backdrop-blur-sm transition-all duration-200 hover:border-gold/50 shadow-lg shadow-black/20"
               >
                 <button
                   onClick={() =>
@@ -107,7 +112,7 @@ const FAQ = () => {
                       exit="exit"
                       className="px-6 pb-4 overflow-hidden"
                     >
-                      <p className="text-sm font-inter text-white/70">
+                      <p className="text-sm sm:text-base font-inter text-white/80 leading-relaxed">
                         {faq.answer}
                       </p>
                     </motion.div>

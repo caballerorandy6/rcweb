@@ -60,9 +60,12 @@ const Navbar = () => {
   // Separate Contact as CTA button
   const mainNavigation = navigation.slice(0, -2); // All except Contact and CTA
   const contactItem = navigation.find((item) => item.name === "Contact");
-  
+
   // Combine main and secondary navigation for mobile menu
-  const allNavigationItems = [...navigation.slice(0, -1), ...secondaryNavigation];
+  const allNavigationItems = [
+    ...navigation.slice(0, -1),
+    ...secondaryNavigation,
+  ];
 
   return (
     <>
@@ -84,13 +87,21 @@ const Navbar = () => {
                   <Link
                     key={item.name}
                     href={getHref(item.hash)}
-                    onClick={() => setActiveSection(item.name)}
-                    className="px-3 py-2 text-sm font-inter transition-colors duration-300 relative group"
+                    onClick={() => {
+                      setActiveSection(item.name);
+                      // Asegurar que el estado se mantenga después del scroll
+                      setTimeout(() => {
+                        setActiveSection(item.name);
+                      }, 500);
+                    }}
+                    className="px-3 py-1 text-sm font-inter transition-colors duration-300 relative group cursor-pointer"
                   >
                     <span
                       className={clsx(
                         "relative z-10",
-                        isActive ? "text-gold" : "text-white/80 group-hover:text-gold"
+                        isActive
+                          ? "text-gold"
+                          : "text-white/80 group-hover:text-gold"
                       )}
                     >
                       {item.name}
@@ -116,16 +127,17 @@ const Navbar = () => {
                 <Link
                   href={getHref(contactItem.hash)}
                   onClick={() => setActiveSection(contactItem.name)}
-                  className="ml-4 px-4 py-2 bg-gold text-gray-900 rounded-lg text-sm font-inter font-medium hover:bg-gold/90 transition-all duration-300"
+                  className="relative ml-4 inline-flex items-center justify-center px-4 py-2 text-sm font-semibold text-black bg-gradient-to-r from-gold via-yellow-200 to-gold hover:from-yellow-200 hover:via-gold hover:to-yellow-200 rounded-xl transition-all duration-300 shadow-lg hover:shadow-gold/25 font-inter group overflow-hidden transform hover:scale-[1.02] active:scale-[0.98]"
                 >
-                  {contactItem.name}
+                  <div className="absolute inset-0 bg-white/20 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700 skew-x-12"></div>
+                  <span className="relative">{contactItem.name}</span>
                 </Link>
               )}
 
               {/* Client Portal - Discreet button */}
               <Link
                 href="/client/login"
-                className="ml-4 px-3 py-2 text-xs text-white/60 hover:text-gold transition-colors duration-300 font-inter border border-white/10 hover:border-gold/30 rounded-lg"
+                className="ml-4 px-3 py-2 text-xs font-semibold text-white/70 hover:text-gold transition-all duration-300 font-inter border border-gold/20 hover:border-gold/50 hover:bg-gold/5 rounded-lg cursor-pointer hover:scale-105 active:scale-95 backdrop-blur-sm"
                 aria-label="Client Portal"
               >
                 Client Portal
@@ -145,11 +157,23 @@ const Navbar = () => {
                     href={getHref(item.hash)}
                     onClick={() => setActiveSection(item.name)}
                     className={clsx(
-                      "text-sm font-inter transition-colors duration-300",
+                      "px-2 py-1 text-sm font-inter transition-colors duration-300 cursor-pointer relative group",
                       isActive ? "text-gold" : "text-white/80 hover:text-gold"
                     )}
                   >
-                    {item.name}
+                    <span className="relative z-10">{item.name}</span>
+                    {isActive && (
+                      <motion.span
+                        className="bg-gold/20 rounded-full absolute inset-0 -z-10"
+                        layoutId="navbar-active-tab-tablet"
+                        transition={{
+                          type: "spring",
+                          stiffness: 500,
+                          damping: 35,
+                          mass: 0.8,
+                        }}
+                      />
+                    )}
                   </Link>
                 );
               })}
@@ -159,16 +183,17 @@ const Navbar = () => {
                 <Link
                   href={getHref(contactItem.hash)}
                   onClick={() => setActiveSection(contactItem.name)}
-                  className="px-4 py-2 bg-gold text-gray-900 rounded-lg text-sm font-inter font-medium hover:bg-gold/90 transition-all duration-300"
+                  className="relative inline-flex items-center justify-center px-4 py-2 text-sm font-semibold text-black bg-gradient-to-r from-gold via-yellow-200 to-gold hover:from-yellow-200 hover:via-gold hover:to-yellow-200 rounded-xl transition-all duration-300 shadow-lg hover:shadow-gold/25 font-inter group overflow-hidden transform hover:scale-[1.02] active:scale-[0.98]"
                 >
-                  Let&#39;s Talk
+                  <div className="absolute inset-0 bg-white/20 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700 skew-x-12"></div>
+                  <span className="relative">Let&#39;s Talk</span>
                 </Link>
               )}
 
               {/* Client Portal - Discreet button */}
               <Link
                 href="/client/login"
-                className="px-3 py-2 text-xs text-white/60 hover:text-gold transition-colors duration-300 font-inter border border-white/10 hover:border-gold/30 rounded-lg"
+                className="px-3 py-2 text-xs font-semibold text-white/70 hover:text-gold transition-all duration-300 font-inter border border-gold/20 hover:border-gold/50 hover:bg-gold/5 rounded-lg cursor-pointer hover:scale-105 active:scale-95 backdrop-blur-sm"
                 aria-label="Client Portal"
               >
                 Client Portal
@@ -178,7 +203,7 @@ const Navbar = () => {
               <button
                 type="button"
                 onClick={handleClickModal}
-                className="text-white/80 hover:text-gold transition-colors"
+                className="text-white/80 hover:text-gold transition-colors cursor-pointer"
                 aria-label="Open navigation menu"
               >
                 <Bars3Icon className="w-6 h-6" aria-hidden="true" />
@@ -189,7 +214,7 @@ const Navbar = () => {
             <button
               type="button"
               onClick={handleClickModal}
-              className="lg:hidden inline-flex items-center justify-center rounded-md text-white/80 hover:text-gold transition-colors"
+              className="lg:hidden inline-flex items-center justify-center rounded-md text-white/80 hover:text-gold transition-colors cursor-pointer"
               aria-label="Open mobile menu"
             >
               <Bars3Icon aria-hidden="true" className="w-6 h-6" />
@@ -213,14 +238,14 @@ const Navbar = () => {
           <div className="absolute inset-0 overflow-hidden">
             <div className="pointer-events-none fixed inset-y-0 right-0 flex max-w-full">
               <DialogPanel className="pointer-events-auto w-screen max-w-sm">
-                <div className="flex h-full flex-col bg-gray-900 shadow-xl">
+                <div className="flex h-full flex-col bg-gradient-to-b from-gray-900 via-gray-900 to-gray-950 backdrop-blur-xl shadow-2xl border-l border-gold/10">
                   {/* Header */}
-                  <div className="flex items-center justify-between px-6 py-4 border-b border-gold/10">
+                  <div className="flex items-center justify-between px-6 py-5 border-b border-gold/20 bg-gold/5">
                     <Logo className="w-32 h-auto" />
                     <button
                       type="button"
                       onClick={() => setIsOpen(false)}
-                      className="rounded-md text-white/80 hover:text-gold transition-colors"
+                      className="rounded-lg p-2 text-white/80 hover:text-gold hover:bg-gold/10 transition-all duration-300 cursor-pointer"
                       aria-label="Close menu"
                     >
                       <XMarkIcon aria-hidden="true" className="w-6 h-6" />
@@ -229,7 +254,7 @@ const Navbar = () => {
 
                   {/* Navigation Items */}
                   <div className="flex-1 overflow-y-auto px-6 py-6">
-                    <nav className="space-y-1">
+                    <nav className="space-y-2">
                       {allNavigationItems.map((item) => {
                         // Skip CTA from regular menu
                         if (item.name === "CTA") return null;
@@ -246,9 +271,12 @@ const Navbar = () => {
                                 setActiveSection(item.name);
                                 handleClickModal();
                               }}
-                              className="block w-full mt-4 px-4 py-3 bg-gold text-gray-900 rounded-lg text-center font-inter font-medium hover:bg-gold/90 transition-all duration-300"
+                              className="relative block w-full mt-6 px-6 py-4 text-base font-semibold text-black bg-gradient-to-r from-gold via-yellow-200 to-gold hover:from-yellow-200 hover:via-gold hover:to-yellow-200 rounded-xl transition-all duration-300 shadow-lg hover:shadow-gold/25 font-inter group overflow-hidden transform hover:scale-[1.02] active:scale-[0.98]"
                             >
-                              Get In Touch
+                              <div className="absolute inset-0 bg-white/20 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700 skew-x-12"></div>
+                              <span className="relative flex items-center justify-center">
+                                Get In Touch
+                              </span>
                             </Link>
                           );
                         }
@@ -262,23 +290,26 @@ const Navbar = () => {
                               handleClickModal();
                             }}
                             className={clsx(
-                              "block px-4 py-3 rounded-lg text-base font-inter transition-all duration-300",
+                              "relative block px-4 py-3.5 rounded-xl text-base font-inter font-medium transition-all duration-300 cursor-pointer group overflow-hidden",
                               isActive
-                                ? "bg-gold/20 text-gold"
-                                : "text-white/80 hover:text-gold hover:bg-gold/5"
+                                ? "bg-gold/20 text-gold border border-gold/30 shadow-lg shadow-gold/10"
+                                : "text-white/80 hover:text-gold border border-transparent hover:border-gold/30 hover:bg-gold/10 hover:shadow-md hover:shadow-gold/5 transform hover:scale-[1.02] active:scale-[0.98]"
                             )}
                           >
-                            {item.name}
+                            {!isActive && (
+                              <span className="absolute inset-0 bg-gradient-to-r from-gold/0 via-gold/5 to-gold/0 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-500"></span>
+                            )}
+                            <span className="relative z-10">{item.name}</span>
                           </Link>
                         );
                       })}
 
                       {/* Client Portal - At the end of mobile menu */}
-                      <div className="mt-4 pt-4 border-t border-gold/10">
+                      <div className="mt-6 pt-6 border-t border-gold/20">
                         <Link
                           href="/client/login"
                           onClick={handleClickModal}
-                          className="block px-4 py-3 rounded-lg text-base font-inter transition-all duration-300 text-white/60 hover:text-gold hover:bg-gold/5"
+                          className="block px-4 py-3.5 rounded-xl text-base font-inter font-semibold transition-all duration-300 text-white/70 hover:text-gold hover:bg-gold/10 hover:border hover:border-gold/30 cursor-pointer border border-gold/20"
                         >
                           Client Portal
                         </Link>
@@ -287,8 +318,8 @@ const Navbar = () => {
                   </div>
 
                   {/* Footer Info */}
-                  <div className="border-t border-gold/10 px-6 py-4">
-                    <p className="text-sm font-inter text-white/50 text-center">
+                  <div className="border-t border-gold/20 px-6 py-5 bg-gold/5">
+                    <p className="text-sm font-inter text-white/60 text-center">
                       Available for freelance projects
                     </p>
                   </div>

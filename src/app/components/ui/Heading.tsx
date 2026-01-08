@@ -11,10 +11,11 @@ interface HeadingProps {
 const Heading = ({ children, icon, text }: HeadingProps) => {
   return (
     <motion.section
-      initial={{ opacity: 0, y: 40 }}
+      initial={false}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, amount: 0.3 }}
       transition={{ type: "spring", stiffness: 200, damping: 20 }}
+      style={{ opacity: 1 }}
       className="mx-auto max-w-2xl text-center"
     >
       <div className="flex items-center justify-center gap-2">
@@ -30,7 +31,7 @@ const Heading = ({ children, icon, text }: HeadingProps) => {
         </h1>
       </div>
 
-      <p className="mt-6 text-lg font-inter text-white/80">{text}</p>
+      <p className="mt-6 text-base sm:text-lg font-inter text-white/80 leading-relaxed">{text}</p>
     </motion.section>
   );
 };

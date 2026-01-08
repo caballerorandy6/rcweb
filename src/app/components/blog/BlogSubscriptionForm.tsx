@@ -123,13 +123,23 @@ const BlogSubscriptionForm = () => {
           <button
             type="submit"
             disabled={isSubmitting}
-            className="w-full py-3 bg-gold text-gray-900 font-bold rounded-xl hover:bg-gold/90 transition-all duration-300 font-inter disabled:opacity-50 disabled:cursor-not-allowed"
+            className="relative w-full py-3 text-lg font-semibold text-black bg-gradient-to-r from-gold via-yellow-200 to-gold hover:from-yellow-200 hover:via-gold hover:to-yellow-200 rounded-xl transition-all duration-300 shadow-lg hover:shadow-gold/25 font-inter group overflow-hidden transform hover:scale-[1.02] active:scale-[0.98] disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100"
           >
-            {isSubmitting ? "Subscribing..." : "Subscribe"}
+            <div className="absolute inset-0 bg-white/20 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700 skew-x-12 disabled:translate-x-[-100%]"></div>
+            <span className="relative flex items-center justify-center">
+              {isSubmitting ? "Subscribing..." : "Subscribe"}
+            </span>
           </button>
 
           <p className="text-gray-500 text-xs font-inter text-center">
-            No spam. Unsubscribe anytime.
+            No spam.{" "}
+            <a
+              href="/blog/unsubscribe"
+              className="text-gold hover:text-yellow-200 transition-colors underline"
+            >
+              Unsubscribe anytime
+            </a>
+            .
           </p>
         </form>
       </div>
