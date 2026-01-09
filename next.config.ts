@@ -72,6 +72,9 @@ const nextConfig: NextConfig = {
   // Rutas tipadas (movido de experimental en Next.js 15.5+)
   typedRoutes: true,
 
+  // External packages configuration
+  serverExternalPackages: ['prettier'],
+
   // Experimental features
   experimental: {
     // ppr: true,  // Partial Prerendering (si lo necesitas)
