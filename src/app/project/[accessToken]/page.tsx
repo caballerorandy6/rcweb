@@ -42,7 +42,7 @@ export default async function ProjectPage(props: { params: Params }) {
           <h1 className="text-4xl font-bold text-gold font-iceland mb-2">
             Project Progress
           </h1>
-          <p className="text-gray-400 font-inter">
+          <p className="text-gray-400 font-inter mx-auto">
             Track the progress of your project in real-time
           </p>
         </div>
@@ -88,7 +88,7 @@ export default async function ProjectPage(props: { params: Params }) {
             {/* Status */}
             <div className="ml-auto">
               <span
-                className={`px-4 py-2 rounded-full text-sm font-medium ${status.color}`}
+                className={`px-4 py-2 rounded-full text-sm font-medium font-inter ${status.color}`}
               >
                 {status.label}
               </span>
@@ -106,7 +106,7 @@ export default async function ProjectPage(props: { params: Params }) {
 
         {/* Footer */}
         <div className="text-center mt-8">
-          <p className="text-gray-500 text-sm font-inter">
+          <p className="text-gray-500 text-sm font-inter mx-auto">
             Questions about your project?{" "}
             <a
               href="mailto:contact@rcwebsolutionsllc.com"

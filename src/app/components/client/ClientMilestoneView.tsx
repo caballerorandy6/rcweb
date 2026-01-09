@@ -25,7 +25,9 @@ export default function ClientMilestoneView({
       case "completed":
         return <CheckCircleIcon className="w-6 h-6 text-green-500" />;
       case "in_progress":
-        return <PlayCircleIcon className="w-6 h-6 text-blue-500 animate-pulse" />;
+        return (
+          <PlayCircleIcon className="w-6 h-6 text-blue-500 animate-pulse" />
+        );
       default:
         return <ClockIcon className="w-6 h-6 text-gray-500" />;
     }
@@ -55,7 +57,7 @@ export default function ClientMilestoneView({
 
   if (milestones.length === 0) {
     return (
-      <div className="text-center py-12">
+      <div className="text-center py-12 flex flex-col justify-center items-center">
         <ClockIcon className="w-16 h-16 text-gray-600 mx-auto mb-4" />
         <p className="text-gray-400 font-inter">
           No milestones have been set up yet

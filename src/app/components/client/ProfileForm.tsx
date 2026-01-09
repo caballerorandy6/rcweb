@@ -137,9 +137,12 @@ export default function ProfileForm({
       <button
         type="submit"
         disabled={isSubmitting}
-        className="w-full py-3 px-4 bg-gold text-black rounded-lg font-semibold font-inter hover:bg-yellow-200 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+        className="relative w-full py-3 px-4 text-base font-semibold text-black bg-gradient-to-r from-gold via-yellow-200 to-gold hover:from-yellow-200 hover:via-gold hover:to-yellow-200 rounded-lg transition-all duration-300 shadow-lg hover:shadow-gold/25 font-inter group overflow-hidden transform hover:scale-[1.02] active:scale-[0.98] disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100"
       >
-        {isSubmitting ? "Updating..." : "Update Profile"}
+        <div className="absolute inset-0 bg-white/20 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700 skew-x-12 disabled:translate-x-[-100%]"></div>
+        <span className="relative flex items-center justify-center">
+          {isSubmitting ? "Updating..." : "Update Profile"}
+        </span>
       </button>
     </form>
   );

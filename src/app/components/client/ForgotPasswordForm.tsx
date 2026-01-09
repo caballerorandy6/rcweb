@@ -105,9 +105,12 @@ export default function ForgotPasswordForm() {
                 <div className="mt-6">
                   <Link
                     href="/client/login"
-                    className="inline-block px-6 py-3 bg-gold text-black rounded-xl font-semibold font-inter hover:bg-yellow-200 transition-colors"
+                    className="relative inline-flex items-center justify-center px-6 py-3 text-base font-semibold text-black bg-gradient-to-r from-gold via-yellow-200 to-gold hover:from-yellow-200 hover:via-gold hover:to-yellow-200 rounded-xl transition-all duration-300 shadow-lg hover:shadow-gold/25 font-inter group overflow-hidden transform hover:scale-[1.02] active:scale-[0.98]"
                   >
-                    Back to Login
+                    <div className="absolute inset-0 bg-white/20 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700 skew-x-12"></div>
+                    <span className="relative flex items-center justify-center">
+                      Back to Login
+                    </span>
                   </Link>
                 </div>
               </div>
@@ -213,4 +216,3 @@ export default function ForgotPasswordForm() {
     </div>
   );
 }
-

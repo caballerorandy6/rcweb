@@ -80,9 +80,12 @@ export default function ClientDashboard({
               </p>
               <Link
                 href="/#pricing"
-                className="inline-block px-6 py-3 bg-gold text-black rounded-xl font-semibold font-inter hover:bg-yellow-200 transition-colors"
+                className="relative inline-flex items-center justify-center px-6 py-3 text-base font-semibold text-black bg-gradient-to-r from-gold via-yellow-200 to-gold hover:from-yellow-200 hover:via-gold hover:to-yellow-200 rounded-xl transition-all duration-300 shadow-lg hover:shadow-gold/25 font-inter group overflow-hidden transform hover:scale-[1.02] active:scale-[0.98]"
               >
-                View Pricing Plans
+                <div className="absolute inset-0 bg-white/20 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700 skew-x-12"></div>
+                <span className="relative flex items-center justify-center">
+                  View Pricing Plans
+                </span>
               </Link>
             </div>
           </div>
@@ -155,7 +158,7 @@ export default function ClientDashboard({
                         </div>
                         <div className="mt-2">
                           <div className="flex items-center justify-between text-xs text-gray-400 mb-1">
-                            <span>Payment Progress</span>
+                            <span className="font-inter">Payment Progress</span>
                             <span>{progress}%</span>
                           </div>
                           <div className="w-full bg-gray-700/50 rounded-full h-2">
@@ -195,24 +198,24 @@ export default function ClientDashboard({
                     </div>
 
                     {/* Payment Information */}
-                    <div className="mb-6 p-4 bg-gray-800/50 rounded-xl border border-gray-700/50">
-                      <h3 className="text-xl text-gold font-semibold font-inter mb-4">
+                    <div className="mb-6 p-4 sm:p-6 bg-gray-800/50 rounded-xl border border-gray-700/50">
+                      <h3 className="text-lg sm:text-xl text-gold font-semibold font-inter mb-4">
                         Payment Information
                       </h3>
-                      <div className="grid grid-cols-2 gap-4 mb-4">
+                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4">
                         <div>
-                          <p className="text-gray-400 text-sm font-inter">
+                          <p className="text-gray-400 text-xs sm:text-sm font-inter">
                             Total Amount
                           </p>
-                          <p className="text-white text-lg font-semibold font-inter">
+                          <p className="text-white text-base sm:text-lg font-semibold font-inter">
                             {formatCurrency(selectedProject.totalAmount)}
                           </p>
                         </div>
                         <div>
-                          <p className="text-gray-400 text-sm font-inter">
+                          <p className="text-gray-400 text-xs sm:text-sm font-inter">
                             First Payment
                           </p>
-                          <p className="text-white text-lg font-semibold font-inter">
+                          <p className="text-white text-base sm:text-lg font-semibold font-inter">
                             {formatCurrency(selectedProject.firstPayment)}
                           </p>
                           <p
@@ -229,10 +232,10 @@ export default function ClientDashboard({
                         </div>
                       </div>
                       <div className="mb-4">
-                        <p className="text-gray-400 text-sm font-inter mb-1">
+                        <p className="text-gray-400 text-xs sm:text-sm font-inter mb-1">
                           Second Payment
                         </p>
-                        <p className="text-white text-lg font-semibold font-inter">
+                        <p className="text-white text-base sm:text-lg font-semibold font-inter">
                           {formatCurrency(selectedProject.secondPayment)}
                         </p>
                         <p
@@ -254,9 +257,12 @@ export default function ClientDashboard({
                                 href={
                                   `/pay/${selectedProject.accessToken}` as Route
                                 }
-                                className="inline-block w-full text-center px-4 py-2 bg-gold text-black rounded-lg font-semibold font-inter hover:bg-yellow-200 transition-colors"
+                                className="relative inline-flex items-center justify-center w-full sm:w-auto px-4 sm:px-6 py-2 sm:py-2.5 text-sm sm:text-base font-semibold text-black bg-gradient-to-r from-gold via-yellow-200 to-gold hover:from-yellow-200 hover:via-gold hover:to-yellow-200 rounded-lg transition-all duration-300 shadow-lg hover:shadow-gold/25 font-inter group overflow-hidden transform hover:scale-[1.02] active:scale-[0.98]"
                               >
-                                Pay Final Payment
+                                <div className="absolute inset-0 bg-white/20 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700 skew-x-12"></div>
+                                <span className="relative flex items-center justify-center">
+                                  Pay Final Payment
+                                </span>
                               </Link>
                             </div>
                           )}
@@ -266,7 +272,7 @@ export default function ClientDashboard({
                     {/* Milestones */}
                     {selectedProject.milestones.length > 0 && (
                       <div className="mb-6">
-                        <h3 className="text-xl text-gold font-semibold font-inter mb-4">
+                        <h3 className="text-lg sm:text-xl text-gold font-semibold font-inter mb-4">
                           Project Milestones
                         </h3>
                         <div className="space-y-3">
@@ -277,20 +283,20 @@ export default function ClientDashboard({
                             return (
                               <div
                                 key={milestone.id}
-                                className="p-4 bg-gray-800/50 rounded-xl border border-gray-700/50"
+                                className="p-3 sm:p-4 bg-gray-800/50 rounded-xl border border-gray-700/50"
                               >
-                                <div className="flex items-start justify-between mb-2">
-                                  <h4 className="text-white font-semibold font-inter">
+                                <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-2 mb-2">
+                                  <h4 className="text-sm sm:text-base text-white font-semibold font-inter">
                                     {milestone.title}
                                   </h4>
                                   <span
-                                    className={`px-2 py-1 rounded text-xs font-inter ${milestoneStatus.color}`}
+                                    className={`px-2 py-1 rounded text-xs font-inter ${milestoneStatus.color} w-fit`}
                                   >
                                     {milestoneStatus.label}
                                   </span>
                                 </div>
                                 {milestone.description && (
-                                  <p className="text-gray-400 text-sm font-inter mb-2">
+                                  <p className="text-xs sm:text-sm text-gray-400 font-inter mb-2">
                                     {milestone.description}
                                   </p>
                                 )}
@@ -316,20 +322,20 @@ export default function ClientDashboard({
                     {/* Invoices */}
                     {selectedProject.invoices.length > 0 && (
                       <div className="mb-6">
-                        <h3 className="text-xl text-gold font-semibold font-inter mb-4">
+                        <h3 className="text-lg sm:text-xl text-gold font-semibold font-inter mb-4">
                           Invoices
                         </h3>
                         <div className="space-y-3">
                           {selectedProject.invoices.map((invoice) => (
                             <div
                               key={invoice.id}
-                              className="flex items-center justify-between p-4 bg-gray-800/50 rounded-xl border border-gray-700/50"
+                              className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 p-3 sm:p-4 bg-gray-800/50 rounded-xl border border-gray-700/50"
                             >
-                              <div>
-                                <p className="text-white font-semibold font-inter">
+                              <div className="flex-1 min-w-0">
+                                <p className="text-sm sm:text-base text-white font-semibold font-inter truncate">
                                   {invoice.invoiceNumber}
                                 </p>
-                                <p className="text-gray-400 text-sm font-inter">
+                                <p className="text-xs sm:text-sm text-gray-400 font-inter">
                                   {formatCurrency(invoice.total)} •{" "}
                                   {formatDate(invoice.issueDate)}
                                 </p>
@@ -339,9 +345,12 @@ export default function ClientDashboard({
                                   href={invoice.pdfUrl}
                                   target="_blank"
                                   rel="noopener noreferrer"
-                                  className="px-4 py-2 bg-gold text-black rounded-lg font-semibold font-inter hover:bg-yellow-200 transition-colors"
+                                  className="relative flex items-center justify-center px-3 sm:px-4 py-2 text-sm sm:text-base font-semibold text-black bg-gradient-to-r from-gold via-yellow-200 to-gold hover:from-yellow-200 hover:via-gold hover:to-yellow-200 rounded-lg transition-all duration-300 shadow-lg hover:shadow-gold/25 font-inter group overflow-hidden transform hover:scale-[1.02] active:scale-[0.98] whitespace-nowrap flex-shrink-0"
                                 >
-                                  Download
+                                  <div className="absolute inset-0 bg-white/20 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700 skew-x-12"></div>
+                                  <span className="relative flex items-center justify-center">
+                                    Download
+                                  </span>
                                 </a>
                               )}
                             </div>
@@ -356,9 +365,12 @@ export default function ClientDashboard({
                         href={
                           `/project/${selectedProject.accessToken}` as Route
                         }
-                        className="inline-block px-6 py-3 bg-gold text-black rounded-xl font-semibold font-inter hover:bg-yellow-200 transition-colors"
+                        className="relative inline-flex items-center justify-center w-full sm:w-auto px-4 sm:px-6 py-2.5 sm:py-3 text-sm sm:text-base font-semibold text-black bg-gradient-to-r from-gold via-yellow-200 to-gold hover:from-yellow-200 hover:via-gold hover:to-yellow-200 rounded-xl transition-all duration-300 shadow-lg hover:shadow-gold/25 font-inter group overflow-hidden transform hover:scale-[1.02] active:scale-[0.98]"
                       >
-                        View Full Project Details
+                        <div className="absolute inset-0 bg-white/20 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700 skew-x-12"></div>
+                        <span className="relative flex items-center justify-center">
+                          View Full Project Details
+                        </span>
                       </Link>
                     </div>
                   </div>
