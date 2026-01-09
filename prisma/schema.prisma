@@ -180,6 +180,7 @@ model Payment {
   termsAcceptance TermsAcceptance?
   invoices        Invoice[]
   milestones      Milestone[]
+  deliverables    Deliverable[]
 
   clientId  String?
   client    Client? @relation(fields: [clientId], references: [id])
@@ -398,3 +399,27 @@ model Client {
 
     @@index([email])
   }
+
+model Deliverable {
+  id          String    @id @default(uuid())
+  paymentId   String
+  payment     Payment   @relation(fields: [paymentId], references: [id], onDelete: Cascade)
+
+  // Información del archivo
+  name        String    // Nombre del archivo/entregable
+  description String?   @db.Text // Descripción opcional
+  type        String    // "source_code", "documentation", "assets", "credentials", "other"
+  fileUrl     String    // URL del archivo en Vercel Blob
+  blobKey     String?   // Key para eliminar de Vercel Blob si es necesario
+  fileSize    Int?      // Tamaño del archivo en bytes
+  mimeType    String?   // Tipo MIME del archivo (application/zip, application/pdf, etc.)
+
+  // Metadata
+  uploadedBy  String?   // Email del admin que subió el archivo
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  @@index([paymentId])
+  @@index([type])
+  @@index([createdAt])
+}

@@ -100,3 +100,28 @@ export function getMilestoneStatusLabel(status: string): {
     }
   );
 }
+
+/**
+ * Obtiene el label legible para el tipo de deliverable
+ */
+export function getDeliverableTypeLabel(type: string): string {
+  const typeMap: Record<string, string> = {
+    source_code: "Source Code",
+    documentation: "Documentation",
+    assets: "Assets",
+    credentials: "Credentials",
+    other: "Other",
+  };
+
+  return typeMap[type] || "Other";
+}
+
+/**
+ * Formatea el tamaño de un archivo en bytes a formato legible (B, KB, MB)
+ */
+export function formatFileSize(bytes: number | null): string {
+  if (!bytes) return "Unknown size";
+  if (bytes < 1024) return `${bytes} B`;
+  if (bytes < 1024 * 1024) return `${(bytes / 1024).toFixed(2)} KB`;
+  return `${(bytes / (1024 * 1024)).toFixed(2)} MB`;
+}

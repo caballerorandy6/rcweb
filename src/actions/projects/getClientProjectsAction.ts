@@ -32,6 +32,9 @@ export async function getClientProjectsAction(): Promise<
         milestones: {
           orderBy: { order: "asc" },
         },
+        deliverables: {
+          orderBy: { createdAt: "desc" },
+        },
       },
       orderBy: { createdAt: "desc" },
     });
@@ -73,6 +76,19 @@ export async function getClientProjectsAction(): Promise<
             order: milestone.order,
             dueDate: milestone.dueDate?.toISOString() || null,
             completedAt: milestone.completedAt?.toISOString() || null,
+          })),
+          deliverables: project.deliverables.map((deliverable) => ({
+            id: deliverable.id,
+            name: deliverable.name,
+            description: deliverable.description,
+            type: deliverable.type,
+            fileUrl: deliverable.fileUrl,
+            fileSize: deliverable.fileSize,
+            mimeType: deliverable.mimeType,
+            createdAt: deliverable.createdAt.toISOString(),
+            updatedAt: deliverable.updatedAt.toISOString(),
+            projectCode: project.projectCode,
+            planName: project.planName,
           })),
         })),
       },

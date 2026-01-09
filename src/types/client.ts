@@ -3,6 +3,8 @@
  * These types represent serialized data from server to client components
  */
 
+import type { ClientDeliverable } from "./deliverable";
+
 export type ClientInvoice = {
   id: string;
   invoiceNumber: string;
@@ -47,4 +49,5 @@ export type ClientProject = {
   updatedAt: Date | string;
   invoices: ClientInvoice[];
   milestones: ClientMilestone[];
+  deliverables: ClientDeliverable[];
 };
