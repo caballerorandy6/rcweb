@@ -48,8 +48,8 @@ export default function ClientInvoices({
   };
 
   return (
-    <div className="min-h-screen bg-gray-900 pt-24 sm:pt-32 pb-8 px-4">
-      <div className="max-w-7xl mx-auto">
+    <div className="min-h-screen bg-gray-900 pt-24 sm:pt-32 pb-8">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
         <div className="mb-8">
           <Link
@@ -90,7 +90,7 @@ export default function ClientInvoices({
               <select
                 value={selectedProject}
                 onChange={(e) => setSelectedProject(e.target.value)}
-                className="w-full px-4 py-2 bg-gray-800 border border-gray-700 rounded-lg text-white font-inter focus:outline-none focus:border-gold transition-colors"
+                className="w-full px-4 py-2 bg-gray-800/50 border border-gray-700/50 rounded-lg text-white font-inter focus:outline-none focus:ring-2 focus:ring-gold/50 focus:border-transparent transition-all"
               >
                 <option value="all">All Projects</option>
                 {projects.map((project) => (
@@ -109,7 +109,7 @@ export default function ClientInvoices({
               <select
                 value={selectedType}
                 onChange={(e) => setSelectedType(e.target.value)}
-                className="w-full px-4 py-2 bg-gray-800 border border-gray-700 rounded-lg text-white font-inter focus:outline-none focus:border-gold transition-colors"
+                className="w-full px-4 py-2 bg-gray-800/50 border border-gray-700/50 rounded-lg text-white font-inter focus:outline-none focus:ring-2 focus:ring-gold/50 focus:border-transparent transition-all"
               >
                 <option value="all">All Types</option>
                 <option value="initial">Initial Payment</option>
@@ -126,7 +126,7 @@ export default function ClientInvoices({
               <select
                 value={selectedStatus}
                 onChange={(e) => setSelectedStatus(e.target.value)}
-                className="w-full px-4 py-2 bg-gray-800 border border-gray-700 rounded-lg text-white font-inter focus:outline-none focus:border-gold transition-colors"
+                className="w-full px-4 py-2 bg-gray-800/50 border border-gray-700/50 rounded-lg text-white font-inter focus:outline-none focus:ring-2 focus:ring-gold/50 focus:border-transparent transition-all"
               >
                 <option value="all">All Status</option>
                 <option value="paid">Paid</option>

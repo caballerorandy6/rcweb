@@ -7,16 +7,18 @@ const Certifications = () => {
   return (
     <section
       id="certifications"
-      className="pt-24 sm:pt-32 pb-16 sm:pb-24 w-10/12 mx-auto"
+      className="relative isolate overflow-hidden pt-24 sm:pt-32 pb-16 sm:pb-24"
     >
-      <Heading
-        icon={<CheckCircleIcon className="w-8 text-gold" />}
-        text="Learn and grow is my priority"
-      >
-        Degrees & Certifications
-      </Heading>
+      <div className="mx-auto max-w-7xl px-6 lg:px-8">
+        <Heading
+          icon={<CheckCircleIcon className="w-8 text-gold" />}
+          text="Learn and grow is my priority"
+        >
+          Degrees & Certifications
+        </Heading>
 
-      <CertificationsList certifications={certifications} />
+        <CertificationsList certifications={certifications} />
+      </div>
     </section>
   );
 };

@@ -19,21 +19,22 @@ const Contact = () => {
     <section
       ref={ref}
       id="contact"
-      className="pt-24 sm:pt-32 pb-16 sm:pb-24 mx-auto w-10/12"
+      className="relative isolate overflow-hidden pt-24 sm:pt-32 pb-16 sm:pb-24"
     >
-      <Heading
-        icon={<EnvelopeIcon className="w-8 text-gold" />}
-        text="Get in Touch"
-      >
-        Contact
-      </Heading>
+      <div className="mx-auto max-w-7xl px-6 lg:px-8">
+        <Heading
+          icon={<EnvelopeIcon className="w-8 text-gold" />}
+          text="Get in Touch"
+        >
+          Contact
+        </Heading>
 
-      {/* Quick Contact Options */}
-      <div className="mx-auto max-w-2xl mt-8 mb-12">
+        {/* Quick Contact Options */}
+        <div className="mx-auto max-w-2xl mt-8 mb-12">
         <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
           <Link
             href="/schedule"
-            className="relative inline-flex items-center justify-center gap-2 px-6 py-4 text-lg font-semibold text-black bg-gradient-to-r from-gold via-yellow-200 to-gold hover:from-yellow-200 hover:via-gold hover:to-yellow-200 rounded-xl transition-all duration-300 shadow-lg hover:shadow-gold/25 font-inter group overflow-hidden transform hover:scale-[1.02] active:scale-[0.98]"
+            className="relative inline-flex items-center justify-center gap-2 px-6 py-4 text-base sm:text-lg font-semibold text-black bg-gradient-to-r from-gold via-yellow-200 to-gold hover:from-yellow-200 hover:via-gold hover:to-yellow-200 rounded-xl transition-all duration-300 shadow-lg hover:shadow-gold/25 font-inter group overflow-hidden transform hover:scale-[1.02] active:scale-[0.98]"
           >
             <div className="absolute inset-0 bg-white/20 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700 skew-x-12"></div>
             <span className="relative flex items-center justify-center gap-2">
@@ -54,8 +55,9 @@ const Contact = () => {
         </p>
       </div>
 
-      <div className="mx-auto w-full sm:w-10/12 md:w-8/12 lg:w-6/12 animateProjectCard">
-        <DialogForm closeModal={() => setOpenLetsContactDialog(false)} />
+        <div className="mx-auto w-full sm:w-10/12 md:w-8/12 lg:w-6/12 animateProjectCard">
+          <DialogForm closeModal={() => setOpenLetsContactDialog(false)} />
+        </div>
       </div>
     </section>
   );

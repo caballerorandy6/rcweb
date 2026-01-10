@@ -1,7 +1,7 @@
 export default function ClientInvoicesSkeleton() {
   return (
-    <div className="min-h-screen bg-gray-900 pt-24 sm:pt-32 pb-8 px-4">
-      <div className="max-w-7xl mx-auto animate-pulse">
+    <div className="min-h-screen bg-gray-900 pt-24 sm:pt-32 pb-8">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 animate-pulse">
         {/* Header Skeleton */}
         <div className="mb-8">
           <div className="h-12 bg-gray-800 rounded-lg w-64 mb-4"></div>

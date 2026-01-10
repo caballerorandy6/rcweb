@@ -77,7 +77,7 @@ export default function ChangePasswordForm({
             {...register("currentPassword")}
             type={showCurrentPassword ? "text" : "password"}
             id="currentPassword"
-            className="w-full px-4 py-3 pr-12 bg-gray-800 text-white rounded-lg border border-gray-700 focus:outline-none focus:border-gold focus:ring-2 focus:ring-gold/20 transition-all font-inter"
+            className="w-full px-4 py-3 pr-12 bg-gray-800/50 text-white rounded-lg border border-gray-700/50 focus:outline-none focus:ring-2 focus:ring-gold/50 focus:border-transparent transition-all font-inter"
             placeholder="Enter your current password"
           />
           <button
@@ -145,7 +145,7 @@ export default function ChangePasswordForm({
             {...register("password")}
             type={showPassword ? "text" : "password"}
             id="password"
-            className="w-full px-4 py-3 pr-12 bg-gray-800 text-white rounded-lg border border-gray-700 focus:outline-none focus:border-gold focus:ring-2 focus:ring-gold/20 transition-all font-inter"
+            className="w-full px-4 py-3 pr-12 bg-gray-800/50 text-white rounded-lg border border-gray-700/50 focus:outline-none focus:ring-2 focus:ring-gold/50 focus:border-transparent transition-all font-inter"
             placeholder="Enter your new password"
           />
           <button
@@ -213,7 +213,7 @@ export default function ChangePasswordForm({
             {...register("confirmPassword")}
             type={showConfirmPassword ? "text" : "password"}
             id="confirmPassword"
-            className="w-full px-4 py-3 pr-12 bg-gray-800 text-white rounded-lg border border-gray-700 focus:outline-none focus:border-gold focus:ring-2 focus:ring-gold/20 transition-all font-inter"
+            className="w-full px-4 py-3 pr-12 bg-gray-800/50 text-white rounded-lg border border-gray-700/50 focus:outline-none focus:ring-2 focus:ring-gold/50 focus:border-transparent transition-all font-inter"
             placeholder="Confirm your new password"
           />
           <button

@@ -157,7 +157,7 @@ const Process = () => {
                         )
                       }
                       disabled={activeStep === processSteps.length - 1}
-                      className={`relative px-6 py-4 rounded-xl font-inter text-lg font-semibold transition-all group overflow-hidden transform hover:scale-[1.02] active:scale-[0.98] ${
+                      className={`relative px-6 py-4 rounded-xl font-inter text-base sm:text-lg font-semibold transition-all group overflow-hidden transform hover:scale-[1.02] active:scale-[0.98] ${
                         activeStep === processSteps.length - 1
                           ? "bg-gray-800 text-gray-600 cursor-not-allowed"
                           : "text-black bg-gradient-to-r from-gold via-yellow-200 to-gold hover:from-yellow-200 hover:via-gold hover:to-yellow-200 shadow-lg hover:shadow-gold/25"
@@ -178,7 +178,7 @@ const Process = () => {
         </div>
 
         {/* Mobile: Accordion Style */}
-        <div className="lg:hidden space-y-4 m-12">
+        <div className="lg:hidden space-y-4 mt-12">
           {processSteps.map((step, index) => (
             <motion.div
               key={index}

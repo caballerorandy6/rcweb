@@ -94,7 +94,7 @@ const Hero = () => {
           </motion.div>
 
           <motion.p
-            className="mt-8 font-inter text-white/80 text-base"
+            className="mt-8 font-inter text-white/80 text-sm sm:text-base"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{
@@ -110,7 +110,7 @@ const Hero = () => {
 
           {/* Social Proof con animación */}
           <motion.div
-            className="mt-6 flex justify-center gap-12 text-lg font-inter font-semibold text-gold/70"
+            className="mt-6 flex justify-center gap-8 sm:gap-12 text-sm sm:text-base md:text-lg font-inter font-semibold text-gold/70"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{
@@ -141,7 +141,7 @@ const Hero = () => {
           </motion.div>
 
           <motion.div
-            className="mt-10 flex flex-col sm:flex-row gap-4 items-center justify-center gap-x-6"
+            className="mt-10 flex flex-col sm:flex-row gap-4 items-center justify-center"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{
@@ -168,7 +168,7 @@ const Hero = () => {
             >
               <Link
                 href={"#services" as Route}
-                className="relative inline-flex items-center justify-center px-6 py-4 text-lg font-semibold text-black bg-gradient-to-r from-gold via-yellow-200 to-gold hover:from-yellow-200 hover:via-gold hover:to-yellow-200 rounded-xl transition-all duration-300 shadow-lg hover:shadow-gold/25 font-inter group overflow-hidden transform hover:scale-[1.02] active:scale-[0.98]"
+                className="relative inline-flex items-center justify-center px-6 py-4 text-base sm:text-lg font-semibold text-black bg-gradient-to-r from-gold via-yellow-200 to-gold hover:from-yellow-200 hover:via-gold hover:to-yellow-200 rounded-xl transition-all duration-300 shadow-lg hover:shadow-gold/25 font-inter group overflow-hidden transform hover:scale-[1.02] active:scale-[0.98]"
               >
                 <div className="absolute inset-0 bg-white/20 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700 skew-x-12"></div>
                 <span className="relative flex items-center justify-center">

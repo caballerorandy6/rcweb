@@ -7,22 +7,24 @@ export async function getProjectStatsAction(): Promise<
   ActionResult<{ stats: ProjectStats }>
 > {
   try {
-    const [total, pending, completed, awaitingPayment] = await Promise.all([
-      prisma.payment.count(),
-      prisma.payment.count({ where: { projectStatus: "pending" } }),
-      prisma.payment.count({ where: { projectStatus: "completed" } }),
-      prisma.payment.count({
-        where: {
-          projectStatus: "ready_for_payment",
-          secondPaid: false,
-        },
-      }),
-    ]);
+    const [total, pending, inProgress, completed, awaitingPayment] =
+      await Promise.all([
+        prisma.payment.count(),
+        prisma.payment.count({ where: { projectStatus: "pending" } }),
+        prisma.payment.count({ where: { projectStatus: "in_progress" } }),
+        prisma.payment.count({ where: { projectStatus: "completed" } }),
+        prisma.payment.count({
+          where: {
+            projectStatus: "ready_for_payment",
+            secondPaid: false,
+          },
+        }),
+      ]);
 
     return {
       success: true,
       data: {
-        stats: { total, pending, completed, awaitingPayment },
+        stats: { total, pending, inProgress, completed, awaitingPayment },
       },
     };
   } catch (error) {

@@ -73,7 +73,7 @@ export default function ProfileForm({
           {...register("name")}
           type="text"
           id="name"
-          className="w-full px-4 py-3 bg-gray-800 text-white rounded-lg border border-gray-700 focus:outline-none focus:border-gold focus:ring-2 focus:ring-gold/20 transition-all font-inter"
+          className="w-full px-4 py-3 bg-gray-800/50 text-white rounded-lg border border-gray-700/50 focus:outline-none focus:ring-2 focus:ring-gold/50 focus:border-transparent transition-all font-inter"
           placeholder="Your full name"
         />
         <ErrorMessage
@@ -97,7 +97,7 @@ export default function ProfileForm({
           {...register("email")}
           type="email"
           id="email"
-          className="w-full px-4 py-3 bg-gray-800 text-white rounded-lg border border-gray-700 focus:outline-none focus:border-gold focus:ring-2 focus:ring-gold/20 transition-all font-inter"
+          className="w-full px-4 py-3 bg-gray-800/50 text-white rounded-lg border border-gray-700/50 focus:outline-none focus:ring-2 focus:ring-gold/50 focus:border-transparent transition-all font-inter"
           placeholder="your.email@example.com"
         />
         <ErrorMessage
@@ -121,7 +121,7 @@ export default function ProfileForm({
           {...register("phone")}
           type="tel"
           id="phone"
-          className="w-full px-4 py-3 bg-gray-800 text-white rounded-lg border border-gray-700 focus:outline-none focus:border-gold focus:ring-2 focus:ring-gold/20 transition-all font-inter"
+          className="w-full px-4 py-3 bg-gray-800/50 text-white rounded-lg border border-gray-700/50 focus:outline-none focus:ring-2 focus:ring-gold/50 focus:border-transparent transition-all font-inter"
           placeholder="+1 (555) 123-4567"
         />
         <ErrorMessage

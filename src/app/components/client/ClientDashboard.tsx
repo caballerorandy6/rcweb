@@ -42,8 +42,8 @@ export default function ClientDashboard({
   ).length;
 
   return (
-    <div className="min-h-screen bg-gray-900 pt-24 sm:pt-32 pb-8 px-4">
-      <div className="max-w-7xl mx-auto">
+    <div className="min-h-screen bg-gray-900 pt-24 sm:pt-32 pb-8">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header with Logout */}
         <div className="mb-8 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
           <div>

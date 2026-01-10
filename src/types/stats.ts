@@ -8,6 +8,7 @@
 export type ProjectStats = {
   total: number;
   pending: number;
+  inProgress: number;
   completed: number;
   awaitingPayment: number;
 };
@@ -21,4 +22,3 @@ export type NewsletterStats = {
   failed: number;
   pending: number;
 };
-
