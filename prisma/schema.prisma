@@ -181,6 +181,7 @@ model Payment {
   invoices        Invoice[]
   milestones      Milestone[]
   deliverables    Deliverable[]
+  messages        ProjectMessage[]
 
   clientId  String?
   client    Client? @relation(fields: [clientId], references: [id])
@@ -422,4 +423,48 @@ model Deliverable {
   @@index([paymentId])
   @@index([type])
   @@index([createdAt])
+}
+
+model ProjectMessage {
+  id          String   @id @default(uuid())
+  paymentId   String
+  payment     Payment  @relation(fields: [paymentId], references: [id], onDelete: Cascade)
+
+  // Contenido
+  message     String   @db.Text
+  senderType  String   // "client" o "admin"
+  senderEmail String   // Email del remitente
+  senderName  String   // Nombre del remitente
+
+  // Archivos adjuntos (opcional)
+  attachments ProjectMessageAttachment[]
+
+  // Estado
+  isRead      Boolean  @default(false)
+  readAt      DateTime?
+
+  // Timestamps
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@index([paymentId])
+  @@index([senderType])
+  @@index([createdAt])
+  @@index([isRead])
+}
+
+model ProjectMessageAttachment {
+  id        String         @id @default(uuid())
+  messageId String
+  message   ProjectMessage @relation(fields: [messageId], references: [id], onDelete: Cascade)
+
+  fileName  String
+  fileUrl   String
+  blobKey   String?
+  fileSize  Int
+  mimeType  String
+
+  createdAt DateTime @default(now())
+
+  @@index([messageId])
 }

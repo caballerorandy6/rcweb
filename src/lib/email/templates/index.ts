@@ -54,6 +54,16 @@ export {
   type BlogUnsubscribeEmailProps,
 } from "./BlogUnsubscribeEmail";
 
+export {
+  NewClientMessageEmail,
+  type NewClientMessageEmailProps,
+} from "./NewClientMessageEmail";
+
+export {
+  NewAdminMessageEmail,
+  type NewAdminMessageEmailProps,
+} from "./NewAdminMessageEmail";
+
 // Admin email templates (React components)
 export {
   AdminNotificationEmail,

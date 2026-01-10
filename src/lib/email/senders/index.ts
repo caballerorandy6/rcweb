@@ -56,6 +56,16 @@ export {
   type SendBlogUnsubscribeEmailParams,
 } from "./sendBlogUnsubscribeEmail";
 
+export {
+  sendNewClientMessageEmail,
+  type SendNewClientMessageEmailParams,
+} from "./sendNewClientMessageEmail";
+
+export {
+  sendNewAdminMessageEmail,
+  type SendNewAdminMessageEmailParams,
+} from "./sendNewAdminMessageEmail";
+
 // Admin email senders
 export {
   sendAdminSubscriptionNotification,
