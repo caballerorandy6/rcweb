@@ -52,7 +52,7 @@ export async function updateProjectStatusAction(
       return { success: true };
     }
 
-    if (!payment.firstPaid && status !== "pending") {
+    if (!payment.firstPaid && payment.projectStatus !== "pending") {
       return {
         success: false,
         error: "Cannot change status: first payment must be completed before starting project",
