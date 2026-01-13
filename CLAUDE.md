@@ -224,6 +224,14 @@ MDX en /content/blog → Renderizado con gray-matter
 
 ## Reglas para Claude
 
+### Principio General
+- Revisar con la mayor profundidad posible siguiendo siempre las mejores prácticas
+- NUNCA forzar cambios innecesarios
+- Mantener siempre el código simple y legible según las necesidades
+- Si algo funciona bien, no cambiarlo solo por "mejorar"
+- `sr` → solo responde (sin ejecutar herramientas)
+- `rv` → revisa y responde (sin modificar código)
+
 ### Código
 - Siempre TypeScript, nunca JavaScript
 - Server Components por defecto
@@ -346,7 +354,10 @@ UPSTASH_REDIS_REST_URL=
 UPSTASH_REDIS_REST_TOKEN=
 
 # URLs
-NEXT_PUBLIC_SITE_URL=https://rcweb.dev
+NEXT_PUBLIC_BASE_URL=https://rcweb.dev
+
+# Admin
+ADMIN_EMAIL=
 ```
 
 ---

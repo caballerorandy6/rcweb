@@ -1,21 +1,21 @@
 "use server";
 
 import { prisma } from "@/lib/prisma";
-import { requireClient } from "@/lib/authGuard";
-import type { ClientMessage } from "@/types/message";
+import { requireAdmin } from "@/lib/authGuard";
+import type { AdminMessage } from "@/types/message";
 import type { ActionResult } from "@/types/common";
 
-export async function getProjectMessagesAction(
-  projectCode: string
-): Promise<ActionResult<{ messages: ClientMessage[] }>> {
-  const client = await requireClient();
+export async function getAdminMessagesAction(
+  paymentId: string
+): Promise<ActionResult<{ messages: AdminMessage[] }>> {
+  const admin = await requireAdmin();
 
-  if (!client.authorized) {
-    return { success: false, error: client.error };
+  if (!admin.authorized) {
+    return { success: false, error: admin.error };
   }
 
   const payment = await prisma.payment.findFirst({
-    where: { projectCode: projectCode.toUpperCase(), clientId: client.userId },
+    where: { id: paymentId },
   });
 
   if (!payment) {
@@ -28,8 +28,17 @@ export async function getProjectMessagesAction(
     orderBy: { createdAt: "asc" },
   });
 
-  const mappedMessages: ClientMessage[] = messages.map((m) => ({
+  const unreadCount = messages.filter(
+    (m) => m.senderType === "client" && !m.isRead
+  ).length;
+
+  const mappedMessages: AdminMessage[] = messages.map((m) => ({
     id: m.id,
+    paymentId: m.paymentId,
+    projectCode: payment.projectCode,
+    planName: payment.planName,
+    clientName: payment.name,
+    clientEmail: payment.email,
     message: m.message,
     senderType: m.senderType as "client" | "admin",
     senderName: m.senderName,
@@ -45,11 +54,12 @@ export async function getProjectMessagesAction(
       fileSize: att.fileSize,
       mimeType: att.mimeType,
     })),
+    unreadCount,
   }));
 
-  // Marcar mensajes del admin como leídos
+  // Marcar mensajes del cliente como leídos
   const unreadIds = messages
-    .filter((m) => m.senderType === "admin" && !m.isRead)
+    .filter((m) => m.senderType === "client" && !m.isRead)
     .map((m) => m.id);
 
   if (unreadIds.length > 0) {

@@ -12,6 +12,7 @@ import {
 import type { ClientProject } from "@/types/client";
 import SignOutButton from "@/app/components/ui/SignOutButton";
 import ClientDeliverables from "./ClientDeliverables";
+import ClientMessages from "./ClientMessages";
 
 interface ClientDashboardProps {
   clientName: string;
@@ -317,6 +318,12 @@ export default function ClientDashboard({
                     <ClientDeliverables
                       deliverables={selectedProject.deliverables}
                       projectCode={selectedProject.projectCode}
+                    />
+
+                    {/* Messages */}
+                    <ClientMessages
+                      projectCode={selectedProject.projectCode}
+                      paymentId={selectedProject.id}
                     />
 
                     {/* Invoices */}

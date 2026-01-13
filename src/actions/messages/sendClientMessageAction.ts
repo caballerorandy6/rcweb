@@ -74,7 +74,7 @@ export async function sendClientMessageAction(
   const clientEmail = payment.email;
   const adminEmail = process.env.ADMIN_EMAIL;
   const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "https://rcweb.dev";
-  const adminPanelUrl = `${baseUrl}/admin/projects/${projectCode}`;
+  const adminPanelUrl = `${baseUrl}/admin/projects`;
 
   if (!adminEmail) {
     return {

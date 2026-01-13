@@ -9,11 +9,12 @@ import { getMilestonesAction } from "@/actions/milestones/getMilestonesAction";
 import { getAdminDeliverablesAction } from "@/actions/deliverables/getAdminDeliverablesAction";
 import MilestoneManager from "./MilestoneManager";
 import AdminDeliverables from "./AdminDeliverables";
+import AdminMessages from "./AdminMessages";
 import { Milestone } from "@/types/milestone";
 import type { AdminDeliverable } from "@/types/deliverable";
 import { AdminProject, ProjectStatus } from "@/types/project";
 import { ProjectStats } from "@/types/stats";
-import { FlagIcon, FolderIcon } from "@heroicons/react/24/outline";
+import { FlagIcon, FolderIcon, ChatBubbleLeftRightIcon } from "@heroicons/react/24/outline";
 
 type ProjectManagementProps = {
   initialProjects: AdminProject[];
@@ -40,6 +41,14 @@ export default function ProjectManagement({
     planName: string;
     clientName: string;
     deliverables: AdminDeliverable[];
+  } | null>(null);
+
+  const [selectedMessages, setSelectedMessages] = useState<{
+    paymentId: string;
+    projectCode: string;
+    planName: string;
+    clientName: string;
+    clientEmail: string;
   } | null>(null);
 
   const handleOpenMilestones = async (project: AdminProject) => {
@@ -70,6 +79,16 @@ export default function ProjectManagement({
     } else if (!result.success) {
       toast.error(result.error || "Failed to load deliverables");
     }
+  };
+
+  const handleOpenMessages = (project: AdminProject) => {
+    setSelectedMessages({
+      paymentId: project.id,
+      projectCode: project.projectCode,
+      planName: project.planName,
+      clientName: project.name,
+      clientEmail: project.email,
+    });
   };
 
   const loadData = async () => {
@@ -339,6 +358,20 @@ export default function ProjectManagement({
                           </div>
                         </div>
                       </div>
+                      <div className="relative group">
+                        <button
+                          onClick={() => handleOpenMessages(project)}
+                          className="p-2 bg-blue-500/20 text-blue-400 rounded-lg hover:bg-blue-500/30 border border-blue-500/30 hover:border-blue-500/50 transition-all duration-200"
+                        >
+                          <ChatBubbleLeftRightIcon className="w-4 h-4" />
+                        </button>
+                        <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-2 py-1 bg-gray-900 text-white text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none whitespace-nowrap z-10 border border-gray-700">
+                          Messages
+                          <div className="absolute top-full left-1/2 -translate-x-1/2 -mt-px">
+                            <div className="border-4 border-transparent border-t-gray-900"></div>
+                          </div>
+                        </div>
+                      </div>
                       {getNextStatus(
                         project.projectStatus,
                         project.secondPaid
@@ -411,6 +444,17 @@ export default function ProjectManagement({
           initialDeliverables={selectedDeliverables.deliverables}
           onClose={() => setSelectedDeliverables(null)}
           onRefresh={loadData}
+        />
+      )}
+
+      {selectedMessages && (
+        <AdminMessages
+          paymentId={selectedMessages.paymentId}
+          projectCode={selectedMessages.projectCode}
+          planName={selectedMessages.planName}
+          clientName={selectedMessages.clientName}
+          clientEmail={selectedMessages.clientEmail}
+          onClose={() => setSelectedMessages(null)}
         />
       )}
     </div>
