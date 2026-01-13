@@ -120,7 +120,7 @@ export default function Footer() {
                   Ready to start your project?
                 </p>
                 <p className="text-white/40 font-inter text-xs">
-                  Available for freelance opportunities
+                  Let&apos;s discuss your project
                 </p>
 
                 {/* Estado de disponibilidad */}
@@ -130,7 +130,7 @@ export default function Footer() {
                     <span className="relative inline-flex rounded-full h-2 w-2 bg-green-500" />
                   </span>
                   <span className="text-green-400 font-inter text-xs font-medium">
-                    Available Now
+                    Taking New Projects
                   </span>
                 </div>
               </div>
