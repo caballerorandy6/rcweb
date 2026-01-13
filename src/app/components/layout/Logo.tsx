@@ -1,22 +1,13 @@
 import Link from "next/link";
 
-//import Image from "next/image";
 interface LogoProps {
   className?: string;
+  onClick?: () => void;
 }
 
-const Logo = ({ className }: LogoProps) => {
+const Logo = ({ className, onClick }: LogoProps) => {
   return (
-    // <Image
-    //   src="/logo.avif"
-    //   alt="logo"
-    //   width={400} // un ancho realista
-    //   height={200}
-    //   className="mx-auto h-auto w-auto max-w-[60%] sm:max-w-[50%] md:max-w-[40%] lg:max-w-[30%]"
-    //   priority
-    // />
-
-    <Link href="/">
+    <Link href="/" onClick={onClick}>
       <svg
         width="300"
         height="100"

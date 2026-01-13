@@ -147,7 +147,7 @@ const Navbar = () => {
             {/* Tablet/Large Screen Compact Menu */}
             <div className="hidden lg:flex 2xl:hidden items-center gap-x-4">
               {/* Show only key items */}
-              {["Services", "Projects", "Pricing"].map((itemName) => {
+              {["Services", "Projects", "Pricing", "Blog", "About"].map((itemName) => {
                 const item = navigation.find((n) => n.name === itemName);
                 if (!item) return null;
                 const isActive = activeSection === item.name;
@@ -241,7 +241,7 @@ const Navbar = () => {
                 <div className="flex h-full flex-col bg-gradient-to-b from-gray-900 via-gray-900 to-gray-950 backdrop-blur-xl shadow-2xl border-l border-gold/10">
                   {/* Header */}
                   <div className="flex items-center justify-between px-6 py-5 border-b border-gold/20 bg-gold/5">
-                    <Logo className="w-32 h-auto" />
+                    <Logo className="w-32 h-auto" onClick={handleClickModal} />
                     <button
                       type="button"
                       onClick={() => setIsOpen(false)}
@@ -320,7 +320,7 @@ const Navbar = () => {
                   {/* Footer Info */}
                   <div className="border-t border-gold/20 px-6 py-5 bg-gold/5">
                     <p className="text-sm font-inter text-white/60 text-center">
-                      Available for freelance projects
+                      Your Digital Partner
                     </p>
                   </div>
                 </div>

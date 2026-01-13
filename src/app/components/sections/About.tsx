@@ -85,9 +85,9 @@ const About = () => {
         <div className="mx-auto max-w-7xl px-6 lg:px-8">
           <Heading
             icon={<UserPlusIcon className="w-8 text-gold" />}
-            text="Who I Am and What I Do"
+            text="The Developer Behind RC Web Solutions"
           >
-            About Me
+            Meet the Founder
           </Heading>
 
           <div className="mt-16 grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center">
