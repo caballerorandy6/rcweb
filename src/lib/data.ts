@@ -44,6 +44,7 @@ export const navigation: NavigationProps[] = [
   { name: "Projects", hash: "/#projects" },
   { name: "Pricing", hash: "/#pricing" },
   { name: "Blog", hash: "/blog" },
+  { name: "About", hash: "/about" },
   { name: "Contact", hash: "/#contact" },
   { name: "CTA", hash: "/#cta" }, // Hidden, used for scroll behavior
 ];
@@ -56,9 +57,7 @@ export const secondaryNavigation: NavigationProps[] = [
 
 // Footer-only navigation
 export const footerNavigation: NavigationProps[] = [
-  { name: "About", hash: "/#about" },
-  { name: "Experience", hash: "/#experience" },
-  { name: "Certifications", hash: "/#certifications" },
+  { name: "About", hash: "/about" },
   { name: "Testimonials", hash: "/#testimonials" },
   { name: "Schedule", hash: "/schedule" },
 ];
