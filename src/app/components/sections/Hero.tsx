@@ -77,7 +77,7 @@ const Hero = () => {
               delay: 0.1,
             }}
           >
-            Randy Caballero
+            RC Web Solutions
           </motion.h1>
 
           <motion.div
@@ -90,7 +90,7 @@ const Hero = () => {
               delay: 0.2,
             }}
           >
-            <CustomBadge>Available for Projects</CustomBadge>
+            <CustomBadge>Your Digital Partner</CustomBadge>
           </motion.div>
 
           <motion.p
@@ -104,8 +104,8 @@ const Hero = () => {
               delay: 0.3,
             }}
           >
-            Full-Stack Developer specializing in Next.js with 5+ years creating
-            digital solutions for businesses.
+            We build high-performance websites and web applications that help
+            businesses grow online.
           </motion.p>
 
           {/* Social Proof con animación */}
@@ -200,31 +200,6 @@ const Hero = () => {
               </Link>
             </motion.div>
 
-            <motion.div
-              whileHover={{
-                scale: 1.05,
-                transition: { type: "spring", stiffness: 400, damping: 17 },
-              }}
-              whileTap={{ scale: 0.95 }}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{
-                type: "spring",
-                stiffness: 200,
-                damping: 20,
-                delay: 0.65,
-              }}
-            >
-              <a
-                href="/resume.pdf"
-                download="Randy Caballero - Resume.pdf"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center justify-center gap-2 px-6 py-3 text-sm sm:text-base font-inter font-semibold text-gold border-2 border-gold/50 hover:bg-gold/10 hover:border-gold/60 rounded-lg transition-all duration-200"
-              >
-                Download CV
-              </a>
-            </motion.div>
           </motion.div>
 
           {/* Quick Contact Options */}

@@ -174,12 +174,25 @@ const About = () => {
               {/* Texto de ubicación debajo de la foto */}
               <div className="text-center lg:text-right mt-6 space-y-1">
                 <p className="text-gold font-inter text-sm font-semibold">
-                  Based in Houston, TX 🤠
+                  Based in Houston, TX
                 </p>
                 <p className="text-gray-400 font-inter text-xs">
                   Serving clients nationwide
                 </p>
               </div>
+
+              {/* Download CV Button */}
+              <motion.a
+                href="/resume.pdf"
+                download="Randy Caballero - Resume.pdf"
+                target="_blank"
+                rel="noopener noreferrer"
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                className="mt-6 inline-flex items-center justify-center gap-2 px-6 py-3 text-sm sm:text-base font-inter font-semibold text-gold border-2 border-gold/50 hover:bg-gold/10 hover:border-gold/60 rounded-lg transition-all duration-200"
+              >
+                Download CV
+              </motion.a>
             </motion.div>
           </div>
         </div>

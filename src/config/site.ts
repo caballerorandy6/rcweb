@@ -20,7 +20,7 @@ export const siteConfig: SiteConfig = {
   siteNameShort: "RC Web Solutions",
   defaultOgImg: "/og-image.jpg",
   description:
-    "Professional full-stack web development services by Randy Caballero. Custom websites, web applications, and scalable digital solutions built with Next.js, React, and modern technologies.",
+    "RC Web Solutions builds high-performance websites and web applications for businesses. Custom digital solutions with Next.js, React, and modern technologies.",
   author: {
     name: "Randy Caballero",
     email: "contactus@rcweb.dev",
