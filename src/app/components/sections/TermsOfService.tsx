@@ -404,11 +404,19 @@ const TermsOfService = () => {
                 </p>
 
                 <h3 className="text-xl font-semibold text-gold/90 font-iceland mt-6 mb-3">
-                  7.2 Completed Work
+                  7.2 Completed Work (Work for Hire)
                 </h3>
+                <div className="bg-gold/10 border border-gold/30 rounded-lg p-4 mb-4">
+                  <p className="text-white/90 font-semibold font-inter">
+                    All custom code, designs, and creative works produced by RC Web
+                    Solutions LLC specifically for your project are considered
+                    &ldquo;work made for hire&rdquo; under U.S. Copyright Law (17 U.S.C.
+                    &sect; 101). Upon full payment, all rights, title, and interest in
+                    such work shall transfer to the Client.
+                  </p>
+                </div>
                 <p className="text-white/80 leading-relaxed font-inter mb-3">
-                  Upon full payment, you will own the custom code and designs
-                  created specifically for your project. However:
+                  This transfer of ownership is subject to the following conditions:
                 </p>
                 <ul className="space-y-2 text-white/80 font-inter list-disc list-inside">
                   <li>
@@ -422,6 +430,38 @@ const TermsOfService = () => {
                   <li>
                     Reusable components and generic code patterns may be used in
                     future projects
+                  </li>
+                </ul>
+
+                <h3 className="text-xl font-semibold text-gold/90 font-iceland mt-6 mb-3">
+                  7.3 Third-Party Licenses
+                </h3>
+                <p className="text-white/80 leading-relaxed font-inter mb-3">
+                  Our work may incorporate third-party libraries, frameworks,
+                  plugins, fonts, or other resources under various open-source or
+                  commercial licenses. The Client acknowledges and agrees:
+                </p>
+                <ul className="space-y-2 text-white/80 font-inter list-disc list-inside">
+                  <li>
+                    <strong className="text-gold">License Compliance:</strong> The
+                    Client is responsible for complying with all third-party license
+                    terms after project delivery
+                  </li>
+                  <li>
+                    <strong className="text-gold">Documentation:</strong> Upon
+                    request, we will provide a list of major third-party dependencies
+                    and their license types
+                  </li>
+                  <li>
+                    <strong className="text-gold">Commercial Licenses:</strong> If
+                    your project requires commercial licenses for fonts, images, or
+                    premium plugins, these costs are the responsibility of the Client
+                    unless otherwise agreed in writing
+                  </li>
+                  <li>
+                    <strong className="text-gold">No Warranty:</strong> We are not
+                    liable for any issues arising from changes to third-party license
+                    terms after project delivery
                   </li>
                 </ul>
               </section>
@@ -605,8 +645,12 @@ const TermsOfService = () => {
               {/* Deliverable Acceptance */}
               <section className="pt-8 border-t border-gold/20">
                 <h2 className="text-2xl font-bold text-gold font-iceland mb-4">
-                  13. Deliverable Acceptance
+                  13. Deliverable Acceptance and Revisions
                 </h2>
+
+                <h3 className="text-xl font-semibold text-gold/90 font-iceland mt-6 mb-3">
+                  13.1 Review Period
+                </h3>
                 <p className="text-white/80 leading-relaxed font-inter mb-4">
                   Upon delivery of each milestone or final deliverable, the Client has
                   <strong className="text-gold"> seven (7) business days</strong> to review
@@ -623,6 +667,39 @@ const TermsOfService = () => {
                   approvals, and final project delivery. We encourage timely
                   communication to ensure your project meets expectations.
                 </p>
+
+                <h3 className="text-xl font-semibold text-gold/90 font-iceland mt-6 mb-3">
+                  13.2 Revision Rounds
+                </h3>
+                <p className="text-white/80 leading-relaxed font-inter mb-4">
+                  Each project includes a limited number of revision rounds to ensure
+                  efficient project completion:
+                </p>
+                <ul className="space-y-2 text-white/80 font-inter list-disc list-inside mb-4">
+                  <li>
+                    <strong className="text-gold">Design Phase:</strong>{" "}
+                    Up to 2 rounds of revisions for mockups and visual design
+                  </li>
+                  <li>
+                    <strong className="text-gold">Development Phase:</strong>{" "}
+                    Up to 2 rounds of revisions for functionality and content
+                  </li>
+                  <li>
+                    <strong className="text-gold">Final Review:</strong>{" "}
+                    1 final round for minor adjustments before launch
+                  </li>
+                </ul>
+                <div className="bg-gold/10 border border-gold/30 rounded-lg p-4">
+                  <p className="text-white/90 font-semibold font-inter mb-2">
+                    Additional Revisions:
+                  </p>
+                  <p className="text-white/80 font-inter">
+                    Revisions beyond the included rounds, or changes outside the
+                    original project scope, will be billed at our hourly rate of
+                    <strong className="text-gold"> $75/hour</strong>. We will notify
+                    you before any additional charges are incurred.
+                  </p>
+                </div>
               </section>
 
               {/* Client Delays and Project Abandonment */}

@@ -188,7 +188,7 @@ export default function PrivacyPolicy() {
                   </li>
                   <li>
                     <strong className="text-gold">Country</strong> refers to:
-                    Texas, United States
+                    United States (State of Texas)
                   </li>
                   <li>
                     <strong className="text-gold">Data Controller</strong>, for
@@ -643,6 +643,80 @@ export default function PrivacyPolicy() {
                 </ul>
               </section>
 
+              {/* Data Retention */}
+              <section className="pt-8 border-t border-gold/20">
+                <h2 className="text-2xl font-bold text-gold font-iceland mb-4">
+                  Data Retention
+                </h2>
+                <p className="text-white/80 leading-relaxed font-inter mb-4">
+                  We retain Your Personal Data only for as long as necessary to fulfill
+                  the purposes outlined in this Privacy Policy. Specifically:
+                </p>
+                <ul className="space-y-2 text-white/80 font-inter list-disc list-inside mb-4">
+                  <li>
+                    <strong className="text-gold">Client Project Data:</strong>{" "}
+                    Retained for 3 years after project completion for warranty, support,
+                    and legal compliance purposes
+                  </li>
+                  <li>
+                    <strong className="text-gold">Payment Records:</strong>{" "}
+                    Retained for 7 years as required by tax and accounting regulations
+                  </li>
+                  <li>
+                    <strong className="text-gold">Marketing Data:</strong>{" "}
+                    Retained until You opt-out or request deletion
+                  </li>
+                  <li>
+                    <strong className="text-gold">Website Usage Data:</strong>{" "}
+                    Retained for 26 months (Google Analytics default)
+                  </li>
+                  <li>
+                    <strong className="text-gold">SMS Consent Records:</strong>{" "}
+                    Retained for 4 years after last interaction as required by TCPA
+                  </li>
+                </ul>
+                <p className="text-white/80 leading-relaxed font-inter">
+                  After the retention period expires, Your data will be securely deleted
+                  or anonymized, unless a longer retention period is required by law.
+                </p>
+              </section>
+
+              {/* International Data Transfers */}
+              <section className="pt-8 border-t border-gold/20">
+                <h2 className="text-2xl font-bold text-gold font-iceland mb-4">
+                  International Data Transfers
+                </h2>
+                <p className="text-white/80 leading-relaxed font-inter mb-4">
+                  Your information, including Personal Data, may be transferred to and
+                  maintained on servers located outside of Your state, province, country,
+                  or other governmental jurisdiction where data protection laws may differ
+                  from those in Your jurisdiction.
+                </p>
+                <p className="text-white/80 leading-relaxed font-inter mb-4">
+                  We use third-party service providers based in the United States,
+                  including:
+                </p>
+                <ul className="space-y-2 text-white/80 font-inter list-disc list-inside mb-4">
+                  <li>Stripe (payment processing) - USA/EU</li>
+                  <li>Twilio (SMS services) - USA</li>
+                  <li>Resend (email services) - USA</li>
+                  <li>Google (analytics) - USA/Global</li>
+                  <li>Vercel (hosting) - USA/Global</li>
+                </ul>
+                <p className="text-white/80 leading-relaxed font-inter mb-4">
+                  These providers comply with applicable data protection frameworks and
+                  implement appropriate safeguards for international transfers, including
+                  Standard Contractual Clauses (SCCs) where applicable.
+                </p>
+                <div className="bg-gold/10 border border-gold/30 rounded-lg p-4">
+                  <p className="text-white/90 font-semibold font-inter">
+                    Note: RC Web Solutions LLC does not actively target or market services
+                    to residents of the European Union. Our primary market is the United States,
+                    specifically small businesses in the Houston, Texas area.
+                  </p>
+                </div>
+              </section>
+
               {/* Service Providers */}
               <section className="pt-8 border-t border-gold/20">
                 <h2 className="text-2xl font-bold text-gold font-iceland mb-4">
@@ -756,6 +830,79 @@ export default function PrivacyPolicy() {
                 </div>
               </section>
 
+              {/* Cookies and Tracking Technologies */}
+              <section className="pt-8 border-t border-gold/20">
+                <h2 className="text-2xl font-bold text-gold font-iceland mb-4">
+                  Cookies and Tracking Technologies
+                </h2>
+                <p className="text-white/80 leading-relaxed font-inter mb-4">
+                  We use cookies and similar tracking technologies to track activity on
+                  Our Service and store certain information. The technologies We use include:
+                </p>
+
+                <h3 className="text-xl font-semibold text-gold/90 font-iceland mt-6 mb-3">
+                  Types of Cookies We Use
+                </h3>
+                <ul className="space-y-3 text-white/80 font-inter list-disc list-inside mb-4">
+                  <li>
+                    <strong className="text-gold">Essential Cookies:</strong>{" "}
+                    Required for the website to function properly (authentication,
+                    security, session management)
+                  </li>
+                  <li>
+                    <strong className="text-gold">Analytics Cookies:</strong>{" "}
+                    Google Analytics cookies (_ga, _gid, _gat) to understand how visitors
+                    interact with our website
+                  </li>
+                  <li>
+                    <strong className="text-gold">Advertising Cookies:</strong>{" "}
+                    Used by Google Ads and Facebook Pixel to measure ad performance and
+                    deliver relevant advertisements
+                  </li>
+                  <li>
+                    <strong className="text-gold">Preference Cookies:</strong>{" "}
+                    Remember Your preferences and settings for future visits
+                  </li>
+                </ul>
+
+                <h3 className="text-xl font-semibold text-gold/90 font-iceland mt-6 mb-3">
+                  Third-Party Cookies
+                </h3>
+                <p className="text-white/80 leading-relaxed font-inter mb-3">
+                  The following third parties may place cookies on Your device:
+                </p>
+                <ul className="space-y-2 text-white/80 font-inter list-disc list-inside mb-4">
+                  <li>Google Analytics - Website traffic analysis</li>
+                  <li>Google Ads - Conversion tracking and remarketing</li>
+                  <li>Meta (Facebook) Pixel - Ad conversion tracking</li>
+                  <li>Stripe - Secure payment processing</li>
+                </ul>
+
+                <h3 className="text-xl font-semibold text-gold/90 font-iceland mt-6 mb-3">
+                  Managing Cookies
+                </h3>
+                <p className="text-white/80 leading-relaxed font-inter mb-3">
+                  You can control and manage cookies in several ways:
+                </p>
+                <ul className="space-y-2 text-white/80 font-inter list-disc list-inside">
+                  <li>
+                    <strong className="text-gold">Browser Settings:</strong>{" "}
+                    Most browsers allow You to refuse or delete cookies through their settings
+                  </li>
+                  <li>
+                    <strong className="text-gold">Google Analytics Opt-Out:</strong>{" "}
+                    Install the Google Analytics Opt-out Browser Add-on
+                  </li>
+                  <li>
+                    <strong className="text-gold">Ad Personalization:</strong>{" "}
+                    Opt out at aboutads.info or networkadvertising.org
+                  </li>
+                </ul>
+                <p className="text-white/80 leading-relaxed font-inter mt-4">
+                  Note: Disabling cookies may affect the functionality of our website.
+                </p>
+              </section>
+
               {/* GDPR Privacy */}
               <section className="pt-8 border-t border-gold/20">
                 <h2 className="text-2xl font-bold text-gold font-iceland mb-4">
@@ -837,6 +984,41 @@ export default function PrivacyPolicy() {
                   <li>The right to delete Personal Data</li>
                   <li>The right not to be discriminated against</li>
                 </ul>
+
+                <h3 className="text-xl font-semibold text-gold/90 font-iceland mt-6 mb-3">
+                  Exercising Your CCPA/CPRA Rights
+                </h3>
+                <p className="text-white/80 leading-relaxed font-inter mb-3">
+                  To exercise any of Your rights under the CCPA/CPRA, You may
+                  contact Us using the contact information provided at the
+                  bottom of this Privacy Policy.
+                </p>
+                <div className="bg-gold/10 border border-gold/30 rounded-lg p-4 mb-4">
+                  <p className="text-white/90 font-semibold font-inter mb-2">
+                    Response Timeframe:
+                  </p>
+                  <p className="text-white/80 font-inter">
+                    Upon receiving Your request, We will respond within{" "}
+                    <strong className="text-gold">45 calendar days</strong>. If
+                    We require more time (up to an additional 45 days), We will
+                    inform You of the reason and extension period in writing.
+                  </p>
+                </div>
+                <p className="text-white/80 leading-relaxed font-inter mb-3">
+                  <strong className="text-gold">Identity Verification:</strong>{" "}
+                  To protect Your privacy and security, We may ask You to verify
+                  Your identity before responding to Your request. We will match
+                  the identifying information You provide with the information
+                  We have on file. If We cannot verify Your identity, We may
+                  request additional information.
+                </p>
+                <p className="text-white/80 leading-relaxed font-inter">
+                  <strong className="text-gold">Authorized Agents:</strong> You
+                  may designate an authorized agent to make requests on Your
+                  behalf. To do so, You must provide the agent with written
+                  permission, and We may require proof of the agent&apos;s
+                  authority and identity.
+                </p>
               </section>
 
               {/* Children's Privacy */}
