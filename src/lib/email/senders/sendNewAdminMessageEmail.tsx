@@ -34,7 +34,7 @@ export async function sendNewAdminMessageEmail(
     );
 
     const result = await sendEmailWithQuota({
-      from: "RC Web <no-reply@rcweb.dev>",
+      from: "RC Web Solutions <no-reply@rcweb.dev>",
       to: customerEmail,
       subject: `Update on Your Project ${projectCode} - RC Web Solutions`,
       html,

@@ -22,7 +22,7 @@ export async function sendFinalPaymentEmail(
     const paymentUrl = `${process.env.NEXT_PUBLIC_BASE_URL}/pay/${payment.accessToken}`;
 
     await resend.emails.send({
-      from: "RC Web <no-reply@rcweb.dev>",
+      from: "RC Web Solutions <no-reply@rcweb.dev>",
       to: payment.email,
       subject: `🎉 Project Complete - ${payment.planName} Website Ready!`,
       html: `

@@ -109,7 +109,7 @@ export default async function ProjectPage(props: { params: Params }) {
           <p className="text-gray-500 text-sm font-inter mx-auto">
             Questions about your project?{" "}
             <a
-              href="mailto:contact@rcwebsolutionsllc.com"
+              href="mailto:contactus@rcweb.dev"
               className="text-gold hover:underline"
             >
               Contact us

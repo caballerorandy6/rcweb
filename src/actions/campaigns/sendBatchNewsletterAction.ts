@@ -97,7 +97,7 @@ export const createAndSendBatchCampaign = async (
     // Create list of all emails to send
     const allEmailsToSend = contactsWithEmail.flatMap((contact) =>
       contact.emails.map((email) => ({
-        from: "RC Web <no-reply@rcweb.dev>",
+        from: "RC Web Solutions <no-reply@rcweb.dev>",
         to: email.email,
         subject: subject,
         html: htmlContent,
@@ -394,7 +394,7 @@ export const continueBatchCampaign = async (
     // Create list of all current emails
     const allCurrentEmails = contactsWithEmail.flatMap((contact) =>
       contact.emails.map((email) => ({
-        from: "RC Web <no-reply@rcweb.dev>",
+        from: "RC Web Solutions <no-reply@rcweb.dev>",
         to: email.email,
         subject: campaign.subject,
         html: campaign.htmlContent,

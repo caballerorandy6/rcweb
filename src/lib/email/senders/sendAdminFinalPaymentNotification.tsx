@@ -42,7 +42,7 @@ export async function sendAdminFinalPaymentNotification(
     );
 
     await resend.emails.send({
-      from: "RC Web <no-reply@rcweb.dev>",
+      from: "RC Web Solutions <no-reply@rcweb.dev>",
       to: ADMIN_EMAIL,
       subject: `Final Payment Received - ${planName} - ${projectCode}`,
       html,

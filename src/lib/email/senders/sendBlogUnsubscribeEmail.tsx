@@ -24,7 +24,7 @@ export async function sendBlogUnsubscribeEmail(
     );
 
     const result = await sendEmailWithQuota({
-      from: "RC Web <no-reply@rcweb.dev>",
+      from: "RC Web Solutions <no-reply@rcweb.dev>",
       to: customerEmail,
       subject: "Successfully Unsubscribed - RC Web Solutions Blog",
       html,

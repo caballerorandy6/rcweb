@@ -47,7 +47,7 @@ export const sendNewsletterAction = async (
     // Esto crea un objeto por CADA email, no por cada contacto.
     const emailsToSend = contactsWithEmail.flatMap((contact) =>
       contact.emails.map((email) => ({
-        from: "RC Web <no-reply@rcweb.dev>",
+        from: "RC Web Solutions <no-reply@rcweb.dev>",
         to: email.email,
         subject: subject.replace(/{{name}}/g, contact.name), // Personalizar también el asunto
         html: htmlContent.replace(/{{name}}/g, contact.name),

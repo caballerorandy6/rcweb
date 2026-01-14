@@ -19,7 +19,7 @@ export async function sendWelcomeEmail(
     );
 
     const result = await sendEmailWithQuota({
-      from: "RC Web <no-reply@rcweb.dev>",
+      from: "RC Web Solutions <no-reply@rcweb.dev>",
       to: customerEmail,
       subject: "Welcome to RC Web Solutions Client Portal",
       html,

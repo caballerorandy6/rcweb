@@ -30,7 +30,7 @@ export async function sendSetupPasswordEmail(
     );
 
     const result = await sendEmailWithQuota({
-      from: "RC Web <no-reply@rcweb.dev>",
+      from: "RC Web Solutions <no-reply@rcweb.dev>",
       to: customerEmail,
       subject: `Complete Your Account Setup - ${customerName}`,
       html,

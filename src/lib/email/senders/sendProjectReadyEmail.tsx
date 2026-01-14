@@ -33,7 +33,7 @@ export async function sendProjectReadyEmail(
     const formattedAmount = (finalAmount / 100).toFixed(2);
 
     await resend.emails.send({
-      from: "RC Web <no-reply@rcweb.dev>",
+      from: "RC Web Solutions <no-reply@rcweb.dev>",
       to: customerEmail,
       subject: `Your ${planName} project is ready! Final payment of $${formattedAmount} required`,
       html,

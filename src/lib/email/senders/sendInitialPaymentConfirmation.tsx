@@ -39,7 +39,7 @@ export async function sendInitialPaymentConfirmation(
     );
 
     await resend.emails.send({
-      from: "RC Web <no-reply@rcweb.dev>",
+      from: "RC Web Solutions <no-reply@rcweb.dev>",
       to: customerEmail,
       subject: `Payment Confirmed - Your Project Code`,
       html,

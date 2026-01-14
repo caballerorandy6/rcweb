@@ -23,7 +23,7 @@ export async function POST(request: NextRequest) {
   try {
     // Send notification email to admin
     const adminEmail = await resend.emails.send({
-      from: "RC Web <no-reply@rcweb.dev>",
+      from: "RC Web Solutions <no-reply@rcweb.dev>",
       to: ["admin@rcweb.dev"],
       subject: `📩 New message from ${name}`,
       html: `
@@ -102,9 +102,9 @@ export async function POST(request: NextRequest) {
 
     // Send auto-reply confirmation email to user
     const userEmail = await resend.emails.send({
-      from: "RC Web Solution <contactus@rcweb.dev>",
+      from: "RC Web Solutions <contactus@rcweb.dev>",
       to: [email],
-      subject: "Got your message! - RC Web Solution",
+      subject: "Got your message! - RC Web Solutions",
       html: `
         <!DOCTYPE html>
         <html>

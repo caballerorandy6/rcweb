@@ -20,7 +20,7 @@ export async function sendResetPasswordEmail(
     );
 
     const result = await sendEmailWithQuota({
-      from: "RC Web <no-reply@rcweb.dev>",
+      from: "RC Web Solutions <no-reply@rcweb.dev>",
       to: customerEmail,
       subject: `Reset Your Password - RC Web Solutions`,
       html,

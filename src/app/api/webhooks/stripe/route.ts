@@ -244,7 +244,7 @@ export async function POST(req: Request) {
         /*
         try {
           await resend.emails.send({
-            from: "RC Web <no-reply@rcweb.dev>",
+            from: "RC Web Solutions <no-reply@rcweb.dev>",
             to: customerEmail,
             subject: `✅ Payment Confirmed - Your Project Code`,
             html: `
@@ -478,7 +478,7 @@ export async function POST(req: Request) {
 
         try {
           await resend.emails.send({
-            from: "RC Web <no-reply@rcweb.dev>",
+            from: "RC Web Solutions <no-reply@rcweb.dev>",
             to: customerEmail,
             subject: `🎉 Project Complete - ${payment.planName} Website Ready!`,
             html: `
@@ -841,7 +841,7 @@ export async function POST(req: Request) {
 
           // Email to admin
           await resend.emails.send({
-            from: "RC Web <no-reply@rcweb.dev>",
+            from: "RC Web Solutions <no-reply@rcweb.dev>",
             to: "admin@rcweb.dev",
             subject: `Payment Failed - ${subscription.email}`,
             html: `
@@ -882,7 +882,7 @@ export async function POST(req: Request) {
       const resend = new Resend(process.env.RESEND_API_KEY!);
 
       await resend.emails.send({
-        from: "RC Web <no-reply@rcweb.dev>",
+        from: "RC Web Solutions <no-reply@rcweb.dev>",
         to: subscription.email,
         subject: "Subscription Cancelled",
         html: `
@@ -895,7 +895,7 @@ export async function POST(req: Request) {
       });
 
       await resend.emails.send({
-        from: "RC Web <no-reply@rcweb.dev>",
+        from: "RC Web Solutions <no-reply@rcweb.dev>",
         to: "admin@rcweb.dev",
         subject: `Subscription Cancelled - ${subscription.email}`,
         html: `

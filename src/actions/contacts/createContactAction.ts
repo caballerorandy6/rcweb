@@ -184,7 +184,7 @@ export const createContactAction = async (
     // 6. Enviar email al admin (el email de confirmación al usuario se envía via n8n)
     try {
       await resend.emails.send({
-          from: "RC Web <no-reply@rcweb.dev>",
+          from: "RC Web Solutions <no-reply@rcweb.dev>",
           to: ["admin@rcweb.dev"],
           subject: `📩 New message from ${safeName}`,
           html: `

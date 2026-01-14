@@ -30,7 +30,7 @@ export async function sendSubscriptionPaymentFailed(
     );
 
     await resend.emails.send({
-      from: "RC Web <no-reply@rcweb.dev>",
+      from: "RC Web Solutions <no-reply@rcweb.dev>",
       to: customerEmail,
       subject: "Payment Failed - Action Required",
       html,

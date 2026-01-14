@@ -45,7 +45,7 @@ export async function sendAdminInitialPaymentNotification(
     );
 
     await resend.emails.send({
-      from: "RC Web <no-reply@rcweb.dev>",
+      from: "RC Web Solutions <no-reply@rcweb.dev>",
       to: ADMIN_EMAIL,
       subject: `New advance payment received - Project ${projectCode}`,
       html,

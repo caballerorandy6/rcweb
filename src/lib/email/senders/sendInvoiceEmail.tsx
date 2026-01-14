@@ -52,7 +52,7 @@ export async function sendInvoiceEmail(
     );
 
     const emailOptions: Parameters<typeof resend.emails.send>[0] = {
-      from: "RC Web <no-reply@rcweb.dev>",
+      from: "RC Web Solutions <no-reply@rcweb.dev>",
       to: customerEmail,
       subject: subjects[type](invoiceNumber),
       html,
