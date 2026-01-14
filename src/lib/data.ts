@@ -459,12 +459,12 @@ export const processSteps = [
     title: "Launch & Support",
     week: "Week 6",
     description:
-      "Production deployment with training and 30 days of included support.",
+      "Production deployment with training and post-launch support (30-180 days depending on plan).",
     details: [
       "Secure deployment",
       "Complete training",
       "Documentation",
-      "30-day support",
+      "Post-launch support included",
     ],
   },
 ];
@@ -539,32 +539,32 @@ export const faqs = [
   {
     question: "Do you work with clients outside USA?",
     answer:
-      "I work with clients worldwide. My projects are fully remote, and I use tools like Zoom and Slack to communicate and collaborate effectively. Payments are easy and secure through Stripe, so you can work with me from anywhere.",
+      "We work with clients worldwide. Our projects are fully remote, and we use tools like Zoom and Slack to communicate and collaborate effectively. Payments are easy and secure through Stripe, so you can work with us from anywhere.",
   },
   {
     question: "How long does a typical project take?",
     answer:
-      "It depends on the scope: Landing pages: 1-2 weeks, Professional websites: 3-4 weeks, Advanced websites: 5-6 weeks, E-commerce: 6-10 weeks, Web applications: 8-12+ weeks. I always provide realistic timelines and meet them.",
+      "It depends on the scope: Landing pages: 1-2 weeks, Professional websites: 3-4 weeks, Admin dashboards: 5-6 weeks, E-commerce: 6-10 weeks, Web applications: 8-12+ weeks. We always provide realistic timelines and meet them.",
   },
   {
     question: "Do you offer post-launch support?",
     answer:
-      "Yes! Support duration varies by project type: Landing pages include 30 days, Professional/Advanced websites include 30-60 days, E-commerce includes 90 days, and Web applications include 6 months. After that, maintenance plans start at $150/month including updates, backups, and priority support.",
+      "Yes! Every project includes complimentary post-launch support. The duration depends on your plan: Landing Pages (30 days), Business Websites (30 days), Website Redesign (45 days), Admin Dashboards (60 days), E-Commerce Websites (90 days), and Custom Web Applications (6 months with priority support). Support covers bug fixes, minor adjustments, and technical assistance. After the included support period, maintenance plans start at $200/month including security updates, performance monitoring, content updates, and priority support.",
   },
   {
     question: "Do you work with technologies besides Next.js?",
     answer:
-      "My specialty is the React/Next.js ecosystem with TypeScript, Node.js, and PostgreSQL - enterprise technology at small business pricing. I also have experience with vanilla JavaScript, and can adapt to project needs. I always recommend the best technology for each case.",
+      "Our specialty is the React/Next.js ecosystem with TypeScript, Node.js, and PostgreSQL - enterprise technology at small business pricing. We also have experience with vanilla JavaScript, and can adapt to project needs. We always recommend the best technology for each case.",
   },
   {
     question: "How does the payment process work?",
     answer:
-      "I use a two-payment structure — 50% upfront to kick off your project and 50% once it's completed and delivered. Payment plans are available for projects over $3,000. You can pay conveniently via Zelle or through Stripe on my website.",
+      "We use a two-payment structure — 50% upfront to kick off your project and 50% once it's completed and delivered. Payment plans are available for projects over $3,000. You can pay conveniently via Zelle or through Stripe on our website.",
   },
   {
     question: "Can I see progress during development?",
     answer:
-      "Absolutely! I provide weekly progress updates and you'll have access to a staging environment where you can see real-time progress. I respond within 24 hours (usually much faster) to any questions or concerns. Transparency is key to my process.",
+      "Absolutely! We provide weekly progress updates and you'll have access to a staging environment where you can see real-time progress. We respond within 24 hours (usually much faster) to any questions or concerns. Transparency is key to our process.",
   },
 ];
 
@@ -634,7 +634,7 @@ export const faqs = [
 export const additionalServices = [
   {
     service: "Monthly Maintenance",
-    price: "$150-$500/month",
+    price: "$200-$500/month",
     description:
       "Security updates, content changes, performance monitoring, priority support",
   },
@@ -656,10 +656,9 @@ export const additionalServices = [
 ];
 
 export const paymentTerms = {
-  upfront: "30%",
-  milestone: "40%",
-  delivery: "30%",
-  description: "Flexible payment terms to ease cash flow for small businesses",
+  upfront: "50%",
+  completion: "50%",
+  description: "Simple two-payment structure: 50% to start, 50% upon completion",
 };
 
 export const pricingPlans = [
@@ -841,7 +840,7 @@ export const deliverables = {
     "30 days of post-launch support",
     "Training session (1 hour)",
   ],
-  "Professional Websites": [
+  "Business Websites": [
     "Complete source code repository",
     "Deployment and configuration",
     "Comprehensive documentation",
@@ -850,17 +849,27 @@ export const deliverables = {
     "Basic SEO setup",
     "Analytics integration",
   ],
-  "Advanced Websites": [
+  "Website Redesign": [
+    "Complete source code repository",
+    "Migration from old platform",
+    "Technical documentation",
+    "45 days of post-launch support",
+    "Training sessions (2 hours)",
+    "SEO preservation & enhancement",
+    "Performance optimization",
+    "Content migration assistance",
+  ],
+  "Admin Dashboards": [
     "Complete source code repository",
     "Multi-environment deployment",
     "Technical documentation",
     "60 days of priority support",
     "Training sessions (3 hours)",
-    "Advanced SEO optimization",
+    "User management setup",
     "Analytics and monitoring setup",
     "Performance optimization",
   ],
-  "Custom E-commerce": [
+  "E-Commerce Websites": [
     "Complete source code repository",
     "Multi-environment deployment",
     "Full technical documentation",

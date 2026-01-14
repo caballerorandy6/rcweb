@@ -154,7 +154,7 @@ export async function POST(request: NextRequest) {
                             <tr>
                               <td style="padding:8px 0;">
                                 <span style="font-size:18px;margin-right:8px;">🌐</span>
-                                <span style="color:#374151;">Check out my portfolio: <a href="https://rcweb.dev" style="color:#7c3aed;text-decoration:none;font-weight:600;">https://rcweb.dev</a></span>
+                                <span style="color:#374151;">Check out our work: <a href="https://rcweb.dev" style="color:#7c3aed;text-decoration:none;font-weight:600;">https://rcweb.dev</a></span>
                               </td>
                             </tr>
                           </table>
@@ -164,7 +164,7 @@ export async function POST(request: NextRequest) {
                         <div style="background:linear-gradient(135deg,#dcfce7 0%,#bbf7d0 100%);border-left:4px solid #22c55e;border-radius:8px;padding:20px;margin-bottom:32px;">
                           <p style="color:#166534;font-weight:600;font-size:16px;margin:0;">
                             <span style="font-size:18px;margin-right:8px;">🟢</span>
-                            Good news: I'm currently available and can start new projects immediately.
+                            Good news: We're currently available and can start new projects immediately.
                           </p>
                         </div>
 

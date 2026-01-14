@@ -102,7 +102,7 @@ export default function PrivacyPolicy() {
             </p>
             <div className="mt-4 flex items-center gap-2 text-gold/70 text-sm">
               <InformationCircleIcon className="w-5 h-5" />
-              <span className="font-inter">Last updated: October 21, 2025</span>
+              <span className="font-inter">Last updated: January 13, 2026</span>
             </div>
           </div>
         </motion.div>
@@ -478,6 +478,66 @@ export default function PrivacyPolicy() {
                   <li>Federal Communications Commission (FCC) regulations</li>
                   <li>State-specific regulations including CCPA/CPRA</li>
                 </ul>
+              </section>
+
+              {/* Client Portal Data */}
+              <section className="pt-8 border-t border-gold/20">
+                <h2 className="text-2xl font-bold text-gold font-iceland mb-4">
+                  Client Portal Data
+                </h2>
+                <p className="text-white/80 leading-relaxed font-inter mb-3">
+                  When You use our Client Portal to track your project, We collect
+                  and store:
+                </p>
+                <ul className="space-y-2 text-white/80 font-inter list-disc list-inside mb-4">
+                  <li>Login credentials and authentication data</li>
+                  <li>Project information and milestone status</li>
+                  <li>Messages exchanged with our team</li>
+                  <li>File uploads and deliverables</li>
+                  <li>Payment history and invoice records</li>
+                  <li>Activity logs and access timestamps</li>
+                </ul>
+                <p className="text-white/80 leading-relaxed font-inter">
+                  This data is used solely to provide You with project visibility,
+                  facilitate communication, and maintain accurate records of our
+                  business relationship.
+                </p>
+              </section>
+
+              {/* AI Tools Disclosure */}
+              <section className="pt-8 border-t border-gold/20">
+                <h2 className="text-2xl font-bold text-gold font-iceland mb-4">
+                  AI Tools and Development Assistance
+                </h2>
+                <p className="text-white/80 leading-relaxed font-inter mb-3">
+                  RC Web Solutions LLC may use artificial intelligence tools to
+                  enhance our development process and service delivery:
+                </p>
+                <ul className="space-y-2 text-white/80 font-inter list-disc list-inside mb-4">
+                  <li>
+                    <strong className="text-gold">Code Development:</strong>{" "}
+                    AI assistants may be used to help write, review, and optimize code
+                  </li>
+                  <li>
+                    <strong className="text-gold">Content Generation:</strong>{" "}
+                    AI may assist in drafting documentation, emails, or initial content
+                  </li>
+                  <li>
+                    <strong className="text-gold">Customer Support:</strong>{" "}
+                    AI chatbots may provide initial responses to inquiries
+                  </li>
+                </ul>
+                <div className="bg-gold/10 border border-gold/30 rounded-lg p-4 mb-4">
+                  <p className="text-white/90 font-semibold font-inter">
+                    Important: We do NOT share your personal data, proprietary business
+                    information, or confidential project details with AI training datasets.
+                  </p>
+                </div>
+                <p className="text-white/80 leading-relaxed font-inter">
+                  All AI-generated content is reviewed and approved by our human team
+                  before delivery. The use of AI tools does not affect our commitment
+                  to quality, security, and confidentiality of your project.
+                </p>
               </section>
 
               {/* Subscription Data */}

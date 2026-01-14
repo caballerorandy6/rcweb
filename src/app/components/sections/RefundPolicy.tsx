@@ -81,7 +81,7 @@ const RefundPolicy = () => {
             </p>
             <p className="mt-4 text-white/90 text-lg leading-relaxed font-inter">
               This policy was last updated on{" "}
-              <strong className="text-gold">October 21, 2025</strong>.
+              <strong className="text-gold">January 13, 2026</strong>.
             </p>
           </div>
         </motion.div>
@@ -367,6 +367,58 @@ const RefundPolicy = () => {
                 </div>
               </section>
 
+              {/* Project Abandonment */}
+              <section className="pt-8 border-t border-gold/20">
+                <h2 className="text-2xl font-bold text-gold font-iceland mb-4">
+                  Project Abandonment
+                </h2>
+                <p className="text-white/80 leading-relaxed font-inter mb-4">
+                  If a Client fails to respond to our communications for 30 consecutive
+                  days without prior notice, the project may be considered abandoned.
+                </p>
+                <div className="bg-red-500/10 border border-red-500/30 rounded-lg p-4 mb-4">
+                  <p className="text-white/90 font-semibold font-inter">
+                    In case of abandonment: All payments made are non-refundable, and
+                    RC Web Solutions LLC has no obligation to complete remaining work.
+                  </p>
+                </div>
+                <p className="text-white/80 leading-relaxed font-inter">
+                  Clients may resume abandoned projects by contacting us, paying any
+                  outstanding balance, and a project reactivation fee (quoted based on
+                  project status and time elapsed).
+                </p>
+              </section>
+
+              {/* Chargebacks */}
+              <section className="pt-8 border-t border-gold/20">
+                <h2 className="text-2xl font-bold text-gold font-iceland mb-4">
+                  Chargebacks and Payment Disputes
+                </h2>
+                <div className="bg-red-500/10 border border-red-500/30 rounded-lg p-4 mb-4">
+                  <p className="text-white/90 font-semibold font-inter">
+                    ⚠️ WARNING: Fraudulent chargebacks will be contested and may result
+                    in legal action.
+                  </p>
+                </div>
+                <p className="text-white/80 leading-relaxed font-inter mb-4">
+                  If you have concerns about charges, please contact us directly before
+                  initiating a chargeback with your bank. We are committed to resolving
+                  issues amicably.
+                </p>
+                <p className="text-white/80 leading-relaxed font-inter mb-3">
+                  In the event of an illegitimate or fraudulent chargeback, RC Web
+                  Solutions LLC reserves the right to:
+                </p>
+                <ul className="space-y-2 text-white/80 font-inter list-disc list-inside">
+                  <li>Immediately suspend or terminate all services</li>
+                  <li>Remove any deployed websites or applications</li>
+                  <li>Contest the chargeback with full documentation</li>
+                  <li>Report the incident to collections agencies</li>
+                  <li>Pursue legal remedies to recover damages and legal fees</li>
+                  <li>Report fraudulent activity to appropriate authorities</li>
+                </ul>
+              </section>
+
               {/* Dispute Resolution */}
               <section className="pt-8 border-t border-gold/20">
                 <h2 className="text-2xl font-bold text-gold font-iceland mb-4">
@@ -392,6 +444,10 @@ const RefundPolicy = () => {
                   <li>
                     All disputes will be handled professionally and in good
                     faith
+                  </li>
+                  <li>
+                    Any unresolved disputes will be subject to the laws of the
+                    State of Texas
                   </li>
                 </ul>
               </section>
@@ -423,7 +479,7 @@ const RefundPolicy = () => {
           <div className="bg-gray-900/60 backdrop-blur-md rounded-xl border border-gold/10 p-6 text-center">
             <div className="flex items-center justify-center gap-2 text-white/50 text-sm font-inter">
               <CalendarIcon className="w-4 h-4" />
-              <span>Last updated: October 21, 2025</span>
+              <span>Last updated: January 13, 2026</span>
             </div>
           </div>
         </motion.div>

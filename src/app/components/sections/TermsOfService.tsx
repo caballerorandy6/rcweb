@@ -164,7 +164,7 @@ const TermsOfService = () => {
             </p>
             <p className="mt-4 text-white/90 text-lg leading-relaxed font-inter">
               This agreement was last updated on{" "}
-              <strong className="text-gold">October 21, 2025</strong>.
+              <strong className="text-gold">January 13, 2026</strong>.
             </p>
           </div>
         </motion.div>
@@ -522,22 +522,50 @@ const TermsOfService = () => {
                 </h2>
 
                 <h3 className="text-xl font-semibold text-gold/90 font-iceland mt-6 mb-3">
-                  11.1 Initial Support
+                  11.1 Post-Launch Support by Plan
                 </h3>
                 <p className="text-white/80 leading-relaxed font-inter mb-4">
-                  We provide 30 days of post-launch support at no additional
-                  cost to address technical issues and bugs related to our work.
+                  Support duration varies by service tier and is included at no additional cost:
                 </p>
+                <ul className="space-y-2 text-white/80 font-inter list-disc list-inside mb-4">
+                  <li><strong className="text-gold">Landing Pages:</strong> 30 days</li>
+                  <li><strong className="text-gold">Business Websites:</strong> 30 days</li>
+                  <li><strong className="text-gold">Website Redesign:</strong> 45 days</li>
+                  <li><strong className="text-gold">Admin Dashboards:</strong> 60 days</li>
+                  <li><strong className="text-gold">E-Commerce Websites:</strong> 90 days</li>
+                  <li><strong className="text-gold">Custom Web Applications:</strong> 6 months (priority support)</li>
+                </ul>
 
                 <h3 className="text-xl font-semibold text-gold/90 font-iceland mt-6 mb-3">
-                  11.2 Ongoing Maintenance
+                  11.2 Support Coverage
                 </h3>
                 <p className="text-white/80 leading-relaxed font-inter mb-3">
-                  Ongoing maintenance, updates, and support beyond the initial
-                  30 days can be arranged through:
+                  Post-launch support covers:
+                </p>
+                <ul className="space-y-2 text-white/80 font-inter list-disc list-inside mb-4">
+                  <li>Bug fixes related to our delivered work</li>
+                  <li>Technical issues caused by our code</li>
+                  <li>Minor adjustments within the original scope</li>
+                </ul>
+                <p className="text-white/80 leading-relaxed font-inter mb-3">
+                  Post-launch support does NOT cover:
                 </p>
                 <ul className="space-y-2 text-white/80 font-inter list-disc list-inside">
-                  <li>Monthly maintenance plans</li>
+                  <li>New features or functionality not in the original scope</li>
+                  <li>Issues caused by client modifications to the code</li>
+                  <li>Third-party service failures or changes</li>
+                  <li>Content updates or changes requested by client</li>
+                  <li>Issues caused by client&apos;s hosting or server configuration</li>
+                </ul>
+
+                <h3 className="text-xl font-semibold text-gold/90 font-iceland mt-6 mb-3">
+                  11.3 Ongoing Maintenance
+                </h3>
+                <p className="text-white/80 leading-relaxed font-inter mb-3">
+                  After the included support period, ongoing maintenance can be arranged through:
+                </p>
+                <ul className="space-y-2 text-white/80 font-inter list-disc list-inside">
+                  <li>Monthly maintenance plans ($200/month)</li>
                   <li>Hourly support agreements</li>
                   <li>Project-based updates</li>
                 </ul>
@@ -574,10 +602,116 @@ const TermsOfService = () => {
                 </ul>
               </section>
 
+              {/* Deliverable Acceptance */}
+              <section className="pt-8 border-t border-gold/20">
+                <h2 className="text-2xl font-bold text-gold font-iceland mb-4">
+                  13. Deliverable Acceptance
+                </h2>
+                <p className="text-white/80 leading-relaxed font-inter mb-4">
+                  Upon delivery of each milestone or final deliverable, the Client has
+                  <strong className="text-gold"> seven (7) business days</strong> to review
+                  and request revisions within the agreed scope.
+                </p>
+                <div className="bg-amber-500/10 border border-amber-500/30 rounded-lg p-4 mb-4">
+                  <p className="text-white/90 font-semibold font-inter">
+                    If no feedback is received within 7 business days, the deliverable
+                    is considered ACCEPTED and approved.
+                  </p>
+                </div>
+                <p className="text-white/80 leading-relaxed font-inter">
+                  This automatic acceptance applies to milestone deliveries, design
+                  approvals, and final project delivery. We encourage timely
+                  communication to ensure your project meets expectations.
+                </p>
+              </section>
+
+              {/* Client Delays and Project Abandonment */}
+              <section className="pt-8 border-t border-gold/20">
+                <h2 className="text-2xl font-bold text-gold font-iceland mb-4">
+                  14. Client Delays and Project Abandonment
+                </h2>
+
+                <h3 className="text-xl font-semibold text-gold/90 font-iceland mt-6 mb-3">
+                  14.1 Client Response Time
+                </h3>
+                <p className="text-white/80 leading-relaxed font-inter mb-4">
+                  Timely communication is essential for project success. Clients are
+                  expected to respond to requests for feedback, content, or approvals
+                  within 5 business days unless otherwise agreed.
+                </p>
+
+                <h3 className="text-xl font-semibold text-gold/90 font-iceland mt-6 mb-3">
+                  14.2 Project Abandonment
+                </h3>
+                <div className="bg-red-500/10 border border-red-500/30 rounded-lg p-4 mb-4">
+                  <p className="text-white/90 font-semibold font-inter">
+                    If a Client fails to respond to communications for 30 consecutive days,
+                    the project may be considered ABANDONED.
+                  </p>
+                </div>
+                <p className="text-white/80 leading-relaxed font-inter mb-3">
+                  In case of project abandonment:
+                </p>
+                <ul className="space-y-2 text-white/80 font-inter list-disc list-inside">
+                  <li>All payments made are non-refundable</li>
+                  <li>RC Web Solutions LLC has no obligation to complete remaining work</li>
+                  <li>Any work completed up to that point remains property of RC Web Solutions LLC until full payment</li>
+                  <li>The Client may resume the project by paying any outstanding balance plus a reactivation fee</li>
+                </ul>
+              </section>
+
+              {/* Indemnification */}
+              <section className="pt-8 border-t border-gold/20">
+                <h2 className="text-2xl font-bold text-gold font-iceland mb-4">
+                  15. Indemnification
+                </h2>
+                <p className="text-white/80 leading-relaxed font-inter mb-4">
+                  The Client agrees to indemnify, defend, and hold harmless RC Web
+                  Solutions LLC, its officers, directors, employees, and agents from
+                  and against any claims, liabilities, damages, losses, and expenses
+                  arising from:
+                </p>
+                <ul className="space-y-2 text-white/80 font-inter list-disc list-inside">
+                  <li>Content, materials, or information provided by the Client that infringes
+                      on any third-party intellectual property rights (copyright, trademark, etc.)</li>
+                  <li>The Client&apos;s use of the delivered work in violation of any applicable laws</li>
+                  <li>Any claims that the Client&apos;s content is defamatory, obscene, or otherwise unlawful</li>
+                  <li>The Client&apos;s breach of any representation, warranty, or obligation under this agreement</li>
+                </ul>
+                <p className="text-white/80 leading-relaxed font-inter mt-4">
+                  The Client is solely responsible for ensuring they have the legal right
+                  to use all content, images, logos, and materials provided for the project.
+                </p>
+              </section>
+
+              {/* Force Majeure */}
+              <section className="pt-8 border-t border-gold/20">
+                <h2 className="text-2xl font-bold text-gold font-iceland mb-4">
+                  16. Force Majeure
+                </h2>
+                <p className="text-white/80 leading-relaxed font-inter mb-4">
+                  RC Web Solutions LLC shall not be liable for any failure or delay in
+                  performing its obligations where such failure or delay results from
+                  causes beyond its reasonable control, including but not limited to:
+                </p>
+                <ul className="space-y-2 text-white/80 font-inter list-disc list-inside">
+                  <li>Natural disasters, acts of God, or severe weather events</li>
+                  <li>Pandemics, epidemics, or public health emergencies</li>
+                  <li>War, terrorism, civil unrest, or government actions</li>
+                  <li>Power outages, internet service disruptions, or telecommunications failures</li>
+                  <li>Third-party service provider failures (hosting, APIs, payment processors)</li>
+                  <li>Cyberattacks, security breaches, or system compromises beyond our control</li>
+                </ul>
+                <p className="text-white/80 leading-relaxed font-inter mt-4">
+                  In such events, project timelines will be extended accordingly, and
+                  both parties will work in good faith to minimize any impact.
+                </p>
+              </section>
+
               {/* Governing Law */}
               <section className="pt-8 border-t border-gold/20">
                 <h2 className="text-2xl font-bold text-gold font-iceland mb-4">
-                  13. Governing Law and Jurisdiction
+                  17. Governing Law and Jurisdiction
                 </h2>
                 <p className="text-white/80 leading-relaxed font-inter">
                   These Terms of Service shall be governed by and construed in
@@ -591,7 +725,7 @@ const TermsOfService = () => {
               {/* Changes to Terms */}
               <section className="pt-8 border-t border-gold/20">
                 <h2 className="text-2xl font-bold text-gold font-iceland mb-4">
-                  14. Changes to Terms
+                  18. Changes to Terms
                 </h2>
                 <p className="text-white/80 leading-relaxed font-inter">
                   We reserve the right to modify these Terms of Service at any
@@ -604,7 +738,7 @@ const TermsOfService = () => {
               {/* Contact Information */}
               <section className="pt-8 border-t border-gold/20">
                 <h2 className="text-2xl font-bold text-gold font-iceland mb-4">
-                  15. Contact Information
+                  19. Contact Information
                 </h2>
                 <p className="text-white/80 leading-relaxed font-inter mb-4">
                   If you have any questions about these Terms of Service, please
@@ -659,7 +793,7 @@ const TermsOfService = () => {
           <div className="bg-gray-900/60 backdrop-blur-md rounded-xl border border-gold/10 p-6 text-center">
             <div className="flex items-center justify-center gap-2 text-white/50 text-sm font-inter">
               <CalendarIcon className="w-4 h-4" />
-              <span>Last updated: October 21, 2025</span>
+              <span>Last updated: January 13, 2026</span>
             </div>
           </div>
         </motion.div>

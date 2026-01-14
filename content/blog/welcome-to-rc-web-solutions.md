@@ -110,52 +110,100 @@ Connect your website to the tools you already use:
 
 ## Our Packages
 
-### **Starter Package** ($1,499 - $2,999)
+### **Landing Page** ($800 - $1,500)
 
-Ideal for small businesses and startups getting started online.
+Single-page websites optimized for conversions and lead generation.
 
 **Includes:**
-- 5-7 responsive pages
-- Mobile-optimized design
+- Responsive single-page design
+- Mobile-optimized layout
 - Basic SEO setup
-- Contact forms
+- Contact form integration
 - Google Analytics
-- 1 month of support
+- 30 days of support
 
-**Timeline:** 2-3 weeks
-
----
-
-### **Growth Package** ($3,499 - $5,999)
-
-Perfect for businesses ready to scale and compete online.
-
-**Includes:**
-- 10-15 dynamic pages
-- Custom animations & interactions
-- Advanced SEO optimization
-- CMS integration (blog/news)
-- Email marketing integration
-- Lead capture & automation
-- 3 months of support
-
-**Timeline:** 3-5 weeks
+**Timeline:** 1-2 weeks
 
 ---
 
-### **Custom Projects** (Starting at $6,000)
+### **Professional Business Website** ($2,500 - $5,000)
 
-For established businesses with specific requirements.
+Complete 5-10 page websites with custom design tailored to your brand.
 
 **Includes:**
-- E-commerce platforms
-- Custom web applications
-- Complex integrations
-- Dedicated project manager
-- 6 months of support
-- Scalable architecture
+- 5-10 responsive pages
+- Custom design & branding
+- SEO optimization
+- Contact forms & lead capture
+- Analytics integration
+- 30 days of support
 
-**Timeline:** 6-12 weeks
+**Timeline:** 3-4 weeks
+
+---
+
+### **Website Redesign** ($3,000 - $8,000)
+
+Transform your outdated website into a modern, high-performance platform.
+
+**Includes:**
+- Modern design & aesthetics
+- Performance optimization
+- Mobile responsive upgrade
+- Content migration
+- SEO preservation & enhancement
+- 45 days of support
+
+**Timeline:** 4-6 weeks
+
+---
+
+### **Admin Dashboard** ($5,000 - $10,000)
+
+Tailored admin dashboards to automate and streamline your business operations.
+
+**Includes:**
+- Custom forms & workflows
+- Data visualization
+- User management
+- Email automation
+- Database integration
+- 60 days of support
+
+**Timeline:** 5-6 weeks
+
+---
+
+### **E-Commerce Website** ($6,000 - $15,000)
+
+Full-featured online stores with secure payment processing.
+
+**Includes:**
+- Product catalog & inventory
+- Secure payment processing (Stripe)
+- Shopping cart & checkout
+- Customer accounts
+- Order management
+- Admin dashboard
+- 90 days of support
+
+**Timeline:** 6-10 weeks
+
+---
+
+### **Custom Web Application** (Starting at $8,000)
+
+Full-stack custom web applications for complex business needs.
+
+**Includes:**
+- SaaS platforms & custom tools
+- Member portals
+- Database architecture
+- API development
+- Third-party integrations
+- 6 months of priority support
+
+**Timeline:** 8-12+ weeks
 
 ---
 
@@ -291,7 +339,7 @@ When you work with RC Web Solutions, you're not just hiring a developer—you're
 We're currently offering **20% OFF all packages** for new clients! This is the perfect time to start that project you've been planning.
 
 **Offer includes:**
-- All website packages (Starter, Growth, Custom)
+- All website packages (Landing Page, Business Website, E-Commerce, and more)
 - Valid for projects started within 30 days
 - No hidden conditions
 
