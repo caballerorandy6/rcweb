@@ -419,6 +419,26 @@ const RefundPolicy = () => {
                 </ul>
               </section>
 
+              {/* Force Majeure */}
+              <section className="pt-8 border-t border-gold/20">
+                <h2 className="text-2xl font-bold text-gold font-iceland mb-4">
+                  Force Majeure Events
+                </h2>
+                <p className="text-white/80 leading-relaxed font-inter mb-4">
+                  RC Web Solutions LLC shall not be liable for delays or failure to
+                  perform due to circumstances beyond our reasonable control, including
+                  but not limited to natural disasters, pandemics, war, government actions,
+                  power outages, internet disruptions, or third-party service failures.
+                </p>
+                <div className="bg-amber-500/10 border border-amber-500/30 rounded-lg p-4">
+                  <p className="text-white/90 font-semibold font-inter">
+                    Force majeure events do not entitle the Client to a refund. Project
+                    timelines will be extended accordingly, and both parties will work
+                    in good faith to minimize any impact.
+                  </p>
+                </div>
+              </section>
+
               {/* Dispute Resolution */}
               <section className="pt-8 border-t border-gold/20">
                 <h2 className="text-2xl font-bold text-gold font-iceland mb-4">
@@ -445,11 +465,50 @@ const RefundPolicy = () => {
                     All disputes will be handled professionally and in good
                     faith
                   </li>
+                </ul>
+              </section>
+
+              {/* Governing Law */}
+              <section className="pt-8 border-t border-gold/20">
+                <h2 className="text-2xl font-bold text-gold font-iceland mb-4">
+                  Governing Law and Jurisdiction
+                </h2>
+                <p className="text-white/80 leading-relaxed font-inter">
+                  This Refund Policy shall be governed by and construed in accordance
+                  with the laws of the State of Texas, United States, without regard
+                  to its conflict of law provisions. Any disputes arising from this
+                  policy shall be resolved in the courts of Houston, Texas.
+                </p>
+              </section>
+
+              {/* Related Documents */}
+              <section className="pt-8 border-t border-gold/20">
+                <h2 className="text-2xl font-bold text-gold font-iceland mb-4">
+                  Related Legal Documents
+                </h2>
+                <p className="text-white/80 leading-relaxed font-inter mb-4">
+                  This Refund Policy is part of our complete legal framework. For
+                  full terms and conditions governing our services, please review:
+                </p>
+                <ul className="space-y-2 text-white/80 font-inter list-disc list-inside">
                   <li>
-                    Any unresolved disputes will be subject to the laws of the
-                    State of Texas
+                    <Link href={"/terms-of-service" as Route} className="text-gold hover:text-gold/80 underline">
+                      Terms of Service
+                    </Link>{" "}
+                    - Complete terms governing our services, intellectual property,
+                    warranties, and limitations
+                  </li>
+                  <li>
+                    <Link href={"/privacy-policy" as Route} className="text-gold hover:text-gold/80 underline">
+                      Privacy Policy
+                    </Link>{" "}
+                    - How we collect, use, and protect your personal information
                   </li>
                 </ul>
+                <p className="text-white/80 leading-relaxed font-inter mt-4">
+                  In case of any conflict between this Refund Policy and our Terms
+                  of Service, the Terms of Service shall prevail.
+                </p>
               </section>
 
               {/* Agreement */}
@@ -459,9 +518,10 @@ const RefundPolicy = () => {
                 </h2>
                 <p className="text-white/80 leading-relaxed font-inter">
                   By making a payment for our services, you acknowledge that you
-                  have read, understood, and agree to this Refund Policy. You
-                  understand that the first payment is non-refundable and that
-                  work will begin immediately upon receipt of payment.
+                  have read, understood, and agree to this Refund Policy, our
+                  Terms of Service, and our Privacy Policy. You understand that
+                  the first payment is non-refundable and that work will begin
+                  immediately upon receipt of payment.
                 </p>
               </section>
             </div>
