@@ -8,7 +8,6 @@ import Projects from "@/app/components/sections/Projects";
 import Process from "@/app/components/sections/Process";
 import Experience from "@/app/components/sections/Experience";
 import Testimonials from "@/app/components/sections/Testimonials";
-import About from "@/app/components/sections/About";
 import Pricing from "@/app/components/sections/Pricing";
 import FAQ from "@/app/components/sections/FAQ";
 import Contact from "@/app/components/sections/Contact";
@@ -48,7 +47,6 @@ export default function Home() {
       <Services />
       <Projects />
       <Process />
-      <About />
       <Experience />
       <Certifications />
       <Testimonials />

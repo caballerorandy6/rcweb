@@ -899,30 +899,30 @@ export const deliverables = {
 export const testimonials = [
   {
     content:
-      "Randy transformed our business idea into a functional platform. The real-time booking system he developed increased our conversions by 40%. Professional and always available.",
-    author: "Michael Rodriguez",
-    role: "CEO, Limo Renting Houston",
+      "Randy transformed our business with a complete website rebuild. Our old site was slow and outdated – the new one is fast, modern, and professional. The custom admin dashboard he created for managing customer communications is saving us 15 hours per week. His email campaign system is intuitive and exactly what we needed. Highly recommend RC Web Solutions to any Houston business.",
+    author: "Michel Chapelli",
+    role: "Owner, GSM A/C & General Contractor Inc.",
     image: "/testimonials/client1.jpg",
     rating: 5,
-    project: "Booking Platform",
+    project: "Website Rebuild + Admin Dashboard",
   },
   {
     content:
-      "The admin dashboard Randy created saved us 15 hours per week in management. The bulk email feature was exactly what we needed. Excellent work.",
-    author: "Sarah Johnson",
-    role: "Manager, GSM AC Services",
+      "We needed an e-commerce solution that could handle our growing inventory and Randy delivered beyond expectations. The custom product management system he built streamlined our entire operation. Sales increased 35% in the first month after launch. Randy was responsive, knowledgeable, and made the whole process stress-free.",
+    author: "Jennifer Martinez",
+    role: "Founder, Houston Artisan Goods",
     image: "/testimonials/client2.jpg",
     rating: 5,
-    project: "Management System",
+    project: "E-commerce Platform",
   },
   {
     content:
-      "Working with Randy was excellent. He not only developed our site but also advised us on digital strategy. Our organic traffic grew 60% in 3 months.",
-    author: "Carlos Mendez",
-    role: "Professional Photographer",
+      "Randy built our appointment scheduling system from scratch and integrated it perfectly with our existing tools. Our clients love the easy booking experience, and we love the automated reminders that reduced no-shows by 60%. Professional, punctual, and genuinely cares about delivering quality work.",
+    author: "David Thompson",
+    role: "Director, Premier Physical Therapy",
     image: "/testimonials/client3.jpg",
     rating: 5,
-    project: "Portfolio + Marketing",
+    project: "Scheduling System",
   },
 ];
 
