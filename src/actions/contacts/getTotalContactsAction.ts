@@ -1,7 +1,8 @@
-import { cache } from "react";
+"use server";
+
 import { prisma } from "@/lib/prisma";
 
-export const getTotalContactsAction = cache(async () => {
+export async function getTotalContactsAction() {
   const count = await prisma.contact.count();
   return count;
-});
+}
