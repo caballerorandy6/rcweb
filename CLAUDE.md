@@ -1,24 +1,31 @@
 # RC Web Solutions - rcweb.dev
 
-## Sobre el Proyecto
-Sitio web profesional de RC Web Solutions LLC, empresa de desarrollo web fundada por Randy Caballero. Ofrece servicios de desarrollo web para pequeños negocios y emprendedores en Houston, TX.
+## React & Next.js Performance Rules
+
+**IMPORTANT:** Follow all performance optimization rules defined in [AGENTS.md](./AGENTS.md) when writing, reviewing, or refactoring React/Next.js code. These are 45 rules from Vercel Engineering, ordered by impact (CRITICAL → LOW).
 
 ---
 
-## Stack Tecnológico
+## About the Project
 
-| Categoría | Tecnología |
-|-----------|------------|
+Professional website for RC Web Solutions LLC, a web development company founded by Randy Caballero. Offers web development services for small businesses and entrepreneurs in Houston, TX.
+
+---
+
+## Tech Stack
+
+| Category | Technology |
+|----------|------------|
 | Framework | Next.js 16 (App Router) |
-| Lenguaje | TypeScript (estricto) |
+| Language | TypeScript (strict) |
 | Styling | Tailwind CSS |
 | UI Components | Headless UI + Heroicons |
-| Animaciones | Framer Motion |
-| Base de datos | PostgreSQL + Prisma ORM |
-| Estado global | Zustand |
-| Formularios | React Hook Form + Zod |
-| Autenticación | NextAuth v5 (beta) |
-| Pagos | Stripe |
+| Animations | Framer Motion |
+| Database | PostgreSQL + Prisma ORM |
+| Global State | Zustand |
+| Forms | React Hook Form + Zod |
+| Authentication | NextAuth v5 (beta) |
+| Payments | Stripe |
 | Email | Resend + React Email |
 | SMS | Twilio |
 | AI | OpenAI |
@@ -26,45 +33,45 @@ Sitio web profesional de RC Web Solutions LLC, empresa de desarrollo web fundada
 | Rate Limiting | Upstash Redis |
 | Analytics | Vercel Analytics |
 | Hosting | Vercel |
-| Dominio | rcweb.dev |
+| Domain | rcweb.dev |
 
 ---
 
-## Estructura del Proyecto
+## Project Structure
 
 ```
 src/
 ├── app/                      # App Router
-│   ├── (admin)/              # Grupo de rutas admin (protegidas)
-│   ├── admin/                # Login de admin
+│   ├── (admin)/              # Admin route group (protected)
+│   ├── admin/                # Admin login
 │   ├── api/                  # API Routes
 │   │   ├── auth/[...nextauth]
 │   │   ├── chat/
 │   │   ├── blog/
 │   │   └── email-webhook/
-│   ├── blog/                 # Blog público + [slug]
-│   ├── client/               # Portal de clientes (autenticado)
-│   ├── project/[accessToken] # Vista pública de proyecto
-│   ├── pay/[token]           # Página de pago Stripe
-│   ├── components/           # Componentes React
-│   │   ├── ui/               # Componentes base
-│   │   ├── forms/            # Formularios
-│   │   ├── sections/         # Secciones de landing
+│   ├── blog/                 # Public blog + [slug]
+│   ├── client/               # Client portal (authenticated)
+│   ├── project/[accessToken] # Public project view
+│   ├── pay/[token]           # Stripe payment page
+│   ├── components/           # React components
+│   │   ├── ui/               # Base components
+│   │   ├── forms/            # Forms
+│   │   ├── sections/         # Landing sections
 │   │   ├── layout/           # Header, Footer, etc.
-│   │   ├── admin/            # Componentes del admin
-│   │   ├── client/           # Componentes del portal cliente
-│   │   ├── blog/             # Componentes del blog
-│   │   ├── payment/          # Componentes de pago
-│   │   ├── auth/             # Componentes de autenticación
-│   │   ├── icons/            # Iconos custom
+│   │   ├── admin/            # Admin components
+│   │   ├── client/           # Client portal components
+│   │   ├── blog/             # Blog components
+│   │   ├── payment/          # Payment components
+│   │   ├── auth/             # Authentication components
+│   │   ├── icons/            # Custom icons
 │   │   ├── seo/              # Meta tags, structured data
 │   │   ├── tracking/         # Analytics
 │   │   ├── skeletons/        # Loading states
-│   │   └── wrappers/         # HOCs y wrappers
-│   ├── schedule/             # Agendar consulta
-│   ├── offer/                # Ofertas especiales
-│   ├── guide/                # Guía descargable
-│   ├── login/                # Login de clientes
+│   │   └── wrappers/         # HOCs and wrappers
+│   ├── schedule/             # Schedule consultation
+│   ├── offer/                # Special offers
+│   ├── guide/                # Downloadable guide
+│   ├── login/                # Client login
 │   ├── privacy-policy/
 │   ├── terms-of-service/
 │   ├── refund-policy/
@@ -90,7 +97,7 @@ src/
 │   └── subscriptions/
 ├── store/                    # Zustand stores
 ├── hooks/                    # Custom hooks
-├── lib/                      # Utilidades core
+├── lib/                      # Core utilities
 │   ├── prisma.ts
 │   ├── auth.ts
 │   ├── authGuard.ts
@@ -100,181 +107,181 @@ src/
 │   ├── blog.ts
 │   ├── email/
 │   └── invoice/
-├── emails/                   # Templates React Email
-├── config/                   # Configuraciones
+├── emails/                   # React Email templates
+├── config/                   # Configurations
 ├── types/                    # TypeScript types/interfaces
-├── utils/                    # Utilidades generales
-└── generated/                # Prisma Client generado
+├── utils/                    # General utilities
+└── generated/                # Generated Prisma Client
 ```
 
 ---
 
-## Modelos de Base de Datos (Prisma)
+## Database Models (Prisma)
 
-### CRM y Contactos
-- `Contact` - Contactos con lead nurturing
-- `ContactEmail` - Emails de contacto
-- `ContactPhone` - Teléfonos de contacto
-- `ContactActivity` - Log de actividades
+### CRM and Contacts
+- `Contact` - Contacts with lead nurturing
+- `ContactEmail` - Contact emails
+- `ContactPhone` - Contact phones
+- `ContactActivity` - Activity log
 
-### Usuarios
-- `Admin` - Administradores del sistema
-- `Client` - Clientes del portal
-- `User` - Usuarios generales
+### Users
+- `Admin` - System administrators
+- `Client` - Portal clients
+- `User` - General users
 
-### Proyectos y Pagos
-- `Payment` - Proyectos con sistema de pagos 50/50
-- `Milestone` - Hitos del proyecto
-- `MilestoneNotification` - Notificaciones de hitos
-- `Deliverable` - Entregables del proyecto
-- `Invoice` - Facturas PDF
-- `TermsAcceptance` - Aceptación de términos
+### Projects and Payments
+- `Payment` - Projects with 50/50 payment system
+- `Milestone` - Project milestones
+- `MilestoneNotification` - Milestone notifications
+- `Deliverable` - Project deliverables
+- `Invoice` - PDF invoices
+- `TermsAcceptance` - Terms acceptance
 
-### Suscripciones
-- `Subscription` - Suscripciones mensuales (mantenimiento)
+### Subscriptions
+- `Subscription` - Monthly subscriptions (maintenance)
 
-### Mensajería
-- `ProjectMessage` - Mensajes cliente ↔ admin
-- `ProjectMessageAttachment` - Archivos adjuntos
+### Messaging
+- `ProjectMessage` - Client ↔ admin messages
+- `ProjectMessageAttachment` - File attachments
 
 ### Marketing
-- `EmailCampaign` - Campañas de email
-- `CampaignEmailLog` - Log de emails enviados
-- `DailyEmailQuota` - Control de cuota diaria
-- `SmsCampaign` - Campañas SMS
-- `SmsLog` - Log de SMS
+- `EmailCampaign` - Email campaigns
+- `CampaignEmailLog` - Sent emails log
+- `DailyEmailQuota` - Daily quota control
+- `SmsCampaign` - SMS campaigns
+- `SmsLog` - SMS log
 
 ### Blog
-- `BlogSubscriber` - Suscriptores del blog
-- `NotifiedBlogPost` - Posts notificados
+- `BlogSubscriber` - Blog subscribers
+- `NotifiedBlogPost` - Notified posts
 
 ---
 
-## Comandos Principales
+## Main Commands
 
 ```bash
-# Desarrollo
-npm run dev              # Desarrollo local (localhost:3000)
-npm run build            # Build de producción
-npm run start            # Iniciar build
+# Development
+npm run dev              # Local development (localhost:3000)
+npm run build            # Production build
+npm run start            # Start build
 npm run lint             # ESLint
 
-# Base de datos
-npx prisma studio        # GUI de base de datos
-npx prisma db push       # Sincronizar schema
-npx prisma generate      # Generar Prisma Client
-npm run migrate          # Migración de desarrollo
-npm run seed             # Seed de datos
+# Database
+npx prisma studio        # Database GUI
+npx prisma db push       # Sync schema
+npx prisma generate      # Generate Prisma Client
+npm run migrate          # Development migration
+npm run seed             # Data seed
 
 # Email
-npm run email            # Preview de emails (puerto 3001)
+npm run email            # Email preview (port 3001)
 
 # Testing
-npm run test:twilio      # Test de Twilio
-npm run test:webhook     # Test de webhooks
+npm run test:twilio      # Twilio test
+npm run test:webhook     # Webhooks test
 ```
 
 ---
 
-## Flujos Críticos
+## Critical Flows
 
-### 1. Proceso de Pago (50/50)
+### 1. Payment Process (50/50)
 ```
-Admin crea Payment → Cliente recibe email con link
-→ Cliente acepta términos → Stripe Checkout (50%)
-→ Webhook procesa pago → Invoice PDF generado
-→ Email con factura → Proyecto inicia
-→ Admin marca "ready" → Email de pago final
-→ Cliente paga 50% restante → Proyecto completado
-```
-
-### 2. Portal de Cliente
-```
-Cliente recibe email de setup → Establece contraseña
-→ Login en /client → Dashboard con proyectos
-→ Ve milestones, deliverables, invoices
-→ Puede enviar mensajes al admin
-→ Descarga entregables cuando proyecto completa
+Admin creates Payment → Client receives email with link
+→ Client accepts terms → Stripe Checkout (50%)
+→ Webhook processes payment → PDF Invoice generated
+→ Email with invoice → Project starts
+→ Admin marks "ready" → Final payment email
+→ Client pays remaining 50% → Project completed
 ```
 
-### 3. Sistema de Mensajes
+### 2. Client Portal
 ```
-Cliente o Admin escribe mensaje
-→ Server Action guarda en DB
-→ Email de notificación al destinatario
-→ Mensajes marcados como leídos
+Client receives setup email → Sets password
+→ Login at /client → Dashboard with projects
+→ Views milestones, deliverables, invoices
+→ Can send messages to admin
+→ Downloads deliverables when project completes
+```
+
+### 3. Messaging System
+```
+Client or Admin writes message
+→ Server Action saves to DB
+→ Notification email to recipient
+→ Messages marked as read
 ```
 
 ### 4. Lead Nurturing
 ```
-Contacto llega (form, SMS) → Status: NEW
-→ Admin gestiona en CRM
-→ Actividades logueadas
-→ Campañas de email/SMS
+Contact arrives (form, SMS) → Status: NEW
+→ Admin manages in CRM
+→ Activities logged
+→ Email/SMS campaigns
 ```
 
 ### 5. Blog
 ```
-MDX en /content/blog → Renderizado con gray-matter
-→ Suscriptores reciben notificación
-→ Unsubscribe con token
+MDX in /content/blog → Rendered with gray-matter
+→ Subscribers receive notification
+→ Unsubscribe with token
 ```
 
 ---
 
-## Reglas para Claude
+## Rules for Claude
 
-### Principio General
-- Revisar con la mayor profundidad posible siguiendo siempre las mejores prácticas
-- NUNCA forzar cambios innecesarios
-- Mantener siempre el código simple y legible según las necesidades
-- Si algo funciona bien, no cambiarlo solo por "mejorar"
-- `sr` → solo responde (sin ejecutar herramientas)
-- `rv` → revisa y responde (sin modificar código)
+### General Principle
+- Review with maximum depth following best practices
+- NEVER force unnecessary changes
+- Always keep code simple and readable as needed
+- If something works well, don't change it just to "improve"
+- `sr` → respond only (no tool execution)
+- `rv` → review and respond (no code modification)
 
-### Código
-- Siempre TypeScript, nunca JavaScript
-- Server Components por defecto
-- `'use client'` solo cuando sea estrictamente necesario
-- Server Actions para mutaciones (están en `/src/actions/`)
-- Validar inputs con Zod siempre
-- Manejar errores con try/catch
-- Usar Prisma Client de `@/generated/prisma/client`
+### Code
+- Always TypeScript, never JavaScript
+- Server Components by default
+- `'use client'` only when strictly necessary
+- Server Actions for mutations (located in `/src/actions/`)
+- Always validate inputs with Zod
+- Handle errors with try/catch
+- Use Prisma Client from `@/generated/prisma/client`
 
-### Estilo
-- Tailwind CSS para todo el styling
-- Headless UI para componentes interactivos
-- Heroicons para iconos
-- Framer Motion para animaciones
+### Styling
+- Tailwind CSS for all styling
+- Headless UI for interactive components
+- Heroicons for icons
+- Framer Motion for animations
 - Mobile-first approach
 
-### Formularios
+### Forms
 - React Hook Form + Zod resolver
-- Validación client-side y server-side
-- Sonner para toast notifications
+- Client-side and server-side validation
+- Sonner for toast notifications
 
-### Autenticación
-- NextAuth v5 con dos providers: Admin y Client
-- Verificar sesión con `auth()` en Server Components
-- `authGuard.ts` para proteger Server Actions
+### Authentication
+- NextAuth v5 with two providers: Admin and Client
+- Verify session with `auth()` in Server Components
+- `authGuard.ts` to protect Server Actions
 
-### Convenciones de Nombres
-- Archivos: kebab-case (`my-component.tsx`)
-- Componentes: PascalCase (`MyComponent`)
-- Funciones/variables: camelCase (`myFunction`)
+### Naming Conventions
+- Files: kebab-case (`my-component.tsx`)
+- Components: PascalCase (`MyComponent`)
+- Functions/variables: camelCase (`myFunction`)
 - Types/Interfaces: PascalCase (`MyType`)
-- Constantes: UPPER_SNAKE_CASE (`MY_CONSTANT`)
+- Constants: UPPER_SNAKE_CASE (`MY_CONSTANT`)
 - Server Actions: camelCase + Action suffix (`createContactAction`)
 
 ### Git
-- Commits descriptivos en inglés
-- Una feature por commit
-- NO incluir menciones a Claude, AI, o "Generated with" en los commits
-- NO agregar Co-Authored-By de Claude/Anthropic
+- Descriptive commits in English
+- One feature per commit
+- DO NOT include mentions of Claude, AI, or "Generated with" in commits
+- DO NOT add Co-Authored-By from Claude/Anthropic
 
 ---
 
-## Imports Comunes
+## Common Imports
 
 ```typescript
 // Database
@@ -292,7 +299,7 @@ import type { ClientProject } from "@/types/client";
 import type { ClientDeliverable } from "@/types/deliverable";
 import type { CreateMessageData } from "@/types/message";
 
-// Validación
+// Validation
 import { z } from "zod";
 import { FormSchema, LoginSchema, BlogSubscriptionSchema } from "@/lib/zod";
 
@@ -320,7 +327,7 @@ import { getAllPosts } from "@/lib/blog";
 
 ---
 
-## Variables de Entorno Requeridas
+## Required Environment Variables
 
 ```env
 # Database
@@ -362,16 +369,16 @@ ADMIN_EMAIL=
 
 ---
 
-## Notas Importantes
+## Important Notes
 
-- **Bilingüe:** Sitio en inglés, pero audiencia hispana en Houston
-- **SEO crítico:** Optimizar meta tags, structured data, sitemap
-- **Performance:** Mantener Lighthouse 90+
-- **Público objetivo:** Pequeños negocios buscando presencia web
-- **Sistema de pagos:** 50% inicial, 50% al completar
-- **Rate limiting:** Implementado con Upstash para forms y APIs
-- **Email quota:** Control diario para evitar límites de Resend
+- **Bilingual:** Site in English, but Hispanic audience in Houston
+- **Critical SEO:** Optimize meta tags, structured data, sitemap
+- **Performance:** Maintain Lighthouse 90+
+- **Target audience:** Small businesses looking for web presence
+- **Payment system:** 50% initial, 50% on completion
+- **Rate limiting:** Implemented with Upstash for forms and APIs
+- **Email quota:** Daily control to avoid Resend limits
 
 ---
 
-*Última actualización: Enero 2025*
+*Last updated: January 2025*

@@ -43,31 +43,31 @@ export async function processPendingInvoicesAction(): Promise<
       },
     });
 
-    const results: InvoiceResult[] = [];
+    const results: InvoiceResult[] = await Promise.all(
+      paymentsWithoutInvoices.map(async (payment) => {
+        try {
+          const result = await createInvoiceAndSendEmail({
+            payment,
+            type: "initial",
+            resend,
+            stripeSessionId: payment.firstSessionId || undefined,
+          });
 
-    for (const payment of paymentsWithoutInvoices) {
-      try {
-        const result = await createInvoiceAndSendEmail({
-          payment,
-          type: "initial",
-          resend,
-          stripeSessionId: payment.firstSessionId || undefined,
-        });
-
-        results.push({
-          projectCode: payment.projectCode,
-          success: true,
-          invoiceId: result.invoiceId,
-        });
-      } catch (error) {
-        console.error(`❌ Error processing ${payment.projectCode}:`, error);
-        results.push({
-          projectCode: payment.projectCode,
-          success: false,
-          error: error instanceof Error ? error.message : String(error),
-        });
-      }
-    }
+          return {
+            projectCode: payment.projectCode,
+            success: true,
+            invoiceId: result.invoiceId,
+          };
+        } catch (error) {
+          console.error(`❌ Error processing ${payment.projectCode}:`, error);
+          return {
+            projectCode: payment.projectCode,
+            success: false,
+            error: error instanceof Error ? error.message : String(error),
+          };
+        }
+      })
+    );
 
     return {
       success: true,

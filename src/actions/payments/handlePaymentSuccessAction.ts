@@ -181,11 +181,11 @@ export async function handlePaymentSuccessAction(
 
       console.log("✅ Payment created via fallback");
 
-      // Send emails from fallback
+      // Send emails from fallback (parallel, independent)
       const resend = new Resend(process.env.RESEND_API_KEY!);
 
-      try {
-        await sendInitialPaymentConfirmation(resend, {
+      const emailResults = await Promise.allSettled([
+        sendInitialPaymentConfirmation(resend, {
           customerEmail,
           customerName,
           planName,
@@ -193,19 +193,23 @@ export async function handlePaymentSuccessAction(
           firstPaymentAmount,
           secondPaymentAmount,
           totalAmount,
-        });
-
-        await sendAdminInitialPaymentFallback(resend, {
+        }),
+        sendAdminInitialPaymentFallback(resend, {
           projectCode: finalProjectCode,
           customerName,
           customerEmail,
           planName,
           firstPaymentAmount,
           paymentId: payment.id,
-        });
-      } catch (emailError) {
-        console.error("❌ Error sending emails from fallback:", emailError);
-      }
+        }),
+      ]);
+
+      emailResults.forEach((result, index) => {
+        if (result.status === "rejected") {
+          const emailType = index === 0 ? "client confirmation" : "admin notification";
+          console.error(`❌ Error sending ${emailType} email:`, result.reason);
+        }
+      });
 
       return { success: true, payment, fallbackUsed: true };
     } catch (error: unknown) {
