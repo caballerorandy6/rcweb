@@ -12,7 +12,7 @@ import DialogForm from "@/app/components/forms/DialogForm";
 import useSectionObserver from "@/hooks/useSectionObserver";
 
 const Contact = () => {
-  const { setOpenLetsContactDialog } = useRCWebStore();
+  const setOpenLetsContactDialog = useRCWebStore((state) => state.setOpenLetsContactDialog);
   const ref = useSectionObserver({ sectionName: "Contact" });
 
   return (
