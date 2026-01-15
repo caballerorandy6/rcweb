@@ -13,7 +13,8 @@ import ProjectsList from "@/app/components/sections/ProjectsList";
 import TechMarquee from "@/app/components/ui/TechMarquee";
 
 const Projects = () => {
-  const { isExpanded, handleClickProjectsDialog } = useRCWebStore();
+  const isExpanded = useRCWebStore((state) => state.isExpanded);
+  const handleClickProjectsDialog = useRCWebStore((state) => state.handleClickProjectsDialog);
   const contentId = useId();
 
   const initialVisibleProjects = 3;
