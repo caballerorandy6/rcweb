@@ -403,8 +403,8 @@ export const InvoiceSummaryTemplate: React.FC<InvoiceSummaryTemplateProps> = ({
             <Text style={styles.tableCol}>DATE PAID</Text>
             <Text style={styles.tableColAmount}>AMOUNT</Text>
           </View>
-          {data.items.map((item, index) => (
-            <View key={index} style={styles.tableRow}>
+          {data.items.map((item) => (
+            <View key={`${item.description}-${item.paidDate}`} style={styles.tableRow}>
               <Text style={styles.tableColDescription}>{item.description}</Text>
               <Text style={styles.tableCol}>
                 {formatInvoiceDate(item.paidDate)}

@@ -41,9 +41,9 @@ const Project = ({
         <p className="mt-2 text-base text-white/80 font-inter">{description}</p>
 
         <div className="flex flex-wrap justify-center gap-1 mt-4">
-          {tecnologies.map((item, index) => (
+          {tecnologies.map((item) => (
             <span
-              key={index}
+              key={item}
               className={clsx(
                 "inline-flex gap-2 items-center rounded-full px-2 py-0.5 text-xs font-inter",
                 {

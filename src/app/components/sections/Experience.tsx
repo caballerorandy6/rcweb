@@ -39,7 +39,7 @@ const Experience = () => {
 
           {experience.map((item, index) => (
             <motion.div
-              key={index}
+              key={`${item.title}-${item.company}`}
               initial={false}
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}

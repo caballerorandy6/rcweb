@@ -26,7 +26,7 @@ const Services = () => {
         <ul className="mx-auto mt-16 grid max-w-2xl grid-cols-1 gap-6 lg:max-w-none lg:grid-cols-2 lg:gap-8">
           {services.map((service, index) => (
             <motion.li
-              key={index}
+              key={service.title}
               initial={false}
               whileInView={{ opacity: 1, y: 0, scale: 1 }}
               viewport={{ once: true, amount: 0.2 }}
@@ -53,9 +53,9 @@ const Services = () => {
               </p>
 
               <div className="flex flex-wrap gap-2">
-                {service.features.map((feature, idx) => (
+                {service.features.map((feature) => (
                   <span
-                    key={idx}
+                    key={feature}
                     className="inline-flex items-center rounded-full bg-gold/10 px-3 py-1 text-xs font-inter text-gold ring-1 ring-inset ring-gold/20"
                   >
                     {feature}

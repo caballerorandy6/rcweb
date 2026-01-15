@@ -12,7 +12,7 @@ import { motion, Variants, AnimatePresence } from "framer-motion";
 
 const FAQ = () => {
   const ref = useSectionObserver({ sectionName: "FAQ" });
-  const [openIndex, setOpenIndex] = useState<number | null>(0);
+  const [openIndex, setOpenIndex] = useState<string | null>(faqs[0]?.question ?? null);
 
   // Variantes para la animación de las tarjetas
   const containerVariants: Variants = {
@@ -80,15 +80,15 @@ const FAQ = () => {
           className="mx-auto mt-16 max-w-3xl"
         >
           <div className="space-y-4">
-            {faqs.map((faq, index) => (
+            {faqs.map((faq) => (
               <motion.div
-                key={index}
+                key={faq.question}
                 variants={cardVariants}
                 className="rounded-lg border border-gold/20 bg-gray-900/50 backdrop-blur-sm transition-all duration-200 hover:border-gold/50 shadow-lg shadow-black/20"
               >
                 <button
                   onClick={() =>
-                    setOpenIndex(openIndex === index ? null : index)
+                    setOpenIndex(openIndex === faq.question ? null : faq.question)
                   }
                   className="flex w-full items-center justify-between px-6 py-4 text-left"
                 >
@@ -97,13 +97,13 @@ const FAQ = () => {
                   </h2>
                   <ChevronDownIcon
                     className={`h-5 w-5 text-gold transition-transform duration-200 ${
-                      openIndex === index ? "rotate-180" : ""
+                      openIndex === faq.question ? "rotate-180" : ""
                     }`}
                   />
                 </button>
 
                 <AnimatePresence initial={false}>
-                  {openIndex === index && (
+                  {openIndex === faq.question && (
                     <motion.div
                       key="answer"
                       variants={answerVariants}

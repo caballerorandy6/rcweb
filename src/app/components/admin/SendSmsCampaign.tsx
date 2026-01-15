@@ -160,9 +160,9 @@ export default function SendSmsCampaign({ initialStats }: SendSmsCampaignProps) 
               Quick Templates:
             </p>
             <div className="flex flex-wrap gap-2">
-              {templates.map((template, index) => (
+              {templates.map((template) => (
                 <button
-                  key={index}
+                  key={template.name}
                   onClick={() => setMessage(template.text)}
                   className="px-3 py-1 text-xs bg-gray-800 text-gray-300 rounded hover:bg-gray-700 hover:text-white transition-colors font-inter"
                 >

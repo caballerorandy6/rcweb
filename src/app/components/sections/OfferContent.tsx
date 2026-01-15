@@ -125,9 +125,9 @@ export default function OfferContent() {
                 { label: "Hours", value: timeLeft.hours },
                 { label: "Minutes", value: timeLeft.minutes },
                 { label: "Seconds", value: timeLeft.seconds },
-              ].map((item, index) => (
+              ].map((item) => (
                 <div
-                  key={index}
+                  key={item.label}
                   className="bg-gray-900/60 backdrop-blur-md rounded-xl border border-gold/20 p-4"
                 >
                   <div className="text-3xl md:text-4xl font-black text-gold font-iceland text-center">
@@ -177,14 +177,13 @@ export default function OfferContent() {
                 "Website Redesign Projects",
                 "Progressive Web Apps (PWA)",
                 "Mobile-Responsive Websites",
-              ].map((service, index) => (
+              ].map((service) => (
                 <motion.div
-                  key={index}
+                  key={service}
                   className="flex items-center gap-3"
                   initial={{ opacity: 0, x: -20 }}
                   whileInView={{ opacity: 1, x: 0 }}
                   viewport={{ once: true }}
-                  transition={{ delay: 0.05 * index }}
                 >
                   <CheckCircleIcon className="w-6 h-6 text-gold flex-shrink-0" />
                   <span className="text-gray-300 font-inter">{service}</span>

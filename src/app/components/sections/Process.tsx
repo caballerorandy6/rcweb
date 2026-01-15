@@ -31,7 +31,7 @@ const Process = () => {
           {/* Step Indicators */}
           <div className="flex justify-between items-center max-w-4xl mx-auto mb-12">
             {processSteps.map((step, index) => (
-              <div key={index} className="flex-1 relative">
+              <div key={step.title} className="flex-1 relative">
                 {/* Connection Line */}
                 {index < processSteps.length - 1 && (
                   <div className="absolute top-6 left-1/2 w-full h-0.5 bg-gold/20">
@@ -120,7 +120,7 @@ const Process = () => {
                   <div className="grid grid-cols-2 gap-3">
                     {currentStep.details?.map((detail, idx) => (
                       <motion.div
-                        key={idx}
+                        key={detail}
                         initial={{ opacity: 0, x: -10 }}
                         animate={{ opacity: 1, x: 0 }}
                         transition={{
@@ -181,7 +181,7 @@ const Process = () => {
         <div className="lg:hidden space-y-4 mt-12">
           {processSteps.map((step, index) => (
             <motion.div
-              key={index}
+              key={step.title}
               initial={false}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
@@ -236,9 +236,9 @@ const Process = () => {
                           {step.description}
                         </p>
                         <div className="space-y-2">
-                          {step.details?.map((detail, idx) => (
+                          {step.details?.map((detail) => (
                             <div
-                              key={idx}
+                              key={detail}
                               className="flex items-start text-sm font-inter text-white/70"
                             >
                               <span className="text-gold mr-2">•</span>

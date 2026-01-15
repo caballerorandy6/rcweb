@@ -105,9 +105,9 @@ export default function ScheduleContent() {
               description:
                 "100% free consultation with zero commitment required",
             },
-          ].map((benefit, index) => (
+          ].map((benefit) => (
             <motion.div
-              key={index}
+              key={benefit.title}
               className="bg-gray-900/60 backdrop-blur-md rounded-xl border border-gold/20 p-6 hover:border-gold/40 transition-all duration-300"
               whileHover={{ scale: 1.05 }}
               transition={{ type: "spring", stiffness: 400, damping: 17 }}
@@ -142,14 +142,13 @@ export default function ScheduleContent() {
                 "Timeline and milestones",
                 "Budget and pricing options",
                 "Next steps and project roadmap",
-              ].map((item, index) => (
+              ].map((item) => (
                 <motion.li
-                  key={index}
+                  key={item}
                   className="flex items-start gap-3 text-gray-300"
                   initial={{ opacity: 0, x: -20 }}
                   whileInView={{ opacity: 1, x: 0 }}
                   viewport={{ once: true }}
-                  transition={{ delay: 0.1 * index }}
                 >
                   <span className="text-gold mt-1">✓</span>
                   <span>{item}</span>

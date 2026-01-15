@@ -42,9 +42,9 @@ export default function QuickActions() {
         Quick Actions
       </h2>
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-        {quickActions.map((action, index) => (
+        {quickActions.map((action) => (
           <Link
-            key={index}
+            key={action.href}
             href={action.href as Route}
             className="flex items-center justify-between p-4 bg-gray-700/30 hover:bg-gray-700/50 rounded-lg transition-colors group"
           >

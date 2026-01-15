@@ -160,14 +160,13 @@ export default function GuideContent() {
                   "Mobile-first design principles",
                   "Cost-effective development strategies",
                   "Maintenance and scaling tips",
-                ].map((item, index) => (
+                ].map((item) => (
                   <motion.li
-                    key={index}
+                    key={item}
                     className="flex items-start gap-3 text-gray-300 font-inter"
                     initial={{ opacity: 0, x: -20 }}
                     whileInView={{ opacity: 1, x: 0 }}
                     viewport={{ once: true }}
-                    transition={{ delay: 0.05 * index }}
                   >
                     <CheckBadgeIcon className="w-6 h-6 text-gold flex-shrink-0 mt-0.5" />
                     <span>{item}</span>
