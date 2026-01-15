@@ -24,6 +24,7 @@ type PageMetadataProps = {
   description: string;
   pageRoute: string;
   ogImg?: string;
+  noIndex?: boolean;
 };
 
 export function genPageMetadata({
@@ -31,6 +32,7 @@ export function genPageMetadata({
   description,
   pageRoute,
   ogImg,
+  noIndex = false,
 }: PageMetadataProps): Metadata {
   const url = `${siteConfig.baseUrl}${pageRoute}`;
   const ogImage = ogImg || siteConfig.defaultOgImg;
@@ -41,6 +43,16 @@ export function genPageMetadata({
     alternates: {
       canonical: url,
     },
+    ...(noIndex && {
+      robots: {
+        index: false,
+        follow: false,
+        googleBot: {
+          index: false,
+          follow: false,
+        },
+      },
+    }),
     openGraph: {
       title: `${title} | ${siteConfig.siteName}`,
       description,

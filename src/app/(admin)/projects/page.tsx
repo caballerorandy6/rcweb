@@ -11,6 +11,7 @@ export const metadata = genPageMetadata({
   title: "Project Management",
   description: "Manage projects and track progress for RC Web Solutions LLC.",
   pageRoute: "/projects",
+  noIndex: true,
 });
 
 async function ProjectManagementWrapper() {

@@ -11,6 +11,10 @@ export type SiteConfig = {
   social: {
     twitter: string;
     linkedin: string;
+    facebook: string;
+    instagram: string;
+    tiktok: string;
+    nextdoor: string;
   };
 };
 
@@ -28,5 +32,9 @@ export const siteConfig: SiteConfig = {
   social: {
     twitter: "@RCWeb2025",
     linkedin: "https://www.linkedin.com/company/rcwebsolutions",
+    facebook: "https://www.facebook.com/rcwebsolutionsllc",
+    instagram: "https://www.instagram.com/rcwebsolutionsllc",
+    tiktok: "https://www.tiktok.com/@rcwebsolutionsllc",
+    nextdoor: "https://nextdoor.com/page/rc-web-solutions-llc",
   },
 };

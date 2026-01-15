@@ -14,6 +14,7 @@ export const metadata = genPageMetadata({
   title: "Newsletter Campaigns",
   description: "Send newsletter campaigns for RC Web Solutions LLC.",
   pageRoute: "/newsletter",
+  noIndex: true,
 });
 
 async function NewsletterContent() {

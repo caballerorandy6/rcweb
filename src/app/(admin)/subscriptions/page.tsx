@@ -9,6 +9,7 @@ export const metadata = genPageMetadata({
   title: "Subscription Management",
   description: "Manage subscriptions for RC Web Solutions LLC.",
   pageRoute: "/subscriptions",
+  noIndex: true,
 });
 
 export default async function SubscriptionsPage() {

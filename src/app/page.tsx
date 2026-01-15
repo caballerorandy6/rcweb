@@ -17,6 +17,8 @@ import ScrollSpy from "@/app/components/ui/ScrollSpy";
 import { JsonLdForFaq } from "@/app/components/seo/JsonLdForFaq";
 import { JsonLdForService } from "@/app/components/seo/JsonLdForService";
 import { JsonLdForOrganization } from "@/app/components/seo/JsonLdForOrganization";
+import { JsonLdForLocalBusiness } from "@/app/components/seo/JsonLdForLocalBusiness";
+import { JsonLdForWebSite } from "@/app/components/seo/JsonLdForWebSite";
 import { faqs, pricingPlans } from "@/lib/data";
 
 export const metadata: Metadata = {
@@ -32,6 +34,8 @@ export default function Home() {
   return (
     <main>
       <JsonLdForOrganization />
+      <JsonLdForLocalBusiness />
+      <JsonLdForWebSite />
       <JsonLdForFaq faqs={faqs} />
       {pricingPlans.map((plan) => (
         <JsonLdForService

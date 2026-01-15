@@ -10,6 +10,7 @@ export const metadata = genPageMetadata({
   title: "Contact Management",
   description: "Manage contacts for RC Web Solutions LLC admin panel.",
   pageRoute: "/contacts",
+  noIndex: true,
 });
 
 export const dynamic = "force-dynamic";

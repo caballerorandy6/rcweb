@@ -15,6 +15,7 @@ export const metadata = genPageMetadata({
   title: "SMS Campaigns",
   description: "Send SMS campaigns for RC Web Solutions LLC.",
   pageRoute: "/sms",
+  noIndex: true,
 });
 
 async function SMSContent() {
