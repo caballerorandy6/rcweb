@@ -1,6 +1,7 @@
 import fs from 'fs';
 import path from 'path';
 import matter from 'gray-matter';
+import { cache } from 'react';
 
 const postsDirectory = path.join(process.cwd(), 'content/blog');
 
@@ -15,7 +16,7 @@ export interface BlogPost {
   content: string;
 }
 
-export function getAllPosts(): BlogPost[] {
+export const getAllPosts = cache((): BlogPost[] => {
   // Check if directory exists
   if (!fs.existsSync(postsDirectory)) {
     return [];
@@ -50,9 +51,9 @@ export function getAllPosts(): BlogPost[] {
       return -1;
     }
   });
-}
+});
 
-export function getPostBySlug(slug: string): BlogPost | null {
+export const getPostBySlug = cache((slug: string): BlogPost | null => {
   try {
     const fullPath = path.join(postsDirectory, `${slug}.md`);
     const fileContents = fs.readFileSync(fullPath, 'utf8');
@@ -72,9 +73,9 @@ export function getPostBySlug(slug: string): BlogPost | null {
     console.error(`Error reading post ${slug}:`, error);
     return null;
   }
-}
+});
 
-export function getAllSlugs(): string[] {
+export const getAllSlugs = cache((): string[] => {
   if (!fs.existsSync(postsDirectory)) {
     return [];
   }
@@ -83,4 +84,4 @@ export function getAllSlugs(): string[] {
   return fileNames
     .filter((fileName) => fileName.endsWith('.md'))
     .map((fileName) => fileName.replace(/\.md$/, ''));
-}
+});

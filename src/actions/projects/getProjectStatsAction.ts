@@ -1,11 +1,12 @@
-import { cache } from "react";
+"use server";
+
 import { prisma } from "@/lib/prisma";
 import type { ProjectStats } from "@/types/stats";
 import type { ActionResult } from "@/types/common";
 
-export const getProjectStatsAction = cache(async (): Promise<
+export async function getProjectStatsAction(): Promise<
   ActionResult<{ stats: ProjectStats }>
-> => {
+> {
   try {
     const [total, pending, inProgress, completed, awaitingPayment] =
       await Promise.all([
@@ -31,4 +32,4 @@ export const getProjectStatsAction = cache(async (): Promise<
     console.error("Error fetching stats:", error);
     return { success: false, error: "Failed to fetch statistics" };
   }
-});
+}

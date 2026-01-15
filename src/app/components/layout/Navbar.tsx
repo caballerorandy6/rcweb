@@ -18,13 +18,12 @@ export interface NavigationProps {
 }
 
 const Navbar = () => {
-  const {
-    activeSection,
-    setActiveSection,
-    isOpen,
-    setIsOpen,
-    handleClickModal,
-  } = useRCWebStore();
+  // Use individual selectors to prevent unnecessary re-renders
+  const activeSection = useRCWebStore((state) => state.activeSection);
+  const setActiveSection = useRCWebStore((state) => state.setActiveSection);
+  const isOpen = useRCWebStore((state) => state.isOpen);
+  const setIsOpen = useRCWebStore((state) => state.setIsOpen);
+  const handleClickModal = useRCWebStore((state) => state.handleClickModal);
 
   const pathname = usePathname();
   const isHomePage = pathname === "/";
