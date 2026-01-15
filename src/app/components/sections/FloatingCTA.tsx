@@ -1,6 +1,7 @@
 "use client";
 import { motion } from "framer-motion";
 import { useRef, useEffect, useState } from "react";
+import dynamic from "next/dynamic";
 import { socialLinks } from "@/lib/data";
 import WhatsApp from "@/app/components/icons/WhatSapp";
 import Linkedin from "@/app/components/icons/Linkedin";
@@ -9,8 +10,11 @@ import Phone from "@/app/components/icons/Phone";
 import Instagram from "@/app/components/icons/Instagram";
 import X from "@/app/components/icons/X";
 import TikTok from "@/app/components/icons/TikTok";
-import Chat from "@/app/components/ui/Chat";
 import ClientOnly from "@/app/components/ui/ClientOnly";
+
+const Chat = dynamic(() => import("@/app/components/ui/Chat"), {
+  ssr: false,
+});
 import Image from "next/image";
 
 const getIconComponent = (name: string, iconSize?: string) => {

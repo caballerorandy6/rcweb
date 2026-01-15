@@ -1,7 +1,7 @@
 "use client";
 
-import { useEffect } from "react";
 import { motion } from "framer-motion";
+import Script from "next/script";
 import {
   CalendarDaysIcon,
   ClockIcon,
@@ -35,23 +35,12 @@ const trackPhoneConversion = () => {
 };
 
 export default function ScheduleContent() {
-  // Load Calendly widget script
-  useEffect(() => {
-    const script = document.createElement("script");
-    script.src = "https://assets.calendly.com/assets/external/widget.js";
-    script.async = true;
-    document.body.appendChild(script);
-
-    return () => {
-      // Cleanup script on unmount
-      const existingScript = document.querySelector('script[src="https://assets.calendly.com/assets/external/widget.js"]');
-      if (existingScript) {
-        existingScript.remove();
-      }
-    };
-  }, []);
-
   return (
+    <>
+      <Script
+        src="https://assets.calendly.com/assets/external/widget.js"
+        strategy="lazyOnload"
+      />
     <section className="relative isolate overflow-hidden py-24 sm:py-32 bg-gradient-to-b from-gray-900 via-gray-900/95 to-gray-900">
       {/* Background decoration */}
       <div className="absolute inset-0 -z-10">
@@ -234,5 +223,6 @@ export default function ScheduleContent() {
         </motion.div>
       </div>
     </section>
+    </>
   );
 }
