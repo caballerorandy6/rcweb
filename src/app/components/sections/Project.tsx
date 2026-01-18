@@ -68,6 +68,8 @@ const Project = ({
                   "bg-gray-700 text-white": item === "Framer Motion",
                   "bg-yellow-400 text-black": item === "Supabase",
                   "bg-blue-700 text-white": item === "MySQL",
+                  "bg-blue-400 text-white": item === "Cloudinary",
+                  "bg-rose-500 text-white": item === "Turborepo",
                 }
               )}
             >
