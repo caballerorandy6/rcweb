@@ -51,8 +51,6 @@ export default function Home() {
       <Services />
       <Projects />
       <Process />
-      <Experience />
-      <Certifications />
       <Testimonials />
       <Pricing />
       <FAQ />

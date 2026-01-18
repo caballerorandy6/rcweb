@@ -81,7 +81,7 @@ const Pricing = () => {
           initial={false}
           whileInView="show"
           viewport={{ once: true, amount: 0.1 }}
-          className="mx-auto mt-16 grid max-w-lg grid-cols-1 gap-8 lg:max-w-none lg:grid-cols-3"
+          className="mx-auto mt-16 flex flex-wrap justify-center gap-8"
           style={{ opacity: 1 }}
         >
           {pricingPlans.map((plan) => (
@@ -92,7 +92,7 @@ const Pricing = () => {
                 plan.featured
                   ? "border-2 border-gold ring-2 ring-gold/20 scale-105"
                   : "border border-gold/20"
-              } bg-gray-900/50 p-8 backdrop-blur-sm transition-all duration-200 hover:border-gold/50 hover:bg-gold/5`}
+              } bg-gray-900/50 p-8 backdrop-blur-sm transition-all duration-200 hover:border-gold/50 hover:bg-gold/5 w-full sm:w-[calc(50%-1rem)] lg:w-[calc(33.333%-1.5rem)]`}
             >
               {plan.featured && (
                 <div className="absolute -top-4 left-1/2 -translate-x-1/2">

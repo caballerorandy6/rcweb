@@ -23,3 +23,6 @@ export type {
 export type { Milestone } from "./milestone";
 export { MilestoneStatus } from "./milestone";
 
+// Review types
+export type { GoogleReview, GoogleReviewsData } from "./review";
+

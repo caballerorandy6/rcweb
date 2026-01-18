@@ -899,32 +899,29 @@ export const deliverables = {
 export const testimonials = [
   {
     content:
-      "Randy transformed our business with a complete website rebuild. Our old site was slow and outdated – the new one is fast, modern, and professional. The custom admin dashboard he created for managing customer communications is saving us 15 hours per week. His email campaign system is intuitive and exactly what we needed. Highly recommend RC Web Solutions to any Houston business.",
-    author: "Michel Chapelli",
-    role: "Owner, GSM A/C & General Contractor Inc.",
-    image: "/testimonials/client1.jpg",
+      "Outstanding service from start to finish. They took the time to understand my needs and created a website that perfectly represents my brand. Fast turnaround, fair pricing, and excellent support even after launch. Five stars well deserved!",
+    author: "Ramon Luis Morales Vega",
     rating: 5,
-    project: "Website Rebuild + Admin Dashboard",
+    time: "a week ago",
   },
   {
     content:
-      "We needed an e-commerce solution that could handle our growing inventory and Randy delivered beyond expectations. The custom product management system he built streamlined our entire operation. Sales increased 35% in the first month after launch. Randy was responsive, knowledgeable, and made the whole process stress-free.",
-    author: "Jennifer Martinez",
-    role: "Founder, Houston Artisan Goods",
-    image: "/testimonials/client2.jpg",
+      "Randy transformed our outdated website into a modern, professional platform that actually brings in customers. Communication was excellent throughout the project, he delivered on time, and the results exceeded our expectations. Highly recommend RC Web Solutions for any business looking to improve their online presence!",
+    author: "Yanisbel Fonseca Cruz",
     rating: 5,
-    project: "E-commerce Platform",
+    time: "a week ago",
   },
   {
     content:
-      "Randy built our appointment scheduling system from scratch and integrated it perfectly with our existing tools. Our clients love the easy booking experience, and we love the automated reminders that reduced no-shows by 60%. Professional, punctual, and genuinely cares about delivering quality work.",
-    author: "David Thompson",
-    role: "Director, Premier Physical Therapy",
-    image: "/testimonials/client3.jpg",
+      "Randy transformed our business with a complete website rebuild. Our old site was slow and outdated – the new one is fast, modern, and professional. But the real value was the custom admin dashboard he created for managing our customer communications. We're now saving 15 hours per week on administrative tasks. What used to take hours now takes minutes. Randy's custom email campaign system is intuitive and exactly what we needed. Randy was professional, communicative, and delivered on time. He explained everything clearly and was always available. Highly recommend RC Web Solutions to any Houston business.",
+    author: "Mike Chapelli",
     rating: 5,
-    project: "Scheduling System",
+    time: "a month ago",
   },
 ];
+
+// Google Reviews - Link to leave a review
+export const GOOGLE_REVIEW_URL = "https://g.page/r/CaUssahd8MITEAE/review";
 
 export const extraFooterLinks = [
   { name: "Privacy Policy", hash: "/privacy-policy" },

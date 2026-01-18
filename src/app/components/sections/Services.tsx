@@ -23,7 +23,7 @@ const Services = () => {
           How I Can Help You
         </Heading>
 
-        <ul className="mx-auto mt-16 grid max-w-2xl grid-cols-1 gap-6 lg:max-w-none lg:grid-cols-2 lg:gap-8">
+        <ul className="mx-auto mt-16 flex flex-wrap justify-center gap-6 lg:gap-8">
           {services.map((service, index) => (
             <motion.li
               key={service.title}
@@ -37,7 +37,7 @@ const Services = () => {
                 damping: 20,
                 delay: index * 0.1,
               }}
-              className="group relative flex flex-col gap-6 rounded-2xl border border-gold/20 bg-gray-900/50 p-6 lg:p-8 backdrop-blur-sm transition-all duration-200 hover:scale-105 hover:border-gold/50 hover:bg-gold/5 shadow-lg shadow-black/20"
+              className="group relative flex flex-col gap-6 rounded-2xl border border-gold/20 bg-gray-900/50 p-6 lg:p-8 backdrop-blur-sm transition-all duration-200 hover:scale-105 hover:border-gold/50 hover:bg-gold/5 shadow-lg shadow-black/20 w-full sm:w-[calc(50%-0.75rem)] lg:w-[calc(33.333%-1.5rem)]"
             >
               <div className="flex items-center gap-4">
                 <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-gold/10 ring-1 ring-gold/30">
