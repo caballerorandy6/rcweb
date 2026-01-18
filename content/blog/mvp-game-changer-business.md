@@ -1,7 +1,7 @@
 ---
 title: "Why Building an MVP Can Be a Game-Changer for Your Business"
 description: "Discover how a Minimum Viable Product (MVP) can help validate your business idea faster, save time and money, and bring your vision to life with real user feedback."
-date: "2025-01-17"
+date: "2026-01-17"
 author: "Randy Caballero"
 image: "/og-image.jpg"
 tags: ["MVP", "Web Development", "Startup Tips", "Case Study", "Next.js", "AI"]
