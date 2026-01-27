@@ -66,7 +66,7 @@ const ProjectsList = ({ projects }: { projects: ProjectProps[] }) => {
         variants={container}
         initial="hidden"
         animate="show"
-        className="mx-auto mt-16 grid max-w-2xl grid-cols-1 gap-x-8 gap-y-20 lg:mx-0 lg:max-w-none lg:grid-cols-3"
+        className="mx-auto mt-16 flex flex-wrap justify-center gap-x-8 gap-y-20"
       >
         <AnimatePresence mode="popLayout">
           {projects.map((project, index) => (
@@ -78,7 +78,7 @@ const ProjectsList = ({ projects }: { projects: ProjectProps[] }) => {
               animate="show"
               exit="exit"
               custom={index}
-              className="col-span-1 flex flex-col h-full bg-gray-900 text-center border border-gold/50 rounded-lg shadow-md hover:shadow-lg transition-shadow w-full animateProjectCard"
+              className="flex flex-col h-full bg-gray-900 text-center border border-gold/50 rounded-lg shadow-md hover:shadow-lg transition-shadow w-full max-w-sm lg:max-w-[calc((100%-4rem)/3)] animateProjectCard"
               whileHover={{
                 scale: 1.03,
                 borderColor: "rgba(203, 178, 106, 0.8)",

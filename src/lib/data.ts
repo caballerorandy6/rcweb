@@ -209,6 +209,22 @@ export const projects: ProjectProps[] = [
   //   url: "https://todo-app-frontend-flame-nu.vercel.app/",
   // },
   {
+    name: "Dulce Antojo Snack Carts",
+    tecnologies: [
+      "NextJS",
+      "React",
+      "TypeScript",
+      "TailwindCSS",
+      "Shadcn UI",
+      "Zod",
+    ],
+    description:
+      "A modern landing page for a snack cart rental business in Houston, TX. Features service showcases, interactive booking forms, and optimized conversions for event catering services.",
+    image: "/dulce-antojo.avif",
+    github: "https://github.com/caballerorandy6/dulce-antojo",
+    url: "https://www.dulceantojosnackcarts.com/",
+  },
+  {
     name: "Photographer Portfolio",
     tecnologies: ["HTML", "CSS", "SASS"],
     description:
