@@ -109,6 +109,11 @@ const Testimonials = () => {
                   <p className="text-sm font-iceland text-white">
                     {testimonial.author}
                   </p>
+                  {testimonial.company && (
+                    <p className="text-xs font-inter text-gold/80">
+                      {testimonial.company}
+                    </p>
+                  )}
                   <p className="text-xs font-inter text-white/60">
                     {testimonial.time}
                   </p>

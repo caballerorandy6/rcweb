@@ -935,24 +935,30 @@ export const deliverables = {
 export const testimonials = [
   {
     content:
-      "Outstanding service from start to finish. They took the time to understand my needs and created a website that perfectly represents my brand. Fast turnaround, fair pricing, and excellent support even after launch. Five stars well deserved!",
-    author: "Ramon Luis Morales Vega",
-    rating: 5,
-    time: "a week ago",
-  },
-  {
-    content:
-      "Randy transformed our outdated website into a modern, professional platform that actually brings in customers. Communication was excellent throughout the project, he delivered on time, and the results exceeded our expectations. Highly recommend RC Web Solutions for any business looking to improve their online presence!",
-    author: "Yanisbel Fonseca Cruz",
-    rating: 5,
-    time: "a week ago",
-  },
-  {
-    content:
       "Randy transformed our business with a complete website rebuild. Our old site was slow and outdated – the new one is fast, modern, and professional. But the real value was the custom admin dashboard he created for managing our customer communications. We're now saving 15 hours per week on administrative tasks. What used to take hours now takes minutes. Randy's custom email campaign system is intuitive and exactly what we needed. Randy was professional, communicative, and delivered on time. He explained everything clearly and was always available. Highly recommend RC Web Solutions to any Houston business.",
-    author: "Mike Chapelli",
+    author: "Michel Chapelli",
+    company: "GSM A/C & General Contractor Inc.",
     rating: 5,
     time: "a month ago",
+    highlight: "Saving 15 hours per week",
+  },
+  {
+    content:
+      "Working with Randy from RC Web Solutions LLC was a great experience. He was professional, responsive, and really took the time to understand my business. The website turned out clean, modern, and easy for customers to use. I'm very happy with the results and would definitely recommend him to anyone needing a professional website.",
+    author: "Leonardo Lecour Acosta",
+    company: "Leo's Home Experts",
+    rating: 5,
+    time: "a week ago",
+    highlight: "Clean, modern, and easy to use",
+  },
+  {
+    content:
+      "Excellent experience working on the development of our website. Professional, responsible, and technically skilled. Delivered on time, optimized speed and SEO structure, and was always willing to improve details.",
+    author: "Yoannis Aguilar Fonseca",
+    company: "",
+    rating: 5,
+    time: "2 days ago",
+    highlight: "Optimized speed and SEO",
   },
 ];
 
