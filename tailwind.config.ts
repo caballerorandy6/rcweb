@@ -1,6 +1,8 @@
 import type { Config } from "tailwindcss";
 
 export default {
+  // Enable dark mode with class strategy
+  darkMode: "class",
   content: [
     "./src/pages/**/*.{js,ts,jsx,tsx,mdx}",
     "./src/components/**/*.{js,ts,jsx,tsx,mdx}",
@@ -13,6 +15,7 @@ export default {
         gold: {
           DEFAULT: "#CBB26A",
           dark: "#A89048",
+          darker: "#8B7945",
           light: "#D9C98A",
         },
         // UI colors
