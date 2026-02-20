@@ -228,7 +228,7 @@ const Hero = () => {
                 <PhoneIcon className="w-5 h-5" />
                 +1 (346) 375-7534
               </motion.a>
-              <span className="text-white/40 hidden sm:inline">|</span>
+              <span className="text-white/50 hidden sm:inline">|</span>
               <Link
                 href={"/schedule" as Route}
                 className="inline-flex items-center gap-2 text-gold hover:text-gold/80 transition-colors duration-200 font-inter text-sm sm:text-base font-semibold"

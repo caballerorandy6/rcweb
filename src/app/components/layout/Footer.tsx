@@ -119,7 +119,7 @@ export default function Footer() {
                 <p className="text-white/60 font-inter text-sm">
                   Ready to start your project?
                 </p>
-                <p className="text-white/40 font-inter text-xs">
+                <p className="text-white/50 font-inter text-xs">
                   Let&apos;s discuss your project
                 </p>
 
@@ -185,7 +185,7 @@ export default function Footer() {
                 </span> */}
               </p>
               <span className="text-white/30">•</span>
-              <p className="text-white/40 font-inter text-xs">
+              <p className="text-white/50 font-inter text-xs">
                 All Rights Reserved
               </p>
             </div>

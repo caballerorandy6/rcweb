@@ -312,7 +312,7 @@ const DialogForm = ({ closeModal }: DialogFormProps) => {
 
             {/* reCAPTCHA disclosure (required when hiding badge) */}
             <div className="flex justify-center mt-3">
-              <p className="text-white/40 font-inter text-xs text-center leading-relaxed max-w-md">
+              <p className="text-white/50 font-inter text-xs text-center leading-relaxed max-w-md">
                 This site is protected by reCAPTCHA and the Google{" "}
                 <a
                   href="https://policies.google.com/privacy"
