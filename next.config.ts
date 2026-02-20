@@ -77,7 +77,8 @@ const nextConfig: NextConfig = {
   typedRoutes: true,
 
   // External packages configuration
-  serverExternalPackages: ['prettier'],
+  // @prisma/client is needed for Turbopack to resolve WASM modules correctly
+  serverExternalPackages: ['@prisma/client', 'prettier'],
 
   // Experimental features
   experimental: {
