@@ -1,7 +1,7 @@
 import { genPageMetadata } from "@/utils/genPageMetadata";
-import { JsonLdForBreadcrumb } from "@/app/components/seo/JsonLdForBreadcrumb";
+import { JsonLdForBreadcrumb } from "@/components/seo/JsonLdForBreadcrumb";
 import { siteConfig } from "@/config/site";
-import ScheduleContent from "@/app/components/sections/ScheduleContent";
+import ScheduleContent from "@/components/sections/ScheduleContent";
 
 export const metadata = genPageMetadata({
   title: "Schedule Free Consultation",

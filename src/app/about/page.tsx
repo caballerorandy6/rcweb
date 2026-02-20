@@ -1,9 +1,9 @@
 import { genPageMetadata } from "@/utils/genPageMetadata";
-import { JsonLdForBreadcrumb } from "@/app/components/seo/JsonLdForBreadcrumb";
+import { JsonLdForBreadcrumb } from "@/components/seo/JsonLdForBreadcrumb";
 import { siteConfig } from "@/config/site";
-import About from "@/app/components/sections/About";
-import Experience from "@/app/components/sections/Experience";
-import Certifications from "@/app/components/sections/Certifications";
+import About from "@/components/sections/About";
+import Experience from "@/components/sections/Experience";
+import Certifications from "@/components/sections/Certifications";
 
 export const metadata = genPageMetadata({
   title: "About Randy Caballero - Full-Stack Web Developer",

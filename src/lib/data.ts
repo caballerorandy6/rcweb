@@ -1,24 +1,24 @@
-import { ProjectProps } from "@/app/components/sections/Project";
+import { ProjectProps } from "@/components/sections/Project";
 import React from "react";
-import JavaScriptIcon from "@/app/components/icons/Javascript";
-import ReactIcon from "@/app/components/icons/React";
-import NextJS from "@/app/components/icons/NextJS";
-import PostgreSQL from "@/app/components/icons/PostgreSQL";
-import TailwindCSS from "@/app/components/icons/TailwindCSS";
-import Docker from "@/app/components/icons/Docker";
-import TypeScript from "@/app/components/icons/TypeScript";
-import AWS from "@/app/components/icons/AWS";
-import MySQL from "@/app/components/icons/MySQL";
-import Prisma from "@/app/components/icons/Prisma";
-import MongoDB from "@/app/components/icons/MongoDB";
-import SASS from "@/app/components/icons/SASS";
-import Jira from "@/app/components/icons/Jira";
-//import Wordpress from "@/app/components/icons/Wordpress";
-import NodeJS from "@/app/components/icons/NodeJS";
-import { TeachMarqueeProps } from "@/app/components/ui/TechMarquee";
+import JavaScriptIcon from "@/components/icons/Javascript";
+import ReactIcon from "@/components/icons/React";
+import NextJS from "@/components/icons/NextJS";
+import PostgreSQL from "@/components/icons/PostgreSQL";
+import TailwindCSS from "@/components/icons/TailwindCSS";
+import Docker from "@/components/icons/Docker";
+import TypeScript from "@/components/icons/TypeScript";
+import AWS from "@/components/icons/AWS";
+import MySQL from "@/components/icons/MySQL";
+import Prisma from "@/components/icons/Prisma";
+import MongoDB from "@/components/icons/MongoDB";
+import SASS from "@/components/icons/SASS";
+import Jira from "@/components/icons/Jira";
+//import Wordpress from "@/components/icons/Wordpress";
+import NodeJS from "@/components/icons/NodeJS";
+import { TeachMarqueeProps } from "@/components/ui/TechMarquee";
 import { BriefcaseIcon, AcademicCapIcon } from "@heroicons/react/24/outline";
-import { NavigationProps } from "@/app/components/layout/Navbar";
-import { ExperienceProps } from "@/app/components/sections/Experience";
+import { NavigationProps } from "@/components/layout/Navbar";
+import { ExperienceProps } from "@/components/sections/Experience";
 import {
   ChatBubbleLeftRightIcon,
   PencilSquareIcon,

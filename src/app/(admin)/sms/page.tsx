@@ -1,12 +1,12 @@
 import { Suspense } from "react";
-import SendSmsCampaign from "@/app/components/admin/SendSmsCampaign";
-import SmsDeliveryStats from "@/app/components/admin/SmsDeliveryStats";
-import CampaignSkeleton from "@/app/components/skeletons/CampaignSkeleton";
+import SendSmsCampaign from "@/components/admin/SendSmsCampaign";
+import SmsDeliveryStats from "@/components/admin/SmsDeliveryStats";
+import CampaignSkeleton from "@/components/skeletons/CampaignSkeleton";
 import { auth } from "@/lib/auth";
 import { redirect } from "next/navigation";
 import { genPageMetadata } from "@/utils/genPageMetadata";
 import { getSmsStatsAction } from "@/actions/stats/getSmsStatsAction";
-import SmsTabs from "@/app/components/admin/SmsTabs";
+import SmsTabs from "@/components/admin/SmsTabs";
 
 // Increase timeout for large SMS campaigns (5 minutes)
 export const maxDuration = 300;

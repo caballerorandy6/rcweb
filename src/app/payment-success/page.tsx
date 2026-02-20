@@ -1,9 +1,9 @@
 import { Suspense } from "react";
 import { prisma } from "@/lib/prisma";
 import { handlePaymentSuccessAction } from "@/actions/payments/handlePaymentSuccessAction";
-import PaymentSuccess from "@/app/components/payment/PaymentSuccess";
-import SubscriptionSuccess from "@/app/components/payment/SubscriptionSuccess";
-import PaymentSuccessSkeleton from "@/app/components/skeletons/PaymentSuccessSkeleton";
+import PaymentSuccess from "@/components/payment/PaymentSuccess";
+import SubscriptionSuccess from "@/components/payment/SubscriptionSuccess";
+import PaymentSuccessSkeleton from "@/components/skeletons/PaymentSuccessSkeleton";
 import { genPageMetadata } from "@/utils/genPageMetadata";
 
 export const metadata = genPageMetadata({

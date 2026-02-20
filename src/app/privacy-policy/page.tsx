@@ -1,5 +1,5 @@
-import PrivacyPolicy from "@/app/components/sections/PrivacyPolicy";
-import { JsonLdForBreadcrumb } from "@/app/components/seo/JsonLdForBreadcrumb";
+import PrivacyPolicy from "@/components/sections/PrivacyPolicy";
+import { JsonLdForBreadcrumb } from "@/components/seo/JsonLdForBreadcrumb";
 import { genPageMetadata } from "@/utils/genPageMetadata";
 import { siteConfig } from "@/config/site";
 

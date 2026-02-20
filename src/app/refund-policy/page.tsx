@@ -1,5 +1,5 @@
-import RefundPolicy from "@/app/components/sections/RefundPolicy";
-import { JsonLdForBreadcrumb } from "@/app/components/seo/JsonLdForBreadcrumb";
+import RefundPolicy from "@/components/sections/RefundPolicy";
+import { JsonLdForBreadcrumb } from "@/components/seo/JsonLdForBreadcrumb";
 import { genPageMetadata } from "@/utils/genPageMetadata";
 import { siteConfig } from "@/config/site";
 

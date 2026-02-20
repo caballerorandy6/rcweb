@@ -2,8 +2,8 @@ import { Metadata } from "next";
 import { redirect } from "next/navigation";
 import { auth } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
-import ProfileForm from "@/app/components/client/ProfileForm";
-import ChangePasswordForm from "@/app/components/client/ChangePasswordForm";
+import ProfileForm from "@/components/client/ProfileForm";
+import ChangePasswordForm from "@/components/client/ChangePasswordForm";
 import { genPageMetadata } from "@/utils/genPageMetadata";
 import type { Route } from "next";
 

@@ -2,7 +2,7 @@ import { Metadata } from "next";
 import { redirect } from "next/navigation";
 import type { Route } from "next";
 import { prisma } from "@/lib/prisma";
-import SetupPasswordForm from "@/app/components/client/SetupPasswordForm";
+import SetupPasswordForm from "@/components/client/SetupPasswordForm";
 import { genPageMetadata } from "@/utils/genPageMetadata";
 
 export const metadata: Metadata = genPageMetadata({

@@ -1,5 +1,5 @@
-import ManageSubscription from "@/app/components/sections/ManageSubscription";
-import { JsonLdForBreadcrumb } from "@/app/components/seo/JsonLdForBreadcrumb";
+import ManageSubscription from "@/components/sections/ManageSubscription";
+import { JsonLdForBreadcrumb } from "@/components/seo/JsonLdForBreadcrumb";
 import { genPageMetadata } from "@/utils/genPageMetadata";
 import { siteConfig } from "@/config/site";
 

@@ -1,7 +1,7 @@
 import { genPageMetadata } from "@/utils/genPageMetadata";
-import { JsonLdForBreadcrumb } from "@/app/components/seo/JsonLdForBreadcrumb";
+import { JsonLdForBreadcrumb } from "@/components/seo/JsonLdForBreadcrumb";
 import { siteConfig } from "@/config/site";
-import GuideContent from "@/app/components/sections/GuideContent";
+import GuideContent from "@/components/sections/GuideContent";
 
 export const metadata = genPageMetadata({
   title: "Free Web Development Guide for Small Businesses",

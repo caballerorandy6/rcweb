@@ -1,7 +1,7 @@
 import { Metadata } from "next";
 import { Suspense } from "react";
-import ForgotPasswordForm from "@/app/components/client/ForgotPasswordForm";
-import ForgotPasswordSkeleton from "@/app/components/skeletons/ForgotPasswordSkeleton";
+import ForgotPasswordForm from "@/components/client/ForgotPasswordForm";
+import ForgotPasswordSkeleton from "@/components/skeletons/ForgotPasswordSkeleton";
 import { genPageMetadata } from "@/utils/genPageMetadata";
 
 export const metadata: Metadata = genPageMetadata({

@@ -1,4 +1,4 @@
-import ClientInvoicesSkeleton from "@/app/components/skeletons/ClientInvoicesSkeleton";
+import ClientInvoicesSkeleton from "@/components/skeletons/ClientInvoicesSkeleton";
 
 export default function Loading() {
   return <ClientInvoicesSkeleton />;

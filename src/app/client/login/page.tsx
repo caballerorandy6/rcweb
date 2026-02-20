@@ -1,9 +1,9 @@
 import { Metadata } from "next";
 import { Suspense } from "react";
 import { auth } from "@/lib/auth";
-import ClientLoginForm from "@/app/components/client/ClientLoginForm";
-import ClientLoginSkeleton from "@/app/components/skeletons/ClientLoginSkeleton";
-import DashboardRedirect from "@/app/components/client/DashboardRedirect";
+import ClientLoginForm from "@/components/client/ClientLoginForm";
+import ClientLoginSkeleton from "@/components/skeletons/ClientLoginSkeleton";
+import DashboardRedirect from "@/components/client/DashboardRedirect";
 import { genPageMetadata } from "@/utils/genPageMetadata";
 
 export const metadata: Metadata = genPageMetadata({

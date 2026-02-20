@@ -2,7 +2,7 @@ import { Metadata } from "next";
 import { redirect } from "next/navigation";
 import { auth } from "@/lib/auth";
 import { getClientInvoicesAction } from "@/actions/invoices/getClientInvoicesAction";
-import ClientInvoices from "@/app/components/client/ClientInvoices";
+import ClientInvoices from "@/components/client/ClientInvoices";
 import { genPageMetadata } from "@/utils/genPageMetadata";
 import type { Route } from "next";
 

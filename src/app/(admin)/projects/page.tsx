@@ -1,5 +1,5 @@
-import ProjectManagement from "@/app/components/admin/ProjectManagement";
-import ProjectManagementSkeleton from "@/app/components/skeletons/ProjectManagementSkeleton";
+import ProjectManagement from "@/components/admin/ProjectManagement";
+import ProjectManagementSkeleton from "@/components/skeletons/ProjectManagementSkeleton";
 import { auth } from "@/lib/auth";
 import { redirect } from "next/navigation";
 import { Suspense } from "react";

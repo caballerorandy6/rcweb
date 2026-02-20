@@ -6,12 +6,12 @@ import Script from "next/script";
 import "./globals.css";
 import { Toaster } from "sonner";
 
-import ConditionalLayout from "@/app/components/layout/ConditionalLayout";
-import CookieConsentProvider from "@/app/components/forms/CookieConsentProvider";
-import Analytics from "@/app/components/tracking/Analytics";
+import ConditionalLayout from "@/components/layout/ConditionalLayout";
+import CookieConsentProvider from "@/components/forms/CookieConsentProvider";
+import Analytics from "@/components/tracking/Analytics";
 // COMMENTED: Not using ads - uncomment if running ad campaigns
-// import FacebookPixel from "@/app/components/tracking/FacebookPixel";
-// import LinkedInInsightTag from "@/app/components/tracking/LinkedInInsightTag";
+// import FacebookPixel from "@/components/tracking/FacebookPixel";
+// import LinkedInInsightTag from "@/components/tracking/LinkedInInsightTag";
 import { siteConfig } from "@/config/site";
 import { Analytics as VercelAnalytics } from "@vercel/analytics/next";
 

@@ -1,5 +1,5 @@
-import PaymentComplete from "@/app/components/payment/PaymentComplete";
-import PaymentCompleteSkeleton from "@/app/components/skeletons/PaymentCompleteSkeleton";
+import PaymentComplete from "@/components/payment/PaymentComplete";
+import PaymentCompleteSkeleton from "@/components/skeletons/PaymentCompleteSkeleton";
 import { genPageMetadata } from "@/utils/genPageMetadata";
 import { Suspense } from "react";
 

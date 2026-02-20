@@ -1,5 +1,5 @@
-import Unsubscribe from "@/app/components/forms/Unsubscribe";
-import UnsubscribeSkeleton from "@/app/components/skeletons/UnsubscribeSkeleton";
+import Unsubscribe from "@/components/forms/Unsubscribe";
+import UnsubscribeSkeleton from "@/components/skeletons/UnsubscribeSkeleton";
 import { genPageMetadata } from "@/utils/genPageMetadata";
 import { Suspense } from "react";
 

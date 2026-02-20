@@ -2,23 +2,23 @@ import type { Metadata } from "next";
 import { siteConfig } from "@/config/site";
 
 // Components
-import Hero from "@/app/components/sections/Hero";
-import Services from "@/app/components/sections/Services";
-import Projects from "@/app/components/sections/Projects";
-import Process from "@/app/components/sections/Process";
-import Experience from "@/app/components/sections/Experience";
-import Testimonials from "@/app/components/sections/Testimonials";
-import Pricing from "@/app/components/sections/Pricing";
-import FAQ from "@/app/components/sections/FAQ";
-import Contact from "@/app/components/sections/Contact";
-import CTA from "@/app/components/sections/FloatingCTA";
-import Certifications from "@/app/components/sections/Certifications";
-import ScrollSpy from "@/app/components/ui/ScrollSpy";
-import { JsonLdForFaq } from "@/app/components/seo/JsonLdForFaq";
-import { JsonLdForService } from "@/app/components/seo/JsonLdForService";
-import { JsonLdForOrganization } from "@/app/components/seo/JsonLdForOrganization";
-import { JsonLdForLocalBusiness } from "@/app/components/seo/JsonLdForLocalBusiness";
-import { JsonLdForWebSite } from "@/app/components/seo/JsonLdForWebSite";
+import Hero from "@/components/sections/Hero";
+import Services from "@/components/sections/Services";
+import Projects from "@/components/sections/Projects";
+import Process from "@/components/sections/Process";
+import Experience from "@/components/sections/Experience";
+import Testimonials from "@/components/sections/Testimonials";
+import Pricing from "@/components/sections/Pricing";
+import FAQ from "@/components/sections/FAQ";
+import Contact from "@/components/sections/Contact";
+import CTA from "@/components/sections/FloatingCTA";
+import Certifications from "@/components/sections/Certifications";
+import ScrollSpy from "@/components/ui/ScrollSpy";
+import { JsonLdForFaq } from "@/components/seo/JsonLdForFaq";
+import { JsonLdForService } from "@/components/seo/JsonLdForService";
+import { JsonLdForOrganization } from "@/components/seo/JsonLdForOrganization";
+import { JsonLdForLocalBusiness } from "@/components/seo/JsonLdForLocalBusiness";
+import { JsonLdForWebSite } from "@/components/seo/JsonLdForWebSite";
 import { faqs, pricingPlans } from "@/lib/data";
 
 export const metadata: Metadata = {

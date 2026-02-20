@@ -1,7 +1,7 @@
 import { Metadata } from "next";
 import { redirect } from "next/navigation";
 import { prisma } from "@/lib/prisma";
-import ResetPasswordForm from "@/app/components/client/ResetPasswordForm";
+import ResetPasswordForm from "@/components/client/ResetPasswordForm";
 import { genPageMetadata } from "@/utils/genPageMetadata";
 import type { Route } from "next";
 

@@ -1,8 +1,8 @@
 import { Metadata } from "next";
 import { Suspense } from "react";
 import { genPageMetadata } from "@/utils/genPageMetadata";
-import BlogUnsubscribeForm from "@/app/components/blog/BlogUnsubscribeForm";
-import BlogUnsubscribeSkeleton from "@/app/components/skeletons/BlogUnsubscribeSkeleton";
+import BlogUnsubscribeForm from "@/components/blog/BlogUnsubscribeForm";
+import BlogUnsubscribeSkeleton from "@/components/skeletons/BlogUnsubscribeSkeleton";
 
 export const metadata: Metadata = genPageMetadata({
   title: "Unsubscribe from Blog - RC Web Solutions",

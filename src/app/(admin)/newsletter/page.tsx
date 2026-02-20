@@ -1,6 +1,6 @@
 import { Suspense } from "react";
-import Newsletter from "@/app/components/admin/SendNewsletterCampaign";
-import CampaignSkeleton from "@/app/components/skeletons/CampaignSkeleton";
+import Newsletter from "@/components/admin/SendNewsletterCampaign";
+import CampaignSkeleton from "@/components/skeletons/CampaignSkeleton";
 import { auth } from "@/lib/auth";
 import { redirect } from "next/navigation";
 import { genPageMetadata } from "@/utils/genPageMetadata";

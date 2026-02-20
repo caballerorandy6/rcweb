@@ -1,5 +1,5 @@
 import { Metadata } from "next";
-import ClientRegisterForm from "@/app/components/client/ClientRegisterForm";
+import ClientRegisterForm from "@/components/client/ClientRegisterForm";
 import { genPageMetadata } from "@/utils/genPageMetadata";
 
 export const metadata: Metadata = genPageMetadata({

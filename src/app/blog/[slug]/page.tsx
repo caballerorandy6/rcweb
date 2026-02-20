@@ -1,10 +1,10 @@
 import { notFound } from "next/navigation";
 import { genPageMetadata } from "@/utils/genPageMetadata";
-import { JsonLdForBreadcrumb } from "@/app/components/seo/JsonLdForBreadcrumb";
-import { JsonLdForArticle } from "@/app/components/seo/JsonLdForArticle";
+import { JsonLdForBreadcrumb } from "@/components/seo/JsonLdForBreadcrumb";
+import { JsonLdForArticle } from "@/components/seo/JsonLdForArticle";
 import { siteConfig } from "@/config/site";
 import { getPostBySlug, getAllSlugs } from "@/lib/blog";
-import BlogPost from "@/app/components/blog/BlogPost";
+import BlogPost from "@/components/blog/BlogPost";
 
 interface BlogPostPageProps {
   params: Promise<{

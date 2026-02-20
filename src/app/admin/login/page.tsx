@@ -1,4 +1,4 @@
-import LoginForm from "@/app/components/auth/LoginForm";
+import LoginForm from "@/components/auth/LoginForm";
 import { genPageMetadata } from "@/utils/genPageMetadata";
 import type { Route } from "next";
 

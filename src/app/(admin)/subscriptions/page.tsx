@@ -1,5 +1,5 @@
-import SubscriptionManagementWrapper from "@/app/components/wrappers/SubscriptionManagementWrapper";
-import SubscriptionManagementSkeleton from "@/app/components/skeletons/SubscriptionManagementSkeleton";
+import SubscriptionManagementWrapper from "@/components/wrappers/SubscriptionManagementWrapper";
+import SubscriptionManagementSkeleton from "@/components/skeletons/SubscriptionManagementSkeleton";
 import { auth } from "@/lib/auth";
 import { redirect } from "next/navigation";
 import { Suspense } from "react";
