@@ -77,8 +77,13 @@ const nextConfig: NextConfig = {
   typedRoutes: true,
 
   // External packages configuration
-  // @prisma/client is needed for Turbopack to resolve WASM modules correctly
-  serverExternalPackages: ['@prisma/client', 'prettier'],
+  // Prisma packages needed for driver adapters with WASM modules
+  serverExternalPackages: [
+    '@prisma/client',
+    '@prisma/adapter-pg',
+    'prisma',
+    'prettier',
+  ],
 
   // Experimental features
   experimental: {
