@@ -1,4 +1,4 @@
-import { useTransition, useRef, useState } from "react";
+import { useTransition, useRef, useState, useCallback } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { ErrorMessage } from "@hookform/error-message";
@@ -34,6 +34,14 @@ const DialogForm = ({ closeModal }: DialogFormProps) => {
   const [isPending, startTransition] = useTransition();
   const formMountTime = useRef<number>(Date.now());
   const [honeypot, setHoneypot] = useState("");
+  const [loadRecaptcha, setLoadRecaptcha] = useState(false);
+
+  // Lazy load reCAPTCHA on first interaction
+  const handleFormInteraction = useCallback(() => {
+    if (!loadRecaptcha) {
+      setLoadRecaptcha(true);
+    }
+  }, [loadRecaptcha]);
 
   const {
     register,
@@ -126,11 +134,11 @@ const DialogForm = ({ closeModal }: DialogFormProps) => {
 
   return (
     <>
-      {/* Load reCAPTCHA v3 */}
-      {RECAPTCHA_SITE_KEY && (
+      {/* Load reCAPTCHA v3 only on user interaction */}
+      {RECAPTCHA_SITE_KEY && loadRecaptcha && (
         <Script
           src={`https://www.google.com/recaptcha/api.js?render=${RECAPTCHA_SITE_KEY}`}
-          strategy="lazyOnload"
+          strategy="afterInteractive"
         />
       )}
 
@@ -139,6 +147,7 @@ const DialogForm = ({ closeModal }: DialogFormProps) => {
 
         <form
           onSubmit={handleSubmit(onSubmit)}
+          onFocus={handleFormInteraction}
           className="relative space-y-6 bg-gradient-to-br from-gray-900/95 to-gray-800/95 p-8 rounded-2xl shadow-2xl backdrop-blur-sm border border-gray-700/50 hover:border-gold/30 transition-all duration-500"
         >
           <div className="absolute top-0 left-0 w-20 h-20 bg-gold/10 rounded-full blur-2xl"></div>

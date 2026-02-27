@@ -60,12 +60,8 @@ const Hero = () => {
       </div>
 
       <div className="mx-auto max-w-7xl px-6 lg:px-8 h-full flex flex-col justify-center">
-        <motion.div
-          className="mx-auto max-w-2xl text-center"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ type: "spring", stiffness: 150, damping: 20 }}
-        >
+        <div className="mx-auto max-w-2xl text-center">
+          {/* h1 fuera de motion.div para no bloquear LCP */}
           <h1 className="text-5xl font-iceland tracking-tight sm:text-9xl text-gold animate-hero-title">
             RC Web Solutions
           </h1>
@@ -228,7 +224,7 @@ const Hero = () => {
               </Link>
             </div>
           </motion.div>
-        </motion.div>
+        </div>
       </div>
     </section>
   );
