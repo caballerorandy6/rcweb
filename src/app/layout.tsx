@@ -128,9 +128,6 @@ export default function RootLayout({
       <head>
         {/* Critical preconnects for fonts - always needed regardless of consent */}
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-        {/* Preconnect for Google services (Analytics, reCAPTCHA) - 300ms savings */}
-        <link rel="preconnect" href="https://www.google.com" crossOrigin="anonymous" />
-        <link rel="preconnect" href="https://www.gstatic.com" crossOrigin="anonymous" />
 
         {/* Google Consent Mode v2 - Must load BEFORE gtag */}
         <Script
