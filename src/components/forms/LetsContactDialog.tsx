@@ -1,8 +1,18 @@
 import { useRCWebStore } from "@/store/rcweb-store";
+import dynamic from "next/dynamic";
 
 //Components
-import DialogForm from "./DialogForm";
 import { Dialog, DialogBackdrop, DialogPanel } from "@headlessui/react";
+
+// Dynamic import - reCAPTCHA solo carga cuando el dialog se abre
+const DialogForm = dynamic(() => import("./DialogForm"), {
+  ssr: false,
+  loading: () => (
+    <div className="flex items-center justify-center p-8">
+      <div className="w-8 h-8 border-2 border-gold border-t-transparent rounded-full animate-spin" />
+    </div>
+  ),
+});
 
 const LetsContactDialog = () => {
   const { isOpenLetsContactDialog, setOpenLetsContactDialog } = useRCWebStore();

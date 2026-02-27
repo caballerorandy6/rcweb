@@ -15,7 +15,9 @@ export default function ConditionalLayout({
   return (
     <>
       {!isAdminRoute && <Header />}
-      {children}
+      <main id="main-content" tabIndex={-1}>
+        {children}
+      </main>
       {!isAdminRoute && <Footer />}
     </>
   );

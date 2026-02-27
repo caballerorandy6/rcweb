@@ -128,6 +128,9 @@ export default function RootLayout({
       <head>
         {/* Critical preconnects for fonts - always needed regardless of consent */}
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        {/* Preconnect for Google services (Analytics, reCAPTCHA) - 300ms savings */}
+        <link rel="preconnect" href="https://www.google.com" crossOrigin="anonymous" />
+        <link rel="preconnect" href="https://www.gstatic.com" crossOrigin="anonymous" />
 
         {/* Google Consent Mode v2 - Must load BEFORE gtag */}
         <Script
@@ -153,14 +156,14 @@ export default function RootLayout({
           }}
         />
 
-        {/* Google Analytics gtag.js - Loads immediately but respects consent mode */}
+        {/* Google Analytics gtag.js - Lazy load para no bloquear render */}
         <Script
           src={`https://www.googletagmanager.com/gtag/js?id=${process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID}`}
-          strategy="afterInteractive"
+          strategy="lazyOnload"
         />
         <Script
           id="google-analytics-init"
-          strategy="afterInteractive"
+          strategy="lazyOnload"
           dangerouslySetInnerHTML={{
             __html: `
               window.dataLayer = window.dataLayer || [];
