@@ -1,11 +1,9 @@
 "use server";
 
-import Stripe from "stripe";
 import { prisma } from "@/lib/prisma";
+import stripe from "@/lib/stripe";
 import { requireAdmin } from "@/lib/authGuard";
 import type { ActionResultSimple } from "@/types/common";
-
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!);
 
 /**
  * Cancels a subscription immediately via Stripe API

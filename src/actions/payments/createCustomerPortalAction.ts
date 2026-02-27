@@ -1,9 +1,7 @@
 "use server";
 
-import Stripe from "stripe";
 import { prisma } from "@/lib/prisma";
-
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!);
+import stripe from "@/lib/stripe";
 
 export interface CustomerPortalResponse {
   success: boolean;

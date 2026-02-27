@@ -1,6 +1,6 @@
 "use server";
 
-import Stripe from "stripe";
+import stripe from "@/lib/stripe";
 import { generateProjectCode } from "@/lib/utils";
 
 // Stripe Price ID for Monthly Maintenance Subscription
@@ -33,10 +33,6 @@ export async function createStripeCheckoutAction({
   planId?: string;
 }): Promise<StripeCheckoutResponse> {
   try {
-    const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
-      apiVersion: "2025-08-27.basil",
-    });
-
     // Check if this is the maintenance subscription plan
     const isSubscription = planId === "website-maintenance";
 

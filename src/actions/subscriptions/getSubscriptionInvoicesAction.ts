@@ -2,9 +2,8 @@
 
 import Stripe from "stripe";
 import { prisma } from "@/lib/prisma";
+import stripe from "@/lib/stripe";
 import type { ActionResult } from "@/types/common";
-
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!);
 
 export interface InvoiceData {
   id: string;

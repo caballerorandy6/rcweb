@@ -58,8 +58,6 @@ model ContactEmail {
   contactId String
   email     String   @unique
   contact   Contact  @relation(fields: [contactId], references: [id], onDelete: Cascade)
-
-  @@index([email])
 }
 
 model ContactPhone {
@@ -68,8 +66,6 @@ model ContactPhone {
   phone     String   @unique
   type      String?  // mobile, home, work, etc.
   contact   Contact  @relation(fields: [contactId], references: [id], onDelete: Cascade)
-
-  @@index([phone])
 }
 
 model User {
@@ -189,6 +185,7 @@ model Payment {
   @@index([email])
   @@index([projectCode])
   @@index([accessToken])
+  @@index([clientId])
 }
 
 model TermsAcceptance {

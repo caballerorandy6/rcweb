@@ -50,9 +50,8 @@ const nextConfig: NextConfig = {
   // React Compiler (Next.js 16+)
   reactCompiler: true,
 
-  // Configuraciones para Next.js 15
+  // Image optimization configuration
   images: {
-    unoptimized: true,
     remotePatterns: [
       {
         protocol: "https",

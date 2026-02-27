@@ -2,15 +2,12 @@
 
 import Stripe from "stripe";
 import { prisma } from "@/lib/prisma";
+import stripe from "@/lib/stripe";
 import { Resend } from "resend";
 import {
   sendInitialPaymentConfirmation,
   sendAdminInitialPaymentFallback,
 } from "@/lib/email/senders";
-
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
-  apiVersion: "2025-08-27.basil",
-});
 
 export async function handlePaymentSuccessAction(
   sessionId: string,

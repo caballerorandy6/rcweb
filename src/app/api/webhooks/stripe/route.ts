@@ -3,6 +3,7 @@
 import { NextResponse } from "next/server";
 import Stripe from "stripe";
 import { prisma } from "@/lib/prisma";
+import stripe from "@/lib/stripe";
 import { Resend } from "resend";
 import crypto from "crypto";
 import { trackPaymentComplete } from "@/lib/analytics";
@@ -18,9 +19,6 @@ import {
 } from "@/lib/email";
 
 // Environment variables validation
-if (!process.env.STRIPE_SECRET_KEY) {
-  throw new Error("STRIPE_SECRET_KEY is not configured");
-}
 if (!process.env.STRIPE_WEBHOOK_SECRET) {
   throw new Error("STRIPE_WEBHOOK_SECRET is not configured");
 }
@@ -28,7 +26,6 @@ if (!process.env.RESEND_API_KEY) {
   throw new Error("RESEND_API_KEY is not configured");
 }
 
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
 const endpointSecret = process.env.STRIPE_WEBHOOK_SECRET;
 const TERMS_VERSION = "2025-09-25"; // Centralized terms version
 

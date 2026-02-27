@@ -1,12 +1,11 @@
 "use server";
 
-import Stripe from "stripe";
 import { Resend } from "resend";
 import { prisma } from "@/lib/prisma";
+import stripe from "@/lib/stripe";
 import { sendSubscriptionPortalLink } from "@/lib/email/senders";
 import type { ActionResultSimple } from "@/types/common";
 
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!);
 const resend = new Resend(process.env.RESEND_API_KEY);
 
 /**
