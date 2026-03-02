@@ -26,19 +26,17 @@
     color: #f7df1e;
   }
 
-  /* Hero title animation - starts at opacity:1 to not block LCP */
+  /* Hero title animation - transform only (no blur/opacity for performance) */
   .animate-hero-title {
-    animation: hero-title 0.8s ease-out forwards;
+    animation: hero-title 0.6s ease-out forwards;
   }
 
   @keyframes hero-title {
     from {
-      transform: scale(0.95) translateY(8px);
-      filter: blur(3px);
+      transform: scale(0.96) translateY(12px);
     }
     to {
       transform: scale(1) translateY(0);
-      filter: blur(0);
     }
   }
 }
