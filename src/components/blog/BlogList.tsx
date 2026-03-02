@@ -45,20 +45,10 @@ export default function BlogList({ posts }: BlogListProps) {
 
         {/* Blog Posts Grid */}
         {posts.length > 0 ? (
-          <motion.div
-            className="mt-16 grid gap-8 md:grid-cols-2 lg:grid-cols-3"
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ type: "spring", stiffness: 200, damping: 20 }}
-          >
+          <div className="mt-16 grid gap-8 md:grid-cols-2 lg:grid-cols-3">
             {posts.map((post, index) => (
-              <motion.article
+              <article
                 key={post.slug}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: 0.1 * index }}
                 className="group relative flex flex-col overflow-hidden rounded-2xl bg-gradient-to-br from-gray-800/50 to-gray-900/50 backdrop-blur-lg border border-gray-700/50 hover:border-gold/30 transition-all duration-300"
               >
                 {/* Featured Image */}
@@ -68,6 +58,8 @@ export default function BlogList({ posts }: BlogListProps) {
                       src={post.image}
                       alt={post.title}
                       fill
+                      priority={index === 0}
+                      sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
                       className="object-cover group-hover:scale-105 transition-transform duration-300"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-gray-900 to-transparent opacity-60"></div>
@@ -93,9 +85,9 @@ export default function BlogList({ posts }: BlogListProps) {
                   <Link href={`/blog/${post.slug}` as Route} className="absolute inset-0" aria-hidden="true">
                     <span className="sr-only">{post.title}</span>
                   </Link>
-                  <h3 className="text-2xl font-bold text-gold font-iceland mb-3 group-hover:text-gold/90 transition-colors relative">
+                  <h2 className="text-2xl font-bold text-gold font-iceland mb-3 group-hover:text-gold/90 transition-colors relative">
                     {post.title}
-                  </h3>
+                  </h2>
 
                   {/* Description */}
                   <p className="text-white/70 font-inter text-sm leading-relaxed mb-4 flex-grow">
@@ -107,11 +99,7 @@ export default function BlogList({ posts }: BlogListProps) {
                     <div className="flex items-center gap-1">
                       <CalendarIcon className="w-4 h-4" />
                       <time dateTime={post.date}>
-                        {new Date(post.date).toLocaleDateString("en-US", {
-                          year: "numeric",
-                          month: "short",
-                          day: "numeric",
-                        })}
+                        {post.date}
                       </time>
                     </div>
                     <div className="flex items-center gap-1">
@@ -123,9 +111,9 @@ export default function BlogList({ posts }: BlogListProps) {
 
                 {/* Hover effect border */}
                 <div className="absolute inset-0 rounded-2xl bg-gradient-to-r from-gold/0 via-gold/5 to-gold/0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"></div>
-              </motion.article>
+              </article>
             ))}
-          </motion.div>
+          </div>
         ) : (
           /* Empty State */
           <motion.div
