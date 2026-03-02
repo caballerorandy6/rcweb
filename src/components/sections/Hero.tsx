@@ -50,7 +50,7 @@ const Hero = () => {
       <div className="mx-auto max-w-7xl px-6 lg:px-8 h-full flex flex-col justify-center">
         <div className="mx-auto max-w-2xl text-center">
           {/* h1 fuera de motion.div para no bloquear LCP */}
-          <h1 className="text-5xl font-iceland tracking-tight sm:text-9xl text-gold animate-hero-title">
+          <h1 className="text-5xl font-iceland tracking-tight sm:text-9xl text-gold">
             RC Web Solutions
           </h1>
 

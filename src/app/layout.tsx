@@ -34,7 +34,9 @@ const iceland = Iceland({
   subsets: ["latin"],
   variable: "--font-iceland",
   display: "swap",
-  preload: true, // Used in headings
+  preload: true,
+  fallback: ["system-ui", "arial"], // Fallback fonts while loading
+  adjustFontFallback: false, // Faster initial render
 });
 
 const inter = Inter({
