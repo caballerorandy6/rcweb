@@ -29,8 +29,9 @@ const Certification = ({
         <Image
           alt={name}
           src={pdfThumbnail}
-          width={1000}
-          height={1000}
+          width={550}
+          height={144}
+          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
           className="w-full h-36 object-cover rounded-t-lg transition-transform duration-300 hover:scale-110"
           priority={false}
           onError={() => setImageError(true)}
@@ -67,8 +68,9 @@ const Certification = ({
       <Image
         alt={name}
         src={imageError ? "/placeholder-certificate.jpg" : image}
-        width={1000}
-        height={1000}
+        width={550}
+        height={144}
+        sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
         className="w-full h-36 object-cover rounded-t-lg transition-transform duration-300 hover:scale-110"
         priority={false}
         onError={() => setImageError(true)}

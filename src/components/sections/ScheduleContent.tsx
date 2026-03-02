@@ -58,13 +58,7 @@ export default function ScheduleContent() {
         </Heading>
 
         {/* Hero Section */}
-        <motion.div
-          className="mt-16 max-w-4xl mx-auto"
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ type: "spring", stiffness: 200, damping: 20 }}
-        >
+        <div className="mt-16 max-w-4xl mx-auto">
           <div className="bg-gradient-to-r from-gold/10 to-gold/5 backdrop-blur-lg rounded-2xl p-8 border border-gold/20 shadow-xl shadow-black/50">
             <p className="text-white/90 text-lg leading-relaxed font-inter text-center">
               Book a{" "}
@@ -76,16 +70,10 @@ export default function ScheduleContent() {
               to life.
             </p>
           </div>
-        </motion.div>
+        </div>
 
         {/* Benefits Grid */}
-        <motion.div
-          className="mt-12 grid grid-cols-1 md:grid-cols-3 gap-6 max-w-6xl mx-auto"
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          viewport={{ once: true }}
-          transition={{ delay: 0.2 }}
-        >
+        <div className="mt-12 grid grid-cols-1 md:grid-cols-3 gap-6 max-w-6xl mx-auto">
           {[
             {
               icon: <ClockIcon className="w-8 h-8" />,
@@ -106,11 +94,9 @@ export default function ScheduleContent() {
                 "100% free consultation with zero commitment required",
             },
           ].map((benefit) => (
-            <motion.div
+            <div
               key={benefit.title}
-              className="bg-gray-900/60 backdrop-blur-md rounded-xl border border-gold/20 p-6 hover:border-gold/40 transition-all duration-300"
-              whileHover={{ scale: 1.05 }}
-              transition={{ type: "spring", stiffness: 400, damping: 17 }}
+              className="bg-gray-900/60 backdrop-blur-md rounded-xl border border-gold/20 p-6 hover:border-gold/40 hover:scale-105 transition-all duration-300"
             >
               <div className="text-gold mb-4">{benefit.icon}</div>
               <h2 className="text-xl font-bold text-gold font-iceland mb-2">
@@ -119,9 +105,9 @@ export default function ScheduleContent() {
               <p className="text-gray-300 text-sm font-inter">
                 {benefit.description}
               </p>
-            </motion.div>
+            </div>
           ))}
-        </motion.div>
+        </div>
 
         {/* What We'll Discuss */}
         <motion.div

@@ -68,19 +68,14 @@ export default function GuideContent() {
 
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
         {/* Free Badge */}
-        <motion.div
-          className="flex justify-center mb-8"
-          initial={{ opacity: 0, y: -20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ type: "spring", stiffness: 200, damping: 20 }}
-        >
+        <div className="flex justify-center mb-8">
           <div className="inline-flex items-center gap-2 px-6 py-3 bg-green-600/20 border border-green-500/50 rounded-full">
             <CheckBadgeIcon className="w-5 h-5 text-green-400" />
             <span className="text-green-400 font-bold font-inter text-sm uppercase tracking-wide">
               100% Free
             </span>
           </div>
-        </motion.div>
+        </div>
 
         <Heading
           icon={<BookOpenIcon className="w-8 text-gold" />}
@@ -91,12 +86,7 @@ export default function GuideContent() {
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 mt-16 max-w-6xl mx-auto">
           {/* Left Column - Guide Preview */}
-          <motion.div
-            initial={{ opacity: 0, x: -20 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ type: "spring", stiffness: 200, damping: 20 }}
-          >
+          <div>
             {/* Mock Book Cover */}
             <div className="relative">
               <div className="bg-gradient-to-br from-gold/20 to-gold/5 backdrop-blur-lg rounded-2xl p-8 border-2 border-gold/30 shadow-2xl shadow-gold/20 transform rotate-2 hover:rotate-0 transition-transform duration-300">
@@ -135,16 +125,10 @@ export default function GuideContent() {
                 </div>
               </div>
             </div>
-          </motion.div>
+          </div>
 
           {/* Right Column - What's Inside + Form */}
-          <motion.div
-            className="space-y-8"
-            initial={{ opacity: 0, x: 20 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ type: "spring", stiffness: 200, damping: 20 }}
-          >
+          <div className="space-y-8">
             {/* What's Inside */}
             <div className="bg-gray-900/60 backdrop-blur-md rounded-xl border border-gold/20 p-8">
               <h3 className="text-2xl font-bold text-gold font-iceland mb-6">
@@ -222,7 +206,7 @@ export default function GuideContent() {
                 You can unsubscribe anytime.
               </p>
             </div>
-          </motion.div>
+          </div>
         </div>
 
         {/* Why Download */}

@@ -67,19 +67,14 @@ export default function OfferContent() {
 
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
         {/* Limited Time Badge */}
-        <motion.div
-          className="flex justify-center mb-8"
-          initial={{ opacity: 0, y: -20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ type: "spring", stiffness: 200, damping: 20 }}
-        >
+        <div className="flex justify-center mb-8">
           <div className="inline-flex items-center gap-2 px-6 py-3 bg-gold/20 border border-gold/50 rounded-full">
             <SparklesIcon className="w-5 h-5 text-gold animate-pulse" />
             <span className="text-gold font-bold font-inter text-sm uppercase tracking-wide">
               New Year Special 2026
             </span>
           </div>
-        </motion.div>
+        </div>
 
         <Heading
           icon={<SparklesIcon className="w-8 text-gold" />}
@@ -89,28 +84,18 @@ export default function OfferContent() {
         </Heading>
 
         {/* Main Offer Card */}
-        <motion.div
-          className="mt-16 max-w-5xl mx-auto"
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ type: "spring", stiffness: 200, damping: 20 }}
-        >
+        <div className="mt-16 max-w-5xl mx-auto">
           <div className="bg-gradient-to-br from-gold/20 via-gold/10 to-transparent backdrop-blur-lg rounded-3xl p-8 md:p-12 border-2 border-gold/30 shadow-2xl shadow-gold/20">
             {/* Discount Badge */}
             <div className="text-center mb-8">
-              <motion.div
-                className="inline-block"
-                animate={{ rotate: [0, -5, 5, -5, 0] }}
-                transition={{ duration: 0.5, repeat: Infinity, repeatDelay: 3 }}
-              >
+              <div className="inline-block">
                 <div className="text-8xl md:text-9xl font-black text-gold font-iceland">
                   15<span className="text-6xl md:text-7xl">%</span>
                 </div>
                 <div className="text-3xl md:text-4xl font-bold text-white font-iceland -mt-4">
                   OFF
                 </div>
-              </motion.div>
+              </div>
             </div>
 
             <p className="text-white/90 text-xl md:text-2xl leading-relaxed font-inter text-center max-w-3xl mx-auto mb-8">
@@ -153,7 +138,7 @@ export default function OfferContent() {
               </MotionLink>
             </div>
           </div>
-        </motion.div>
+        </div>
 
         {/* What's Included */}
         <motion.div
