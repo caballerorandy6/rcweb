@@ -16,16 +16,8 @@ const CookieConsent = ({ onAccept, onReject }: CookieConsentProps) => {
     // Check if user has already made a choice
     const consent = localStorage.getItem("cookie-consent");
     if (!consent) {
-      // Show banner after 3s delay to avoid impacting LCP measurement
-      // Uses requestIdleCallback for better performance when available
-      const showBanner = () => setIsVisible(true);
-      if ("requestIdleCallback" in window) {
-        setTimeout(() => {
-          requestIdleCallback(showBanner, { timeout: 3000 });
-        }, 2500);
-      } else {
-        setTimeout(showBanner, 3000);
-      }
+      // Show banner after 5s to avoid impacting LCP measurement
+      setTimeout(() => setIsVisible(true), 5000);
     } else {
       // Load scripts based on stored preference
       if (consent === "accepted") {

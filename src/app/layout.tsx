@@ -126,8 +126,7 @@ export default function RootLayout({
   return (
     <html lang="en" className="!scroll-smooth" data-scroll-behavior="smooth" suppressHydrationWarning>
       <head>
-        {/* Critical preconnects for fonts - always needed regardless of consent */}
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        {/* Note: next/font handles font preconnects automatically */}
 
         {/* Google Consent Mode v2 - Must load BEFORE gtag */}
         <Script
