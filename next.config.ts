@@ -60,8 +60,13 @@ const nextConfig: NextConfig = {
     ],
   },
 
-  // Transpile framer-motion para evitar problemas con export *
-  transpilePackages: ["framer-motion"],
+  // Transpile packages to fix Turbopack ESM bundling issues
+  transpilePackages: [
+    "framer-motion",
+    "react-markdown",
+    "hast-util-to-jsx-runtime",
+    "property-information",
+  ],
 
   // Eliminar console.log en producción para reducir bundle size
   compiler: {
