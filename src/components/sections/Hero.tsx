@@ -1,10 +1,11 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import Image from "next/image";
 import Link from "next/link";
 import type { Route } from "next";
 import CustomBadge from "@/components/ui/CustomBadge";
 import useSectionObserver from "@/hooks/useSectionObserver";
+import heroImage from "../../../public/hero.webp";
 import { motion } from "framer-motion";
 import { PhoneIcon, CalendarDaysIcon } from "@heroicons/react/24/outline";
 import { trackFBPhoneCall } from "@/components/tracking/FacebookPixel";
@@ -26,13 +27,6 @@ const trackPhoneConversion = () => {
 
 const Hero = () => {
   const ref = useSectionObserver({ sectionName: "Home" });
-  const videoRef = useRef<HTMLVideoElement>(null);
-
-  useEffect(() => {
-    if (videoRef.current) {
-      videoRef.current.playbackRate = 0.5;
-    }
-  }, []);
 
   return (
     <section
@@ -41,21 +35,15 @@ const Hero = () => {
       className="relative isolate overflow-hidden pt-24 sm:pt-32 pb-16 sm:pb-24 h-screen"
     >
       <div className="absolute inset-0 -z-10 h-full w-full">
-        <video
-          ref={videoRef}
-          autoPlay
-          loop
-          muted
-          playsInline
-          preload="none"
-          poster="/background.avif"
+        <Image
+          src={heroImage}
+          alt=""
+          fill
+          priority
+          sizes="100vw"
+          className="object-cover object-right md:object-center opacity-35"
           aria-hidden="true"
-          className="inset-0 -z-10 size-full object-cover object-right md:object-center opacity-35"
-        >
-          <source src="/hero.webm" type="video/webm" />
-          <track kind="captions" label="No audio" />
-          Your browser does not support the video tag.
-        </video>
+        />
         <div className="absolute inset-0 bg-gradient-to-b from-black/50 via-black/30 to-black/70"></div>
       </div>
 
