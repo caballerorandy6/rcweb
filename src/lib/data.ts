@@ -225,6 +225,23 @@ export const projects: ProjectProps[] = [
     url: "https://www.dulceantojosnackcarts.com/",
   },
   {
+    name: "Leo's Home Experts",
+    tecnologies: [
+      "NextJS",
+      "React",
+      "TypeScript",
+      "TailwindCSS",
+      "Shadcn UI",
+      "Zod",
+      "React Hook Form",
+    ],
+    description:
+      "Landing page for a Houston-based home services company specializing in patio construction, motorized screens, and awning installations. Features local SEO optimization with JSON-LD schema and video gallery integration.",
+    image: "/leos-home-experts.webp",
+    github: "https://github.com/caballerorandy6/leos-home-experts",
+    url: "https://www.ac-remodelingservice.com/",
+  },
+  {
     name: "Photographer Portfolio",
     tecnologies: ["HTML", "CSS", "SASS"],
     description:

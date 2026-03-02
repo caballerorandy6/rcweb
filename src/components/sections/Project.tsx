@@ -70,6 +70,7 @@ const Project = ({
                   "bg-blue-700 text-white": item === "MySQL",
                   "bg-blue-400 text-white": item === "Cloudinary",
                   "bg-rose-500 text-white": item === "Turborepo",
+                  "bg-pink-600 text-white": item === "React Hook Form",
                 }
               )}
             >
