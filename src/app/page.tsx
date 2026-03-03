@@ -1,18 +1,20 @@
 import type { Metadata } from "next";
+import dynamic from "next/dynamic";
 import { siteConfig } from "@/config/site";
 
-// Components
+// Hero loads immediately (above the fold)
 import Hero from "@/components/sections/Hero";
-import Services from "@/components/sections/Services";
-import Projects from "@/components/sections/Projects";
-import Process from "@/components/sections/Process";
-import Experience from "@/components/sections/Experience";
-import Testimonials from "@/components/sections/Testimonials";
-import Pricing from "@/components/sections/Pricing";
-import FAQ from "@/components/sections/FAQ";
-import Contact from "@/components/sections/Contact";
-import CTA from "@/components/sections/FloatingCTA";
-import Certifications from "@/components/sections/Certifications";
+
+// Lazy load sections below the fold for better LCP
+const Services = dynamic(() => import("@/components/sections/Services"));
+const Projects = dynamic(() => import("@/components/sections/Projects"));
+const Process = dynamic(() => import("@/components/sections/Process"));
+const Testimonials = dynamic(() => import("@/components/sections/Testimonials"));
+const Pricing = dynamic(() => import("@/components/sections/Pricing"));
+const FAQ = dynamic(() => import("@/components/sections/FAQ"));
+const Contact = dynamic(() => import("@/components/sections/Contact"));
+const CTA = dynamic(() => import("@/components/sections/FloatingCTA"));
+
 import ScrollSpy from "@/components/ui/ScrollSpy";
 import { JsonLdForFaq } from "@/components/seo/JsonLdForFaq";
 import { JsonLdForService } from "@/components/seo/JsonLdForService";
