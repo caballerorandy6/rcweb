@@ -7,6 +7,7 @@ import { toast } from "sonner";
 import { createContactAction } from "@/actions/contacts/createContactAction";
 import { trackContactFormSubmit, trackSubmitLeadForm } from "@/lib/analytics";
 import { trackFBLead } from "@/components/tracking/FacebookPixel";
+import { trackLinkedInConversion } from "@/components/tracking/LinkedInInsightTag";
 import Script from "next/script";
 import { useRouter } from "next/navigation";
 
@@ -108,6 +109,9 @@ const DialogForm = ({ closeModal }: DialogFormProps) => {
 
           // Track Facebook Lead conversion
           trackFBLead();
+
+          // Track LinkedIn Lead conversion
+          trackLinkedInConversion();
 
           toast.success(contact.message, { id: toastId });
           reset();

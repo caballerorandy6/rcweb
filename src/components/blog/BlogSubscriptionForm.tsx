@@ -7,6 +7,9 @@ import { BlogSubscriptionSchema, BlogSubscriptionData } from "@/lib/zod";
 import { toast } from "sonner";
 import { EnvelopeIcon } from "@heroicons/react/24/outline";
 import { subscribeToBlogAction } from "@/actions/subscriptions/subscribeToBlogAction";
+import { trackFBLead } from "@/components/tracking/FacebookPixel";
+import { trackLinkedInConversion } from "@/components/tracking/LinkedInInsightTag";
+import { trackSubmitLeadForm } from "@/lib/analytics";
 
 const BlogSubscriptionForm = () => {
   const {
@@ -29,6 +32,11 @@ const BlogSubscriptionForm = () => {
       const result = await subscribeToBlogAction(data);
 
       if (result.success) {
+        // Track conversions
+        trackFBLead();
+        trackLinkedInConversion();
+        trackSubmitLeadForm(data.email);
+
         toast.success(result.message, { id: toastId });
         reset();
       } else {

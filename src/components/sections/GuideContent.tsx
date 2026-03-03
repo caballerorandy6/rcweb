@@ -13,6 +13,8 @@ import { useState } from "react";
 import { toast } from "sonner";
 import { downloadGuideAction } from "@/actions/campaigns/downloadGuideAction";
 import { trackFBLead } from "@/components/tracking/FacebookPixel";
+import { trackLinkedInConversion } from "@/components/tracking/LinkedInInsightTag";
+import { trackSubmitLeadForm } from "@/lib/analytics";
 
 export default function GuideContent() {
   const [email, setEmail] = useState("");
@@ -38,6 +40,12 @@ export default function GuideContent() {
       if (result.success) {
         // Track Facebook Lead conversion
         trackFBLead();
+
+        // Track LinkedIn Lead conversion
+        trackLinkedInConversion();
+
+        // Track Google Ads conversion
+        trackSubmitLeadForm(email);
 
         if (result.emailSent) {
           toast.success("Guide downloaded and sent to your email!");

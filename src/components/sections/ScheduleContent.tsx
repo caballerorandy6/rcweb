@@ -12,12 +12,13 @@ import Link from "next/link";
 import HeadingStatic from "@/components/ui/HeadingStatic";
 import { trackFBPhoneCall } from "@/components/tracking/FacebookPixel";
 import { trackManualContact } from "@/lib/analytics";
+import { trackLinkedInConversion } from "@/components/tracking/LinkedInInsightTag";
 import { useInView } from "@/hooks/useInView";
 
 // Calendly configuration
 const CALENDLY_URL = process.env.NEXT_PUBLIC_CALENDLY_URL || "https://calendly.com/rcwebsolutions/30min";
 
-// Phone Conversion Tracking (Google Ads + Facebook)
+// Phone Conversion Tracking (Google Ads + Facebook + LinkedIn)
 const trackPhoneConversion = () => {
   // Google Ads manual contact conversion
   trackManualContact();
@@ -33,6 +34,9 @@ const trackPhoneConversion = () => {
 
   // Facebook Pixel conversion
   trackFBPhoneCall();
+
+  // LinkedIn conversion
+  trackLinkedInConversion();
 };
 
 export default function ScheduleContent() {
