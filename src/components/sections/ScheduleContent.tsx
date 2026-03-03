@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import { motion } from "framer-motion";
 import Script from "next/script";
 import {
@@ -35,12 +36,17 @@ const trackPhoneConversion = () => {
 };
 
 export default function ScheduleContent() {
+  const [showCalendly, setShowCalendly] = useState(false);
+
   return (
     <>
-      <Script
-        src="https://assets.calendly.com/assets/external/widget.js"
-        strategy="lazyOnload"
-      />
+      {/* Only load Calendly script when user wants to see the calendar */}
+      {showCalendly && (
+        <Script
+          src="https://assets.calendly.com/assets/external/widget.js"
+          strategy="afterInteractive"
+        />
+      )}
     <section className="relative isolate overflow-hidden py-24 sm:py-32 bg-gradient-to-b from-gray-900 via-gray-900/95 to-gray-900">
       {/* Background decoration */}
       <div className="absolute inset-0 -z-10">
@@ -144,22 +150,39 @@ export default function ScheduleContent() {
           </div>
         </motion.div>
 
-        {/* Embedded Calendly Widget */}
-        <motion.div
-          className="mt-16 max-w-4xl mx-auto"
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ delay: 0.4 }}
-        >
+        {/* Embedded Calendly Widget - Lazy loaded on click */}
+        <div className="mt-16 max-w-4xl mx-auto">
           <div className="bg-gray-900/60 backdrop-blur-md rounded-xl border border-gold/20 p-4 overflow-hidden">
-            <div
-              className="calendly-inline-widget"
-              data-url={`${CALENDLY_URL}?hide_gdpr_banner=1&background_color=111827&text_color=ffffff&primary_color=d4af37`}
-              style={{ minWidth: "320px", height: "700px" }}
-            />
+            {showCalendly ? (
+              <div
+                className="calendly-inline-widget"
+                data-url={`${CALENDLY_URL}?hide_gdpr_banner=1&background_color=111827&text_color=ffffff&primary_color=d4af37`}
+                style={{ minWidth: "320px", height: "700px" }}
+              />
+            ) : (
+              <button
+                onClick={() => setShowCalendly(true)}
+                className="w-full py-16 flex flex-col items-center justify-center gap-6 hover:bg-gold/5 transition-colors duration-300 rounded-lg group"
+              >
+                <div className="w-24 h-24 rounded-full bg-gold/20 flex items-center justify-center group-hover:bg-gold/30 transition-colors">
+                  <CalendarDaysIcon className="w-12 h-12 text-gold" />
+                </div>
+                <div className="text-center">
+                  <h3 className="text-2xl font-bold text-gold font-iceland mb-2">
+                    View Available Times
+                  </h3>
+                  <p className="text-gray-400 font-inter text-sm max-w-md">
+                    Click to load the calendar and choose a time that works for you
+                  </p>
+                </div>
+                <div className="px-8 py-4 bg-gold text-gray-900 font-bold rounded-xl hover:bg-gold/90 transition-colors font-inter text-lg flex items-center gap-2">
+                  <CalendarDaysIcon className="w-6 h-6" />
+                  Open Calendar
+                </div>
+              </button>
+            )}
           </div>
-        </motion.div>
+        </div>
 
         {/* Alternative Contact Options */}
         <motion.div
