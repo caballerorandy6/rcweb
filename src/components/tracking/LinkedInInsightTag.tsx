@@ -12,16 +12,18 @@ declare global {
 
 const LINKEDIN_PARTNER_ID = process.env.NEXT_PUBLIC_LINKEDIN_PARTNER_ID;
 
+// LinkedIn Conversion ID for "Contact Form Lead - rcweb.dev"
+// Created in LinkedIn Campaign Manager: Measurement > Conversion tracking
+const LINKEDIN_CONVERSION_ID = 26696657;
+
 export default function LinkedInInsightTag() {
   const pathname = usePathname();
 
   useEffect(() => {
     if (!LINKEDIN_PARTNER_ID) return;
 
-    // Track page views
-    if (window.lintrk) {
-      window.lintrk("track", { conversion_id: LINKEDIN_PARTNER_ID });
-    }
+    // Page views are tracked automatically by the Insight Tag
+    // No need to manually track page views here
   }, [pathname]);
 
   // Don't render if no partner ID
@@ -30,11 +32,11 @@ export default function LinkedInInsightTag() {
   return null;
 }
 
-// Helper function for tracking conversions
-export const trackLinkedInConversion = (conversionId?: string) => {
+// Helper function for tracking conversions (form submissions, leads, etc.)
+export const trackLinkedInConversion = () => {
   if (typeof window !== "undefined" && window.lintrk) {
     window.lintrk("track", {
-      conversion_id: conversionId || LINKEDIN_PARTNER_ID,
+      conversion_id: LINKEDIN_CONVERSION_ID,
     });
   }
 };
