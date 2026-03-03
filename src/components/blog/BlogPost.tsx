@@ -18,13 +18,23 @@ interface BlogPostProps {
   post: BlogPostType;
 }
 
+// Format date consistently to avoid hydration mismatch
+const formatDate = (dateString: string): string => {
+  const date = new Date(dateString);
+  const months = [
+    "January", "February", "March", "April", "May", "June",
+    "July", "August", "September", "October", "November", "December"
+  ];
+  return `${months[date.getMonth()]} ${date.getDate()}, ${date.getFullYear()}`;
+};
+
+// Calculate read time
+const calculateReadTime = (content: string): number => {
+  const words = content.trim().split(/\s+/).length;
+  return Math.ceil(words / 200);
+};
+
 export default function BlogPost({ post }: BlogPostProps) {
-  // Calculate read time
-  const calculateReadTime = (content: string) => {
-    const words = content.trim().split(/\s+/).length;
-    const minutes = Math.ceil(words / 200);
-    return minutes;
-  };
 
   return (
     <section className="relative isolate overflow-hidden py-24 sm:py-32 bg-gradient-to-b from-gray-900 via-gray-900/95 to-gray-900 min-h-screen">
@@ -107,11 +117,7 @@ export default function BlogPost({ post }: BlogPostProps) {
               <div className="flex items-center gap-2">
                 <CalendarIcon className="w-5 h-5" />
                 <time dateTime={post.date}>
-                  {new Date(post.date).toLocaleDateString("en-US", {
-                    year: "numeric",
-                    month: "long",
-                    day: "numeric",
-                  })}
+                  {formatDate(post.date)}
                 </time>
               </div>
               <div className="flex items-center gap-2">
@@ -243,6 +249,22 @@ export default function BlogPost({ post }: BlogPostProps) {
                       {children}
                     </td>
                   ),
+                  // Handle GFM task list checkboxes for accessibility
+                  input: ({ type, checked, disabled }) => {
+                    if (type === "checkbox") {
+                      return (
+                        <input
+                          type="checkbox"
+                          checked={checked}
+                          disabled={disabled}
+                          readOnly
+                          aria-label={checked ? "Completed task" : "Incomplete task"}
+                          className="mr-2 accent-gold"
+                        />
+                      );
+                    }
+                    return <input type={type} />;
+                  },
                 }}
               >
                 {post.content}
