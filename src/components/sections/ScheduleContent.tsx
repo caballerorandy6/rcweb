@@ -1,7 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import { motion } from "framer-motion";
 import Script from "next/script";
 import {
   CalendarDaysIcon,
@@ -10,7 +9,7 @@ import {
   PhoneIcon,
 } from "@heroicons/react/24/outline";
 import Link from "next/link";
-import Heading from "@/components/ui/Heading";
+import HeadingStatic from "@/components/ui/HeadingStatic";
 import { trackFBPhoneCall } from "@/components/tracking/FacebookPixel";
 import { trackManualContact } from "@/lib/analytics";
 
@@ -56,12 +55,12 @@ export default function ScheduleContent() {
       </div>
 
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
-        <Heading
+        <HeadingStatic
           icon={<CalendarDaysIcon className="w-8 text-gold" />}
           text="Let's Build Something Amazing Together"
         >
           Schedule Your Free Consultation
-        </Heading>
+        </HeadingStatic>
 
         {/* Hero Section */}
         <div className="mt-16 max-w-4xl mx-auto">
@@ -116,13 +115,7 @@ export default function ScheduleContent() {
         </div>
 
         {/* What We'll Discuss */}
-        <motion.div
-          className="mt-16 max-w-4xl mx-auto"
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ delay: 0.3 }}
-        >
+        <div className="mt-16 max-w-4xl mx-auto">
           <div className="bg-gray-900/60 backdrop-blur-md rounded-xl border border-gold/20 p-8">
             <h2 className="text-3xl font-bold text-gold font-iceland mb-6 text-center">
               What We&apos;ll Discuss
@@ -135,20 +128,17 @@ export default function ScheduleContent() {
                 "Budget and pricing options",
                 "Next steps and project roadmap",
               ].map((item) => (
-                <motion.li
+                <li
                   key={item}
                   className="flex items-start gap-3 text-gray-300"
-                  initial={{ opacity: 0, x: -20 }}
-                  whileInView={{ opacity: 1, x: 0 }}
-                  viewport={{ once: true }}
                 >
                   <span className="text-gold mt-1">✓</span>
                   <span>{item}</span>
-                </motion.li>
+                </li>
               ))}
             </ul>
           </div>
-        </motion.div>
+        </div>
 
         {/* Embedded Calendly Widget - Lazy loaded on click */}
         <div className="mt-16 max-w-4xl mx-auto">
@@ -185,40 +175,26 @@ export default function ScheduleContent() {
         </div>
 
         {/* Alternative Contact Options */}
-        <motion.div
-          className="flex flex-col sm:flex-row gap-4 mt-12 justify-center"
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ delay: 0.5 }}
-        >
-          <motion.a
+        <div className="flex flex-col sm:flex-row gap-4 mt-12 justify-center">
+          <a
             href="tel:+13463757534"
             onClick={trackPhoneConversion}
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-            className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-gold text-gray-900 font-bold rounded-lg hover:bg-gold/90 transition-colors font-inter text-lg"
+            className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-gold text-gray-900 font-bold rounded-lg hover:bg-gold/90 hover:scale-105 active:scale-95 transition-all duration-200 font-inter text-lg"
           >
             <PhoneIcon className="w-6 h-6" />
             Call (346) 375-7534
-          </motion.a>
+          </a>
 
           <Link
             href="/#contact"
-            className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-transparent border-2 border-gold text-gold font-bold rounded-lg hover:bg-gold/10 transition-colors font-inter text-lg"
+            className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-transparent border-2 border-gold text-gold font-bold rounded-lg hover:bg-gold/10 hover:scale-105 active:scale-95 transition-all duration-200 font-inter text-lg"
           >
             Send a Message
           </Link>
-        </motion.div>
+        </div>
 
         {/* Contact Alternative */}
-        <motion.div
-          className="mt-8 text-center"
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          viewport={{ once: true }}
-          transition={{ delay: 0.6 }}
-        >
+        <div className="mt-8 text-center">
           <p className="text-white/70 font-inter mx-auto text-sm">
             Can&apos;t find a time that works?{" "}
             <a
@@ -228,7 +204,7 @@ export default function ScheduleContent() {
               Email us directly
             </a>
           </p>
-        </motion.div>
+        </div>
       </div>
     </section>
     </>
