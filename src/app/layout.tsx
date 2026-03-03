@@ -11,6 +11,7 @@ import CookieConsentProvider from "@/components/forms/CookieConsentProvider";
 import Analytics from "@/components/tracking/Analytics";
 import FacebookPixel from "@/components/tracking/FacebookPixel";
 import LinkedInInsightTag from "@/components/tracking/LinkedInInsightTag";
+import ExitIntentPopup from "@/components/forms/ExitIntentPopup";
 import { siteConfig } from "@/config/site";
 import { Analytics as VercelAnalytics } from "@vercel/analytics/next";
 
@@ -218,6 +219,7 @@ export default function RootLayout({
         <VercelAnalytics />
 
         <Toaster position="bottom-right" richColors closeButton={true} />
+        <ExitIntentPopup />
         <ConditionalLayout>{children}</ConditionalLayout>
       </body>
     </html>
