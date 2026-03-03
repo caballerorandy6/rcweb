@@ -58,10 +58,15 @@ const BlogSubscriptionForm = () => {
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
           {/* Email Field */}
           <div>
+            <label htmlFor="blog-email" className="sr-only">
+              Email address
+            </label>
             <input
               {...register("email")}
+              id="blog-email"
               type="email"
               placeholder="your@email.com"
+              aria-label="Email address for blog subscription"
               className="w-full p-3 bg-gray-800/80 text-white rounded-xl border border-gray-700/60 focus:outline-none focus:border-gold focus:ring-2 focus:ring-gold/20 transition-all duration-300 font-inter placeholder-gray-500"
             />
             <ErrorMessage

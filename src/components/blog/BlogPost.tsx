@@ -65,7 +65,9 @@ export default function BlogPost({ post }: BlogPostProps) {
                 src={post.image}
                 alt={post.title}
                 fill
+                sizes="(max-width: 768px) 100vw, 896px"
                 className="object-cover"
+                priority
               />
               <div className="absolute inset-0 bg-gradient-to-t from-gray-900 via-gray-900/50 to-transparent"></div>
             </div>
