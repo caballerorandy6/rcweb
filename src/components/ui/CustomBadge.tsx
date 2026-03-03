@@ -10,6 +10,7 @@ const CustomBadge = ({ children }: CustomBadgeProps) => {
     <Link
       href="https://www.linkedin.com/in/caballerorandy/"
       target="_blank"
+      rel="noopener noreferrer"
       className="flex items-center justify-center mt-10"
     >
       <span className="relative inline-flex overflow-hidden rounded-full p-[1px] transition-transform duration-200 ease-in-out hover:scale-105">
