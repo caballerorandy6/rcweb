@@ -1,239 +1,317 @@
 "use client";
-import { motion } from "framer-motion";
-import { useRef, useEffect, useState } from "react";
+
+import { motion, AnimatePresence } from "framer-motion";
+import { useEffect, useState, useMemo } from "react";
 import dynamic from "next/dynamic";
-import { socialLinks } from "@/lib/data";
+import Image from "next/image";
+import { XMarkIcon, ChatBubbleLeftRightIcon } from "@heroicons/react/24/solid";
 import WhatsApp from "@/components/icons/WhatSapp";
+import Phone from "@/components/icons/Phone";
 import Linkedin from "@/components/icons/Linkedin";
 import Facebook from "@/components/icons/Facebook";
-import Phone from "@/components/icons/Phone";
 import Instagram from "@/components/icons/Instagram";
-import X from "@/components/icons/X";
 import TikTok from "@/components/icons/TikTok";
+import X from "@/components/icons/X";
 import ClientOnly from "@/components/ui/ClientOnly";
-import { trackFBContact } from "@/components/tracking/FacebookPixel";
+import { trackFBContact, trackFBPhoneCall } from "@/components/tracking/FacebookPixel";
 import { trackLinkedInConversion } from "@/components/tracking/LinkedInInsightTag";
-import { trackEvent } from "@/lib/analytics";
+import { event as trackEvent } from "@/lib/analytics";
 
 const Chat = dynamic(() => import("@/components/ui/Chat"), {
   ssr: false,
 });
-import Image from "next/image";
 
-const getIconComponent = (name: string, iconSize?: string) => {
-  const iconMap: Record<string, React.ReactNode> = {
-    LinkedIn: <Linkedin className={iconSize} />,
-    Phone: <Phone className={iconSize} />,
-    WhatsApp: <WhatsApp className={iconSize} />,
-    "Tik Tok": <TikTok className={iconSize} />,
-    Facebook: <Facebook className={iconSize} />,
-    Instagram: <Instagram className={iconSize} />,
-    X: <X className={iconSize} />,
-  };
-  return iconMap[name];
+// Animation variants - defined outside component for performance
+const menuVariants = {
+  hidden: { opacity: 0, scale: 0.8, y: 20 },
+  visible: {
+    opacity: 1,
+    scale: 1,
+    y: 0,
+    transition: {
+      type: "spring" as const,
+      stiffness: 300,
+      damping: 25,
+      staggerChildren: 0.05,
+    },
+  },
+  exit: {
+    opacity: 0,
+    scale: 0.8,
+    y: 20,
+    transition: { duration: 0.2 },
+  },
 };
 
+const itemVariants = {
+  hidden: { opacity: 0, x: 20, scale: 0.8 },
+  visible: {
+    opacity: 1,
+    x: 0,
+    scale: 1,
+    transition: { type: "spring" as const, stiffness: 300, damping: 25 },
+  },
+};
+
+// Priority contact actions for lead generation
+const primaryActions = [
+  {
+    id: "whatsapp",
+    name: "WhatsApp",
+    url: "https://wa.me/18325465983?text=Hi%20Randy%2C%20I%27m%20interested%20in%20discussing%20a%20web%20project",
+    Icon: WhatsApp,
+    bgClass: "bg-[#25D366] hover:bg-[#1da851]",
+    label: "WhatsApp",
+  },
+  {
+    id: "phone",
+    name: "Phone",
+    url: "tel:+13463757534",
+    Icon: Phone,
+    bgClass: "bg-emerald-600 hover:bg-emerald-700",
+    label: "Call Now",
+  },
+];
+
+// Social media links (secondary)
+const socialActions = [
+  {
+    id: "linkedin",
+    name: "LinkedIn",
+    url: "https://www.linkedin.com/company/rcwebsolutions",
+    Icon: Linkedin,
+    bgClass: "bg-[#0A66C2] hover:bg-[#004182]",
+  },
+  {
+    id: "facebook",
+    name: "Facebook",
+    url: "https://www.facebook.com/rcwebsolutionsllc",
+    Icon: Facebook,
+    bgClass: "bg-[#1877F2] hover:bg-[#155DBB]",
+  },
+  {
+    id: "instagram",
+    name: "Instagram",
+    url: "https://www.instagram.com/rcwebsolutionsllc",
+    Icon: Instagram,
+    bgClass: "bg-[#E1306C] hover:bg-[#C13584]",
+  },
+  {
+    id: "tiktok",
+    name: "TikTok",
+    url: "https://www.tiktok.com/@rcwebsolutionsllc",
+    Icon: TikTok,
+    bgClass: "bg-gray-900 hover:bg-gray-800",
+  },
+  {
+    id: "x",
+    name: "X",
+    url: "https://x.com/RCWeb2025",
+    Icon: X,
+    bgClass: "bg-gray-900 hover:bg-gray-700",
+  },
+];
+
 const FloatingCTA = () => {
-  const ctaRef = useRef(null);
   const [isContactInView, setIsContactInView] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const [isChatOpen, setIsChatOpen] = useState(false);
 
+  // Hide when contact section is visible
   useEffect(() => {
-    // Find the Contact section
     const contactSection = document.getElementById("contact");
     if (!contactSection) return;
 
     const observer = new IntersectionObserver(
       ([entry]) => {
         setIsContactInView(entry.isIntersecting);
-        // Auto-close when contact section is in view
-        if (entry.isIntersecting) {
-          setIsOpen(false);
-        }
+        if (entry.isIntersecting) setIsOpen(false);
       },
       { threshold: 0.3 }
     );
 
     observer.observe(contactSection);
-
     return () => observer.disconnect();
   }, []);
 
-  const handleClick = (url: string, isButton?: boolean, linkName?: string) => {
-    // Track conversion for WhatsApp and Phone clicks
-    if (linkName === "WhatsApp" || linkName === "Phone") {
+  const handlePrimaryClick = (action: (typeof primaryActions)[0]) => {
+    // Track conversions
+    if (action.id === "whatsapp") {
       trackFBContact();
-      trackLinkedInConversion();
-      trackEvent({
-        action: "contact_click",
-        category: "engagement",
-        label: linkName,
-      });
+    } else if (action.id === "phone") {
+      trackFBPhoneCall();
     }
+    trackLinkedInConversion();
+    trackEvent({
+      action: "floating_cta_click",
+      category: "engagement",
+      label: action.name,
+    });
 
-    if (isButton) {
-      window.open(url, "_self");
-    }
+    window.open(action.url, action.id === "phone" ? "_self" : "_blank");
+    setIsOpen(false);
+  };
+
+  const handleChatOpen = () => {
+    trackEvent({
+      action: "ai_chat_open",
+      category: "engagement",
+      label: "floating_cta",
+    });
+    setIsChatOpen(true);
+    setIsOpen(false);
+  };
+
+  const handleSocialClick = (action: (typeof socialActions)[0]) => {
+    trackEvent({
+      action: "social_click",
+      category: "engagement",
+      label: action.name,
+    });
+    window.open(action.url, "_blank");
   };
 
   return (
     <ClientOnly>
+      {/* Main Container */}
       <motion.div
-      ref={ctaRef}
-      style={{
-        position: "fixed",
-        bottom: "1.5rem",
-        right: "2rem",
-        zIndex: 50,
-        display: "flex",
-        flexDirection: "column-reverse",
-        gap: "1rem",
-        alignItems: "flex-end",
-      }}
-      initial={{ opacity: 0, x: 100 }}
-      animate={{
-        opacity: isContactInView ? 0 : 1,
-        x: isContactInView ? 100 : 0,
-        pointerEvents: isContactInView ? "none" : "auto",
-      }}
-      transition={{ type: "spring", stiffness: 260, damping: 20 }}
-    >
-      <div className="flex flex-col-reverse gap-4 items-end">
-        {/* Toggle Button - Always visible */}
-        <motion.button
-          type="button"
-          style={{
-            display: "flex",
-            height: "3rem",
-            width: "3rem",
-            alignItems: "center",
-            justifyContent: "center",
-            borderRadius: "9999px",
-            background:
-              "linear-gradient(to bottom right, rgb(203 178 106), rgb(250 204 21))",
-            color: "white",
-            boxShadow:
-              "0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1)",
-            transition: "all 0.3s",
-            border: "none",
-            cursor: "pointer",
-          }}
-          aria-label={isOpen ? "Close contact options" : "Open contact options"}
-          whileHover={{
-            rotate: 90,
-            scale: 1.1,
-            transition: { type: "spring", stiffness: 300, damping: 15 },
-          }}
-          whileTap={{ scale: 0.95 }}
-          onTap={() => setIsOpen(!isOpen)}
-        >
-          <svg
-            className="w-5 h-5"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth={2.5}
-            viewBox="0 0 24 24"
-          >
-            {isOpen ? (
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M6 18L18 6M6 6l12 12"
-              />
-            ) : (
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"
-              />
-            )}
-          </svg>
-        </motion.button>
-
-        {/* Contact Buttons - Show/Hide based on isOpen */}
-        <motion.div
-          className={isOpen ? "animateFloatingLinks rounded-full py-4" : ""}
-          style={{
-            display: "flex",
-            flexDirection: "column",
-            gap: "0.75rem",
-          }}
-          initial={{ opacity: 0, y: 20, scale: 0 }}
-          animate={{
-            opacity: isOpen ? 1 : 0,
-            y: isOpen ? 0 : 20,
-            scale: isOpen ? 1 : 0,
-            pointerEvents: isOpen ? "auto" : "none",
-          }}
-          transition={{ type: "spring", stiffness: 200, damping: 20 }}
-        >
-          {/* Chat Button */}
-          <motion.div
-            initial={{ opacity: 0, x: 20 }}
-            animate={{ opacity: isOpen ? 1 : 0, x: isOpen ? 0 : 20 }}
-            transition={{
-              type: "spring",
-              stiffness: 300,
-              damping: 25,
-              delay: 0,
-            }}
-          >
-            <button
-              onClick={() => setIsChatOpen(true)}
-              className="relative flex h-14 w-14 items-center justify-center rounded-full bg-gradient-to-br shadow-lg transition-all duration-200 hover:scale-110 hover:shadow-xl overflow-hidden "
-              aria-label="Open AI Chat Assistant - Maria"
-            >
-              <Image
-                src="/chat.png"
-                alt="AI Chat Assistant - Maria"
-                width={128}
-                height={128}
-                className="object-cover"
-                sizes="(max-width: 768px) 56px, 64px"
-              />
-            </button>
-          </motion.div>
-
-          {socialLinks.map((link) => (
+        className="fixed bottom-6 right-6 z-50 flex flex-col items-end gap-3"
+        initial={{ opacity: 0, y: 50 }}
+        animate={{
+          opacity: isContactInView ? 0 : 1,
+          y: isContactInView ? 50 : 0,
+          pointerEvents: isContactInView ? "none" : "auto",
+        }}
+        transition={{ type: "spring", stiffness: 200, damping: 25 }}
+      >
+        {/* Expanded Menu */}
+        <AnimatePresence>
+          {isOpen && (
             <motion.div
-              key={link.name}
-              initial={{ opacity: 0, x: 20 }}
-              animate={{ opacity: isOpen ? 1 : 0, x: isOpen ? 0 : 20 }}
-              transition={{
-                type: "spring",
-                stiffness: 300,
-                damping: 25,
-                delay: link.delay,
-              }}
+              className="flex flex-col gap-2 mb-2"
+              variants={menuVariants}
+              initial="hidden"
+              animate="visible"
+              exit="exit"
             >
-              {link.isButton ? (
-                <button
-                  onClick={() => handleClick(link.url, link.isButton, link.name)}
-                  className={`flex h-14 w-14 items-center justify-center rounded-full ${link.bgColor} text-white shadow-lg transition-all duration-200 hover:scale-110 ${link.hoverColor} hover:shadow-xl`}
-                  aria-label={link.ariaLabel}
-                >
-                  {getIconComponent(link.name, link.iconSize)}
-                </button>
-              ) : (
-                <a
-                  href={link.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className={`flex h-14 w-14 items-center justify-center rounded-full ${link.bgColor} text-white shadow-lg transition-all duration-200 hover:scale-110 ${link.hoverColor} hover:shadow-xl`}
-                  aria-label={link.ariaLabel}
-                >
-                  {getIconComponent(link.name, link.iconSize)}
-                </a>
-              )}
-            </motion.div>
-          ))}
-        </motion.div>
-      </div>
+              {/* AI Chat Button - Priority */}
+              <motion.button
+                variants={itemVariants}
+                onClick={handleChatOpen}
+                className="group flex items-center gap-3 rounded-full bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 pl-3 pr-4 py-2.5 text-white shadow-lg hover:shadow-xl transition-all duration-200 hover:scale-105"
+                aria-label="Chat with AI Assistant"
+              >
+                <div className="relative h-8 w-8 rounded-full overflow-hidden ring-2 ring-white/30">
+                  <Image
+                    src="/maria.avif"
+                    alt="Maria AI"
+                    fill
+                    className="object-cover"
+                    sizes="32px"
+                  />
+                </div>
+                <span className="font-medium text-sm whitespace-nowrap pr-1">
+                  Chat with Maria
+                </span>
+              </motion.button>
 
-      {/* Chat Component */}
-      {isChatOpen && <Chat onClose={() => setIsChatOpen(false)} />}
-    </motion.div>
+              {/* Primary Contact Actions */}
+              {primaryActions.map((action) => (
+                <motion.button
+                  key={action.id}
+                  variants={itemVariants}
+                  onClick={() => handlePrimaryClick(action)}
+                  className={`group flex items-center gap-3 rounded-full ${action.bgClass} pl-3 pr-4 py-2.5 text-white shadow-lg hover:shadow-xl transition-all duration-200 hover:scale-105`}
+                  aria-label={action.label}
+                >
+                  <action.Icon className="h-7 w-7" />
+                  <span className="font-medium text-sm whitespace-nowrap pr-1">
+                    {action.label}
+                  </span>
+                </motion.button>
+              ))}
+
+              {/* Divider */}
+              <div className="w-full h-px bg-white/20 my-1" />
+
+              {/* Social Links - Secondary (smaller, horizontal group) */}
+              <motion.div
+                variants={itemVariants}
+                className="flex items-center justify-end gap-2"
+              >
+                {socialActions.map((action) => (
+                  <button
+                    key={action.id}
+                    onClick={() => handleSocialClick(action)}
+                    className={`flex h-10 w-10 items-center justify-center rounded-full ${action.bgClass} text-white shadow-md hover:shadow-lg transition-all duration-200 hover:scale-110`}
+                    aria-label={`Connect on ${action.name}`}
+                  >
+                    <action.Icon className="h-5 w-5" />
+                  </button>
+                ))}
+              </motion.div>
+            </motion.div>
+          )}
+        </AnimatePresence>
+
+        {/* Toggle Button */}
+        <motion.button
+          onClick={() => setIsOpen(!isOpen)}
+          className={`relative flex h-14 w-14 items-center justify-center rounded-full shadow-xl transition-all duration-300 ${
+            isOpen
+              ? "bg-gray-800 hover:bg-gray-700"
+              : "bg-gradient-to-br from-gold via-yellow-400 to-amber-500 hover:from-yellow-400 hover:via-amber-400 hover:to-gold"
+          }`}
+          whileHover={{ scale: 1.1 }}
+          whileTap={{ scale: 0.95 }}
+          aria-label={isOpen ? "Close contact menu" : "Open contact menu"}
+        >
+          <AnimatePresence mode="wait">
+            {isOpen ? (
+              <motion.div
+                key="close"
+                initial={{ rotate: -90, opacity: 0 }}
+                animate={{ rotate: 0, opacity: 1 }}
+                exit={{ rotate: 90, opacity: 0 }}
+                transition={{ duration: 0.15 }}
+              >
+                <XMarkIcon className="h-6 w-6 text-white" />
+              </motion.div>
+            ) : (
+              <motion.div
+                key="open"
+                initial={{ rotate: 90, opacity: 0 }}
+                animate={{ rotate: 0, opacity: 1 }}
+                exit={{ rotate: -90, opacity: 0 }}
+                transition={{ duration: 0.15 }}
+              >
+                <ChatBubbleLeftRightIcon className="h-6 w-6 text-gray-900" />
+              </motion.div>
+            )}
+          </AnimatePresence>
+
+          {/* Pulse animation when closed */}
+          {!isOpen && (
+            <motion.div
+              className="absolute inset-0 rounded-full bg-gold/40"
+              animate={{
+                scale: [1, 1.5, 1.5],
+                opacity: [0.6, 0, 0],
+              }}
+              transition={{
+                duration: 2,
+                repeat: Infinity,
+                ease: "easeOut",
+              }}
+            />
+          )}
+        </motion.button>
+      </motion.div>
+
+      {/* Chat Modal */}
+      <AnimatePresence>
+        {isChatOpen && <Chat onClose={() => setIsChatOpen(false)} />}
+      </AnimatePresence>
     </ClientOnly>
   );
 };

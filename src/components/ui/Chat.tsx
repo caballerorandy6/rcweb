@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 import { PaperAirplaneIcon, XMarkIcon } from "@heroicons/react/24/outline";
 import { useState, useEffect, useRef } from "react";
 import Image from "next/image";
-import { trackEvent } from "@/lib/analytics";
+import { event as trackEvent } from "@/lib/analytics";
 
 interface Message {
   id: string;
