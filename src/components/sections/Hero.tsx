@@ -9,8 +9,9 @@ import heroImage from "../../../public/hero.webp";
 import { motion } from "framer-motion";
 import { PhoneIcon, CalendarDaysIcon } from "@heroicons/react/24/outline";
 import { trackFBPhoneCall } from "@/components/tracking/FacebookPixel";
+import { trackLinkedInConversion } from "@/components/tracking/LinkedInInsightTag";
 
-// Phone Conversion Tracking (Google Ads + Facebook)
+// Phone Conversion Tracking (Google Ads + Facebook + LinkedIn)
 const trackPhoneConversion = () => {
   // Google Ads conversion
   if (typeof window !== "undefined" && window.gtag) {
@@ -23,6 +24,9 @@ const trackPhoneConversion = () => {
 
   // Facebook Pixel conversion
   trackFBPhoneCall();
+
+  // LinkedIn conversion
+  trackLinkedInConversion();
 };
 
 const Hero = () => {

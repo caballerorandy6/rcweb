@@ -14,6 +14,8 @@ import confetti from "canvas-confetti";
 import type { Subscription } from "@/generated/prisma/client";
 import { trackLeadConversion, trackPurchase } from "@/lib/analytics";
 import { formatDate as formatDateUtil } from "@/lib/utils";
+import { trackFBPurchase } from "@/components/tracking/FacebookPixel";
+import { trackLinkedInConversion } from "@/components/tracking/LinkedInInsightTag";
 
 interface SubscriptionSuccessProps {
   subscription?: Subscription | null;
@@ -39,6 +41,12 @@ export default function SubscriptionSuccess({
         subscription.currency,
         subscription.stripeSubscriptionId
       );
+
+      // Track Facebook Pixel Purchase
+      trackFBPurchase(subscription.amount / 100, subscription.currency);
+
+      // Track LinkedIn Conversion
+      trackLinkedInConversion();
 
       trackLeadConversion();
 

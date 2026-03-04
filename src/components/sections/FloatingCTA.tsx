@@ -11,6 +11,9 @@ import Instagram from "@/components/icons/Instagram";
 import X from "@/components/icons/X";
 import TikTok from "@/components/icons/TikTok";
 import ClientOnly from "@/components/ui/ClientOnly";
+import { trackFBContact } from "@/components/tracking/FacebookPixel";
+import { trackLinkedInConversion } from "@/components/tracking/LinkedInInsightTag";
+import { trackEvent } from "@/lib/analytics";
 
 const Chat = dynamic(() => import("@/components/ui/Chat"), {
   ssr: false,
@@ -57,7 +60,18 @@ const FloatingCTA = () => {
     return () => observer.disconnect();
   }, []);
 
-  const handleClick = (url: string, isButton?: boolean) => {
+  const handleClick = (url: string, isButton?: boolean, linkName?: string) => {
+    // Track conversion for WhatsApp and Phone clicks
+    if (linkName === "WhatsApp" || linkName === "Phone") {
+      trackFBContact();
+      trackLinkedInConversion();
+      trackEvent({
+        action: "contact_click",
+        category: "engagement",
+        label: linkName,
+      });
+    }
+
     if (isButton) {
       window.open(url, "_self");
     }
@@ -195,7 +209,7 @@ const FloatingCTA = () => {
             >
               {link.isButton ? (
                 <button
-                  onClick={() => handleClick(link.url, link.isButton)}
+                  onClick={() => handleClick(link.url, link.isButton, link.name)}
                   className={`flex h-14 w-14 items-center justify-center rounded-full ${link.bgColor} text-white shadow-lg transition-all duration-200 hover:scale-110 ${link.hoverColor} hover:shadow-xl`}
                   aria-label={link.ariaLabel}
                 >

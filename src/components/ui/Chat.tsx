@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 import { PaperAirplaneIcon, XMarkIcon } from "@heroicons/react/24/outline";
 import { useState, useEffect, useRef } from "react";
 import Image from "next/image";
+import { trackEvent } from "@/lib/analytics";
 
 interface Message {
   id: string;
@@ -19,6 +20,7 @@ export default function Chat({ onClose }: ChatProps) {
   const [messages, setMessages] = useState<Message[]>([]);
   const [input, setInput] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const [hasTrackedEngagement, setHasTrackedEngagement] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
   // Auto-scroll al último mensaje
@@ -54,6 +56,16 @@ export default function Chat({ onClose }: ChatProps) {
     setMessages((prev) => [...prev, userMessage]);
     setInput("");
     setIsLoading(true);
+
+    // Track first user engagement with AI Chat
+    if (!hasTrackedEngagement) {
+      trackEvent({
+        action: "ai_chat_engagement",
+        category: "engagement",
+        label: "first_message",
+      });
+      setHasTrackedEngagement(true);
+    }
 
     try {
       const response = await fetch("/api/chat", {

@@ -12,6 +12,8 @@ import { toast } from "sonner";
 import confetti from "canvas-confetti";
 import type { Payment } from "@/generated/prisma/client";
 import { trackLeadConversion, trackPurchase } from "@/lib/analytics";
+import { trackFBPurchase } from "@/components/tracking/FacebookPixel";
+import { trackLinkedInConversion } from "@/components/tracking/LinkedInInsightTag";
 
 interface PaymentSuccessClientProps {
   payment?: Payment | null;
@@ -48,6 +50,12 @@ export default function PaymentSuccess({
         'USD',
         payment.firstSessionId || payment.secondSessionId || undefined
       );
+
+      // Track Facebook Pixel Purchase
+      trackFBPurchase(paymentAmount / 100, 'USD');
+
+      // Track LinkedIn Conversion
+      trackLinkedInConversion();
 
       // Track lead conversion (payment completed = lead converted to customer)
       trackLeadConversion();

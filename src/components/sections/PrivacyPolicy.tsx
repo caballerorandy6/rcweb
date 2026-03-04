@@ -14,8 +14,9 @@ import {
 } from "@heroicons/react/24/outline";
 import useSectionObserver from "@/hooks/useSectionObserver";
 import { trackFBPhoneCall } from "@/components/tracking/FacebookPixel";
+import { trackLinkedInConversion } from "@/components/tracking/LinkedInInsightTag";
 
-// Phone Conversion Tracking (Google Ads + Facebook)
+// Phone Conversion Tracking (Google Ads + Facebook + LinkedIn)
 const trackPhoneConversion = () => {
   // Google Ads conversion
   if (typeof window !== "undefined" && window.gtag) {
@@ -28,6 +29,9 @@ const trackPhoneConversion = () => {
 
   // Facebook Pixel conversion
   trackFBPhoneCall();
+
+  // LinkedIn conversion
+  trackLinkedInConversion();
 };
 
 export default function PrivacyPolicy() {
