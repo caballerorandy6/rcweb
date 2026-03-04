@@ -67,18 +67,18 @@ export default async function StatsGrid() {
   ];
 
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6 mb-8 font-inter">
+    <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3 sm:gap-4 lg:gap-5 font-inter">
       {statsCards.map((card, i) => (
         <div
           key={i}
-          className="bg-gray-800/50 rounded-lg p-6 border border-gray-700/50"
+          className="bg-gray-800/80 rounded-xl p-4 sm:p-5 border border-gray-700/50 hover:border-gray-600 transition-colors"
         >
-          <div className="flex items-center justify-between">
-            <div>
-              <p className="text-gray-400 text-sm">{card.label}</p>
-              <p className="text-3xl font-bold text-white mt-1">{card.value}</p>
+          <div className="flex items-center justify-between gap-2">
+            <div className="min-w-0">
+              <p className="text-gray-400 text-xs sm:text-sm truncate">{card.label}</p>
+              <p className="text-2xl sm:text-3xl font-bold text-white mt-1">{card.value}</p>
             </div>
-            <div>{card.icon}</div>
+            <div className="flex-shrink-0">{card.icon}</div>
           </div>
         </div>
       ))}

@@ -144,36 +144,34 @@ export default function AdminSidebar() {
 
   return (
     <>
-      {/* Mobile menu button - positioned below public navbar */}
-      <div className="lg:hidden fixed top-[84px] left-4 z-50">
-        <button
-          onClick={() => setSidebarOpen(!sidebarOpen)}
-          className="p-2 rounded-lg bg-gray-800/90 backdrop-blur-sm border border-gray-700/50 text-gray-300 hover:text-gold transition-colors shadow-lg"
-          aria-label="Toggle menu"
-        >
-          {sidebarOpen ? (
-            <XMarkIcon className="h-6 w-6" />
-          ) : (
-            <Bars3Icon className="h-6 w-6" />
-          )}
-        </button>
-      </div>
+      {/* Mobile menu button - fixed position below navbar */}
+      <button
+        onClick={() => setSidebarOpen(!sidebarOpen)}
+        className="lg:hidden fixed top-[80px] left-4 z-50 p-2.5 rounded-xl bg-gray-800 border border-gray-700 text-gray-300 hover:text-gold hover:border-gold/50 transition-all duration-200 shadow-xl shadow-black/20"
+        aria-label="Toggle menu"
+      >
+        {sidebarOpen ? (
+          <XMarkIcon className="h-5 w-5" />
+        ) : (
+          <Bars3Icon className="h-5 w-5" />
+        )}
+      </button>
 
       {/* Backdrop overlay for mobile */}
       {sidebarOpen && (
         <div
-          className="fixed inset-0 top-[72px] bg-black/50 backdrop-blur-sm z-[45] lg:hidden"
+          className="fixed inset-0 top-[72px] bg-black/60 backdrop-blur-sm z-40 lg:hidden"
           onClick={() => setSidebarOpen(false)}
         />
       )}
 
       {/* Sidebar - starts below public navbar */}
       <aside
-        className={`fixed top-[72px] left-0 h-[calc(100vh-72px)] w-64 bg-gray-900/95 backdrop-blur-sm border-r border-gray-700/50 z-40 transform transition-transform duration-300 ease-in-out lg:translate-x-0 ${sidebarOpen ? "translate-x-0" : "-translate-x-full"}`}
+        className={`fixed top-[72px] left-0 h-[calc(100vh-72px)] w-64 bg-gray-900 border-r border-gray-800 z-50 transform transition-transform duration-300 ease-in-out lg:translate-x-0 overflow-hidden ${sidebarOpen ? "translate-x-0" : "-translate-x-full"}`}
       >
         <div className="flex flex-col h-full">
           {/* Header */}
-          <div className="flex items-center justify-between px-6 py-4 border-b border-gray-700/50">
+          <div className="flex items-center px-5 py-4 border-b border-gray-800 bg-gray-900">
             <Link
               href="/admin-dashboard"
               className="text-xl font-bold text-gold font-iceland hover:text-gold/80 transition-colors"
@@ -184,13 +182,13 @@ export default function AdminSidebar() {
           </div>
 
           {/* Navigation */}
-          <nav className="flex-1 px-3 py-4 overflow-y-auto">
+          <nav className="flex-1 px-3 py-4 overflow-y-auto scrollbar-thin scrollbar-thumb-gray-700 scrollbar-track-transparent">
             {/* Public Site Section */}
             <div className="mb-4">
               <h3 className="px-3 mb-2 text-[10px] font-semibold text-gray-500 uppercase tracking-wider font-inter">
                 Public Site
               </h3>
-              <div className="space-y-0.5">
+              <div className="space-y-1">
                 {publicNavigation.map((item) => {
                   const Icon = item.icon;
                   return (
@@ -198,7 +196,7 @@ export default function AdminSidebar() {
                       key={item.name}
                       href={item.href}
                       onClick={() => setSidebarOpen(false)}
-                      className="flex items-center gap-2.5 px-3 py-1.5 rounded-md font-inter text-sm text-gray-400 hover:bg-gray-800/50 hover:text-gold transition-all duration-200"
+                      className="flex items-center gap-3 px-3 py-2 rounded-lg font-inter text-sm text-gray-400 hover:bg-gray-800 hover:text-gold transition-all duration-200"
                     >
                       <Icon className="h-4 w-4 flex-shrink-0" />
                       <span>{item.name}</span>
@@ -209,14 +207,14 @@ export default function AdminSidebar() {
             </div>
 
             {/* Divider */}
-            <div className="border-t border-gray-700/50 my-3" />
+            <div className="border-t border-gray-800 my-4" />
 
             {/* Admin Section */}
             <div>
               <h3 className="px-3 mb-2 text-[10px] font-semibold text-gray-500 uppercase tracking-wider font-inter">
                 Admin Panel
               </h3>
-              <div className="space-y-0.5">
+              <div className="space-y-1">
                 {adminNavigation.map((item) => {
                   const Icon = isActive(item.href) ? item.iconSolid : item.icon;
                   return (
@@ -224,7 +222,11 @@ export default function AdminSidebar() {
                       key={item.name}
                       href={item.href}
                       onClick={() => setSidebarOpen(false)}
-                      className={`flex items-center gap-2.5 px-3 py-2 rounded-md font-inter text-sm transition-all duration-200 ${isActive(item.href) ? "bg-gold/20 text-gold" : "text-gray-300 hover:bg-gray-800/50 hover:text-gold"}`}
+                      className={`flex items-center gap-3 px-3 py-2.5 rounded-lg font-inter text-sm transition-all duration-200 ${
+                        isActive(item.href)
+                          ? "bg-gold/10 text-gold border border-gold/20"
+                          : "text-gray-300 hover:bg-gray-800 hover:text-white"
+                      }`}
                     >
                       <Icon className="h-4 w-4 flex-shrink-0" />
                       <span>{item.name}</span>
@@ -236,7 +238,7 @@ export default function AdminSidebar() {
           </nav>
 
           {/* Footer */}
-          <div className="px-3 py-3 border-t border-gray-700/50 space-y-3">
+          <div className="px-3 py-4 border-t border-gray-800 space-y-3 bg-gray-900">
             <SignOutButton />
             <div className="text-[10px] text-gray-600 text-center font-inter">
               © 2025 RC Web Solutions LLC

@@ -76,36 +76,39 @@ export default async function LeadsBySource() {
   ];
 
   return (
-    <div className="bg-gray-800/50 rounded-lg p-6 border border-gray-700/50">
+    <div className="bg-gray-800/80 rounded-xl p-4 sm:p-6 border border-gray-700/50">
       {/* Header */}
-      <div className="flex items-center gap-3 mb-6">
-        <ChartBarIcon className="w-6 h-6 text-gold" />
-        <h2 className="text-2xl font-bold text-white font-iceland">
-          Leads by Source
-        </h2>
-        <span className="ml-auto text-sm text-gray-400 font-inter">
-          Total: <span className="text-gold font-semibold">{data.total}</span>{" "}
-          leads
+      <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-3 mb-5">
+        <div className="flex items-center gap-3">
+          <ChartBarIcon className="w-5 h-5 sm:w-6 sm:h-6 text-gold flex-shrink-0" />
+          <h2 className="text-xl sm:text-2xl font-bold text-white font-iceland">
+            Leads by Source
+          </h2>
+        </div>
+        <span className="sm:ml-auto text-sm text-gray-400 font-inter">
+          Total: <span className="text-gold font-semibold">{data.total.toLocaleString()}</span> leads
         </span>
       </div>
 
       {/* Status Pills */}
-      <div className="flex flex-wrap gap-3 mb-6">
+      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-2 sm:gap-3 mb-6">
         {statusCards.map((card) => (
           <div
             key={card.label}
-            className={`flex items-center gap-2 px-3 py-1.5 rounded-full ${card.bgColor} font-inter`}
+            className={`flex items-center gap-2 px-3 py-2 rounded-lg ${card.bgColor} font-inter`}
           >
-            <span className={card.color}>{card.icon}</span>
-            <span className="text-sm text-gray-300">{card.label}:</span>
-            <span className={`font-semibold ${card.color}`}>{card.value}</span>
+            <span className={`${card.color} flex-shrink-0`}>{card.icon}</span>
+            <div className="min-w-0 flex-1">
+              <span className="text-xs text-gray-400 block truncate">{card.label}</span>
+              <span className={`font-bold text-sm ${card.color}`}>{card.value.toLocaleString()}</span>
+            </div>
           </div>
         ))}
       </div>
 
       {/* Source Bars */}
       {data.sources.length > 0 ? (
-        <div className="space-y-4">
+        <div className="space-y-3 sm:space-y-4">
           {data.sources.map((source) => {
             const label =
               sourceLabels[source.source] || source.source || "Unknown";
@@ -113,22 +116,22 @@ export default async function LeadsBySource() {
 
             return (
               <div key={source.source} className="font-inter">
-                <div className="flex items-center justify-between mb-1">
-                  <span className="text-sm text-gray-300">{label}</span>
-                  <div className="flex items-center gap-2">
-                    <span className="text-sm font-semibold text-white">
-                      {source.count}
+                <div className="flex items-center justify-between mb-1.5 gap-2">
+                  <span className="text-xs sm:text-sm text-gray-300 truncate">{label}</span>
+                  <div className="flex items-center gap-1.5 sm:gap-2 flex-shrink-0">
+                    <span className="text-xs sm:text-sm font-semibold text-white">
+                      {source.count.toLocaleString()}
                     </span>
-                    <span className="text-xs text-gray-500">
+                    <span className="text-[10px] sm:text-xs text-gray-500">
                       ({source.percentage}%)
                     </span>
                   </div>
                 </div>
-                <div className="h-3 bg-gray-700/50 rounded-full overflow-hidden">
+                <div className="h-2.5 sm:h-3 bg-gray-700/50 rounded-full overflow-hidden">
                   <div
                     className="h-full rounded-full transition-all duration-500 ease-out"
                     style={{
-                      width: `${source.percentage}%`,
+                      width: `${Math.max(source.percentage, 2)}%`,
                       backgroundColor: color,
                     }}
                   />
@@ -139,9 +142,9 @@ export default async function LeadsBySource() {
         </div>
       ) : (
         <div className="text-center py-8">
-          <UserGroupIcon className="w-12 h-12 text-gray-600 mx-auto mb-3" />
-          <p className="text-gray-400 font-inter">No leads recorded yet</p>
-          <p className="text-sm text-gray-500 font-inter mt-1">
+          <UserGroupIcon className="w-10 h-10 sm:w-12 sm:h-12 text-gray-600 mx-auto mb-3" />
+          <p className="text-gray-400 font-inter text-sm sm:text-base">No leads recorded yet</p>
+          <p className="text-xs sm:text-sm text-gray-500 font-inter mt-1">
             Leads will appear here as they come in from various sources
           </p>
         </div>
@@ -149,8 +152,8 @@ export default async function LeadsBySource() {
 
       {/* Legend */}
       {data.sources.length > 0 && (
-        <div className="mt-6 pt-4 border-t border-gray-700/50">
-          <p className="text-xs text-gray-500 font-inter">
+        <div className="mt-5 pt-4 border-t border-gray-700/50">
+          <p className="text-[10px] sm:text-xs text-gray-500 font-inter">
             Lead sources are tracked automatically from contact forms, guide
             downloads, exit intent popups, and other conversion points.
           </p>
