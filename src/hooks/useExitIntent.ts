@@ -23,6 +23,10 @@ export function useExitIntent(options: UseExitIntentOptions = {}) {
   const wasRecentlyShown = () => {
     if (typeof window === "undefined") return true;
 
+    // Check session storage first (once per session)
+    if (sessionStorage.getItem(`${cookieName}-session`)) return true;
+
+    // Then check localStorage for long-term dismissal
     const lastShown = localStorage.getItem(cookieName);
     if (!lastShown) return false;
 
@@ -37,6 +41,7 @@ export function useExitIntent(options: UseExitIntentOptions = {}) {
   const markAsShown = () => {
     if (typeof window === "undefined") return;
     localStorage.setItem(cookieName, Date.now().toString());
+    sessionStorage.setItem(`${cookieName}-session`, "true");
   };
 
   const closePopup = () => {

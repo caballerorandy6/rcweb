@@ -12,8 +12,8 @@ import { trackSubmitLeadForm } from "@/lib/analytics";
 
 export default function ExitIntentPopup() {
   const { showPopup, closePopup } = useExitIntent({
-    delayMs: 10000, // Wait 10 seconds before enabling
-    cookieExpiryDays: 3, // Show again after 3 days
+    delayMs: 30000, // Wait 30 seconds before enabling
+    cookieExpiryDays: 30, // Show again after 30 days
   });
 
   const [email, setEmail] = useState("");
