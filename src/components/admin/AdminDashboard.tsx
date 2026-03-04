@@ -4,6 +4,8 @@ import { redirect } from "next/navigation";
 import StatsGrid from "@/components/admin/StatsGrid";
 import StatsGridSkeleton from "@/components/skeletons/StatsGridSkeleton";
 import QuickActions from "@/components/admin/QuickActions";
+import LeadsBySource from "@/components/admin/LeadsBySource";
+import LeadsBySourceSkeleton from "@/components/skeletons/LeadsBySourceSkeleton";
 
 export default async function AdminDashboard() {
   const session = await auth();
@@ -32,6 +34,11 @@ export default async function AdminDashboard() {
 
       {/* Quick Actions */}
       <QuickActions />
+
+      {/* Leads by Source */}
+      <Suspense fallback={<LeadsBySourceSkeleton />}>
+        <LeadsBySource />
+      </Suspense>
 
       {/* User Info */}
       <div className="bg-gray-800/50 rounded-lg p-6 border border-gray-700/50">

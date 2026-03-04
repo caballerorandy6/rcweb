@@ -34,6 +34,8 @@ model Contact {
 
   @@index([leadStatus])
   @@index([nurturingStatus])
+  @@index([source])
+  @@index([createdAt])
 }
 
 // Lead Nurturing Activity Log

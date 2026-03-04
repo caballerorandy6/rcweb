@@ -97,7 +97,8 @@ const DialogForm = ({ closeModal }: DialogFormProps) => {
         const contact = await createContactAction(
           data,
           recaptchaToken,
-          timeSpent
+          timeSpent,
+          "contact_form"
         );
 
         if (contact.success) {

@@ -55,7 +55,8 @@ async function verifyRecaptcha(token: string): Promise<boolean> {
 export const createContactAction = async (
   data: FormData,
   recaptchaToken?: string,
-  timeSpent?: number
+  timeSpent?: number,
+  source: string = "contact_form"
 ): Promise<CreateContactAction> => {
   // Anti-Bot Validation: Verify reCAPTCHA
   if (recaptchaToken) {
@@ -146,6 +147,7 @@ export const createContactAction = async (
         data: {
           name,
           marketingConsent,
+          source,
           emails: email ? { create: { email } } : undefined,
           phones: phone ? { create: { phone } } : undefined,
         },
