@@ -5,6 +5,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import twilio from "twilio";
 import { validateTwilioSignature, forbiddenTwilioSmsResponse } from "@/lib/twilioAuth";
+import { sendNewLeadNotification } from "@/lib/email/senders/sendNewLeadNotification";
 
 export async function POST(request: NextRequest) {
   try {
@@ -132,7 +133,14 @@ async function handleOptIn(phoneNumber: string) {
           },
         },
       });
-          }
+
+      // Send notification to admin
+      sendNewLeadNotification({
+        leadName: `SMS Subscriber ${phoneNumber.slice(-4)}`,
+        leadPhone: phoneNumber,
+        source: "sms_opt_in",
+      }).catch(console.error);
+    }
   } catch (error) {
     console.error("❌ Error handling opt-in:", error);
     throw error;

@@ -2,6 +2,7 @@
 
 import { prisma } from "@/lib/prisma";
 import { BlogSubscriptionData, BlogSubscriptionSchema } from "@/lib/zod";
+import { sendNewLeadNotification } from "@/lib/email/senders/sendNewLeadNotification";
 
 export const subscribeToBlogAction = async (data: BlogSubscriptionData) => {
   // Validar los datos de entrada
@@ -50,6 +51,13 @@ export const subscribeToBlogAction = async (data: BlogSubscriptionData) => {
             create: { email },
           },
         },
+      });
+
+      // Send notification to admin
+      await sendNewLeadNotification({
+        leadName: "Blog Subscriber",
+        leadEmail: email,
+        source: "blog_subscription",
       });
     }
 

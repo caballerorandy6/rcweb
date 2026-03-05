@@ -3,6 +3,7 @@
 import { Resend } from "resend";
 import { prisma } from "@/lib/prisma";
 import { checkAndReserveEmailQuota, releaseEmailQuota } from "@/lib/emailQuota";
+import { sendNewLeadNotification } from "@/lib/email/senders/sendNewLeadNotification";
 import fs from "fs";
 import path from "path";
 
@@ -38,6 +39,13 @@ export async function downloadGuideAction(email: string) {
           },
         },
       });
+
+      // Send notification to admin (don't await to not block the user)
+      sendNewLeadNotification({
+        leadName: "Guide Download",
+        leadEmail: email,
+        source: "guide_download",
+      }).catch(console.error);
     }
 
     // 3. Verificar quota de emails
