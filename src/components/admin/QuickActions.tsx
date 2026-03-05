@@ -1,37 +1,48 @@
 import Link from "next/link";
 import type { Route } from "next";
-import { ArrowRightIcon } from "@heroicons/react/24/solid";
+import {
+  PlusCircleIcon,
+  EnvelopeIcon,
+  ChatBubbleLeftRightIcon,
+  DocumentPlusIcon,
+  UserPlusIcon,
+} from "@heroicons/react/24/outline";
 
-export const quickActions = [
+const quickActions = [
   {
-    href: "/contacts",
-    title: "View Contacts",
-    description: "Manage all contacts",
-    iconColor: "text-gray-400",
+    href: "/projects?action=new",
+    title: "New Project",
+    description: "Create a project",
+    icon: <PlusCircleIcon className="w-5 h-5" />,
+    color: "text-blue-400",
+  },
+  {
+    href: "/contacts?action=new",
+    title: "Add Contact",
+    description: "New lead entry",
+    icon: <UserPlusIcon className="w-5 h-5" />,
+    color: "text-green-400",
   },
   {
     href: "/newsletter",
     title: "Send Newsletter",
     description: "Email campaign",
-    iconColor: "text-gray-400",
+    icon: <EnvelopeIcon className="w-5 h-5" />,
+    color: "text-purple-400",
   },
   {
     href: "/sms",
     title: "Send SMS",
     description: "SMS campaign",
-    iconColor: "text-gray-400",
-  },
-  {
-    href: "/projects",
-    title: "View Projects",
-    description: "Manage all projects",
-    iconColor: "text-gray-400",
+    icon: <ChatBubbleLeftRightIcon className="w-5 h-5" />,
+    color: "text-cyan-400",
   },
   {
     href: "/manage-invoices",
-    title: "Manage Invoices",
-    description: "View all invoices",
-    iconColor: "text-gray-400",
+    title: "View Invoices",
+    description: "Manage payments",
+    icon: <DocumentPlusIcon className="w-5 h-5" />,
+    color: "text-yellow-400",
   },
 ];
 
@@ -41,24 +52,24 @@ export default function QuickActions() {
       <h2 className="text-xl sm:text-2xl font-bold text-white mb-4 font-iceland">
         Quick Actions
       </h2>
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-3">
+      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3">
         {quickActions.map((action) => (
           <Link
             key={action.href}
             href={action.href as Route}
-            className="flex items-center justify-between p-3 sm:p-4 bg-gray-700/40 hover:bg-gray-700/60 rounded-lg transition-all duration-200 group border border-transparent hover:border-gray-600"
+            className="flex flex-col items-center justify-center p-4 bg-gray-700/40 hover:bg-gray-700/60 rounded-lg transition-all duration-200 group border border-transparent hover:border-gray-600 text-center"
           >
-            <div className="min-w-0 flex-1">
-              <p className="text-white font-medium font-inter text-sm sm:text-base truncate">
-                {action.title}
-              </p>
-              <p className="text-gray-400 text-xs sm:text-sm font-inter truncate">
-                {action.description}
-              </p>
-            </div>
-            <ArrowRightIcon
-              className={`w-4 h-4 sm:w-5 sm:h-5 ${action.iconColor} group-hover:text-gold group-hover:translate-x-0.5 transition-all flex-shrink-0 ml-2`}
-            />
+            <span
+              className={`${action.color} mb-2 group-hover:scale-110 transition-transform`}
+            >
+              {action.icon}
+            </span>
+            <p className="text-white font-medium font-inter text-sm truncate w-full">
+              {action.title}
+            </p>
+            <p className="text-gray-500 text-xs font-inter truncate w-full">
+              {action.description}
+            </p>
           </Link>
         ))}
       </div>

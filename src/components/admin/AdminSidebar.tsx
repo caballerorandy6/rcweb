@@ -144,34 +144,45 @@ export default function AdminSidebar() {
 
   return (
     <>
-      {/* Mobile menu button - fixed position below navbar */}
-      <button
-        onClick={() => setSidebarOpen(!sidebarOpen)}
-        className="lg:hidden fixed top-[80px] left-4 z-50 p-2.5 rounded-xl bg-gray-800 border border-gray-700 text-gray-300 hover:text-gold hover:border-gold/50 transition-all duration-200 shadow-xl shadow-black/20"
-        aria-label="Toggle menu"
-      >
-        {sidebarOpen ? (
-          <XMarkIcon className="h-5 w-5" />
-        ) : (
-          <Bars3Icon className="h-5 w-5" />
-        )}
-      </button>
+      {/* Mobile Header - fixed at very top */}
+      <div className="lg:hidden fixed top-0 left-0 right-0 z-50 bg-gray-900/95 backdrop-blur-sm border-b border-gray-800">
+        <div className="flex items-center justify-between px-4 py-3">
+          <Link
+            href="/admin-dashboard"
+            className="text-xl font-bold text-gold font-iceland"
+          >
+            RC Web Admin
+          </Link>
+          <button
+            type="button"
+            onClick={() => setSidebarOpen(!sidebarOpen)}
+            className="inline-flex items-center justify-center rounded-md text-white/80 hover:text-gold transition-colors"
+            aria-label="Open menu"
+          >
+            <Bars3Icon className="w-6 h-6" />
+          </button>
+        </div>
+      </div>
 
       {/* Backdrop overlay for mobile */}
       {sidebarOpen && (
         <div
-          className="fixed inset-0 top-[72px] bg-black/60 backdrop-blur-sm z-40 lg:hidden"
+          className="fixed inset-0 bg-black/50 z-40 lg:hidden"
           onClick={() => setSidebarOpen(false)}
         />
       )}
 
-      {/* Sidebar - starts below public navbar */}
+      {/* Sidebar - Desktop: fixed left, Mobile: drawer from right */}
       <aside
-        className={`fixed top-[72px] left-0 h-[calc(100vh-72px)] w-64 bg-gray-900 border-r border-gray-800 z-50 transform transition-transform duration-300 ease-in-out lg:translate-x-0 overflow-hidden ${sidebarOpen ? "translate-x-0" : "-translate-x-full"}`}
+        className={`fixed w-64 bg-gray-900 z-50 transform transition-transform duration-300 ease-in-out
+          top-[48px] h-[calc(100vh-48px)] right-0 border-l border-gray-800
+          lg:top-[72px] lg:h-[calc(100vh-72px)] lg:left-0 lg:right-auto lg:border-l-0 lg:border-r lg:translate-x-0 ${
+          sidebarOpen ? "translate-x-0" : "translate-x-full lg:translate-x-0"
+        }`}
       >
-        <div className="flex flex-col h-full">
-          {/* Header */}
-          <div className="flex items-center px-5 py-4 border-b border-gray-800 bg-gray-900">
+        <div className="flex flex-col h-full overflow-hidden">
+          {/* Header with close button */}
+          <div className="flex items-center justify-between px-5 py-4 border-b border-gray-800 bg-gray-900">
             <Link
               href="/admin-dashboard"
               className="text-xl font-bold text-gold font-iceland hover:text-gold/80 transition-colors"
@@ -179,38 +190,19 @@ export default function AdminSidebar() {
             >
               RC Web Admin
             </Link>
+            <button
+              onClick={() => setSidebarOpen(false)}
+              className="lg:hidden p-1.5 rounded-lg text-gray-400 hover:text-white hover:bg-gray-800 transition-colors"
+              aria-label="Close menu"
+            >
+              <XMarkIcon className="h-5 w-5" />
+            </button>
           </div>
 
           {/* Navigation */}
-          <nav className="flex-1 px-3 py-4 overflow-y-auto scrollbar-thin scrollbar-thumb-gray-700 scrollbar-track-transparent">
-            {/* Public Site Section */}
+          <nav className="flex-1 px-3 py-4 overflow-y-auto">
+            {/* Admin Section - Primary */}
             <div className="mb-4">
-              <h3 className="px-3 mb-2 text-[10px] font-semibold text-gray-500 uppercase tracking-wider font-inter">
-                Public Site
-              </h3>
-              <div className="space-y-1">
-                {publicNavigation.map((item) => {
-                  const Icon = item.icon;
-                  return (
-                    <Link
-                      key={item.name}
-                      href={item.href}
-                      onClick={() => setSidebarOpen(false)}
-                      className="flex items-center gap-3 px-3 py-2 rounded-lg font-inter text-sm text-gray-400 hover:bg-gray-800 hover:text-gold transition-all duration-200"
-                    >
-                      <Icon className="h-4 w-4 flex-shrink-0" />
-                      <span>{item.name}</span>
-                    </Link>
-                  );
-                })}
-              </div>
-            </div>
-
-            {/* Divider */}
-            <div className="border-t border-gray-800 my-4" />
-
-            {/* Admin Section */}
-            <div>
               <h3 className="px-3 mb-2 text-[10px] font-semibold text-gray-500 uppercase tracking-wider font-inter">
                 Admin Panel
               </h3>
@@ -235,6 +227,40 @@ export default function AdminSidebar() {
                 })}
               </div>
             </div>
+
+            {/* Divider */}
+            <div className="border-t border-gray-800 my-4" />
+
+            {/* Public Site Section - Collapsible */}
+            <details className="group">
+              <summary className="flex items-center justify-between px-3 py-2 cursor-pointer list-none text-[10px] font-semibold text-gray-500 uppercase tracking-wider font-inter hover:text-gray-400 transition-colors">
+                <span>Public Site</span>
+                <svg
+                  className="w-3 h-3 transition-transform group-open:rotate-180"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                </svg>
+              </summary>
+              <div className="space-y-1 mt-2">
+                {publicNavigation.map((item) => {
+                  const Icon = item.icon;
+                  return (
+                    <Link
+                      key={item.name}
+                      href={item.href}
+                      onClick={() => setSidebarOpen(false)}
+                      className="flex items-center gap-3 px-3 py-2 rounded-lg font-inter text-sm text-gray-400 hover:bg-gray-800 hover:text-gold transition-all duration-200"
+                    >
+                      <Icon className="h-4 w-4 flex-shrink-0" />
+                      <span>{item.name}</span>
+                    </Link>
+                  );
+                })}
+              </div>
+            </details>
           </nav>
 
           {/* Footer */}

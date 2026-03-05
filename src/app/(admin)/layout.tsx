@@ -15,14 +15,14 @@ export default async function AdminLayout({
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-900 via-gray-950 to-gray-900 pt-[72px]">
+    <div className="min-h-screen bg-gradient-to-br from-gray-900 via-gray-950 to-gray-900 pt-[48px] lg:pt-[72px]">
       {/* Sidebar */}
       <AdminSidebar />
 
       {/* Main content wrapper */}
-      <div className="lg:pl-64 min-h-[calc(100vh-72px)]">
-        {/* Page content - extra padding on mobile for hamburger */}
-        <main className="p-4 pt-16 sm:p-6 sm:pt-6 lg:p-8">{children}</main>
+      <div className="lg:pl-64 min-h-[calc(100vh-48px)] lg:min-h-[calc(100vh-72px)]">
+        {/* Page content */}
+        <main className="p-4 sm:p-6 lg:p-8">{children}</main>
       </div>
     </div>
   );
