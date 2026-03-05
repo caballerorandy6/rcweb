@@ -11,6 +11,7 @@ import CookieConsentProvider from "@/components/forms/CookieConsentProvider";
 import Analytics from "@/components/tracking/Analytics";
 import FacebookPixel from "@/components/tracking/FacebookPixel";
 import LinkedInInsightTag from "@/components/tracking/LinkedInInsightTag";
+import UTMTracker from "@/components/tracking/UTMTracker";
 import ExitIntentPopup from "@/components/forms/ExitIntentPopup";
 import { siteConfig } from "@/config/site";
 import { Analytics as VercelAnalytics } from "@vercel/analytics/next";
@@ -213,6 +214,7 @@ export default function RootLayout({
           <Analytics />
           <FacebookPixel />
           <LinkedInInsightTag />
+          <UTMTracker />
         </Suspense>
 
         {/* Vercel Analytics (essential, no personal data) */}

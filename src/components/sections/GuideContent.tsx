@@ -15,6 +15,7 @@ import { downloadGuideAction } from "@/actions/campaigns/downloadGuideAction";
 import { trackFBLead } from "@/components/tracking/FacebookPixel";
 import { trackLinkedInConversion } from "@/components/tracking/LinkedInInsightTag";
 import { trackSubmitLeadForm } from "@/lib/analytics";
+import { getStoredUTMParams } from "@/hooks/useUTMParams";
 
 export default function GuideContent() {
   const [email, setEmail] = useState("");
@@ -34,7 +35,8 @@ export default function GuideContent() {
       document.body.removeChild(link);
 
       // 2. Call Server Action to save email and send PDF via email
-      const result = await downloadGuideAction(email);
+      const utmData = getStoredUTMParams();
+      const result = await downloadGuideAction(email, "guide_download", utmData || undefined);
 
       // 3. Handle result
       if (result.success) {

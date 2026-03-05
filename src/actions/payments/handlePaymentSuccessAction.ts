@@ -8,6 +8,7 @@ import {
   sendInitialPaymentConfirmation,
   sendAdminInitialPaymentFallback,
 } from "@/lib/email/senders";
+import { linkPaymentToContact } from "@/actions/stats/getRevenueAttributionAction";
 
 export async function handlePaymentSuccessAction(
   sessionId: string,
@@ -33,6 +34,8 @@ export async function handlePaymentSuccessAction(
 
     if (quickCheck) {
       console.log("✅ Payment found immediately (webhook already processed)");
+      // Link to contact for revenue attribution (fire and forget)
+      linkPaymentToContact(quickCheck.id).catch(console.error);
       return { success: true, payment: quickCheck, fallbackUsed: false };
     }
 
@@ -59,6 +62,8 @@ export async function handlePaymentSuccessAction(
         console.log(
           `✅ Payment found after ${attempts} seconds (webhook processed)`
         );
+        // Link to contact for revenue attribution (fire and forget)
+        linkPaymentToContact(payment.id).catch(console.error);
         return { success: true, payment, fallbackUsed: false };
       }
     }
@@ -177,6 +182,9 @@ export async function handlePaymentSuccessAction(
       });
 
       console.log("✅ Payment created via fallback");
+
+      // Link to contact for revenue attribution (fire and forget)
+      linkPaymentToContact(payment.id).catch(console.error);
 
       // Send emails from fallback (parallel, independent)
       const resend = new Resend(process.env.RESEND_API_KEY!);

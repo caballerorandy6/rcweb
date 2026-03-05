@@ -12,6 +12,16 @@ export interface CreateContactAction {
   errors: Record<string, string[]>;
 }
 
+export interface UTMData {
+  utmSource?: string | null;
+  utmMedium?: string | null;
+  utmCampaign?: string | null;
+  utmTerm?: string | null;
+  utmContent?: string | null;
+  referrer?: string | null;
+  landingPage?: string | null;
+}
+
 const resend = new Resend(process.env.RESEND_API_KEY!);
 
 async function verifyRecaptcha(token: string): Promise<boolean> {
@@ -56,7 +66,8 @@ export const createContactAction = async (
   data: FormData,
   recaptchaToken?: string,
   timeSpent?: number,
-  source: string = "contact_form"
+  source: string = "contact_form",
+  utmData?: UTMData
 ): Promise<CreateContactAction> => {
   // Anti-Bot Validation: Verify reCAPTCHA
   if (recaptchaToken) {
@@ -150,6 +161,14 @@ export const createContactAction = async (
           source,
           emails: email ? { create: { email } } : undefined,
           phones: phone ? { create: { phone } } : undefined,
+          // UTM tracking data
+          utmSource: utmData?.utmSource || null,
+          utmMedium: utmData?.utmMedium || null,
+          utmCampaign: utmData?.utmCampaign || null,
+          utmTerm: utmData?.utmTerm || null,
+          utmContent: utmData?.utmContent || null,
+          referrer: utmData?.referrer || null,
+          landingPage: utmData?.landingPage || null,
         },
       });
     }

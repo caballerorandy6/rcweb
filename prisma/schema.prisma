@@ -27,15 +27,27 @@ model Contact {
   interestedIn     String?         // web, ecommerce, app, marketing
   notes            String?         @db.Text
 
+  // UTM Tracking fields
+  utmSource        String?         // google, facebook, linkedin, newsletter
+  utmMedium        String?         // cpc, email, social, organic
+  utmCampaign      String?         // campaign name
+  utmTerm          String?         // paid search keyword
+  utmContent       String?         // ad variation / A-B test
+  referrer         String?         // original referrer URL
+  landingPage      String?         // first page visited
+
   // Relaciones
   emails           ContactEmail[]
   phones           ContactPhone[]
   activities       ContactActivity[]
+  payments         Payment[]
 
   @@index([leadStatus])
   @@index([nurturingStatus])
   @@index([source])
   @@index([createdAt])
+  @@index([utmSource])
+  @@index([utmCampaign])
 }
 
 // Lead Nurturing Activity Log
@@ -184,10 +196,15 @@ model Payment {
   clientId  String?
   client    Client? @relation(fields: [clientId], references: [id])
 
+  // Revenue Attribution - link to original lead
+  contactId String?
+  contact   Contact? @relation(fields: [contactId], references: [id])
+
   @@index([email])
   @@index([projectCode])
   @@index([accessToken])
   @@index([clientId])
+  @@index([contactId])
 }
 
 model TermsAcceptance {

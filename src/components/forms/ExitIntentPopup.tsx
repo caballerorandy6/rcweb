@@ -9,6 +9,7 @@ import { downloadGuideAction } from "@/actions/campaigns/downloadGuideAction";
 import { trackFBLead } from "@/components/tracking/FacebookPixel";
 import { trackLinkedInConversion } from "@/components/tracking/LinkedInInsightTag";
 import { trackSubmitLeadForm } from "@/lib/analytics";
+import { getStoredUTMParams } from "@/hooks/useUTMParams";
 
 export default function ExitIntentPopup() {
   const { showPopup, closePopup } = useExitIntent({
@@ -34,8 +35,9 @@ export default function ExitIntentPopup() {
       link.click();
       document.body.removeChild(link);
 
-      // Save email and send guide via email
-      const result = await downloadGuideAction(email);
+      // Get UTM params and save email with guide via email
+      const utmData = getStoredUTMParams();
+      const result = await downloadGuideAction(email, "exit_intent", utmData || undefined);
 
       if (result.success) {
         // Track conversions

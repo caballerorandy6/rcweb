@@ -9,7 +9,17 @@ import path from "path";
 
 const resend = new Resend(process.env.RESEND_API_KEY!);
 
-export async function downloadGuideAction(email: string) {
+export interface UTMData {
+  utmSource?: string | null;
+  utmMedium?: string | null;
+  utmCampaign?: string | null;
+  utmTerm?: string | null;
+  utmContent?: string | null;
+  referrer?: string | null;
+  landingPage?: string | null;
+}
+
+export async function downloadGuideAction(email: string, source: string = "guide_download", utmData?: UTMData) {
   try {
     // Validar email
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -31,12 +41,20 @@ export async function downloadGuideAction(email: string) {
         data: {
           name: "Guide Download", // Nombre placeholder
           marketingConsent: false, // No tiene consentimiento de marketing aún
-          source: "guide_download",
+          source,
           emails: {
             create: {
               email,
             },
           },
+          // UTM tracking data
+          utmSource: utmData?.utmSource || null,
+          utmMedium: utmData?.utmMedium || null,
+          utmCampaign: utmData?.utmCampaign || null,
+          utmTerm: utmData?.utmTerm || null,
+          utmContent: utmData?.utmContent || null,
+          referrer: utmData?.referrer || null,
+          landingPage: utmData?.landingPage || null,
         },
       });
 
@@ -44,7 +62,7 @@ export async function downloadGuideAction(email: string) {
       sendNewLeadNotification({
         leadName: "Guide Download",
         leadEmail: email,
-        source: "guide_download",
+        source,
       }).catch(console.error);
     }
 

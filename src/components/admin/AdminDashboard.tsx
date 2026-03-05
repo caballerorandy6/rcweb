@@ -6,6 +6,12 @@ import StatsGridSkeleton from "@/components/skeletons/StatsGridSkeleton";
 import QuickActions from "@/components/admin/QuickActions";
 import LeadsBySource from "@/components/admin/LeadsBySource";
 import LeadsBySourceSkeleton from "@/components/skeletons/LeadsBySourceSkeleton";
+import LeadsTrendChartWrapper from "@/components/admin/LeadsTrendChartWrapper";
+import LeadsTrendChartSkeleton from "@/components/skeletons/LeadsTrendChartSkeleton";
+import LeadsByUTM from "@/components/admin/LeadsByUTM";
+import LeadsByUTMSkeleton from "@/components/skeletons/LeadsByUTMSkeleton";
+import RevenueAttribution from "@/components/admin/RevenueAttribution";
+import RevenueAttributionSkeleton from "@/components/skeletons/RevenueAttributionSkeleton";
 
 export default async function AdminDashboard() {
   const session = await auth();
@@ -40,9 +46,24 @@ export default async function AdminDashboard() {
       {/* Quick Actions */}
       <QuickActions />
 
+      {/* Lead Trends Chart */}
+      <Suspense fallback={<LeadsTrendChartSkeleton />}>
+        <LeadsTrendChartWrapper />
+      </Suspense>
+
       {/* Leads by Source */}
       <Suspense fallback={<LeadsBySourceSkeleton />}>
         <LeadsBySource />
+      </Suspense>
+
+      {/* UTM Tracking */}
+      <Suspense fallback={<LeadsByUTMSkeleton />}>
+        <LeadsByUTM />
+      </Suspense>
+
+      {/* Revenue Attribution */}
+      <Suspense fallback={<RevenueAttributionSkeleton />}>
+        <RevenueAttribution />
       </Suspense>
     </div>
   );

@@ -8,6 +8,7 @@ import { createContactAction } from "@/actions/contacts/createContactAction";
 import { trackContactFormSubmit, trackSubmitLeadForm } from "@/lib/analytics";
 import { trackFBLead } from "@/components/tracking/FacebookPixel";
 import { trackLinkedInConversion } from "@/components/tracking/LinkedInInsightTag";
+import { getStoredUTMParams } from "@/hooks/useUTMParams";
 import Script from "next/script";
 import { useRouter } from "next/navigation";
 
@@ -92,13 +93,17 @@ const DialogForm = ({ closeModal }: DialogFormProps) => {
 
     const toastId = toast.loading("Sending message...");
 
+    // Get UTM params from session storage
+    const utmData = getStoredUTMParams();
+
     try {
       startTransition(async () => {
         const contact = await createContactAction(
           data,
           recaptchaToken,
           timeSpent,
-          "contact_form"
+          "contact_form",
+          utmData || undefined
         );
 
         if (contact.success) {
