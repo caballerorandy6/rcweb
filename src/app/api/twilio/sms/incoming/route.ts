@@ -123,7 +123,7 @@ async function handleOptIn(phoneNumber: string) {
         data: {
           name: `SMS Subscriber ${phoneNumber.slice(-4)}`,
           marketingConsent: true,
-          source: "SMS_OPT_IN",
+          source: "sms_opt_in",
           phones: {
             create: {
               phone: phoneNumber,
@@ -165,7 +165,7 @@ async function handleOptOut(phoneNumber: string) {
         data: {
           name: `SMS Unsubscribed ${phoneNumber.slice(-4)}`,
           marketingConsent: false,
-          source: "SMS_OPT_OUT",
+          source: "sms_opt_out",
           phones: {
             create: {
               phone: phoneNumber,

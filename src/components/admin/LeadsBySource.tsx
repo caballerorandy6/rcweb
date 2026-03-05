@@ -15,6 +15,10 @@ const sourceLabels: Record<string, string> = {
   exit_intent: "Exit Intent Popup",
   google_places: "Google Places Import",
   sms_opt_in: "SMS Opt-In",
+  SMS_OPT_IN: "SMS Opt-In", // Legacy uppercase
+  sms_opt_out: "SMS Opt-Out",
+  SMS_OPT_OUT: "SMS Opt-Out", // Legacy uppercase
+  blog_subscription: "Blog Subscription",
   whatsapp: "WhatsApp",
   schedule_call: "Schedule Call",
   manual: "Manual Entry",
@@ -28,6 +32,10 @@ const sourceColors: Record<string, string> = {
   exit_intent: "#F59E0B", // amber
   google_places: "#8B5CF6", // purple
   sms_opt_in: "#06B6D4", // cyan
+  SMS_OPT_IN: "#06B6D4", // Legacy uppercase
+  sms_opt_out: "#F87171", // red
+  SMS_OPT_OUT: "#F87171", // Legacy uppercase
+  blog_subscription: "#A855F7", // violet
   whatsapp: "#22C55E", // whatsapp green
   schedule_call: "#EC4899", // pink
   manual: "#6B7280", // gray

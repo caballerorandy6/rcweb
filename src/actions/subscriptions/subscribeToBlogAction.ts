@@ -35,6 +35,24 @@ export const subscribeToBlogAction = async (data: BlogSubscriptionData) => {
       create: { email, isActive: true, preferredLanguage },
     });
 
+    // Track as lead in Contacts for CRM/nurturing
+    const existingEmail = await prisma.contactEmail.findUnique({
+      where: { email },
+    });
+
+    if (!existingEmail) {
+      await prisma.contact.create({
+        data: {
+          name: "Blog Subscriber",
+          marketingConsent: true,
+          source: "blog_subscription",
+          emails: {
+            create: { email },
+          },
+        },
+      });
+    }
+
     return {
       success: true,
       message: "Successfully subscribed to the blog.",
