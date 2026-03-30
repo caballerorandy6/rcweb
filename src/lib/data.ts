@@ -40,7 +40,7 @@ import {
 
 // Main navigation - Only essential links (5 max for optimal UX)
 export const navigation: NavigationProps[] = [
-  { name: "Services", hash: "/#services" },
+  { name: "Services", hash: "/services" },
   { name: "Projects", hash: "/#projects" },
   { name: "Pricing", hash: "/#pricing" },
   { name: "Blog", hash: "/blog" },
@@ -529,16 +529,38 @@ export const processSteps = [
 
 export const services = [
   {
+    slug: "web-design-houston",
     icon: RocketLaunchIcon,
-    title: "Professional Landing Page Development",
+    title: "Web Design & Landing Pages",
     description:
-      "Single-page websites optimized for conversions and lead generation. Perfect for product launches, event promotion, and quick online presence.",
+      "Custom, mobile-first websites optimized for conversions and lead generation. Perfect for Houston businesses starting their online presence.",
     features: ["Responsive", "SEO", "Fast Loading", "Contact Forms"],
     highlight: "95+ Lighthouse Score",
     price: "$800",
   },
   {
-    icon: BriefcaseIcon,
+    slug: "bilingual-websites-houston",
+    icon: ChatBubbleLeftRightIcon,
+    title: "Bilingual Websites",
+    description:
+      "English and Spanish websites that reach Houston's diverse community. Native localization, not machine translation. Built by a Latino developer.",
+    features: ["English & Spanish", "Native Localization", "Hreflang SEO", "Cultural Context"],
+    highlight: "44% of Houston is Hispanic",
+    price: "$800",
+  },
+  {
+    slug: "ecommerce-houston",
+    icon: CurrencyDollarIcon,
+    title: "E-Commerce Website Development",
+    description:
+      "Full-featured online stores with secure Stripe payments, inventory management, and admin dashboard. No monthly platform fees.",
+    features: ["Payment Integration", "Shopping Cart", "Admin Dashboard", "Order Management"],
+    highlight: "90-day Support Included",
+    price: "$6,000",
+  },
+  {
+    slug: "nextjs-development-houston",
+    icon: CodeBracketIcon,
     title: "Professional Business Website",
     description:
       "Complete 5-10 page websites with custom design tailored to your brand. Ideal for established businesses, professional services, and portfolios.",
@@ -556,16 +578,7 @@ export const services = [
     price: "$5,000",
   },
   {
-    icon: CurrencyDollarIcon,
-    title: "E-Commerce Website Development",
-    description:
-      "Full-featured online stores with secure payment processing, inventory management, and admin dashboard.",
-    features: ["Payment Integration", "Shopping Cart", "Admin Dashboard", "Order Management"],
-    highlight: "90-day Support Included",
-    price: "$6,000",
-  },
-  {
-    icon: CodeBracketIcon,
+    icon: CubeTransparentIcon,
     title: "Website Redesign and Modernization",
     description:
       "Transform your outdated website into a modern, high-performance platform. We rebuild with current technology replacing legacy code.",
@@ -583,11 +596,12 @@ export const services = [
     price: "$8,000",
   },
   {
+    slug: "seo-local-houston",
     icon: ShieldCheckIcon,
-    title: "Monthly Website Maintenance and Support",
+    title: "Monthly Website Maintenance & SEO",
     description:
-      "Ongoing maintenance, security updates, and technical support to keep your website secure, fast, and up-to-date.",
-    features: ["Security Updates", "Performance Optimization", "Content Updates", "Priority Support"],
+      "Ongoing maintenance, security updates, local SEO optimization, and technical support to keep your Houston business visible on Google.",
+    features: ["Security Updates", "Local SEO", "Content Updates", "Priority Support"],
     highlight: "Peace of mind guaranteed",
     price: "$200/month",
   },
@@ -994,6 +1008,211 @@ export const extraFooterLinks = [
   { name: "Manage Subscription", hash: "/manage-subscription" },
   { name: "Free Guide", hash: "/guide" },
   { name: "Client Portal", hash: "/client/login" },
+];
+
+export type ServicePage = {
+  slug: string;
+  title: string;
+  metaTitle: string;
+  metaDescription: string;
+  headline: string;
+  subheadline: string;
+  content: string;
+  features: {
+    title: string;
+    description: string;
+  }[];
+  relatedProjects: string[];
+  priceFrom: string;
+  cta: string;
+};
+
+export const servicePages: ServicePage[] = [
+  {
+    slug: "web-design-houston",
+    title: "Web Design",
+    metaTitle: "Web Design Houston TX | Custom Websites for Small Businesses",
+    metaDescription:
+      "Professional web design in Houston, TX. Custom, mobile-first websites built with Next.js for small businesses. Bilingual English & Spanish. From $800.",
+    headline: "Web Design in Houston, TX",
+    subheadline:
+      "Custom, mobile-first websites designed to convert visitors into customers. Built with modern technology that loads fast and ranks well on Google.",
+    content:
+      "Your website is your most important salesperson — it works 24/7, never takes a day off, and is often the first impression customers have of your business. As a Houston-based web designer, I build websites that aren't just beautiful — they're built to perform. Every site is designed mobile-first because over 60% of your Houston customers are searching from their phones. I use Next.js and React, the same technology behind Nike, Netflix, and Twitch, which means your site loads in under 2 seconds and ranks better on Google. Whether you need a simple landing page or a full business website, I work directly with you to create something that represents your brand and drives real results. Bilingual service available in English and Spanish to reach Houston's diverse community.",
+    features: [
+      {
+        title: "Mobile-First Design",
+        description:
+          "Every website is designed for mobile screens first, then scaled up. Your Houston customers are searching from their phones — your site needs to work perfectly there.",
+      },
+      {
+        title: "Fast Loading Speed",
+        description:
+          "Sites built with Next.js load in under 2 seconds. Google rewards fast sites with better rankings, and visitors stay longer when pages load quickly.",
+      },
+      {
+        title: "SEO Built In",
+        description:
+          "Every page includes proper meta tags, schema markup, and optimized content structure so Google can find and rank your Houston business.",
+      },
+      {
+        title: "Conversion Focused",
+        description:
+          "Strategic placement of calls-to-action, contact forms, and phone numbers designed to turn visitors into paying customers.",
+      },
+    ],
+    relatedProjects: ["Clínica Hispana Gessner", "Clínica Hispana Airline", "Leo's Home Experts"],
+    priceFrom: "$800",
+    cta: "Get a Custom Website",
+  },
+  {
+    slug: "nextjs-development-houston",
+    title: "Next.js Development",
+    metaTitle: "Next.js Developer Houston TX | React & Full-Stack Web Apps",
+    metaDescription:
+      "Expert Next.js developer in Houston, TX. Full-stack web applications with React, TypeScript, and PostgreSQL. Admin dashboards, APIs, and custom platforms.",
+    headline: "Next.js Developer in Houston, TX",
+    subheadline:
+      "Full-stack web applications built with Next.js, React, and TypeScript. From admin dashboards to custom platforms — enterprise technology at small business pricing.",
+    content:
+      "Next.js is the leading React framework used by companies like Nike, Twitch, and Notion. As a Next.js specialist in Houston, I bring that same enterprise-grade technology to local businesses at affordable prices. Why does this matter for your business? Sites built with Next.js are faster, more secure, and rank better on Google than traditional WordPress or Wix sites. They also scale without breaking — so when your business grows, your website grows with it. I build everything from simple landing pages to complex web applications with admin dashboards, user authentication, database integration, and API connections. Every project includes TypeScript for reliability, Tailwind CSS for responsive design, and PostgreSQL for data that scales. If you need a developer who can build something custom that WordPress plugins can't handle, let's talk.",
+    features: [
+      {
+        title: "Server-Side Rendering",
+        description:
+          "Pages render on the server for instant loading and better SEO. Google sees fully rendered content instead of empty JavaScript shells.",
+      },
+      {
+        title: "Full-Stack Capabilities",
+        description:
+          "Frontend, backend, APIs, and database — all in one project. No need to hire separate developers for different parts of your application.",
+      },
+      {
+        title: "Admin Dashboards",
+        description:
+          "Custom dashboards to manage your business operations. Client portals, email campaigns, data visualization, and workflow automation.",
+      },
+      {
+        title: "TypeScript & PostgreSQL",
+        description:
+          "Type-safe code that catches bugs before they reach production. PostgreSQL databases that handle millions of records without slowing down.",
+      },
+    ],
+    relatedProjects: ["GSM AC & General Contractor", "RC Beauty Salon"],
+    priceFrom: "$2,500",
+    cta: "Build Your Web App",
+  },
+  {
+    slug: "bilingual-websites-houston",
+    title: "Bilingual Websites",
+    metaTitle: "Bilingual Website Houston TX | English & Spanish Web Design",
+    metaDescription:
+      "Bilingual website development in Houston, TX. English and Spanish websites for businesses serving the Hispanic community. Latino-owned. From $800.",
+    headline: "Bilingual Websites in Houston, TX",
+    subheadline:
+      "English and Spanish websites that reach Houston's diverse community. Built by a Latino developer who understands both cultures and both markets.",
+    content:
+      "Houston is one of the most diverse cities in the country, with over 44% Hispanic population. If your business serves Spanish-speaking customers but your website is English-only, you're leaving money on the table. As a bilingual developer (native Spanish speaker from Cuba), I don't just translate your website — I localize it. That means the Spanish version reads naturally, uses the right tone for your audience, and includes cultural context that automated translators miss. This is especially important for healthcare clinics, legal services, restaurants, and home services where trust is built through language. I've built bilingual websites for Houston clinics like Clínica Hispana Gessner and Clínica Hispana Airline, helping them reach patients who prefer to browse in Spanish. Every bilingual site includes proper hreflang tags so Google shows the right language version to the right searcher.",
+    features: [
+      {
+        title: "Native Spanish Localization",
+        description:
+          "Not machine translation — real Spanish written by a native speaker. Your content reads naturally and builds trust with Spanish-speaking customers.",
+      },
+      {
+        title: "SEO in Both Languages",
+        description:
+          "Proper hreflang tags, Spanish meta descriptions, and bilingual schema markup so Google shows the right version to each searcher.",
+      },
+      {
+        title: "Cultural Context",
+        description:
+          "Design and messaging that resonates with the Hispanic community. Colors, imagery, and tone adapted for your target audience.",
+      },
+      {
+        title: "Single Codebase",
+        description:
+          "Both languages managed in one website — no duplicate sites to maintain. Update once, both versions stay in sync.",
+      },
+    ],
+    relatedProjects: ["Clínica Hispana Gessner", "Clínica Hispana Airline", "Dulce Antojo Snack Carts"],
+    priceFrom: "$800",
+    cta: "Get a Bilingual Website",
+  },
+  {
+    slug: "ecommerce-houston",
+    title: "E-Commerce",
+    metaTitle: "E-Commerce Website Houston TX | Online Stores with Stripe Payments",
+    metaDescription:
+      "E-commerce website development in Houston, TX. Custom online stores with Stripe payments, inventory management, and admin dashboard. From $6,000.",
+    headline: "E-Commerce Websites in Houston, TX",
+    subheadline:
+      "Custom online stores with secure Stripe payments, inventory management, and an admin dashboard to run your business. No monthly platform fees eating your margins.",
+    content:
+      "Most Houston businesses start selling online with Shopify or WooCommerce — and then hit the wall. Monthly fees, limited customization, slow loading, and plugins that break on every update. A custom e-commerce site built with Next.js eliminates all of that. You own the code, there are no monthly platform fees beyond hosting, and every feature is built exactly for your business. Your online store includes Stripe payment processing (the same system used by Amazon and Google), real-time inventory management, order tracking, customer accounts, and a full admin dashboard where you manage everything. The site loads in under 2 seconds — which matters because every extra second of load time reduces conversions by 7%. For Houston businesses ready to sell online without the limitations of template platforms, this is the solution.",
+    features: [
+      {
+        title: "Stripe Payment Processing",
+        description:
+          "Secure payment processing trusted by millions of businesses. Credit cards, debit cards, Apple Pay, and Google Pay — all built in.",
+      },
+      {
+        title: "Inventory Management",
+        description:
+          "Track stock levels, set low-stock alerts, and manage product variants. Your admin dashboard shows everything at a glance.",
+      },
+      {
+        title: "No Monthly Platform Fees",
+        description:
+          "Unlike Shopify ($39/mo+), you own the code. Only pay for hosting (~$20/mo) and Stripe's standard 2.9% + 30¢ per transaction.",
+      },
+      {
+        title: "Admin Dashboard",
+        description:
+          "Manage orders, customers, products, and analytics from one place. Built custom for your workflow, not a generic template.",
+      },
+    ],
+    relatedProjects: ["GSM AC & General Contractor", "RC Beauty Salon"],
+    priceFrom: "$6,000",
+    cta: "Launch Your Online Store",
+  },
+  {
+    slug: "seo-local-houston",
+    title: "Local SEO",
+    metaTitle: "Local SEO Houston TX | Get Found on Google by Houston Customers",
+    metaDescription:
+      "Local SEO services in Houston, TX. Google Business Profile optimization, schema markup, and SEO-optimized websites that rank for Houston searches. From $200/mo.",
+    headline: "Local SEO in Houston, TX",
+    subheadline:
+      "Get your Houston business found on Google. Technical SEO, schema markup, and content strategy that puts you in front of customers searching for your services.",
+    content:
+      "97% of consumers search online before visiting a local business. If your Houston business doesn't show up on the first page of Google, you're invisible to those customers. Local SEO isn't just about keywords — it's about technical signals that tell Google you're a real business serving real customers in Houston. That means proper schema markup (LocalBusiness, Service, FAQ), optimized Google Business Profile, consistent NAP (Name, Address, Phone) across the web, and content that targets the specific services and areas you cover. I've helped Houston businesses like GSM A/C and Leo's Home Experts rank for their target keywords by building websites with SEO baked into the architecture — not added as an afterthought. Every website I build includes technical SEO fundamentals: fast loading speeds, mobile optimization, proper heading structure, meta tags, and JSON-LD structured data. For businesses wanting ongoing SEO improvement, I offer monthly maintenance plans that include content updates, performance monitoring, and search ranking tracking.",
+    features: [
+      {
+        title: "Schema Markup",
+        description:
+          "LocalBusiness, Service, FAQ, and Review schema tells Google exactly what your business does and where you're located. This powers rich results in search.",
+      },
+      {
+        title: "Google Business Profile",
+        description:
+          "Optimized GBP setup with proper categories, service areas, photos, and review strategy. The foundation of local search visibility.",
+      },
+      {
+        title: "Technical SEO",
+        description:
+          "Fast loading speeds, mobile optimization, proper heading structure, XML sitemaps, and robots.txt configuration. The fundamentals that most sites get wrong.",
+      },
+      {
+        title: "Content Strategy",
+        description:
+          "Location pages, service pages, and blog content targeting the keywords your Houston customers actually search for.",
+      },
+    ],
+    relatedProjects: ["Clínica Hispana Gessner", "Leo's Home Experts", "GSM AC & General Contractor"],
+    priceFrom: "$200/mo",
+    cta: "Improve Your Rankings",
+  },
 ];
 
 export const sections = [

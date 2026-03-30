@@ -1,6 +1,7 @@
 import { genPageMetadata } from "@/utils/genPageMetadata";
 import { JsonLdForBreadcrumb } from "@/components/seo/JsonLdForBreadcrumb";
 import { siteConfig } from "@/config/site";
+import BackLink from "@/components/ui/BackLink";
 import OfferContent from "@/components/sections/OfferContent";
 
 export const metadata = genPageMetadata({
@@ -19,6 +20,9 @@ export default function OfferPage() {
           { name: "Special Offer", item: `${siteConfig.baseUrl}/offer` },
         ]}
       />
+      <div className="bg-gray-950">
+        <BackLink href="/#pricing" label="Back to Pricing" />
+      </div>
       <OfferContent />
     </>
   );

@@ -1,13 +1,29 @@
 "use client";
 
+import Link from "next/link";
+import type { Route } from "next";
 import { motion } from "framer-motion";
 import useSectionObserver from "@/hooks/useSectionObserver";
 import { Cog6ToothIcon } from "@heroicons/react/24/outline";
 import { services } from "@/lib/data";
 import Heading from "@/components/ui/Heading";
 
+const FEATURED_SLUGS = [
+  "web-design-houston",
+  "bilingual-websites-houston",
+  "ecommerce-houston",
+];
+
 const Services = () => {
   const ref = useSectionObserver({ sectionName: "Services" });
+
+  // Show only the 3 most commercial services
+  const featuredServices = services.filter((s) =>
+    "slug" in s && FEATURED_SLUGS.includes(s.slug as string)
+  );
+
+  // Fallback to first 3 if no slug match (keeps backward compatibility)
+  const displayServices = featuredServices.length > 0 ? featuredServices : services.slice(0, 3);
 
   return (
     <section
@@ -24,7 +40,7 @@ const Services = () => {
         </Heading>
 
         <ul className="mx-auto mt-16 flex flex-wrap justify-center gap-6 lg:gap-8">
-          {services.map((service, index) => (
+          {displayServices.map((service, index) => (
             <motion.li
               key={service.title}
               initial={false}
@@ -88,6 +104,17 @@ const Services = () => {
             </motion.li>
           ))}
         </ul>
+
+        {/* View All Services */}
+        <div className="mt-12 text-center">
+          <Link
+            href={"/services" as Route}
+            className="inline-flex items-center justify-center gap-2 px-8 py-4 text-base font-inter font-semibold text-gold border-2 border-gold/50 hover:bg-gold/10 hover:border-gold/60 rounded-xl transition-all duration-200 hover:scale-105"
+          >
+            View All Services
+            <span>→</span>
+          </Link>
+        </div>
       </div>
     </section>
   );

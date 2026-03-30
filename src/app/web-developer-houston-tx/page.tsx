@@ -6,6 +6,7 @@ import { genPageMetadata } from "@/utils/genPageMetadata";
 import { JsonLdForBreadcrumb } from "@/components/seo/JsonLdForBreadcrumb";
 import { JsonLdForLocalBusiness } from "@/components/seo/JsonLdForLocalBusiness";
 import { siteConfig } from "@/config/site";
+import BackLink from "@/components/ui/BackLink";
 import {
   MapPinIcon,
   PhoneIcon,
@@ -131,8 +132,9 @@ export default function WebDeveloperHoustonPage() {
       <JsonLdForLocalBusiness />
 
       <main className="bg-gray-950">
+        <BackLink href="/" label="Back to Home" />
         {/* Hero Section */}
-        <section className="relative pt-32 pb-20 sm:pt-40 sm:pb-28">
+        <section className="relative pt-8 pb-20 sm:pt-12 sm:pb-28">
           <div className="absolute inset-0 bg-gradient-to-b from-gold/5 via-transparent to-transparent" />
           <div className="relative mx-auto max-w-7xl px-6 lg:px-8">
             <div className="mx-auto max-w-3xl text-center">

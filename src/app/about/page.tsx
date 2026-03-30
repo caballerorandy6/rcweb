@@ -1,6 +1,7 @@
 import { genPageMetadata } from "@/utils/genPageMetadata";
 import { JsonLdForBreadcrumb } from "@/components/seo/JsonLdForBreadcrumb";
 import { siteConfig } from "@/config/site";
+import BackLink from "@/components/ui/BackLink";
 import About from "@/components/sections/About";
 import Experience from "@/components/sections/Experience";
 import Certifications from "@/components/sections/Certifications";
@@ -22,6 +23,7 @@ export default function AboutPage() {
         ]}
       />
       <main className="bg-gray-900 min-h-screen">
+        <BackLink href="/" label="Back to Home" />
         <About />
         <Experience />
         <Certifications />
