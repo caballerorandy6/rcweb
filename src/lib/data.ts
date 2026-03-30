@@ -40,7 +40,7 @@ import {
 
 // Main navigation - Only essential links (5 max for optimal UX)
 export const navigation: NavigationProps[] = [
-  { name: "Services", hash: "/services" },
+  { name: "Services", hash: "/#services" },
   { name: "Projects", hash: "/#projects" },
   { name: "Pricing", hash: "/#pricing" },
   { name: "Blog", hash: "/blog" },
