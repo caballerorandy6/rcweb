@@ -30,6 +30,7 @@ export default function robots(): MetadataRoute.Robots {
           "/privacy-policy",
           "/terms-of-service",
           "/refund-policy",
+          "/web-developer-houston-tx",
         ],
         disallow: [
           "/admin/login",

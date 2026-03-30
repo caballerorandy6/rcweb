@@ -75,6 +75,12 @@ const sitemapConfig: SitemapConfig = {
       priority: 0.8,
     },
     {
+      route: "/web-developer-houston-tx",
+      lastModified: new Date().toISOString().split("T")[0],
+      changeFrequency: "monthly",
+      priority: 0.9,
+    },
+    {
       route: "/privacy-policy",
       lastModified: "2025-10-18",
       changeFrequency: "monthly",

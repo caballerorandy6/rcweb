@@ -24,7 +24,7 @@ export const siteConfig: SiteConfig = {
   siteNameShort: "RC Web Solutions",
   defaultOgImg: "/og-image.jpg",
   description:
-    "RC Web Solutions builds high-performance websites and web applications for businesses. Custom digital solutions with Next.js, React, and modern technologies.",
+    "Houston TX web developer specializing in high-performance websites and web applications for small businesses. Custom digital solutions with Next.js, React, and modern technologies. Bilingual English & Spanish.",
   author: {
     name: "Randy Caballero",
     email: "contactus@rcweb.dev",

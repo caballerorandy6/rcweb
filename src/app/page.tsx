@@ -25,9 +25,9 @@ import { JsonLdForWebSite } from "@/components/seo/JsonLdForWebSite";
 import { faqs, pricingPlans } from "@/lib/data";
 
 export const metadata: Metadata = {
-  title: "Home",
+  title: "Web Developer Houston TX | Custom Websites for Small Businesses",
   description:
-    "Professional full-stack web development services by Randy Caballero. Custom websites, web applications, and scalable digital solutions built with Next.js, React, and modern technologies. Flexible pricing plans for startups, small businesses, and enterprises.",
+    "Houston TX web developer Randy Caballero builds custom websites and web apps for small businesses. Next.js, React, bilingual English & Spanish. From $997. Free consultation.",
   alternates: {
     canonical: siteConfig.baseUrl,
   },

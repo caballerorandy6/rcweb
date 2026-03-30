@@ -10,7 +10,7 @@ export interface ProjectProps {
   tecnologies: string[];
   description: string;
   image: string;
-  github: string;
+  github?: string;
   url: string;
 }
 
@@ -82,20 +82,22 @@ const Project = ({
 
       {/* Buttons */}
       <div className="flex divide-gray-700 border-t border-gold/50 mt-auto">
-        <a
-          href={github}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="flex-1 py-3 text-base font-inter text-gold hover:bg-gray-800 transition rounded-bl-lg border-r border-gold/50"
-        >
-          <GithubIcon className="inline-block w-5 h-5 mr-2" />
-          GitHub
-        </a>
+        {github && (
+          <a
+            href={github}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex-1 py-3 text-base font-inter text-gold hover:bg-gray-800 transition rounded-bl-lg border-r border-gold/50"
+          >
+            <GithubIcon className="inline-block w-5 h-5 mr-2" />
+            GitHub
+          </a>
+        )}
         <a
           href={url}
           target="_blank"
           rel="noopener noreferrer"
-          className="flex-1 py-3 text-base font-inter text-gold hover:bg-gray-800 transition rounded-br-lg"
+          className={`flex-1 py-3 text-base font-inter text-gold hover:bg-gray-800 transition ${github ? "rounded-br-lg" : "rounded-b-lg"}`}
         >
           <Website className="inline-block w-5 h-5 mr-2" />
           Preview

@@ -60,6 +60,7 @@ export const footerNavigation: NavigationProps[] = [
   { name: "About", hash: "/about" },
   { name: "Testimonials", hash: "/#testimonials" },
   { name: "Schedule", hash: "/schedule" },
+  { name: "Houston, TX", hash: "/web-developer-houston-tx" },
 ];
 
 export const experience: ExperienceProps[] = [
@@ -99,21 +100,88 @@ export const experience: ExperienceProps[] = [
 ];
 
 export const projects: ProjectProps[] = [
+  // Real client projects — ordered by niche strength and credibility
   {
-    name: "Limo Renting",
+    name: "Clínica Hispana Gessner",
     tecnologies: [
       "NextJS",
+      "React",
       "TypeScript",
       "TailwindCSS",
       "Shadcn UI",
       "Zod",
-      "Zustand",
     ],
     description:
-      "This web-based platform streamlines the process of renting limousines for special occasions, offering users real-time access to vehicle availability, service customization, and secure booking—all within a modern, responsive interface.",
-    image: "/limo-renting.avif",
-    github: "https://github.com/caballerorandy6/Limo-Renting-NextJS",
-    url: "https://limo-renting-next-js-nu.vercel.app/",
+      "Bilingual website for a Houston Hispanic clinic featuring online appointment booking, service information, and local SEO optimization to reach the Spanish-speaking community.",
+    image: "/clinica-gessner.avif",
+    url: "https://www.clinicagessner.com/",
+  },
+  {
+    name: "Clínica Hispana Airline",
+    tecnologies: [
+      "NextJS",
+      "React",
+      "TypeScript",
+      "TailwindCSS",
+      "Shadcn UI",
+      "Zod",
+    ],
+    description:
+      "Professional bilingual website for a Houston clinic serving the Hispanic community. Features local SEO, service pages, and patient-friendly design optimized for mobile.",
+    image: "/clinica-hispana-airline.avif",
+    url: "https://www.clinicahispanaairline.com/",
+  },
+  {
+    name: "GSM AC & General Contractor",
+    tecnologies: [
+      "NextJS",
+      "TypeScript",
+      "TailwindCSS",
+      "Tailwind UI",
+      "Zod",
+      "Zustand",
+      "Prisma",
+      "PostgreSQL",
+      "Docker",
+    ],
+    description:
+      "Custom website and admin dashboard for a Houston HVAC company. Automated email campaigns, service request management, and real-time client-side rendering. Saved the business 15+ hours per week.",
+    image: "/gsmactx.avif",
+    github: "https://github.com/caballerorandy6/gsmactx_2.0",
+    url: "https://www.gsmactx.com/",
+  },
+  {
+    name: "Leo's Home Experts",
+    tecnologies: [
+      "NextJS",
+      "React",
+      "TypeScript",
+      "TailwindCSS",
+      "Shadcn UI",
+      "Zod",
+      "React Hook Form",
+    ],
+    description:
+      "Landing page for a Houston-based home services company specializing in patio construction, motorized screens, and awning installations. Features local SEO optimization with JSON-LD schema and video gallery integration.",
+    image: "/leos-home-experts.webp",
+    github: "https://github.com/caballerorandy6/leos-home-experts",
+    url: "https://www.ac-remodelingservice.com/",
+  },
+  {
+    name: "Dulce Antojo Snack Carts",
+    tecnologies: [
+      "NextJS",
+      "React",
+      "TypeScript",
+      "TailwindCSS",
+      "Shadcn UI",
+      "Zod",
+    ],
+    description:
+      "A modern landing page for a snack cart rental business in Houston, TX. Features service showcases, interactive booking forms, and optimized conversions for event catering services.",
+    image: "/dulce-antojo.avif",
+    github: "https://github.com/caballerorandy6/dulce-antojo",
+    url: "https://www.dulcesantojosnackcarts.com/",
   },
   {
     name: "RC Beauty Salon",
@@ -134,24 +202,41 @@ export const projects: ProjectProps[] = [
     github: "https://github.com/caballerorandy6/rcbeautysalon",
     url: "https://www.rcbeautysalon.org/",
   },
+  // Personal/demo projects
   {
-    name: "GSM AC ",
+    name: "Family Timeline",
+    tecnologies: [
+      "NextJS",
+      "React",
+      "TypeScript",
+      "TailwindCSS",
+      "Shadcn UI",
+      "NodeJS",
+      "Express",
+      "Cloudinary",
+      "Turborepo",
+    ],
+    description:
+      "A modern fullstack monorepo application for creating and managing digital family trees. Build genealogies, preserve memories, and share family history with a beautiful timeline interface.",
+    image: "/family-timeline.avif",
+    github: "https://github.com/caballerorandy6/family-tree",
+    url: "https://family-tree-web-two.vercel.app/",
+  },
+  {
+    name: "Limo Renting",
     tecnologies: [
       "NextJS",
       "TypeScript",
       "TailwindCSS",
-      "Tailwind UI",
+      "Shadcn UI",
       "Zod",
       "Zustand",
-      "Prisma",
-      "PostgreSQL",
-      "Docker",
     ],
     description:
-      "Developed a SPA for dynamic air conditioning service requests with real-time client-side rendering and an admin dashboard for managing listings and bulk email campaigns.",
-    image: "/gsmactx.avif",
-    github: "https://github.com/caballerorandy6/gsmactx_2.0",
-    url: "https://www.gsmactx.com/",
+      "This web-based platform streamlines the process of renting limousines for special occasions, offering users real-time access to vehicle availability, service customization, and secure booking—all within a modern, responsive interface.",
+    image: "/limo-renting.avif",
+    github: "https://github.com/caballerorandy6/Limo-Renting-NextJS",
+    url: "https://limo-renting-next-js-nu.vercel.app/",
   },
   {
     name: "Little Lemon Restaurant",
@@ -172,76 +257,6 @@ export const projects: ProjectProps[] = [
     url: "https://little-lemon-restaurant-nine-omega.vercel.app/",
   },
   {
-    name: "Family Timeline",
-    tecnologies: [
-      "NextJS",
-      "React",
-      "TypeScript",
-      "TailwindCSS",
-      "Shadcn UI",
-      "NodeJS",
-      "Express",
-      "Cloudinary",
-      "Turborepo",
-    ],
-    description:
-      "A modern fullstack monorepo application for creating and managing digital family trees. Build genealogies, preserve memories, and share family history with a beautiful timeline interface.",
-    image: "/family-timeline.avif",
-    github: "https://github.com/caballerorandy6/family-tree",
-    url: "https://family-tree-web-two.vercel.app/",
-  },
-  // {
-  //   name: "Todo List App",
-  //   tecnologies: [
-  //     "NextJS",
-  //     "TypeScript",
-  //     "TailwindCSS",
-  //     "NodeJS",
-  //     "Express",
-  //     "MySQL",
-  //     "Prisma",
-  //     "Zod",
-  //   ],
-  //   description:
-  //     "A simple Todo List application built with Next.js, TypeScript, TailwindCSS, Node, Express, MySQL, Prisma, and Zod.",
-  //   image: "/todo-list-app.avif",
-  //   github: "https://github.com/caballerorandy6/todo-app-frontend",
-  //   url: "https://todo-app-frontend-flame-nu.vercel.app/",
-  // },
-  {
-    name: "Dulce Antojo Snack Carts",
-    tecnologies: [
-      "NextJS",
-      "React",
-      "TypeScript",
-      "TailwindCSS",
-      "Shadcn UI",
-      "Zod",
-    ],
-    description:
-      "A modern landing page for a snack cart rental business in Houston, TX. Features service showcases, interactive booking forms, and optimized conversions for event catering services.",
-    image: "/dulce-antojo.avif",
-    github: "https://github.com/caballerorandy6/dulce-antojo",
-    url: "https://www.dulceantojosnackcarts.com/",
-  },
-  {
-    name: "Leo's Home Experts",
-    tecnologies: [
-      "NextJS",
-      "React",
-      "TypeScript",
-      "TailwindCSS",
-      "Shadcn UI",
-      "Zod",
-      "React Hook Form",
-    ],
-    description:
-      "Landing page for a Houston-based home services company specializing in patio construction, motorized screens, and awning installations. Features local SEO optimization with JSON-LD schema and video gallery integration.",
-    image: "/leos-home-experts.webp",
-    github: "https://github.com/caballerorandy6/leos-home-experts",
-    url: "https://www.ac-remodelingservice.com/",
-  },
-  {
     name: "Photographer Portfolio",
     tecnologies: ["HTML", "CSS", "SASS"],
     description:
@@ -250,16 +265,6 @@ export const projects: ProjectProps[] = [
     github: "https://github.com/caballerorandy6/photographer-portfolio",
     url: "https://photographerportfolio1.netlify.app",
   },
-
-  // {
-  //   name: "Search Drinks",
-  //   tecnologies: ["React", "Vite"],
-  //   description:
-  //     "The website allows users to search for and explore various drinks, providing details about their ingredients and preparation methods.",
-  //   image: "/searchdrinks.avif",
-  //   github: "https://github.com/caballerorandy6/seachdrinks",
-  //   url: "https://seachdrinks.netlify.app/",
-  // },
 ];
 
 export const teachMarqueeData: TeachMarqueeProps[] = [

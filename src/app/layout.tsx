@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono, Iceland, Inter } from "next/font/google";
+import localFont from "next/font/local";
 import { Suspense } from "react";
 import Script from "next/script";
 
@@ -16,42 +16,40 @@ import ExitIntentPopup from "@/components/forms/ExitIntentPopup";
 import { siteConfig } from "@/config/site";
 import { Analytics as VercelAnalytics } from "@vercel/analytics/next";
 
-const geistSans = Geist({
+const geistSans = localFont({
+  src: "./fonts/GeistVF.woff2",
   variable: "--font-geist-sans",
-  subsets: ["latin"],
   display: "swap",
   preload: true,
 });
 
-const geistMono = Geist_Mono({
+const geistMono = localFont({
+  src: "./fonts/GeistMonoVF.woff2",
   variable: "--font-geist-mono",
-  subsets: ["latin"],
   display: "swap",
-  preload: false, // Not critical
+  preload: false,
 });
 
-const iceland = Iceland({
-  weight: "400",
-  subsets: ["latin"],
+const iceland = localFont({
+  src: "./fonts/Iceland.woff2",
   variable: "--font-iceland",
   display: "swap",
+  weight: "400",
   preload: true,
-  fallback: ["system-ui", "arial"], // Fallback fonts while loading
-  adjustFontFallback: false, // Faster initial render
 });
 
-const inter = Inter({
-  subsets: ["latin"],
+const inter = localFont({
+  src: "./fonts/InterVF.woff2",
   variable: "--font-inter",
   display: "swap",
-  preload: true, // Primary body font
+  preload: true,
 });
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteConfig.baseUrl),
   title: {
-    default: `${siteConfig.siteNameShort} - Full-Stack Web Development Services`,
-    template: `%s | ${siteConfig.siteNameShort}`,
+    default: `Web Developer Houston TX | ${siteConfig.siteNameShort} - Custom Websites & Web Apps`,
+    template: `%s | ${siteConfig.siteNameShort} - Houston TX`,
   },
   description: siteConfig.description,
   authors: [{ name: siteConfig.author.name }],
@@ -62,9 +60,8 @@ export const metadata: Metadata = {
     locale: "en_US",
     url: siteConfig.baseUrl,
     siteName: siteConfig.siteName,
-    title: `${siteConfig.siteNameShort} - Professional Web Development Services`,
-    description:
-      "Full-stack web development services specializing in Next.js and React. Custom solutions for your business needs.",
+    title: `Web Developer Houston TX | ${siteConfig.siteNameShort} - Custom Websites & Web Apps`,
+    description: siteConfig.description,
     images: [
       {
         url: siteConfig.defaultOgImg,
@@ -76,9 +73,8 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: `${siteConfig.siteNameShort} - Professional Web Development Services`,
-    description:
-      "Full-stack web development services specializing in Next.js and React.",
+    title: `Web Developer Houston TX | ${siteConfig.siteNameShort}`,
+    description: siteConfig.description,
     images: [siteConfig.defaultOgImg],
     creator: siteConfig.social.twitter,
   },
