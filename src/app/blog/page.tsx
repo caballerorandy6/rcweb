@@ -2,6 +2,7 @@ import { genPageMetadata } from "@/utils/genPageMetadata";
 import { JsonLdForBreadcrumb } from "@/components/seo/JsonLdForBreadcrumb";
 import { siteConfig } from "@/config/site";
 import { getAllPosts } from "@/lib/blog";
+import BackLink from "@/components/ui/BackLink";
 import BlogList from "@/components/blog/BlogList";
 
 export const metadata = genPageMetadata({
@@ -22,6 +23,9 @@ export default function BlogPage() {
           { name: "Blog", item: `${siteConfig.baseUrl}/blog` },
         ]}
       />
+      <div className="bg-gray-900">
+        <BackLink href="/#blog" label="Back to Home" />
+      </div>
       <BlogList posts={posts} />
     </>
   );

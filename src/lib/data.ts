@@ -43,7 +43,7 @@ export const navigation: NavigationProps[] = [
   { name: "Services", hash: "/#services" },
   { name: "Projects", hash: "/#projects" },
   { name: "Pricing", hash: "/#pricing" },
-  { name: "Blog", hash: "/blog" },
+  { name: "Blog", hash: "/#blog" },
   { name: "About", hash: "/about" },
   { name: "Contact", hash: "/#contact" },
   { name: "CTA", hash: "/#cta" }, // Hidden, used for scroll behavior

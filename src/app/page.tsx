@@ -12,6 +12,7 @@ const Projects = dynamic(() => import("@/components/sections/Projects"));
 const Process = dynamic(() => import("@/components/sections/Process"));
 const Testimonials = dynamic(() => import("@/components/sections/Testimonials"));
 const Pricing = dynamic(() => import("@/components/sections/Pricing"));
+const BlogPreview = dynamic(() => import("@/components/sections/BlogPreview"));
 const FAQ = dynamic(() => import("@/components/sections/FAQ"));
 const Contact = dynamic(() => import("@/components/sections/Contact"));
 const CTA = dynamic(() => import("@/components/sections/FloatingCTA"));
@@ -57,6 +58,7 @@ export default function Home() {
       <Process />
       <Testimonials />
       <Pricing />
+      <BlogPreview />
       <FAQ />
       <Contact />
       <CTA />
