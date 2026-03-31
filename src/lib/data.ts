@@ -149,6 +149,7 @@ export const projects: ProjectProps[] = [
     image: "/gsmactx.avif",
     github: "https://github.com/caballerorandy6/gsmactx_2.0",
     url: "https://www.gsmactx.com/",
+    caseStudy: "/case-study/gsmactx",
   },
   {
     name: "Leo's Home Experts",
