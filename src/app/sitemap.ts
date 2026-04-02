@@ -75,6 +75,36 @@ const sitemapConfig: SitemapConfig = {
       priority: 0.8,
     },
     {
+      route: "/projects-portfolio",
+      lastModified: new Date().toISOString().split("T")[0],
+      changeFrequency: "monthly",
+      priority: 0.8,
+    },
+    {
+      route: "/case-study/clinica-gessner",
+      lastModified: new Date().toISOString().split("T")[0],
+      changeFrequency: "monthly",
+      priority: 0.7,
+    },
+    {
+      route: "/case-study/clinica-airline",
+      lastModified: new Date().toISOString().split("T")[0],
+      changeFrequency: "monthly",
+      priority: 0.7,
+    },
+    {
+      route: "/case-study/leos-home-experts",
+      lastModified: new Date().toISOString().split("T")[0],
+      changeFrequency: "monthly",
+      priority: 0.7,
+    },
+    {
+      route: "/case-study/dulce-antojo",
+      lastModified: new Date().toISOString().split("T")[0],
+      changeFrequency: "monthly",
+      priority: 0.7,
+    },
+    {
       route: "/web-developer-houston-tx",
       lastModified: new Date().toISOString().split("T")[0],
       changeFrequency: "monthly",

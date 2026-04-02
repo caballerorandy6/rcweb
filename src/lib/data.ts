@@ -115,6 +115,7 @@ export const projects: ProjectProps[] = [
       "Bilingual website for a Houston Hispanic clinic featuring online appointment booking, service information, and local SEO optimization to reach the Spanish-speaking community.",
     image: "/clinica-gessner.avif",
     url: "https://www.clinicagessner.com/",
+    caseStudy: "/case-study/clinica-gessner",
   },
   {
     name: "Clínica Hispana Airline",
@@ -130,6 +131,7 @@ export const projects: ProjectProps[] = [
       "Professional bilingual website for a Houston clinic serving the Hispanic community. Features local SEO, service pages, and patient-friendly design optimized for mobile.",
     image: "/clinica-hispana-airline.avif",
     url: "https://www.clinicahispanaairline.com/",
+    caseStudy: "/case-study/clinica-airline",
   },
   {
     name: "GSM AC & General Contractor",
@@ -167,6 +169,7 @@ export const projects: ProjectProps[] = [
     image: "/leos-home-experts.webp",
     github: "https://github.com/caballerorandy6/leos-home-experts",
     url: "https://www.ac-remodelingservice.com/",
+    caseStudy: "/case-study/leos-home-experts",
   },
   {
     name: "Dulce Antojo Snack Carts",
@@ -183,6 +186,7 @@ export const projects: ProjectProps[] = [
     image: "/dulce-antojo.avif",
     github: "https://github.com/caballerorandy6/dulce-antojo",
     url: "https://www.dulcesantojosnackcarts.com/",
+    caseStudy: "/case-study/dulce-antojo",
   },
   {
     name: "RC Beauty Salon",

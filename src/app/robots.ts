@@ -33,6 +33,8 @@ export default function robots(): MetadataRoute.Robots {
           "/web-developer-houston-tx",
           "/services",
           "/services/*",
+          "/projects-portfolio",
+          "/case-study/*",
         ],
         disallow: [
           "/admin/login",

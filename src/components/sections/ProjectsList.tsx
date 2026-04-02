@@ -92,6 +92,7 @@ const ProjectsList = ({ projects }: { projects: ProjectProps[] }) => {
                 image={project.image}
                 github={project.github}
                 url={project.url}
+                caseStudy={project.caseStudy}
               />
             </motion.li>
           ))}
