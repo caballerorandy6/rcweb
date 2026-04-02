@@ -1,0 +1,166 @@
+# RC Web Solutions LLC
+
+> Houston, TX web developer specializing in custom websites and web applications for small businesses. Built with Next.js, React, and TypeScript. Bilingual English & Spanish. Latino-owned.
+
+## About
+
+RC Web Solutions LLC is a professional web development company based in Houston, Texas, founded by Randy Caballero. We build high-performance, custom websites and web applications for small businesses, with a focus on the Houston Hispanic market. Every project is built with modern technology (Next.js, React, TypeScript) and includes local SEO, mobile-first design, and bilingual capabilities.
+
+- Website: https://rcweb.dev
+- Phone: +1 (346) 375-7534
+- Email: contactus@rcweb.dev
+- Location: Houston, TX, USA
+- Languages: English, Spanish (native)
+- Founded: 2022
+
+## Founder
+
+Randy Caballero is a full-stack web developer with a Bachelor of Software Engineering from Universidad de Camaguey (Cuba) and a Master of Science from Nova Southeastern University. Based in Houston, TX since 2022. Experience includes freelance web development, software development at Atser Technologies Inc., and training at Revature.
+
+## Services
+
+### Web Design & Landing Pages — from $800
+Custom, mobile-first websites optimized for conversions and lead generation. Includes responsive design, SEO, fast loading (under 2 seconds), and contact forms. Delivery: 1-2 weeks.
+
+### Professional Business Website — from $2,500
+Complete 5-10 page websites with custom design, SEO optimization, analytics integration, and 30 days of post-launch support. Delivery: 3-4 weeks.
+
+### Bilingual Websites (English & Spanish) — from $800
+Native Spanish localization (not machine translation) with proper hreflang tags, bilingual SEO, and cultural context for Houston's Hispanic community. 44% of Houston's population is Hispanic.
+
+### E-Commerce Website Development — from $6,000
+Custom online stores with Stripe payment processing, inventory management, customer accounts, order tracking, and admin dashboard. No monthly platform fees. Delivery: 6-10 weeks.
+
+### Custom Business Management Dashboard — from $5,000
+Tailored admin dashboards with custom forms, data visualization, email automation, user management, and database integration. Delivery: 5-6 weeks.
+
+### Website Redesign and Modernization — from $3,000
+Transform outdated websites into modern, high-performance platforms. Includes content migration, SEO preservation, and performance optimization. Delivery: 4-6 weeks.
+
+### Custom Web Application Development — from $8,000
+Full-stack platforms with user authentication, database architecture, API development, third-party integrations, and 6 months of priority support. Delivery: 8-12+ weeks.
+
+### Monthly Website Maintenance & SEO — from $200/month
+Security updates, performance monitoring, content updates, local SEO optimization, backup management, and same-day response for urgent issues.
+
+## Technology Stack
+
+Next.js, React, TypeScript, Tailwind CSS, Node.js, PostgreSQL, Prisma, Docker, AWS, MongoDB, MySQL, Zod, Zustand, Framer Motion, Stripe, Resend, Cloudinary
+
+## Payment Structure
+
+50% upfront to start, 50% upon completion. Payment plans available for projects over $3,000. Accepted: Credit Card, Debit Card, Zelle (via Stripe).
+
+## Client Portfolio
+
+### Healthcare (Bilingual)
+- Clinica Hispana Gessner — https://www.clinicagessner.com/ — Bilingual website for Houston Hispanic clinic with appointment booking, lead capture, and local SEO. Case study: https://rcweb.dev/case-study/clinica-gessner
+- Clinica Hispana Airline — https://www.clinicahispanaairline.com/ — Bilingual clinic website targeting the Hispanic community near Airline Drive, Houston. Case study: https://rcweb.dev/case-study/clinica-airline
+
+### HVAC & Contractors
+- GSM A/C & General Contractor — https://www.gsmactx.com/ — Custom website with admin dashboard and bulk email campaigns for Houston HVAC company. Saves 15+ hours/week. Case study: https://rcweb.dev/case-study/gsmactx
+
+### Home Services
+- Leo's Home Experts — https://www.ac-remodelingservice.com/ — Landing page for Houston home services company (patios, motorized screens, awnings) with video gallery and local SEO. Case study: https://rcweb.dev/case-study/leos-home-experts
+
+### Food & Events
+- Dulce Antojo Snack Carts — https://www.dulcesantojosnackcarts.com/ — Conversion-optimized landing page for Houston snack cart rental business with 13+ service options. Case study: https://rcweb.dev/case-study/dulce-antojo
+
+### Beauty & Wellness
+- RC Beauty Salon — https://www.rcbeautysalon.org/ — Modern beauty salon website with online bookings, service showcases, and Cloudinary image management.
+
+## Client Testimonials
+
+"Randy transformed our business with a complete website rebuild. The custom admin dashboard saves 15 hours per week on administrative tasks. Randy was professional, communicative, and delivered on time. Highly recommend RC Web Solutions to any Houston business." — Michel Chapelli, GSM A/C & General Contractor Inc. (5 stars)
+
+"Working with Randy was a great experience. He was professional, responsive, and really took the time to understand my business. The website turned out clean, modern, and easy for customers to use." — Leonardo Lecour Acosta, Leo's Home Experts (5 stars)
+
+"Excellent experience with website development. Professional, responsible, and technically skilled. Delivered on time, optimized speed and SEO structure, and was always willing to improve details." — Yoannis Aguilar Fonseca (5 stars)
+
+## Areas Served
+
+Houston metropolitan area including: Downtown Houston, The Heights, Katy, Sugar Land, Cypress, Spring, Pearland, Pasadena, The Woodlands, East Houston, Bellaire, Missouri City, Richmond, Humble, League City. Remote services available nationwide.
+
+## Blog Topics
+
+We publish articles on web development, SEO, and digital strategy for Houston business owners:
+- How Much Does a Website Cost in Houston in 2026?
+- WordPress vs Next.js: Which Is Better for Your Houston Small Business?
+- Why Your Houston Clinic Needs a Bilingual Website
+- 5 Signs Your Houston Business Website Needs a Redesign
+- PageSpeed Optimization: From Score 50 to 98
+- Preparing Your E-Commerce Site for Black Friday & Cyber Monday
+- Building Custom Admin Dashboards for Small Businesses
+- Preventing XSS Attacks in Next.js
+- Implementing Rate Limiting with Upstash Redis
+- Marketing Automation with n8n for Small Businesses
+
+Full blog: https://rcweb.dev/blog
+
+## Development Process
+
+1. Discovery (Week 1) — Requirements analysis, competition research, detailed proposal, transparent quote
+2. Design & Planning (Weeks 1-2) — Interactive mockups, tech stack selection, project timeline, review & feedback
+3. Iterative Development (Weeks 2-5) — Weekly sprints, Friday demos, continuous testing, real-time adjustments
+4. Launch & Support (Week 6) — Secure deployment, complete training, documentation, post-launch support
+
+## Key Differentiators
+
+- Bilingual (English/Spanish native) — serves Houston's 44% Hispanic population
+- Latino-owned business in Houston, TX
+- Modern tech stack (Next.js, React, TypeScript) — same technology used by Nike, Netflix, Twitch
+- Transparent 50/50 pricing — no hidden fees
+- Client portal for real-time project tracking
+- 95+ Lighthouse performance scores
+- Websites load in under 2 seconds
+- All clients retain full code ownership
+
+## Frequently Asked Questions
+
+Q: Do you work with clients outside the USA?
+A: Yes. Projects are fully remote using Zoom and Slack. Payments through Stripe work worldwide.
+
+Q: How long does a typical project take?
+A: Landing pages: 1-2 weeks. Business websites: 3-4 weeks. Admin dashboards: 5-6 weeks. E-commerce: 6-10 weeks. Web applications: 8-12+ weeks.
+
+Q: Do you offer post-launch support?
+A: Yes. Every project includes free post-launch support (30 days to 6 months depending on the plan). Optional maintenance starts at $200/month.
+
+Q: How does payment work?
+A: 50% upfront, 50% upon completion. Payment plans available for projects over $3,000. Pay via Zelle or Stripe.
+
+Q: Can I see progress during development?
+A: Yes. Weekly progress updates, staging environment access, and 24-hour response time.
+
+## Contact
+
+- Schedule a free 30-minute consultation: https://rcweb.dev/schedule
+- Phone: +1 (346) 375-7534
+- Email: contactus@rcweb.dev
+- WhatsApp: https://wa.me/18325465983
+- LinkedIn: https://www.linkedin.com/company/rcwebsolutions
+- Instagram: https://www.instagram.com/rcwebsolutionsllc
+- Facebook: https://www.facebook.com/rcwebsolutionsllc
+- TikTok: https://www.tiktok.com/@rcwebsolutionsllc
+- X/Twitter: https://x.com/RCWeb2025
+
+## Sitemap
+
+- https://rcweb.dev/ — Homepage
+- https://rcweb.dev/about — About Randy Caballero
+- https://rcweb.dev/services — All Web Development Services
+- https://rcweb.dev/services/web-design-houston — Web Design Houston TX
+- https://rcweb.dev/services/nextjs-development-houston — Next.js Development Houston TX
+- https://rcweb.dev/services/bilingual-websites-houston — Bilingual Websites Houston TX
+- https://rcweb.dev/services/ecommerce-houston — E-Commerce Houston TX
+- https://rcweb.dev/services/seo-local-houston — Local SEO Houston TX
+- https://rcweb.dev/projects-portfolio — Projects & Case Studies
+- https://rcweb.dev/case-study/gsmactx — GSM AC Case Study
+- https://rcweb.dev/case-study/clinica-gessner — Clinica Gessner Case Study
+- https://rcweb.dev/case-study/clinica-airline — Clinica Airline Case Study
+- https://rcweb.dev/case-study/leos-home-experts — Leo's Home Experts Case Study
+- https://rcweb.dev/case-study/dulce-antojo — Dulce Antojo Case Study
+- https://rcweb.dev/web-developer-houston-tx — Web Developer in Houston TX
+- https://rcweb.dev/blog — Web Development Blog
+- https://rcweb.dev/schedule — Free Consultation Booking
+- https://rcweb.dev/guide — Free Web Development Guide
