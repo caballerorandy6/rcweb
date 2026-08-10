@@ -33,7 +33,6 @@ export async function handlePaymentSuccessAction(
     });
 
     if (quickCheck) {
-      console.log("✅ Payment found immediately (webhook already processed)");
       // Link to contact for revenue attribution (fire and forget)
       linkPaymentToContact(quickCheck.id).catch(console.error);
       return { success: true, payment: quickCheck, fallbackUsed: false };
@@ -59,9 +58,6 @@ export async function handlePaymentSuccessAction(
       });
 
       if (payment) {
-        console.log(
-          `✅ Payment found after ${attempts} seconds (webhook processed)`
-        );
         // Link to contact for revenue attribution (fire and forget)
         linkPaymentToContact(payment.id).catch(console.error);
         return { success: true, payment, fallbackUsed: false };
@@ -69,8 +65,6 @@ export async function handlePaymentSuccessAction(
     }
 
     // 3. FALLBACK: Webhook didn't process in 30 seconds - retrieve session from Stripe
-    console.log("⚠️ Webhook did not process in time, using fallback...");
-
     let session: Stripe.Checkout.Session;
     try {
       session = await stripe.checkout.sessions.retrieve(sessionId);
@@ -180,8 +174,6 @@ export async function handlePaymentSuccessAction(
 
         return newPayment;
       });
-
-      console.log("✅ Payment created via fallback");
 
       // Link to contact for revenue attribution (fire and forget)
       linkPaymentToContact(payment.id).catch(console.error);

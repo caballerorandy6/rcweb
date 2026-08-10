@@ -2,6 +2,7 @@
 
 import { prisma } from "@/lib/prisma";
 import type { ActionResult } from "@/types/common";
+import { requireAdmin } from "@/lib/authGuard";
 
 type ContactWithRelations = {
   id: string;
@@ -18,6 +19,11 @@ export async function getContactsAction(): Promise<
   ActionResult<{ contacts: ContactWithRelations[] }>
 > {
   try {
+    const authCheck = await requireAdmin();
+    if (!authCheck.authorized) {
+      return { success: false, error: authCheck.error };
+    }
+
     const contacts = await prisma.contact.findMany({
       include: {
         emails: true,

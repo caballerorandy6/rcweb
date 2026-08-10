@@ -3,6 +3,7 @@
 import { prisma } from "@/lib/prisma";
 import type { BusinessContact } from "./searchBusinessContactsAction";
 import type { ActionResult } from "@/types/common";
+import { requireAdmin } from "@/lib/authGuard";
 
 type ImportResult = {
   imported: number;
@@ -21,6 +22,11 @@ export async function importBusinessContactsAction(
   marketingConsent: boolean = false
 ): Promise<ActionResult<ImportResult>> {
   try {
+    const authCheck = await requireAdmin();
+    if (!authCheck.authorized) {
+      return { success: false, error: authCheck.error };
+    }
+
     if (!businesses || businesses.length === 0) {
       return {
         success: false,

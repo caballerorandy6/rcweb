@@ -2,6 +2,7 @@
 
 import { prisma } from "@/lib/prisma";
 import type { ActionResult } from "@/types/common";
+import { requireAdmin } from "@/lib/authGuard";
 
 export interface SubscriptionData {
   id: string;
@@ -23,6 +24,11 @@ export async function getAllSubscriptionsAction(): Promise<
   ActionResult<{ subscriptions: SubscriptionData[] }>
 > {
   try {
+    const authCheck = await requireAdmin();
+    if (!authCheck.authorized) {
+      return { success: false, error: authCheck.error };
+    }
+
     const subscriptions = await prisma.subscription.findMany({
       orderBy: { createdAt: "desc" },
     });

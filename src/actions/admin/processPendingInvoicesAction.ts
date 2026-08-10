@@ -5,6 +5,7 @@ import { prisma } from "@/lib/prisma";
 import { Resend } from "resend";
 import { createInvoiceAndSendEmail } from "@/lib/invoice/createInvoiceAndSendEmail";
 import type { ActionResult } from "@/types/common";
+import { requireAdmin } from "@/lib/authGuard";
 
 type InvoiceResult = {
   projectCode: string;
@@ -26,6 +27,11 @@ export async function processPendingInvoicesAction(): Promise<
   ActionResult<ProcessResult>
 > {
   try {
+    const authCheck = await requireAdmin();
+    if (!authCheck.authorized) {
+      return { success: false, error: authCheck.error };
+    }
+
     const resend = new Resend(process.env.RESEND_API_KEY!);
 
     // Find payments without invoices

@@ -1,6 +1,7 @@
 "use server";
 
 import { prisma } from "@/lib/prisma";
+import { requireAdmin } from "@/lib/authGuard";
 
 export interface LeadTrendPoint {
   date: string;
@@ -20,6 +21,11 @@ export interface LeadsTrendResult {
 export async function getLeadsTrendAction(
   period: "7d" | "30d" | "90d" = "30d"
 ): Promise<LeadsTrendResult> {
+  const authCheck = await requireAdmin();
+  if (!authCheck.authorized) {
+    throw new Error(authCheck.error);
+  }
+
   const now = new Date();
   let startDate: Date;
   let groupBy: "day" | "week";

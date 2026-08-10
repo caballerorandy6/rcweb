@@ -1,10 +1,16 @@
 "use server";
 
 import { prisma } from "@/lib/prisma";
+import { requireAdmin } from "@/lib/authGuard";
 
 // Función helper para obtener estadísticas de SMS
 export const getSmsStatsAction = async () => {
   try {
+    const authCheck = await requireAdmin();
+    if (!authCheck.authorized) {
+      throw new Error(authCheck.error);
+    }
+
     // Contar teléfonos con consentimiento de marketing
     const phonesWithConsent = await prisma.contactPhone.count({
       where: {

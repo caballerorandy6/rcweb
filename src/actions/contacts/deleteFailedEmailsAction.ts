@@ -2,6 +2,7 @@
 
 import { prisma } from "@/lib/prisma";
 import type { ActionResult } from "@/types/common";
+import { requireAdmin } from "@/lib/authGuard";
 
 type DeleteResult = {
   deletedCount: number;
@@ -12,6 +13,11 @@ export async function deleteFailedEmailsAction(
   emailAddresses: string[]
 ): Promise<ActionResult<DeleteResult>> {
   try {
+    const authCheck = await requireAdmin();
+    if (!authCheck.authorized) {
+      return { success: false, error: authCheck.error };
+    }
+
     if (emailAddresses.length === 0) {
       return {
         success: false,
@@ -19,13 +25,10 @@ export async function deleteFailedEmailsAction(
       };
     }
 
-    console.log("📥 Received emails to delete:", emailAddresses);
-
     // Normalize email addresses to lowercase
     const normalizedEmails = emailAddresses.map((email) =>
       email.toLowerCase().trim()
     );
-    console.log("🔍 Normalized emails:", normalizedEmails);
 
     // Get all ContactEmail records that match
     const contactEmailsToDelete = await prisma.contactEmail.findMany({
@@ -41,8 +44,6 @@ export async function deleteFailedEmailsAction(
       },
     });
 
-    console.log("📱 Found matching email IDs:", contactEmailsToDelete.length);
-
     // Delete ContactEmail records
     const result = await prisma.contactEmail.deleteMany({
       where: {
@@ -51,8 +52,6 @@ export async function deleteFailedEmailsAction(
         },
       },
     });
-
-    console.log("✅ Deleted count:", result.count);
 
     // Clean up contacts without any emails or phones
     const contactsWithoutEmailsOrPhones = await prisma.contact.findMany({
@@ -77,10 +76,6 @@ export async function deleteFailedEmailsAction(
     });
 
     if (contactsWithoutEmailsOrPhones.length > 0) {
-      console.log(
-        `🧹 Found ${contactsWithoutEmailsOrPhones.length} contacts without emails or phones`
-      );
-
       await prisma.contact.deleteMany({
         where: {
           id: {
@@ -88,10 +83,6 @@ export async function deleteFailedEmailsAction(
           },
         },
       });
-
-      console.log(
-        `✅ Cleaned up ${contactsWithoutEmailsOrPhones.length} empty contacts`
-      );
     }
 
     return {
@@ -141,21 +132,6 @@ export async function deleteFailedEmailsFromCampaignsAction(): Promise<
         },
       };
     }
-
-    console.log(
-      `📧 Found ${failedEmailLogs.length} unique failed email addresses in campaign logs`
-    );
-
-    // Group by status for reporting
-    const statusGroups = failedEmailLogs.reduce(
-      (acc, log) => {
-        acc[log.status] = (acc[log.status] || 0) + 1;
-        return acc;
-      },
-      {} as Record<string, number>
-    );
-
-    console.log("Status breakdown:", statusGroups);
 
     // Extract email addresses
     const emailAddresses = failedEmailLogs.map((log) => log.emailAddress);

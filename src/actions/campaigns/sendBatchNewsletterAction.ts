@@ -249,9 +249,6 @@ export const createAndSendBatchCampaign = async (
         .map((r) => r.email.to);
 
       if (failedEmails.length > 0) {
-        console.log(
-          `🗑️  Auto-deleting ${failedEmails.length} failed email(s) from contacts...`
-        );
         await deleteFailedEmailsAction(failedEmails);
       }
     }
@@ -539,9 +536,6 @@ export const continueBatchCampaign = async (
         .map((r) => r.email.to);
 
       if (failedEmails.length > 0) {
-        console.log(
-          `🗑️  Auto-deleting ${failedEmails.length} failed email(s) from contacts...`
-        );
         await deleteFailedEmailsAction(failedEmails);
       }
     }

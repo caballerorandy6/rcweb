@@ -3,21 +3,13 @@
 import { useSearchParams } from "next/navigation";
 import Link from "next/link";
 import { useEffect } from "react";
-import { markProjectAsCompleteAction } from "@/actions/projects/markProjectAsCompleteAction";
 
 export default function PaymentComplete() {
   const searchParams = useSearchParams();
   const projectCode = searchParams.get("code");
 
-  useEffect(() => {
-    if (projectCode) {
-      markProjectAsCompleteAction(projectCode).then((result) => {
-        if (!result.success) {
-          console.error("Error marking project as complete:", result.error);
-        }
-      });
-    }
-  }, [projectCode]);
+  // El webhook de Stripe es la única fuente de verdad para marcar el pago final:
+  // esta página solo celebra y muestra el código de referencia.
   useEffect(() => {
     // Efecto de confetti
     if (typeof window !== "undefined") {
@@ -59,18 +51,7 @@ export default function PaymentComplete() {
         }, 250);
       });
     }
-
-    // Marcar como completamente pagado en la base de datos
-    if (projectCode) {
-      fetch("/api/complete-payment", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ projectCode }),
-      }).catch((error) => {
-        console.error("Error updating payment status:", error);
-      });
-    }
-  }, [projectCode]);
+  }, []);
 
   return (
     <div className="min-h-screen bg-gray-900 flex items-center justify-center px-4 py-24 lg:py-32 relative overflow-hidden">

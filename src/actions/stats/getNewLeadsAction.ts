@@ -1,6 +1,7 @@
 "use server";
 
 import { prisma } from "@/lib/prisma";
+import { requireAdmin } from "@/lib/authGuard";
 
 export interface NewLeadsStats {
   thisWeek: number;
@@ -10,6 +11,11 @@ export interface NewLeadsStats {
 }
 
 export async function getNewLeadsAction(): Promise<NewLeadsStats> {
+  const authCheck = await requireAdmin();
+  if (!authCheck.authorized) {
+    throw new Error(authCheck.error);
+  }
+
   const now = new Date();
 
   // Start of this week (Sunday)

@@ -1,10 +1,16 @@
 "use server";
 
 import { prisma } from "@/lib/prisma";
+import { requireAdmin } from "@/lib/authGuard";
 
 // Obtener estadísticas de contactos elegibles
 export const getNumberOfEligibleContactsAction = async () => {
   try {
+    const authCheck = await requireAdmin();
+    if (!authCheck.authorized) {
+      throw new Error(authCheck.error);
+    }
+
     // Total de contactos con consentimiento Y que tienen email
     const eligible = await prisma.contact.count({
       where: {
@@ -38,6 +44,11 @@ export const getNumberOfEligibleContactsAction = async () => {
 // Obtener estadísticas de emails elegibles
 export const getNumberOfEligibleEmailsAction = async () => {
   try {
+    const authCheck = await requireAdmin();
+    if (!authCheck.authorized) {
+      throw new Error(authCheck.error);
+    }
+
     // Emails de contactos con consentimiento
     const eligibleEmails = await prisma.contactEmail.count({
       where: {

@@ -18,7 +18,7 @@ export const revalidate = 0;
  * Security: Requires one of:
  * - Valid API key (for internal/admin access)
  * - Admin session
- * - Email query param matching invoice customer email
+ * - token query param matching the payment's accessToken (customer links)
  */
 export async function GET(
   request: NextRequest,
@@ -61,10 +61,12 @@ export async function GET(
       }
     }
 
-    // Option 3: Email verification (for customer access via email link)
+    // Option 3: accessToken del payment (UUID no adivinable, para links de cliente).
+    // El email plano no sirve como credencial: los números de invoice son
+    // secuenciales y el email de un cliente no es secreto.
     if (!authorized) {
-      const email = request.nextUrl.searchParams.get("email");
-      if (email && email.toLowerCase() === invoice.customerEmail.toLowerCase()) {
+      const token = request.nextUrl.searchParams.get("token");
+      if (token && invoice.payment?.accessToken === token) {
         authorized = true;
       }
     }

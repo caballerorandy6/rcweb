@@ -1,5 +1,6 @@
 "use server";
 import type { ActionResult } from "@/types/common";
+import { requireAdmin } from "@/lib/authGuard";
 
 export interface BusinessContact {
   name: string;
@@ -25,6 +26,11 @@ export async function searchBusinessContactsAction(
   maxResults: number = 20
 ): Promise<ActionResult<{ businesses: BusinessContact[]; count: number }>> {
   try {
+    const authCheck = await requireAdmin();
+    if (!authCheck.authorized) {
+      return { success: false, error: authCheck.error };
+    }
+
     const GOOGLE_PLACES_API_KEY = process.env.GOOGLE_PLACES_API_KEY;
 
     if (!GOOGLE_PLACES_API_KEY) {

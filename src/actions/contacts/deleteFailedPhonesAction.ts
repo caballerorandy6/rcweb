@@ -2,19 +2,23 @@
 
 import { prisma } from "@/lib/prisma";
 import type { ActionResult } from "@/types/common";
+import { requireAdmin } from "@/lib/authGuard";
 
 export async function deleteFailedPhonesAction(
   phoneNumbers: string[]
 ): Promise<ActionResult<{ deletedCount: number }>> {
   try {
+    const authCheck = await requireAdmin();
+    if (!authCheck.authorized) {
+      return { success: false, error: authCheck.error };
+    }
+
     if (phoneNumbers.length === 0) {
       return {
         success: false,
         error: "No phone numbers provided",
       };
     }
-
-    console.log("📥 Received phones to delete:", phoneNumbers);
 
     // Función para normalizar números (quitar espacios, guiones, paréntesis)
     const normalize = (phone: string) => {
@@ -27,7 +31,6 @@ export async function deleteFailedPhonesAction(
 
     // Normalizar números recibidos
     const normalizedNumbers = phoneNumbers.map(normalize);
-    console.log("🔍 Normalized phones from Twilio:", normalizedNumbers);
 
     // Obtener TODOS los teléfonos de la BD y buscar coincidencias normalizadas
     const allPhones = await prisma.contactPhone.findMany({
@@ -45,8 +48,6 @@ export async function deleteFailedPhonesAction(
       })
       .map((p) => p.id);
 
-    console.log("📱 Found matching phone IDs:", phoneIdsToDelete);
-
     // Eliminar teléfonos por ID
     const result = await prisma.contactPhone.deleteMany({
       where: {
@@ -55,8 +56,6 @@ export async function deleteFailedPhonesAction(
         },
       },
     });
-
-    console.log("✅ Deleted count:", result.count);
 
     return {
       success: true,

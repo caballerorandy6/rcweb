@@ -4,6 +4,7 @@ import Stripe from "stripe";
 import { prisma } from "@/lib/prisma";
 import stripe from "@/lib/stripe";
 import type { ActionResult } from "@/types/common";
+import { requireAdmin } from "@/lib/authGuard";
 
 export interface InvoiceData {
   id: string;
@@ -24,6 +25,11 @@ export async function getSubscriptionInvoicesAction(
   subscriptionId: string
 ): Promise<ActionResult<{ invoices: InvoiceData[] }>> {
   try {
+    const authCheck = await requireAdmin();
+    if (!authCheck.authorized) {
+      return { success: false, error: authCheck.error };
+    }
+
     // Find subscription in database to get Stripe customer ID
     const subscription = await prisma.subscription.findUnique({
       where: { id: subscriptionId },

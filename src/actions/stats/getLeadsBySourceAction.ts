@@ -1,6 +1,7 @@
 "use server";
 
 import { prisma } from "@/lib/prisma";
+import { requireAdmin } from "@/lib/authGuard";
 
 export interface LeadSourceStat {
   source: string;
@@ -23,6 +24,11 @@ export interface LeadsBySourceResult {
 
 export async function getLeadsBySourceAction(): Promise<LeadsBySourceResult> {
   try {
+    const authCheck = await requireAdmin();
+    if (!authCheck.authorized) {
+      throw new Error(authCheck.error);
+    }
+
     // Get all contacts grouped by source
     const sourceGroups = await prisma.contact.groupBy({
       by: ["source"],
@@ -98,6 +104,11 @@ export async function getLeadsBySourceForPeriodAction(
   endDate: Date
 ): Promise<LeadsBySourceResult> {
   try {
+    const authCheck = await requireAdmin();
+    if (!authCheck.authorized) {
+      throw new Error(authCheck.error);
+    }
+
     const sourceGroups = await prisma.contact.groupBy({
       by: ["source"],
       where: {

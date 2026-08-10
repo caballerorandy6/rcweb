@@ -5,6 +5,7 @@ import { prisma } from "@/lib/prisma";
 import stripe from "@/lib/stripe";
 import { sendSubscriptionPortalLink } from "@/lib/email/senders";
 import type { ActionResultSimple } from "@/types/common";
+import { checkActionRateLimit, rateLimiters } from "@/lib/rateLimit";
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 
@@ -16,6 +17,11 @@ export async function sendPortalLinkAction(
   email: string
 ): Promise<ActionResultSimple> {
   try {
+    const rateCheck = await checkActionRateLimit(rateLimiters.contact);
+    if (!rateCheck.success) {
+      return { success: false, error: rateCheck.error! };
+    }
+
     // Validate email format
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(email)) {

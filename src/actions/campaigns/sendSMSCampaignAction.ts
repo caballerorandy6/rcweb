@@ -4,6 +4,7 @@ import { prisma } from "@/lib/prisma";
 import twilio from "twilio";
 import { trackSMSCampaignSent } from "@/lib/analytics";
 import { deleteFailedPhonesAction } from "@/actions/contacts/deleteFailedPhonesAction";
+import { requireAdmin } from "@/lib/authGuard";
 
 // Inicializar cliente Twilio
 const twilioClient = twilio(
@@ -62,6 +63,11 @@ export const sendSmsCampaignAction = async (
   skipTimeValidation = false // For admin override or scheduled campaigns
 ): Promise<SmsActionResponse> => {
   try {
+    const authCheck = await requireAdmin();
+    if (!authCheck.authorized) {
+      return { success: false, message: authCheck.error };
+    }
+
     // 1. Check if within allowed hours (skip for test mode or if explicitly allowed)
     if (!testMode && !skipTimeValidation) {
       const timeCheck = isWithinAllowedHours();
@@ -216,8 +222,6 @@ export const sendSmsCampaignAction = async (
     const errors: string[] = [];
     const failedPhones: string[] = [];
 
-    console.log(`📤 Sending ${smsToSend.length} SMS messages...`);
-
     for (const sms of smsToSend) {
       try {
         const messageParams: {
@@ -294,9 +298,6 @@ export const sendSmsCampaignAction = async (
 
     // 7. Automatically delete failed phones from contacts
     if (failedPhones.length > 0) {
-      console.log(
-        `🗑️  Auto-deleting ${failedPhones.length} failed phone(s) from contacts...`
-      );
       await deleteFailedPhonesAction(failedPhones);
     }
 

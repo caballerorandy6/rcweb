@@ -1,6 +1,7 @@
 import { Ratelimit } from "@upstash/ratelimit";
 import { Redis } from "@upstash/redis";
 import { NextRequest, NextResponse } from "next/server";
+import { headers } from "next/headers";
 
 // Create Redis client
 const redis = new Redis({
@@ -48,6 +49,32 @@ export function getClientIp(request: NextRequest): string {
   }
 
   return "anonymous";
+}
+
+/**
+ * Rate limit check for Server Actions (no NextRequest available).
+ * Reads the caller IP from request headers via next/headers.
+ */
+export async function checkActionRateLimit(
+  limiter: Ratelimit
+): Promise<{ success: boolean; error?: string }> {
+  const headerList = await headers();
+  const forwardedFor = headerList.get("x-forwarded-for");
+  const ip =
+    forwardedFor?.split(",")[0].trim() ||
+    headerList.get("x-real-ip") ||
+    "anonymous";
+
+  const { success } = await limiter.limit(ip);
+
+  if (!success) {
+    return {
+      success: false,
+      error: "Too many requests. Please try again later.",
+    };
+  }
+
+  return { success: true };
 }
 
 /**

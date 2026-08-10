@@ -4,6 +4,7 @@ import { prisma } from "@/lib/prisma";
 import { sendFinalPaymentEmail } from "@/actions/campaigns/sendFinalPaymentEmailAction";
 import type { ProjectStatus } from "@/types/project";
 import type { ActionResult } from "@/types/common";
+import { requireAdmin } from "@/lib/authGuard";
 
 type PaymentInfo = {
   id: string;
@@ -17,6 +18,11 @@ export async function updateProjectStatusAction(
   status: ProjectStatus
 ): Promise<ActionResult<{ payment: PaymentInfo }>> {
   try {
+    const authCheck = await requireAdmin();
+    if (!authCheck.authorized) {
+      return { success: false, error: authCheck.error };
+    }
+
     const payment = await prisma.payment.update({
       where: { projectCode },
       data: {

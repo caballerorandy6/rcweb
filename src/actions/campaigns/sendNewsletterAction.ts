@@ -3,6 +3,7 @@
 import { prisma } from "@/lib/prisma";
 import { Resend } from "resend";
 import { trackEmailCampaignSent } from "@/lib/analytics";
+import { requireAdmin } from "@/lib/authGuard";
 
 const resend = new Resend(process.env.RESEND_API_KEY!);
 
@@ -18,6 +19,11 @@ export const sendNewsletterAction = async (
   testMode = false
 ): Promise<NewsletterActionResponse> => {
   try {
+    const authCheck = await requireAdmin();
+    if (!authCheck.authorized) {
+      return { success: false, message: authCheck.error };
+    }
+
     // 1. Obtener contactos con consentimiento que tengan al menos un email
     const contactsWithEmail = await prisma.contact.findMany({
       where: {

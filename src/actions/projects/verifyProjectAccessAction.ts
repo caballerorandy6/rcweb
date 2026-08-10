@@ -3,6 +3,7 @@
 import { prisma } from "@/lib/prisma";
 import type { ActionResult } from "@/types/common";
 import type { VerifiedProjectAccess } from "@/types/project";
+import { checkActionRateLimit, rateLimiters } from "@/lib/rateLimit";
 
 // Verificar acceso a proyecto mediante email y código de proyecto
 export async function verifyProjectAccessAction(
@@ -10,6 +11,11 @@ export async function verifyProjectAccessAction(
   projectCode: string
 ): Promise<ActionResult<{ payment: VerifiedProjectAccess }>> {
   try {
+    const rateCheck = await checkActionRateLimit(rateLimiters.contact);
+    if (!rateCheck.success) {
+      return { success: false, error: rateCheck.error! };
+    }
+
     const payment = await prisma.payment.findFirst({
       where: {
         email: email.toLowerCase(),

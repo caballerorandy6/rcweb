@@ -1,6 +1,7 @@
 "use server";
 
 import { prisma } from "@/lib/prisma";
+import { requireAdmin } from "@/lib/authGuard";
 
 export interface RevenueBySource {
   source: string;
@@ -27,6 +28,11 @@ export interface RevenueAttributionResult {
 }
 
 export async function getRevenueAttributionAction(): Promise<RevenueAttributionResult> {
+  const authCheck = await requireAdmin();
+  if (!authCheck.authorized) {
+    throw new Error(authCheck.error);
+  }
+
   // Get all paid payments with their linked contacts
   const payments = await prisma.payment.findMany({
     where: {

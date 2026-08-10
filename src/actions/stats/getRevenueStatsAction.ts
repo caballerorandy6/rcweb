@@ -1,6 +1,7 @@
 "use server";
 
 import { prisma } from "@/lib/prisma";
+import { requireAdmin } from "@/lib/authGuard";
 
 export interface RevenueStats {
   totalRevenue: number; // In dollars
@@ -10,6 +11,11 @@ export interface RevenueStats {
 }
 
 export async function getRevenueStatsAction(): Promise<RevenueStats> {
+  const authCheck = await requireAdmin();
+  if (!authCheck.authorized) {
+    throw new Error(authCheck.error);
+  }
+
   const now = new Date();
   const startOfMonth = new Date(now.getFullYear(), now.getMonth(), 1);
 
