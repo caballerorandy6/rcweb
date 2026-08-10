@@ -30,15 +30,6 @@ export async function POST(request: NextRequest) {
     const callSid = formData.get("CallSid");
     const from = formData.get("From");
 
-    // Log transcription information
-    console.log("Voicemail transcription received:", {
-      transcriptionStatus,
-      transcriptionText,
-      recordingSid,
-      from,
-      timestamp: new Date().toISOString(),
-    });
-
     // If transcription was successful, send email with text
     if (transcriptionStatus === "completed" && transcriptionText) {
       await sendEmailWithQuota({
@@ -61,10 +52,6 @@ export async function POST(request: NextRequest) {
           </p>
         `,
       });
-
-      console.log("Transcription email sent successfully");
-    } else {
-      console.log("Transcription failed or not available:", transcriptionStatus);
     }
 
     return NextResponse.json({ success: true });

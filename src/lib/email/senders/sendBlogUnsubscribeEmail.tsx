@@ -38,7 +38,6 @@ export async function sendBlogUnsubscribeEmail(
       return { success: false, error: result.error };
     }
 
-    console.log("✅ Blog unsubscribe email sent to:", customerEmail);
     return { success: true };
   } catch (error) {
     const errorMessage = error instanceof Error ? error.message : String(error);

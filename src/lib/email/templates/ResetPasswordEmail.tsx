@@ -50,12 +50,12 @@ export const ResetPasswordEmail: React.FC<ResetPasswordEmailProps> = ({
             </Section>
 
             <Text style={styles.paragraph}>
-              This link will expire in 1 hour. If you didn't request a password reset,
+              This link will expire in 1 hour. If you didn&apos;t request a password reset,
               you can safely ignore this email.
             </Text>
 
             <Text style={styles.paragraph}>
-              If the button doesn't work, copy and paste this link into your browser:
+              If the button doesn&apos;t work, copy and paste this link into your browser:
             </Text>
             <Text style={styles.linkText}>
               <Link href={resetPasswordUrl} style={styles.link}>

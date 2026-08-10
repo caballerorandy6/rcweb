@@ -37,7 +37,6 @@ export async function sendSetupPasswordEmail(
     });
 
     if (result.success) {
-      console.log("✅ Setup password email sent to:", customerEmail);
       return { success: true };
     } else {
       return { success: false, error: result.error };

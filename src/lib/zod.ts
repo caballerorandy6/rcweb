@@ -18,7 +18,6 @@ export const FormSchema = z.object({
     .optional(), // mensaje opcional para captura rápida de contactos
   marketingConsent: z
     .boolean()
-    .default(false)
     .describe("Consent to receive marketing emails and messages"),
 });
 

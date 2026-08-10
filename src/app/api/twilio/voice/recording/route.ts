@@ -31,16 +31,6 @@ export async function POST(request: NextRequest) {
     const from = formData.get("From");
     const to = formData.get("To");
 
-    // Log voicemail information
-    console.log("Voicemail received:", {
-      recordingSid,
-      recordingUrl,
-      recordingDuration: `${recordingDuration} seconds`,
-      from,
-      to,
-      timestamp: new Date().toISOString(),
-    });
-
     // Send email notification with voicemail details
     await sendEmailWithQuota({
       from: "RC Web Solutions <noreply@rcweb.dev>",
@@ -59,8 +49,6 @@ export async function POST(request: NextRequest) {
         <p>Call SID: ${callSid}</p>
       `,
     });
-
-    console.log("Voicemail notification email sent successfully");
 
     return NextResponse.json({ success: true });
   } catch (error) {

@@ -50,7 +50,7 @@ export default function ClientLoginForm() {
             Forgot your password?
           </Link>
           <p className="text-gray-500 text-xs font-inter">
-            Don't have an account?{" "}
+            Don&apos;t have an account?{" "}
             <Link
               href="/client/register"
               className="text-gold hover:text-yellow-200 transition-colors font-semibold"

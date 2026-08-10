@@ -441,7 +441,7 @@ export default function SmsDeliveryStats() {
         <div className="bg-gray-800 rounded-lg p-12 text-center">
           <div className="text-gray-400 text-lg mb-2">📊</div>
           <div className="text-gray-400">
-            Click "Get Report" to view SMS delivery statistics
+            Click &quot;Get Report&quot; to view SMS delivery statistics
           </div>
         </div>
       )}

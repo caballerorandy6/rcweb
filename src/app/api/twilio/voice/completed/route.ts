@@ -30,17 +30,6 @@ export async function POST(request: NextRequest) {
     const to = formData.get("To");
     const dialCallStatus = formData.get("DialCallStatus");
 
-    // Log call information
-    console.log("Call completed:", {
-      callSid,
-      callStatus,
-      dialCallStatus,
-      callDuration: `${callDuration} seconds`,
-      from,
-      to,
-      timestamp: new Date().toISOString(),
-    });
-
     // You can save this to your database if needed
     // await prisma.callLog.create({ data: { ... } });
 

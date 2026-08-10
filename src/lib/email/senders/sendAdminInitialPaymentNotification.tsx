@@ -51,7 +51,6 @@ export async function sendAdminInitialPaymentNotification(
       html,
     });
 
-    console.log("✅ Admin initial payment notification sent");
     return { success: true };
   } catch (error) {
     const errorMessage = error instanceof Error ? error.message : String(error);

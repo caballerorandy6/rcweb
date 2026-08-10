@@ -26,7 +26,6 @@ export async function sendWelcomeEmail(
     });
 
     if (result.success) {
-      console.log("✅ Welcome email sent to:", customerEmail);
       return { success: true };
     } else {
       return { success: false, error: result.error };

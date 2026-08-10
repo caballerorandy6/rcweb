@@ -51,7 +51,6 @@ export async function sendNewClientMessageEmail(
       return { success: false, error: result.error };
     }
 
-    console.log("✅ New client message email sent to admin:", adminEmail);
     return { success: true };
   } catch (error) {
     const errorMessage = error instanceof Error ? error.message : String(error);

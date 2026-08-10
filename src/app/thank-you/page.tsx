@@ -50,7 +50,7 @@ export default function ThankYouPage() {
                     Confirmation Email
                   </h3>
                   <p className="text-gray-400 text-sm sm:text-base font-inter">
-                    You'll receive a confirmation email shortly with a copy of your message.
+                    You&apos;ll receive a confirmation email shortly with a copy of your message.
                   </p>
                 </div>
               </div>
@@ -80,7 +80,7 @@ export default function ThankYouPage() {
                     Personalized Consultation
                   </h3>
                   <p className="text-gray-400 text-sm sm:text-base font-inter">
-                    We'll discuss your project requirements and provide a customized solution for your needs.
+                    We&apos;ll discuss your project requirements and provide a customized solution for your needs.
                   </p>
                 </div>
               </div>

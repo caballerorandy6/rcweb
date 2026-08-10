@@ -51,7 +51,7 @@ export const BlogUnsubscribeEmail: React.FC<BlogUnsubscribeEmailProps> = ({
               </Text>
               <ul style={styles.list}>
                 <li style={styles.listItem}>
-                  You won't receive email notifications about new blog posts
+                  You won&apos;t receive email notifications about new blog posts
                 </li>
                 <li style={styles.listItem}>
                   You can still visit our blog anytime at{" "}

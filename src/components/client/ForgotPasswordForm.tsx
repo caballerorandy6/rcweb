@@ -89,11 +89,11 @@ export default function ForgotPasswordForm() {
                 </h2>
                 <div className="w-24 h-1 bg-gradient-to-r from-transparent via-gold to-transparent mx-auto mt-4 rounded-full"></div>
                 <p className="text-gray-400 text-sm mt-4 font-inter">
-                  We've sent a password reset link to your email address. Please
+                  We&apos;ve sent a password reset link to your email address. Please
                   check your inbox and follow the instructions.
                 </p>
                 <p className="text-gray-500 text-xs mt-4 font-inter">
-                  Didn't receive the email? Check your spam folder or{" "}
+                  Didn&apos;t receive the email? Check your spam folder or{" "}
                   <Link
                     href="/client/forgot-password"
                     className="text-gold hover:text-yellow-200 transition-colors"
@@ -137,7 +137,7 @@ export default function ForgotPasswordForm() {
               </h2>
               <div className="w-24 h-1 bg-gradient-to-r from-transparent via-gold to-transparent mx-auto mt-4 rounded-full"></div>
               <p className="text-center text-gray-400 text-sm mt-4 font-inter">
-                Enter your email address and we'll send you a link to reset your
+                Enter your email address and we&apos;ll send you a link to reset your
                 password
               </p>
             </div>

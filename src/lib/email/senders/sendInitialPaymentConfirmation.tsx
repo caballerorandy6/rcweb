@@ -45,10 +45,6 @@ export async function sendInitialPaymentConfirmation(
       html,
     });
 
-    console.log(
-      "✅ Initial payment confirmation email sent to:",
-      customerEmail
-    );
     return { success: true };
   } catch (error) {
     const errorMessage = error instanceof Error ? error.message : String(error);

@@ -34,7 +34,6 @@ export async function sendSubscriptionPortalLink(
       html,
     });
 
-    console.log("✅ Subscription portal link email sent to:", customerEmail);
     return { success: true };
   } catch (error) {
     const errorMessage = error instanceof Error ? error.message : String(error);

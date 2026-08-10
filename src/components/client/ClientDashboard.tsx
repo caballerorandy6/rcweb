@@ -76,7 +76,7 @@ export default function ClientDashboard({
           <div className="flex items-center justify-center min-h-[60vh]">
             <div className="bg-gradient-to-br from-gray-900/95 to-gray-800/95 p-8 lg:p-12 rounded-2xl shadow-2xl backdrop-blur-sm border border-gray-700/50 max-w-md w-full text-center">
               <p className="text-gray-400 font-inter mb-6 text-lg">
-                You don't have any projects yet. Once you make a payment, your
+                You don&apos;t have any projects yet. Once you make a payment, your
                 projects will appear here.
               </p>
               <Link

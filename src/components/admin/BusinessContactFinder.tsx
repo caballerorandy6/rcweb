@@ -135,11 +135,6 @@ export default function BusinessContactFinder({
           );
           setSelectedBusinesses(new Set());
 
-          // Show errors if any
-          if (result.data.errors && result.data.errors.length > 0) {
-            console.log("Import errors:", result.data.errors);
-          }
-
           // Refresh the contacts list
           if (onImportComplete) {
             onImportComplete();

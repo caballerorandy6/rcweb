@@ -70,7 +70,6 @@ export async function sendInvoiceEmail(
 
     await resend.emails.send(emailOptions);
 
-    console.log(`✅ Invoice email (${type}) sent to ${customerEmail}`);
     return { success: true };
   } catch (error) {
     const errorMessage = error instanceof Error ? error.message : String(error);

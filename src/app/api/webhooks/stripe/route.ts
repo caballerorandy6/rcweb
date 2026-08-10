@@ -788,8 +788,6 @@ export async function POST(req: Request) {
             renewalDate,
             manageUrl: `${baseUrl}/manage-subscription`,
           });
-
-          console.log("✅ Renewal reminder sent to:", subscription.email);
         }
 
         return NextResponse.json({ received: true, reminderSent: true });

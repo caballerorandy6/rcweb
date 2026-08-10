@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -83,12 +84,12 @@ export default function BlogUnsubscribeForm() {
         </p>
         <p className="text-gray-500 font-inter text-sm">
           Changed your mind? You can resubscribe anytime from our{" "}
-          <a
+          <Link
             href="/blog#newsletter"
             className="text-gold hover:text-yellow-200 transition-colors underline"
           >
             blog page
-          </a>
+          </Link>
           .
         </p>
       </div>
@@ -145,12 +146,12 @@ export default function BlogUnsubscribeForm() {
 
         <p className="text-gray-500 text-xs font-inter text-center">
           You can resubscribe anytime from our{" "}
-          <a
+          <Link
             href="/blog#newsletter"
             className="text-gold hover:text-yellow-200 transition-colors underline"
           >
             blog page
-          </a>
+          </Link>
           .
         </p>
       </form>

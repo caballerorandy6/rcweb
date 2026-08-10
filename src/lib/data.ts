@@ -645,69 +645,6 @@ export const faqs = [
   },
 ];
 
-// export const pricingPlans = [
-//   {
-//     name: "Starter",
-//     price: "$1,499",
-//     range: "$1,499 - $2,999",
-//     duration: "2-3 weeks",
-//     description: "Perfect for small businesses starting their digital journey",
-//     features: [
-//       "5-7 page responsive website",
-//       "Mobile-optimized design",
-//       "Basic SEO setup",
-//       "Contact form integration",
-//       "Social media links",
-//       "Google Analytics setup",
-//       "1 month free support",
-//     ],
-//     ideal: "Ideal for: Local businesses, freelancers, personal brands",
-//     featured: false,
-//     cta: "Start Your Project",
-//   },
-//   {
-//     name: "Growth",
-//     price: "$3,499",
-//     range: "$3,499 - $5,999",
-//     duration: "3-5 weeks",
-//     description: "Scale your business with advanced features and functionality",
-//     features: [
-//       "10-15 page dynamic website",
-//       "Custom animations & interactions",
-//       "Advanced SEO optimization",
-//       "CMS integration (blog/news)",
-//       "Email marketing integration",
-//       "Lead capture & automation",
-//       "Google My Business setup",
-//       "3 months free support",
-//     ],
-//     ideal: "Ideal for: Growing startups, service businesses, B2B companies",
-//     featured: true,
-//     cta: "Most Popular Choice",
-//   },
-//   {
-//     name: "Premium",
-//     price: "$7,999",
-//     range: "$7,999 - $14,999",
-//     duration: "6-8 weeks",
-//     description: "Complete digital solution for established businesses",
-//     features: [
-//       "20+ page custom website",
-//       "E-commerce functionality",
-//       "Custom web application features",
-//       "API integrations",
-//       "Advanced analytics dashboard",
-//       "Multi-language support",
-//       "A/B testing setup",
-//       "6 months premium support",
-//       "Monthly performance reports",
-//     ],
-//     ideal: "Ideal for: Established SMBs, E-commerce, Multi-location businesses",
-//     featured: false,
-//     cta: "Transform Your Business",
-//   },
-// ];
-
 export const additionalServices = [
   {
     service: "Monthly Maintenance",
@@ -872,20 +809,6 @@ export const pricingPlans = [
     featured: false,
     cta: "Build Your Platform",
   },
-  // 🟡 TEST/DEV ONLY - Comentar para producción
-  // {
-  //   id: "test-plan",
-  //   name: "Test Plan (Development Only)",
-  //   price: "$1",
-  //   priceInCents: 100, // $1.00
-  //   range: "$1",
-  //   duration: "Testing",
-  //   description: "For testing payment flow only",
-  //   features: ["Test feature 1", "Test feature 2"],
-  //   ideal: "For development testing only",
-  //   featured: false,
-  //   cta: "Test Payment",
-  // },
   {
     id: "website-maintenance",
     name: "Monthly Website Maintenance and Support",

@@ -2,6 +2,9 @@ import { prisma } from "@/lib/prisma";
 import Link from "next/link";
 import { formatInvoiceDate } from "@/lib/invoice/types";
 
+// Página de admin: datos siempre frescos, nunca prerenderizar en build
+export const dynamic = "force-dynamic";
+
 export const metadata = {
   title: "Manage Invoices - Admin",
   description: "Manage all invoices",

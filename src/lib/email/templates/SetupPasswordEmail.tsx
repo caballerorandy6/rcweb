@@ -63,7 +63,7 @@ export const SetupPasswordEmail: React.FC<SetupPasswordEmailProps> = ({
             </Section>
 
             <Text style={styles.paragraph}>
-              This link will expire in <strong>30 days</strong>. If you don't
+              This link will expire in <strong>30 days</strong>. If you don&apos;t
               set up your password within this time, you can request a new link
               from the login page.
             </Text>

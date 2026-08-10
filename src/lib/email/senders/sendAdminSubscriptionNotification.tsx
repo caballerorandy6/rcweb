@@ -51,7 +51,6 @@ export async function sendAdminSubscriptionNotification(
       html,
     });
 
-    console.log("✅ Admin subscription notification sent");
     return { success: true };
   } catch (error) {
     const errorMessage = error instanceof Error ? error.message : String(error);

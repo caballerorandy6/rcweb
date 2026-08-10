@@ -85,8 +85,6 @@ export async function createInvoice(
       },
     });
 
-    console.log(`✅ Invoice created: ${invoiceNumber} (${data.type})`);
-
     return {
       invoiceId: invoice.id,
       invoiceNumber: invoice.invoiceNumber,

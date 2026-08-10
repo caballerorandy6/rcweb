@@ -39,7 +39,6 @@ export async function sendProjectReadyEmail(
       html,
     });
 
-    console.log(`✅ Project ready email sent to ${customerEmail}`);
     return { success: true };
   } catch (error) {
     const errorMessage = error instanceof Error ? error.message : String(error);

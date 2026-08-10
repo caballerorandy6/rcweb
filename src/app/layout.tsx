@@ -14,7 +14,6 @@ import LinkedInInsightTag from "@/components/tracking/LinkedInInsightTag";
 import UTMTracker from "@/components/tracking/UTMTracker";
 import ExitIntentPopup from "@/components/forms/ExitIntentPopup";
 import { siteConfig } from "@/config/site";
-import { Analytics as VercelAnalytics } from "@vercel/analytics/next";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff2",
@@ -212,9 +211,6 @@ export default function RootLayout({
           <LinkedInInsightTag />
           <UTMTracker />
         </Suspense>
-
-        {/* Vercel Analytics (essential, no personal data) */}
-        <VercelAnalytics />
 
         <Toaster position="bottom-right" richColors closeButton={true} />
         <ExitIntentPopup />

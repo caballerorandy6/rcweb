@@ -36,7 +36,6 @@ export async function sendSubscriptionConfirmation(
       html,
     });
 
-    console.log("✅ Subscription confirmation email sent to:", customerEmail);
     return { success: true };
   } catch (error) {
     const errorMessage = error instanceof Error ? error.message : String(error);

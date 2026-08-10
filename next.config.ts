@@ -55,7 +55,11 @@ const nextConfig: NextConfig = {
     remotePatterns: [
       {
         protocol: "https",
-        hostname: "**",
+        hostname: "res.cloudinary.com",
+      },
+      {
+        protocol: "https",
+        hostname: "*.public.blob.vercel-storage.com",
       },
     ],
   },
@@ -86,19 +90,14 @@ const nextConfig: NextConfig = {
     '@prisma/client',
     '@prisma/adapter-pg',
     'prisma',
-    'prettier',
   ],
 
   // Experimental features
   experimental: {
-    // ppr: true,  // Partial Prerendering (si lo necesitas)
     serverActions: {
       bodySizeLimit: '2mb',
     },
   },
-
-  // Turbopack configuration (Next.js 16+)
-  turbopack: {},
 };
 
 export default nextConfig;

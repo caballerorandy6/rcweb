@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { ErrorMessage } from "@hookform/error-message";
@@ -146,12 +147,12 @@ const BlogSubscriptionForm = () => {
 
           <p className="text-gray-500 text-xs font-inter text-center">
             No spam.{" "}
-            <a
+            <Link
               href="/blog/unsubscribe"
               className="text-gold hover:text-yellow-200 transition-colors underline"
             >
               Unsubscribe anytime
-            </a>
+            </Link>
             .
           </p>
         </form>
