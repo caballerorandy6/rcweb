@@ -134,7 +134,7 @@ export default function SubscriptionSuccess({
                   <p className="text-yellow-500 font-semibold text-sm">
                     Processing in Progress
                   </p>
-                  <p className="text-yellow-200/80 text-xs mt-1">
+                  <p className="text-gold-light/80 text-xs mt-1">
                     Your subscription is being set up. You&apos;ll receive a
                     confirmation email shortly.
                   </p>

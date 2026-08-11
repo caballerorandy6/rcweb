@@ -336,7 +336,7 @@ const FloatingCTA = () => {
               }}
               transition={{
                 duration: 2,
-                repeat: Infinity,
+                repeat: 3,
                 ease: "easeOut",
               }}
             />

@@ -95,7 +95,7 @@ export default function ThankYouPage() {
             <div className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4 text-sm sm:text-base font-inter">
               <a
                 href="tel:+13463757534"
-                className="text-gold hover:text-yellow-200 transition-colors flex items-center"
+                className="text-gold hover:text-gold-light transition-colors flex items-center"
               >
                 <span className="mr-2">📱</span>
                 +1 (346) 375-7534
@@ -103,7 +103,7 @@ export default function ThankYouPage() {
               <span className="hidden sm:inline text-gray-600">|</span>
               <a
                 href="mailto:contactus@rcweb.dev"
-                className="text-gold hover:text-yellow-200 transition-colors flex items-center"
+                className="text-gold hover:text-gold-light transition-colors flex items-center"
               >
                 <span className="mr-2">✉️</span>
                 contactus@rcweb.dev
@@ -115,7 +115,7 @@ export default function ThankYouPage() {
           <div className="text-center">
             <Link
               href="/"
-              className="inline-flex items-center justify-center px-6 sm:px-8 py-3 sm:py-4 text-base sm:text-lg font-semibold text-black bg-gradient-to-r from-gold via-yellow-200 to-gold hover:from-yellow-200 hover:via-gold hover:to-yellow-200 rounded-xl transition-all duration-300 shadow-lg hover:shadow-gold/25 font-inter group transform hover:scale-105 active:scale-95"
+              className="inline-flex items-center justify-center px-6 sm:px-8 py-3 sm:py-4 text-base sm:text-lg font-semibold text-black bg-gradient-to-r from-gold via-gold-light to-gold hover:from-gold-light hover:via-gold hover:to-gold-light rounded-xl transition-all duration-300 shadow-lg hover:shadow-gold/25 font-inter group transform hover:scale-105 active:scale-95"
             >
               <span>Back to Home</span>
               <svg

@@ -1,7 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
 import type { Route } from "next";
-import clsx from "clsx";
 
 //Icons
 import GithubIcon from "@/components/icons/Github";
@@ -41,42 +40,14 @@ const Project = ({
 
       {/* Technologies */}
       <div className="p-5 flex-grow flex flex-col">
-        <h2 className="text-2xl font-iceland text-gold">{name}</h2>
+        <h3 className="text-2xl font-iceland text-gold">{name}</h3>
         <p className="mt-2 text-base text-white/80 font-inter line-clamp-3">{description}</p>
 
         <div className="flex flex-wrap justify-center gap-1 mt-4 min-h-[60px]">
           {tecnologies.map((item) => (
             <span
               key={item}
-              className={clsx(
-                "inline-flex gap-2 items-center rounded-full px-2 py-0.5 text-xs font-inter",
-                {
-                  "bg-black/50 text-white": item === "NextJS",
-                  "bg-blue-500 text-white": item === "TypeScript",
-                  "bg-indigo-500 text-white": item === "TailwindCSS",
-                  "bg-gray-500 text-white": item === "Shadcn UI",
-                  "bg-yellow-500 text-black": item === "JavaScript",
-                  "bg-cyan-500 text-white": item === "React",
-                  "bg-violet-500 text-white": item === "Vite",
-                  "bg-fuchsia-500 text-white": item === "Zod",
-                  "bg-white/90 text-blue-700": item === "Zustand",
-                  "bg-red-500 text-white": item === "HTML",
-                  "bg-pink-500 text-white": item === "CSS",
-                  "bg-purple-500 text-white": item === "SASS",
-                  "bg-green-500 text-white": item === "PostgreSQL",
-                  "bg-gray-800 text-white": item === "Prisma",
-                  "bg-orange-500 text-white": item === "Docker",
-                  "bg-teal-500 text-white": item === "Tailwind UI",
-                  "bg-lime-500 text-black": item === "Express",
-                  "bg-red-700 text-white": item === "NodeJS",
-                  "bg-gray-700 text-white": item === "Framer Motion",
-                  "bg-yellow-400 text-black": item === "Supabase",
-                  "bg-blue-700 text-white": item === "MySQL",
-                  "bg-blue-400 text-white": item === "Cloudinary",
-                  "bg-rose-500 text-white": item === "Turborepo",
-                  "bg-pink-600 text-white": item === "React Hook Form",
-                }
-              )}
+              className="inline-flex gap-2 items-center rounded-full px-2.5 py-0.5 text-xs font-inter bg-gold/10 text-gold ring-1 ring-inset ring-gold/20 transition-colors hover:bg-gold/20"
             >
               {item}
             </span>

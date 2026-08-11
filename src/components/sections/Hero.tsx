@@ -3,6 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import type { Route } from "next";
+import Button from "@/components/ui/Button";
 import CustomBadge from "@/components/ui/CustomBadge";
 import useSectionObserver from "@/hooks/useSectionObserver";
 import heroImage from "../../../public/hero.webp";
@@ -36,7 +37,7 @@ const Hero = () => {
     <section
       id="home"
       ref={ref}
-      className="relative isolate overflow-hidden pt-24 sm:pt-32 pb-16 sm:pb-24 h-screen"
+      className="relative isolate overflow-hidden pt-24 sm:pt-32 pb-16 sm:pb-24 min-h-[100svh]"
     >
       <div className="absolute inset-0 -z-10 h-full w-full">
         <Image
@@ -51,82 +52,87 @@ const Hero = () => {
         <div className="absolute inset-0 bg-gradient-to-b from-black/50 via-black/30 to-black/70"></div>
       </div>
 
-      <div className="mx-auto max-w-7xl px-6 lg:px-8 h-full flex flex-col justify-center">
-        <div className="mx-auto max-w-2xl text-center">
+      <div className="mx-auto max-w-7xl px-6 lg:px-8 min-h-[calc(100svh-8rem)] flex flex-col justify-center">
+        <div className="mx-auto max-w-3xl text-center">
+          {/* Eyebrow: marca como contexto, no como titular */}
+          <p className="mx-auto text-center text-sm sm:text-base font-inter font-semibold tracking-[0.25em] uppercase text-gold/80">
+            RC Web Solutions · Houston, TX
+          </p>
+
           {/* h1 fuera de motion.div para no bloquear LCP */}
-          <h1 className="text-5xl font-iceland tracking-tight sm:text-9xl text-gold animate-hero-title">
-            RC Web Solutions
+          <h1 className="mt-4 text-5xl sm:text-7xl lg:text-8xl font-iceland tracking-tight text-gold animate-hero-title">
+            Websites That Win Customers
           </h1>
 
           <motion.div
-            initial={{ opacity: 0, scale: 0 }}
+            initial={{ opacity: 0, scale: 0.8 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{
               type: "spring",
               stiffness: 200,
-              damping: 10,
-              delay: 0.2,
+              damping: 20,
+              delay: 0.1,
             }}
           >
             <CustomBadge>Your Digital Partner</CustomBadge>
           </motion.div>
 
           <motion.p
-            className="mt-8 font-inter text-white/80 text-sm sm:text-base"
+            className="mt-8 mx-auto font-inter text-white/80 text-base sm:text-lg"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{
               type: "spring",
               stiffness: 220,
               damping: 22,
-              delay: 0.3,
+              delay: 0.1,
             }}
           >
-            We build high-performance websites and web applications that help
-            businesses grow online.
+            High-performance websites and web apps for small businesses — built
+            to load fast, rank on Google, and turn visitors into clients.
           </motion.p>
 
-          {/* Social Proof con animación */}
+          {/* Señales de calidad concretas */}
           <motion.div
-            className="mt-6 flex justify-center gap-8 sm:gap-12 text-sm sm:text-base md:text-lg font-inter font-semibold text-gold/70"
+            className="mt-6 flex flex-wrap justify-center gap-x-8 gap-y-2 sm:gap-x-12 text-sm sm:text-base md:text-lg font-inter font-semibold text-gold"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{
               type: "spring",
               stiffness: 200,
               damping: 20,
-              delay: 0.4,
+              delay: 0.1,
             }}
           >
             <motion.span
-              whileHover={{ scale: 1.1, color: "#fbbf24" }}
+              whileHover={{ scale: 1.1, color: "#D9C98A" }}
               transition={{ type: "spring", stiffness: 300 }}
             >
-              10+ Projects
+              Sub-second Load Times
             </motion.span>
             <motion.span
-              whileHover={{ scale: 1.1, color: "#fbbf24" }}
+              whileHover={{ scale: 1.1, color: "#D9C98A" }}
               transition={{ type: "spring", stiffness: 300 }}
             >
-              5+ Happy Clients
+              95+ Lighthouse Scores
             </motion.span>
             <motion.span
-              whileHover={{ scale: 1.1, color: "#fbbf24" }}
+              whileHover={{ scale: 1.1, color: "#D9C98A" }}
               transition={{ type: "spring", stiffness: 300 }}
             >
-              100% Remote
+              English &amp; Español
             </motion.span>
           </motion.div>
 
           <motion.div
             className="mt-10 flex flex-col sm:flex-row gap-4 items-center justify-center"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
             transition={{
               type: "spring",
               stiffness: 200,
               damping: 20,
-              delay: 0.5,
+              delay: 0.25,
             }}
           >
             <motion.div
@@ -135,24 +141,10 @@ const Hero = () => {
                 transition: { type: "spring", stiffness: 400, damping: 17 },
               }}
               whileTap={{ scale: 0.95 }}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{
-                type: "spring",
-                stiffness: 200,
-                damping: 20,
-                delay: 0.55,
-              }}
             >
-              <Link
-                href={"#services" as Route}
-                className="relative inline-flex items-center justify-center px-6 py-4 text-base sm:text-lg font-semibold text-black bg-gradient-to-r from-gold via-yellow-200 to-gold hover:from-yellow-200 hover:via-gold hover:to-yellow-200 rounded-xl transition-all duration-300 shadow-lg hover:shadow-gold/25 font-inter group overflow-hidden transform hover:scale-[1.02] active:scale-[0.98]"
-              >
-                <div className="absolute inset-0 bg-white/20 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700 skew-x-12"></div>
-                <span className="relative flex items-center justify-center">
-                  View Services
-                </span>
-              </Link>
+              <Button href={"#services" as Route} size="lg">
+                View Services
+              </Button>
             </motion.div>
 
             <motion.div
@@ -161,23 +153,11 @@ const Hero = () => {
                 transition: { type: "spring", stiffness: 400, damping: 17 },
               }}
               whileTap={{ scale: 0.95 }}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{
-                type: "spring",
-                stiffness: 200,
-                damping: 20,
-                delay: 0.6,
-              }}
             >
-              <Link
-                href={"/schedule" as Route}
-                className="inline-flex items-center justify-center gap-2 px-6 py-3 text-sm sm:text-base font-inter font-semibold text-gold border-2 border-gold/50 hover:bg-gold/10 hover:border-gold/60 rounded-lg transition-all duration-200"
-              >
+              <Button href={"/schedule" as Route} variant="secondary" size="md">
                 Schedule a Call
-              </Link>
+              </Button>
             </motion.div>
-
           </motion.div>
 
           {/* Quick Contact Options */}
@@ -189,10 +169,10 @@ const Hero = () => {
               type: "spring",
               stiffness: 200,
               damping: 20,
-              delay: 0.7,
+              delay: 0.35,
             }}
           >
-            <p className="text-white/60 font-inter text-sm mb-3 text-center">
+            <p className="text-white/70 font-inter text-sm mb-3 text-center">
               Ready to start? Choose your preferred way:
             </p>
             <div className="flex flex-col sm:flex-row gap-3 items-center">
@@ -206,7 +186,7 @@ const Hero = () => {
                 <PhoneIcon className="w-5 h-5" />
                 +1 (346) 375-7534
               </motion.a>
-              <span className="text-white/50 hidden sm:inline">|</span>
+              <span className="text-white/40 hidden sm:inline" aria-hidden="true">|</span>
               <Link
                 href={"/schedule" as Route}
                 className="inline-flex items-center gap-2 text-gold hover:text-gold/80 transition-colors duration-200 font-inter text-sm sm:text-base font-semibold"

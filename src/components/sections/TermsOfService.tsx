@@ -141,6 +141,7 @@ const TermsOfService = () => {
         </motion.div>
 
         <Heading
+          as="h1"
           icon={<DocumentTextIcon className="w-8 text-gold" />}
           text="Legal Agreement"
         >

@@ -38,7 +38,7 @@ export default function Footer() {
               {contactItem && (
                 <Link
                   href={contactItem.hash as Route}
-                  className="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-gold to-yellow-300 text-gray-900 rounded-lg text-sm font-inter font-semibold hover:from-yellow-300 hover:to-gold transition-all duration-300 hover:shadow-lg hover:shadow-gold/20 hover:-translate-y-0.5 group"
+                  className="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-gold to-gold-light text-gray-900 rounded-lg text-sm font-inter font-semibold hover:from-gold-light hover:to-gold transition-all duration-300 hover:shadow-lg hover:shadow-gold/20 hover:-translate-y-0.5 group"
                 >
                   Get In Touch
                   <svg

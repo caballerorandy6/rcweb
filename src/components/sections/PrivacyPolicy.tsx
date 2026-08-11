@@ -78,6 +78,7 @@ export default function PrivacyPolicy() {
         </motion.div>
 
         <Heading
+          as="h1"
           icon={<ShieldCheckIcon className="w-8 text-gold" />}
           text="Your Privacy Matters"
         >

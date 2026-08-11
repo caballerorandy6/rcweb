@@ -2,9 +2,15 @@ interface HeadingStaticProps {
   children: React.ReactNode;
   icon: React.ReactNode;
   text: string;
+  as?: "h1" | "h2"; // h2 por defecto: solo un h1 por página
 }
 
-const HeadingStatic = ({ children, icon, text }: HeadingStaticProps) => {
+const HeadingStatic = ({
+  children,
+  icon,
+  text,
+  as: Tag = "h2",
+}: HeadingStaticProps) => {
   return (
     <section className="mx-auto max-w-2xl text-center">
       <div className="flex items-center justify-center gap-2">
@@ -15,9 +21,9 @@ const HeadingStatic = ({ children, icon, text }: HeadingStaticProps) => {
           {icon}
         </span>
 
-        <h1 className="text-2xl font-semibold text-gold font-iceland sm:text-3xl md:text-4xl lg:text-5xl">
+        <Tag className="text-2xl font-semibold text-gold font-iceland sm:text-3xl md:text-4xl lg:text-5xl">
           {children}
-        </h1>
+        </Tag>
       </div>
 
       <p className="mt-6 text-base sm:text-lg font-inter text-white/80 leading-relaxed">

@@ -266,7 +266,7 @@ export default function AdminDeliverables({
                       href={deliverable.fileUrl}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="inline-flex items-center gap-1 mt-3 text-sm text-gold hover:text-yellow-200 transition-colors font-inter"
+                      className="inline-flex items-center gap-1 mt-3 text-sm text-gold hover:text-gold-light transition-colors font-inter"
                     >
                       <CloudArrowUpIcon className="w-4 h-4 rotate-180" />
                       View/Download

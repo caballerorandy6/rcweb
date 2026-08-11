@@ -8,6 +8,7 @@ import { Dialog, DialogPanel } from "@headlessui/react";
 import { useRCWebStore } from "@/store/rcweb-store";
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
 import Logo from "@/components/layout/Logo";
+import Button from "@/components/ui/Button";
 import { navigation, secondaryNavigation } from "@/lib/data";
 import { usePathname } from "next/navigation";
 import { useEffect } from "react";
@@ -123,14 +124,14 @@ const Navbar = () => {
 
               {/* Contact as CTA Button */}
               {contactItem && (
-                <Link
+                <Button
                   href={getHref(contactItem.hash)}
+                  size="sm"
+                  className="ml-4"
                   onClick={() => setActiveSection(contactItem.name)}
-                  className="relative ml-4 inline-flex items-center justify-center px-4 py-2 text-sm font-semibold text-black bg-gradient-to-r from-gold via-yellow-200 to-gold hover:from-yellow-200 hover:via-gold hover:to-yellow-200 rounded-xl transition-all duration-300 shadow-lg hover:shadow-gold/25 font-inter group overflow-hidden transform hover:scale-[1.02] active:scale-[0.98]"
                 >
-                  <div className="absolute inset-0 bg-white/20 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700 skew-x-12"></div>
-                  <span className="relative">{contactItem.name}</span>
-                </Link>
+                  {contactItem.name}
+                </Button>
               )}
 
               {/* Client Portal - Discreet button */}
@@ -179,14 +180,13 @@ const Navbar = () => {
 
               {/* Contact Button */}
               {contactItem && (
-                <Link
+                <Button
                   href={getHref(contactItem.hash)}
+                  size="sm"
                   onClick={() => setActiveSection(contactItem.name)}
-                  className="relative inline-flex items-center justify-center px-4 py-2 text-sm font-semibold text-black bg-gradient-to-r from-gold via-yellow-200 to-gold hover:from-yellow-200 hover:via-gold hover:to-yellow-200 rounded-xl transition-all duration-300 shadow-lg hover:shadow-gold/25 font-inter group overflow-hidden transform hover:scale-[1.02] active:scale-[0.98]"
                 >
-                  <div className="absolute inset-0 bg-white/20 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700 skew-x-12"></div>
-                  <span className="relative">Let&#39;s Talk</span>
-                </Link>
+                  Let&#39;s Talk
+                </Button>
               )}
 
               {/* Client Portal - Discreet button */}
@@ -222,8 +222,8 @@ const Navbar = () => {
         </div>
       </nav>
 
-      {/* Spacer for fixed navbar */}
-      <div className="h-[72px]" />
+      {/* Spacer solo fuera del homepage: el hero full-screen ya vive bajo el nav transparente */}
+      {!isHomePage && <div className="h-[72px]" />}
 
       {/* Mobile/Tablet Drawer */}
       <Dialog
@@ -263,20 +263,19 @@ const Navbar = () => {
                         // Style Contact differently
                         if (item.name === "Contact") {
                           return (
-                            <Link
+                            <Button
                               key={item.name}
                               href={getHref(item.hash)}
+                              size="lg"
+                              fullWidth
+                              className="mt-6"
                               onClick={() => {
                                 setActiveSection(item.name);
                                 handleClickModal();
                               }}
-                              className="relative block w-full mt-6 px-6 py-4 text-base font-semibold text-black bg-gradient-to-r from-gold via-yellow-200 to-gold hover:from-yellow-200 hover:via-gold hover:to-yellow-200 rounded-xl transition-all duration-300 shadow-lg hover:shadow-gold/25 font-inter group overflow-hidden transform hover:scale-[1.02] active:scale-[0.98]"
                             >
-                              <div className="absolute inset-0 bg-white/20 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700 skew-x-12"></div>
-                              <span className="relative flex items-center justify-center">
-                                Get In Touch
-                              </span>
-                            </Link>
+                              Get In Touch
+                            </Button>
                           );
                         }
 

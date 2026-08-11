@@ -113,7 +113,7 @@ export default function ClientDeliverables({
                 target="_blank"
                 rel="noopener noreferrer"
                 download
-                className="relative flex items-center justify-center gap-2 px-3 sm:px-4 py-2 text-sm sm:text-base font-semibold text-black bg-gradient-to-r from-gold via-yellow-200 to-gold hover:from-yellow-200 hover:via-gold hover:to-yellow-200 rounded-lg transition-all duration-300 shadow-lg hover:shadow-gold/25 font-inter group overflow-hidden transform hover:scale-[1.02] active:scale-[0.98] whitespace-nowrap w-full sm:w-auto flex-shrink-0"
+                className="relative flex items-center justify-center gap-2 px-3 sm:px-4 py-2 text-sm sm:text-base font-semibold text-black bg-gradient-to-r from-gold via-gold-light to-gold hover:from-gold-light hover:via-gold hover:to-gold-light rounded-lg transition-all duration-300 shadow-lg hover:shadow-gold/25 font-inter group overflow-hidden transform hover:scale-[1.02] active:scale-[0.98] whitespace-nowrap w-full sm:w-auto flex-shrink-0"
               >
                 <div className="absolute inset-0 bg-white/20 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700 skew-x-12"></div>
                 <span className="relative flex items-center justify-center gap-2">

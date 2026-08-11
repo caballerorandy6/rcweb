@@ -45,7 +45,7 @@ export default function ClientLoginForm() {
         <>
           <Link
             href="/client/forgot-password"
-            className="text-gold hover:text-yellow-200 transition-colors block mb-2"
+            className="text-gold hover:text-gold-light transition-colors block mb-2"
           >
             Forgot your password?
           </Link>
@@ -53,7 +53,7 @@ export default function ClientLoginForm() {
             Don&apos;t have an account?{" "}
             <Link
               href="/client/register"
-              className="text-gold hover:text-yellow-200 transition-colors font-semibold"
+              className="text-gold hover:text-gold-light transition-colors font-semibold"
             >
               Sign up here
             </Link>

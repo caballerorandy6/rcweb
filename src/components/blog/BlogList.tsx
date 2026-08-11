@@ -32,6 +32,7 @@ export default function BlogList({ posts }: BlogListProps) {
 
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
         <Heading
+          as="h1"
           icon={<BookOpenIcon className="w-8 text-gold" />}
           text="Learn, Grow, Succeed"
         >

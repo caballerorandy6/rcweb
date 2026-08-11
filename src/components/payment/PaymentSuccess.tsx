@@ -148,7 +148,7 @@ export default function PaymentSuccess({
                   <p className="text-yellow-500 font-semibold text-sm">
                     Backup Processing Used
                   </p>
-                  <p className="text-yellow-200/80 text-xs mt-1">
+                  <p className="text-gold-light/80 text-xs mt-1">
                     Your payment was processed successfully through our backup
                     system. Everything is fine!
                   </p>

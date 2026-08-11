@@ -84,6 +84,7 @@ const About = () => {
       <section ref={ref} id="about" className="pt-24 sm:pt-32 pb-16 sm:pb-24">
         <div className="mx-auto max-w-7xl px-6 lg:px-8">
           <Heading
+          as="h1"
             icon={<UserPlusIcon className="w-8 text-gold" />}
             text="The Developer Behind RC Web Solutions"
           >

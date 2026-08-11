@@ -103,9 +103,9 @@ const Pricing = () => {
               )}
 
               <div>
-                <h2 className="text-2xl font-iceland text-white">
+                <h3 className="text-2xl font-iceland text-white">
                   {plan.name}
-                </h2>
+                </h3>
                 <p className="mt-4 flex items-baseline gap-x-2">
                   <span className="text-4xl font-iceland text-gold">
                     {plan.price}
@@ -139,7 +139,7 @@ const Pricing = () => {
                 onClick={() => handlePlanSelection(plan.id)}
                 className={`mt-8 w-full relative inline-flex items-center justify-center py-4 text-lg font-semibold rounded-xl transition-all duration-300 font-inter group overflow-hidden transform hover:scale-[1.02] active:scale-[0.98] ${
                   plan.featured
-                    ? "text-black bg-gradient-to-r from-gold via-yellow-200 to-gold hover:from-yellow-200 hover:via-gold hover:to-yellow-200 shadow-lg hover:shadow-gold/25"
+                    ? "text-black bg-gradient-to-r from-gold via-gold-light to-gold hover:from-gold-light hover:via-gold hover:to-gold-light shadow-lg hover:shadow-gold/25"
                     : "text-gold border-2 border-gold/50 hover:bg-gold/10 hover:border-gold/60"
                 }`}
               >
@@ -234,7 +234,7 @@ const Pricing = () => {
                 <button
                   onClick={handleGoToTerms}
                   disabled={isPending}
-                  className="relative flex-1 inline-flex items-center justify-center py-4 text-lg font-semibold text-black bg-gradient-to-r from-gold via-yellow-200 to-gold hover:from-yellow-200 hover:via-gold hover:to-yellow-200 rounded-xl transition-all duration-300 shadow-lg hover:shadow-gold/25 font-inter group overflow-hidden transform hover:scale-[1.02] active:scale-[0.98] disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="relative flex-1 inline-flex items-center justify-center py-4 text-lg font-semibold text-black bg-gradient-to-r from-gold via-gold-light to-gold hover:from-gold-light hover:via-gold hover:to-gold-light rounded-xl transition-all duration-300 shadow-lg hover:shadow-gold/25 font-inter group overflow-hidden transform hover:scale-[1.02] active:scale-[0.98] disabled:opacity-50 disabled:cursor-not-allowed"
                 >
                   <div className="absolute inset-0 bg-white/20 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700 skew-x-12"></div>
                   <span className="relative flex items-center justify-center">

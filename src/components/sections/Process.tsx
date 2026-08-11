@@ -160,7 +160,7 @@ const Process = () => {
                       className={`relative px-6 py-4 rounded-xl font-inter text-base sm:text-lg font-semibold transition-all group overflow-hidden transform hover:scale-[1.02] active:scale-[0.98] ${
                         activeStep === processSteps.length - 1
                           ? "bg-gray-800 text-gray-600 cursor-not-allowed"
-                          : "text-black bg-gradient-to-r from-gold via-yellow-200 to-gold hover:from-yellow-200 hover:via-gold hover:to-yellow-200 shadow-lg hover:shadow-gold/25"
+                          : "text-black bg-gradient-to-r from-gold via-gold-light to-gold hover:from-gold-light hover:via-gold hover:to-gold-light shadow-lg hover:shadow-gold/25"
                       }`}
                     >
                       {activeStep !== processSteps.length - 1 && (

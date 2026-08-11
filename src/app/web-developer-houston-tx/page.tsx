@@ -158,7 +158,7 @@ export default function WebDeveloperHoustonPage() {
               <div className="mt-10 flex flex-col sm:flex-row gap-4 justify-center">
                 <Link
                   href="/schedule"
-                  className="inline-flex items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-gold via-yellow-200 to-gold px-6 py-4 text-base font-semibold text-black hover:from-yellow-200 hover:via-gold hover:to-yellow-200 transition-all duration-300 shadow-lg hover:shadow-gold/25 font-inter"
+                  className="inline-flex items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-gold via-gold-light to-gold px-6 py-4 text-base font-semibold text-black hover:from-gold-light hover:via-gold hover:to-gold-light transition-all duration-300 shadow-lg hover:shadow-gold/25 font-inter"
                 >
                   <CalendarDaysIcon className="h-5 w-5" />
                   Free Consultation
@@ -322,7 +322,7 @@ export default function WebDeveloperHoustonPage() {
               <div className="mt-10 flex flex-col sm:flex-row gap-4 justify-center">
                 <Link
                   href="/schedule"
-                  className="inline-flex items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-gold via-yellow-200 to-gold px-8 py-4 text-lg font-semibold text-black hover:from-yellow-200 hover:via-gold hover:to-yellow-200 transition-all duration-300 shadow-lg hover:shadow-gold/25 font-inter"
+                  className="inline-flex items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-gold via-gold-light to-gold px-8 py-4 text-lg font-semibold text-black hover:from-gold-light hover:via-gold hover:to-gold-light transition-all duration-300 shadow-lg hover:shadow-gold/25 font-inter"
                 >
                   <CalendarDaysIcon className="h-5 w-5" />
                   Schedule Free Consultation

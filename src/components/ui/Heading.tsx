@@ -6,9 +6,10 @@ interface HeadingProps {
   children: React.ReactNode; // título
   icon: React.ReactNode; // ícono decorativo o informativo
   text: string; // descripción
+  as?: "h1" | "h2"; // h2 por defecto: solo un h1 por página
 }
 
-const Heading = ({ children, icon, text }: HeadingProps) => {
+const Heading = ({ children, icon, text, as: Tag = "h2" }: HeadingProps) => {
   return (
     <motion.section
       initial={false}
@@ -26,9 +27,9 @@ const Heading = ({ children, icon, text }: HeadingProps) => {
           {icon}
         </span>
 
-        <h1 className="text-2xl font-semibold text-gold font-iceland sm:text-3xl md:text-4xl lg:text-5xl">
+        <Tag className="text-2xl font-semibold text-gold font-iceland sm:text-3xl md:text-4xl lg:text-5xl">
           {children}
-        </h1>
+        </Tag>
       </div>
 
       <p className="mt-6 text-base sm:text-lg font-inter text-white/80 leading-relaxed">{text}</p>

@@ -59,9 +59,9 @@ const Services = () => {
                 <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-gold/10 ring-1 ring-gold/30">
                   <service.icon className="h-6 w-6 text-gold" />
                 </div>
-                <h2 className="text-xl font-iceland text-white">
+                <h3 className="text-xl font-iceland text-white">
                   {service.title}
-                </h2>
+                </h3>
               </div>
 
               <p className="text-sm sm:text-base font-inter text-white/80 leading-relaxed">

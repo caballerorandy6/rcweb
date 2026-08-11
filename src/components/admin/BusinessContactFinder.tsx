@@ -379,9 +379,9 @@ export default function BusinessContactFinder({
           <div className="bg-yellow-500/10 border border-yellow-500/30 rounded-lg p-4">
             <div className="flex gap-2">
               <span className="text-yellow-500 text-lg">⚠️</span>
-              <div className="text-sm text-yellow-200">
+              <div className="text-sm text-gold-light">
                 <p className="font-semibold mb-1">Important:</p>
-                <ul className="list-disc list-inside space-y-1 text-yellow-200/90">
+                <ul className="list-disc list-inside space-y-1 text-gold-light/90">
                   <li>
                     Inferred emails may not be valid - verify before sending
                     campaigns

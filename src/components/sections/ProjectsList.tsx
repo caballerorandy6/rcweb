@@ -78,7 +78,7 @@ const ProjectsList = ({ projects }: { projects: ProjectProps[] }) => {
               animate="show"
               exit="exit"
               custom={index}
-              className="flex flex-col h-full bg-gray-900 text-center border border-gold/50 rounded-lg shadow-md hover:shadow-lg transition-shadow w-full max-w-sm lg:max-w-[calc((100%-4rem)/3)] animateProjectCard"
+              className="flex flex-col h-full bg-gray-900 text-center border border-gold/50 rounded-lg shadow-md hover:shadow-lg transition-shadow w-full max-w-sm lg:max-w-[calc((100%-4rem)/3)]"
               whileHover={{
                 scale: 1.03,
                 borderColor: "rgba(203, 178, 106, 0.8)",

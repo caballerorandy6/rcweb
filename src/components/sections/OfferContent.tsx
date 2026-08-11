@@ -77,6 +77,7 @@ export default function OfferContent() {
         </div>
 
         <Heading
+          as="h1"
           icon={<SparklesIcon className="w-8 text-gold" />}
           text="Start 2026 with a New Website"
         >

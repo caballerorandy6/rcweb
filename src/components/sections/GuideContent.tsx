@@ -88,6 +88,7 @@ export default function GuideContent() {
         </div>
 
         <Heading
+          as="h1"
           icon={<BookOpenIcon className="w-8 text-gold" />}
           text="Your Essential Guide to Web Success"
         >

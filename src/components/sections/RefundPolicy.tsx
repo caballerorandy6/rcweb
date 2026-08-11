@@ -57,6 +57,7 @@ const RefundPolicy = () => {
         </motion.div>
 
         <Heading
+          as="h1"
           icon={<CurrencyDollarIcon className="w-8 text-gold" />}
           text="Our Commitment to You"
         >

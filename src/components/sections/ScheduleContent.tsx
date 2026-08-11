@@ -123,6 +123,7 @@ export default function ScheduleContent() {
 
         <div className="mx-auto max-w-7xl px-6 lg:px-8">
           <HeadingStatic
+            as="h1"
             icon={<CalendarDaysIcon className="w-8 text-gold" />}
             text="Let's Build Something Amazing Together"
           >

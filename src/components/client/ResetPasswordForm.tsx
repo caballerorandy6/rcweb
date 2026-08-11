@@ -228,7 +228,7 @@ export default function ResetPasswordForm({ token }: ResetPasswordFormProps) {
                 <button
                   disabled={isSubmitting}
                   type="submit"
-                  className="relative w-full py-4 text-lg font-semibold text-black bg-gradient-to-r from-gold via-yellow-200 to-gold hover:from-yellow-200 hover:via-gold hover:to-yellow-200 rounded-xl transition-all duration-300 shadow-lg hover:shadow-gold/25 font-inter group overflow-hidden transform hover:scale-[1.02] active:scale-[0.98] disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="relative w-full py-4 text-lg font-semibold text-black bg-gradient-to-r from-gold via-gold-light to-gold hover:from-gold-light hover:via-gold hover:to-gold-light rounded-xl transition-all duration-300 shadow-lg hover:shadow-gold/25 font-inter group overflow-hidden transform hover:scale-[1.02] active:scale-[0.98] disabled:opacity-50 disabled:cursor-not-allowed"
                 >
                   <div className="absolute inset-0 bg-white/20 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700 skew-x-12"></div>
                   <span className="relative flex items-center justify-center">
@@ -259,7 +259,7 @@ export default function ResetPasswordForm({ token }: ResetPasswordFormProps) {
                 Remember your password?{" "}
                 <Link
                   href="/client/login"
-                  className="text-gold hover:text-yellow-200 transition-colors"
+                  className="text-gold hover:text-gold-light transition-colors"
                 >
                   Sign in here
                 </Link>
