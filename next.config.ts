@@ -1,5 +1,87 @@
 import type { NextConfig } from "next";
 
+// Content Security Policy
+// Cada dominio de terceros está agrupado por servicio para que sea fácil
+// auditar qué permite cada uno. Si se agrega un tracker nuevo, hay que
+// permitir tanto el script como los endpoints a los que envía datos.
+const cspDirectives: Record<string, string[]> = {
+  "default-src": ["'self'"],
+  "script-src": [
+    "'self'",
+    "'unsafe-inline'",
+    "'unsafe-eval'",
+    // Google Analytics 4 y Google Tag
+    "https://www.googletagmanager.com",
+    "https://www.google-analytics.com",
+    // Google Ads
+    "https://www.googleadservices.com",
+    "https://googleads.g.doubleclick.net",
+    // reCAPTCHA
+    "https://www.google.com",
+    "https://www.gstatic.com",
+    // Facebook Pixel
+    "https://connect.facebook.net",
+    // LinkedIn Insight Tag
+    "https://snap.licdn.com",
+    // Calendly
+    "https://assets.calendly.com",
+  ],
+  "style-src": [
+    "'self'",
+    "'unsafe-inline'",
+    "https://fonts.googleapis.com",
+    "https://assets.calendly.com",
+  ],
+  "font-src": ["'self'", "https://fonts.gstatic.com"],
+  "img-src": ["'self'", "data:", "blob:", "https:", "http:"],
+  "connect-src": [
+    "'self'",
+    // Google Analytics 4: GA4 envía hits a subdominios regionales
+    "https://www.google-analytics.com",
+    "https://*.google-analytics.com",
+    "https://analytics.google.com",
+    "https://*.analytics.google.com",
+    "https://stats.g.doubleclick.net",
+    "https://www.googletagmanager.com",
+    // Google Ads (conversiones y remarketing)
+    "https://www.google.com",
+    "https://google.com",
+    "https://ad.doubleclick.net",
+    "https://googleads.g.doubleclick.net",
+    "https://www.googleadservices.com",
+    "https://pagead2.googlesyndication.com",
+    // Facebook Pixel
+    "https://connect.facebook.net",
+    "https://www.facebook.com",
+    // LinkedIn Insight Tag
+    "https://px.ads.linkedin.com",
+    "https://px4.ads.linkedin.com",
+    // Stripe, Vercel y Calendly
+    "https://api.stripe.com",
+    "https://vitals.vercel-insights.com",
+    "https://*.vercel-analytics.com",
+    "https://calendly.com",
+  ],
+  "frame-src": [
+    "'self'",
+    "https://js.stripe.com",
+    "https://www.google.com",
+    "https://recaptcha.google.com",
+    "https://calendly.com",
+    // Google Ads usa iframes para conversiones
+    "https://td.doubleclick.net",
+    "https://bid.g.doubleclick.net",
+    "https://www.googletagmanager.com",
+  ],
+  "object-src": ["'none'"],
+  "base-uri": ["'self'"],
+  "form-action": ["'self'", "https://checkout.stripe.com"],
+};
+
+const contentSecurityPolicy = Object.entries(cspDirectives)
+  .map(([directive, sources]) => `${directive} ${sources.join(" ")}`)
+  .join("; ");
+
 // Security headers configuration
 const securityHeaders = [
   {
@@ -32,7 +114,7 @@ const securityHeaders = [
   },
   {
     key: "Content-Security-Policy",
-    value: "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://www.googletagmanager.com https://www.google-analytics.com https://www.google.com https://www.gstatic.com https://assets.calendly.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://assets.calendly.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: blob: https: http:; connect-src 'self' https://www.google-analytics.com https://api.stripe.com https://vitals.vercel-insights.com https://*.vercel-analytics.com https://calendly.com; frame-src 'self' https://js.stripe.com https://www.google.com https://recaptcha.google.com https://calendly.com; object-src 'none'; base-uri 'self'; form-action 'self' https://checkout.stripe.com;",
+    value: contentSecurityPolicy,
   },
 ];
 
