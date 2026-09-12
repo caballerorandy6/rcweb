@@ -46,7 +46,7 @@ Company Info:
 - Location: Houston, TX
 - Specialties: React, Next.js, Full-Stack Development
 - Services: Custom websites, web applications, e-commerce solutions
-- Experience: 5+ years
+- Experience: 6+ years, 20+ production sites shipped
 - Contact: contactus@rcweb.dev, 346-375-7534
 
 Be professional, friendly, and helpful. Answer questions about web development, the services offered, pricing, and general inquiries.

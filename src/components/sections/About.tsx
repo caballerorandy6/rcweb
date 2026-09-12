@@ -1,5 +1,7 @@
 "use client";
 
+import { siteConfig } from "@/config/site";
+
 import Image from "next/image";
 import Heading from "@/components/ui/Heading";
 import { UserPlusIcon, MapPinIcon } from "@heroicons/react/24/outline";
@@ -54,10 +56,17 @@ const About = () => {
             name: "Randy Caballero",
             jobTitle: "Full-Stack Web Developer",
             description:
-              "React and Next.js Developer with over 5 years of experience building high-performance, scalable web applications",
-            image:
-              "https://rcwebsolutionsllc.com/randy-caballero-web-developer.avif",
-            url: "https://rcwebsolutionsllc.com",
+              "Full-stack developer with 6+ years building React and Next.js applications. Founder of RC Web Solutions LLC in Houston, TX, with 20+ production sites shipped.",
+            image: `${siteConfig.baseUrl}/randy-caballero-web-developer.avif`,
+            url: `${siteConfig.baseUrl}/about`,
+            sameAs: [
+              "https://www.linkedin.com/in/caballerorandy",
+              "https://github.com/caballerorandy6",
+            ],
+            alumniOf: [
+              { "@type": "CollegeOrUniversity", name: "Nova Southeastern University" },
+              { "@type": "CollegeOrUniversity", name: "Universidad de Camagüey" },
+            ],
             address: {
               "@type": "PostalAddress",
               addressLocality: "Houston",
@@ -72,10 +81,13 @@ const About = () => {
               "React",
               "Next.js",
               "TypeScript",
+              "Node.js",
+              "PostgreSQL",
+              "Prisma",
               "Full-Stack Development",
-              "Web Development",
-              "Digital Marketing",
-              // "WordPress",
+              "Google Ads",
+              "Meta Ads",
+              "Local SEO",
             ],
           }),
         }}
@@ -104,42 +116,39 @@ const About = () => {
                 className="text-sm sm:text-base text-gray-100 leading-relaxed pb-10 text-justify lg:text-left"
                 variants={paragraphVariants}
               >
-                React and Next.js Developer with over{" "}
+                Full-stack developer with{" "}
                 <strong className="text-gold font-semibold">
-                  5 years of experience
+                  6+ years of experience
                 </strong>{" "}
-                building high-performance, scalable web applications. I have
-                worked as a freelancer for diverse clients, delivering
-                full-cycle solutions focused on{" "}
+                building React and Next.js applications. Through RC Web
+                Solutions I have built and shipped{" "}
                 <strong className="text-gold font-semibold">
-                  speed, resource optimization, accessibility, and outstanding
-                  user experience
-                </strong>
-                . My professional experience also includes roles at Atser
-                Systems Inc. and Revature, where I contributed to{" "}
+                  20+ production sites
+                </strong>{" "}
+                for Houston businesses, from the frontend and APIs to the
+                database and deployment. Before founding the agency I worked as a
+                software developer at Atser Systems Inc. and Revature, contributing
+                to{" "}
                 <strong className="text-gold font-semibold">
                   full-stack application development
                 </strong>{" "}
-                in collaborative Agile environments.
+                in Agile teams.
               </motion.p>
 
               <motion.p
                 className="text-sm sm:text-base text-gray-100 leading-relaxed text-justify lg:text-left"
                 variants={paragraphVariants}
               >
-                I specialize in{" "}
+                I work across the full stack with{" "}
                 <span className="text-gold font-medium">
-                  modern frontend development
-                </span>{" "}
-                using React and Next.js, and have hands-on experience{" "}
-                <span className="text-gold font-medium">
-                  integrating RESTful APIs
+                  Next.js, TypeScript, Node.js, PostgreSQL, and Prisma
                 </span>
-                , working with PostgreSQL databases, and managing state with
-                tools like Zustand. Additionally, I bring valuable knowledge in{" "}
-                <span className="text-gold font-medium">digital marketing</span>
-                , allowing me to align technical execution with business
-                strategy and user engagement goals.
+                , and I also own the layer that brings customers in:{" "}
+                <span className="text-gold font-medium">
+                  Google Ads, Meta Ads, conversion tracking, and local SEO
+                </span>
+                . On one client site I cut load time from 7–8 seconds to under 1
+                second, which restored the performance of their paid campaigns.
               </motion.p>
             </motion.div>
 

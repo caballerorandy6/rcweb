@@ -63,39 +63,67 @@ export const footerNavigation: NavigationProps[] = [
   { name: "Houston, TX", hash: "/web-developer-houston-tx" },
 ];
 
+// Fuente: resume de Randy Caballero (actualizado septiembre 2026)
 export const experience: ExperienceProps[] = [
   {
-    title: "Freelance Web Developer and Digital Marketing",
-    company: "Freelancer",
+    title: "Founder & Lead Developer",
+    company: "RC Web Solutions LLC",
     location: "Houston, TX",
-    description: "Web Developer and Digital Marketing Specialist",
+    description:
+      "Built and deployed 20+ production Next.js sites for Houston-area businesses, owning the full cycle from requirements to post-launch maintenance, plus the analytics and paid-acquisition layer.",
     icon: React.createElement(BriefcaseIcon),
-    date: "January 2022 - Present",
+    date: "Sept 2022 - Present",
   },
   {
     title: "Software Developer",
-    company: "Atser Technologies, Inc.",
+    company: "Atser Systems Inc.",
     location: "Houston, TX",
-    description: "Software Developer",
+    description:
+      "Built responsive web applications with Next.js, TypeScript, Tailwind CSS, and shadcn/ui, integrating C#/.NET REST APIs in a cross-functional Agile team.",
     icon: React.createElement(BriefcaseIcon),
-    date: "November 2024 - April 2025",
+    date: "Nov 2024 - Apr 2025",
   },
   {
     title: "Software Developer",
     company: "Revature",
     location: "Houston, TX",
-    description: "Software Developer",
+    description:
+      "Developed and maintained website features alongside senior developers, integrating third-party APIs and running cross-browser testing.",
     icon: React.createElement(BriefcaseIcon),
-    date: "August 2022 - September 2022",
+    date: "Apr 2022 - Sept 2022",
   },
-
   {
-    title: "Bachelor of Software Engineering",
-    company: "Universidad de Camaguey, Ignacio Agramonte Loynaz",
-    location: "Camaguey, Cuba",
-    description: "Software Engineer Student",
+    title: "Frontend Developer",
+    company: "Empresa Agropecuaria de Camagüey",
+    location: "Camagüey, Cuba",
+    description:
+      "Built web applications and real-time operational dashboards for agricultural management systems with JavaScript, HTML5, CSS3, and Bootstrap.",
+    icon: React.createElement(BriefcaseIcon),
+    date: "Sept 2015 - Feb 2017",
+  },
+  {
+    title: "Doctor of Education (EdD)",
+    company: "Nova Southeastern University",
+    location: "Fort Lauderdale, FL",
+    description: "Doctoral program in progress",
     icon: React.createElement(AcademicCapIcon),
-    date: "September 2007 - July 2012",
+    date: "May 2024 - Present",
+  },
+  {
+    title: "M.S., Education",
+    company: "Nova Southeastern University",
+    location: "Fort Lauderdale, FL",
+    description: "Master of Science in Education",
+    icon: React.createElement(AcademicCapIcon),
+    date: "May 2021 - Apr 2024",
+  },
+  {
+    title: "B.S., Software Engineering",
+    company: "Universidad de Camagüey",
+    location: "Camagüey, Cuba",
+    description: "Bachelor of Science in Software Engineering",
+    icon: React.createElement(AcademicCapIcon),
+    date: "Graduated July 2012",
   },
 ];
 

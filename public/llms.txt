@@ -15,7 +15,7 @@ RC Web Solutions LLC is a professional web development company based in Houston,
 
 ## Founder
 
-Randy Caballero is a full-stack web developer with a Bachelor of Software Engineering from Universidad de Camaguey (Cuba) and a Master of Science from Nova Southeastern University. Based in Houston, TX since 2022. Experience includes freelance web development, software development at Atser Technologies Inc., and training at Revature.
+Randy Caballero is a full-stack developer with 6+ years of experience building React and Next.js applications. He founded RC Web Solutions LLC in September 2022 and has shipped 20+ production sites for Houston-area businesses, handling frontend, APIs, databases, deployment, analytics, and paid acquisition. Previous roles: Software Developer at Atser Systems Inc. (2024-2025), Software Developer at Revature (2022), and Frontend Developer at Empresa Agropecuaria de Camagüey (2015-2017). Education: B.S. in Software Engineering from Universidad de Camagüey, M.S. in Education from Nova Southeastern University, and a Doctor of Education (EdD) in progress at Nova Southeastern University.
 
 ## Services
 

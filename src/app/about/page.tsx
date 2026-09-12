@@ -9,7 +9,7 @@ import Certifications from "@/components/sections/Certifications";
 export const metadata = genPageMetadata({
   title: "About Randy Caballero - Full-Stack Web Developer",
   description:
-    "Learn about Randy Caballero, a Full-Stack Web Developer with 5+ years of experience in React, Next.js, and TypeScript. Based in Houston, TX, serving clients nationwide.",
+    "Learn about Randy Caballero, a full-stack developer with 6+ years of experience in React, Next.js, and TypeScript who has shipped 20+ production sites. Based in Houston, TX, serving clients nationwide.",
   pageRoute: "/about",
 });
 
