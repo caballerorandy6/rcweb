@@ -8,6 +8,7 @@ import { pricingPlans } from "@/lib/data";
 import Heading from "../ui/Heading";
 import { motion, Variants } from "framer-motion";
 import { toast } from "sonner";
+import { saveCheckoutCustomer } from "@/lib/checkoutCustomer";
 
 const Pricing = () => {
   const [selectedPlan, setSelectedPlan] = useState<string | null>(null);
@@ -47,18 +48,13 @@ const Pricing = () => {
       return;
     }
 
-    // Solo redirigir a términos con los datos necesarios
+    // Nombre y email se guardan en sessionStorage; la URL solo lleva el ID del plan.
     startTransition(() => {
-      const params = new URLSearchParams({
-        planId: plan.id,
-        planName: plan.name,
-        planPrice: plan.priceInCents.toString(),
-        planDescription: plan.description,
-        customerEmail,
-        customerName,
+      saveCheckoutCustomer({
+        name: customerName.trim(),
+        email: customerEmail.trim(),
       });
-
-      router.push(`/terms-of-service?${params.toString()}`);
+      router.push(`/terms-of-service?plan=${encodeURIComponent(plan.id)}`);
     });
   };
 

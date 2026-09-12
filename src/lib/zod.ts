@@ -21,6 +21,22 @@ export const FormSchema = z.object({
     .describe("Consent to receive marketing emails and messages"),
 });
 
+// Checkout: el cliente solo envía el ID del plan. Precio, nombre y descripción
+// se leen en el servidor desde pricingPlans para que no se puedan manipular.
+export const CheckoutRequestSchema = z.object({
+  planId: z.string().min(1, { message: "Plan is required" }),
+  customer: z.object({
+    name: z
+      .string()
+      .trim()
+      .min(2, { message: "Name is too short" })
+      .max(100, { message: "Name is too long" }),
+    email: z.string().trim().email({ message: "Invalid email address" }),
+  }),
+});
+
+export type CheckoutRequest = z.infer<typeof CheckoutRequestSchema>;
+
 // Schema de validación
 export const LoginSchema = z.object({
   email: z

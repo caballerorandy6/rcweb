@@ -2,6 +2,8 @@
 
 import stripe from "@/lib/stripe";
 import { generateProjectCode } from "@/lib/utils";
+import { pricingPlans } from "@/lib/data";
+import { CheckoutRequestSchema, type CheckoutRequest } from "@/lib/zod";
 
 // Stripe Price ID for Monthly Maintenance Subscription
 // Set via environment variable for security and flexibility
@@ -14,24 +16,34 @@ export interface StripeCheckoutResponse {
   error?: string;
 }
 
-export async function createStripeCheckoutAction({
-  plan,
-  customer,
-  termsAcceptedAt,
-  planId,
-}: {
-  plan: {
-    name: string;
-    price: number;
-    description: string;
+export async function createStripeCheckoutAction(
+  request: CheckoutRequest
+): Promise<StripeCheckoutResponse> {
+  const parsed = CheckoutRequestSchema.safeParse(request);
+  if (!parsed.success) {
+    return {
+      success: false,
+      error: parsed.error.issues[0]?.message ?? "Invalid checkout data",
+    };
+  }
+
+  const { planId, customer } = parsed.data;
+
+  // El precio nunca viene del navegador: se busca el plan en el servidor.
+  const pricingPlan = pricingPlans.find((p) => p.id === planId);
+  if (!pricingPlan) {
+    return { success: false, error: "Selected plan is not available" };
+  }
+
+  const plan = {
+    name: pricingPlan.name,
+    price: pricingPlan.priceInCents,
+    description: pricingPlan.description,
   };
-  customer: {
-    email: string;
-    name: string;
-  };
-  termsAcceptedAt: string;
-  planId?: string;
-}): Promise<StripeCheckoutResponse> {
+
+  // Se registra en el servidor para que la fecha de aceptación sea confiable.
+  const termsAcceptedAt = new Date().toISOString();
+
   try {
     // Check if this is the maintenance subscription plan
     const isSubscription = planId === "website-maintenance";

@@ -17,6 +17,7 @@ import {
 } from "@heroicons/react/24/outline";
 import useSectionObserver from "@/hooks/useSectionObserver";
 import { createStripeCheckoutAction } from "@/actions/payments/createStripeCheckoutAction";
+import { getCheckoutCustomer } from "@/lib/checkoutCustomer";
 
 const TermsOfService = () => {
   const router = useRouter();
@@ -24,16 +25,13 @@ const TermsOfService = () => {
   const ref = useSectionObserver({ sectionName: "Terms of Service" });
   const [isPending, startTransition] = useTransition();
 
-  // Obtener datos de URL
-  const planId = searchParams.get("planId");
-  const planName = searchParams.get("planName");
-  const planPrice = searchParams.get("planPrice");
-  const planDescription = searchParams.get("planDescription");
-  const customerEmail = searchParams.get("customerEmail");
-  const customerName = searchParams.get("customerName");
+  // La URL solo trae el ID del plan; los datos del cliente vienen de sessionStorage.
+  const planId = searchParams.get("plan");
 
   const handleAcceptTerms = () => {
-    if (!planName || !planPrice || !customerEmail || !customerName) {
+    const customer = getCheckoutCustomer();
+
+    if (!planId || !customer) {
       toast.error("Missing information. Please start from pricing.");
       router.push("/#pricing");
       return;
@@ -43,23 +41,8 @@ const TermsOfService = () => {
       try {
         toast.loading("Processing...");
 
-        // Registrar timestamp de aceptación
-        const termsAcceptedAt = new Date().toISOString();
-
-        // Crear sesión de Stripe
-        const result = await createStripeCheckoutAction({
-          plan: {
-            name: planName,
-            price: parseInt(planPrice),
-            description: planDescription || planName,
-          },
-          customer: {
-            email: customerEmail,
-            name: customerName,
-          },
-          termsAcceptedAt,
-          planId: planId || undefined,
-        });
+        // El servidor calcula precio y fecha de aceptación de términos.
+        const result = await createStripeCheckoutAction({ planId, customer });
 
         toast.dismiss();
 
