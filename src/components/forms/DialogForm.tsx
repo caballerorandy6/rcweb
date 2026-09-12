@@ -1,4 +1,4 @@
-import { useTransition, useRef, useState, useCallback } from "react";
+import { useEffect, useTransition, useRef, useState } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { ErrorMessage } from "@hookform/error-message";
@@ -9,23 +9,8 @@ import { trackContactFormSubmit, trackSubmitLeadForm } from "@/lib/analytics";
 import { trackFBLead } from "@/components/tracking/FacebookPixel";
 import { trackLinkedInConversion } from "@/components/tracking/LinkedInInsightTag";
 import { getStoredUTMParams } from "@/hooks/useUTMParams";
-import Script from "next/script";
+import { getRecaptchaToken, loadRecaptcha } from "@/lib/recaptcha";
 import { useRouter } from "next/navigation";
-
-// Extend Window interface for grecaptcha
-declare global {
-  interface Window {
-    grecaptcha?: {
-      ready: (callback: () => void) => void;
-      execute: (
-        siteKey: string,
-        options: { action: string }
-      ) => Promise<string>;
-    };
-  }
-}
-
-const RECAPTCHA_SITE_KEY = process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY || "";
 
 interface DialogFormProps {
   closeModal: () => void;
@@ -34,16 +19,20 @@ interface DialogFormProps {
 const DialogForm = ({ closeModal }: DialogFormProps) => {
   const router = useRouter();
   const [isPending, startTransition] = useTransition();
-  const formMountTime = useRef<number>(Date.now());
+  const formMountTime = useRef<number | null>(null);
   const [honeypot, setHoneypot] = useState("");
-  const [loadRecaptcha, setLoadRecaptcha] = useState(false);
 
-  // Lazy load reCAPTCHA on first interaction
-  const handleFormInteraction = useCallback(() => {
-    if (!loadRecaptcha) {
-      setLoadRecaptcha(true);
-    }
-  }, [loadRecaptcha]);
+  // Se marca al montar (no durante el render) para medir cuánto tardó el usuario
+  useEffect(() => {
+    formMountTime.current = Date.now();
+  }, []);
+
+  // Precarga reCAPTCHA en la primera interacción para que el envío sea rápido
+  const handleFormInteraction = () => {
+    loadRecaptcha().catch(() => {
+      // Si falla aquí, se reintenta al enviar
+    });
+  };
 
   const {
     register,
@@ -70,25 +59,23 @@ const DialogForm = ({ closeModal }: DialogFormProps) => {
     }
 
     // Anti-Bot Protection Layer 2: Minimum time check (3 seconds)
-    const timeSpent = Date.now() - formMountTime.current;
+    const timeSpent = formMountTime.current ? Date.now() - formMountTime.current : 0;
     if (timeSpent < 3000) {
       console.warn("🚫 Bot detected: Form submitted too quickly");
       toast.error("Please take a moment to review your message.");
       return;
     }
 
-    // Anti-Bot Protection Layer 3: reCAPTCHA v3
+    // Anti-Bot Protection Layer 3: reCAPTCHA v3 (el servidor exige el token)
     let recaptchaToken = "";
-    if (RECAPTCHA_SITE_KEY && window.grecaptcha) {
-      try {
-        recaptchaToken = await window.grecaptcha.execute(RECAPTCHA_SITE_KEY, {
-          action: "submit_contact_form",
-        });
-      } catch (error) {
-        console.error("reCAPTCHA error:", error);
-        toast.error("Verification failed. Please refresh and try again.");
-        return;
-      }
+    try {
+      recaptchaToken = await getRecaptchaToken("submit_contact_form");
+    } catch (error) {
+      console.error("reCAPTCHA error:", error);
+      toast.error(
+        "We couldn't verify your submission. Please disable ad blockers or refresh and try again."
+      );
+      return;
     }
 
     const toastId = toast.loading("Sending message...");
@@ -144,19 +131,11 @@ const DialogForm = ({ closeModal }: DialogFormProps) => {
 
   return (
     <>
-      {/* Load reCAPTCHA v3 only on user interaction */}
-      {RECAPTCHA_SITE_KEY && loadRecaptcha && (
-        <Script
-          src={`https://www.google.com/recaptcha/api.js?render=${RECAPTCHA_SITE_KEY}`}
-          strategy="afterInteractive"
-        />
-      )}
-
       <div className="relative">
         <div className="absolute inset-0 bg-gradient-to-br from-gold/5 via-transparent to-purple-500/5 rounded-2xl blur-xl"></div>
 
         <form
-          onSubmit={handleSubmit(onSubmit)}
+          onSubmit={(event) => handleSubmit(onSubmit)(event)}
           onFocus={handleFormInteraction}
           className="relative space-y-6 bg-gradient-to-br from-gray-900/95 to-gray-800/95 p-8 rounded-2xl shadow-2xl backdrop-blur-sm border border-gray-700/50 hover:border-gold/30 transition-all duration-500"
         >

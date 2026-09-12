@@ -1,6 +1,7 @@
 "use server";
 
 import { prisma } from "@/lib/prisma";
+import { auth } from "@/lib/auth";
 import { FormSchema, type FormData } from "@/lib/zod";
 import { Resend } from "resend";
 import { checkAndReserveEmailQuota, releaseEmailQuota } from "@/lib/emailQuota";
@@ -24,40 +25,49 @@ export interface UTMData {
 
 const resend = new Resend(process.env.RESEND_API_KEY!);
 
-async function verifyRecaptcha(token: string): Promise<boolean> {
-  const secretKey = process.env.RECAPTCHA_SECRET_KEY;
-  const isDevelopment = process.env.NODE_ENV === 'development';
+const RECAPTCHA_ACTION = "submit_contact_form";
+const RECAPTCHA_MIN_SCORE = 0.5;
 
-  if (!secretKey || !token) {
-    console.warn("⚠️ reCAPTCHA not configured or no token provided");
-    return true; // Allow submission if reCAPTCHA not configured
+async function verifyRecaptcha(token: string | undefined): Promise<boolean> {
+  const secretKey = process.env.RECAPTCHA_SECRET_KEY;
+
+  if (!secretKey) {
+    console.warn("⚠️ reCAPTCHA secret key not configured; skipping verification");
+    return true;
   }
 
-  // Skip reCAPTCHA verification in development
-  if (isDevelopment) {
-    return true;
+  // Sin token no hay forma de probar que es una persona: un bot podría omitirlo.
+  if (!token) {
+    return false;
   }
 
   try {
     const response = await fetch("https://www.google.com/recaptcha/api/siteverify", {
       method: "POST",
       headers: { "Content-Type": "application/x-www-form-urlencoded" },
-      body: `secret=${secretKey}&response=${token}`,
+      body: new URLSearchParams({ secret: secretKey, response: token }),
     });
 
     const data = await response.json();
 
-    // Score ranges from 0.0 (bot) to 1.0 (human)
-    // We require a minimum score of 0.5
-    if (data.success && data.score >= 0.5) {
-            return true;
+    // El token debe ser válido, venir de este formulario y tener score de humano
+    if (
+      data.success &&
+      data.action === RECAPTCHA_ACTION &&
+      data.score >= RECAPTCHA_MIN_SCORE
+    ) {
+      return true;
     }
 
-    console.warn(`🚫 reCAPTCHA failed. Score: ${data.score}, Success: ${data.success}`);
+    console.warn(
+      `🚫 reCAPTCHA failed. Score: ${data.score}, Action: ${data.action}, Success: ${data.success}`
+    );
     return false;
   } catch (error) {
+    // Si Google no responde se deja pasar para no bloquear clientes reales;
+    // un atacante no puede provocar esta falla desde el navegador.
     console.error("❌ reCAPTCHA verification error:", error);
-    return true; // Allow submission on error to not block real users
+    return true;
   }
 }
 
@@ -68,27 +78,31 @@ export const createContactAction = async (
   source: string = "contact_form",
   utmData?: UTMData
 ): Promise<CreateContactAction> => {
-  // Anti-Bot Validation: Verify reCAPTCHA
-  if (recaptchaToken) {
+  // El admin crea contactos manualmente desde el dashboard sin reCAPTCHA.
+  const session = await auth();
+  const isAdmin = session?.user?.role === "ADMIN";
+  const skipBotChecks = isAdmin || process.env.NODE_ENV === "development";
+
+  if (!skipBotChecks) {
     const isHuman = await verifyRecaptcha(recaptchaToken);
     if (!isHuman) {
       console.warn("🚫 Bot detected: reCAPTCHA failed");
       return {
         success: false,
-        message: "Verification failed. Please try again.",
+        message: "Verification failed. Please refresh the page and try again.",
         errors: {},
       };
     }
-  }
 
-  // Anti-Bot Validation: Check minimum time (3 seconds)
-  if (timeSpent && timeSpent < 3000) {
-    console.warn(`🚫 Bot detected: Form submitted too quickly (${timeSpent}ms)`);
-    return {
-      success: false,
-      message: "Please take a moment to review your message.",
-      errors: {},
-    };
+    // Anti-Bot Validation: Check minimum time (3 seconds)
+    if (timeSpent !== undefined && timeSpent < 3000) {
+      console.warn(`🚫 Bot detected: Form submitted too quickly (${timeSpent}ms)`);
+      return {
+        success: false,
+        message: "Please take a moment to review your message.",
+        errors: {},
+      };
+    }
   }
 
   const parsed = FormSchema.safeParse(data);
