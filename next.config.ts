@@ -72,10 +72,13 @@ const cspDirectives: Record<string, string[]> = {
     "https://td.doubleclick.net",
     "https://bid.g.doubleclick.net",
     "https://www.googletagmanager.com",
+    // Facebook Pixel abre un iframe para algunos eventos
+    "https://www.facebook.com",
   ],
   "object-src": ["'none'"],
   "base-uri": ["'self'"],
-  "form-action": ["'self'", "https://checkout.stripe.com"],
+  // Facebook Pixel envía eventos grandes como formulario POST a facebook.com/tr
+  "form-action": ["'self'", "https://checkout.stripe.com", "https://www.facebook.com"],
 };
 
 const contentSecurityPolicy = Object.entries(cspDirectives)
