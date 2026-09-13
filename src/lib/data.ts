@@ -569,7 +569,7 @@ export const services = [
       "Custom, mobile-first websites optimized for conversions and lead generation. Perfect for Houston businesses starting their online presence.",
     features: ["Responsive", "SEO", "Fast Loading", "Contact Forms"],
     highlight: "95+ Lighthouse Score",
-    price: "$800",
+    price: "$1,200",
   },
   {
     slug: "bilingual-websites-houston",
@@ -579,7 +579,7 @@ export const services = [
       "English and Spanish websites that reach Houston's diverse community. Native localization, not machine translation. Built by a Latino developer.",
     features: ["English & Spanish", "Native Localization", "Hreflang SEO", "Cultural Context"],
     highlight: "44% of Houston is Hispanic",
-    price: "$800",
+    price: "$1,200",
   },
   {
     slug: "ecommerce-houston",
@@ -589,7 +589,7 @@ export const services = [
       "Full-featured online stores with secure Stripe payments, inventory management, and admin dashboard. No monthly platform fees.",
     features: ["Payment Integration", "Shopping Cart", "Admin Dashboard", "Order Management"],
     highlight: "90-day Support Included",
-    price: "$6,000",
+    price: "$8,000",
   },
   {
     slug: "nextjs-development-houston",
@@ -599,7 +599,7 @@ export const services = [
       "Complete 5-10 page websites with custom design tailored to your brand. Ideal for established businesses, professional services, and portfolios.",
     features: ["Custom Design", "SEO Optimization", "Analytics", "30-day Support"],
     highlight: "Like GSM AC & RC Beauty Salon",
-    price: "$2,500",
+    price: "$3,500",
   },
   {
     icon: ChartBarIcon,
@@ -608,7 +608,7 @@ export const services = [
       "Tailored admin dashboards to automate and streamline your business operations. Perfect for service businesses.",
     features: ["Custom Forms", "Data Visualization", "Email Automation", "User Management"],
     highlight: "Save 15 hours/week",
-    price: "$5,000",
+    price: "$7,500",
   },
   {
     icon: CubeTransparentIcon,
@@ -617,7 +617,7 @@ export const services = [
       "Transform your outdated website into a modern, high-performance platform. We rebuild with current technology replacing legacy code.",
     features: ["Modern Design", "Performance Boost", "Mobile Optimization", "Content Migration"],
     highlight: "From Outdated to Outstanding",
-    price: "$3,000",
+    price: "$4,000",
   },
   {
     icon: CubeTransparentIcon,
@@ -626,7 +626,7 @@ export const services = [
       "Full-stack custom web applications built with Next.js, React, and TypeScript. Specialized functionality for booking systems and platforms.",
     features: ["Database Integration", "User Authentication", "API Development", "6-month Support"],
     highlight: "Built for scalability",
-    price: "$8,000",
+    price: "$12,000",
   },
   {
     slug: "seo-local-houston",
@@ -707,9 +707,9 @@ export const pricingPlans = [
   {
     id: "landing-page",
     name: "Professional Landing Page Development",
-    price: "$800",
-    priceInCents: 80000, // $800.00
-    range: "$800 - $1,500",
+    price: "$1,200",
+    priceInCents: 120000, // $1,200.00
+    range: "$1,200 - $2,500",
     duration: "1-2 weeks",
     description: "Single page focused on conversions",
     features: [
@@ -728,9 +728,9 @@ export const pricingPlans = [
   {
     id: "professional-website",
     name: "Professional Business Website",
-    price: "$2,500",
-    priceInCents: 250000, // $2,500.00
-    range: "$2,500 - $5,000",
+    price: "$3,500",
+    priceInCents: 350000, // $3,500.00
+    range: "$3,500 - $6,500",
     duration: "3-4 weeks",
     description: "5-10 pages with custom design",
     features: [
@@ -751,9 +751,9 @@ export const pricingPlans = [
   {
     id: "business-dashboard",
     name: "Custom Business Management Dashboard",
-    price: "$5,000",
-    priceInCents: 500000, // $5,000.00
-    range: "$5,000 - $10,000",
+    price: "$7,500",
+    priceInCents: 750000, // $7,500.00
+    range: "$7,500 - $15,000",
     duration: "5-6 weeks",
     description: "Tailored admin dashboards for business operations",
     features: [
@@ -773,9 +773,9 @@ export const pricingPlans = [
   {
     id: "ecommerce",
     name: "E-Commerce Website Development",
-    price: "$6,000",
-    priceInCents: 600000, // $6,000.00
-    range: "$6,000 - $15,000",
+    price: "$8,000",
+    priceInCents: 800000, // $8,000.00
+    range: "$8,000 - $20,000",
     duration: "6-10 weeks",
     description: "Full online store with payment processing",
     features: [
@@ -796,9 +796,9 @@ export const pricingPlans = [
   {
     id: "website-redesign",
     name: "Website Redesign and Modernization",
-    price: "$3,000",
-    priceInCents: 300000, // $3,000.00
-    range: "$3,000 - $8,000",
+    price: "$4,000",
+    priceInCents: 400000, // $4,000.00
+    range: "$4,000 - $8,000",
     duration: "4-6 weeks",
     description: "Transform your outdated website",
     features: [
@@ -818,9 +818,9 @@ export const pricingPlans = [
   {
     id: "web-application",
     name: "Custom Web Application Development",
-    price: "$8,000",
-    priceInCents: 800000, // $8,000.00
-    range: "Starting at $8,000",
+    price: "$12,000",
+    priceInCents: 1200000, // $12,000.00
+    range: "Starting at $12,000",
     duration: "8-12+ weeks",
     description: "Custom platforms and systems",
     features: [
@@ -989,7 +989,7 @@ export const servicePages: ServicePage[] = [
     title: "Web Design",
     metaTitle: "Web Design Houston TX | Custom Websites for Small Businesses",
     metaDescription:
-      "Professional web design in Houston, TX. Custom, mobile-first websites built with Next.js for small businesses. Bilingual English & Spanish. From $800.",
+      "Professional web design in Houston, TX. Custom, mobile-first websites built with Next.js for small businesses. Bilingual English & Spanish. From $1,200.",
     headline: "Web Design in Houston, TX",
     subheadline:
       "Custom, mobile-first websites designed to convert visitors into customers. Built with modern technology that loads fast and ranks well on Google.",
@@ -1018,7 +1018,7 @@ export const servicePages: ServicePage[] = [
       },
     ],
     relatedProjects: ["Clínica Hispana Gessner", "Clínica Hispana Airline", "Leo's Home Experts"],
-    priceFrom: "$800",
+    priceFrom: "$1,200",
     cta: "Get a Custom Website",
   },
   {
@@ -1055,7 +1055,7 @@ export const servicePages: ServicePage[] = [
       },
     ],
     relatedProjects: ["GSM AC & General Contractor", "RC Beauty Salon"],
-    priceFrom: "$2,500",
+    priceFrom: "$3,500",
     cta: "Build Your Web App",
   },
   {
@@ -1063,7 +1063,7 @@ export const servicePages: ServicePage[] = [
     title: "Bilingual Websites",
     metaTitle: "Bilingual Website Houston TX | English & Spanish Web Design",
     metaDescription:
-      "Bilingual website development in Houston, TX. English and Spanish websites for businesses serving the Hispanic community. Latino-owned. From $800.",
+      "Bilingual website development in Houston, TX. English and Spanish websites for businesses serving the Hispanic community. Latino-owned. From $1,200.",
     headline: "Bilingual Websites in Houston, TX",
     subheadline:
       "English and Spanish websites that reach Houston's diverse community. Built by a Latino developer who understands both cultures and both markets.",
@@ -1092,7 +1092,7 @@ export const servicePages: ServicePage[] = [
       },
     ],
     relatedProjects: ["Clínica Hispana Gessner", "Clínica Hispana Airline", "Dulce Antojo Snack Carts"],
-    priceFrom: "$800",
+    priceFrom: "$1,200",
     cta: "Get a Bilingual Website",
   },
   {
@@ -1100,7 +1100,7 @@ export const servicePages: ServicePage[] = [
     title: "E-Commerce",
     metaTitle: "E-Commerce Website Houston TX | Online Stores with Stripe Payments",
     metaDescription:
-      "E-commerce website development in Houston, TX. Custom online stores with Stripe payments, inventory management, and admin dashboard. From $6,000.",
+      "E-commerce website development in Houston, TX. Custom online stores with Stripe payments, inventory management, and admin dashboard. From $8,000.",
     headline: "E-Commerce Websites in Houston, TX",
     subheadline:
       "Custom online stores with secure Stripe payments, inventory management, and an admin dashboard to run your business. No monthly platform fees eating your margins.",
@@ -1129,7 +1129,7 @@ export const servicePages: ServicePage[] = [
       },
     ],
     relatedProjects: ["GSM AC & General Contractor", "RC Beauty Salon"],
-    priceFrom: "$6,000",
+    priceFrom: "$8,000",
     cta: "Launch Your Online Store",
   },
   {

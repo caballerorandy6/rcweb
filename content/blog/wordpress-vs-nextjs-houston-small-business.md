@@ -52,7 +52,7 @@ For a Houston business competing for local search results, that speed difference
 
 **Annual cost: $0 - $2,400** beyond the initial build
 
-The initial build cost for Next.js is higher ($800-8,000 vs $500-5,000 for WordPress). But you make that back in lower ongoing costs within the first year.
+The initial build cost for Next.js is higher ($1,200-12,000 vs $500-5,000 for WordPress). But lower ongoing costs recover a large part of that difference over time.
 
 ---
 

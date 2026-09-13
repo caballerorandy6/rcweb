@@ -111,9 +111,9 @@ These are real searches with real patients behind them. And almost nobody is opt
 
 A bilingual website doesn't have to cost double. Because both languages share the same design and structure, the additional cost is mainly in content localization and SEO setup.
 
-- **Landing page (bilingual):** $800 - $1,500
-- **Full clinic website (bilingual):** $2,500 - $5,000
-- **With appointment booking system:** $5,000 - $8,000
+- **Landing page (bilingual):** $1,200 - $2,500
+- **Full clinic website (bilingual):** $3,500 - $6,500
+- **With appointment booking system:** $7,500 - $12,000
 
 Every bilingual site I build includes proper hreflang tags, bilingual schema markup, and Spanish meta descriptions at no extra charge. It's built into the architecture, not added as an afterthought.
 

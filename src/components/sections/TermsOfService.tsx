@@ -680,7 +680,7 @@ const TermsOfService = () => {
                   <p className="text-white/80 font-inter">
                     Revisions beyond the included rounds, or changes outside the
                     original project scope, will be billed at our hourly rate of
-                    <strong className="text-gold"> $75/hour</strong>. We will notify
+                    <strong className="text-gold"> $95/hour</strong>. We will notify
                     you before any additional charges are incurred.
                   </p>
                 </div>

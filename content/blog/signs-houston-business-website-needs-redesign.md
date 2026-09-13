@@ -123,9 +123,9 @@ A website redesign isn't just making things look prettier. Here's what a proper 
 
 Redesign pricing depends on the scope:
 
-- **Simple redesign (same content, new design):** $3,000 - $5,000
-- **Redesign + new content:** $4,000 - $8,000
-- **Full rebuild with new functionality:** $5,000 - $15,000
+- **Simple redesign (same content, new design):** $4,000 - $6,000
+- **Redesign + new content:** $5,000 - $8,000
+- **Full rebuild with new functionality:** $7,500 - $15,000
 
 I offer a 50/50 payment structure: half upfront, half on delivery. No paying 100% before seeing results.
 

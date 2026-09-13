@@ -358,8 +358,8 @@ export default function SendNewsletterCampaign({
         <div class="pricing-section">
           <div class="pricing-card">
             <div class="plan-name">👻 Landing Pages</div>
-            <div class="plan-price">Starting at $800</div>
-            <div class="price-range">Price Range: $800 - $1,500</div>
+            <div class="plan-price">Starting at $1,200</div>
+            <div class="price-range">Price Range: $1,200 - $2,500</div>
             <div class="plan-duration">1-2 weeks delivery</div>
             <div class="plan-description">Single page focused on conversions</div>
             <ul class="features-list">
@@ -377,8 +377,8 @@ export default function SendNewsletterCampaign({
           <div class="pricing-card" style="border-color: #ffa500; border-width: 3px">
             <div style="background: #ffa500; color: #000; display: inline-block; padding: 5px 15px; border-radius: 20px; font-size: 12px; font-weight: bold; margin-bottom: 10px;">⭐ MOST POPULAR</div>
             <div class="plan-name">🎃 Professional Websites</div>
-            <div class="plan-price">Starting at $2,500</div>
-            <div class="price-range">Price Range: $2,500 - $5,000</div>
+            <div class="plan-price">Starting at $3,500</div>
+            <div class="price-range">Price Range: $3,500 - $6,500</div>
             <div class="plan-duration">3-4 weeks delivery</div>
             <div class="plan-description">5-10 pages with custom design</div>
             <ul class="features-list">
@@ -605,7 +605,7 @@ export default function SendNewsletterCampaign({
                     ⚠️ Mitos Comunes Que Te Están Frenando
                 </h4>
                 <div style="color: #78350F; font-size: 14px; line-height: 1.8;">
-                    <p style="margin-bottom: 10px;"><strong>"Es muy caro"</strong> → Desde $800, menos que un stand en una feria</p>
+                    <p style="margin-bottom: 10px;"><strong>"Es muy caro"</strong> → Desde $1,200, menos que un stand en una feria</p>
                     <p style="margin-bottom: 10px;"><strong>"No sé de tecnología"</strong> → Nosotros nos encargamos de todo</p>
                     <p style="margin-bottom: 10px;"><strong>"Tengo Facebook"</strong> → Facebook complementa, no reemplaza tu sitio</p>
                     <p style="margin-bottom: 0;"><strong>"Mi negocio es pequeño"</strong> → Por eso necesitas más visibilidad</p>
@@ -632,7 +632,7 @@ export default function SendNewsletterCampaign({
             <!-- Pricing Preview -->
             <div style="text-align: center; margin: 30px 0;">
                 <p style="color: #4a5568; margin-bottom: 15px; font-size: 15px;">
-                    <strong>Paquetes desde $800</strong> • <strong>Planes de Pago 50/50</strong>
+                    <strong>Paquetes desde $1,200</strong> • <strong>Planes de Pago 50/50</strong>
                 </p>
                 <p style="color: #6B7280; font-size: 13px; line-height: 1.6;">
                     Landing Pages | Sitios Corporativos | Tiendas en Línea<br>
@@ -848,7 +848,7 @@ export default function SendNewsletterCampaign({
                     ⚠️ Common Myths Holding You Back
                 </h4>
                 <div style="color: #78350F; font-size: 14px; line-height: 1.8;">
-                    <p style="margin-bottom: 10px;"><strong>"It's too expensive"</strong> → Starting at $800, less than a trade show booth</p>
+                    <p style="margin-bottom: 10px;"><strong>"It's too expensive"</strong> → Starting at $1,200, less than a trade show booth</p>
                     <p style="margin-bottom: 10px;"><strong>"I don't know tech"</strong> → We handle everything for you</p>
                     <p style="margin-bottom: 10px;"><strong>"I have Facebook"</strong> → Facebook complements, doesn't replace your site</p>
                     <p style="margin-bottom: 0;"><strong>"My business is small"</strong> → That's why you need more visibility</p>
@@ -875,7 +875,7 @@ export default function SendNewsletterCampaign({
             <!-- Pricing Preview -->
             <div style="text-align: center; margin: 30px 0;">
                 <p style="color: #4a5568; margin-bottom: 15px; font-size: 15px;">
-                    <strong>Packages starting at $800</strong> • <strong>50/50 Payment Plans</strong>
+                    <strong>Packages starting at $1,200</strong> • <strong>50/50 Payment Plans</strong>
                 </p>
                 <p style="color: #6B7280; font-size: 13px; line-height: 1.6;">
                     Landing Pages | Corporate Websites | Online Stores<br>

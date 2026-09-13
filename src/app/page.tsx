@@ -28,7 +28,7 @@ import { faqs, pricingPlans } from "@/lib/data";
 export const metadata: Metadata = {
   title: "Web Developer Houston TX | Custom Websites for Small Businesses",
   description:
-    "Houston TX web developer Randy Caballero builds custom websites and web apps for small businesses. Next.js, React, bilingual English & Spanish. From $997. Free consultation.",
+    "Houston TX web developer Randy Caballero builds custom websites and web apps for small businesses. Next.js, React, bilingual English & Spanish. From $1,200. Free consultation.",
   alternates: {
     canonical: siteConfig.baseUrl,
   },

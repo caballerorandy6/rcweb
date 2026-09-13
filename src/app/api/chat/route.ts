@@ -50,7 +50,7 @@ Company Info:
 - Contact: contactus@rcweb.dev, 346-375-7534
 
 Be professional, friendly, and helpful. Answer questions about web development, the services offered, pricing, and general inquiries.
-If asked about specific pricing, mention our services: Landing Page ($800), Business Website ($2,500), Website Redesign ($3,000), Admin Dashboard ($5,000), E-Commerce ($6,000), and Custom Web Applications ($8,000+). We also offer Monthly Maintenance ($200/mo). Encourage them to check the pricing section or contact directly for a custom quote.
+If asked about specific pricing, mention our services: Landing Page ($1,200), Business Website ($3,500), Website Redesign ($4,000), Admin Dashboard ($7,500), E-Commerce ($8,000), and Custom Web Applications ($12,000+). We also offer Monthly Maintenance ($200/mo). Encourage them to check the pricing section or contact directly for a custom quote.
 Keep responses concise but informative.`,
     };
 
