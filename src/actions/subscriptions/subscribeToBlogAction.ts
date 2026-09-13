@@ -9,7 +9,7 @@ export const subscribeToBlogAction = async (data: BlogSubscriptionData) => {
   const parsedData = BlogSubscriptionSchema.safeParse(data);
 
   if (!parsedData.success) {
-    const firstError = parsedData.error.errors[0]?.message || "Invalid data";
+    const firstError = parsedData.error.issues[0]?.message || "Invalid data";
     return {
       success: false,
       message: firstError,

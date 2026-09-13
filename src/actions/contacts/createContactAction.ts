@@ -2,6 +2,7 @@
 
 import { prisma } from "@/lib/prisma";
 import { auth } from "@/lib/auth";
+import { z } from "zod";
 import { FormSchema, type FormData } from "@/lib/zod";
 import { Resend } from "resend";
 import { checkAndReserveEmailQuota, releaseEmailQuota } from "@/lib/emailQuota";
@@ -111,7 +112,7 @@ export const createContactAction = async (
     return {
       success: false,
       message: "Validation Failed",
-      errors: parsed.error.flatten().fieldErrors,
+      errors: z.flattenError(parsed.error).fieldErrors,
     };
   }
 

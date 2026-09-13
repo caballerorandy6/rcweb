@@ -14,7 +14,7 @@ import {
 import { unsubscribeFromBlogAction } from "@/actions/subscriptions/unsubscribeFromBlogAction";
 
 const unsubscribeSchema = z.object({
-  email: z.string().email({ message: "Please enter a valid email address" }),
+  email: z.email({ message: "Please enter a valid email address" }),
 });
 
 type UnsubscribeFormData = z.infer<typeof unsubscribeSchema>;

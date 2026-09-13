@@ -1,12 +1,9 @@
-import z from "zod";
+import { z } from "zod";
 
 // Schema de validación para formularios de contacto
 export const FormSchema = z.object({
   name: z.string().min(2, { message: "Name is too short" }),
-  email: z
-    .string()
-    .email({ message: "Invalid email address" })
-    .min(1, { message: "Email is required" }),
+  email: z.email({ message: "Invalid email address" }),
   phone: z
     .string()
     .min(10, { message: "Phone number is too short" })
@@ -31,7 +28,7 @@ export const CheckoutRequestSchema = z.object({
       .trim()
       .min(2, { message: "Name is too short" })
       .max(100, { message: "Name is too long" }),
-    email: z.string().trim().email({ message: "Invalid email address" }),
+    email: z.string().trim().pipe(z.email({ message: "Invalid email address" })),
   }),
 });
 
@@ -39,10 +36,7 @@ export type CheckoutRequest = z.infer<typeof CheckoutRequestSchema>;
 
 // Schema de validación
 export const LoginSchema = z.object({
-  email: z
-    .string()
-    .email({ message: "Invalid email address" })
-    .min(1, { message: "Email is required" }),
+  email: z.email({ message: "Invalid email address" }),
   password: z
     .string()
     .min(8, { message: "Password must be at least 8 characters" }),
@@ -52,30 +46,21 @@ export type LoginData = z.infer<typeof LoginSchema>;
 
 // Manage Subscription Schema
 export const ManageSubscriptionSchema = z.object({
-  email: z
-    .string()
-    .email({ message: "Please enter a valid email address" })
-    .min(1, { message: "Email is required" }),
+  email: z.email({ message: "Please enter a valid email address" }),
 });
 
 // Blog Subscription Schema
 export const BlogSubscriptionSchema = z.object({
-  email: z
-    .string()
-    .email({ message: "Please enter a valid email address" })
-    .min(1, { message: "Email is required" }),
+  email: z.email({ message: "Please enter a valid email address" }),
   preferredLanguage: z.enum(["en", "es"], {
-    required_error: "Please select a language",
+    error: "Please select a language",
   }),
 });
 
 // Client Registration Schema (for form validation - includes confirmPassword)
 export const ClientRegisterFormSchema = z
   .object({
-    email: z
-      .string()
-      .email({ message: "Invalid email address" })
-      .min(1, { message: "Email is required" }),
+    email: z.email({ message: "Invalid email address" }),
     password: z
       .string()
       .min(8, { message: "Password must be at least 8 characters" }),
@@ -91,10 +76,7 @@ export const ClientRegisterFormSchema = z
 
 // Client Registration Schema (for action - excludes confirmPassword)
 export const ClientRegisterSchema = z.object({
-  email: z
-    .string()
-    .email({ message: "Invalid email address" })
-    .min(1, { message: "Email is required" }),
+  email: z.email({ message: "Invalid email address" }),
   password: z
     .string()
     .min(8, { message: "Password must be at least 8 characters" }),
@@ -106,10 +88,7 @@ export type ClientRegisterData = z.infer<typeof ClientRegisterSchema>;
 
 // Reset Password Request Schema
 export const ResetPasswordRequestSchema = z.object({
-  email: z
-    .string()
-    .email({ message: "Invalid email address" })
-    .min(1, { message: "Email is required" }),
+  email: z.email({ message: "Invalid email address" }),
 });
 
 // Reset Password Schema
@@ -147,10 +126,7 @@ export const SetupPasswordSchema = z
 // Update Client Profile Schema
 export const UpdateClientProfileSchema = z.object({
   name: z.string().min(2, { message: "Name must be at least 2 characters" }),
-  email: z
-    .string()
-    .email({ message: "Invalid email address" })
-    .min(1, { message: "Email is required" }),
+  email: z.email({ message: "Invalid email address" }),
   phone: z
     .string()
     .min(10, { message: "Phone number is too short" })
