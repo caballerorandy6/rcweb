@@ -92,7 +92,7 @@ const Process = () => {
                 transition={{ type: "spring", stiffness: 260, damping: 25 }}
                 className="max-w-3xl mx-auto"
               >
-                <div className="bg-gray-900/50 backdrop-blur-sm rounded-2xl p-6 lg:p-8 border border-gold/20 shadow-lg shadow-black/20">
+                <div className="bg-gray-900/50 backdrop-blur-xs rounded-2xl p-6 lg:p-8 border border-gold/20 shadow-lg shadow-black/20">
                   {/* Icon and Title */}
                   <div className="flex items-center gap-4 mb-6">
                     <div className="w-14 h-14 bg-gold/10 rounded-xl flex items-center justify-center">
@@ -131,7 +131,7 @@ const Process = () => {
                         }}
                         className="flex items-center text-sm font-inter text-white/60"
                       >
-                        <ChevronRightIcon className="w-4 h-4 text-gold mr-2 flex-shrink-0" />
+                        <ChevronRightIcon className="w-4 h-4 text-gold mr-2 shrink-0" />
                         {detail}
                       </motion.div>
                     ))}
@@ -160,11 +160,11 @@ const Process = () => {
                       className={`relative px-6 py-4 rounded-xl font-inter text-base sm:text-lg font-semibold transition-all group overflow-hidden transform hover:scale-[1.02] active:scale-[0.98] ${
                         activeStep === processSteps.length - 1
                           ? "bg-gray-800 text-gray-600 cursor-not-allowed"
-                          : "text-black bg-gradient-to-r from-gold via-gold-light to-gold hover:from-gold-light hover:via-gold hover:to-gold-light shadow-lg hover:shadow-gold/25"
+                          : "text-black bg-linear-to-r from-gold via-gold-light to-gold hover:from-gold-light hover:via-gold hover:to-gold-light shadow-lg hover:shadow-gold/25"
                       }`}
                     >
                       {activeStep !== processSteps.length - 1 && (
-                        <div className="absolute inset-0 bg-white/20 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700 skew-x-12"></div>
+                        <div className="absolute inset-0 bg-white/20 -translate-x-full group-hover:translate-x-full transition-transform duration-700 skew-x-12"></div>
                       )}
                       <span className="relative flex items-center justify-center">
                         Next Step

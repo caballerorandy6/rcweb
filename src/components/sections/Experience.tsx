@@ -35,7 +35,7 @@ const Experience = () => {
         {/* Experience Cards - Zigzag Layout */}
         <div className="relative max-w-5xl mx-auto mt-12">
           {/* Central line for desktop */}
-          <div className="hidden lg:block absolute left-1/2 transform -translate-x-1/2 w-0.5 h-full bg-gradient-to-b from-gold/20 via-gold/40 to-gold/20"></div>
+          <div className="hidden lg:block absolute left-1/2 transform -translate-x-1/2 w-0.5 h-full bg-linear-to-b from-gold/20 via-gold/40 to-gold/20"></div>
 
           {experience.map((item, index) => (
             <motion.div
@@ -65,12 +65,12 @@ const Experience = () => {
               <div
                 className={`w-full lg:w-5/12 ${index % 2 === 0 ? "lg:pr-12 lg:text-right" : "lg:pl-12"}`}
               >
-                <div className="group bg-gray-900/50 backdrop-blur-sm rounded-2xl p-6 lg:p-8 border border-gold/20 hover:border-gold/50 hover:bg-gold/5 transition-all duration-300 shadow-lg shadow-black/20">
+                <div className="group bg-gray-900/50 backdrop-blur-xs rounded-2xl p-6 lg:p-8 border border-gold/20 hover:border-gold/50 hover:bg-gold/5 transition-all duration-300 shadow-lg shadow-black/20">
                   {/* Icon */}
                   <div
                     className={`flex items-center gap-4 mb-4 ${index % 2 === 0 ? "lg:flex-row-reverse" : ""}`}
                   >
-                    <div className="flex-shrink-0 w-12 h-12 text-gold rounded-xl flex items-center justify-center">
+                    <div className="shrink-0 w-12 h-12 text-gold rounded-xl flex items-center justify-center">
                       {item.icon}
                     </div>
                     <div

@@ -54,14 +54,14 @@ const CookieConsent = ({ onAccept, onReject }: CookieConsentProps) => {
           <div className="mx-auto max-w-5xl">
             <div className="relative overflow-hidden rounded-2xl border border-gold/30 bg-gray-900/95 backdrop-blur-lg p-6 sm:p-8 shadow-2xl">
               {/* Background gradient */}
-              <div className="absolute inset-0 bg-gradient-to-br from-gold/5 via-transparent to-transparent opacity-50" />
+              <div className="absolute inset-0 bg-linear-to-br from-gold/5 via-transparent to-transparent opacity-50" />
 
               <div className="relative flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
                 {/* Content */}
                 <div className="flex-1">
                   <div className="flex items-center gap-2 mb-2">
                     <svg
-                      className="w-5 h-5 text-gold flex-shrink-0"
+                      className="w-5 h-5 text-gold shrink-0"
                       fill="none"
                       stroke="currentColor"
                       viewBox="0 0 24 24"
@@ -90,7 +90,7 @@ const CookieConsent = ({ onAccept, onReject }: CookieConsentProps) => {
                         Read our Privacy Policy
                       </Link>
                     </p>
-                    <div className="text-xs font-inter text-white/50 bg-gray-800/50 p-2 rounded">
+                    <div className="text-xs font-inter text-white/50 bg-gray-800/50 p-2 rounded-sm">
                       <strong className="text-white/70">Essential:</strong> Google
                       reCAPTCHA (anti-bot protection)
                       <br />

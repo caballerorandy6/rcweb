@@ -6,8 +6,8 @@ export default function LeadsTrendChartSkeleton() {
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
         <div className="flex items-center gap-3">
-          <ChartBarIcon className="w-5 h-5 sm:w-6 sm:h-6 text-gray-600 flex-shrink-0" />
-          <div className="h-7 w-32 bg-gray-700 rounded" />
+          <ChartBarIcon className="w-5 h-5 sm:w-6 sm:h-6 text-gray-600 shrink-0" />
+          <div className="h-7 w-32 bg-gray-700 rounded-sm" />
         </div>
         <div className="flex gap-2">
           {[1, 2, 3].map((i) => (
@@ -20,8 +20,8 @@ export default function LeadsTrendChartSkeleton() {
       <div className="grid grid-cols-3 gap-3 mb-6">
         {[1, 2, 3].map((i) => (
           <div key={i} className="bg-gray-700/30 rounded-lg p-3 text-center">
-            <div className="h-3 w-16 bg-gray-700 rounded mx-auto mb-2" />
-            <div className="h-8 w-12 bg-gray-700 rounded mx-auto" />
+            <div className="h-3 w-16 bg-gray-700 rounded-sm mx-auto mb-2" />
+            <div className="h-8 w-12 bg-gray-700 rounded-sm mx-auto" />
           </div>
         ))}
       </div>

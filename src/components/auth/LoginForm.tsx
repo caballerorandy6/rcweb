@@ -78,9 +78,9 @@ export default function LoginForm({
     <div className="min-h-screen flex items-center justify-center bg-gray-900 px-4 py-8">
       <div className="w-full max-w-md">
         <div className="relative">
-          <div className="absolute inset-0 bg-gradient-to-br from-gold/5 via-transparent to-purple-500/5 rounded-2xl blur-xl"></div>
+          <div className="absolute inset-0 bg-linear-to-br from-gold/5 via-transparent to-purple-500/5 rounded-2xl blur-xl"></div>
 
-          <div className="relative space-y-6 bg-gradient-to-br from-gray-900/95 to-gray-800/95 p-8 rounded-2xl shadow-2xl backdrop-blur-sm border border-gray-700/50 hover:border-gold/30 transition-all duration-500">
+          <div className="relative space-y-6 bg-linear-to-br from-gray-900/95 to-gray-800/95 p-8 rounded-2xl shadow-2xl backdrop-blur-xs border border-gray-700/50 hover:border-gold/30 transition-all duration-500">
             <div className="absolute top-0 left-0 w-20 h-20 bg-gold/10 rounded-full blur-2xl"></div>
             <div className="absolute bottom-0 right-0 w-16 h-16 bg-purple-500/10 rounded-full blur-2xl"></div>
 
@@ -88,7 +88,7 @@ export default function LoginForm({
               <h2 className="text-4xl md:text-5xl text-gold font-bold text-center font-iceland tracking-wide">
                 {title}
               </h2>
-              <div className="w-24 h-1 bg-gradient-to-r from-transparent via-gold to-transparent mx-auto mt-4 rounded-full"></div>
+              <div className="w-24 h-1 bg-linear-to-r from-transparent via-gold to-transparent mx-auto mt-4 rounded-full"></div>
               <p className="text-center text-gray-400 text-sm mt-4 font-inter">
                 {subtitle}
               </p>
@@ -102,11 +102,11 @@ export default function LoginForm({
                     {...register("email")}
                     type="text"
                     id="email"
-                    className="w-full p-4 bg-gray-800/80 text-white rounded-xl border border-gray-700/60 focus:outline-none focus:border-gold focus:ring-2 focus:ring-gold/20 transition-all duration-300 font-inter placeholder-gray-400 hover:bg-gray-800 peer backdrop-blur-sm"
+                    className="w-full p-4 bg-gray-800/80 text-white rounded-xl border border-gray-700/60 focus:outline-hidden focus:border-gold focus:ring-2 focus:ring-gold/20 transition-all duration-300 font-inter placeholder-gray-400 hover:bg-gray-800 peer backdrop-blur-xs"
                     placeholder="Email"
                     autoComplete="email"
                   />
-                  <div className="absolute inset-0 rounded-xl bg-gradient-to-r from-gold/0 via-gold/5 to-gold/0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"></div>
+                  <div className="absolute inset-0 rounded-xl bg-linear-to-r from-gold/0 via-gold/5 to-gold/0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"></div>
                 </div>
                 <ErrorMessage
                   errors={errors}
@@ -127,7 +127,7 @@ export default function LoginForm({
                     {...register("password")}
                     type={showPassword ? "text" : "password"}
                     id="password"
-                    className="w-full p-4 pr-12 bg-gray-800/80 text-white rounded-xl border border-gray-700/60 focus:outline-none focus:border-gold focus:ring-2 focus:ring-gold/20 transition-all duration-300 font-inter placeholder-gray-400 hover:bg-gray-800 peer backdrop-blur-sm"
+                    className="w-full p-4 pr-12 bg-gray-800/80 text-white rounded-xl border border-gray-700/60 focus:outline-hidden focus:border-gold focus:ring-2 focus:ring-gold/20 transition-all duration-300 font-inter placeholder-gray-400 hover:bg-gray-800 peer backdrop-blur-xs"
                     placeholder="Password"
                     autoComplete="current-password"
                   />
@@ -177,7 +177,7 @@ export default function LoginForm({
                       </svg>
                     )}
                   </button>
-                  <div className="absolute inset-0 rounded-xl bg-gradient-to-r from-gold/0 via-gold/5 to-gold/0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"></div>
+                  <div className="absolute inset-0 rounded-xl bg-linear-to-r from-gold/0 via-gold/5 to-gold/0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"></div>
                 </div>
                 <ErrorMessage
                   errors={errors}
@@ -196,9 +196,9 @@ export default function LoginForm({
                 <button
                   disabled={isSubmitting}
                   type="submit"
-                  className="relative w-full py-4 text-lg font-semibold text-black bg-gradient-to-r from-gold via-gold-light to-gold hover:from-gold-light hover:via-gold hover:to-gold-light rounded-xl transition-all duration-300 shadow-lg hover:shadow-gold/25 font-inter group overflow-hidden transform hover:scale-[1.02] active:scale-[0.98] disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="relative w-full py-4 text-lg font-semibold text-black bg-linear-to-r from-gold via-gold-light to-gold hover:from-gold-light hover:via-gold hover:to-gold-light rounded-xl transition-all duration-300 shadow-lg hover:shadow-gold/25 font-inter group overflow-hidden transform hover:scale-[1.02] active:scale-[0.98] disabled:opacity-50 disabled:cursor-not-allowed"
                 >
-                  <div className="absolute inset-0 bg-white/20 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700 skew-x-12"></div>
+                  <div className="absolute inset-0 bg-white/20 -translate-x-full group-hover:translate-x-full transition-transform duration-700 skew-x-12"></div>
                   <span className="relative flex items-center justify-center">
                     {isSubmitting ? "Signing in..." : "Sign In"}
                     {!isSubmitting && (

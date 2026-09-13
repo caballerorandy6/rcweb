@@ -95,7 +95,7 @@ export default function SubscriptionSuccess({
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-gray-900 to-black flex items-center justify-center px-4 py-24 sm:py-32">
+    <div className="min-h-screen bg-linear-to-b from-gray-900 to-black flex items-center justify-center px-4 py-24 sm:py-32">
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
@@ -115,7 +115,7 @@ export default function SubscriptionSuccess({
         </motion.div>
 
         {/* Main Content */}
-        <div className="bg-gray-800/50 backdrop-blur-sm rounded-2xl p-8 border border-gold/20">
+        <div className="bg-gray-800/50 backdrop-blur-xs rounded-2xl p-8 border border-gold/20">
           <h1 className="text-4xl font-bold text-gold text-center mb-4">
             Subscription Active!
           </h1>
@@ -152,7 +152,7 @@ export default function SubscriptionSuccess({
               className="space-y-4 mb-8"
             >
               {/* Plan Info */}
-              <div className="bg-gradient-to-r from-gold/20 to-yellow-500/20 rounded-xl p-6 border border-gold/30">
+              <div className="bg-linear-to-r from-gold/20 to-yellow-500/20 rounded-xl p-6 border border-gold/30">
                 <div className="flex items-center gap-3 mb-4">
                   <CreditCardIcon className="w-6 h-6 text-gold" />
                   <span className="text-lg font-semibold text-gold">

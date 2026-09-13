@@ -6,10 +6,10 @@ export default function LeadsBySourceSkeleton() {
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-3 mb-5">
         <div className="flex items-center gap-3">
-          <ChartBarIcon className="w-5 h-5 sm:w-6 sm:h-6 text-gray-600 flex-shrink-0" />
-          <div className="h-6 sm:h-7 w-32 sm:w-40 bg-gray-700 rounded" />
+          <ChartBarIcon className="w-5 h-5 sm:w-6 sm:h-6 text-gray-600 shrink-0" />
+          <div className="h-6 sm:h-7 w-32 sm:w-40 bg-gray-700 rounded-sm" />
         </div>
-        <div className="sm:ml-auto h-4 sm:h-5 w-24 bg-gray-700 rounded" />
+        <div className="sm:ml-auto h-4 sm:h-5 w-24 bg-gray-700 rounded-sm" />
       </div>
 
       {/* Status Pills */}
@@ -27,10 +27,10 @@ export default function LeadsBySourceSkeleton() {
         {[80, 60, 45].map((width, i) => (
           <div key={i}>
             <div className="flex items-center justify-between mb-1.5 gap-2">
-              <div className="h-3 sm:h-4 w-20 sm:w-28 bg-gray-700 rounded" />
+              <div className="h-3 sm:h-4 w-20 sm:w-28 bg-gray-700 rounded-sm" />
               <div className="flex items-center gap-1.5 sm:gap-2">
-                <div className="h-3 sm:h-4 w-8 bg-gray-700 rounded" />
-                <div className="h-2.5 sm:h-3 w-8 bg-gray-700/50 rounded" />
+                <div className="h-3 sm:h-4 w-8 bg-gray-700 rounded-sm" />
+                <div className="h-2.5 sm:h-3 w-8 bg-gray-700/50 rounded-sm" />
               </div>
             </div>
             <div className="h-2.5 sm:h-3 bg-gray-700/50 rounded-full overflow-hidden">

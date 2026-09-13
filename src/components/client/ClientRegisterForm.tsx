@@ -67,9 +67,9 @@ export default function ClientRegisterForm() {
     <div className="min-h-screen flex items-center justify-center bg-gray-900 px-4 py-8">
       <div className="w-full max-w-md">
         <div className="relative">
-          <div className="absolute inset-0 bg-gradient-to-br from-gold/5 via-transparent to-purple-500/5 rounded-2xl blur-xl"></div>
+          <div className="absolute inset-0 bg-linear-to-br from-gold/5 via-transparent to-purple-500/5 rounded-2xl blur-xl"></div>
 
-          <div className="relative space-y-6 bg-gradient-to-br from-gray-900/95 to-gray-800/95 p-8 rounded-2xl shadow-2xl backdrop-blur-sm border border-gray-700/50 hover:border-gold/30 transition-all duration-500">
+          <div className="relative space-y-6 bg-linear-to-br from-gray-900/95 to-gray-800/95 p-8 rounded-2xl shadow-2xl backdrop-blur-xs border border-gray-700/50 hover:border-gold/30 transition-all duration-500">
             <div className="absolute top-0 left-0 w-20 h-20 bg-gold/10 rounded-full blur-2xl"></div>
             <div className="absolute bottom-0 right-0 w-16 h-16 bg-purple-500/10 rounded-full blur-2xl"></div>
 
@@ -77,7 +77,7 @@ export default function ClientRegisterForm() {
               <h2 className="text-4xl md:text-5xl text-gold font-bold text-center font-iceland tracking-wide">
                 Create Account
               </h2>
-              <div className="w-24 h-1 bg-gradient-to-r from-transparent via-gold to-transparent mx-auto mt-4 rounded-full"></div>
+              <div className="w-24 h-1 bg-linear-to-r from-transparent via-gold to-transparent mx-auto mt-4 rounded-full"></div>
               <p className="text-center text-gray-400 text-sm mt-4 font-inter">
                 Register to access your client portal
               </p>
@@ -96,7 +96,7 @@ export default function ClientRegisterForm() {
                   {...register("name")}
                   type="text"
                   id="name"
-                  className="w-full px-4 py-3 bg-gray-800/50 border border-gray-700/50 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-gold/50 focus:border-transparent transition-all font-inter"
+                  className="w-full px-4 py-3 bg-gray-800/50 border border-gray-700/50 rounded-lg text-white placeholder-gray-500 focus:outline-hidden focus:ring-2 focus:ring-gold/50 focus:border-transparent transition-all font-inter"
                   placeholder="Enter your full name"
                   disabled={isSubmitting}
                 />
@@ -123,7 +123,7 @@ export default function ClientRegisterForm() {
                   {...register("email")}
                   type="email"
                   id="email"
-                  className="w-full px-4 py-3 bg-gray-800/50 border border-gray-700/50 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-gold/50 focus:border-transparent transition-all font-inter"
+                  className="w-full px-4 py-3 bg-gray-800/50 border border-gray-700/50 rounded-lg text-white placeholder-gray-500 focus:outline-hidden focus:ring-2 focus:ring-gold/50 focus:border-transparent transition-all font-inter"
                   placeholder="Enter your email"
                   disabled={isSubmitting}
                 />
@@ -151,7 +151,7 @@ export default function ClientRegisterForm() {
                     {...register("password")}
                     type={showPassword ? "text" : "password"}
                     id="password"
-                    className="w-full px-4 py-3 bg-gray-800/50 border border-gray-700/50 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-gold/50 focus:border-transparent transition-all font-inter pr-12"
+                    className="w-full px-4 py-3 bg-gray-800/50 border border-gray-700/50 rounded-lg text-white placeholder-gray-500 focus:outline-hidden focus:ring-2 focus:ring-gold/50 focus:border-transparent transition-all font-inter pr-12"
                     placeholder="Enter your password"
                     disabled={isSubmitting}
                   />
@@ -222,7 +222,7 @@ export default function ClientRegisterForm() {
                     {...register("confirmPassword")}
                     type={showConfirmPassword ? "text" : "password"}
                     id="confirmPassword"
-                    className="w-full px-4 py-3 bg-gray-800/50 border border-gray-700/50 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-gold/50 focus:border-transparent transition-all font-inter pr-12"
+                    className="w-full px-4 py-3 bg-gray-800/50 border border-gray-700/50 rounded-lg text-white placeholder-gray-500 focus:outline-hidden focus:ring-2 focus:ring-gold/50 focus:border-transparent transition-all font-inter pr-12"
                     placeholder="Confirm your password"
                     disabled={isSubmitting}
                   />
@@ -284,9 +284,9 @@ export default function ClientRegisterForm() {
               <button
                 type="submit"
                 disabled={isSubmitting}
-                className="relative w-full py-3 px-4 text-base font-semibold text-black bg-gradient-to-r from-gold via-gold-light to-gold hover:from-gold-light hover:via-gold hover:to-gold-light rounded-lg transition-all duration-300 shadow-lg hover:shadow-gold/25 font-inter group overflow-hidden transform hover:scale-[1.02] active:scale-[0.98] disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100"
+                className="relative w-full py-3 px-4 text-base font-semibold text-black bg-linear-to-r from-gold via-gold-light to-gold hover:from-gold-light hover:via-gold hover:to-gold-light rounded-lg transition-all duration-300 shadow-lg hover:shadow-gold/25 font-inter group overflow-hidden transform hover:scale-[1.02] active:scale-[0.98] disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100"
               >
-                <div className="absolute inset-0 bg-white/20 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700 skew-x-12 disabled:translate-x-[-100%]"></div>
+                <div className="absolute inset-0 bg-white/20 -translate-x-full group-hover:translate-x-full transition-transform duration-700 skew-x-12 disabled:-translate-x-full"></div>
                 <span className="relative flex items-center justify-center">
                   {isSubmitting ? "Creating Account..." : "Create Account"}
                 </span>

@@ -77,7 +77,7 @@ export default function ChangePasswordForm({
             {...register("currentPassword")}
             type={showCurrentPassword ? "text" : "password"}
             id="currentPassword"
-            className="w-full px-4 py-3 pr-12 bg-gray-800/50 text-white rounded-lg border border-gray-700/50 focus:outline-none focus:ring-2 focus:ring-gold/50 focus:border-transparent transition-all font-inter"
+            className="w-full px-4 py-3 pr-12 bg-gray-800/50 text-white rounded-lg border border-gray-700/50 focus:outline-hidden focus:ring-2 focus:ring-gold/50 focus:border-transparent transition-all font-inter"
             placeholder="Enter your current password"
           />
           <button
@@ -145,7 +145,7 @@ export default function ChangePasswordForm({
             {...register("password")}
             type={showPassword ? "text" : "password"}
             id="password"
-            className="w-full px-4 py-3 pr-12 bg-gray-800/50 text-white rounded-lg border border-gray-700/50 focus:outline-none focus:ring-2 focus:ring-gold/50 focus:border-transparent transition-all font-inter"
+            className="w-full px-4 py-3 pr-12 bg-gray-800/50 text-white rounded-lg border border-gray-700/50 focus:outline-hidden focus:ring-2 focus:ring-gold/50 focus:border-transparent transition-all font-inter"
             placeholder="Enter your new password"
           />
           <button
@@ -213,7 +213,7 @@ export default function ChangePasswordForm({
             {...register("confirmPassword")}
             type={showConfirmPassword ? "text" : "password"}
             id="confirmPassword"
-            className="w-full px-4 py-3 pr-12 bg-gray-800/50 text-white rounded-lg border border-gray-700/50 focus:outline-none focus:ring-2 focus:ring-gold/50 focus:border-transparent transition-all font-inter"
+            className="w-full px-4 py-3 pr-12 bg-gray-800/50 text-white rounded-lg border border-gray-700/50 focus:outline-hidden focus:ring-2 focus:ring-gold/50 focus:border-transparent transition-all font-inter"
             placeholder="Confirm your new password"
           />
           <button
@@ -272,9 +272,9 @@ export default function ChangePasswordForm({
       <button
         type="submit"
         disabled={isSubmitting}
-        className="relative w-full py-3 px-4 text-base font-semibold text-black bg-gradient-to-r from-gold via-gold-light to-gold hover:from-gold-light hover:via-gold hover:to-gold-light rounded-lg transition-all duration-300 shadow-lg hover:shadow-gold/25 font-inter group overflow-hidden transform hover:scale-[1.02] active:scale-[0.98] disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100"
+        className="relative w-full py-3 px-4 text-base font-semibold text-black bg-linear-to-r from-gold via-gold-light to-gold hover:from-gold-light hover:via-gold hover:to-gold-light rounded-lg transition-all duration-300 shadow-lg hover:shadow-gold/25 font-inter group overflow-hidden transform hover:scale-[1.02] active:scale-[0.98] disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100"
       >
-        <div className="absolute inset-0 bg-white/20 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700 skew-x-12 disabled:translate-x-[-100%]"></div>
+        <div className="absolute inset-0 bg-white/20 -translate-x-full group-hover:translate-x-full transition-transform duration-700 skew-x-12 disabled:-translate-x-full"></div>
         <span className="relative flex items-center justify-center">
           {isSubmitting ? "Changing Password..." : "Change Password"}
         </span>

@@ -78,7 +78,7 @@ export default function FinalPayment() {
                   type="email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  className="w-full p-3 bg-gray-700 text-white rounded-lg border border-gray-600 focus:border-gold focus:outline-none"
+                  className="w-full p-3 bg-gray-700 text-white rounded-lg border border-gray-600 focus:border-gold focus:outline-hidden"
                   placeholder="john@example.com"
                 />
               </div>
@@ -91,7 +91,7 @@ export default function FinalPayment() {
                   type="text"
                   value={projectCode}
                   onChange={(e) => setProjectCode(e.target.value.toUpperCase())}
-                  className="w-full p-3 bg-gray-700 text-white rounded-lg border border-gray-600 focus:border-gold focus:outline-none font-mono text-center text-xl tracking-wider"
+                  className="w-full p-3 bg-gray-700 text-white rounded-lg border border-gray-600 focus:border-gold focus:outline-hidden font-mono text-center text-xl tracking-wider"
                   placeholder="ABC123"
                   maxLength={6}
                 />

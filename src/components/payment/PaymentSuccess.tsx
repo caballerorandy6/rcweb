@@ -109,7 +109,7 @@ export default function PaymentSuccess({
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-gray-900 to-black flex items-center justify-center px-4  py-24 sm:py-32">
+    <div className="min-h-screen bg-linear-to-b from-gray-900 to-black flex items-center justify-center px-4  py-24 sm:py-32">
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
@@ -129,7 +129,7 @@ export default function PaymentSuccess({
         </motion.div>
 
         {/* Main Content */}
-        <div className="bg-gray-800/50 backdrop-blur-sm rounded-2xl p-8 border border-gold/20">
+        <div className="bg-gray-800/50 backdrop-blur-xs rounded-2xl p-8 border border-gold/20">
           <h1 className="text-4xl font-bold text-gold text-center mb-4">
             Payment Successful! 🎉
           </h1>
@@ -163,7 +163,7 @@ export default function PaymentSuccess({
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ type: "spring", stiffness: 200, damping: 20, delay: 0.4 }}
-              className="bg-gradient-to-r from-gold/20 to-yellow-500/20 rounded-xl p-6 mb-8 border border-gold/30 font-inter flex flex-col items-center"
+              className="bg-linear-to-r from-gold/20 to-yellow-500/20 rounded-xl p-6 mb-8 border border-gold/30 font-inter flex flex-col items-center"
             >
               <p className="text-sm text-gold mb-2 text-center uppercase tracking-wide">
                 Your Project Code

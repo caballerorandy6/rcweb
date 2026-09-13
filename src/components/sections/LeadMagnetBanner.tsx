@@ -20,7 +20,7 @@ const LeadMagnetBanner = () => {
   return (
     <section className="relative py-16 sm:py-20 overflow-hidden">
       {/* Background gradient */}
-      <div className="absolute inset-0 bg-gradient-to-r from-gold/10 via-transparent to-gold/10" />
+      <div className="absolute inset-0 bg-linear-to-r from-gold/10 via-transparent to-gold/10" />
 
       {/* Animated glow */}
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[200px] bg-gold/20 rounded-full blur-[100px] animate-pulse" />
@@ -40,10 +40,10 @@ const LeadMagnetBanner = () => {
               whileInView={{ scale: 1, rotate: 0 }}
               viewport={{ once: true }}
               transition={{ type: "spring", stiffness: 200, damping: 15, delay: 0.1 }}
-              className="flex-shrink-0"
+              className="shrink-0"
             >
               <div className="relative">
-                <div className="w-24 h-24 sm:w-32 sm:h-32 rounded-2xl bg-gradient-to-br from-gold via-gold-light to-gold flex items-center justify-center shadow-lg shadow-gold/30">
+                <div className="w-24 h-24 sm:w-32 sm:h-32 rounded-2xl bg-linear-to-br from-gold via-gold-light to-gold flex items-center justify-center shadow-lg shadow-gold/30">
                   <BookOpenIcon className="w-12 h-12 sm:w-16 sm:h-16 text-gray-900" />
                 </div>
                 {/* Free badge */}
@@ -83,12 +83,12 @@ const LeadMagnetBanner = () => {
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
               transition={{ delay: 0.25 }}
-              className="flex-shrink-0"
+              className="shrink-0"
             >
               <Link
                 href="/guide"
                 onClick={handleClick}
-                className="group inline-flex items-center gap-3 px-8 py-4 bg-gradient-to-r from-gold via-gold-light to-gold hover:from-gold-light hover:via-gold hover:to-gold-dark text-gray-900 font-bold rounded-xl transition-all duration-300 shadow-lg shadow-gold/30 hover:shadow-xl hover:shadow-gold/40 font-inter text-lg"
+                className="group inline-flex items-center gap-3 px-8 py-4 bg-linear-to-r from-gold via-gold-light to-gold hover:from-gold-light hover:via-gold hover:to-gold-dark text-gray-900 font-bold rounded-xl transition-all duration-300 shadow-lg shadow-gold/30 hover:shadow-xl hover:shadow-gold/40 font-inter text-lg"
               >
                 Download Now
                 <ArrowRightIcon className="w-5 h-5 transition-transform group-hover:translate-x-1" />

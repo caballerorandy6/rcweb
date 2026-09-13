@@ -135,7 +135,7 @@ export default function WebDeveloperHoustonPage() {
         <BackLink href="/" label="Back to Home" />
         {/* Hero Section */}
         <section className="relative pt-8 pb-20 sm:pt-12 sm:pb-28">
-          <div className="absolute inset-0 bg-gradient-to-b from-gold/5 via-transparent to-transparent" />
+          <div className="absolute inset-0 bg-linear-to-b from-gold/5 via-transparent to-transparent" />
           <div className="relative mx-auto max-w-7xl px-6 lg:px-8">
             <div className="mx-auto max-w-3xl text-center">
               <div className="inline-flex items-center gap-2 rounded-full bg-gold/10 px-4 py-1.5 text-sm font-medium text-gold mb-8">
@@ -158,7 +158,7 @@ export default function WebDeveloperHoustonPage() {
               <div className="mt-10 flex flex-col sm:flex-row gap-4 justify-center">
                 <Link
                   href="/schedule"
-                  className="inline-flex items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-gold via-gold-light to-gold px-6 py-4 text-base font-semibold text-black hover:from-gold-light hover:via-gold hover:to-gold-light transition-all duration-300 shadow-lg hover:shadow-gold/25 font-inter"
+                  className="inline-flex items-center justify-center gap-2 rounded-xl bg-linear-to-r from-gold via-gold-light to-gold px-6 py-4 text-base font-semibold text-black hover:from-gold-light hover:via-gold hover:to-gold-light transition-all duration-300 shadow-lg hover:shadow-gold/25 font-inter"
                 >
                   <CalendarDaysIcon className="h-5 w-5" />
                   Free Consultation
@@ -208,7 +208,7 @@ export default function WebDeveloperHoustonPage() {
         </section>
 
         {/* Houston Case Studies */}
-        <section className="py-20 sm:py-28 bg-white/[0.02]">
+        <section className="py-20 sm:py-28 bg-white/2">
           <div className="mx-auto max-w-7xl px-6 lg:px-8">
             <div className="mx-auto max-w-2xl text-center mb-16">
               <h2 className="text-3xl font-bold tracking-tight text-white sm:text-4xl font-iceland">
@@ -276,7 +276,7 @@ export default function WebDeveloperHoustonPage() {
         </section>
 
         {/* What You Get */}
-        <section className="py-20 sm:py-28 bg-white/[0.02]">
+        <section className="py-20 sm:py-28 bg-white/2">
           <div className="mx-auto max-w-7xl px-6 lg:px-8">
             <div className="mx-auto max-w-2xl text-center mb-16">
               <h2 className="text-3xl font-bold tracking-tight text-white sm:text-4xl font-iceland">
@@ -299,7 +299,7 @@ export default function WebDeveloperHoustonPage() {
                   key={item}
                   className="flex gap-4 py-4 border-b border-white/5 last:border-b-0"
                 >
-                  <CheckCircleIcon className="h-6 w-6 flex-shrink-0 text-gold" />
+                  <CheckCircleIcon className="h-6 w-6 shrink-0 text-gold" />
                   <p className="text-gray-300 font-inter">{item}</p>
                 </div>
               ))}
@@ -322,7 +322,7 @@ export default function WebDeveloperHoustonPage() {
               <div className="mt-10 flex flex-col sm:flex-row gap-4 justify-center">
                 <Link
                   href="/schedule"
-                  className="inline-flex items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-gold via-gold-light to-gold px-8 py-4 text-lg font-semibold text-black hover:from-gold-light hover:via-gold hover:to-gold-light transition-all duration-300 shadow-lg hover:shadow-gold/25 font-inter"
+                  className="inline-flex items-center justify-center gap-2 rounded-xl bg-linear-to-r from-gold via-gold-light to-gold px-8 py-4 text-lg font-semibold text-black hover:from-gold-light hover:via-gold hover:to-gold-light transition-all duration-300 shadow-lg hover:shadow-gold/25 font-inter"
                 >
                   <CalendarDaysIcon className="h-5 w-5" />
                   Schedule Free Consultation

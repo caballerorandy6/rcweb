@@ -68,7 +68,7 @@ export default function GuideContent() {
   };
 
   return (
-    <section className="relative isolate overflow-hidden py-24 sm:py-32 bg-gradient-to-b from-gray-900 via-gray-900/95 to-gray-900">
+    <section className="relative isolate overflow-hidden py-24 sm:py-32 bg-linear-to-b from-gray-900 via-gray-900/95 to-gray-900">
       {/* Background decoration */}
       <div className="absolute inset-0 -z-10">
         <div className="absolute inset-0 bg-[url('/grid.svg')] bg-center opacity-10"></div>
@@ -100,7 +100,7 @@ export default function GuideContent() {
           <div>
             {/* Mock Book Cover */}
             <div className="relative">
-              <div className="bg-gradient-to-br from-gold/20 to-gold/5 backdrop-blur-lg rounded-2xl p-8 border-2 border-gold/30 shadow-2xl shadow-gold/20 transform rotate-2 hover:rotate-0 transition-transform duration-300">
+              <div className="bg-linear-to-br from-gold/20 to-gold/5 backdrop-blur-lg rounded-2xl p-8 border-2 border-gold/30 shadow-2xl shadow-gold/20 transform rotate-2 hover:rotate-0 transition-transform duration-300">
                 <div className="text-center">
                   <BookOpenIcon className="w-20 h-20 text-gold mx-auto mb-6" />
                   <h2 className="text-3xl md:text-4xl font-black text-gold font-iceland mb-4">
@@ -163,7 +163,7 @@ export default function GuideContent() {
                     whileInView={{ opacity: 1, x: 0 }}
                     viewport={{ once: true }}
                   >
-                    <CheckBadgeIcon className="w-6 h-6 text-gold flex-shrink-0 mt-0.5" />
+                    <CheckBadgeIcon className="w-6 h-6 text-gold shrink-0 mt-0.5" />
                     <span>{item}</span>
                   </motion.li>
                 ))}
@@ -171,7 +171,7 @@ export default function GuideContent() {
             </div>
 
             {/* Download Form */}
-            <div className="bg-gradient-to-r from-gold/10 to-gold/5 backdrop-blur-lg rounded-xl border border-gold/20 p-8">
+            <div className="bg-linear-to-r from-gold/10 to-gold/5 backdrop-blur-lg rounded-xl border border-gold/20 p-8">
               <h3 className="text-2xl font-bold text-gold font-iceland mb-4">
                 Download Your Free Guide
               </h3>
@@ -188,7 +188,7 @@ export default function GuideContent() {
                     onChange={(e) => setEmail(e.target.value)}
                     placeholder="your@email.com"
                     required
-                    className="w-full p-4 bg-gray-800/80 text-white rounded-xl border border-gray-700/60 focus:outline-none focus:border-gold focus:ring-2 focus:ring-gold/20 transition-all duration-300 font-inter placeholder-gray-400"
+                    className="w-full p-4 bg-gray-800/80 text-white rounded-xl border border-gray-700/60 focus:outline-hidden focus:border-gold focus:ring-2 focus:ring-gold/20 transition-all duration-300 font-inter placeholder-gray-400"
                   />
                 </div>
 

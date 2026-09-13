@@ -137,7 +137,7 @@ const Navbar = () => {
               {/* Client Portal - Discreet button */}
               <Link
                 href="/client/login"
-                className="ml-4 px-3 py-2 text-xs font-semibold text-white/70 hover:text-gold transition-all duration-300 font-inter border border-gold/20 hover:border-gold/50 hover:bg-gold/5 rounded-lg cursor-pointer hover:scale-105 active:scale-95 backdrop-blur-sm"
+                className="ml-4 px-3 py-2 text-xs font-semibold text-white/70 hover:text-gold transition-all duration-300 font-inter border border-gold/20 hover:border-gold/50 hover:bg-gold/5 rounded-lg cursor-pointer hover:scale-105 active:scale-95 backdrop-blur-xs"
                 aria-label="Client Portal"
               >
                 Client Portal
@@ -192,7 +192,7 @@ const Navbar = () => {
               {/* Client Portal - Discreet button */}
               <Link
                 href="/client/login"
-                className="px-3 py-2 text-xs font-semibold text-white/70 hover:text-gold transition-all duration-300 font-inter border border-gold/20 hover:border-gold/50 hover:bg-gold/5 rounded-lg cursor-pointer hover:scale-105 active:scale-95 backdrop-blur-sm"
+                className="px-3 py-2 text-xs font-semibold text-white/70 hover:text-gold transition-all duration-300 font-inter border border-gold/20 hover:border-gold/50 hover:bg-gold/5 rounded-lg cursor-pointer hover:scale-105 active:scale-95 backdrop-blur-xs"
                 aria-label="Client Portal"
               >
                 Client Portal
@@ -237,7 +237,7 @@ const Navbar = () => {
           <div className="absolute inset-0 overflow-hidden">
             <div className="pointer-events-none fixed inset-y-0 right-0 flex max-w-full">
               <DialogPanel className="pointer-events-auto w-screen max-w-sm">
-                <div className="flex h-full flex-col bg-gradient-to-b from-gray-900 via-gray-900 to-gray-950 backdrop-blur-xl shadow-2xl border-l border-gold/10">
+                <div className="flex h-full flex-col bg-linear-to-b from-gray-900 via-gray-900 to-gray-950 backdrop-blur-xl shadow-2xl border-l border-gold/10">
                   {/* Header */}
                   <div className="flex items-center justify-between px-6 py-5 border-b border-gold/20 bg-gold/5">
                     <Logo className="w-32 h-auto" onClick={handleClickModal} />
@@ -295,7 +295,7 @@ const Navbar = () => {
                             )}
                           >
                             {!isActive && (
-                              <span className="absolute inset-0 bg-gradient-to-r from-gold/0 via-gold/5 to-gold/0 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-500"></span>
+                              <span className="absolute inset-0 bg-linear-to-r from-gold/0 via-gold/5 to-gold/0 -translate-x-full group-hover:translate-x-full transition-transform duration-500"></span>
                             )}
                             <span className="relative z-10">{item.name}</span>
                           </Link>

@@ -83,7 +83,7 @@ export default function ClientMilestoneView({
         </div>
         <div className="h-4 bg-gray-700 rounded-full overflow-hidden">
           <div
-            className="h-full bg-gradient-to-r from-gold to-yellow-500 transition-all duration-700 ease-out"
+            className="h-full bg-linear-to-r from-gold to-yellow-500 transition-all duration-700 ease-out"
             style={{ width: `${progressPercent}%` }}
           />
         </div>
@@ -104,7 +104,7 @@ export default function ClientMilestoneView({
               className={`relative flex gap-4 p-4 rounded-xl border ${getStatusBg(milestone.status)} transition-all`}
             >
               {/* Icon with background */}
-              <div className="relative z-10 flex-shrink-0 w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center border-2 border-gray-700">
+              <div className="relative z-10 shrink-0 w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center border-2 border-gray-700">
                 {getStatusIcon(milestone.status)}
               </div>
 
@@ -122,7 +122,7 @@ export default function ClientMilestoneView({
                     )}
                   </div>
                   <span
-                    className={`flex-shrink-0 px-3 py-1 rounded-full text-xs font-medium ${
+                    className={`shrink-0 px-3 py-1 rounded-full text-xs font-medium ${
                       milestone.status === "completed"
                         ? "bg-green-500/20 text-green-400"
                         : milestone.status === "in_progress"
@@ -151,7 +151,7 @@ export default function ClientMilestoneView({
               </div>
 
               {/* Step number */}
-              <div className="flex-shrink-0 w-8 h-8 rounded-full bg-gray-700/50 flex items-center justify-center">
+              <div className="shrink-0 w-8 h-8 rounded-full bg-gray-700/50 flex items-center justify-center">
                 <span className="text-xs font-bold text-gray-400">
                   {index + 1}
                 </span>

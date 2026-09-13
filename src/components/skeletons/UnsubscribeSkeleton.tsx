@@ -12,19 +12,19 @@ export default function UnsubscribeSkeleton() {
 
         {/* Description Skeleton */}
         <div className="space-y-2 mb-8">
-          <div className="h-4 bg-gray-700 rounded mx-auto w-full"></div>
-          <div className="h-4 bg-gray-700 rounded mx-auto w-5/6"></div>
+          <div className="h-4 bg-gray-700 rounded-sm mx-auto w-full"></div>
+          <div className="h-4 bg-gray-700 rounded-sm mx-auto w-5/6"></div>
         </div>
 
         {/* Email Input Skeleton */}
         <div className="mb-4">
-          <div className="h-5 bg-gray-700 rounded mb-2 w-1/4"></div>
+          <div className="h-5 bg-gray-700 rounded-sm mb-2 w-1/4"></div>
           <div className="h-12 bg-gray-700 rounded-lg"></div>
         </div>
 
         {/* Reason Select Skeleton */}
         <div className="mb-6">
-          <div className="h-5 bg-gray-700 rounded mb-2 w-1/3"></div>
+          <div className="h-5 bg-gray-700 rounded-sm mb-2 w-1/3"></div>
           <div className="h-12 bg-gray-700 rounded-lg"></div>
         </div>
 
@@ -32,7 +32,7 @@ export default function UnsubscribeSkeleton() {
         <div className="h-12 bg-gray-700 rounded-lg mb-4"></div>
 
         {/* Footer Text Skeleton */}
-        <div className="h-3 bg-gray-700 rounded mx-auto w-2/3"></div>
+        <div className="h-3 bg-gray-700 rounded-sm mx-auto w-2/3"></div>
       </div>
     </div>
   );

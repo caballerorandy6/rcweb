@@ -57,7 +57,7 @@ export default function OfferContent() {
   }, []);
 
   return (
-    <section className="relative isolate overflow-hidden py-24 sm:py-32 bg-gradient-to-b from-gray-900 via-gray-900/95 to-gray-900">
+    <section className="relative isolate overflow-hidden py-24 sm:py-32 bg-linear-to-b from-gray-900 via-gray-900/95 to-gray-900">
       {/* Background decoration */}
       <div className="absolute inset-0 -z-10">
         <div className="absolute inset-0 bg-[url('/grid.svg')] bg-center opacity-10"></div>
@@ -86,7 +86,7 @@ export default function OfferContent() {
 
         {/* Main Offer Card */}
         <div className="mt-16 max-w-5xl mx-auto">
-          <div className="bg-gradient-to-br from-gold/20 via-gold/10 to-transparent backdrop-blur-lg rounded-3xl p-8 md:p-12 border-2 border-gold/30 shadow-2xl shadow-gold/20">
+          <div className="bg-linear-to-br from-gold/20 via-gold/10 to-transparent backdrop-blur-lg rounded-3xl p-8 md:p-12 border-2 border-gold/30 shadow-2xl shadow-gold/20">
             {/* Discount Badge */}
             <div className="text-center mb-8">
               <div className="inline-block">
@@ -171,7 +171,7 @@ export default function OfferContent() {
                   whileInView={{ opacity: 1, x: 0 }}
                   viewport={{ once: true }}
                 >
-                  <CheckCircleIcon className="w-6 h-6 text-gold flex-shrink-0" />
+                  <CheckCircleIcon className="w-6 h-6 text-gold shrink-0" />
                   <span className="text-gray-300 font-inter">{service}</span>
                 </motion.div>
               ))}
@@ -187,7 +187,7 @@ export default function OfferContent() {
           viewport={{ once: true }}
           transition={{ delay: 0.3 }}
         >
-          <div className="bg-gray-900/40 backdrop-blur-sm rounded-lg border border-gold/10 p-6">
+          <div className="bg-gray-900/40 backdrop-blur-xs rounded-lg border border-gold/10 p-6">
             <h3 className="text-lg font-bold text-gold font-iceland mb-3">
               Offer Terms:
             </h3>

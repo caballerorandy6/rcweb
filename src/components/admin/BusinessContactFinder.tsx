@@ -174,7 +174,7 @@ export default function BusinessContactFinder({
             <select
               value={businessType}
               onChange={(e) => setBusinessType(e.target.value)}
-              className="w-full p-3 bg-gray-700 text-white rounded-lg border border-gray-600 focus:border-gold focus:outline-none"
+              className="w-full p-3 bg-gray-700 text-white rounded-lg border border-gray-600 focus:border-gold focus:outline-hidden"
             >
               {BUSINESS_CATEGORIES.map((cat) => (
                 <option key={cat.value} value={cat.value}>
@@ -194,7 +194,7 @@ export default function BusinessContactFinder({
               value={location}
               onChange={(e) => setLocation(e.target.value)}
               placeholder="e.g., Miami, FL or 33101"
-              className="w-full p-3 bg-gray-700 text-white rounded-lg border border-gray-600 focus:border-gold focus:outline-none"
+              className="w-full p-3 bg-gray-700 text-white rounded-lg border border-gray-600 focus:border-gold focus:outline-hidden"
             />
           </div>
         </div>

@@ -22,7 +22,7 @@ export default function BlogList({ posts }: BlogListProps) {
   };
 
   return (
-    <section className="relative isolate overflow-hidden py-24 sm:py-32 bg-gradient-to-b from-gray-900 via-gray-900/95 to-gray-900">
+    <section className="relative isolate overflow-hidden py-24 sm:py-32 bg-linear-to-b from-gray-900 via-gray-900/95 to-gray-900">
       {/* Background decoration */}
       <div className="absolute inset-0 -z-10">
         <div className="absolute inset-0 bg-[url('/grid.svg')] bg-center opacity-10"></div>
@@ -50,7 +50,7 @@ export default function BlogList({ posts }: BlogListProps) {
             {posts.map((post, index) => (
               <article
                 key={post.slug}
-                className="group relative flex flex-col overflow-hidden rounded-2xl bg-gradient-to-br from-gray-800/50 to-gray-900/50 backdrop-blur-lg border border-gray-700/50 hover:border-gold/30 transition-all duration-300"
+                className="group relative flex flex-col overflow-hidden rounded-2xl bg-linear-to-br from-gray-800/50 to-gray-900/50 backdrop-blur-lg border border-gray-700/50 hover:border-gold/30 transition-all duration-300"
               >
                 {/* Featured Image */}
                 {post.image && (
@@ -63,7 +63,7 @@ export default function BlogList({ posts }: BlogListProps) {
                       sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
                       className="object-cover group-hover:scale-105 transition-transform duration-300"
                     />
-                    <div className="absolute inset-0 bg-gradient-to-t from-gray-900 to-transparent opacity-60"></div>
+                    <div className="absolute inset-0 bg-linear-to-t from-gray-900 to-transparent opacity-60"></div>
                   </div>
                 )}
 
@@ -91,7 +91,7 @@ export default function BlogList({ posts }: BlogListProps) {
                   </h2>
 
                   {/* Description */}
-                  <p className="text-white/70 font-inter text-sm leading-relaxed mb-4 flex-grow">
+                  <p className="text-white/70 font-inter text-sm leading-relaxed mb-4 grow">
                     {post.description}
                   </p>
 
@@ -111,7 +111,7 @@ export default function BlogList({ posts }: BlogListProps) {
                 </div>
 
                 {/* Hover effect border */}
-                <div className="absolute inset-0 rounded-2xl bg-gradient-to-r from-gold/0 via-gold/5 to-gold/0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"></div>
+                <div className="absolute inset-0 rounded-2xl bg-linear-to-r from-gold/0 via-gold/5 to-gold/0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"></div>
               </article>
             ))}
           </div>

@@ -50,7 +50,7 @@ export default async function RevenueAttribution() {
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-3 mb-5">
         <div className="flex items-center gap-3">
-          <CurrencyDollarIcon className="w-5 h-5 sm:w-6 sm:h-6 text-gold flex-shrink-0" />
+          <CurrencyDollarIcon className="w-5 h-5 sm:w-6 sm:h-6 text-gold shrink-0" />
           <h2 className="text-xl sm:text-2xl font-bold text-white font-iceland">
             Revenue Attribution
           </h2>
@@ -79,7 +79,7 @@ export default async function RevenueAttribution() {
                   <div key={source.source} className="font-inter">
                     <div className="flex items-center justify-between mb-1 gap-2">
                       <span className="text-xs sm:text-sm text-gray-300 truncate">{label}</span>
-                      <div className="flex items-center gap-2 flex-shrink-0">
+                      <div className="flex items-center gap-2 shrink-0">
                         <span className="text-xs sm:text-sm font-bold text-green-400">
                           {formatCurrency(source.revenue)}
                         </span>

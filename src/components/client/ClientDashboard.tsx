@@ -74,16 +74,16 @@ export default function ClientDashboard({
 
         {projects.length === 0 ? (
           <div className="flex items-center justify-center min-h-[60vh]">
-            <div className="bg-gradient-to-br from-gray-900/95 to-gray-800/95 p-8 lg:p-12 rounded-2xl shadow-2xl backdrop-blur-sm border border-gray-700/50 max-w-md w-full text-center">
+            <div className="bg-linear-to-br from-gray-900/95 to-gray-800/95 p-8 lg:p-12 rounded-2xl shadow-2xl backdrop-blur-xs border border-gray-700/50 max-w-md w-full text-center">
               <p className="text-gray-400 font-inter mb-6 text-lg">
                 You don&apos;t have any projects yet. Once you make a payment, your
                 projects will appear here.
               </p>
               <Link
                 href="/#pricing"
-                className="relative inline-flex items-center justify-center px-6 py-3 text-base font-semibold text-black bg-gradient-to-r from-gold via-gold-light to-gold hover:from-gold-light hover:via-gold hover:to-gold-light rounded-xl transition-all duration-300 shadow-lg hover:shadow-gold/25 font-inter group overflow-hidden transform hover:scale-[1.02] active:scale-[0.98]"
+                className="relative inline-flex items-center justify-center px-6 py-3 text-base font-semibold text-black bg-linear-to-r from-gold via-gold-light to-gold hover:from-gold-light hover:via-gold hover:to-gold-light rounded-xl transition-all duration-300 shadow-lg hover:shadow-gold/25 font-inter group overflow-hidden transform hover:scale-[1.02] active:scale-[0.98]"
               >
-                <div className="absolute inset-0 bg-white/20 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700 skew-x-12"></div>
+                <div className="absolute inset-0 bg-white/20 -translate-x-full group-hover:translate-x-full transition-transform duration-700 skew-x-12"></div>
                 <span className="relative flex items-center justify-center">
                   View Pricing Plans
                 </span>
@@ -94,7 +94,7 @@ export default function ClientDashboard({
           <>
             {/* Statistics Summary */}
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
-              <div className="bg-gradient-to-br from-gray-900/95 to-gray-800/95 p-6 rounded-xl border border-gray-700/50">
+              <div className="bg-linear-to-br from-gray-900/95 to-gray-800/95 p-6 rounded-xl border border-gray-700/50">
                 <p className="text-gray-400 text-sm font-inter mb-1">
                   Total Projects
                 </p>
@@ -102,7 +102,7 @@ export default function ClientDashboard({
                   {totalProjects}
                 </p>
               </div>
-              <div className="bg-gradient-to-br from-gray-900/95 to-gray-800/95 p-6 rounded-xl border border-gray-700/50">
+              <div className="bg-linear-to-br from-gray-900/95 to-gray-800/95 p-6 rounded-xl border border-gray-700/50">
                 <p className="text-gray-400 text-sm font-inter mb-1">
                   In Progress
                 </p>
@@ -110,7 +110,7 @@ export default function ClientDashboard({
                   {inProgressProjects}
                 </p>
               </div>
-              <div className="bg-gradient-to-br from-gray-900/95 to-gray-800/95 p-6 rounded-xl border border-gray-700/50">
+              <div className="bg-linear-to-br from-gray-900/95 to-gray-800/95 p-6 rounded-xl border border-gray-700/50">
                 <p className="text-gray-400 text-sm font-inter mb-1">
                   Completed
                 </p>
@@ -152,7 +152,7 @@ export default function ClientDashboard({
                             </p>
                           </div>
                           <span
-                            className={`px-2 py-1 rounded text-xs font-inter ${statusInfo.color}`}
+                            className={`px-2 py-1 rounded-sm text-xs font-inter ${statusInfo.color}`}
                           >
                             {statusInfo.label}
                           </span>
@@ -178,7 +178,7 @@ export default function ClientDashboard({
               {/* Project Details */}
               {selectedProject && (
                 <div className="lg:col-span-2">
-                  <div className="bg-gradient-to-br from-gray-900/95 to-gray-800/95 p-6 lg:p-8 rounded-2xl shadow-2xl backdrop-blur-sm border border-gray-700/50">
+                  <div className="bg-linear-to-br from-gray-900/95 to-gray-800/95 p-6 lg:p-8 rounded-2xl shadow-2xl backdrop-blur-xs border border-gray-700/50">
                     <div className="flex items-start justify-between mb-6">
                       <div>
                         <h2 className="text-3xl text-gold font-bold font-iceland mb-2">
@@ -189,7 +189,7 @@ export default function ClientDashboard({
                         </p>
                       </div>
                       <span
-                        className={`px-3 py-1 rounded text-sm font-inter ${getProjectStatusLabel(selectedProject.projectStatus).color}`}
+                        className={`px-3 py-1 rounded-sm text-sm font-inter ${getProjectStatusLabel(selectedProject.projectStatus).color}`}
                       >
                         {
                           getProjectStatusLabel(selectedProject.projectStatus)
@@ -258,9 +258,9 @@ export default function ClientDashboard({
                                 href={
                                   `/pay/${selectedProject.accessToken}` as Route
                                 }
-                                className="relative inline-flex items-center justify-center w-full sm:w-auto px-4 sm:px-6 py-2 sm:py-2.5 text-sm sm:text-base font-semibold text-black bg-gradient-to-r from-gold via-gold-light to-gold hover:from-gold-light hover:via-gold hover:to-gold-light rounded-lg transition-all duration-300 shadow-lg hover:shadow-gold/25 font-inter group overflow-hidden transform hover:scale-[1.02] active:scale-[0.98]"
+                                className="relative inline-flex items-center justify-center w-full sm:w-auto px-4 sm:px-6 py-2 sm:py-2.5 text-sm sm:text-base font-semibold text-black bg-linear-to-r from-gold via-gold-light to-gold hover:from-gold-light hover:via-gold hover:to-gold-light rounded-lg transition-all duration-300 shadow-lg hover:shadow-gold/25 font-inter group overflow-hidden transform hover:scale-[1.02] active:scale-[0.98]"
                               >
-                                <div className="absolute inset-0 bg-white/20 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700 skew-x-12"></div>
+                                <div className="absolute inset-0 bg-white/20 -translate-x-full group-hover:translate-x-full transition-transform duration-700 skew-x-12"></div>
                                 <span className="relative flex items-center justify-center">
                                   Pay Final Payment
                                 </span>
@@ -291,7 +291,7 @@ export default function ClientDashboard({
                                     {milestone.title}
                                   </h4>
                                   <span
-                                    className={`px-2 py-1 rounded text-xs font-inter ${milestoneStatus.color} w-fit`}
+                                    className={`px-2 py-1 rounded-sm text-xs font-inter ${milestoneStatus.color} w-fit`}
                                   >
                                     {milestoneStatus.label}
                                   </span>
@@ -352,9 +352,9 @@ export default function ClientDashboard({
                                   href={invoice.pdfUrl}
                                   target="_blank"
                                   rel="noopener noreferrer"
-                                  className="relative flex items-center justify-center px-3 sm:px-4 py-2 text-sm sm:text-base font-semibold text-black bg-gradient-to-r from-gold via-gold-light to-gold hover:from-gold-light hover:via-gold hover:to-gold-light rounded-lg transition-all duration-300 shadow-lg hover:shadow-gold/25 font-inter group overflow-hidden transform hover:scale-[1.02] active:scale-[0.98] whitespace-nowrap flex-shrink-0"
+                                  className="relative flex items-center justify-center px-3 sm:px-4 py-2 text-sm sm:text-base font-semibold text-black bg-linear-to-r from-gold via-gold-light to-gold hover:from-gold-light hover:via-gold hover:to-gold-light rounded-lg transition-all duration-300 shadow-lg hover:shadow-gold/25 font-inter group overflow-hidden transform hover:scale-[1.02] active:scale-[0.98] whitespace-nowrap shrink-0"
                                 >
-                                  <div className="absolute inset-0 bg-white/20 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700 skew-x-12"></div>
+                                  <div className="absolute inset-0 bg-white/20 -translate-x-full group-hover:translate-x-full transition-transform duration-700 skew-x-12"></div>
                                   <span className="relative flex items-center justify-center">
                                     Download
                                   </span>
@@ -372,9 +372,9 @@ export default function ClientDashboard({
                         href={
                           `/project/${selectedProject.accessToken}` as Route
                         }
-                        className="relative inline-flex items-center justify-center w-full sm:w-auto px-4 sm:px-6 py-2.5 sm:py-3 text-sm sm:text-base font-semibold text-black bg-gradient-to-r from-gold via-gold-light to-gold hover:from-gold-light hover:via-gold hover:to-gold-light rounded-xl transition-all duration-300 shadow-lg hover:shadow-gold/25 font-inter group overflow-hidden transform hover:scale-[1.02] active:scale-[0.98]"
+                        className="relative inline-flex items-center justify-center w-full sm:w-auto px-4 sm:px-6 py-2.5 sm:py-3 text-sm sm:text-base font-semibold text-black bg-linear-to-r from-gold via-gold-light to-gold hover:from-gold-light hover:via-gold hover:to-gold-light rounded-xl transition-all duration-300 shadow-lg hover:shadow-gold/25 font-inter group overflow-hidden transform hover:scale-[1.02] active:scale-[0.98]"
                       >
-                        <div className="absolute inset-0 bg-white/20 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700 skew-x-12"></div>
+                        <div className="absolute inset-0 bg-white/20 -translate-x-full group-hover:translate-x-full transition-transform duration-700 skew-x-12"></div>
                         <span className="relative flex items-center justify-center">
                           View Full Project Details
                         </span>

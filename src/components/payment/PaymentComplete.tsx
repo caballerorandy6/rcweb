@@ -95,7 +95,7 @@ export default function PaymentComplete() {
           <ul className="space-y-3 text-sm text-gray-300 font-inter">
             <li className="flex items-start">
               <svg
-                className="w-5 h-5 text-green-500 mr-2 mt-0.5 flex-shrink-0"
+                className="w-5 h-5 text-green-500 mr-2 mt-0.5 shrink-0"
                 fill="none"
                 stroke="currentColor"
                 viewBox="0 0 24 24"
@@ -114,7 +114,7 @@ export default function PaymentComplete() {
             </li>
             <li className="flex items-start">
               <svg
-                className="w-5 h-5 text-green-500 mr-2 mt-0.5 flex-shrink-0"
+                className="w-5 h-5 text-green-500 mr-2 mt-0.5 shrink-0"
                 fill="none"
                 stroke="currentColor"
                 viewBox="0 0 24 24"
@@ -132,7 +132,7 @@ export default function PaymentComplete() {
             </li>
             <li className="flex items-start">
               <svg
-                className="w-5 h-5 text-green-500 mr-2 mt-0.5 flex-shrink-0"
+                className="w-5 h-5 text-green-500 mr-2 mt-0.5 shrink-0"
                 fill="none"
                 stroke="currentColor"
                 viewBox="0 0 24 24"
@@ -150,7 +150,7 @@ export default function PaymentComplete() {
             </li>
             <li className="flex items-start">
               <svg
-                className="w-5 h-5 text-green-500 mr-2 mt-0.5 flex-shrink-0"
+                className="w-5 h-5 text-green-500 mr-2 mt-0.5 shrink-0"
                 fill="none"
                 stroke="currentColor"
                 viewBox="0 0 24 24"

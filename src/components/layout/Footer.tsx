@@ -12,7 +12,7 @@ export default function Footer() {
   const secondaryLinks = secondaryNavigation;
 
   return (
-    <footer className="relative bg-gradient-to-b from-gray-900/95 to-black overflow-hidden">
+    <footer className="relative bg-linear-to-b from-gray-900/95 to-black overflow-hidden">
       {/* Elementos decorativos de fondo - Mejorados */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         <div className="absolute top-10 left-1/4 w-64 h-64 bg-gold/10 rounded-full blur-[100px]" />
@@ -20,7 +20,7 @@ export default function Footer() {
       </div>
 
       {/* Línea decorativa superior */}
-      <div className="w-full h-px bg-gradient-to-r from-transparent via-gold/40 to-transparent" />
+      <div className="w-full h-px bg-linear-to-r from-transparent via-gold/40 to-transparent" />
 
       <div className="relative z-10">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl py-12 lg:py-16">
@@ -38,7 +38,7 @@ export default function Footer() {
               {contactItem && (
                 <Link
                   href={contactItem.hash as Route}
-                  className="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-gold to-gold-light text-gray-900 rounded-lg text-sm font-inter font-semibold hover:from-gold-light hover:to-gold transition-all duration-300 hover:shadow-lg hover:shadow-gold/20 hover:-translate-y-0.5 group"
+                  className="inline-flex items-center gap-2 px-6 py-3 bg-linear-to-r from-gold to-gold-light text-gray-900 rounded-lg text-sm font-inter font-semibold hover:from-gold-light hover:to-gold transition-all duration-300 hover:shadow-lg hover:shadow-gold/20 hover:-translate-y-0.5 group"
                 >
                   Get In Touch
                   <svg
@@ -61,7 +61,7 @@ export default function Footer() {
             {/* Columnas de navegación - Cada una ocupa 1 columna */}
             <div className="text-center sm:text-left sm:col-span-1">
               <h2 className="text-gold font-inter font-semibold text-sm uppercase tracking-wider mb-4 flex items-center justify-center sm:justify-start gap-2">
-                <span className="w-8 h-px bg-gradient-to-r from-gold/50 to-transparent hidden sm:block" />
+                <span className="w-8 h-px bg-linear-to-r from-gold/50 to-transparent hidden sm:block" />
                 Navigation
               </h2>
               <ul className="space-y-2">
@@ -81,7 +81,7 @@ export default function Footer() {
 
             <div className="text-center sm:text-left sm:col-span-1">
               <h2 className="text-gold font-inter font-semibold text-sm uppercase tracking-wider mb-4 flex items-center justify-center sm:justify-start gap-2">
-                <span className="w-8 h-px bg-gradient-to-r from-gold/50 to-transparent hidden sm:block" />
+                <span className="w-8 h-px bg-linear-to-r from-gold/50 to-transparent hidden sm:block" />
                 More
               </h2>
               <ul className="space-y-2">
@@ -112,7 +112,7 @@ export default function Footer() {
 
             <div className="text-center sm:text-left sm:col-span-1">
               <h2 className="text-gold font-inter font-semibold text-sm uppercase tracking-wider mb-4 flex items-center justify-center sm:justify-start gap-2">
-                <span className="w-8 h-px bg-gradient-to-r from-gold/50 to-transparent hidden sm:block" />
+                <span className="w-8 h-px bg-linear-to-r from-gold/50 to-transparent hidden sm:block" />
                 Connect
               </h2>
               <div className="space-y-3">
@@ -139,7 +139,7 @@ export default function Footer() {
 
           {/* Separador */}
           <div className="my-8 lg:my-12">
-            <div className="w-full h-px bg-gradient-to-r from-transparent via-white/10 to-transparent" />
+            <div className="w-full h-px bg-linear-to-r from-transparent via-white/10 to-transparent" />
           </div>
 
           {/* Links secundarios y copyright - Flex mejorado */}

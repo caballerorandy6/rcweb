@@ -187,7 +187,7 @@ export default function MilestoneManager({
           </div>
           <div className="h-3 bg-gray-700 rounded-full overflow-hidden">
             <div
-              className="h-full bg-gradient-to-r from-gold to-yellow-500 transition-all duration-500"
+              className="h-full bg-linear-to-r from-gold to-yellow-500 transition-all duration-500"
               style={{ width: `${progressPercent}%` }}
             />
           </div>
@@ -236,7 +236,7 @@ export default function MilestoneManager({
                           }
                         }}
                         autoFocus
-                        className="w-full bg-gray-700 text-white px-3 py-1 rounded border border-gold/50 focus:outline-none focus:border-gold font-inter"
+                        className="w-full bg-gray-700 text-white px-3 py-1 rounded-sm border border-gold/50 focus:outline-hidden focus:border-gold font-inter"
                       />
                     ) : (
                       <h3 className="font-semibold text-white font-inter truncate">
@@ -273,14 +273,14 @@ export default function MilestoneManager({
                         )
                       }
                       disabled={isLoading}
-                      className="px-3 py-1 bg-gold/20 text-gold text-sm rounded hover:bg-gold/30 transition-colors font-inter disabled:opacity-50"
+                      className="px-3 py-1 bg-gold/20 text-gold text-sm rounded-sm hover:bg-gold/30 transition-colors font-inter disabled:opacity-50"
                     >
                       → {getNextStatus(milestone.status)?.replace("_", " ")}
                     </button>
                   )}
                   <button
                     onClick={() => setEditingId(milestone.id)}
-                    className="p-1 hover:bg-gray-700 rounded transition-colors"
+                    className="p-1 hover:bg-gray-700 rounded-sm transition-colors"
                     title="Edit"
                   >
                     <PencilIcon className="w-4 h-4 text-gray-400" />
@@ -288,7 +288,7 @@ export default function MilestoneManager({
                   <button
                     onClick={() => handleDelete(milestone.id)}
                     disabled={isLoading}
-                    className="p-1 hover:bg-red-500/20 rounded transition-colors disabled:opacity-50"
+                    className="p-1 hover:bg-red-500/20 rounded-sm transition-colors disabled:opacity-50"
                     title="Delete"
                   >
                     <TrashIcon className="w-4 h-4 text-red-400" />
@@ -306,7 +306,7 @@ export default function MilestoneManager({
                 value={newTitle}
                 onChange={(e) => setNewTitle(e.target.value)}
                 placeholder="Milestone title..."
-                className="w-full bg-gray-700 text-white px-3 py-2 rounded border border-gray-600 focus:outline-none focus:border-gold font-inter mb-2"
+                className="w-full bg-gray-700 text-white px-3 py-2 rounded-sm border border-gray-600 focus:outline-hidden focus:border-gold font-inter mb-2"
                 autoFocus
               />
               <textarea
@@ -314,13 +314,13 @@ export default function MilestoneManager({
                 onChange={(e) => setNewDescription(e.target.value)}
                 placeholder="Description (optional)..."
                 rows={2}
-                className="w-full bg-gray-700 text-white px-3 py-2 rounded border border-gray-600 focus:outline-none focus:border-gold font-inter mb-3 resize-none"
+                className="w-full bg-gray-700 text-white px-3 py-2 rounded-sm border border-gray-600 focus:outline-hidden focus:border-gold font-inter mb-3 resize-none"
               />
               <div className="flex gap-2">
                 <button
                   onClick={handleAddMilestone}
                   disabled={isLoading || !newTitle.trim()}
-                  className="px-4 py-2 bg-gold text-gray-900 rounded font-semibold hover:bg-gold/90 transition-colors font-inter disabled:opacity-50"
+                  className="px-4 py-2 bg-gold text-gray-900 rounded-sm font-semibold hover:bg-gold/90 transition-colors font-inter disabled:opacity-50"
                 >
                   {isLoading ? "Adding..." : "Add Milestone"}
                 </button>
@@ -330,7 +330,7 @@ export default function MilestoneManager({
                     setNewTitle("");
                     setNewDescription("");
                   }}
-                  className="px-4 py-2 bg-gray-700 text-white rounded hover:bg-gray-600 transition-colors font-inter"
+                  className="px-4 py-2 bg-gray-700 text-white rounded-sm hover:bg-gray-600 transition-colors font-inter"
                 >
                   Cancel
                 </button>

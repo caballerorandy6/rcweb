@@ -5,8 +5,8 @@ export default function SubscriptionManagementSkeleton() {
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
         {[...Array(4)].map((_, i) => (
           <div key={i} className="bg-gray-800/50 rounded-lg p-4 border border-gray-700/50">
-            <div className="h-4 bg-gray-700 rounded w-24 mb-2"></div>
-            <div className="h-8 bg-gray-700 rounded w-16"></div>
+            <div className="h-4 bg-gray-700 rounded-sm w-24 mb-2"></div>
+            <div className="h-8 bg-gray-700 rounded-sm w-16"></div>
           </div>
         ))}
       </div>
@@ -22,7 +22,7 @@ export default function SubscriptionManagementSkeleton() {
       <div className="bg-gray-800/50 rounded-lg border border-gray-700/50 p-4">
         <div className="space-y-4">
           {[...Array(5)].map((_, i) => (
-            <div key={i} className="h-16 bg-gray-700/50 rounded"></div>
+            <div key={i} className="h-16 bg-gray-700/50 rounded-sm"></div>
           ))}
         </div>
       </div>

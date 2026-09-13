@@ -47,7 +47,7 @@ export default function LeadsTrendChart({
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
         <div className="flex items-center gap-3">
-          <ChartBarIcon className="w-5 h-5 sm:w-6 sm:h-6 text-gold flex-shrink-0" />
+          <ChartBarIcon className="w-5 h-5 sm:w-6 sm:h-6 text-gold shrink-0" />
           <h2 className="text-xl sm:text-2xl font-bold text-white font-iceland">
             Lead Trends
           </h2>

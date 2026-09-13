@@ -46,7 +46,7 @@ export default function PrivacyPolicy() {
     <section
       id="privacy"
       ref={ref}
-      className="relative isolate overflow-hidden py-24 sm:py-32 bg-gradient-to-b from-gray-900 via-gray-900/95 to-gray-900"
+      className="relative isolate overflow-hidden py-24 sm:py-32 bg-linear-to-b from-gray-900 via-gray-900/95 to-gray-900"
     >
       {/* Background decoration */}
       <div className="absolute inset-0 -z-10">
@@ -93,7 +93,7 @@ export default function PrivacyPolicy() {
           viewport={{ once: true }}
           transition={{ type: "spring", stiffness: 200, damping: 20 }}
         >
-          <div className="bg-gradient-to-r from-gold/10 to-gold/5 backdrop-blur-lg rounded-2xl p-8 border border-gold/20 shadow-xl shadow-black/50">
+          <div className="bg-linear-to-r from-gold/10 to-gold/5 backdrop-blur-lg rounded-2xl p-8 border border-gold/20 shadow-xl shadow-black/50">
             <p className="text-white/90 text-lg leading-relaxed font-inter">
               This Privacy Policy describes Our policies and procedures on the
               collection, use and disclosure of Your information when You use
@@ -1072,7 +1072,7 @@ export default function PrivacyPolicy() {
           viewport={{ once: true }}
           transition={{ type: "spring", stiffness: 200, damping: 20 }}
         >
-          <div className="bg-gradient-to-r from-gold/10 to-transparent backdrop-blur-md rounded-xl border border-gold/20 p-8">
+          <div className="bg-linear-to-r from-gold/10 to-transparent backdrop-blur-md rounded-xl border border-gold/20 p-8">
             <h2 className="text-2xl font-bold text-gold font-iceland mb-6">
               Contact Us
             </h2>

@@ -62,14 +62,14 @@ export default function ExitIntentPopup() {
     <Dialog open={showPopup} onClose={closePopup} className="relative z-50">
       <DialogBackdrop
         transition
-        className="fixed inset-0 bg-black/80 backdrop-blur-sm transition-opacity data-closed:opacity-0 data-enter:duration-300 data-enter:ease-out data-leave:duration-200 data-leave:ease-in"
+        className="fixed inset-0 bg-black/80 backdrop-blur-xs transition-opacity data-closed:opacity-0 data-enter:duration-300 data-enter:ease-out data-leave:duration-200 data-leave:ease-in"
       />
 
       <div className="fixed inset-0 z-50 overflow-y-auto">
         <div className="flex min-h-full items-center justify-center p-4">
           <DialogPanel
             transition
-            className="relative w-full max-w-lg transform overflow-hidden rounded-2xl bg-gradient-to-br from-gray-900 via-gray-900 to-gray-800 border-2 border-gold/30 shadow-2xl shadow-gold/10 transition-all data-closed:scale-95 data-closed:opacity-0 data-enter:duration-300 data-enter:ease-out data-leave:duration-200 data-leave:ease-in"
+            className="relative w-full max-w-lg transform overflow-hidden rounded-2xl bg-linear-to-br from-gray-900 via-gray-900 to-gray-800 border-2 border-gold/30 shadow-2xl shadow-gold/10 transition-all data-closed:scale-95 data-closed:opacity-0 data-enter:duration-300 data-enter:ease-out data-leave:duration-200 data-leave:ease-in"
           >
             {/* Close button */}
             <button
@@ -124,15 +124,15 @@ export default function ExitIntentPopup() {
                   onChange={(e) => setEmail(e.target.value)}
                   placeholder="Enter your email"
                   required
-                  className="w-full p-4 bg-gray-800/80 text-white rounded-xl border border-gray-700/60 focus:outline-none focus:border-gold focus:ring-2 focus:ring-gold/20 transition-all font-inter placeholder-gray-400"
+                  className="w-full p-4 bg-gray-800/80 text-white rounded-xl border border-gray-700/60 focus:outline-hidden focus:border-gold focus:ring-2 focus:ring-gold/20 transition-all font-inter placeholder-gray-400"
                 />
 
                 <button
                   type="submit"
                   disabled={isSubmitting}
-                  className="relative w-full py-4 text-lg font-semibold text-black bg-gradient-to-r from-gold via-gold-light to-gold hover:from-gold-light hover:via-gold hover:to-gold-light rounded-xl transition-all duration-300 shadow-lg hover:shadow-gold/25 font-inter group overflow-hidden transform hover:scale-[1.02] active:scale-[0.98] disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100"
+                  className="relative w-full py-4 text-lg font-semibold text-black bg-linear-to-r from-gold via-gold-light to-gold hover:from-gold-light hover:via-gold hover:to-gold-light rounded-xl transition-all duration-300 shadow-lg hover:shadow-gold/25 font-inter group overflow-hidden transform hover:scale-[1.02] active:scale-[0.98] disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100"
                 >
-                  <div className="absolute inset-0 bg-white/20 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700 skew-x-12" />
+                  <div className="absolute inset-0 bg-white/20 -translate-x-full group-hover:translate-x-full transition-transform duration-700 skew-x-12" />
                   <span className="relative">
                     {isSubmitting ? "Sending..." : "Get My Free Guide"}
                   </span>

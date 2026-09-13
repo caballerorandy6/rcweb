@@ -28,7 +28,7 @@ const sizeClasses: Record<ButtonSize, string> = {
 
 const variantClasses: Record<ButtonVariant, string> = {
   primary:
-    "text-black bg-gradient-to-r from-gold via-gold-light to-gold hover:from-gold-light hover:via-gold hover:to-gold-light shadow-lg hover:shadow-gold/25 transform hover:scale-[1.02] active:scale-[0.98] disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100",
+    "text-black bg-linear-to-r from-gold via-gold-light to-gold hover:from-gold-light hover:via-gold hover:to-gold-light shadow-lg hover:shadow-gold/25 transform hover:scale-[1.02] active:scale-[0.98] disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100",
   secondary:
     "text-gold border-2 border-gold/50 hover:bg-gold/10 hover:border-gold disabled:opacity-50 disabled:cursor-not-allowed",
 };

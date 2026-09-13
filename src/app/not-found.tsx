@@ -94,7 +94,7 @@ export default function NotFound() {
         </video>
 
         {/* Overlay gradients */}
-        <div className="absolute inset-0 bg-gradient-to-b from-gray-900/80 via-gray-900/60 to-gray-900/80" />
+        <div className="absolute inset-0 bg-linear-to-b from-gray-900/80 via-gray-900/60 to-gray-900/80" />
         <div className="absolute inset-0 bg-black/30" />
       </div>
 
@@ -108,7 +108,7 @@ export default function NotFound() {
         {/* Warning Icon */}
         <motion.div className="flex justify-center" variants={itemVariants}>
           <motion.div
-            className="p-6 bg-gold/10 backdrop-blur-sm rounded-full border-2 border-gold/50"
+            className="p-6 bg-gold/10 backdrop-blur-xs rounded-full border-2 border-gold/50"
             variants={pulseVariants}
             animate="animate"
           >
@@ -144,15 +144,15 @@ export default function NotFound() {
           variants={itemVariants}
           className="grid grid-cols-3 gap-4 max-w-lg mx-auto mb-10 font-inter"
         >
-          <div className="bg-gray-900/50 backdrop-blur-sm border border-gold/20 rounded-lg p-3">
+          <div className="bg-gray-900/50 backdrop-blur-xs border border-gold/20 rounded-lg p-3">
             <p className="text-2xl font-bold text-gold">404</p>
             <p className="text-xs text-gray-400 font-inter">Error Code</p>
           </div>
-          <div className="bg-gray-900/50 backdrop-blur-sm border border-gold/20 rounded-lg p-3">
+          <div className="bg-gray-900/50 backdrop-blur-xs border border-gold/20 rounded-lg p-3">
             <p className="text-2xl font-bold text-gold">0</p>
             <p className="text-xs text-gray-400 font-inter">Pages Found</p>
           </div>
-          <div className="bg-gray-900/50 backdrop-blur-sm border border-gold/20 rounded-lg p-3">
+          <div className="bg-gray-900/50 backdrop-blur-xs border border-gold/20 rounded-lg p-3">
             <p className="text-2xl font-bold text-gold">∞</p>
             <p className="text-xs text-gray-400 font-inter">Possibilities</p>
           </div>

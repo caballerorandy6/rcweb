@@ -122,7 +122,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className="!scroll-smooth" data-scroll-behavior="smooth" suppressHydrationWarning>
+    <html lang="en" className="scroll-smooth!" data-scroll-behavior="smooth" suppressHydrationWarning>
       <head>
         {/* Note: next/font handles font preconnects automatically */}
 
@@ -197,7 +197,7 @@ export default function RootLayout({
         {/* Skip to main content link for accessibility (WCAG 2.1 Level A) */}
         <a
           href="#main-content"
-          className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-[9999] focus:px-4 focus:py-2 focus:bg-gold focus:text-black focus:rounded-lg focus:font-semibold focus:outline-none"
+          className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-9999 focus:px-4 focus:py-2 focus:bg-gold focus:text-black focus:rounded-lg focus:font-semibold focus:outline-hidden"
         >
           Skip to main content
         </a>

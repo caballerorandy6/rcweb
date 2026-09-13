@@ -55,7 +55,7 @@ export default function Unsubscribe() {
           </p>
           <Link
             href="/"
-            className="mt-6 inline-block bg-gray-700 text-white py-2 px-4 rounded hover:bg-gray-600 font-inter"
+            className="mt-6 inline-block bg-gray-700 text-white py-2 px-4 rounded-sm hover:bg-gray-600 font-inter"
           >
             Back to Home
           </Link>
@@ -72,7 +72,7 @@ export default function Unsubscribe() {
             from marketing emails?
           </p>
 
-          <div className="bg-gray-700/50 rounded p-4 mb-6 font-inter">
+          <div className="bg-gray-700/50 rounded-sm p-4 mb-6 font-inter">
             <p className="text-sm text-gray-400">You will no longer receive:</p>
             <ul className="mt-2 text-sm text-gray-300 space-y-1">
               <li>• Marketing updates</li>
@@ -85,13 +85,13 @@ export default function Unsubscribe() {
             <button
               onClick={handleUnsubscribe}
               disabled={isPending}
-              className="flex-1 bg-red-600 text-white py-2 rounded hover:bg-red-700 disabled:opacity-50 font-inter"
+              className="flex-1 bg-red-600 text-white py-2 rounded-sm hover:bg-red-700 disabled:opacity-50 font-inter"
             >
               {isPending ? "Processing..." : "Yes, Unsubscribe"}
             </button>
             <Link
               href="/"
-              className="flex-1 bg-gray-700 text-white py-2 rounded hover:bg-gray-600 text-center font-inter"
+              className="flex-1 bg-gray-700 text-white py-2 rounded-sm hover:bg-gray-600 text-center font-inter"
             >
               Cancel
             </Link>

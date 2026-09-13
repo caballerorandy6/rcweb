@@ -132,12 +132,12 @@ const DialogForm = ({ closeModal }: DialogFormProps) => {
   return (
     <>
       <div className="relative">
-        <div className="absolute inset-0 bg-gradient-to-br from-gold/5 via-transparent to-purple-500/5 rounded-2xl blur-xl"></div>
+        <div className="absolute inset-0 bg-linear-to-br from-gold/5 via-transparent to-purple-500/5 rounded-2xl blur-xl"></div>
 
         <form
           onSubmit={(event) => handleSubmit(onSubmit)(event)}
           onFocus={handleFormInteraction}
-          className="relative space-y-6 bg-gradient-to-br from-gray-900/95 to-gray-800/95 p-8 rounded-2xl shadow-2xl backdrop-blur-sm border border-gray-700/50 hover:border-gold/30 transition-all duration-500"
+          className="relative space-y-6 bg-linear-to-br from-gray-900/95 to-gray-800/95 p-8 rounded-2xl shadow-2xl backdrop-blur-xs border border-gray-700/50 hover:border-gold/30 transition-all duration-500"
         >
           <div className="absolute top-0 left-0 w-20 h-20 bg-gold/10 rounded-full blur-2xl"></div>
           <div className="absolute bottom-0 right-0 w-16 h-16 bg-purple-500/10 rounded-full blur-2xl"></div>
@@ -146,7 +146,7 @@ const DialogForm = ({ closeModal }: DialogFormProps) => {
             <h2 className="text-4xl md:text-5xl text-gold  font-bold text-center font-iceland tracking-wide">
               Let&apos;s Connect
             </h2>
-            <div className="w-24 h-1 bg-gradient-to-r from-transparent via-gold to-transparent mx-auto mt-4 rounded-full"></div>
+            <div className="w-24 h-1 bg-linear-to-r from-transparent via-gold to-transparent mx-auto mt-4 rounded-full"></div>
           </div>
 
           {/* Honeypot field - hidden from users, visible to bots */}
@@ -157,7 +157,7 @@ const DialogForm = ({ closeModal }: DialogFormProps) => {
             onChange={(e) => setHoneypot(e.target.value)}
             autoComplete="new-password"
             tabIndex={-1}
-            className="absolute -left-[9999px] opacity-0 h-0 w-0 pointer-events-none"
+            className="absolute left-[-9999px] opacity-0 h-0 w-0 pointer-events-none"
             aria-hidden="true"
           />
 
@@ -168,10 +168,10 @@ const DialogForm = ({ closeModal }: DialogFormProps) => {
                 {...register("name")}
                 type="text"
                 id="name"
-                className="w-full p-4 bg-gray-800/80 text-white rounded-xl border border-gray-700/60 focus:outline-none focus:border-gold focus:ring-2 focus:ring-gold/20 transition-all duration-300 font-inter placeholder-gray-400 hover:bg-gray-800 peer backdrop-blur-sm"
+                className="w-full p-4 bg-gray-800/80 text-white rounded-xl border border-gray-700/60 focus:outline-hidden focus:border-gold focus:ring-2 focus:ring-gold/20 transition-all duration-300 font-inter placeholder-gray-400 hover:bg-gray-800 peer backdrop-blur-xs"
                 placeholder="Full Name"
               />
-              <div className="absolute inset-0 rounded-xl bg-gradient-to-r from-gold/0 via-gold/5 to-gold/0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"></div>
+              <div className="absolute inset-0 rounded-xl bg-linear-to-r from-gold/0 via-gold/5 to-gold/0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"></div>
             </div>
             <ErrorMessage
               errors={errors}
@@ -192,10 +192,10 @@ const DialogForm = ({ closeModal }: DialogFormProps) => {
                 {...register("email")}
                 type="email"
                 id="email"
-                className="w-full p-4 bg-gray-800/80 text-white rounded-xl border border-gray-700/60 focus:outline-none focus:border-gold focus:ring-2 focus:ring-gold/20 transition-all duration-300 font-inter placeholder-gray-400 hover:bg-gray-800 peer backdrop-blur-sm"
+                className="w-full p-4 bg-gray-800/80 text-white rounded-xl border border-gray-700/60 focus:outline-hidden focus:border-gold focus:ring-2 focus:ring-gold/20 transition-all duration-300 font-inter placeholder-gray-400 hover:bg-gray-800 peer backdrop-blur-xs"
                 placeholder="Email"
               />
-              <div className="absolute inset-0 rounded-xl bg-gradient-to-r from-gold/0 via-gold/5 to-gold/0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"></div>
+              <div className="absolute inset-0 rounded-xl bg-linear-to-r from-gold/0 via-gold/5 to-gold/0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"></div>
             </div>
             <ErrorMessage
               errors={errors}
@@ -216,10 +216,10 @@ const DialogForm = ({ closeModal }: DialogFormProps) => {
                 {...register("phone")}
                 type="tel"
                 id="phone"
-                className="w-full p-4 bg-gray-800/80 text-white rounded-xl border border-gray-700/60 focus:outline-none focus:border-gold focus:ring-2 focus:ring-gold/20 transition-all duration-300 font-inter placeholder-gray-400 hover:bg-gray-800 peer backdrop-blur-sm"
+                className="w-full p-4 bg-gray-800/80 text-white rounded-xl border border-gray-700/60 focus:outline-hidden focus:border-gold focus:ring-2 focus:ring-gold/20 transition-all duration-300 font-inter placeholder-gray-400 hover:bg-gray-800 peer backdrop-blur-xs"
                 placeholder="Phone Number"
               />
-              <div className="absolute inset-0 rounded-xl bg-gradient-to-r from-gold/0 via-gold/5 to-gold/0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"></div>
+              <div className="absolute inset-0 rounded-xl bg-linear-to-r from-gold/0 via-gold/5 to-gold/0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"></div>
             </div>
             <ErrorMessage
               errors={errors}
@@ -239,11 +239,11 @@ const DialogForm = ({ closeModal }: DialogFormProps) => {
               <textarea
                 {...register("message")}
                 id="message"
-                className="w-full p-4 bg-gray-800/80 text-white rounded-xl border border-gray-700/60 focus:outline-none focus:border-gold focus:ring-2 focus:ring-gold/20 transition-all duration-300 font-inter placeholder-gray-400 hover:bg-gray-800 peer backdrop-blur-sm resize-none"
+                className="w-full p-4 bg-gray-800/80 text-white rounded-xl border border-gray-700/60 focus:outline-hidden focus:border-gold focus:ring-2 focus:ring-gold/20 transition-all duration-300 font-inter placeholder-gray-400 hover:bg-gray-800 peer backdrop-blur-xs resize-none"
                 placeholder="Type your message..."
                 rows={5}
               />
-              <div className="absolute inset-0 rounded-xl bg-gradient-to-r from-gold/0 via-gold/5 to-gold/0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"></div>
+              <div className="absolute inset-0 rounded-xl bg-linear-to-r from-gold/0 via-gold/5 to-gold/0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"></div>
             </div>
             <ErrorMessage
               errors={errors}
@@ -264,7 +264,7 @@ const DialogForm = ({ closeModal }: DialogFormProps) => {
                 <input
                   {...register("marketingConsent")}
                   type="checkbox"
-                  className="w-5 h-5 bg-gray-800/80 border-2 border-gray-700/60 rounded text-gold focus:ring-2 focus:ring-gold/20 focus:ring-offset-0 focus:ring-offset-gray-900 checked:bg-gold checked:border-gold cursor-pointer transition-all duration-200 hover:border-gold/50"
+                  className="w-5 h-5 bg-gray-800/80 border-2 border-gray-700/60 rounded-sm text-gold focus:ring-2 focus:ring-gold/20 focus:ring-offset-0 focus:ring-offset-gray-900 checked:bg-gold checked:border-gold cursor-pointer transition-all duration-200 hover:border-gold/50"
                 />
               </div>
               <div className="flex-1">
@@ -287,9 +287,9 @@ const DialogForm = ({ closeModal }: DialogFormProps) => {
             <button
               disabled={isPending}
               type="submit"
-              className="relative w-full py-4 text-lg font-semibold text-black bg-gradient-to-r from-gold via-gold-light to-gold hover:from-gold-light hover:via-gold hover:to-gold-light rounded-xl transition-all duration-300 shadow-lg hover:shadow-gold/25 font-inter group overflow-hidden transform hover:scale-[1.02] active:scale-[0.98]"
+              className="relative w-full py-4 text-lg font-semibold text-black bg-linear-to-r from-gold via-gold-light to-gold hover:from-gold-light hover:via-gold hover:to-gold-light rounded-xl transition-all duration-300 shadow-lg hover:shadow-gold/25 font-inter group overflow-hidden transform hover:scale-[1.02] active:scale-[0.98]"
             >
-              <div className="absolute inset-0 bg-white/20 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700 skew-x-12"></div>
+              <div className="absolute inset-0 bg-white/20 -translate-x-full group-hover:translate-x-full transition-transform duration-700 skew-x-12"></div>
               <span className="relative flex items-center justify-center">
                 {isPending ? <p>Sending...</p> : <p>Send Message</p>}
                 <svg

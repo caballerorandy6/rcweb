@@ -14,7 +14,7 @@ export default function TermsOfServiceSkeleton() {
         {/* Last Updated Skeleton */}
         <div className="mx-auto max-w-4xl mb-8 animate-pulse">
           <div className="rounded-xl border border-gold/20 bg-gray-900/50 p-4">
-            <div className="h-4 bg-gray-700 rounded w-1/3"></div>
+            <div className="h-4 bg-gray-700 rounded-sm w-1/3"></div>
           </div>
         </div>
 
@@ -23,11 +23,11 @@ export default function TermsOfServiceSkeleton() {
           {[1, 2, 3, 4, 5, 6].map((i) => (
             <div
               key={i}
-              className="rounded-xl border border-gold/20 bg-gray-900/50 backdrop-blur-sm p-6"
+              className="rounded-xl border border-gold/20 bg-gray-900/50 backdrop-blur-xs p-6"
             >
               {/* Card Header */}
               <div className="flex items-start gap-4 mb-4">
-                <div className="h-8 w-8 bg-gray-700 rounded-lg flex-shrink-0"></div>
+                <div className="h-8 w-8 bg-gray-700 rounded-lg shrink-0"></div>
                 <div className="flex-1">
                   <div className="h-7 bg-gray-700 rounded-lg mb-2 w-1/2"></div>
                   <div className="h-4 bg-gray-700 rounded-lg w-full"></div>

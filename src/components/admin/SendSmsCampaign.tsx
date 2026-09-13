@@ -147,7 +147,7 @@ export default function SendSmsCampaign({ initialStats }: SendSmsCampaignProps) 
               placeholder="Your message here... (Always include: Reply STOP to unsubscribe)"
               rows={4}
               maxLength={480} // Max 3 SMS segments
-              className="w-full p-3 bg-gray-800 text-white rounded-lg border border-gray-700 focus:border-blue-400 focus:outline-none font-inter"
+              className="w-full p-3 bg-gray-800 text-white rounded-lg border border-gray-700 focus:border-blue-400 focus:outline-hidden font-inter"
             />
             <p className="text-xs text-gray-500 mt-1 font-inter">
               Always include opt-out instructions in your message.
@@ -164,7 +164,7 @@ export default function SendSmsCampaign({ initialStats }: SendSmsCampaignProps) 
                 <button
                   key={template.name}
                   onClick={() => setMessage(template.text)}
-                  className="px-3 py-1 text-xs bg-gray-800 text-gray-300 rounded hover:bg-gray-700 hover:text-white transition-colors font-inter"
+                  className="px-3 py-1 text-xs bg-gray-800 text-gray-300 rounded-sm hover:bg-gray-700 hover:text-white transition-colors font-inter"
                 >
                   {template.name}
                 </button>
@@ -179,7 +179,7 @@ export default function SendSmsCampaign({ initialStats }: SendSmsCampaignProps) 
               id="testMode"
               checked={testMode}
               onChange={(e) => setTestMode(e.target.checked)}
-              className="w-5 h-5 bg-gray-800 border-gray-700 text-blue-400 rounded focus:ring-blue-400"
+              className="w-5 h-5 bg-gray-800 border-gray-700 text-blue-400 rounded-sm focus:ring-blue-400"
             />
             <label htmlFor="testMode" className="text-white font-inter">
               Test Mode

@@ -71,7 +71,7 @@ export default function BlogUnsubscribeForm() {
 
   if (isUnsubscribed) {
     return (
-      <div className="bg-gradient-to-br from-gray-900/95 to-gray-800/95 p-8 lg:p-12 rounded-2xl shadow-2xl backdrop-blur-sm border border-gray-700/50 text-center">
+      <div className="bg-linear-to-br from-gray-900/95 to-gray-800/95 p-8 lg:p-12 rounded-2xl shadow-2xl backdrop-blur-xs border border-gray-700/50 text-center">
         <div className="flex justify-center mb-6">
           <CheckCircleIcon className="w-16 h-16 text-green-400" />
         </div>
@@ -97,7 +97,7 @@ export default function BlogUnsubscribeForm() {
   }
 
   return (
-    <div className="bg-gradient-to-br from-gray-900/95 to-gray-800/95 p-8 lg:p-12 rounded-2xl shadow-2xl backdrop-blur-sm border border-gray-700/50">
+    <div className="bg-linear-to-br from-gray-900/95 to-gray-800/95 p-8 lg:p-12 rounded-2xl shadow-2xl backdrop-blur-xs border border-gray-700/50">
       <div className="flex items-center gap-3 mb-6">
         <EnvelopeIcon className="w-8 h-8 text-gold" />
         <h1 className="text-3xl md:text-4xl text-gold font-bold font-iceland">
@@ -123,7 +123,7 @@ export default function BlogUnsubscribeForm() {
             type="email"
             id="email"
             placeholder="your@email.com"
-            className="w-full p-4 bg-gray-800/80 text-white rounded-xl border border-gray-700/60 focus:outline-none focus:border-gold focus:ring-2 focus:ring-gold/20 transition-all duration-300 font-inter placeholder-gray-500"
+            className="w-full p-4 bg-gray-800/80 text-white rounded-xl border border-gray-700/60 focus:outline-hidden focus:border-gold focus:ring-2 focus:ring-gold/20 transition-all duration-300 font-inter placeholder-gray-500"
             disabled={isSubmitting}
           />
           {errors.email && (
@@ -136,9 +136,9 @@ export default function BlogUnsubscribeForm() {
         <button
           type="submit"
           disabled={isSubmitting}
-          className="relative w-full py-4 text-lg font-semibold text-black bg-gradient-to-r from-gold via-gold-light to-gold hover:from-gold-light hover:via-gold hover:to-gold-light rounded-xl transition-all duration-300 shadow-lg hover:shadow-gold/25 font-inter group overflow-hidden transform hover:scale-[1.02] active:scale-[0.98] disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100"
+          className="relative w-full py-4 text-lg font-semibold text-black bg-linear-to-r from-gold via-gold-light to-gold hover:from-gold-light hover:via-gold hover:to-gold-light rounded-xl transition-all duration-300 shadow-lg hover:shadow-gold/25 font-inter group overflow-hidden transform hover:scale-[1.02] active:scale-[0.98] disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100"
         >
-          <div className="absolute inset-0 bg-white/20 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700 skew-x-12 disabled:translate-x-[-100%]"></div>
+          <div className="absolute inset-0 bg-white/20 -translate-x-full group-hover:translate-x-full transition-transform duration-700 skew-x-12 disabled:-translate-x-full"></div>
           <span className="relative flex items-center justify-center">
             {isSubmitting ? "Unsubscribing..." : "Unsubscribe"}
           </span>

@@ -75,7 +75,7 @@ const TermsOfService = () => {
     <section
       ref={ref}
       id="terms"
-      className="relative py-24 sm:py-32 overflow-hidden bg-gradient-to-b from-gray-900 via-gray-900/95 to-gray-900"
+      className="relative py-24 sm:py-32 overflow-hidden bg-linear-to-b from-gray-900 via-gray-900/95 to-gray-900"
     >
       {/* Background decoration */}
       <div className="absolute inset-0 -z-10">
@@ -92,12 +92,12 @@ const TermsOfService = () => {
           transition={{ type: "spring", stiffness: 220, damping: 22 }}
           className="mb-8 max-w-5xl mx-auto"
         >
-          <div className="bg-amber-500/10 border border-amber-500/30 rounded-xl p-4 sm:p-6 backdrop-blur-sm">
+          <div className="bg-amber-500/10 border border-amber-500/30 rounded-xl p-4 sm:p-6 backdrop-blur-xs">
             <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4">
-              <div className="flex-shrink-0">
+              <div className="shrink-0">
                 <ExclamationTriangleIcon className="w-10 h-10 text-amber-500" />
               </div>
-              <div className="flex-grow">
+              <div className="grow">
                 <h2 className="text-amber-500 font-bold text-2xl mb-1 font-iceland">
                   Important: Review Required
                 </h2>
@@ -114,7 +114,7 @@ const TermsOfService = () => {
                 }}
                 whileTap={{ scale: 0.95 }}
                 onClick={handleGoBack}
-                className="flex-shrink-0 inline-flex items-center gap-2 px-4 py-2 bg-gray-800 hover:bg-gray-700 text-white rounded-lg transition-colors border border-gray-600 font-inter"
+                className="shrink-0 inline-flex items-center gap-2 px-4 py-2 bg-gray-800 hover:bg-gray-700 text-white rounded-lg transition-colors border border-gray-600 font-inter"
               >
                 <ArrowLeftIcon className="w-4 h-4" />
                 Go Back
@@ -139,7 +139,7 @@ const TermsOfService = () => {
           viewport={{ once: true }}
           transition={{ type: "spring", stiffness: 200, damping: 20 }}
         >
-          <div className="bg-gradient-to-r from-gold/10 to-gold/5 backdrop-blur-lg rounded-2xl p-8 border border-gold/20 shadow-xl shadow-black/50">
+          <div className="bg-linear-to-r from-gold/10 to-gold/5 backdrop-blur-lg rounded-2xl p-8 border border-gold/20 shadow-xl shadow-black/50">
             <p className="text-white/90 text-lg leading-relaxed font-inter">
               Welcome to{" "}
               <span className="text-gold font-bold">RC Web Solutions LLC</span>.

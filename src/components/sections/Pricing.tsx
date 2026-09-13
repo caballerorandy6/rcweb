@@ -88,7 +88,7 @@ const Pricing = () => {
                 plan.featured
                   ? "border-2 border-gold ring-2 ring-gold/20 scale-105"
                   : "border border-gold/20"
-              } bg-gray-900/50 p-8 backdrop-blur-sm transition-all duration-200 hover:border-gold/50 hover:bg-gold/5 w-full sm:w-[calc(50%-1rem)] lg:w-[calc(33.333%-1.5rem)]`}
+              } bg-gray-900/50 p-8 backdrop-blur-xs transition-all duration-200 hover:border-gold/50 hover:bg-gold/5 w-full sm:w-[calc(50%-1rem)] lg:w-[calc(33.333%-1.5rem)]`}
             >
               {plan.featured && (
                 <div className="absolute -top-4 left-1/2 -translate-x-1/2">
@@ -135,12 +135,12 @@ const Pricing = () => {
                 onClick={() => handlePlanSelection(plan.id)}
                 className={`mt-8 w-full relative inline-flex items-center justify-center py-4 text-lg font-semibold rounded-xl transition-all duration-300 font-inter group overflow-hidden transform hover:scale-[1.02] active:scale-[0.98] ${
                   plan.featured
-                    ? "text-black bg-gradient-to-r from-gold via-gold-light to-gold hover:from-gold-light hover:via-gold hover:to-gold-light shadow-lg hover:shadow-gold/25"
+                    ? "text-black bg-linear-to-r from-gold via-gold-light to-gold hover:from-gold-light hover:via-gold hover:to-gold-light shadow-lg hover:shadow-gold/25"
                     : "text-gold border-2 border-gold/50 hover:bg-gold/10 hover:border-gold/60"
                 }`}
               >
                 {plan.featured && (
-                  <div className="absolute inset-0 bg-white/20 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700 skew-x-12"></div>
+                  <div className="absolute inset-0 bg-white/20 -translate-x-full group-hover:translate-x-full transition-transform duration-700 skew-x-12"></div>
                 )}
                 <span className="relative flex items-center justify-center">
                   {plan.cta}
@@ -152,7 +152,7 @@ const Pricing = () => {
 
         {/* Modal */}
         {showModal && (
-          <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 backdrop-blur-sm p-4">
+          <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 backdrop-blur-xs p-4">
             <motion.div
               initial={{ opacity: 0, scale: 0.95 }}
               animate={{ opacity: 1, scale: 1 }}
@@ -208,7 +208,7 @@ const Pricing = () => {
                     type="text"
                     value={customerName}
                     onChange={(e) => setCustomerName(e.target.value)}
-                    className="w-full p-3 bg-gray-800/70 text-white rounded-lg border border-gray-700 focus:border-gold focus:outline-none focus:ring-2 focus:ring-gold/20 transition-all"
+                    className="w-full p-3 bg-gray-800/70 text-white rounded-lg border border-gray-700 focus:border-gold focus:outline-hidden focus:ring-2 focus:ring-gold/20 transition-all"
                     placeholder="John Doe"
                   />
                 </div>
@@ -220,7 +220,7 @@ const Pricing = () => {
                     type="email"
                     value={customerEmail}
                     onChange={(e) => setCustomerEmail(e.target.value)}
-                    className="w-full p-3 bg-gray-800/70 text-white rounded-lg border border-gray-700 focus:border-gold focus:outline-none focus:ring-2 focus:ring-gold/20 transition-all"
+                    className="w-full p-3 bg-gray-800/70 text-white rounded-lg border border-gray-700 focus:border-gold focus:outline-hidden focus:ring-2 focus:ring-gold/20 transition-all"
                     placeholder="john@example.com"
                   />
                 </div>
@@ -230,9 +230,9 @@ const Pricing = () => {
                 <button
                   onClick={handleGoToTerms}
                   disabled={isPending}
-                  className="relative flex-1 inline-flex items-center justify-center py-4 text-lg font-semibold text-black bg-gradient-to-r from-gold via-gold-light to-gold hover:from-gold-light hover:via-gold hover:to-gold-light rounded-xl transition-all duration-300 shadow-lg hover:shadow-gold/25 font-inter group overflow-hidden transform hover:scale-[1.02] active:scale-[0.98] disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="relative flex-1 inline-flex items-center justify-center py-4 text-lg font-semibold text-black bg-linear-to-r from-gold via-gold-light to-gold hover:from-gold-light hover:via-gold hover:to-gold-light rounded-xl transition-all duration-300 shadow-lg hover:shadow-gold/25 font-inter group overflow-hidden transform hover:scale-[1.02] active:scale-[0.98] disabled:opacity-50 disabled:cursor-not-allowed"
                 >
-                  <div className="absolute inset-0 bg-white/20 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700 skew-x-12"></div>
+                  <div className="absolute inset-0 bg-white/20 -translate-x-full group-hover:translate-x-full transition-transform duration-700 skew-x-12"></div>
                   <span className="relative flex items-center justify-center">
                     {isPending ? "Loading..." : "Go to Terms & Pay"}
                   </span>

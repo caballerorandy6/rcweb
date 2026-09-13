@@ -172,7 +172,7 @@ const About = () => {
                 />
 
                 {/* Badge de ubicación */}
-                <div className="absolute bottom-4 left-4 bg-gray-900/90 backdrop-blur-sm px-4 py-2 rounded-lg border border-gold/30 shadow-lg">
+                <div className="absolute bottom-4 left-4 bg-gray-900/90 backdrop-blur-xs px-4 py-2 rounded-lg border border-gold/30 shadow-lg">
                   <div className="flex items-center gap-2">
                     <MapPinIcon className="w-4 h-4 text-gold" />
                     <span className="text-white text-sm font-inter font-medium">

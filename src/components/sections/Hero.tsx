@@ -37,7 +37,7 @@ const Hero = () => {
     <section
       id="home"
       ref={ref}
-      className="relative isolate overflow-hidden pt-24 sm:pt-32 pb-16 sm:pb-24 min-h-[100svh]"
+      className="relative isolate overflow-hidden pt-24 sm:pt-32 pb-16 sm:pb-24 min-h-svh"
     >
       <div className="absolute inset-0 -z-10 h-full w-full">
         <Image
@@ -49,7 +49,7 @@ const Hero = () => {
           className="object-cover object-right md:object-center opacity-35"
           aria-hidden="true"
         />
-        <div className="absolute inset-0 bg-gradient-to-b from-black/50 via-black/30 to-black/70"></div>
+        <div className="absolute inset-0 bg-linear-to-b from-black/50 via-black/30 to-black/70"></div>
       </div>
 
       <div className="mx-auto max-w-7xl px-6 lg:px-8 min-h-[calc(100svh-8rem)] flex flex-col justify-center">

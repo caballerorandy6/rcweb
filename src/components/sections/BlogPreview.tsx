@@ -27,7 +27,7 @@ export default function BlogPreview() {
           {posts.map((post, index) => (
             <article
               key={post.slug}
-              className="group relative flex flex-col overflow-hidden rounded-2xl bg-gradient-to-br from-gray-800/50 to-gray-900/50 backdrop-blur-lg border border-gray-700/50 hover:border-gold/30 transition-all duration-300"
+              className="group relative flex flex-col overflow-hidden rounded-2xl bg-linear-to-br from-gray-800/50 to-gray-900/50 backdrop-blur-lg border border-gray-700/50 hover:border-gold/30 transition-all duration-300"
             >
               {post.image && (
                 <div className="relative h-48 overflow-hidden bg-gray-800">
@@ -39,7 +39,7 @@ export default function BlogPreview() {
                     sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
                     className="object-cover group-hover:scale-105 transition-transform duration-300"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-gray-900 to-transparent opacity-60" />
+                  <div className="absolute inset-0 bg-linear-to-t from-gray-900 to-transparent opacity-60" />
                 </div>
               )}
 

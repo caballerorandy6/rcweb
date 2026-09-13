@@ -96,7 +96,7 @@ export default async function StatsGrid() {
                 </p>
               )}
             </div>
-            <div className="flex-shrink-0">{card.icon}</div>
+            <div className="shrink-0">{card.icon}</div>
           </div>
         </div>
       ))}

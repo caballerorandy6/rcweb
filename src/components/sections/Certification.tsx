@@ -42,7 +42,7 @@ const Certification = ({
     // Si es PDF sin thumbnail, mostrar placeholder o iframe
     if (isPDF) {
       return (
-        <div className="relative w-full h-36 bg-gradient-to-br from-gray-800 to-gray-700 flex items-center justify-center">
+        <div className="relative w-full h-36 bg-linear-to-br from-gray-800 to-gray-700 flex items-center justify-center">
           {/* Opción A: Placeholder estilizado */}
           <div className="text-center">
             <svg
@@ -80,24 +80,24 @@ const Certification = ({
 
   return (
     <div className="flex flex-col h-full">
-      <div className="overflow-hidden rounded-t-lg bg-gray-800 relative group flex-shrink-0">
+      <div className="overflow-hidden rounded-t-lg bg-gray-800 relative group shrink-0">
         {renderPreview()}
 
         {isPDF && (
-          <div className="absolute top-2 right-2 bg-red-600 text-white px-2 py-1 rounded text-xs font-inter">
+          <div className="absolute top-2 right-2 bg-red-600 text-white px-2 py-1 rounded-sm text-xs font-inter">
             PDF
           </div>
         )}
       </div>
 
-      <div className="p-5 flex-grow flex flex-col justify-between">
+      <div className="p-5 grow flex flex-col justify-between">
         <div>
           <h2 className="text-2xl font-iceland text-gold line-clamp-2">{name}</h2>
           <p className="mt-3 text-sm text-white/80 font-inter line-clamp-4">{description}</p>
         </div>
       </div>
 
-      <div className="flex divide-gray-700 border-t border-gold/50 flex-shrink-0">
+      <div className="flex divide-gray-700 border-t border-gold/50 shrink-0">
         <a
           href={url}
           target="_blank"

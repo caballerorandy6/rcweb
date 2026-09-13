@@ -78,7 +78,7 @@ export default function AdminMessages({
   };
 
   return (
-    <div className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-50 p-4">
+    <div className="fixed inset-0 bg-black/60 backdrop-blur-xs flex items-center justify-center z-50 p-4">
       <div className="bg-gray-900 border border-gray-700/50 rounded-xl w-full max-w-2xl max-h-[90vh] flex flex-col">
         {/* Header */}
         <div className="p-4 sm:p-6 border-b border-gray-700/50">
@@ -162,7 +162,7 @@ export default function AdminMessages({
               onKeyDown={handleKeyDown}
               placeholder="Type your message..."
               rows={2}
-              className="flex-1 bg-gray-700/50 border border-gray-600/50 rounded-lg px-3 py-2 text-sm text-white placeholder-gray-400 focus:outline-none focus:border-gold/50 resize-none"
+              className="flex-1 bg-gray-700/50 border border-gray-600/50 rounded-lg px-3 py-2 text-sm text-white placeholder-gray-400 focus:outline-hidden focus:border-gold/50 resize-none"
             />
             <button
               onClick={handleSendMessage}

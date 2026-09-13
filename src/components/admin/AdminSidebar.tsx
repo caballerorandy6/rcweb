@@ -145,7 +145,7 @@ export default function AdminSidebar() {
   return (
     <>
       {/* Mobile Header - fixed at very top */}
-      <div className="lg:hidden fixed top-0 left-0 right-0 z-50 bg-gray-900/95 backdrop-blur-sm border-b border-gray-800">
+      <div className="lg:hidden fixed top-0 left-0 right-0 z-50 bg-gray-900/95 backdrop-blur-xs border-b border-gray-800">
         <div className="flex items-center justify-between px-4 py-3">
           <Link
             href="/admin-dashboard"
@@ -220,7 +220,7 @@ export default function AdminSidebar() {
                           : "text-gray-300 hover:bg-gray-800 hover:text-white"
                       }`}
                     >
-                      <Icon className="h-4 w-4 flex-shrink-0" />
+                      <Icon className="h-4 w-4 shrink-0" />
                       <span>{item.name}</span>
                     </Link>
                   );
@@ -254,7 +254,7 @@ export default function AdminSidebar() {
                       onClick={() => setSidebarOpen(false)}
                       className="flex items-center gap-3 px-3 py-2 rounded-lg font-inter text-sm text-gray-400 hover:bg-gray-800 hover:text-gold transition-all duration-200"
                     >
-                      <Icon className="h-4 w-4 flex-shrink-0" />
+                      <Icon className="h-4 w-4 shrink-0" />
                       <span>{item.name}</span>
                     </Link>
                   );

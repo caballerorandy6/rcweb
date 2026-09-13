@@ -43,7 +43,7 @@ export default function ServicesPage() {
       <main className="bg-gray-950">
         <BackLink href="/#services" label="Back to Home" />
         <section className="relative pt-8 pb-20 sm:pt-12 sm:pb-28">
-          <div className="absolute inset-0 bg-gradient-to-b from-gold/5 via-transparent to-transparent" />
+          <div className="absolute inset-0 bg-linear-to-b from-gold/5 via-transparent to-transparent" />
           <div className="relative mx-auto max-w-7xl px-6 lg:px-8">
             <div className="mx-auto max-w-3xl text-center">
               <h1 className="text-4xl font-bold tracking-tight text-white sm:text-6xl font-iceland">

@@ -80,7 +80,7 @@ const Testimonials = () => {
             <motion.div
               key={testimonial.author}
               variants={cardVariants}
-              className="group relative rounded-2xl border border-gold/20 bg-gray-900/50 p-6 lg:p-8 backdrop-blur-sm transition-all duration-200 hover:border-gold/50 hover:bg-gold/5 hover:scale-105 shadow-lg shadow-black/20 w-full sm:w-[calc(50%-0.75rem)] lg:w-[calc(33.333%-1.5rem)]"
+              className="group relative rounded-2xl border border-gold/20 bg-gray-900/50 p-6 lg:p-8 backdrop-blur-xs transition-all duration-200 hover:border-gold/50 hover:bg-gold/5 hover:scale-105 shadow-lg shadow-black/20 w-full sm:w-[calc(50%-0.75rem)] lg:w-[calc(33.333%-1.5rem)]"
             >
               {/* Google badge */}
               <div className="absolute top-4 right-4">

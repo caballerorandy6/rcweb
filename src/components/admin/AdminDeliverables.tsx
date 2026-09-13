@@ -218,7 +218,7 @@ export default function AdminDeliverables({
                 className="p-4 rounded-lg border border-gray-700/50 bg-gray-900/50 hover:border-gold/30 transition-all"
               >
                 <div className="flex items-start gap-3">
-                  <div className="text-gold mt-0.5 flex-shrink-0">
+                  <div className="text-gold mt-0.5 shrink-0">
                     {getDeliverableIcon(deliverable.type)}
                   </div>
 
@@ -229,7 +229,7 @@ export default function AdminDeliverables({
                           {deliverable.name}
                         </h3>
                         <div className="flex items-center gap-2 mt-1">
-                          <span className="px-2 py-0.5 bg-gold/20 text-gold text-xs font-inter rounded">
+                          <span className="px-2 py-0.5 bg-gold/20 text-gold text-xs font-inter rounded-sm">
                             {getDeliverableTypeLabel(deliverable.type)}
                           </span>
                           {deliverable.fileSize && (
@@ -242,7 +242,7 @@ export default function AdminDeliverables({
                       <button
                         onClick={() => handleDelete(deliverable.id)}
                         disabled={isDeleting === deliverable.id}
-                        className="p-1.5 hover:bg-red-500/20 rounded transition-colors disabled:opacity-50 flex-shrink-0"
+                        className="p-1.5 hover:bg-red-500/20 rounded-sm transition-colors disabled:opacity-50 shrink-0"
                         title="Delete"
                       >
                         <TrashIcon className="w-4 h-4 text-red-400" />
@@ -306,7 +306,7 @@ export default function AdminDeliverables({
                     value={fileName}
                     onChange={(e) => setFileName(e.target.value)}
                     placeholder="Enter deliverable name..."
-                    className="w-full bg-gray-700 text-white px-3 py-2 rounded border border-gray-600 focus:outline-none focus:border-gold font-inter"
+                    className="w-full bg-gray-700 text-white px-3 py-2 rounded-sm border border-gray-600 focus:outline-hidden focus:border-gold font-inter"
                   />
                 </div>
 
@@ -319,7 +319,7 @@ export default function AdminDeliverables({
                     onChange={(e) => setDescription(e.target.value)}
                     placeholder="Enter description..."
                     rows={2}
-                    className="w-full bg-gray-700 text-white px-3 py-2 rounded border border-gray-600 focus:outline-none focus:border-gold font-inter resize-none"
+                    className="w-full bg-gray-700 text-white px-3 py-2 rounded-sm border border-gray-600 focus:outline-hidden focus:border-gold font-inter resize-none"
                   />
                 </div>
 
@@ -330,7 +330,7 @@ export default function AdminDeliverables({
                   <select
                     value={type}
                     onChange={(e) => setType(e.target.value as DeliverableType)}
-                    className="w-full bg-gray-700 text-white px-3 py-2 rounded border border-gray-600 focus:outline-none focus:border-gold font-inter"
+                    className="w-full bg-gray-700 text-white px-3 py-2 rounded-sm border border-gray-600 focus:outline-hidden focus:border-gold font-inter"
                   >
                     {DELIVERABLE_TYPES.map((t) => (
                       <option key={t} value={t}>
@@ -344,7 +344,7 @@ export default function AdminDeliverables({
                   <button
                     onClick={handleUpload}
                     disabled={isUploading || !fileName.trim() || !selectedFile}
-                    className="px-4 py-2 bg-gold text-gray-900 rounded font-semibold hover:bg-gold/90 transition-colors font-inter disabled:opacity-50 disabled:cursor-not-allowed"
+                    className="px-4 py-2 bg-gold text-gray-900 rounded-sm font-semibold hover:bg-gold/90 transition-colors font-inter disabled:opacity-50 disabled:cursor-not-allowed"
                   >
                     {isUploading ? "Uploading..." : "Upload Deliverable"}
                   </button>
@@ -356,7 +356,7 @@ export default function AdminDeliverables({
                       setType("source_code");
                       setSelectedFile(null);
                     }}
-                    className="px-4 py-2 bg-gray-700 text-white rounded hover:bg-gray-600 transition-colors font-inter"
+                    className="px-4 py-2 bg-gray-700 text-white rounded-sm hover:bg-gray-600 transition-colors font-inter"
                   >
                     Cancel
                   </button>

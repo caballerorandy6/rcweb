@@ -155,7 +155,7 @@ export default function ContactManagement({
           placeholder="Search by name, email, or phone..."
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
-          className="w-full md:w-96 p-3 bg-gray-800 text-white rounded-lg border border-gray-700 focus:border-gold focus:outline-none"
+          className="w-full md:w-96 p-3 bg-gray-800 text-white rounded-lg border border-gray-700 focus:border-gold focus:outline-hidden"
         />
       </div>
 
@@ -279,7 +279,7 @@ export default function ContactManagement({
                             name: e.target.value,
                           })
                         }
-                        className="bg-gray-700 text-white px-2 py-1 rounded"
+                        className="bg-gray-700 text-white px-2 py-1 rounded-sm"
                       />
                     ) : (
                       <span className="text-white font-medium">
@@ -435,7 +435,7 @@ export default function ContactManagement({
                   onChange={(e) =>
                     setFormData({ ...formData, name: e.target.value })
                   }
-                  className="w-full p-2 bg-gray-700 text-white rounded border border-gray-600 focus:border-gold focus:outline-none"
+                  className="w-full p-2 bg-gray-700 text-white rounded-sm border border-gray-600 focus:border-gold focus:outline-hidden"
                 />
               </div>
 
@@ -449,7 +449,7 @@ export default function ContactManagement({
                   onChange={(e) =>
                     setFormData({ ...formData, email: e.target.value })
                   }
-                  className="w-full p-2 bg-gray-700 text-white rounded border border-gray-600 focus:border-gold focus:outline-none"
+                  className="w-full p-2 bg-gray-700 text-white rounded-sm border border-gray-600 focus:border-gold focus:outline-hidden"
                 />
               </div>
 
@@ -463,7 +463,7 @@ export default function ContactManagement({
                   onChange={(e) =>
                     setFormData({ ...formData, phone: e.target.value })
                   }
-                  className="w-full p-2 bg-gray-700 text-white rounded border border-gray-600 focus:border-gold focus:outline-none"
+                  className="w-full p-2 bg-gray-700 text-white rounded-sm border border-gray-600 focus:border-gold focus:outline-hidden"
                 />
               </div>
 
@@ -489,7 +489,7 @@ export default function ContactManagement({
               <button
                 onClick={handleCreateContact}
                 disabled={isPending}
-                className="flex-1 bg-gold text-gray-900 py-2 rounded font-semibold hover:bg-gold/90 disabled:opacity-50 font-inter"
+                className="flex-1 bg-gold text-gray-900 py-2 rounded-sm font-semibold hover:bg-gold/90 disabled:opacity-50 font-inter"
               >
                 {isPending ? "Creating..." : "Create Contact"}
               </button>
@@ -503,7 +503,7 @@ export default function ContactManagement({
                     marketingConsent: false,
                   });
                 }}
-                className="flex-1 bg-gray-700 text-white py-2 rounded hover:bg-gray-600 font-inter"
+                className="flex-1 bg-gray-700 text-white py-2 rounded-sm hover:bg-gray-600 font-inter"
               >
                 Cancel
               </button>

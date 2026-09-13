@@ -84,7 +84,7 @@ const FAQ = () => {
               <motion.div
                 key={faq.question}
                 variants={cardVariants}
-                className="rounded-lg border border-gold/20 bg-gray-900/50 backdrop-blur-sm transition-all duration-200 hover:border-gold/50 shadow-lg shadow-black/20"
+                className="rounded-lg border border-gold/20 bg-gray-900/50 backdrop-blur-xs transition-all duration-200 hover:border-gold/50 shadow-lg shadow-black/20"
               >
                 <button
                   onClick={() =>

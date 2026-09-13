@@ -190,7 +190,7 @@ export default function ProjectManagement({
 
       {stats && (
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 font-inter">
-          <div className="bg-gradient-to-br from-gray-800/80 to-gray-900/80 backdrop-blur-sm border border-gold/20 rounded-xl p-4 sm:p-6 shadow-lg shadow-black/20 hover:border-gold/40 transition-all duration-300">
+          <div className="bg-linear-to-br from-gray-800/80 to-gray-900/80 backdrop-blur-xs border border-gold/20 rounded-xl p-4 sm:p-6 shadow-lg shadow-black/20 hover:border-gold/40 transition-all duration-300">
             <h3 className="text-gray-400 text-xs sm:text-sm mb-2 font-medium">
               Total Projects
             </h3>
@@ -198,7 +198,7 @@ export default function ProjectManagement({
               {stats.total}
             </p>
           </div>
-          <div className="bg-gradient-to-br from-gray-800/80 to-gray-900/80 backdrop-blur-sm border border-blue-500/20 rounded-xl p-4 sm:p-6 shadow-lg shadow-black/20 hover:border-blue-500/40 transition-all duration-300">
+          <div className="bg-linear-to-br from-gray-800/80 to-gray-900/80 backdrop-blur-xs border border-blue-500/20 rounded-xl p-4 sm:p-6 shadow-lg shadow-black/20 hover:border-blue-500/40 transition-all duration-300">
             <h3 className="text-gray-400 text-xs sm:text-sm mb-2 font-medium">
               In Progress
             </h3>
@@ -206,7 +206,7 @@ export default function ProjectManagement({
               {stats.inProgress}
             </p>
           </div>
-          <div className="bg-gradient-to-br from-gray-800/80 to-gray-900/80 backdrop-blur-sm border border-orange-500/20 rounded-xl p-4 sm:p-6 shadow-lg shadow-black/20 hover:border-orange-500/40 transition-all duration-300">
+          <div className="bg-linear-to-br from-gray-800/80 to-gray-900/80 backdrop-blur-xs border border-orange-500/20 rounded-xl p-4 sm:p-6 shadow-lg shadow-black/20 hover:border-orange-500/40 transition-all duration-300">
             <h3 className="text-gray-400 text-xs sm:text-sm mb-2 font-medium">
               Awaiting Payment
             </h3>
@@ -214,7 +214,7 @@ export default function ProjectManagement({
               {stats.awaitingPayment}
             </p>
           </div>
-          <div className="bg-gradient-to-br from-gray-800/80 to-gray-900/80 backdrop-blur-sm border border-green-500/20 rounded-xl p-4 sm:p-6 shadow-lg shadow-black/20 hover:border-green-500/40 transition-all duration-300">
+          <div className="bg-linear-to-br from-gray-800/80 to-gray-900/80 backdrop-blur-xs border border-green-500/20 rounded-xl p-4 sm:p-6 shadow-lg shadow-black/20 hover:border-green-500/40 transition-all duration-300">
             <h3 className="text-gray-400 text-xs sm:text-sm mb-2 font-medium">
               Completed
             </h3>
@@ -225,11 +225,11 @@ export default function ProjectManagement({
         </div>
       )}
 
-      <div className="bg-gradient-to-br from-gray-800/80 to-gray-900/80 backdrop-blur-sm border border-gray-700/50 rounded-xl overflow-hidden shadow-xl shadow-black/20 font-inter">
+      <div className="bg-linear-to-br from-gray-800/80 to-gray-900/80 backdrop-blur-xs border border-gray-700/50 rounded-xl overflow-hidden shadow-xl shadow-black/20 font-inter">
         <div className="overflow-x-auto">
           <table className="w-full">
             <thead>
-              <tr className="bg-gradient-to-r from-gray-700/80 to-gray-800/80 text-left border-b border-gray-700/50">
+              <tr className="bg-linear-to-r from-gray-700/80 to-gray-800/80 text-left border-b border-gray-700/50">
                 <th className="px-4 sm:px-6 lg:px-8 py-3 sm:py-4 text-xs sm:text-sm font-semibold text-gold uppercase tracking-wider">
                   Code
                 </th>
@@ -337,7 +337,7 @@ export default function ProjectManagement({
                         >
                           <FlagIcon className="w-4 h-4" />
                         </button>
-                        <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-2 py-1 bg-gray-900 text-white text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none whitespace-nowrap z-10 border border-gray-700">
+                        <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-2 py-1 bg-gray-900 text-white text-xs rounded-sm opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none whitespace-nowrap z-10 border border-gray-700">
                           Manage Milestones
                           <div className="absolute top-full left-1/2 -translate-x-1/2 -mt-px">
                             <div className="border-4 border-transparent border-t-gray-900"></div>
@@ -351,7 +351,7 @@ export default function ProjectManagement({
                         >
                           <FolderIcon className="w-4 h-4" />
                         </button>
-                        <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-2 py-1 bg-gray-900 text-white text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none whitespace-nowrap z-10 border border-gray-700">
+                        <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-2 py-1 bg-gray-900 text-white text-xs rounded-sm opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none whitespace-nowrap z-10 border border-gray-700">
                           Manage Deliverables
                           <div className="absolute top-full left-1/2 -translate-x-1/2 -mt-px">
                             <div className="border-4 border-transparent border-t-gray-900"></div>
@@ -365,7 +365,7 @@ export default function ProjectManagement({
                         >
                           <ChatBubbleLeftRightIcon className="w-4 h-4" />
                         </button>
-                        <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-2 py-1 bg-gray-900 text-white text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none whitespace-nowrap z-10 border border-gray-700">
+                        <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-2 py-1 bg-gray-900 text-white text-xs rounded-sm opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none whitespace-nowrap z-10 border border-gray-700">
                           Messages
                           <div className="absolute top-full left-1/2 -translate-x-1/2 -mt-px">
                             <div className="border-4 border-transparent border-t-gray-900"></div>
@@ -390,9 +390,9 @@ export default function ProjectManagement({
                                 )
                               }
                               disabled={isPending}
-                              className="relative inline-flex items-center justify-center px-3 sm:px-4 py-2 text-xs sm:text-sm font-semibold text-black bg-gradient-to-r from-gold via-gold-light to-gold hover:from-gold-light hover:via-gold hover:to-gold-light rounded-lg transition-all duration-300 shadow-lg hover:shadow-gold/25 font-inter group/btn overflow-hidden transform hover:scale-[1.02] active:scale-[0.98] disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100 whitespace-nowrap"
+                              className="relative inline-flex items-center justify-center px-3 sm:px-4 py-2 text-xs sm:text-sm font-semibold text-black bg-linear-to-r from-gold via-gold-light to-gold hover:from-gold-light hover:via-gold hover:to-gold-light rounded-lg transition-all duration-300 shadow-lg hover:shadow-gold/25 font-inter group/btn overflow-hidden transform hover:scale-[1.02] active:scale-[0.98] disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100 whitespace-nowrap"
                             >
-                              <div className="absolute inset-0 bg-white/20 translate-x-[-100%] group-hover/btn:translate-x-[100%] transition-transform duration-700 skew-x-12"></div>
+                              <div className="absolute inset-0 bg-white/20 -translate-x-full group-hover/btn:translate-x-full transition-transform duration-700 skew-x-12"></div>
                               <span className="relative flex items-center justify-center">
                                 {isPending
                                   ? "..."
@@ -404,7 +404,7 @@ export default function ProjectManagement({
                                     : `→ ${getNextStatus(project.projectStatus, project.secondPaid)?.replace("_", " ")}`}
                               </span>
                             </button>
-                            <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-2 py-1 bg-gray-900 text-white text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none whitespace-nowrap z-10 border border-gray-700">
+                            <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-2 py-1 bg-gray-900 text-white text-xs rounded-sm opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none whitespace-nowrap z-10 border border-gray-700">
                               {getNextStatus(
                                 project.projectStatus,
                                 project.secondPaid

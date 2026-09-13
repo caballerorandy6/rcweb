@@ -71,7 +71,7 @@ export default function ClientDeliverables({
               {/* Content Section */}
               <div className="flex items-start gap-2 sm:gap-3 flex-1 min-w-0">
                 {/* Icon */}
-                <div className="text-gold mt-0.5 flex-shrink-0">
+                <div className="text-gold mt-0.5 shrink-0">
                   {getDeliverableIcon(deliverable.type)}
                 </div>
 
@@ -82,7 +82,7 @@ export default function ClientDeliverables({
                     <h4 className="text-sm sm:text-base text-white font-semibold font-inter truncate">
                       {deliverable.name}
                     </h4>
-                    <span className="px-2 py-0.5 bg-gold/20 text-gold text-xs font-inter rounded flex-shrink-0 w-fit">
+                    <span className="px-2 py-0.5 bg-gold/20 text-gold text-xs font-inter rounded-sm shrink-0 w-fit">
                       {getDeliverableTypeLabel(deliverable.type)}
                     </span>
                   </div>
@@ -113,9 +113,9 @@ export default function ClientDeliverables({
                 target="_blank"
                 rel="noopener noreferrer"
                 download
-                className="relative flex items-center justify-center gap-2 px-3 sm:px-4 py-2 text-sm sm:text-base font-semibold text-black bg-gradient-to-r from-gold via-gold-light to-gold hover:from-gold-light hover:via-gold hover:to-gold-light rounded-lg transition-all duration-300 shadow-lg hover:shadow-gold/25 font-inter group overflow-hidden transform hover:scale-[1.02] active:scale-[0.98] whitespace-nowrap w-full sm:w-auto flex-shrink-0"
+                className="relative flex items-center justify-center gap-2 px-3 sm:px-4 py-2 text-sm sm:text-base font-semibold text-black bg-linear-to-r from-gold via-gold-light to-gold hover:from-gold-light hover:via-gold hover:to-gold-light rounded-lg transition-all duration-300 shadow-lg hover:shadow-gold/25 font-inter group overflow-hidden transform hover:scale-[1.02] active:scale-[0.98] whitespace-nowrap w-full sm:w-auto shrink-0"
               >
-                <div className="absolute inset-0 bg-white/20 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700 skew-x-12"></div>
+                <div className="absolute inset-0 bg-white/20 -translate-x-full group-hover:translate-x-full transition-transform duration-700 skew-x-12"></div>
                 <span className="relative flex items-center justify-center gap-2">
                   <CloudArrowDownIcon className="w-4 h-4 sm:w-5 sm:h-5" />
                   <span>Download</span>

@@ -39,7 +39,7 @@ const Project = ({
       </div>
 
       {/* Technologies */}
-      <div className="p-5 flex-grow flex flex-col">
+      <div className="p-5 grow flex flex-col">
         <h3 className="text-2xl font-iceland text-gold">{name}</h3>
         <p className="mt-2 text-base text-white/80 font-inter line-clamp-3">{description}</p>
 

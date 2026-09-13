@@ -32,7 +32,7 @@ export default async function LeadsByUTM() {
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-3 mb-5">
         <div className="flex items-center gap-3">
-          <LinkIcon className="w-5 h-5 sm:w-6 sm:h-6 text-gold flex-shrink-0" />
+          <LinkIcon className="w-5 h-5 sm:w-6 sm:h-6 text-gold shrink-0" />
           <h2 className="text-xl sm:text-2xl font-bold text-white font-iceland">
             UTM Tracking
           </h2>
@@ -64,7 +64,7 @@ export default async function LeadsByUTM() {
                       <span className="text-xs sm:text-sm text-gray-300 truncate capitalize">
                         {source.utmSource}
                       </span>
-                      <div className="flex items-center gap-1.5 flex-shrink-0">
+                      <div className="flex items-center gap-1.5 shrink-0">
                         <span className="text-xs sm:text-sm font-semibold text-white">
                           {source.count}
                         </span>

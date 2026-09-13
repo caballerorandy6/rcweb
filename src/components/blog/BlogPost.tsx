@@ -37,7 +37,7 @@ const calculateReadTime = (content: string): number => {
 export default function BlogPost({ post }: BlogPostProps) {
 
   return (
-    <section className="relative isolate overflow-hidden py-24 sm:py-32 bg-gradient-to-b from-gray-900 via-gray-900/95 to-gray-900 min-h-screen">
+    <section className="relative isolate overflow-hidden py-24 sm:py-32 bg-linear-to-b from-gray-900 via-gray-900/95 to-gray-900 min-h-screen">
       {/* Background decoration */}
       <div className="absolute inset-0 -z-10">
         <div className="absolute inset-0 bg-[url('/grid.svg')] bg-center opacity-10"></div>
@@ -66,7 +66,7 @@ export default function BlogPost({ post }: BlogPostProps) {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.1 }}
-          className="bg-gradient-to-br from-gray-800/50 to-gray-900/50 backdrop-blur-lg rounded-2xl border border-gray-700/50 overflow-hidden"
+          className="bg-linear-to-br from-gray-800/50 to-gray-900/50 backdrop-blur-lg rounded-2xl border border-gray-700/50 overflow-hidden"
         >
           {/* Featured Image */}
           {post.image && (
@@ -79,7 +79,7 @@ export default function BlogPost({ post }: BlogPostProps) {
                 className="object-cover"
                 priority
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-gray-900 via-gray-900/50 to-transparent"></div>
+              <div className="absolute inset-0 bg-linear-to-t from-gray-900 via-gray-900/50 to-transparent"></div>
             </div>
           )}
 
@@ -201,7 +201,7 @@ export default function BlogPost({ post }: BlogPostProps) {
                     </blockquote>
                   ),
                   code: ({ children }) => (
-                    <code className="bg-gray-800 px-2 py-1 rounded text-gold text-sm font-mono">
+                    <code className="bg-gray-800 px-2 py-1 rounded-sm text-gold text-sm font-mono">
                       {children}
                     </code>
                   ),
@@ -272,7 +272,7 @@ export default function BlogPost({ post }: BlogPostProps) {
             </div>
 
             {/* Call to Action */}
-            <div className="mt-12 p-8 bg-gradient-to-r from-gold/10 to-gold/5 rounded-xl border border-gold/20">
+            <div className="mt-12 p-8 bg-linear-to-r from-gold/10 to-gold/5 rounded-xl border border-gold/20">
               <h3 className="text-2xl font-bold text-gold font-iceland mb-3">
                 Ready to Start Your Project?
               </h3>

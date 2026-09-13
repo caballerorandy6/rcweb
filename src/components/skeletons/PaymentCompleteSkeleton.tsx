@@ -21,32 +21,32 @@ export default function PaymentCompleteSkeleton() {
 
         {/* Content Box Skeleton */}
         <div className="bg-gray-700/50 rounded-lg p-6 mb-6">
-          <div className="h-6 bg-gray-600 rounded mb-4 mx-auto w-1/3"></div>
+          <div className="h-6 bg-gray-600 rounded-sm mb-4 mx-auto w-1/3"></div>
           <div className="space-y-3">
             <div className="flex items-start">
-              <div className="w-5 h-5 bg-gray-600 rounded mr-2 mt-0.5 flex-shrink-0"></div>
-              <div className="flex-1 h-4 bg-gray-600 rounded"></div>
+              <div className="w-5 h-5 bg-gray-600 rounded-sm mr-2 mt-0.5 shrink-0"></div>
+              <div className="flex-1 h-4 bg-gray-600 rounded-sm"></div>
             </div>
             <div className="flex items-start">
-              <div className="w-5 h-5 bg-gray-600 rounded mr-2 mt-0.5 flex-shrink-0"></div>
-              <div className="flex-1 h-4 bg-gray-600 rounded"></div>
+              <div className="w-5 h-5 bg-gray-600 rounded-sm mr-2 mt-0.5 shrink-0"></div>
+              <div className="flex-1 h-4 bg-gray-600 rounded-sm"></div>
             </div>
             <div className="flex items-start">
-              <div className="w-5 h-5 bg-gray-600 rounded mr-2 mt-0.5 flex-shrink-0"></div>
-              <div className="flex-1 h-4 bg-gray-600 rounded"></div>
+              <div className="w-5 h-5 bg-gray-600 rounded-sm mr-2 mt-0.5 shrink-0"></div>
+              <div className="flex-1 h-4 bg-gray-600 rounded-sm"></div>
             </div>
             <div className="flex items-start">
-              <div className="w-5 h-5 bg-gray-600 rounded mr-2 mt-0.5 flex-shrink-0"></div>
-              <div className="flex-1 h-4 bg-gray-600 rounded"></div>
+              <div className="w-5 h-5 bg-gray-600 rounded-sm mr-2 mt-0.5 shrink-0"></div>
+              <div className="flex-1 h-4 bg-gray-600 rounded-sm"></div>
             </div>
           </div>
         </div>
 
         {/* Project Code Skeleton */}
         <div className="bg-gray-700 rounded-lg p-4 mb-6">
-          <div className="h-4 bg-gray-600 rounded mb-2 mx-auto w-1/3"></div>
-          <div className="h-8 bg-gray-600 rounded mx-auto w-1/2"></div>
-          <div className="h-3 bg-gray-600 rounded mt-2 mx-auto w-1/4"></div>
+          <div className="h-4 bg-gray-600 rounded-sm mb-2 mx-auto w-1/3"></div>
+          <div className="h-8 bg-gray-600 rounded-sm mx-auto w-1/2"></div>
+          <div className="h-3 bg-gray-600 rounded-sm mt-2 mx-auto w-1/4"></div>
         </div>
 
         {/* Buttons Skeleton */}
@@ -57,8 +57,8 @@ export default function PaymentCompleteSkeleton() {
 
         {/* Footer Skeleton */}
         <div className="mt-8 pt-6 border-t border-gray-700">
-          <div className="h-4 bg-gray-700 rounded mx-auto w-3/4 mb-2"></div>
-          <div className="h-3 bg-gray-700 rounded mx-auto w-1/2"></div>
+          <div className="h-4 bg-gray-700 rounded-sm mx-auto w-3/4 mb-2"></div>
+          <div className="h-3 bg-gray-700 rounded-sm mx-auto w-1/2"></div>
         </div>
       </div>
     </div>

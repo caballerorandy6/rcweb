@@ -114,7 +114,7 @@ export default async function ServicePage({
       <main className="bg-gray-950">
         {/* Hero */}
         <section className="relative pt-32 pb-20 sm:pt-40 sm:pb-28">
-          <div className="absolute inset-0 bg-gradient-to-b from-gold/5 via-transparent to-transparent" />
+          <div className="absolute inset-0 bg-linear-to-b from-gold/5 via-transparent to-transparent" />
           <div className="relative mx-auto max-w-7xl px-6 lg:px-8">
             <div className="mx-auto max-w-3xl">
               <Link
@@ -145,7 +145,7 @@ export default async function ServicePage({
               <div className="mt-8 flex flex-col sm:flex-row gap-4">
                 <Link
                   href="/schedule"
-                  className="inline-flex items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-gold via-gold-light to-gold px-6 py-4 text-base font-semibold text-black hover:from-gold-light hover:via-gold hover:to-gold-light transition-all duration-300 shadow-lg hover:shadow-gold/25 font-inter"
+                  className="inline-flex items-center justify-center gap-2 rounded-xl bg-linear-to-r from-gold via-gold-light to-gold px-6 py-4 text-base font-semibold text-black hover:from-gold-light hover:via-gold hover:to-gold-light transition-all duration-300 shadow-lg hover:shadow-gold/25 font-inter"
                 >
                   <CalendarDaysIcon className="h-5 w-5" />
                   {service.cta}
@@ -174,7 +174,7 @@ export default async function ServicePage({
         </section>
 
         {/* Features */}
-        <section className="py-20 sm:py-28 bg-white/[0.02]">
+        <section className="py-20 sm:py-28 bg-white/2">
           <div className="mx-auto max-w-7xl px-6 lg:px-8">
             <div className="mx-auto max-w-2xl text-center mb-16">
               <h2 className="text-3xl font-bold tracking-tight text-white sm:text-4xl font-iceland">
@@ -239,7 +239,7 @@ export default async function ServicePage({
         )}
 
         {/* CTA */}
-        <section className="py-20 sm:py-28 bg-white/[0.02]">
+        <section className="py-20 sm:py-28 bg-white/2">
           <div className="mx-auto max-w-7xl px-6 lg:px-8">
             <div className="mx-auto max-w-2xl text-center">
               <h2 className="text-3xl font-bold tracking-tight text-white sm:text-4xl font-iceland">
@@ -253,7 +253,7 @@ export default async function ServicePage({
               <div className="mt-10">
                 <Link
                   href="/schedule"
-                  className="inline-flex items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-gold via-gold-light to-gold px-8 py-4 text-lg font-semibold text-black hover:from-gold-light hover:via-gold hover:to-gold-light transition-all duration-300 shadow-lg hover:shadow-gold/25 font-inter"
+                  className="inline-flex items-center justify-center gap-2 rounded-xl bg-linear-to-r from-gold via-gold-light to-gold px-8 py-4 text-lg font-semibold text-black hover:from-gold-light hover:via-gold hover:to-gold-light transition-all duration-300 shadow-lg hover:shadow-gold/25 font-inter"
                 >
                   <CalendarDaysIcon className="h-5 w-5" />
                   Schedule Free Consultation

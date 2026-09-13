@@ -989,7 +989,7 @@ export default function SendNewsletterCampaign({
               value={subject}
               onChange={(e) => setSubject(e.target.value)}
               placeholder="Your amazing subject line..."
-              className="w-full p-3 bg-gray-800 text-white rounded-lg border border-gray-700 focus:border-gold focus:outline-none font-inter"
+              className="w-full p-3 bg-gray-800 text-white rounded-lg border border-gray-700 focus:border-gold focus:outline-hidden font-inter"
             />
           </div>
 
@@ -1003,7 +1003,7 @@ export default function SendNewsletterCampaign({
                 type="file"
                 accept="image/*"
                 onChange={handleImageUpload}
-                className="flex-1 p-3 bg-gray-800 text-white rounded-lg border border-gray-700 focus:border-gold focus:outline-none font-inter file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:bg-gold file:text-black file:font-semibold hover:file:bg-gold/90"
+                className="flex-1 p-3 bg-gray-800 text-white rounded-lg border border-gray-700 focus:border-gold focus:outline-hidden font-inter file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:bg-gold file:text-black file:font-semibold hover:file:bg-gold/90"
               />
               {imageBase64 && (
                 <button
@@ -1039,7 +1039,7 @@ export default function SendNewsletterCampaign({
               onChange={(e) => setContent(e.target.value)}
               placeholder="<h1>Your email content here...</h1>..."
               rows={12}
-              className="w-full p-3 bg-gray-800 text-white rounded-lg border border-gray-700 focus:border-gold focus:outline-none font-mono text-sm"
+              className="w-full p-3 bg-gray-800 text-white rounded-lg border border-gray-700 focus:border-gold focus:outline-hidden font-mono text-sm"
             />
           </div>
 
@@ -1050,7 +1050,7 @@ export default function SendNewsletterCampaign({
               id="testMode"
               checked={testMode}
               onChange={(e) => setTestMode(e.target.checked)}
-              className="w-5 h-5 bg-gray-800 border-gray-700 text-gold rounded focus:ring-gold"
+              className="w-5 h-5 bg-gray-800 border-gray-700 text-gold rounded-sm focus:ring-gold"
             />
             <label htmlFor="testMode" className="text-white font-inter">
               Test Mode
@@ -1100,7 +1100,7 @@ export default function SendNewsletterCampaign({
 
             <button
               onClick={useOfferTemplate}
-              className="px-6 py-3 bg-gradient-to-r from-gold to-gold/80 text-black rounded-lg hover:from-gold/90 hover:to-gold/70 transition-all font-inter font-semibold"
+              className="px-6 py-3 bg-linear-to-r from-gold to-gold/80 text-black rounded-lg hover:from-gold/90 hover:to-gold/70 transition-all font-inter font-semibold"
             >
               🎉 20% OFF Template
             </button>
@@ -1114,14 +1114,14 @@ export default function SendNewsletterCampaign({
 
             <button
               onClick={useWhyWebsiteTemplateES}
-              className="px-6 py-3 bg-gradient-to-r from-blue-600 to-blue-800 text-white rounded-lg hover:from-blue-700 hover:to-blue-900 transition-all font-inter font-semibold"
+              className="px-6 py-3 bg-linear-to-r from-blue-600 to-blue-800 text-white rounded-lg hover:from-blue-700 hover:to-blue-900 transition-all font-inter font-semibold"
             >
               🌐 Why Website (ES)
             </button>
 
             <button
               onClick={useWhyWebsiteTemplateEN}
-              className="px-6 py-3 bg-gradient-to-r from-purple-600 to-purple-800 text-white rounded-lg hover:from-purple-700 hover:to-purple-900 transition-all font-inter font-semibold"
+              className="px-6 py-3 bg-linear-to-r from-purple-600 to-purple-800 text-white rounded-lg hover:from-purple-700 hover:to-purple-900 transition-all font-inter font-semibold"
             >
               🌐 Why Website (EN)
             </button>

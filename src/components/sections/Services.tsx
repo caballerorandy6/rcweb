@@ -53,7 +53,7 @@ const Services = () => {
                 damping: 20,
                 delay: index * 0.1,
               }}
-              className="group relative flex flex-col gap-6 rounded-2xl border border-gold/20 bg-gray-900/50 p-6 lg:p-8 backdrop-blur-sm transition-all duration-200 hover:scale-105 hover:border-gold/50 hover:bg-gold/5 shadow-lg shadow-black/20 w-full sm:w-[calc(50%-0.75rem)] lg:w-[calc(33.333%-1.5rem)]"
+              className="group relative flex flex-col gap-6 rounded-2xl border border-gold/20 bg-gray-900/50 p-6 lg:p-8 backdrop-blur-xs transition-all duration-200 hover:scale-105 hover:border-gold/50 hover:bg-gold/5 shadow-lg shadow-black/20 w-full sm:w-[calc(50%-0.75rem)] lg:w-[calc(33.333%-1.5rem)]"
             >
               <div className="flex items-center gap-4">
                 <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-gold/10 ring-1 ring-gold/30">

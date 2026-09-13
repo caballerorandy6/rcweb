@@ -51,7 +51,7 @@ const BlogSubscriptionForm = () => {
 
   return (
     <div id="newsletter" className="w-full max-w-md mx-auto">
-      <div className="bg-gray-900/80 backdrop-blur-sm border border-gray-700/50 rounded-2xl p-6">
+      <div className="bg-gray-900/80 backdrop-blur-xs border border-gray-700/50 rounded-2xl p-6">
         <div className="flex items-center gap-2 mb-4">
           <EnvelopeIcon className="w-6 h-6 text-gold" />
           <h2 className="text-xl font-bold text-white font-iceland">
@@ -76,7 +76,7 @@ const BlogSubscriptionForm = () => {
               type="email"
               placeholder="your@email.com"
               aria-label="Email address for blog subscription"
-              className="w-full p-3 bg-gray-800/80 text-white rounded-xl border border-gray-700/60 focus:outline-none focus:border-gold focus:ring-2 focus:ring-gold/20 transition-all duration-300 font-inter placeholder-gray-500"
+              className="w-full p-3 bg-gray-800/80 text-white rounded-xl border border-gray-700/60 focus:outline-hidden focus:border-gold focus:ring-2 focus:ring-gold/20 transition-all duration-300 font-inter placeholder-gray-500"
             />
             <ErrorMessage
               errors={errors}
@@ -137,9 +137,9 @@ const BlogSubscriptionForm = () => {
           <button
             type="submit"
             disabled={isSubmitting}
-            className="relative w-full py-3 text-lg font-semibold text-black bg-gradient-to-r from-gold via-gold-light to-gold hover:from-gold-light hover:via-gold hover:to-gold-light rounded-xl transition-all duration-300 shadow-lg hover:shadow-gold/25 font-inter group overflow-hidden transform hover:scale-[1.02] active:scale-[0.98] disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100"
+            className="relative w-full py-3 text-lg font-semibold text-black bg-linear-to-r from-gold via-gold-light to-gold hover:from-gold-light hover:via-gold hover:to-gold-light rounded-xl transition-all duration-300 shadow-lg hover:shadow-gold/25 font-inter group overflow-hidden transform hover:scale-[1.02] active:scale-[0.98] disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100"
           >
-            <div className="absolute inset-0 bg-white/20 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700 skew-x-12 disabled:translate-x-[-100%]"></div>
+            <div className="absolute inset-0 bg-white/20 -translate-x-full group-hover:translate-x-full transition-transform duration-700 skew-x-12 disabled:-translate-x-full"></div>
             <span className="relative flex items-center justify-center">
               {isSubmitting ? "Subscribing..." : "Subscribe"}
             </span>

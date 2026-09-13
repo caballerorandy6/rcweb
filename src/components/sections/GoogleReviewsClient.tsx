@@ -46,7 +46,7 @@ export default function GoogleReviewsClient({ reviews }: GoogleReviewsClientProp
         <motion.div
           key={`${review.authorName}-${review.time}`}
           variants={cardVariants}
-          className="group relative rounded-2xl border border-gold/20 bg-gray-900/50 p-6 backdrop-blur-sm transition-all duration-200 hover:border-gold/50 hover:bg-gold/5 shadow-lg shadow-black/20"
+          className="group relative rounded-2xl border border-gold/20 bg-gray-900/50 p-6 backdrop-blur-xs transition-all duration-200 hover:border-gold/50 hover:bg-gold/5 shadow-lg shadow-black/20"
         >
           {/* Stars */}
           <div className="flex gap-1 mb-4">

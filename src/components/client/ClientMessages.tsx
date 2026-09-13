@@ -136,7 +136,7 @@ export default function ClientMessages({
             onKeyDown={handleKeyDown}
             placeholder="Type your message..."
             rows={2}
-            className="flex-1 bg-gray-700/50 border border-gray-600/50 rounded-lg px-3 py-2 text-sm text-white placeholder-gray-400 focus:outline-none focus:border-gold/50 resize-none"
+            className="flex-1 bg-gray-700/50 border border-gray-600/50 rounded-lg px-3 py-2 text-sm text-white placeholder-gray-400 focus:outline-hidden focus:border-gold/50 resize-none"
           />
           <button
             onClick={handleSendMessage}

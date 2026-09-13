@@ -80,7 +80,7 @@ export default function ClientInvoices({
         </div>
 
         {/* Filters */}
-        <div className="bg-gradient-to-br from-gray-900/95 to-gray-800/95 p-6 rounded-2xl shadow-2xl backdrop-blur-sm border border-gray-700/50 mb-6">
+        <div className="bg-linear-to-br from-gray-900/95 to-gray-800/95 p-6 rounded-2xl shadow-2xl backdrop-blur-xs border border-gray-700/50 mb-6">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             {/* Project Filter */}
             <div>
@@ -90,7 +90,7 @@ export default function ClientInvoices({
               <select
                 value={selectedProject}
                 onChange={(e) => setSelectedProject(e.target.value)}
-                className="w-full px-4 py-2 bg-gray-800/50 border border-gray-700/50 rounded-lg text-white font-inter focus:outline-none focus:ring-2 focus:ring-gold/50 focus:border-transparent transition-all"
+                className="w-full px-4 py-2 bg-gray-800/50 border border-gray-700/50 rounded-lg text-white font-inter focus:outline-hidden focus:ring-2 focus:ring-gold/50 focus:border-transparent transition-all"
               >
                 <option value="all">All Projects</option>
                 {projects.map((project) => (
@@ -109,7 +109,7 @@ export default function ClientInvoices({
               <select
                 value={selectedType}
                 onChange={(e) => setSelectedType(e.target.value)}
-                className="w-full px-4 py-2 bg-gray-800/50 border border-gray-700/50 rounded-lg text-white font-inter focus:outline-none focus:ring-2 focus:ring-gold/50 focus:border-transparent transition-all"
+                className="w-full px-4 py-2 bg-gray-800/50 border border-gray-700/50 rounded-lg text-white font-inter focus:outline-hidden focus:ring-2 focus:ring-gold/50 focus:border-transparent transition-all"
               >
                 <option value="all">All Types</option>
                 <option value="initial">Initial Payment</option>
@@ -126,7 +126,7 @@ export default function ClientInvoices({
               <select
                 value={selectedStatus}
                 onChange={(e) => setSelectedStatus(e.target.value)}
-                className="w-full px-4 py-2 bg-gray-800/50 border border-gray-700/50 rounded-lg text-white font-inter focus:outline-none focus:ring-2 focus:ring-gold/50 focus:border-transparent transition-all"
+                className="w-full px-4 py-2 bg-gray-800/50 border border-gray-700/50 rounded-lg text-white font-inter focus:outline-hidden focus:ring-2 focus:ring-gold/50 focus:border-transparent transition-all"
               >
                 <option value="all">All Status</option>
                 <option value="paid">Paid</option>
@@ -139,7 +139,7 @@ export default function ClientInvoices({
 
         {/* Invoices List */}
         {filteredInvoices.length === 0 ? (
-          <div className="bg-gradient-to-br from-gray-900/95 to-gray-800/95 p-12 rounded-2xl shadow-2xl backdrop-blur-sm border border-gray-700/50 text-center">
+          <div className="bg-linear-to-br from-gray-900/95 to-gray-800/95 p-12 rounded-2xl shadow-2xl backdrop-blur-xs border border-gray-700/50 text-center">
             <p className="text-gray-400 font-inter text-lg">
               {invoices.length === 0
                 ? "You don't have any invoices yet."
@@ -151,7 +151,7 @@ export default function ClientInvoices({
             {filteredInvoices.map((invoice) => (
               <div
                 key={invoice.id}
-                className="bg-gradient-to-br from-gray-900/95 to-gray-800/95 p-6 rounded-xl border border-gray-700/50 hover:border-gold/50 transition-colors"
+                className="bg-linear-to-br from-gray-900/95 to-gray-800/95 p-6 rounded-xl border border-gray-700/50 hover:border-gold/50 transition-colors"
               >
                 <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
                   <div className="flex-1">
@@ -166,7 +166,7 @@ export default function ClientInvoices({
                       >
                         {invoice.status.toUpperCase()}
                       </span>
-                      <span className="px-2 py-1 rounded text-xs font-inter bg-gold/20 text-gold">
+                      <span className="px-2 py-1 rounded-sm text-xs font-inter bg-gold/20 text-gold">
                         {getTypeLabel(invoice.type)}
                       </span>
                     </div>
@@ -194,9 +194,9 @@ export default function ClientInvoices({
                         href={invoice.pdfUrl}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="relative inline-flex items-center justify-center px-6 py-3 text-base font-semibold text-black bg-gradient-to-r from-gold via-gold-light to-gold hover:from-gold-light hover:via-gold hover:to-gold-light rounded-lg transition-all duration-300 shadow-lg hover:shadow-gold/25 font-inter group overflow-hidden transform hover:scale-[1.02] active:scale-[0.98] whitespace-nowrap"
+                        className="relative inline-flex items-center justify-center px-6 py-3 text-base font-semibold text-black bg-linear-to-r from-gold via-gold-light to-gold hover:from-gold-light hover:via-gold hover:to-gold-light rounded-lg transition-all duration-300 shadow-lg hover:shadow-gold/25 font-inter group overflow-hidden transform hover:scale-[1.02] active:scale-[0.98] whitespace-nowrap"
                       >
-                        <div className="absolute inset-0 bg-white/20 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700 skew-x-12"></div>
+                        <div className="absolute inset-0 bg-white/20 -translate-x-full group-hover:translate-x-full transition-transform duration-700 skew-x-12"></div>
                         <span className="relative flex items-center justify-center">
                           Download PDF
                         </span>
@@ -215,7 +215,7 @@ export default function ClientInvoices({
 
         {/* Summary */}
         {filteredInvoices.length > 0 && (
-          <div className="mt-6 bg-gradient-to-br from-gray-900/95 to-gray-800/95 p-6 rounded-xl border border-gray-700/50">
+          <div className="mt-6 bg-linear-to-br from-gray-900/95 to-gray-800/95 p-6 rounded-xl border border-gray-700/50">
             <p className="text-gray-400 font-inter">
               Showing {filteredInvoices.length} of {invoices.length} invoice
               {invoices.length !== 1 ? "s" : ""}

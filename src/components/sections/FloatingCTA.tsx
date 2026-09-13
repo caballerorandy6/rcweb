@@ -130,7 +130,7 @@ const socialActions = [
     name: "Instagram",
     url: "https://www.instagram.com/rcwebsolutionsllc",
     Icon: InstagramIcon,
-    bgClass: "bg-gradient-to-br from-[#f9ce34] via-[#ee2a7b] to-[#6228d7] hover:opacity-90",
+    bgClass: "bg-linear-to-br from-[#f9ce34] via-[#ee2a7b] to-[#6228d7] hover:opacity-90",
   },
   {
     id: "tiktok",
@@ -234,7 +234,7 @@ const FloatingCTA = () => {
               <motion.button
                 variants={itemVariants}
                 onClick={handleChatOpen}
-                className="group flex items-center gap-3 rounded-xl bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 pl-3 pr-4 py-2.5 text-white shadow-lg hover:shadow-purple-500/25 transition-all duration-200 hover:scale-[1.02]"
+                className="group flex items-center gap-3 rounded-xl bg-linear-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 pl-3 pr-4 py-2.5 text-white shadow-lg hover:shadow-purple-500/25 transition-all duration-200 hover:scale-[1.02]"
                 aria-label="Chat with AI Assistant"
               >
                 <div className="relative h-8 w-8 rounded-full overflow-hidden ring-2 ring-white/30">
@@ -296,7 +296,7 @@ const FloatingCTA = () => {
           className={`relative flex h-14 w-14 items-center justify-center rounded-full shadow-xl transition-all duration-300 ${
             isOpen
               ? "bg-gray-800 hover:bg-gray-700 ring-1 ring-white/10"
-              : "bg-gradient-to-br from-gold via-gold-light to-gold hover:from-gold-light hover:via-gold hover:to-gold-dark shadow-gold/30"
+              : "bg-linear-to-br from-gold via-gold-light to-gold hover:from-gold-light hover:via-gold hover:to-gold-dark shadow-gold/30"
           }`}
           whileHover={{ scale: 1.1 }}
           whileTap={{ scale: 0.95 }}

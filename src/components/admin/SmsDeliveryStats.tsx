@@ -123,7 +123,7 @@ export default function SmsDeliveryStats() {
             <select
               value={hoursAgo}
               onChange={(e) => setHoursAgo(parseInt(e.target.value))}
-              className="w-full p-3 bg-gray-700 text-white rounded-lg border border-gray-600 focus:border-gold focus:outline-none"
+              className="w-full p-3 bg-gray-700 text-white rounded-lg border border-gray-600 focus:border-gold focus:outline-hidden"
             >
               <option value={1}>Last 1 hour</option>
               <option value={6}>Last 6 hours</option>
@@ -287,7 +287,7 @@ export default function SmsDeliveryStats() {
                       setSelectedErrorCode(e.target.value);
                       setSelectedPhones(new Set());
                     }}
-                    className="px-3 py-2 bg-gray-700 text-white rounded-lg border border-gray-600 focus:border-gold focus:outline-none text-sm"
+                    className="px-3 py-2 bg-gray-700 text-white rounded-lg border border-gray-600 focus:border-gold focus:outline-hidden text-sm"
                   >
                     <option value="all">All Errors</option>
                     {Object.keys(stats.errorCodes)

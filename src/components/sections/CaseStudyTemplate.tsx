@@ -88,7 +88,7 @@ export default function CaseStudyTemplate({ data }: { data: CaseStudyData }) {
       {/* Hero Section */}
       <section className="relative pt-24 pb-16 sm:pt-32 sm:pb-24 overflow-hidden">
         <div className="absolute inset-0 -z-10">
-          <div className="absolute inset-0 bg-gradient-to-b from-gray-900 via-gray-900/95 to-gray-900" />
+          <div className="absolute inset-0 bg-linear-to-b from-gray-900 via-gray-900/95 to-gray-900" />
           <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-gold/10 rounded-full blur-[150px]" />
         </div>
 
@@ -175,7 +175,7 @@ export default function CaseStudyTemplate({ data }: { data: CaseStudyData }) {
             {data.stats.map((stat) => (
               <div
                 key={stat.label}
-                className="text-center p-6 bg-gray-800/50 backdrop-blur-sm rounded-xl border border-gold/10"
+                className="text-center p-6 bg-gray-800/50 backdrop-blur-xs rounded-xl border border-gold/10"
               >
                 <div className="text-3xl sm:text-4xl font-bold text-gold font-iceland">
                   {stat.value}
@@ -213,7 +213,7 @@ export default function CaseStudyTemplate({ data }: { data: CaseStudyData }) {
           </motion.div>
           <div className="grid md:grid-cols-3 gap-8">
             {data.challenges.map((challenge, index) => (
-              <motion.div key={challenge.title} initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: index * 0.1 }} className="bg-gray-800/50 backdrop-blur-sm rounded-xl p-8 border border-red-500/20">
+              <motion.div key={challenge.title} initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: index * 0.1 }} className="bg-gray-800/50 backdrop-blur-xs rounded-xl p-8 border border-red-500/20">
                 {(() => { const Icon = iconMap[challenge.icon]; return Icon ? <Icon className="w-10 h-10 text-red-400 mb-4" /> : null; })()}
                 <h3 className="text-xl font-bold text-white font-iceland mb-3">{challenge.title}</h3>
                 <p className="text-white/60 font-inter text-sm">{challenge.description}</p>
@@ -232,7 +232,7 @@ export default function CaseStudyTemplate({ data }: { data: CaseStudyData }) {
           </motion.div>
           <div className="space-y-12">
             {data.solutions.map((solution, index) => (
-              <motion.div key={solution.title} initial={{ opacity: 0, x: index % 2 === 0 ? -30 : 30 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} className="bg-gray-900/80 backdrop-blur-sm rounded-2xl p-8 border border-gold/20">
+              <motion.div key={solution.title} initial={{ opacity: 0, x: index % 2 === 0 ? -30 : 30 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} className="bg-gray-900/80 backdrop-blur-xs rounded-2xl p-8 border border-gold/20">
                 <div className="grid md:grid-cols-2 gap-8">
                   <div>
                     <h3 className="text-2xl font-bold text-gold font-iceland mb-4">{solution.title}</h3>
@@ -242,7 +242,7 @@ export default function CaseStudyTemplate({ data }: { data: CaseStudyData }) {
                     <ul className="space-y-3">
                       {solution.features.map((feature) => (
                         <li key={feature} className="flex items-start gap-3 text-white/80 font-inter text-sm">
-                          <CheckCircleIcon className="w-5 h-5 text-green-400 flex-shrink-0 mt-0.5" />
+                          <CheckCircleIcon className="w-5 h-5 text-green-400 shrink-0 mt-0.5" />
                           {feature}
                         </li>
                       ))}
@@ -263,7 +263,7 @@ export default function CaseStudyTemplate({ data }: { data: CaseStudyData }) {
           </motion.div>
           <div className="grid md:grid-cols-3 gap-8">
             {data.results.map((result, index) => (
-              <motion.div key={result.metric} initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: index * 0.1 }} className="bg-gradient-to-b from-gold/10 to-transparent rounded-xl p-8 border border-gold/30 text-center">
+              <motion.div key={result.metric} initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: index * 0.1 }} className="bg-linear-to-b from-gold/10 to-transparent rounded-xl p-8 border border-gold/30 text-center">
                 {(() => { const Icon = iconMap[result.icon]; return Icon ? <Icon className="w-12 h-12 text-gold mx-auto mb-4" /> : null; })()}
                 <h3 className="text-xl font-bold text-gold font-iceland mb-2">{result.metric}</h3>
                 <p className="text-white/60 font-inter text-sm">{result.description}</p>
@@ -277,7 +277,7 @@ export default function CaseStudyTemplate({ data }: { data: CaseStudyData }) {
       {data.testimonial && (
         <section className="py-20 bg-gray-800/30">
           <div className="mx-auto max-w-4xl px-6 lg:px-8">
-            <motion.div initial={{ opacity: 0, scale: 0.95 }} whileInView={{ opacity: 1, scale: 1 }} viewport={{ once: true }} className="bg-gray-900/80 backdrop-blur-sm rounded-2xl p-8 sm:p-12 border border-gold/20 text-center">
+            <motion.div initial={{ opacity: 0, scale: 0.95 }} whileInView={{ opacity: 1, scale: 1 }} viewport={{ once: true }} className="bg-gray-900/80 backdrop-blur-xs rounded-2xl p-8 sm:p-12 border border-gold/20 text-center">
               <div className="flex justify-center gap-1 mb-6">
                 {[...Array(5)].map((_, i) => (
                   <StarIcon key={i} className="w-6 h-6 text-gold fill-current" />

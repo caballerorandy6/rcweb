@@ -15,7 +15,7 @@ export default async function AdminLayout({
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-900 via-gray-950 to-gray-900 pt-[48px] lg:pt-[72px]">
+    <div className="min-h-screen bg-linear-to-br from-gray-900 via-gray-950 to-gray-900 pt-[48px] lg:pt-[72px]">
       {/* Sidebar */}
       <AdminSidebar />
 

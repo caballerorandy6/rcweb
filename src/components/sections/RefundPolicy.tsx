@@ -25,7 +25,7 @@ const RefundPolicy = () => {
     <section
       ref={ref}
       id="refund-policy"
-      className="relative py-24 sm:py-32 overflow-hidden bg-gradient-to-b from-gray-900 via-gray-900/95 to-gray-900"
+      className="relative py-24 sm:py-32 overflow-hidden bg-linear-to-b from-gray-900 via-gray-900/95 to-gray-900"
     >
       {/* Background decoration */}
       <div className="absolute inset-0 -z-10">
@@ -72,7 +72,7 @@ const RefundPolicy = () => {
           viewport={{ once: true }}
           transition={{ type: "spring", stiffness: 200, damping: 20 }}
         >
-          <div className="bg-gradient-to-r from-gold/10 to-gold/5 backdrop-blur-lg rounded-2xl p-8 border border-gold/20 shadow-xl shadow-black/50">
+          <div className="bg-linear-to-r from-gold/10 to-gold/5 backdrop-blur-lg rounded-2xl p-8 border border-gold/20 shadow-xl shadow-black/50">
             <p className="text-white/90 text-lg leading-relaxed font-inter">
               At{" "}
               <span className="text-gold font-bold">RC Web Solutions LLC</span>,
@@ -342,7 +342,7 @@ const RefundPolicy = () => {
 
                 <div className="space-y-3 text-white/80 font-inter">
                   <div className="flex items-center gap-3">
-                    <EnvelopeIcon className="w-5 h-5 text-gold flex-shrink-0" />
+                    <EnvelopeIcon className="w-5 h-5 text-gold shrink-0" />
                     <div>
                       <strong className="text-gold">Email:</strong>{" "}
                       <a
@@ -354,7 +354,7 @@ const RefundPolicy = () => {
                     </div>
                   </div>
                   <div className="flex items-center gap-3">
-                    <CurrencyDollarIcon className="w-5 h-5 text-gold flex-shrink-0" />
+                    <CurrencyDollarIcon className="w-5 h-5 text-gold shrink-0" />
                     <div>
                       <strong className="text-gold">Phone:</strong>{" "}
                       <a
