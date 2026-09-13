@@ -60,7 +60,7 @@ async function verifyRecaptcha(token: string | undefined): Promise<boolean> {
     }
 
     console.warn(
-      `🚫 reCAPTCHA failed. Score: ${data.score}, Action: ${data.action}, Success: ${data.success}`
+      `🚫 reCAPTCHA failed. Score: ${data.score}, Action: ${data.action}, Success: ${data.success}, Hostname: ${data.hostname}, Errors: ${JSON.stringify(data["error-codes"] ?? [])}`
     );
     return false;
   } catch (error) {
