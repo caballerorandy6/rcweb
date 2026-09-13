@@ -569,7 +569,7 @@ export const services = [
       "Custom, mobile-first websites optimized for conversions and lead generation. Perfect for Houston businesses starting their online presence.",
     features: ["Responsive", "SEO", "Fast Loading", "Contact Forms"],
     highlight: "95+ Lighthouse Score",
-    price: "$1,200",
+    price: "$1,000",
   },
   {
     slug: "bilingual-websites-houston",
@@ -579,7 +579,7 @@ export const services = [
       "English and Spanish websites that reach Houston's diverse community. Native localization, not machine translation. Built by a Latino developer.",
     features: ["English & Spanish", "Native Localization", "Hreflang SEO", "Cultural Context"],
     highlight: "44% of Houston is Hispanic",
-    price: "$1,200",
+    price: "$1,000",
   },
   {
     slug: "ecommerce-houston",
@@ -599,7 +599,7 @@ export const services = [
       "Complete 5-10 page websites with custom design tailored to your brand. Ideal for established businesses, professional services, and portfolios.",
     features: ["Custom Design", "SEO Optimization", "Analytics", "30-day Support"],
     highlight: "Like GSM AC & RC Beauty Salon",
-    price: "$3,500",
+    price: "$3,000",
   },
   {
     icon: ChartBarIcon,
@@ -617,7 +617,7 @@ export const services = [
       "Transform your outdated website into a modern, high-performance platform. We rebuild with current technology replacing legacy code.",
     features: ["Modern Design", "Performance Boost", "Mobile Optimization", "Content Migration"],
     highlight: "From Outdated to Outstanding",
-    price: "$4,000",
+    price: "$3,500",
   },
   {
     icon: CubeTransparentIcon,
@@ -707,9 +707,9 @@ export const pricingPlans = [
   {
     id: "landing-page",
     name: "Professional Landing Page Development",
-    price: "$1,200",
-    priceInCents: 120000, // $1,200.00
-    range: "$1,200 - $2,500",
+    price: "$1,000",
+    priceInCents: 100000, // $1,000.00
+    range: "$1,000 - $2,000",
     duration: "1-2 weeks",
     description: "Single page focused on conversions",
     features: [
@@ -728,9 +728,9 @@ export const pricingPlans = [
   {
     id: "professional-website",
     name: "Professional Business Website",
-    price: "$3,500",
-    priceInCents: 350000, // $3,500.00
-    range: "$3,500 - $6,500",
+    price: "$3,000",
+    priceInCents: 300000, // $3,000.00
+    range: "$3,000 - $6,000",
     duration: "3-4 weeks",
     description: "5-10 pages with custom design",
     features: [
@@ -796,9 +796,9 @@ export const pricingPlans = [
   {
     id: "website-redesign",
     name: "Website Redesign and Modernization",
-    price: "$4,000",
-    priceInCents: 400000, // $4,000.00
-    range: "$4,000 - $8,000",
+    price: "$3,500",
+    priceInCents: 350000, // $3,500.00
+    range: "$3,500 - $8,000",
     duration: "4-6 weeks",
     description: "Transform your outdated website",
     features: [
@@ -989,7 +989,7 @@ export const servicePages: ServicePage[] = [
     title: "Web Design",
     metaTitle: "Web Design Houston TX | Custom Websites for Small Businesses",
     metaDescription:
-      "Professional web design in Houston, TX. Custom, mobile-first websites built with Next.js for small businesses. Bilingual English & Spanish. From $1,200.",
+      "Professional web design in Houston, TX. Custom, mobile-first websites built with Next.js for small businesses. Bilingual English & Spanish. From $1,000.",
     headline: "Web Design in Houston, TX",
     subheadline:
       "Custom, mobile-first websites designed to convert visitors into customers. Built with modern technology that loads fast and ranks well on Google.",
@@ -1018,7 +1018,7 @@ export const servicePages: ServicePage[] = [
       },
     ],
     relatedProjects: ["Clínica Hispana Gessner", "Clínica Hispana Airline", "Leo's Home Experts"],
-    priceFrom: "$1,200",
+    priceFrom: "$1,000",
     cta: "Get a Custom Website",
   },
   {
@@ -1055,7 +1055,7 @@ export const servicePages: ServicePage[] = [
       },
     ],
     relatedProjects: ["GSM AC & General Contractor", "RC Beauty Salon"],
-    priceFrom: "$3,500",
+    priceFrom: "$3,000",
     cta: "Build Your Web App",
   },
   {
@@ -1063,7 +1063,7 @@ export const servicePages: ServicePage[] = [
     title: "Bilingual Websites",
     metaTitle: "Bilingual Website Houston TX | English & Spanish Web Design",
     metaDescription:
-      "Bilingual website development in Houston, TX. English and Spanish websites for businesses serving the Hispanic community. Latino-owned. From $1,200.",
+      "Bilingual website development in Houston, TX. English and Spanish websites for businesses serving the Hispanic community. Latino-owned. From $1,000.",
     headline: "Bilingual Websites in Houston, TX",
     subheadline:
       "English and Spanish websites that reach Houston's diverse community. Built by a Latino developer who understands both cultures and both markets.",
@@ -1092,7 +1092,7 @@ export const servicePages: ServicePage[] = [
       },
     ],
     relatedProjects: ["Clínica Hispana Gessner", "Clínica Hispana Airline", "Dulce Antojo Snack Carts"],
-    priceFrom: "$1,200",
+    priceFrom: "$1,000",
     cta: "Get a Bilingual Website",
   },
   {

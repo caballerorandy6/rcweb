@@ -19,7 +19,7 @@ I'm Randy Caballero, a web developer based in Houston, TX. I've built websites f
 
 ## Website Pricing Breakdown for Houston Businesses
 
-### Landing Page: $1,200 - $2,500
+### Landing Page: $1,000 - $2,000
 
 A single-page website focused on one goal — usually getting phone calls or form submissions. Perfect if you're just starting out or promoting a specific service.
 
@@ -35,7 +35,7 @@ A single-page website focused on one goal — usually getting phone calls or for
 
 ---
 
-### Professional Business Website: $3,500 - $6,500
+### Professional Business Website: $3,000 - $6,000
 
 A full 5-10 page website with custom design, multiple service pages, and everything an established business needs to look professional online.
 

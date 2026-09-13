@@ -80,7 +80,7 @@ const services = [
     icon: CurrencyDollarIcon,
     title: "Affordable Plans",
     description:
-      "Transparent pricing starting at $1,200. No hidden fees, 50/50 payment split, and a dedicated client portal to track progress.",
+      "Transparent pricing starting at $1,000. No hidden fees, 50/50 payment split, and a dedicated client portal to track progress.",
   },
 ];
 

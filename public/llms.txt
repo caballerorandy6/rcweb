@@ -19,13 +19,13 @@ Randy Caballero is a full-stack developer with 6+ years of experience building R
 
 ## Services
 
-### Web Design & Landing Pages — from $1,200
+### Web Design & Landing Pages — from $1,000
 Custom, mobile-first websites optimized for conversions and lead generation. Includes responsive design, SEO, fast loading (under 2 seconds), and contact forms. Delivery: 1-2 weeks.
 
-### Professional Business Website — from $3,500
+### Professional Business Website — from $3,000
 Complete 5-10 page websites with custom design, SEO optimization, analytics integration, and 30 days of post-launch support. Delivery: 3-4 weeks.
 
-### Bilingual Websites (English & Spanish) — from $1,200
+### Bilingual Websites (English & Spanish) — from $1,000
 Native Spanish localization (not machine translation) with proper hreflang tags, bilingual SEO, and cultural context for Houston's Hispanic community. 44% of Houston's population is Hispanic.
 
 ### E-Commerce Website Development — from $8,000
@@ -34,7 +34,7 @@ Custom online stores with Stripe payment processing, inventory management, custo
 ### Custom Business Management Dashboard — from $7,500
 Tailored admin dashboards with custom forms, data visualization, email automation, user management, and database integration. Delivery: 5-6 weeks.
 
-### Website Redesign and Modernization — from $4,000
+### Website Redesign and Modernization — from $3,500
 Transform outdated websites into modern, high-performance platforms. Includes content migration, SEO preservation, and performance optimization. Delivery: 4-6 weeks.
 
 ### Custom Web Application Development — from $12,000
