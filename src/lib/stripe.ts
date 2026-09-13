@@ -9,9 +9,11 @@ if (!process.env.STRIPE_SECRET_KEY) {
   throw new Error("STRIPE_SECRET_KEY environment variable is not set");
 }
 
-// Create singleton Stripe instance
+// Create singleton Stripe instance.
+// La versión de API se fija a la que trae el SDK instalado; al actualizar el SDK
+// hay que revisar el changelog de Stripe y actualizar este valor a la par.
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY, {
-  apiVersion: "2025-08-27.basil",
+  apiVersion: "2026-08-26.dahlia",
   typescript: true,
 });
 
