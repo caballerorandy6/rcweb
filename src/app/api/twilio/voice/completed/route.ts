@@ -22,15 +22,8 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 403 });
     }
 
-    // Extract call details
-    const callSid = formData.get("CallSid");
-    const callStatus = formData.get("CallStatus");
-    const callDuration = formData.get("CallDuration");
-    const from = formData.get("From");
-    const to = formData.get("To");
-    const dialCallStatus = formData.get("DialCallStatus");
-
-    // You can save this to your database if needed
+    // Call details arrive in params (CallSid, CallStatus, CallDuration,
+    // From, To, DialCallStatus). You can save them to your database if needed
     // await prisma.callLog.create({ data: { ... } });
 
     return NextResponse.json({ success: true });

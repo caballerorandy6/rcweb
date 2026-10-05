@@ -9,6 +9,30 @@ interface UseExitIntentOptions {
   cookieExpiryDays?: number;
 }
 
+function wasRecentlyShown(cookieName: string, cookieExpiryDays: number) {
+  if (typeof window === "undefined") return true;
+
+  // Check session storage first (once per session)
+  if (sessionStorage.getItem(`${cookieName}-session`)) return true;
+
+  // Then check localStorage for long-term dismissal
+  const lastShown = localStorage.getItem(cookieName);
+  if (!lastShown) return false;
+
+  const lastShownDate = new Date(parseInt(lastShown));
+  const expiryDate = new Date(
+    lastShownDate.getTime() + cookieExpiryDays * 24 * 60 * 60 * 1000
+  );
+
+  return new Date() < expiryDate;
+}
+
+function markAsShown(cookieName: string) {
+  if (typeof window === "undefined") return;
+  localStorage.setItem(cookieName, Date.now().toString());
+  sessionStorage.setItem(`${cookieName}-session`, "true");
+}
+
 export function useExitIntent(options: UseExitIntentOptions = {}) {
   const {
     threshold = 50,
@@ -20,33 +44,9 @@ export function useExitIntent(options: UseExitIntentOptions = {}) {
   const [showPopup, setShowPopup] = useState(false);
   const [isEnabled, setIsEnabled] = useState(false);
 
-  const wasRecentlyShown = () => {
-    if (typeof window === "undefined") return true;
-
-    // Check session storage first (once per session)
-    if (sessionStorage.getItem(`${cookieName}-session`)) return true;
-
-    // Then check localStorage for long-term dismissal
-    const lastShown = localStorage.getItem(cookieName);
-    if (!lastShown) return false;
-
-    const lastShownDate = new Date(parseInt(lastShown));
-    const expiryDate = new Date(
-      lastShownDate.getTime() + cookieExpiryDays * 24 * 60 * 60 * 1000
-    );
-
-    return new Date() < expiryDate;
-  };
-
-  const markAsShown = () => {
-    if (typeof window === "undefined") return;
-    localStorage.setItem(cookieName, Date.now().toString());
-    sessionStorage.setItem(`${cookieName}-session`, "true");
-  };
-
   const closePopup = () => {
     setShowPopup(false);
-    markAsShown();
+    markAsShown(cookieName);
   };
 
   useEffect(() => {
@@ -57,7 +57,7 @@ export function useExitIntent(options: UseExitIntentOptions = {}) {
     if (isMobile) return;
 
     // Don't show if recently shown
-    if (wasRecentlyShown()) return;
+    if (wasRecentlyShown(cookieName, cookieExpiryDays)) return;
 
     // Enable after delay
     const enableTimer = setTimeout(() => {
@@ -65,7 +65,7 @@ export function useExitIntent(options: UseExitIntentOptions = {}) {
     }, delayMs);
 
     return () => clearTimeout(enableTimer);
-  }, []);
+  }, [cookieName, cookieExpiryDays, delayMs]);
 
   useEffect(() => {
     if (!isEnabled) return;
@@ -73,13 +73,13 @@ export function useExitIntent(options: UseExitIntentOptions = {}) {
     const handleMouseLeave = (e: MouseEvent) => {
       if (e.clientY <= threshold && !showPopup) {
         setShowPopup(true);
-        markAsShown();
+        markAsShown(cookieName);
       }
     };
 
     document.addEventListener("mouseleave", handleMouseLeave);
     return () => document.removeEventListener("mouseleave", handleMouseLeave);
-  }, [isEnabled, showPopup, threshold]);
+  }, [isEnabled, showPopup, threshold, cookieName]);
 
   return { showPopup, closePopup };
 }

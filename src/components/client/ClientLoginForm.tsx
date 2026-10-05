@@ -30,12 +30,6 @@ export default function ClientLoginForm() {
     router.replace("/client/login" as Route);
   }, [error, router]);
 
-  const handleSuccess = () => {
-    setTimeout(() => {
-      window.location.href = "/client/dashboard";
-    }, 100);
-  };
-
   return (
     <LoginForm
       title="Client Login"
@@ -60,7 +54,6 @@ export default function ClientLoginForm() {
           </p>
         </>
       }
-      onSuccess={handleSuccess}
     />
   );
 }

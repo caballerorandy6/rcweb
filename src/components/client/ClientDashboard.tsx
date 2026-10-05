@@ -317,7 +317,6 @@ export default function ClientDashboard({
                     {/* Deliverables */}
                     <ClientDeliverables
                       deliverables={selectedProject.deliverables}
-                      projectCode={selectedProject.projectCode}
                     />
 
                     {/* Messages */}
