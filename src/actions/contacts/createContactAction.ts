@@ -8,6 +8,7 @@ import { Resend } from "resend";
 import { checkAndReserveEmailQuota, releaseEmailQuota } from "@/lib/emailQuota";
 import { escapeHtml, sanitizeEmail, sanitizePhone } from "@/lib/sanitize";
 import { ADMIN_EMAIL } from "@/lib/email/adminEmail";
+import { sendContactConfirmationEmail } from "@/lib/email/senders/sendContactConfirmationEmail";
 
 export interface CreateContactAction {
   success: boolean;
@@ -188,22 +189,7 @@ export const createContactAction = async (
       });
     }
 
-    // 5. Trigger n8n Lead Nurturing workflow (only if marketingConsent)
-    if (marketingConsent && email) {
-      try {
-        const n8nWebhookUrl = process.env.N8N_WEBHOOK_URL || "http://localhost:5678/webhook/new-contact";
-        await fetch(n8nWebhookUrl, {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ name, email, phone }),
-        });
-      } catch (webhookError) {
-        // Don't fail the request if webhook fails
-        console.error("⚠️ Failed to trigger n8n webhook:", webhookError);
-      }
-    }
-
-    // 6. Verificar y reservar cuota (1 email al admin, confirmación va por n8n)
+    // 5. Verificar y reservar cuota para el email al admin
     const quotaCheck = await checkAndReserveEmailQuota(1);
 
     if (!quotaCheck.canSend) {
@@ -216,7 +202,7 @@ export const createContactAction = async (
       };
     }
 
-    // 6. Enviar email al admin (el email de confirmación al usuario se envía via n8n)
+    // 6. Enviar email al admin
     try {
       await resend.emails.send({
           from: "RC Web Solutions <no-reply@rcweb.dev>",
@@ -294,13 +280,23 @@ export const createContactAction = async (
             </html>
           `,
       });
-
-      // Email de confirmación al usuario (DESACTIVADO - Ahora se envía via n8n Lead Nurturing)
     } catch (emailError) {
       console.error("❌ Failed to send email:", emailError);
       // Release quota on email send failure
       await releaseEmailQuota(1);
       throw emailError;
+    }
+
+    // 7. Confirmación al visitante. El contacto ya está guardado, así que un
+    // fallo aquí no debe convertir el envío del formulario en un error.
+    if (email && !isAdmin) {
+      const confirmation = await sendContactConfirmationEmail({
+        customerEmail: email,
+        customerName: name,
+      });
+      if (!confirmation.success) {
+        console.error("⚠️ Contact confirmation email failed:", confirmation.error);
+      }
     }
 
     return {

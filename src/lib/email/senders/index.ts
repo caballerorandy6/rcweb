@@ -42,6 +42,11 @@ export {
 } from "./sendWelcomeEmail";
 
 export {
+  sendContactConfirmationEmail,
+  type SendContactConfirmationEmailParams,
+} from "./sendContactConfirmationEmail";
+
+export {
   sendSetupPasswordEmail,
   type SendSetupPasswordEmailParams,
 } from "./sendSetupPasswordEmail";
