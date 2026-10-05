@@ -40,6 +40,11 @@ export {
 export { WelcomeEmail, type WelcomeEmailProps } from "./WelcomeEmail";
 
 export {
+  ContactConfirmationEmail,
+  type ContactConfirmationEmailProps,
+} from "./ContactConfirmationEmail";
+
+export {
   SetupPasswordEmail,
   type SetupPasswordEmailProps,
 } from "./SetupPasswordEmail";
