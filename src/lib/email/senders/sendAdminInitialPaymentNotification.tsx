@@ -3,8 +3,7 @@
 import { Resend } from "resend";
 import { render } from "@react-email/components";
 import { AdminNotificationEmail } from "../templates";
-
-const ADMIN_EMAIL = "admin@rcweb.dev";
+import { ADMIN_EMAIL } from "../adminEmail";
 
 export interface AdminInitialPaymentNotificationParams {
   projectCode: string;

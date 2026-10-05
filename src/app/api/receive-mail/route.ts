@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { Resend } from "resend";
 import { escapeHtml, sanitizeEmail, sanitizePhone } from "@/lib/sanitize";
 import { rateLimiters, checkRateLimit } from "@/lib/rateLimit";
+import { ADMIN_EMAIL } from "@/lib/email/adminEmail";
 
 export async function POST(request: NextRequest) {
   // Rate limiting: 5 requests per minute
@@ -24,7 +25,7 @@ export async function POST(request: NextRequest) {
     // Send notification email to admin
     const adminEmail = await resend.emails.send({
       from: "RC Web Solutions <no-reply@rcweb.dev>",
-      to: ["admin@rcweb.dev"],
+      to: [ADMIN_EMAIL],
       subject: `📩 New message from ${name}`,
       html: `
         <!DOCTYPE html>

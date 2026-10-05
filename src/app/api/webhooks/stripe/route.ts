@@ -8,6 +8,7 @@ import { Resend } from "resend";
 import crypto from "crypto";
 import { trackPaymentComplete } from "@/lib/analytics";
 import { createInvoiceAndSendEmail } from "@/lib/invoice/createInvoiceAndSendEmail";
+import { ADMIN_EMAIL } from "@/lib/email/adminEmail";
 import {
   sendSubscriptionConfirmation,
   sendAdminSubscriptionNotification,
@@ -837,7 +838,7 @@ export async function POST(req: Request) {
           // Email to admin
           await resend.emails.send({
             from: "RC Web Solutions <no-reply@rcweb.dev>",
-            to: "admin@rcweb.dev",
+            to: ADMIN_EMAIL,
             subject: `Payment Failed - ${subscription.email}`,
             html: `
               <h2>Subscription Payment Failed</h2>
@@ -891,7 +892,7 @@ export async function POST(req: Request) {
 
       await resend.emails.send({
         from: "RC Web Solutions <no-reply@rcweb.dev>",
-        to: "admin@rcweb.dev",
+        to: ADMIN_EMAIL,
         subject: `Subscription Cancelled - ${subscription.email}`,
         html: `
           <h2>Subscription Cancelled</h2>

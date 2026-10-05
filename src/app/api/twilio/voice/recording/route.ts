@@ -6,6 +6,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { sendEmailWithQuota } from "@/lib/sendEmailWithQuota";
 import { validateTwilioSignature } from "@/lib/twilioAuth";
+import { ADMIN_EMAIL } from "@/lib/email/adminEmail";
 
 export async function POST(request: NextRequest) {
   try {
@@ -34,7 +35,7 @@ export async function POST(request: NextRequest) {
     // Send email notification with voicemail details
     await sendEmailWithQuota({
       from: "RC Web Solutions <noreply@rcweb.dev>",
-      to: "contactus@rcweb.dev",
+      to: ADMIN_EMAIL,
       subject: `New Voicemail from ${from}`,
       html: `
         <h2>New Voicemail Received</h2>
