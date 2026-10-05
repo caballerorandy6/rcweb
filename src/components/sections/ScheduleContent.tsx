@@ -43,9 +43,12 @@ export default function ScheduleContent() {
   const [showCalendly, setShowCalendly] = useState(false);
 
   // IntersectionObserver hooks for scroll animations
-  const discussSection = useInView<HTMLDivElement>({ threshold: 0.2 });
-  const contactSection = useInView<HTMLDivElement>({ threshold: 0.2 });
-  const altContactSection = useInView<HTMLDivElement>({ threshold: 0.2 });
+  const { ref: discussRef, isInView: discussInView } =
+    useInView<HTMLDivElement>({ threshold: 0.2 });
+  const { ref: contactRef, isInView: contactInView } =
+    useInView<HTMLDivElement>({ threshold: 0.2 });
+  const { ref: altContactRef, isInView: altContactInView } =
+    useInView<HTMLDivElement>({ threshold: 0.2 });
 
   return (
     <>
@@ -184,8 +187,8 @@ export default function ScheduleContent() {
 
           {/* What We'll Discuss - Animated on scroll */}
           <div
-            ref={discussSection.ref}
-            className={`mt-16 max-w-4xl mx-auto ${discussSection.isInView ? 'animate-fade-in-up' : 'pre-animate'}`}
+            ref={discussRef}
+            className={`mt-16 max-w-4xl mx-auto ${discussInView ? 'animate-fade-in-up' : 'pre-animate'}`}
           >
             <div className="bg-gray-900/60 backdrop-blur-md rounded-xl border border-gold/20 p-8">
               <h2 className="text-3xl font-bold text-gold font-iceland mb-6 text-center">
@@ -202,7 +205,7 @@ export default function ScheduleContent() {
                   <li
                     key={item}
                     className={`flex items-start gap-3 text-gray-300 ${
-                      discussSection.isInView
+                      discussInView
                         ? `animate-fade-in-left animate-delay-${(index + 1) * 100}`
                         : 'pre-animate'
                     }`}
@@ -251,9 +254,9 @@ export default function ScheduleContent() {
 
           {/* Alternative Contact Options - Animated on scroll */}
           <div
-            ref={contactSection.ref}
+            ref={contactRef}
             className={`flex flex-col sm:flex-row gap-4 mt-12 justify-center ${
-              contactSection.isInView ? 'animate-fade-in-up' : 'pre-animate'
+              contactInView ? 'animate-fade-in-up' : 'pre-animate'
             }`}
           >
             <a
@@ -275,9 +278,9 @@ export default function ScheduleContent() {
 
           {/* Contact Alternative - Animated on scroll */}
           <div
-            ref={altContactSection.ref}
+            ref={altContactRef}
             className={`mt-8 text-center ${
-              altContactSection.isInView ? 'animate-fade-in' : 'pre-animate'
+              altContactInView ? 'animate-fade-in' : 'pre-animate'
             }`}
           >
             <p className="text-white/70 font-inter mx-auto text-sm">

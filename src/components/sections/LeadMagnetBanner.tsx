@@ -3,8 +3,6 @@
 import { motion } from "framer-motion";
 import Link from "next/link";
 import { BookOpenIcon, ArrowRightIcon } from "@heroicons/react/24/outline";
-import { trackFBLead } from "@/components/tracking/FacebookPixel";
-import { trackLinkedInConversion } from "@/components/tracking/LinkedInInsightTag";
 import { event as trackEvent } from "@/lib/analytics";
 
 const LeadMagnetBanner = () => {

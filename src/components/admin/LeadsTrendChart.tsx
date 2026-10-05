@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import {
   AreaChart,
   Area,
@@ -33,14 +33,14 @@ export default function LeadsTrendChart({
   const [period, setPeriod] = useState<"7d" | "30d" | "90d">(initialData.period);
   const [isLoading, setIsLoading] = useState(false);
 
-  useEffect(() => {
-    if (period !== data.period) {
-      setIsLoading(true);
-      fetchData(period)
-        .then(setData)
-        .finally(() => setIsLoading(false));
-    }
-  }, [period, data.period, fetchData]);
+  const handlePeriodChange = (newPeriod: "7d" | "30d" | "90d") => {
+    if (newPeriod === period) return;
+    setPeriod(newPeriod);
+    setIsLoading(true);
+    fetchData(newPeriod)
+      .then(setData)
+      .finally(() => setIsLoading(false));
+  };
 
   return (
     <div className="bg-gray-800/80 rounded-xl p-4 sm:p-6 border border-gray-700/50">
@@ -58,7 +58,7 @@ export default function LeadsTrendChart({
           {(["7d", "30d", "90d"] as const).map((p) => (
             <button
               key={p}
-              onClick={() => setPeriod(p)}
+              onClick={() => handlePeriodChange(p)}
               disabled={isLoading}
               className={`px-3 py-1.5 text-xs sm:text-sm font-medium rounded-lg transition-all font-inter ${
                 period === p

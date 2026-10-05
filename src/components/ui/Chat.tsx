@@ -12,12 +12,19 @@ interface Message {
   content: string;
 }
 
+const WELCOME_MESSAGE: Message = {
+  id: "welcome",
+  role: "assistant",
+  content:
+    "Hi! I'm Maria, your virtual assistant for RC Web Solutions. I'm here to help you with information about our services, pricing, projects, and answer any questions you might have. How can I assist you today?",
+};
+
 interface ChatProps {
   onClose: () => void;
 }
 
 export default function Chat({ onClose }: ChatProps) {
-  const [messages, setMessages] = useState<Message[]>([]);
+  const [messages, setMessages] = useState<Message[]>([WELCOME_MESSAGE]);
   const [input, setInput] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [hasTrackedEngagement, setHasTrackedEngagement] = useState(false);
@@ -31,17 +38,6 @@ export default function Chat({ onClose }: ChatProps) {
   useEffect(() => {
     scrollToBottom();
   }, [messages]);
-
-  // Mensaje de bienvenida automático al abrir el chat
-  useEffect(() => {
-    const welcomeMessage: Message = {
-      id: "welcome",
-      role: "assistant",
-      content:
-        "Hi! I'm Maria, your virtual assistant for RC Web Solutions. I'm here to help you with information about our services, pricing, projects, and answer any questions you might have. How can I assist you today?",
-    };
-    setMessages([welcomeMessage]);
-  }, []);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();

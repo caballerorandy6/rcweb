@@ -1,6 +1,5 @@
 "use client";
 
-import { useState } from "react";
 import {
   CloudArrowDownIcon,
   DocumentIcon,
@@ -18,7 +17,6 @@ import type { ClientDeliverable } from "@/types/deliverable";
 
 interface ClientDeliverablesProps {
   deliverables: ClientDeliverable[];
-  projectCode: string;
 }
 
 const getDeliverableIcon = (type: string) => {
@@ -38,7 +36,6 @@ const getDeliverableIcon = (type: string) => {
 
 export default function ClientDeliverables({
   deliverables,
-  projectCode,
 }: ClientDeliverablesProps) {
   if (deliverables.length === 0) {
     return (

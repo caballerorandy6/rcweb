@@ -2,7 +2,6 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import type { Route } from "next";
 import { formatCurrency, formatDate } from "@/lib/utils";
 import type { ClientInvoiceWithProject } from "@/types/client";
 

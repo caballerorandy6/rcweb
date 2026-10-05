@@ -23,23 +23,28 @@ export default function ClientMessages({
   const [isLoading, setIsLoading] = useState(true);
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
+  // Bumped after sending a message to fetch the thread again
+  const [reloadCount, setReloadCount] = useState(0);
+
   useEffect(() => {
-    loadMessages();
-  }, [projectCode]);
+    let ignore = false;
+    getProjectMessagesAction(projectCode).then((result) => {
+      if (ignore) return;
+      if (result.success) {
+        setMessages(result.data.messages);
+      } else {
+        toast.error(result.error);
+      }
+      setIsLoading(false);
+    });
+    return () => {
+      ignore = true;
+    };
+  }, [projectCode, reloadCount]);
 
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages]);
-
-  const loadMessages = async () => {
-    const result = await getProjectMessagesAction(projectCode);
-    if (result.success) {
-      setMessages(result.data.messages);
-    } else {
-      toast.error(result.error);
-    }
-    setIsLoading(false);
-  };
 
   const handleSendMessage = async () => {
     if (!messageText.trim()) {
@@ -55,7 +60,7 @@ export default function ClientMessages({
     });
     if (result.success) {
       setMessageText("");
-      loadMessages();
+      setReloadCount((count) => count + 1);
       toast.success("Message sent");
     } else {
       toast.error(result.error);

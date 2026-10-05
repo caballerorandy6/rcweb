@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useTransition } from "react";
+import { useState, useTransition } from "react";
 import { sendSmsCampaignAction } from "@/actions/campaigns/sendSMSCampaignAction";
 import { getSmsStatsAction } from "@/actions/stats/getSmsStatsAction";
 
@@ -25,12 +25,7 @@ export default function SendSmsCampaign({ initialStats }: SendSmsCampaignProps) 
     message: string;
   } | null>(null);
   const [isPending, startTransition] = useTransition();
-  const [charCount, setCharCount] = useState(0);
-
-  // Actualizar contador de caracteres
-  useEffect(() => {
-    setCharCount(message.length);
-  }, [message]);
+  const charCount = message.length;
 
   const handleSend = async () => {
     if (!message) {
@@ -55,7 +50,6 @@ export default function SendSmsCampaign({ initialStats }: SendSmsCampaignProps) 
 
       if (response.success && !testMode) {
         setMessage("");
-        setCharCount(0);
         // Recargar estadísticas
         const newStats = await getSmsStatsAction();
         setStats(newStats);

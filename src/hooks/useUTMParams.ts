@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 
 export interface UTMParams {
   utmSource: string | null;
@@ -18,29 +18,12 @@ const STORAGE_KEY = "rcweb_utm_params";
  * Hook to capture and persist UTM parameters from URL.
  * Stores in sessionStorage so params persist across page navigations.
  * Only captures on first visit (doesn't overwrite existing params).
+ * Read them back with getStoredUTMParams().
  */
-export function useUTMParams(): UTMParams {
-  const [params, setParams] = useState<UTMParams>({
-    utmSource: null,
-    utmMedium: null,
-    utmCampaign: null,
-    utmTerm: null,
-    utmContent: null,
-    referrer: null,
-    landingPage: null,
-  });
-
+export function useUTMParams(): void {
   useEffect(() => {
-    // Check if we already have stored params
-    const stored = sessionStorage.getItem(STORAGE_KEY);
-    if (stored) {
-      try {
-        setParams(JSON.parse(stored));
-        return;
-      } catch {
-        // Invalid stored data, continue to capture fresh
-      }
-    }
+    // Keep the params from the first visit
+    if (getStoredUTMParams()) return;
 
     // Capture UTM params from URL
     const urlParams = new URLSearchParams(window.location.search);
@@ -63,11 +46,8 @@ export function useUTMParams(): UTMParams {
 
     if (hasData) {
       sessionStorage.setItem(STORAGE_KEY, JSON.stringify(newParams));
-      setParams(newParams);
     }
   }, []);
-
-  return params;
 }
 
 /**
