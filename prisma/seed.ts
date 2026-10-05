@@ -2,20 +2,27 @@ import "dotenv/config";
 import bcrypt from "bcryptjs";
 import { PrismaClient } from "../src/generated/prisma/client";
 import { PrismaPg } from "@prisma/adapter-pg";
+import { getDbSsl } from "../src/lib/dbSsl";
 
 const adapter = new PrismaPg({
   connectionString: process.env.DATABASE_URL!,
+  ssl: getDbSsl(),
 });
 const prisma = new PrismaClient({ adapter });
 
 async function main() {
   console.log("🌱 Starting seed...");
 
-  // Crear administradores
+  // Credentials come from the environment: this repository is public.
+  const adminPassword = process.env.ADMIN_PASSWORD;
+  if (!adminPassword) {
+    throw new Error("ADMIN_PASSWORD is required to seed the admin user");
+  }
+
   const admins = [
     {
-      email: "admin@rcweb.dev",
-      password: "Libre2025!",
+      email: process.env.ADMIN_EMAIL || "admin@rcweb.dev",
+      password: adminPassword,
       name: "Admin",
     },
   ];
