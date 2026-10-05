@@ -10,17 +10,24 @@ const FACEBOOK_PIXEL_ID = process.env.NEXT_PUBLIC_FACEBOOK_PIXEL_ID;
 const LINKEDIN_PARTNER_ID = process.env.NEXT_PUBLIC_LINKEDIN_PARTNER_ID;
 const GOOGLE_ADS_ID = process.env.NEXT_PUBLIC_GOOGLE_ADS_ID;
 
+function readStoredConsent(): string | null {
+  if (typeof window === "undefined") return null;
+  return localStorage.getItem("cookie-consent");
+}
+
 export default function CookieConsentProvider() {
-  const [hasConsent, setHasConsent] = useState(false);
-  const [showBanner, setShowBanner] = useState(true);
+  // Nothing below renders until ClientOnly mounts, so reading localStorage
+  // in the initializers cannot cause a hydration mismatch.
+  const [hasConsent, setHasConsent] = useState(
+    () => readStoredConsent() === "accepted"
+  );
+  const [showBanner, setShowBanner] = useState(() => {
+    const consent = readStoredConsent();
+    return consent !== "accepted" && consent !== "rejected";
+  });
 
   useEffect(() => {
-    // Check localStorage on mount
-    const consent = localStorage.getItem("cookie-consent");
-    if (consent === "accepted") {
-      setHasConsent(true);
-      setShowBanner(false);
-
+    if (readStoredConsent() === "accepted") {
       // Update consent mode for returning visitors
       if (typeof window !== 'undefined' && window.gtag) {
         window.gtag('consent', 'update', {
@@ -32,9 +39,6 @@ export default function CookieConsentProvider() {
           'personalization_storage': 'granted'
         });
       }
-    } else if (consent === "rejected") {
-      setHasConsent(false);
-      setShowBanner(false);
     }
   }, []);
 

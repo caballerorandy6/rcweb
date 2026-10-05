@@ -1,6 +1,8 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useSyncExternalStore } from "react";
+
+const subscribe = () => () => {};
 
 interface ClientOnlyProps {
   children: React.ReactNode;
@@ -20,11 +22,12 @@ interface ClientOnlyProps {
  * @param fallback - Optional content to show during SSR (default: null)
  */
 export default function ClientOnly({ children, fallback = null }: ClientOnlyProps) {
-  const [hasMounted, setHasMounted] = useState(false);
-
-  useEffect(() => {
-    setHasMounted(true);
-  }, []);
+  // false on the server and during hydration, true once on the client
+  const hasMounted = useSyncExternalStore(
+    subscribe,
+    () => true,
+    () => false
+  );
 
   if (!hasMounted) {
     return <>{fallback}</>;
