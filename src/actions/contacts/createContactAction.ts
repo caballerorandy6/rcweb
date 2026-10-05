@@ -7,6 +7,7 @@ import { FormSchema, type FormData } from "@/lib/zod";
 import { Resend } from "resend";
 import { checkAndReserveEmailQuota, releaseEmailQuota } from "@/lib/emailQuota";
 import { escapeHtml, sanitizeEmail, sanitizePhone } from "@/lib/sanitize";
+import { ADMIN_EMAIL } from "@/lib/email/adminEmail";
 
 export interface CreateContactAction {
   success: boolean;
@@ -219,7 +220,7 @@ export const createContactAction = async (
     try {
       await resend.emails.send({
           from: "RC Web Solutions <no-reply@rcweb.dev>",
-          to: ["admin@rcweb.dev"],
+          to: [ADMIN_EMAIL],
           subject: `📩 New message from ${safeName}`,
           html: `
             <!DOCTYPE html>

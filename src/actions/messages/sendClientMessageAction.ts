@@ -4,6 +4,7 @@ import { prisma } from "@/lib/prisma";
 import { requireClient } from "@/lib/authGuard";
 import { auth } from "@/lib/auth";
 import { sendNewClientMessageEmail } from "@/lib/email/senders";
+import { ADMIN_EMAIL } from "@/lib/email/adminEmail";
 import type { CreateMessageData } from "@/types/message";
 import type { ActionResult } from "@/types/common";
 
@@ -72,7 +73,7 @@ export async function sendClientMessageAction(
   const planName = payment.planName;
   const clientName = payment.name;
   const clientEmail = payment.email;
-  const adminEmail = process.env.ADMIN_EMAIL;
+  const adminEmail = ADMIN_EMAIL;
   const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "https://rcweb.dev";
   const adminPanelUrl = `${baseUrl}/admin/projects`;
 

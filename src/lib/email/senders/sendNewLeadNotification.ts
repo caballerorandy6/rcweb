@@ -1,9 +1,9 @@
 import { Resend } from "resend";
 import { render } from "@react-email/render";
 import NewLeadNotificationEmail from "../templates/NewLeadNotificationEmail";
+import { ADMIN_EMAIL } from "../adminEmail";
 
 const resend = new Resend(process.env.RESEND_API_KEY);
-const ADMIN_EMAIL = process.env.ADMIN_EMAIL || "contactus@rcweb.dev";
 
 interface SendNewLeadNotificationParams {
   leadName: string;
