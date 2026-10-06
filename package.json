@@ -11,6 +11,8 @@
     "generate": "prisma generate",
     "migrate": "prisma migrate dev",
     "lint": "eslint .",
+    "test": "vitest run",
+    "test:watch": "vitest",
     "seed": "tsx prisma/seed.ts",
     "seed:dev": "tsx prisma/seed-dev.ts"
   },
@@ -74,6 +76,7 @@
     "prisma": "^7.10.0",
     "tailwindcss": "^4.3.3",
     "tsx": "^4.21.0",
-    "typescript": "^5.9.2"
+    "typescript": "^5.9.2",
+    "vitest": "^5.0.3"
   }
 }
