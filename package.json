@@ -11,7 +11,8 @@
     "generate": "prisma generate",
     "migrate": "prisma migrate dev",
     "lint": "eslint .",
-    "seed": "tsx prisma/seed.ts"
+    "seed": "tsx prisma/seed.ts",
+    "seed:dev": "tsx prisma/seed-dev.ts"
   },
   "dependencies": {
     "@headlessui/react": "^2.2.0",
