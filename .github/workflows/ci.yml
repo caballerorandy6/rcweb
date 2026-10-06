@@ -29,6 +29,9 @@ jobs:
 
       - run: npm run lint
 
+      # next-env.d.ts and route types are generated, not committed
+      - run: npx next typegen
+
       - run: npx tsc --noEmit
 
       - run: npm test
