@@ -15,7 +15,8 @@ export default defineConfig({
   // Never leave a test.only in CI by mistake
   forbidOnly: !!process.env.CI,
   retries: process.env.CI ? 1 : 0,
-  reporter: process.env.CI ? "github" : "list",
+  // In CI: annotations on the PR plus an HTML report uploaded as an artifact
+  reporter: process.env.CI ? [["github"], ["html", { open: "never" }]] : "list",
   use: {
     baseURL: `http://localhost:${PORT}`,
     // Keep a trace of the first retry so a flaky failure can be inspected
