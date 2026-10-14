@@ -13,6 +13,8 @@
     "lint": "eslint .",
     "test": "vitest run",
     "test:watch": "vitest",
+    "test:e2e": "playwright test",
+    "test:e2e:ui": "playwright test --ui",
     "seed": "tsx prisma/seed.ts",
     "seed:dev": "tsx prisma/seed-dev.ts"
   },

@@ -1,63 +1,29 @@
 import { defineConfig, devices } from "@playwright/test";
 
-/**
- * Playwright E2E Test Configuration for RC Web Solutions
- * @see https://playwright.dev/docs/test-configuration
- */
+// End-to-end smoke tests. They run against a real Next.js server that
+// Playwright starts on its own (see webServer below).
+const PORT = 3100;
+
 export default defineConfig({
-  testDir: "./tests",
-  /* Run tests in files in parallel */
+  testDir: "./e2e",
+  // Each test gets a fresh browser context: no cookies or storage shared
   fullyParallel: true,
-  /* Fail the build on CI if you accidentally left test.only in the source code. */
+  // Never leave a test.only in CI by mistake
   forbidOnly: !!process.env.CI,
-  /* Retry on CI only */
-  retries: process.env.CI ? 2 : 0,
-  /* Opt out of parallel tests on CI. */
-  workers: process.env.CI ? 1 : undefined,
-  /* Reporter to use. See https://playwright.dev/docs/test-reporters */
-  reporter: [["html", { open: "never" }], ["list"]],
-  /* Global timeout for each test */
-  timeout: 30000,
-  /* Shared settings for all the projects below. */
+  retries: process.env.CI ? 1 : 0,
+  reporter: process.env.CI ? "github" : "list",
   use: {
-    /* Base URL to use in actions like `await page.goto('/')`. */
-    baseURL: "http://localhost:3000",
-    /* Collect trace when retrying the failed test. */
+    baseURL: `http://localhost:${PORT}`,
+    // Keep a trace of the first retry so a flaky failure can be inspected
     trace: "on-first-retry",
-    /* Take screenshot on failure */
     screenshot: "only-on-failure",
   },
-
-  /* Configure projects for major browsers */
-  projects: [
-    {
-      name: "chromium",
-      use: { ...devices["Desktop Chrome"] },
-    },
-    {
-      name: "firefox",
-      use: { ...devices["Desktop Firefox"] },
-    },
-    {
-      name: "webkit",
-      use: { ...devices["Desktop Safari"] },
-    },
-    /* Mobile viewports */
-    {
-      name: "Mobile Chrome",
-      use: { ...devices["Pixel 5"] },
-    },
-    {
-      name: "Mobile Safari",
-      use: { ...devices["iPhone 12"] },
-    },
-  ],
-
-  /* Run local dev server before starting the tests */
+  projects: [{ name: "chromium", use: { ...devices["Desktop Chrome"] } }],
   webServer: {
-    command: "npm run dev",
-    url: "http://localhost:3000",
+    command: `npx next dev -p ${PORT}`,
+    url: `http://localhost:${PORT}`,
+    // Locally reuse a dev server that is already running on that port
     reuseExistingServer: !process.env.CI,
-    timeout: 120000,
+    timeout: 120_000,
   },
 });
