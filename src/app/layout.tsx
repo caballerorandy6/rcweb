@@ -12,7 +12,6 @@ import Analytics from "@/components/tracking/Analytics";
 import FacebookPixel from "@/components/tracking/FacebookPixel";
 import LinkedInInsightTag from "@/components/tracking/LinkedInInsightTag";
 import UTMTracker from "@/components/tracking/UTMTracker";
-import ExitIntentPopup from "@/components/forms/ExitIntentPopup";
 import { siteConfig } from "@/config/site";
 
 const geistSans = localFont({
@@ -213,7 +212,6 @@ export default function RootLayout({
         </Suspense>
 
         <Toaster position="bottom-right" richColors closeButton={true} />
-        <ExitIntentPopup />
         <ConditionalLayout>{children}</ConditionalLayout>
       </body>
     </html>
