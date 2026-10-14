@@ -18,9 +18,9 @@ jobs:
       # prisma generate (postinstall) only needs the variable to exist
       DATABASE_URL: postgresql://ci:ci@localhost:5432/ci
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
 
-      - uses: actions/setup-node@v5
+      - uses: actions/setup-node@v6
         with:
           node-version: 24
           cache: npm
@@ -35,3 +35,60 @@ jobs:
       - run: npx tsc --noEmit
 
       - run: npm test
+
+  e2e:
+    name: End-to-end (Playwright)
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    services:
+      postgres:
+        image: postgres:17
+        env:
+          POSTGRES_USER: ci
+          POSTGRES_PASSWORD: ci
+          POSTGRES_DB: rcweb_ci
+        ports: ["5432:5432"]
+        options: >-
+          --health-cmd "pg_isready -U ci"
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 10
+    env:
+      CI: true
+      DATABASE_URL: postgresql://ci:ci@localhost:5432/rcweb_ci
+      DIRECT_URL: postgresql://ci:ci@localhost:5432/rcweb_ci
+      # Dummy values: the smoke tests never send email or charge anything
+      AUTH_SECRET: ci-only-secret-not-used-anywhere-else
+      AUTH_TRUST_HOST: "true"
+      STRIPE_SECRET_KEY: sk_test_placeholder
+      NEXT_PUBLIC_BASE_URL: http://localhost:3100
+      # Test accounts for e2e/admin-login.spec.ts (seeded below)
+      TEST_ADMIN_EMAIL: admin@rcweb.test
+      TEST_ADMIN_PASSWORD: ci-admin-password
+      TEST_CLIENT_EMAIL: client@rcweb.test
+      TEST_CLIENT_PASSWORD: ci-client-password
+    steps:
+      - uses: actions/checkout@v6
+
+      - uses: actions/setup-node@v6
+        with:
+          node-version: 24
+          cache: npm
+
+      - run: npm ci
+
+      - name: Create the schema and the test accounts
+        run: |
+          npx prisma db push
+          npm run seed:dev
+
+      - run: npx playwright install --with-deps chromium
+
+      - run: npx playwright test
+
+      - uses: actions/upload-artifact@v4
+        if: ${{ !cancelled() }}
+        with:
+          name: playwright-report
+          path: playwright-report/
+          retention-days: 7
