@@ -1,5 +1,6 @@
 "use client";
 
+import * as Sentry from "@sentry/nextjs";
 import { useEffect } from "react";
 import Link from "next/link";
 import type { Route } from "next";
@@ -12,8 +13,7 @@ export default function Error({
   reset: () => void;
 }) {
   useEffect(() => {
-    // Log error to monitoring service
-    console.error("Application error:", error);
+    Sentry.captureException(error);
   }, [error]);
 
   return (
