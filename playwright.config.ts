@@ -1,8 +1,12 @@
 import { defineConfig, devices } from "@playwright/test";
+import { config as loadEnv } from "dotenv";
 
 // End-to-end smoke tests. They run against a real Next.js server that
 // Playwright starts on its own (see webServer below).
 const PORT = 3100;
+
+// Test accounts seeded by `npm run seed:dev`
+loadEnv({ path: ".env.test" });
 
 export default defineConfig({
   testDir: "./e2e",
