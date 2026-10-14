@@ -1,4 +1,5 @@
 import type { NextConfig } from "next";
+import { withSentryConfig } from "@sentry/nextjs/config";
 
 // Content Security Policy
 // Cada dominio de terceros está agrupado por servicio para que sea fácil
@@ -185,4 +186,14 @@ const nextConfig: NextConfig = {
   },
 };
 
-export default nextConfig;
+export default withSentryConfig(nextConfig, {
+  // Provided by the Vercel <-> Sentry integration
+  org: process.env.SENTRY_ORG,
+  project: process.env.SENTRY_PROJECT,
+  // Upload source maps so stack traces point to the TypeScript source
+  authToken: process.env.SENTRY_AUTH_TOKEN,
+  // Browser events go through our own origin: survives ad blockers and
+  // needs no CSP change
+  tunnelRoute: "/monitoring",
+  silent: !process.env.CI,
+});
