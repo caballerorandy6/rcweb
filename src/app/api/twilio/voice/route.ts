@@ -69,11 +69,3 @@ export async function POST(request: NextRequest) {
     });
   }
 }
-
-// Handle GET requests (for testing)
-export async function GET() {
-  return NextResponse.json({
-    message: "Twilio Voice Webhook is active",
-    forwardTo: FORWARD_TO_NUMBER,
-  });
-}

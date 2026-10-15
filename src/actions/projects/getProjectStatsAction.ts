@@ -1,6 +1,7 @@
 "use server";
 
 import { prisma } from "@/lib/prisma";
+import { requireAdmin } from "@/lib/authGuard";
 import type { ProjectStats } from "@/types/stats";
 import type { ActionResult } from "@/types/common";
 
@@ -8,6 +9,11 @@ export async function getProjectStatsAction(): Promise<
   ActionResult<{ stats: ProjectStats }>
 > {
   try {
+    const authCheck = await requireAdmin();
+    if (!authCheck.authorized) {
+      return { success: false, error: authCheck.error };
+    }
+
     const [total, pending, inProgress, completed, awaitingPayment] =
       await Promise.all([
         prisma.payment.count(),

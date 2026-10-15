@@ -318,7 +318,6 @@ rcweb/
 ├── CHANGELOG.md           # Version history
 ├── CONTRIBUTING.md        # Contribution guidelines
 ├── next.config.ts         # Next.js configuration
-├── tailwind.config.ts     # Tailwind CSS configuration
 └── tsconfig.json          # TypeScript configuration
 ```
 
@@ -338,10 +337,8 @@ rcweb/
 | `/api/chat` | POST | OpenAI chat endpoint (Edge runtime) |
 | `/api/invoice/[invoiceNumber]` | GET | Download invoice PDF by number |
 | `/api/twilio/sms/incoming` | POST | Handle incoming SMS messages |
-| `/api/twilio/voice` | POST | Handle incoming voice calls (IVR) |
-| `/api/twilio/voice/completed` | POST | Handle completed voice calls |
+| `/api/twilio/voice` | POST | Handle incoming voice calls (forward + voicemail) |
 | `/api/webhooks/stripe` | POST | Stripe payment webhook |
-| `/api/receive-mail` | POST | Incoming email webhook |
 
 ### Webhook Configuration
 
