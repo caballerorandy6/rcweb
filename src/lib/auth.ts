@@ -1,8 +1,14 @@
-import NextAuth from "next-auth";
+import NextAuth, { CredentialsSignin } from "next-auth";
+import { rateLimiters } from "@/lib/rateLimit";
 import Credentials from "next-auth/providers/credentials";
 import { prisma } from "@/lib/prisma";
 import bcrypt from "bcryptjs";
 import type { NextAuthConfig } from "next-auth";
+
+// Surfaces as `code: "locked"` on the client so the form can explain it
+class AccountLockedError extends CredentialsSignin {
+  code = "locked";
+}
 
 export const authConfig: NextAuthConfig = {
   providers: [
@@ -19,6 +25,12 @@ export const authConfig: NextAuthConfig = {
 
         const email = credentials.email as string;
         const password = credentials.password as string;
+
+        // Five failed attempts lock the account for 15 minutes
+        const loginKey = email.toLowerCase();
+        if (await rateLimiters.login.isBlocked(loginKey)) {
+          throw new AccountLockedError();
+        }
 
         try {
           // Primero intentar buscar admin
@@ -37,8 +49,11 @@ export const authConfig: NextAuthConfig = {
             );
 
             if (!isPasswordValid) {
+              await rateLimiters.login.hit(loginKey);
               return null;
             }
+
+            await rateLimiters.login.reset(loginKey);
 
             // Actualizar último login
             await prisma.admin.update({
@@ -62,12 +77,10 @@ export const authConfig: NextAuthConfig = {
             },
           });
 
-          if (!client) {
-            return null;
-          }
-
-          // Cliente debe tener contraseña y estar activo
-          if (!client.password || !client.isActive) {
+          // Unknown or inactive accounts count as failed attempts too, so an
+          // attacker cannot tell which emails exist
+          if (!client || !client.password || !client.isActive) {
+            await rateLimiters.login.hit(loginKey);
             return null;
           }
 
@@ -78,8 +91,11 @@ export const authConfig: NextAuthConfig = {
           );
 
           if (!isPasswordValid) {
+            await rateLimiters.login.hit(loginKey);
             return null;
           }
+
+          await rateLimiters.login.reset(loginKey);
 
           // Actualizar último login
           await prisma.client.update({
@@ -95,6 +111,7 @@ export const authConfig: NextAuthConfig = {
             role: "CLIENT",
           };
         } catch (error) {
+          if (error instanceof AccountLockedError) throw error;
           console.error("Auth error:", error);
           return null;
         }

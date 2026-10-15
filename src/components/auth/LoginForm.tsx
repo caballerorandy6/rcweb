@@ -50,7 +50,12 @@ export default function LoginForm({
       });
 
       if (result?.error) {
-        toast.error("Invalid email or password", { id: toastId });
+        toast.error(
+          result.code === "locked"
+            ? "Too many failed attempts. Please try again in 15 minutes."
+            : "Invalid email or password",
+          { id: toastId }
+        );
         return;
       }
 

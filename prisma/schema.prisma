@@ -109,6 +109,17 @@ model Admin {
 }
 
 
+// One row per allowed request; src/lib/rateLimit.ts counts rows per key
+// inside a time window. Old rows are pruned by the limiter itself.
+model RateLimitHit {
+  id        String   @id @default(uuid())
+  key       String
+  createdAt DateTime @default(now())
+
+  @@index([key, createdAt])
+  @@index([createdAt])
+}
+
 model EmailCampaign {
   id              String              @id @default(uuid())
   name            String
