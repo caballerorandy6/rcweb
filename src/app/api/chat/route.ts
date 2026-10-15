@@ -1,5 +1,6 @@
 import { OpenAI } from "openai";
 import { Ratelimit } from "@upstash/ratelimit";
+import { limitOrAllow } from "@/lib/rateLimit";
 import { Redis } from "@upstash/redis";
 
 // Permitir streaming
@@ -25,7 +26,7 @@ export async function POST(req: Request) {
   try {
     // Rate limiting
     const ip = req.headers.get("x-forwarded-for")?.split(",")[0] ?? "anonymous";
-    const { success } = await ratelimit.limit(ip);
+    const { success } = await limitOrAllow(ratelimit, ip);
 
     if (!success) {
       return new Response(

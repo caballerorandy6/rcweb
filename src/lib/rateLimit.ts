@@ -2,6 +2,7 @@ import { Ratelimit } from "@upstash/ratelimit";
 import { Redis } from "@upstash/redis";
 import { NextRequest, NextResponse } from "next/server";
 import { headers } from "next/headers";
+import * as Sentry from "@sentry/nextjs";
 
 // Create Redis client
 const redis = new Redis({
@@ -32,6 +33,23 @@ export const rateLimiters = {
     prefix: "ratelimit:api",
   }),
 };
+
+/**
+ * Runs the limiter but never blocks a request because the limiter itself
+ * failed (Redis down or unreachable): the error is reported and the
+ * request is allowed through.
+ */
+export async function limitOrAllow(
+  limiter: Ratelimit,
+  key: string
+): Promise<{ success: boolean; limit: number; remaining: number; reset: number }> {
+  try {
+    return await limiter.limit(key);
+  } catch (error) {
+    Sentry.captureException(error, { tags: { feature: "rate-limit" } });
+    return { success: true, limit: 0, remaining: 0, reset: 0 };
+  }
+}
 
 /**
  * Get client IP from request
@@ -65,7 +83,7 @@ export async function checkActionRateLimit(
     headerList.get("x-real-ip") ||
     "anonymous";
 
-  const { success } = await limiter.limit(ip);
+  const { success } = await limitOrAllow(limiter, ip);
 
   if (!success) {
     return {
@@ -85,7 +103,7 @@ export async function checkRateLimit(
   limiter: Ratelimit
 ): Promise<{ success: boolean; response?: NextResponse }> {
   const ip = getClientIp(request);
-  const { success, limit, reset, remaining } = await limiter.limit(ip);
+  const { success, limit, reset, remaining } = await limitOrAllow(limiter, ip);
 
   if (!success) {
     return {
