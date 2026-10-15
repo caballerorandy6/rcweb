@@ -3,7 +3,6 @@
 
 import { NextRequest, NextResponse } from "next/server";
 import { getInvoiceByNumber } from "@/lib/invoice/actions";
-import { validateApiKey } from "@/lib/apiAuth";
 import { auth } from "@/lib/auth";
 
 // Configuración para prevenir indexación
@@ -16,7 +15,6 @@ export const revalidate = 0;
  * Ejemplo: /api/invoice/INV-2025-001
  *
  * Security: Requires one of:
- * - Valid API key (for internal/admin access)
  * - Admin session
  * - token query param matching the payment's accessToken (customer links)
  */
@@ -48,20 +46,13 @@ export async function GET(
     // Authorization check
     let authorized = false;
 
-    // Option 1: Valid API key
-    if (validateApiKey(request)) {
+    // Option 1: Admin session
+    const session = await auth();
+    if (session?.user?.role === "ADMIN") {
       authorized = true;
     }
 
-    // Option 2: Admin session
-    if (!authorized) {
-      const session = await auth();
-      if (session?.user?.role === "ADMIN") {
-        authorized = true;
-      }
-    }
-
-    // Option 3: accessToken del payment (UUID no adivinable, para links de cliente).
+    // Option 2: accessToken del payment (UUID no adivinable, para links de cliente).
     // El email plano no sirve como credencial: los números de invoice son
     // secuenciales y el email de un cliente no es secreto.
     if (!authorized) {
