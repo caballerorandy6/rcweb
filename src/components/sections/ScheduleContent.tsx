@@ -52,62 +52,6 @@ export default function ScheduleContent() {
 
   return (
     <>
-      {/* CSS Animations */}
-      <style jsx>{`
-        @keyframes fadeInUp {
-          from {
-            opacity: 0;
-            transform: translateY(20px);
-          }
-          to {
-            opacity: 1;
-            transform: translateY(0);
-          }
-        }
-
-        @keyframes fadeInLeft {
-          from {
-            opacity: 0;
-            transform: translateX(-20px);
-          }
-          to {
-            opacity: 1;
-            transform: translateX(0);
-          }
-        }
-
-        @keyframes fadeIn {
-          from {
-            opacity: 0;
-          }
-          to {
-            opacity: 1;
-          }
-        }
-
-        .animate-fade-in-up {
-          animation: fadeInUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-        }
-
-        .animate-fade-in-left {
-          animation: fadeInLeft 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-        }
-
-        .animate-fade-in {
-          animation: fadeIn 0.5s ease-out forwards;
-        }
-
-        .animate-delay-100 { animation-delay: 100ms; }
-        .animate-delay-200 { animation-delay: 200ms; }
-        .animate-delay-300 { animation-delay: 300ms; }
-        .animate-delay-400 { animation-delay: 400ms; }
-        .animate-delay-500 { animation-delay: 500ms; }
-
-        .pre-animate {
-          opacity: 0;
-        }
-      `}</style>
-
       {/* Only load Calendly script when user wants to see the calendar */}
       {showCalendly && (
         <Script
@@ -188,7 +132,7 @@ export default function ScheduleContent() {
           {/* What We'll Discuss - Animated on scroll */}
           <div
             ref={discussRef}
-            className={`mt-16 max-w-4xl mx-auto ${discussInView ? 'animate-fade-in-up' : 'pre-animate'}`}
+            className={`mt-16 max-w-4xl mx-auto ${discussInView ? 'animate-fade-in-up' : 'opacity-0'}`}
           >
             <div className="bg-gray-900/60 backdrop-blur-md rounded-xl border border-gold/20 p-8">
               <h2 className="text-3xl font-bold text-gold font-iceland mb-6 text-center">
@@ -205,10 +149,9 @@ export default function ScheduleContent() {
                   <li
                     key={item}
                     className={`flex items-start gap-3 text-gray-300 ${
-                      discussInView
-                        ? `animate-fade-in-left animate-delay-${(index + 1) * 100}`
-                        : 'pre-animate'
+                      discussInView ? 'animate-fade-in-left' : 'opacity-0'
                     }`}
+                    style={{ animationDelay: `${(index + 1) * 100}ms` }}
                   >
                     <span className="text-gold mt-1">✓</span>
                     <span>{item}</span>
@@ -256,7 +199,7 @@ export default function ScheduleContent() {
           <div
             ref={contactRef}
             className={`flex flex-col sm:flex-row gap-4 mt-12 justify-center ${
-              contactInView ? 'animate-fade-in-up' : 'pre-animate'
+              contactInView ? 'animate-fade-in-up' : 'opacity-0'
             }`}
           >
             <a
@@ -280,7 +223,7 @@ export default function ScheduleContent() {
           <div
             ref={altContactRef}
             className={`mt-8 text-center ${
-              altContactInView ? 'animate-fade-in' : 'pre-animate'
+              altContactInView ? 'animate-fade-in' : 'opacity-0'
             }`}
           >
             <p className="text-white/70 font-inter mx-auto text-sm">
