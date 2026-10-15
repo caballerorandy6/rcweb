@@ -17,15 +17,7 @@ model Contact {
   createdAt        DateTime        @default(now())
   updatedAt        DateTime        @updatedAt
 
-  // Lead Nurturing fields
   leadStatus       String          @default("NEW") // NEW, CONTACTED, INTERESTED, PROPOSAL_SENT, WON, LOST
-  leadScore        Int             @default(0)
-  nurturingStatus  String?         // ACTIVE, PAUSED, COMPLETED, NONE
-  nurturingStep    Int             @default(0)
-  lastContactedAt  DateTime?
-  nextFollowUpAt   DateTime?
-  interestedIn     String?         // web, ecommerce, app, marketing
-  notes            String?         @db.Text
 
   // UTM Tracking fields
   utmSource        String?         // google, facebook, linkedin, newsletter
@@ -39,32 +31,13 @@ model Contact {
   // Relaciones
   emails           ContactEmail[]
   phones           ContactPhone[]
-  activities       ContactActivity[]
   payments         Payment[]
 
   @@index([leadStatus])
-  @@index([nurturingStatus])
   @@index([source])
   @@index([createdAt])
   @@index([utmSource])
   @@index([utmCampaign])
-}
-
-// Lead Nurturing Activity Log
-model ContactActivity {
-  id          String   @id @default(uuid())
-  contactId   String
-  contact     Contact  @relation(fields: [contactId], references: [id], onDelete: Cascade)
-
-  type        String   // EMAIL_SENT, EMAIL_OPENED, SEQUENCE_STARTED, SEQUENCE_COMPLETED, STATUS_CHANGED, NOTE_ADDED
-  description String
-  metadata    Json?    // Additional data (email subject, step number, etc.)
-
-  createdAt   DateTime @default(now())
-
-  @@index([contactId])
-  @@index([type])
-  @@index([createdAt])
 }
 
 model ContactEmail {
@@ -298,15 +271,6 @@ model BlogSubscriber {
   @@index([preferredLanguage])
 }
 
-model NotifiedBlogPost {
-  id        String   @id @default(uuid())
-  slug      String   @unique
-  title     String
-  notifiedAt DateTime @default(now())
-
-  @@index([slug])
-}
-
 // Milestone status enum
 enum MilestoneStatus {
   pending
@@ -330,33 +294,9 @@ model Milestone {
   createdAt   DateTime        @default(now())
   updatedAt   DateTime        @updatedAt
 
-  notifications MilestoneNotification[]
-
   @@index([paymentId])
   @@index([status])
   @@index([order])
-}
-
-// Notifications for milestone updates (consumed by n8n)
-model MilestoneNotification {
-  id          String    @id @default(uuid())
-  milestoneId String
-  milestone   Milestone @relation(fields: [milestoneId], references: [id], onDelete: Cascade)
-
-  type        String    // "completed", "started", "updated"
-
-  // Denormalized data for n8n (avoids extra queries)
-  projectCode   String
-  clientName    String
-  clientEmail   String
-  milestoneTitle String
-  accessToken   String  // For building the project URL
-
-  sentAt      DateTime? // null = pending, date = sent
-  createdAt   DateTime  @default(now())
-
-  @@index([sentAt])
-  @@index([createdAt])
 }
 
 model Invoice {
