@@ -1,60 +1,128 @@
-import { Ratelimit } from "@upstash/ratelimit";
-import { Redis } from "@upstash/redis";
 import { NextRequest, NextResponse } from "next/server";
 import { headers } from "next/headers";
 import * as Sentry from "@sentry/nextjs";
+import { prisma } from "@/lib/prisma";
 
-// Create Redis client
-const redis = new Redis({
-  url: process.env.KV_REST_API_URL!,
-  token: process.env.KV_REST_API_TOKEN!,
-});
+// Sliding-window rate limiting backed by Postgres (table RateLimitHit).
+// Every allowed call stores one row; a key is blocked while it has `limit`
+// rows younger than `windowMs`. No external service involved, and if the
+// database query itself fails the request is allowed (fail-open) and the
+// error is reported to Sentry.
+
+export interface RateLimitResult {
+  success: boolean;
+  limit: number;
+  remaining: number;
+  /** Unix time (ms) when the window opens again */
+  reset: number;
+}
+
+interface LimiterOptions {
+  prefix: string;
+  limit: number;
+  windowMs: number;
+}
+
+// Rows older than this are removed opportunistically (1 % of the calls)
+const RETENTION_MS = 24 * 60 * 60 * 1000;
+
+export function createLimiter({ prefix, limit, windowMs }: LimiterOptions) {
+  const fullKey = (key: string) => `${prefix}:${key}`;
+
+  async function countRecent(key: string, now: number) {
+    return prisma.rateLimitHit.count({
+      where: { key: fullKey(key), createdAt: { gt: new Date(now - windowMs) } },
+    });
+  }
+
+  async function resetAt(key: string, now: number) {
+    const oldest = await prisma.rateLimitHit.findFirst({
+      where: { key: fullKey(key), createdAt: { gt: new Date(now - windowMs) } },
+      orderBy: { createdAt: "asc" },
+      select: { createdAt: true },
+    });
+    return (oldest?.createdAt.getTime() ?? now) + windowMs;
+  }
+
+  function report(error: unknown) {
+    Sentry.captureException(error, { tags: { feature: "rate-limit", prefix } });
+  }
+
+  return {
+    /** Records one hit for the key and tells whether it is within the limit */
+    async limit(key: string): Promise<RateLimitResult> {
+      const now = Date.now();
+      try {
+        const count = await countRecent(key, now);
+        if (count >= limit) {
+          return { success: false, limit, remaining: 0, reset: await resetAt(key, now) };
+        }
+        await prisma.rateLimitHit.create({ data: { key: fullKey(key) } });
+        if (Math.random() < 0.01) {
+          await prisma.rateLimitHit.deleteMany({
+            where: { createdAt: { lt: new Date(now - RETENTION_MS) } },
+          });
+        }
+        return { success: true, limit, remaining: limit - count - 1, reset: now + windowMs };
+      } catch (error) {
+        report(error);
+        return { success: true, limit, remaining: 0, reset: now };
+      }
+    },
+
+    /** True while the key has reached the limit; records nothing */
+    async isBlocked(key: string): Promise<boolean> {
+      try {
+        return (await countRecent(key, Date.now())) >= limit;
+      } catch (error) {
+        report(error);
+        return false;
+      }
+    },
+
+    /** Records one hit without checking the limit (e.g. a failed login) */
+    async hit(key: string): Promise<void> {
+      try {
+        await prisma.rateLimitHit.create({ data: { key: fullKey(key) } });
+      } catch (error) {
+        report(error);
+      }
+    },
+
+    /** Forgets every hit of the key (e.g. after a successful login) */
+    async reset(key: string): Promise<void> {
+      try {
+        await prisma.rateLimitHit.deleteMany({ where: { key: fullKey(key) } });
+      } catch (error) {
+        report(error);
+      }
+    },
+  };
+}
+
+export type RateLimiter = ReturnType<typeof createLimiter>;
+
+const MINUTE = 60 * 1000;
 
 // Rate limiters for different endpoints
 export const rateLimiters = {
   // Chat API: 10 requests per minute (protect OpenAI costs)
-  chat: new Ratelimit({
-    redis,
-    limiter: Ratelimit.slidingWindow(10, "1 m"),
-    prefix: "ratelimit:chat",
-  }),
+  chat: createLimiter({ prefix: "chat", limit: 10, windowMs: MINUTE }),
 
-  // Contact form: 5 requests per minute (prevent spam)
-  contact: new Ratelimit({
-    redis,
-    limiter: Ratelimit.slidingWindow(5, "1 m"),
-    prefix: "ratelimit:contact",
-  }),
+  // Contact form and similar public forms: 5 requests per minute
+  contact: createLimiter({ prefix: "contact", limit: 5, windowMs: MINUTE }),
 
   // General API: 60 requests per minute
-  api: new Ratelimit({
-    redis,
-    limiter: Ratelimit.slidingWindow(60, "1 m"),
-    prefix: "ratelimit:api",
-  }),
-};
+  api: createLimiter({ prefix: "api", limit: 60, windowMs: MINUTE }),
 
-/**
- * Runs the limiter but never blocks a request because the limiter itself
- * failed (Redis down or unreachable): the error is reported and the
- * request is allowed through.
- */
-export async function limitOrAllow(
-  limiter: Ratelimit,
-  key: string
-): Promise<{ success: boolean; limit: number; remaining: number; reset: number }> {
-  try {
-    return await limiter.limit(key);
-  } catch (error) {
-    Sentry.captureException(error, { tags: { feature: "rate-limit" } });
-    return { success: true, limit: 0, remaining: 0, reset: 0 };
-  }
-}
+  // Login: 5 failed attempts per account lock it for 15 minutes
+  login: createLimiter({ prefix: "login", limit: 5, windowMs: 15 * MINUTE }),
+};
 
 /**
  * Get client IP from request
  */
-export function getClientIp(request: NextRequest): string {
+export function getClientIp(request: NextRequest | Request): string {
   const forwardedFor = request.headers.get("x-forwarded-for");
   const realIp = request.headers.get("x-real-ip");
 
@@ -74,7 +142,7 @@ export function getClientIp(request: NextRequest): string {
  * Reads the caller IP from request headers via next/headers.
  */
 export async function checkActionRateLimit(
-  limiter: Ratelimit
+  limiter: RateLimiter
 ): Promise<{ success: boolean; error?: string }> {
   const headerList = await headers();
   const forwardedFor = headerList.get("x-forwarded-for");
@@ -83,7 +151,7 @@ export async function checkActionRateLimit(
     headerList.get("x-real-ip") ||
     "anonymous";
 
-  const { success } = await limitOrAllow(limiter, ip);
+  const { success } = await limiter.limit(ip);
 
   if (!success) {
     return {
@@ -96,14 +164,14 @@ export async function checkActionRateLimit(
 }
 
 /**
- * Check rate limit and return response if exceeded
+ * Rate limit check for route handlers; returns the 429 response when blocked.
  */
 export async function checkRateLimit(
   request: NextRequest,
-  limiter: Ratelimit
+  limiter: RateLimiter
 ): Promise<{ success: boolean; response?: NextResponse }> {
   const ip = getClientIp(request);
-  const { success, limit, reset, remaining } = await limitOrAllow(limiter, ip);
+  const { success, limit, reset, remaining } = await limiter.limit(ip);
 
   if (!success) {
     return {
