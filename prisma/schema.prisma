@@ -10,28 +10,28 @@ datasource db {
 }
 
 model Contact {
-  id               String          @id @default(uuid())
+  id               String   @id @default(uuid())
   name             String
-  marketingConsent Boolean         @default(false)
-  source           String?         // web_form, sms_opt_in, manual, etc.
-  createdAt        DateTime        @default(now())
-  updatedAt        DateTime        @updatedAt
+  marketingConsent Boolean  @default(false)
+  source           String? // web_form, sms_opt_in, manual, etc.
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
 
-  leadStatus       String          @default("NEW") // NEW, CONTACTED, INTERESTED, PROPOSAL_SENT, WON, LOST
+  leadStatus String @default("NEW") // NEW, CONTACTED, INTERESTED, PROPOSAL_SENT, WON, LOST
 
   // UTM Tracking fields
-  utmSource        String?         // google, facebook, linkedin, newsletter
-  utmMedium        String?         // cpc, email, social, organic
-  utmCampaign      String?         // campaign name
-  utmTerm          String?         // paid search keyword
-  utmContent       String?         // ad variation / A-B test
-  referrer         String?         // original referrer URL
-  landingPage      String?         // first page visited
+  utmSource   String? // google, facebook, linkedin, newsletter
+  utmMedium   String? // cpc, email, social, organic
+  utmCampaign String? // campaign name
+  utmTerm     String? // paid search keyword
+  utmContent  String? // ad variation / A-B test
+  referrer    String? // original referrer URL
+  landingPage String? // first page visited
 
   // Relaciones
-  emails           ContactEmail[]
-  phones           ContactPhone[]
-  payments         Payment[]
+  emails   ContactEmail[]
+  phones   ContactPhone[]
+  payments Payment[]
 
   @@index([leadStatus])
   @@index([source])
@@ -41,31 +41,18 @@ model Contact {
 }
 
 model ContactEmail {
-  id        String   @id @default(uuid())
+  id        String  @id @default(uuid())
   contactId String
-  email     String   @unique
-  contact   Contact  @relation(fields: [contactId], references: [id], onDelete: Cascade)
+  email     String  @unique
+  contact   Contact @relation(fields: [contactId], references: [id], onDelete: Cascade)
 }
 
 model ContactPhone {
-  id        String   @id @default(uuid())
+  id        String  @id @default(uuid())
   contactId String
-  phone     String   @unique
-  type      String?  // mobile, home, work, etc.
-  contact   Contact  @relation(fields: [contactId], references: [id], onDelete: Cascade)
-}
-
-model User {
-  id        String    @id @default(uuid())
-  email     String    @unique
-  password  String
-  name      String
-  isActive  Boolean   @default(true)
-  lastLogin DateTime?
-  createdAt DateTime  @default(now())
-  updatedAt DateTime  @updatedAt
-
-  @@index([email])
+  phone     String  @unique
+  type      String? // mobile, home, work, etc.
+  contact   Contact @relation(fields: [contactId], references: [id], onDelete: Cascade)
 }
 
 model Admin {
@@ -77,10 +64,9 @@ model Admin {
   lastLogin DateTime?
   createdAt DateTime  @default(now())
   updatedAt DateTime  @updatedAt
-  
+
   @@index([email])
 }
-
 
 // One row per allowed request; src/lib/rateLimit.ts counts rows per key
 // inside a time window. Old rows are pruned by the limiter itself.
@@ -94,17 +80,17 @@ model RateLimitHit {
 }
 
 model EmailCampaign {
-  id              String              @id @default(uuid())
+  id              String             @id @default(uuid())
   name            String
   subject         String
-  htmlContent     String              @db.Text
-  createdAt       DateTime            @default(now())
+  htmlContent     String             @db.Text
+  createdAt       DateTime           @default(now())
   sentAt          DateTime?
   completedAt     DateTime?
-  emailsSent      Int                 @default(0)     // Total de emails enviados hasta ahora
-  totalEmails     Int                 @default(0)     // Total de emails a enviar
-  status          String              @default("pending")  // pending, in_progress, completed, failed, sending
-  lastBatchSentAt DateTime?                           // Última vez que se envió un lote
+  emailsSent      Int                @default(0) // Total de emails enviados hasta ahora
+  totalEmails     Int                @default(0) // Total de emails a enviar
+  status          String             @default("pending") // pending, in_progress, completed, failed, sending
+  lastBatchSentAt DateTime? // Última vez que se envió un lote
   emailLogs       CampaignEmailLog[]
 
   @@index([status])
@@ -127,58 +113,53 @@ model CampaignEmailLog {
 }
 
 model DailyEmailQuota {
-  id          String   @id @default(uuid())
-  date        DateTime @unique @db.Date
-  emailsSent  Int      @default(0)
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  id         String   @id @default(uuid())
+  date       DateTime @unique @db.Date
+  emailsSent Int      @default(0)
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
 
   @@index([date])
 }
 
 model SmsCampaign {
-  id        String   @id @default(uuid())
+  id        String    @id @default(uuid())
   name      String
-  createdAt DateTime @default(now())
+  createdAt DateTime  @default(now())
   sentAt    DateTime?
-  smsSent   Int      @default(0)  // Total de SMS enviados en esta campaña
+  smsSent   Int       @default(0) // Total de SMS enviados en esta campaña
 }
 
 model Payment {
-  id              String    @id @default(uuid())
-  projectCode     String    @unique @default(cuid()) // Código corto para el cliente
-  accessToken     String    @unique @default(uuid()) // Token seguro para URLs
+  id              String  @id @default(uuid())
+  projectCode     String  @unique @default(cuid()) // Código corto para el cliente
+  accessToken     String  @unique @default(uuid()) // Token seguro para URLs
   email           String
   name            String
   planName        String
-  totalAmount     Int       // Total en centavos
-  firstPayment    Int       // Primer pago en centavos
-  secondPayment   Int       // Segundo pago en centavos
-  firstPaid       Boolean   @default(false)
-  secondPaid      Boolean   @default(false)
-  firstSessionId  String?   // Stripe session ID del primer pago
-  secondSessionId String?   // Stripe session ID del segundo pago
+  totalAmount     Int // Total en centavos
+  firstPayment    Int // Primer pago en centavos
+  secondPayment   Int // Segundo pago en centavos
+  firstPaid       Boolean @default(false)
+  secondPaid      Boolean @default(false)
+  firstSessionId  String? // Stripe session ID del primer pago
+  secondSessionId String? // Stripe session ID del segundo pago
 
   // Datos del proyecto
-  projectStatus   String    @default("pending") // pending, in_progress, ready_for_payment, completed
-  projectNotes    String?   // Notas internas
+  projectStatus String  @default("pending") // pending, in_progress, ready_for_payment, completed
+  projectNotes  String? // Notas internas
 
   // Fechas importantes
-  firstPaidAt     DateTime?
-  secondPaidAt    DateTime?
-  projectStarted  DateTime?
-  projectReady    DateTime?
-  createdAt       DateTime  @default(now())
-  updatedAt       DateTime  @updatedAt
+  firstPaidAt    DateTime?
+  secondPaidAt   DateTime?
+  projectStarted DateTime?
+  projectReady   DateTime?
+  createdAt      DateTime  @default(now())
+  updatedAt      DateTime  @updatedAt
 
   termsAcceptance TermsAcceptance?
   invoices        Invoice[]
   milestones      Milestone[]
-  deliverables    Deliverable[]
-  messages        ProjectMessage[]
-
-  clientId  String?
-  client    Client? @relation(fields: [clientId], references: [id])
 
   // Revenue Attribution - link to original lead
   contactId String?
@@ -187,54 +168,53 @@ model Payment {
   @@index([email])
   @@index([projectCode])
   @@index([accessToken])
-  @@index([clientId])
   @@index([contactId])
 }
 
 model TermsAcceptance {
-  id             String        @id @default(cuid())
+  id             String   @id @default(cuid())
   userId         String?
-  paymentId      String?       @unique // opcional si quieres ligarlo a un pago
-  subscriptionId String?       @unique // para suscripciones
+  paymentId      String?  @unique // opcional si quieres ligarlo a un pago
+  subscriptionId String?  @unique // para suscripciones
   plan           String?
   acceptedAt     DateTime
   ipAddress      String?
   userAgent      String?
   termsVersion   String
 
-  payment        Payment?      @relation(fields: [paymentId], references: [id], onDelete: Cascade)
-  subscription   Subscription? @relation(fields: [subscriptionId], references: [id], onDelete: Cascade)
+  payment      Payment?      @relation(fields: [paymentId], references: [id], onDelete: Cascade)
+  subscription Subscription? @relation(fields: [subscriptionId], references: [id], onDelete: Cascade)
 }
 
 model Subscription {
-  id                    String    @id @default(uuid())
-  stripeSubscriptionId  String    @unique
-  stripeCustomerId      String
-  email                 String
-  name                  String
-  planName              String
-  amount                Int       // Amount in cents ($200 = 20000)
-  currency              String    @default("USD")
+  id                   String @id @default(uuid())
+  stripeSubscriptionId String @unique
+  stripeCustomerId     String
+  email                String
+  name                 String
+  planName             String
+  amount               Int // Amount in cents ($200 = 20000)
+  currency             String @default("USD")
 
   // Status
-  status                String    @default("active") // active, cancelled, past_due, unpaid
+  status String @default("active") // active, cancelled, past_due, unpaid
 
   // Billing cycle
-  currentPeriodStart    DateTime?
-  currentPeriodEnd      DateTime?
+  currentPeriodStart DateTime?
+  currentPeriodEnd   DateTime?
 
   // Cancellation
-  cancelledAt           DateTime?
-  cancelAtPeriodEnd     Boolean   @default(false)
+  cancelledAt       DateTime?
+  cancelAtPeriodEnd Boolean   @default(false)
 
   // Stripe session/checkout info
-  stripeSessionId       String?
+  stripeSessionId String?
 
   // Timestamps
-  createdAt             DateTime  @default(now())
-  updatedAt             DateTime  @updatedAt
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
-  termsAcceptance       TermsAcceptance?
+  termsAcceptance TermsAcceptance?
 
   @@index([email])
   @@index([stripeSubscriptionId])
@@ -242,14 +222,13 @@ model Subscription {
   @@index([status])
 }
 
-
 model SmsLog {
   id          String   @id @default(uuid())
   phoneNumber String
   message     String   @db.Text
-  direction   String   // received, sent
-  command     String?  // START, STOP, HELP, etc.
-  status      String?  // queued, sent, delivered, failed
+  direction   String // received, sent
+  command     String? // START, STOP, HELP, etc.
+  status      String? // queued, sent, delivered, failed
   twilioSid   String?
   createdAt   DateTime @default(now())
 
@@ -280,19 +259,19 @@ enum MilestoneStatus {
 
 // Project Milestones for tracking detailed progress
 model Milestone {
-  id          String          @id @default(uuid())
-  paymentId   String
-  payment     Payment         @relation(fields: [paymentId], references: [id], onDelete: Cascade)
+  id        String  @id @default(uuid())
+  paymentId String
+  payment   Payment @relation(fields: [paymentId], references: [id], onDelete: Cascade)
 
-  title       String          // "Design Mockups", "Frontend Development", etc.
+  title       String // "Design Mockups", "Frontend Development", etc.
   description String?         @db.Text
   order       Int             @default(0) // For sorting milestones
   status      MilestoneStatus @default(pending)
   dueDate     DateTime?
   completedAt DateTime?
 
-  createdAt   DateTime        @default(now())
-  updatedAt   DateTime        @updatedAt
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
   @@index([paymentId])
   @@index([status])
@@ -300,42 +279,42 @@ model Milestone {
 }
 
 model Invoice {
-  id              String    @id @default(uuid())
-  invoiceNumber   String    @unique // "INV-2025-001"
-  paymentId       String
-  payment         Payment   @relation(fields: [paymentId], references: [id], onDelete: Cascade)
+  id            String  @id @default(uuid())
+  invoiceNumber String  @unique // "INV-2025-001"
+  paymentId     String
+  payment       Payment @relation(fields: [paymentId], references: [id], onDelete: Cascade)
 
   // Tipo de invoice
-  type            String    // "initial", "final", "summary"
+  type String // "initial", "final", "summary"
 
   // Datos del cliente (snapshot histórico)
-  customerName    String
-  customerEmail   String
-  projectCode     String    // Denormalizado para fácil búsqueda
-  planName        String
+  customerName  String
+  customerEmail String
+  projectCode   String // Denormalizado para fácil búsqueda
+  planName      String
 
   // Detalles financieros (en centavos)
-  description     String    @db.Text
-  subtotal        Int       // Subtotal en centavos
-  taxRate         Float     @default(0) // Porcentaje de impuestos (ej: 8.5 para 8.5%)
-  taxAmount       Int       @default(0) // Monto de impuestos en centavos
-  total           Int       // Total final en centavos (subtotal + tax)
-  currency        String    @default("USD")
+  description String @db.Text
+  subtotal    Int // Subtotal en centavos
+  taxRate     Float  @default(0) // Porcentaje de impuestos (ej: 8.5 para 8.5%)
+  taxAmount   Int    @default(0) // Monto de impuestos en centavos
+  total       Int // Total final en centavos (subtotal + tax)
+  currency    String @default("USD")
 
   // Almacenamiento del PDF
-  pdfUrl          String?   // URL en Vercel Blob
-  pdfBlobKey      String?   // Key para eliminar de Vercel Blob si es necesario
+  pdfUrl     String? // URL en Vercel Blob
+  pdfBlobKey String? // Key para eliminar de Vercel Blob si es necesario
 
   // Metadata de Stripe
   stripeSessionId String?
 
   // Status y fechas
-  status          String    @default("paid") // paid, pending, cancelled
-  issueDate       DateTime  @default(now())
-  dueDate         DateTime?
-  paidDate        DateTime?
-  createdAt       DateTime  @default(now())
-  updatedAt       DateTime  @updatedAt
+  status    String    @default("paid") // paid, pending, cancelled
+  issueDate DateTime  @default(now())
+  dueDate   DateTime?
+  paidDate  DateTime?
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
 
   @@index([paymentId])
   @@index([invoiceNumber])
@@ -344,94 +323,4 @@ model Invoice {
   @@index([projectCode])
   @@index([status])
   @@index([issueDate])
-}
-
-model Client {
-    id              String    @id @default(uuid())
-    email           String    @unique
-    password        String?   // Nullable hasta que establezcan contraseña
-    name            String
-    phone           String?
-    emailVerified   DateTime?
-    resetToken      String?   // Para reset de contraseña (cuando ya tiene una)
-    resetTokenExpiry DateTime?
-    setupToken      String?   // Para establecer contraseña inicial (cuando no tiene)
-    setupTokenExpiry DateTime? // Expira en 30 días
-    createdAt       DateTime  @default(now())
-    updatedAt       DateTime  @updatedAt
-    lastLogin       DateTime?
-    isActive        Boolean   @default(true)
-
-    // Relación con Payment
-    payments        Payment[]
-
-    @@index([email])
-  }
-
-model Deliverable {
-  id          String    @id @default(uuid())
-  paymentId   String
-  payment     Payment   @relation(fields: [paymentId], references: [id], onDelete: Cascade)
-
-  // Información del archivo
-  name        String    // Nombre del archivo/entregable
-  description String?   @db.Text // Descripción opcional
-  type        String    // "source_code", "documentation", "assets", "credentials", "other"
-  fileUrl     String    // URL del archivo en Vercel Blob
-  blobKey     String?   // Key para eliminar de Vercel Blob si es necesario
-  fileSize    Int?      // Tamaño del archivo en bytes
-  mimeType    String?   // Tipo MIME del archivo (application/zip, application/pdf, etc.)
-
-  // Metadata
-  uploadedBy  String?   // Email del admin que subió el archivo
-  createdAt   DateTime  @default(now())
-  updatedAt   DateTime  @updatedAt
-
-  @@index([paymentId])
-  @@index([type])
-  @@index([createdAt])
-}
-
-model ProjectMessage {
-  id          String   @id @default(uuid())
-  paymentId   String
-  payment     Payment  @relation(fields: [paymentId], references: [id], onDelete: Cascade)
-
-  // Contenido
-  message     String   @db.Text
-  senderType  String   // "client" o "admin"
-  senderEmail String   // Email del remitente
-  senderName  String   // Nombre del remitente
-
-  // Archivos adjuntos (opcional)
-  attachments ProjectMessageAttachment[]
-
-  // Estado
-  isRead      Boolean  @default(false)
-  readAt      DateTime?
-
-  // Timestamps
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
-
-  @@index([paymentId])
-  @@index([senderType])
-  @@index([createdAt])
-  @@index([isRead])
-}
-
-model ProjectMessageAttachment {
-  id        String         @id @default(uuid())
-  messageId String
-  message   ProjectMessage @relation(fields: [messageId], references: [id], onDelete: Cascade)
-
-  fileName  String
-  fileUrl   String
-  blobKey   String?
-  fileSize  Int
-  mimeType  String
-
-  createdAt DateTime @default(now())
-
-  @@index([messageId])
 }

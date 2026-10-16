@@ -37,39 +37,14 @@ export {
 } from "./sendSubscriptionPaymentFailed";
 
 export {
-  sendWelcomeEmail,
-  type SendWelcomeEmailParams,
-} from "./sendWelcomeEmail";
-
-export {
   sendContactConfirmationEmail,
   type SendContactConfirmationEmailParams,
 } from "./sendContactConfirmationEmail";
 
 export {
-  sendSetupPasswordEmail,
-  type SendSetupPasswordEmailParams,
-} from "./sendSetupPasswordEmail";
-
-export {
-  sendResetPasswordEmail,
-  type SendResetPasswordEmailParams,
-} from "./sendResetPasswordEmail";
-
-export {
   sendBlogUnsubscribeEmail,
   type SendBlogUnsubscribeEmailParams,
 } from "./sendBlogUnsubscribeEmail";
-
-export {
-  sendNewClientMessageEmail,
-  type SendNewClientMessageEmailParams,
-} from "./sendNewClientMessageEmail";
-
-export {
-  sendNewAdminMessageEmail,
-  type SendNewAdminMessageEmailParams,
-} from "./sendNewAdminMessageEmail";
 
 // Admin email senders
 export {

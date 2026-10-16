@@ -963,7 +963,6 @@ export const extraFooterLinks = [
   { name: "Refund Policy", hash: "/refund-policy" },
   { name: "Manage Subscription", hash: "/manage-subscription" },
   { name: "Free Guide", hash: "/guide" },
-  { name: "Client Portal", hash: "/client/login" },
 ];
 
 export type ServicePage = {

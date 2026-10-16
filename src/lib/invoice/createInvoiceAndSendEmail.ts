@@ -6,6 +6,7 @@ import { Payment } from "@/generated/prisma/client";
 import { createInvoice, createInvoiceSummary } from "./actions";
 import { InvoiceType, DEFAULT_TAX_RATE } from "./types";
 import { sendInvoiceEmail } from "@/lib/email/senders";
+import { getProjectUrl } from "@/lib/projectUrl";
 
 interface CreateInvoiceAndSendEmailParams {
   payment: Payment;
@@ -73,6 +74,7 @@ export async function createInvoiceAndSendEmail({
       totalAmount: payment.totalAmount,
       type,
       pdfBuffer,
+      projectUrl: getProjectUrl(payment.accessToken),
     });
 
     return invoiceResult;

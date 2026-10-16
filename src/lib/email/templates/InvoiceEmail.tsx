@@ -22,6 +22,8 @@ export interface InvoiceEmailProps {
   firstPayment: number;
   secondPayment: number;
   totalAmount: number;
+  /** Public progress page (/project/{accessToken}); replaces the old client portal */
+  projectUrl?: string;
 }
 
 // Alias for backward compatibility in this file
@@ -53,6 +55,7 @@ export const InvoiceEmail = ({
   firstPayment,
   secondPayment,
   totalAmount,
+  projectUrl,
 }: InvoiceEmailProps) => {
   return (
     <Html>
@@ -191,6 +194,17 @@ export const InvoiceEmail = ({
                 <Text style={styles.completeBadgeText}>
                   Thank you for choosing RC Web Solutions!
                 </Text>
+              </Section>
+            )}
+
+            {projectUrl && (
+              <Section style={styles.projectLinkBox}>
+                <Text style={styles.projectLinkText}>
+                  Follow the progress of your project at any time:
+                </Text>
+                <Link href={projectUrl} style={styles.projectButton}>
+                  View your project
+                </Link>
               </Section>
             )}
 
@@ -348,6 +362,25 @@ const styles = {
     color: "#065f46",
     fontSize: "14px",
     margin: 0,
+  },
+  projectLinkBox: {
+    textAlign: "center" as const,
+    margin: "24px 0 0 0",
+  },
+  projectLinkText: {
+    color: colors.grayLight,
+    fontSize: "14px",
+    margin: "0 0 12px 0",
+  },
+  projectButton: {
+    display: "inline-block",
+    backgroundColor: colors.gold,
+    color: colors.dark,
+    padding: "12px 24px",
+    borderRadius: "8px",
+    fontSize: "14px",
+    fontWeight: 600,
+    textDecoration: "none",
   },
   hr: {
     border: "none",

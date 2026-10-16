@@ -1,11 +1,7 @@
 "use server";
 
-import { signOut, auth } from "@/lib/auth";
+import { signOut } from "@/lib/auth";
 
 export const signOutAction = async () => {
-  const session = await auth();
-  // Redirect to appropriate login page based on role
-  const redirectTo =
-    session?.user?.role === "CLIENT" ? "/client/login" : "/admin/login";
-  await signOut({ redirectTo, redirect: true });
+  await signOut({ redirectTo: "/admin/login", redirect: true });
 };

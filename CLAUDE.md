@@ -6,7 +6,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 RC Web Solutions (rcweb.dev) — professional web development company site with admin CRM, blog, Stripe payments (50/50 split), email/SMS campaigns, and AI chat. Built for small businesses in Houston, TX.
 
-The password-protected client portal (`client/`) is being removed: there will be no registered clients, only token links (`/pay/[token]`, `/project/[accessToken]`) and invoices by email. One role: admin.
+There is no client portal and no registered clients: customers get token links (`/pay/[token]`, `/project/[accessToken]`) and invoices by email. One role: admin.
 
 ## Commands
 
@@ -21,7 +21,7 @@ npx prisma generate      # Regenerate Prisma Client (also runs on postinstall)
 npx prisma db push       # Sync schema to DB without migration
 npm run migrate          # Prisma migrate dev
 npm run seed             # Seed database (tsx prisma/seed.ts)
-npm run seed:dev         # Test admin/client accounts from .env.test (localhost DB only)
+npm run seed:dev         # Test admin account + sample project from .env.test (localhost DB only)
 npm run email            # React Email preview (port 3001)
 ```
 
@@ -72,7 +72,6 @@ Also read the Next.js docs shipped with the installed version (`node_modules/nex
 ### Route Groups
 
 - `(admin)/` — protected admin dashboard, CRM, campaign management
-- `client/` — client portal (scheduled for removal, see About)
 - `pay/[token]` — Stripe payment pages
 - `project/[accessToken]` — public project view links
 

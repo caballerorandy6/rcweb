@@ -133,15 +133,6 @@ const Navbar = () => {
                   {contactItem.name}
                 </Button>
               )}
-
-              {/* Client Portal - Discreet button */}
-              <Link
-                href="/client/login"
-                className="ml-4 px-3 py-2 text-xs font-semibold text-white/70 hover:text-gold transition-all duration-300 font-inter border border-gold/20 hover:border-gold/50 hover:bg-gold/5 rounded-lg cursor-pointer hover:scale-105 active:scale-95 backdrop-blur-xs"
-                aria-label="Client Portal"
-              >
-                Client Portal
-              </Link>
             </div>
 
             {/* Tablet/Large Screen Compact Menu */}
@@ -188,15 +179,6 @@ const Navbar = () => {
                   Let&#39;s Talk
                 </Button>
               )}
-
-              {/* Client Portal - Discreet button */}
-              <Link
-                href="/client/login"
-                className="px-3 py-2 text-xs font-semibold text-white/70 hover:text-gold transition-all duration-300 font-inter border border-gold/20 hover:border-gold/50 hover:bg-gold/5 rounded-lg cursor-pointer hover:scale-105 active:scale-95 backdrop-blur-xs"
-                aria-label="Client Portal"
-              >
-                Client Portal
-              </Link>
 
               {/* More Menu */}
               <button
@@ -301,17 +283,6 @@ const Navbar = () => {
                           </Link>
                         );
                       })}
-
-                      {/* Client Portal - At the end of mobile menu */}
-                      <div className="mt-6 pt-6 border-t border-gold/20">
-                        <Link
-                          href="/client/login"
-                          onClick={handleClickModal}
-                          className="block px-4 py-3.5 rounded-xl text-base font-inter font-semibold transition-all duration-300 text-white/70 hover:text-gold hover:bg-gold/10 hover:border hover:border-gold/30 cursor-pointer border border-gold/20"
-                        >
-                          Client Portal
-                        </Link>
-                      </div>
                     </nav>
                   </div>
 

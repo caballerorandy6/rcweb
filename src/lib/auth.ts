@@ -33,7 +33,7 @@ export const authConfig: NextAuthConfig = {
         }
 
         try {
-          // Primero intentar buscar admin
+          // Admin is the only role; there is no client login
           const admin = await prisma.admin.findFirst({
             where: {
               email: email,
@@ -41,53 +41,16 @@ export const authConfig: NextAuthConfig = {
             },
           });
 
-          if (admin) {
-            // Verificar contraseña de admin
-            const isPasswordValid = await bcrypt.compare(
-              password,
-              admin.password
-            );
-
-            if (!isPasswordValid) {
-              await rateLimiters.login.hit(loginKey);
-              return null;
-            }
-
-            await rateLimiters.login.reset(loginKey);
-
-            // Actualizar último login
-            await prisma.admin.update({
-              where: { id: admin.id },
-              data: { lastLogin: new Date() },
-            });
-
-            // Retornar datos del admin para la sesión
-            return {
-              id: admin.id,
-              email: admin.email,
-              name: admin.name,
-              role: "ADMIN",
-            };
-          }
-
-          // Si no es admin, buscar cliente
-          const client = await prisma.client.findUnique({
-            where: {
-              email: email,
-            },
-          });
-
           // Unknown or inactive accounts count as failed attempts too, so an
           // attacker cannot tell which emails exist
-          if (!client || !client.password || !client.isActive) {
+          if (!admin) {
             await rateLimiters.login.hit(loginKey);
             return null;
           }
 
-          // Verificar contraseña de cliente
           const isPasswordValid = await bcrypt.compare(
             password,
-            client.password
+            admin.password
           );
 
           if (!isPasswordValid) {
@@ -98,17 +61,16 @@ export const authConfig: NextAuthConfig = {
           await rateLimiters.login.reset(loginKey);
 
           // Actualizar último login
-          await prisma.client.update({
-            where: { id: client.id },
+          await prisma.admin.update({
+            where: { id: admin.id },
             data: { lastLogin: new Date() },
           });
 
-          // Retornar datos del cliente para la sesión
           return {
-            id: client.id,
-            email: client.email,
-            name: client.name,
-            role: "CLIENT",
+            id: admin.id,
+            email: admin.email,
+            name: admin.name,
+            role: "ADMIN",
           };
         } catch (error) {
           if (error instanceof AccountLockedError) throw error;

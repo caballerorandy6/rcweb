@@ -14,6 +14,7 @@ export interface SendInvoiceEmailParams {
   totalAmount: number;
   type: InvoiceEmailType;
   pdfBuffer?: Buffer;
+  projectUrl?: string;
 }
 
 const subjects: Record<InvoiceEmailType, (invoiceNumber: string) => string> = {
@@ -36,6 +37,7 @@ export async function sendInvoiceEmail(
     totalAmount,
     type,
     pdfBuffer,
+    projectUrl,
   } = params;
 
   try {
@@ -48,6 +50,7 @@ export async function sendInvoiceEmail(
         firstPayment={firstPayment}
         secondPayment={secondPayment}
         totalAmount={totalAmount}
+        projectUrl={projectUrl}
       />
     );
 

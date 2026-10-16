@@ -485,27 +485,26 @@ export default function PrivacyPolicy() {
                 </ul>
               </section>
 
-              {/* Client Portal Data */}
+              {/* Project Data */}
               <section className="pt-8 border-t border-gold/20">
                 <h2 className="text-2xl font-bold text-gold font-iceland mb-4">
-                  Client Portal Data
+                  Project Data
                 </h2>
                 <p className="text-white/80 leading-relaxed font-inter mb-3">
-                  When You use our Client Portal to track your project, We collect
-                  and store:
+                  When You hire Us, We collect and store the information needed
+                  to deliver and document Your project:
                 </p>
                 <ul className="space-y-2 text-white/80 font-inter list-disc list-inside mb-4">
-                  <li>Login credentials and authentication data</li>
+                  <li>Your name, email address and the plan You purchased</li>
                   <li>Project information and milestone status</li>
-                  <li>Messages exchanged with our team</li>
-                  <li>File uploads and deliverables</li>
                   <li>Payment history and invoice records</li>
-                  <li>Activity logs and access timestamps</li>
+                  <li>Your acceptance of our Terms of Service</li>
                 </ul>
                 <p className="text-white/80 leading-relaxed font-inter">
-                  This data is used solely to provide You with project visibility,
-                  facilitate communication, and maintain accurate records of our
-                  business relationship.
+                  You can follow Your project&apos;s progress through a private link
+                  We send You by email; no account or password is required. This
+                  data is used solely to provide You with project visibility and
+                  maintain accurate records of our business relationship.
                 </p>
               </section>
 

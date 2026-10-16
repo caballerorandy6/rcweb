@@ -65,8 +65,6 @@ jobs:
       # Test accounts for e2e/admin-login.spec.ts (seeded below)
       TEST_ADMIN_EMAIL: admin@rcweb.test
       TEST_ADMIN_PASSWORD: ci-admin-password
-      TEST_CLIENT_EMAIL: client@rcweb.test
-      TEST_CLIENT_PASSWORD: ci-client-password
     steps:
       - uses: actions/checkout@v6
 

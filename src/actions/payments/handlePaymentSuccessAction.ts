@@ -9,6 +9,7 @@ import {
   sendAdminInitialPaymentFallback,
 } from "@/lib/email/senders";
 import { linkPaymentToContact } from "@/actions/stats/getRevenueAttributionAction";
+import { getProjectUrl } from "@/lib/projectUrl";
 
 export async function handlePaymentSuccessAction(
   sessionId: string,
@@ -190,6 +191,7 @@ export async function handlePaymentSuccessAction(
           firstPaymentAmount,
           secondPaymentAmount,
           totalAmount,
+          projectUrl: getProjectUrl(payment.accessToken),
         }),
         sendAdminInitialPaymentFallback(resend, {
           projectCode: finalProjectCode,
