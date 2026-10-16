@@ -51,7 +51,7 @@ export async function createStripeCheckoutAction(
     if (isSubscription) {
       // Create SUBSCRIPTION session for maintenance plan
       const session = await stripe.checkout.sessions.create({
-        payment_method_types: ["card"],
+        allowed_payment_method_types: ["card"],
         mode: "subscription",
         customer_email: customer.email,
         billing_address_collection: "required",
@@ -90,7 +90,7 @@ export async function createStripeCheckoutAction(
     // Crear sesión de Stripe CON TODA LA METADATA
     // El Payment se creará en el webhook DESPUÉS del pago exitoso
     const session = await stripe.checkout.sessions.create({
-      payment_method_types: ["card"],
+      allowed_payment_method_types: ["card"],
       mode: "payment",
       customer_email: customer.email,
       billing_address_collection: "required",

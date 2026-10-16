@@ -41,7 +41,7 @@ export async function createFinalPaymentSessionAction(
 
     // Crear sesión de Stripe para pago final
     const session = await stripe.checkout.sessions.create({
-      payment_method_types: ["card"],
+      allowed_payment_method_types: ["card"],
       mode: "payment",
       customer_email: email,
       metadata: metadata, // ← AQUÍ SE ENVÍA EL METADATA
