@@ -12,6 +12,7 @@ import {
   EnvelopeIcon,
 } from "@heroicons/react/24/outline";
 import useSectionObserver from "@/hooks/useSectionObserver";
+import { COMPANY, COMPANY_LOCATION } from "@/lib/company";
 
 const RefundPolicy = () => {
   const router = useRouter();
@@ -580,7 +581,7 @@ const RefundPolicy = () => {
           }}
         >
           <p className="text-white/50 text-sm font-inter">
-            RC Web Solutions LLC - Houston, TX 77085
+            {COMPANY.name} - {COMPANY_LOCATION}
           </p>
         </motion.div>
       </div>

@@ -13,6 +13,7 @@ import {
   ArrowLeftIcon,
 } from "@heroicons/react/24/outline";
 import useSectionObserver from "@/hooks/useSectionObserver";
+import { COMPANY, COMPANY_ADDRESS } from "@/lib/company";
 import { trackFBPhoneCall } from "@/components/tracking/FacebookPixel";
 import { trackLinkedInConversion } from "@/components/tracking/LinkedInInsightTag";
 
@@ -176,9 +177,8 @@ export default function PrivacyPolicy() {
                     <strong className="text-gold">Company</strong> (referred to
                     as either &ldquo;the Company&rdquo;, &ldquo;We&rdquo;,
                     &ldquo;Us&rdquo; or &ldquo;Our&rdquo; in this Agreement)
-                    refers to RC Web Solutions LLC, 6210 Newquay St Houston, TX
-                    77085. For the purposes of the GDPR, the Company is the Data
-                    Controller.
+                    refers to {COMPANY.name}, {COMPANY_ADDRESS}. For the
+                    purposes of the GDPR, the Company is the Data Controller.
                   </li>
                   <li>
                     <strong className="text-gold">Consumer</strong>, for the
@@ -1130,7 +1130,7 @@ export default function PrivacyPolicy() {
                 <p>
                   <strong className="text-gold">RC Web Solutions LLC</strong>
                 </p>
-                <p>6210 Newquay St, Houston, TX 77085</p>
+                <p>{COMPANY_ADDRESS}</p>
                 <p className="mt-2">
                   <a
                     href="https://rcweb.dev"

@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import Image from "next/image";
+import { COMPANY_LOCATION } from "@/lib/company";
 import {
   createAndSendBatchCampaign,
   continueBatchCampaign,
@@ -259,7 +260,7 @@ export default function SendNewsletterCampaign({
                                 RC WEB SOLUTIONS LLC
                             </p>
                             <p style="color: #9CA3AF; margin: 0 0 20px 0; font-size: 14px; font-family: 'Inter', Arial, sans-serif;">
-                                Houston, TX 77085
+                                ${COMPANY_LOCATION}
                             </p>
                             <p style="margin: 0 0 20px 0; line-height: 2;">
                                 <a href="tel:3463757534" style="color: #D4AF37; text-decoration: none; margin: 0 15px; font-family: 'Inter', Arial, sans-serif; font-size: 14px;">📞 (346) 375-7534</a><br>
@@ -655,7 +656,7 @@ export default function SendNewsletterCampaign({
         <!-- Footer -->
         <div class="footer">
             <div class="footer-logo">RC WEB SOLUTIONS LLC</div>
-            <p style="margin-bottom: 15px; font-size: 14px;">Houston, TX 77085</p>
+            <p style="margin-bottom: 15px; font-size: 14px;">${COMPANY_LOCATION}</p>
 
             <div class="footer-links">
                 <a href="tel:3463757534">📞 (346) 375-7534</a><br>
@@ -898,7 +899,7 @@ export default function SendNewsletterCampaign({
         <!-- Footer -->
         <div class="footer">
             <div class="footer-logo">RC WEB SOLUTIONS LLC</div>
-            <p style="margin-bottom: 15px; font-size: 14px;">Houston, TX 77085</p>
+            <p style="margin-bottom: 15px; font-size: 14px;">${COMPANY_LOCATION}</p>
 
             <div class="footer-links">
                 <a href="tel:3463757534">📞 (346) 375-7534</a><br>

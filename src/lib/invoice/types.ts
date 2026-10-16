@@ -1,3 +1,5 @@
+import { COMPANY } from "@/lib/company";
+
 /**
  * Tipos de invoice
  */
@@ -78,15 +80,15 @@ export interface CompanyInfo {
 }
 
 export const RC_WEB_COMPANY_INFO: CompanyInfo = {
-  name: "RC Web Solutions LLC",
-  address: "6210 Newquay St",
-  city: "Houston",
-  state: "TX",
-  zip: "77085",
-  country: "USA",
-  email: "admin@rcweb.dev",
-  phone: "+1 (346) 375-7534",
-  website: "www.rcweb.dev",
+  name: COMPANY.name,
+  address: COMPANY.address,
+  city: COMPANY.city,
+  state: COMPANY.state,
+  zip: COMPANY.zip,
+  country: COMPANY.country,
+  email: COMPANY.email,
+  phone: COMPANY.phone,
+  website: COMPANY.website,
 };
 
 /**
