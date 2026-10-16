@@ -22,7 +22,6 @@ const BlogSubscriptionForm = () => {
     resolver: zodResolver(BlogSubscriptionSchema),
     defaultValues: {
       email: "",
-      preferredLanguage: "en",
     },
   });
 
@@ -60,8 +59,8 @@ const BlogSubscriptionForm = () => {
         </div>
 
         <p className="text-gray-400 text-sm font-inter mb-6">
-          Get notified when I publish new articles about web development, React,
-          Next.js, and more.
+          Get new articles about web development, React and Next.js, plus
+          occasional offers from RC Web Solutions, by email.
         </p>
 
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
@@ -89,50 +88,6 @@ const BlogSubscriptionForm = () => {
             />
           </div>
 
-          {/* Language Selection */}
-          <div>
-            <label className="text-sm text-gray-400 font-inter mb-2 block">
-              Email Notifications Language
-            </label>
-            <div className="flex gap-4">
-              <label className="flex items-center gap-2 cursor-pointer group">
-                <input
-                  {...register("preferredLanguage")}
-                  type="radio"
-                  value="en"
-                  className="w-4 h-4 text-gold bg-gray-800 border-gray-600 focus:ring-gold/20 focus:ring-2"
-                />
-                <span className="text-white font-inter text-sm group-hover:text-gold transition-colors">
-                  English
-                </span>
-              </label>
-              <label className="flex items-center gap-2 cursor-pointer group">
-                <input
-                  {...register("preferredLanguage")}
-                  type="radio"
-                  value="es"
-                  className="w-4 h-4 text-gold bg-gray-800 border-gray-600 focus:ring-gold/20 focus:ring-2"
-                />
-                <span className="text-white font-inter text-sm group-hover:text-gold transition-colors">
-                  Español
-                </span>
-              </label>
-            </div>
-            <p className="text-gray-500 text-xs font-inter mt-2">
-              Blog content is in English. Notifications will be sent in your
-              preferred language.
-            </p>
-            <ErrorMessage
-              errors={errors}
-              name="preferredLanguage"
-              render={({ message }) => (
-                <p className="text-red-400 text-sm mt-2 font-inter">
-                  {message}
-                </p>
-              )}
-            />
-          </div>
-
           {/* Submit Button */}
           <button
             type="submit"
@@ -146,9 +101,10 @@ const BlogSubscriptionForm = () => {
           </button>
 
           <p className="text-gray-500 text-xs font-inter text-center">
-            No spam.{" "}
+            By subscribing you agree to receive emails from RC Web Solutions
+            LLC. No spam.{" "}
             <Link
-              href="/blog/unsubscribe"
+              href="/unsubscribe"
               className="text-gold hover:text-gold-light transition-colors underline"
             >
               Unsubscribe anytime
