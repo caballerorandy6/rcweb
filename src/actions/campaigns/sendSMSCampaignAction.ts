@@ -126,13 +126,19 @@ export const sendSmsCampaignAction = async (
       },
     });
 
-    // 4. Modo de prueba - enviar a números específicos de prueba
+    // 4. Modo de prueba - enviar a los números de SMS_TEST_NUMBERS (E.164, separados por comas)
     if (testMode) {
-      // Números de prueba hardcodeados
-      const TEST_NUMBERS = [
-        "+18325465983",  // Número de prueba 1
-        "+13464417386",  // Yani Cruz
-      ];
+      const TEST_NUMBERS = (process.env.SMS_TEST_NUMBERS ?? "")
+        .split(",")
+        .map((n) => n.trim())
+        .filter(Boolean);
+
+      if (TEST_NUMBERS.length === 0) {
+        return {
+          success: false,
+          message: "SMS_TEST_NUMBERS is not configured; add at least one E.164 number to send a test campaign.",
+        };
+      }
 
       let successCount = 0;
       let failedCount = 0;

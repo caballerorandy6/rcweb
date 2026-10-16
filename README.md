@@ -198,6 +198,8 @@ Create a `.env.local` file in the root directory. See `.env.example` for a compl
 - `STRIPE_SECRET_KEY` - Stripe API key
 - `RESEND_API_KEY` - Resend API key
 - `TWILIO_ACCOUNT_SID` - Twilio account SID
+- `TWILIO_FORWARD_TO_NUMBER` - Personal number (E.164) that receives calls forwarded from the Twilio number
+- `SMS_TEST_NUMBERS` - Comma-separated E.164 numbers used by the SMS campaign test mode
 - `BLOB_READ_WRITE_TOKEN` - Vercel Blob token
 
 See [.env.example](./.env.example) for detailed documentation of all environment variables.
