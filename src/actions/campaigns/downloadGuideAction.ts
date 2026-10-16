@@ -4,6 +4,7 @@ import { Resend } from "resend";
 import { prisma } from "@/lib/prisma";
 import { checkAndReserveEmailQuota, releaseEmailQuota } from "@/lib/emailQuota";
 import { sendNewLeadNotification } from "@/lib/email/senders/sendNewLeadNotification";
+import { COMPANY, COMPANY_LOCATION } from "@/lib/company";
 import fs from "fs";
 import path from "path";
 
@@ -178,7 +179,7 @@ export async function downloadGuideAction(email: string, source: string = "guide
             </div>
 
             <div class="footer">
-              <p>RC Web Solutions LLC | Houston, TX 77085<br>
+              <p>${COMPANY.name} | ${COMPANY_LOCATION}<br>
               📧 contactus@rcweb.dev | 📱 (346) 375-7534<br>
               🌐 <a href="https://rcweb.dev" style="color: #D4AF37;">rcweb.dev</a></p>
 

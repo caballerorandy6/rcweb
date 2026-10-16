@@ -16,6 +16,7 @@ import {
   ExclamationTriangleIcon,
 } from "@heroicons/react/24/outline";
 import useSectionObserver from "@/hooks/useSectionObserver";
+import { COMPANY, COMPANY_ADDRESS, COMPANY_LOCATION } from "@/lib/company";
 import { createStripeCheckoutAction } from "@/actions/payments/createStripeCheckoutAction";
 import { getCheckoutCustomer } from "@/lib/checkoutCustomer";
 
@@ -809,7 +810,7 @@ const TermsOfService = () => {
                   <p>
                     <strong className="text-gold">RC Web Solutions LLC</strong>
                   </p>
-                  <p>6210 Newquay St, Houston, TX 77085</p>
+                  <p>{COMPANY_ADDRESS}</p>
                   <p>
                     Email:{" "}
                     <a
@@ -925,7 +926,7 @@ const TermsOfService = () => {
           }}
         >
           <p className="text-white/50 text-sm font-inter">
-            RC Web Solutions LLC - Houston, TX 77085
+            {COMPANY.name} - {COMPANY_LOCATION}
           </p>
         </motion.div>
       </div>
