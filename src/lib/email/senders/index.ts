@@ -41,10 +41,6 @@ export {
   type SendContactConfirmationEmailParams,
 } from "./sendContactConfirmationEmail";
 
-export {
-  sendBlogUnsubscribeEmail,
-  type SendBlogUnsubscribeEmailParams,
-} from "./sendBlogUnsubscribeEmail";
 
 // Admin email senders
 export {

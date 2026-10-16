@@ -123,6 +123,13 @@ const securityHeaders = [
 ];
 
 const nextConfig: NextConfig = {
+  async redirects() {
+    return [
+      // The blog had its own subscriber list; it is now part of the newsletter
+      { source: "/blog/unsubscribe", destination: "/unsubscribe", permanent: true },
+    ];
+  },
+
   // Security headers for all routes
   async headers() {
     return [

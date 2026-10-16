@@ -42,10 +42,6 @@ export {
   type ContactConfirmationEmailProps,
 } from "./ContactConfirmationEmail";
 
-export {
-  BlogUnsubscribeEmail,
-  type BlogUnsubscribeEmailProps,
-} from "./BlogUnsubscribeEmail";
 
 // Admin email templates (React components)
 export {
