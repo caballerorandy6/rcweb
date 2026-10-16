@@ -24,6 +24,7 @@ export async function sendInitialPaymentConfirmation(
     firstPaymentAmount,
     secondPaymentAmount,
     totalAmount,
+    projectUrl,
   } = params;
 
   try {
@@ -35,6 +36,7 @@ export async function sendInitialPaymentConfirmation(
         firstPaymentAmount={firstPaymentAmount}
         secondPaymentAmount={secondPaymentAmount}
         totalAmount={totalAmount}
+        projectUrl={projectUrl}
       />
     );
 

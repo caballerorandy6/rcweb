@@ -21,6 +21,8 @@ export interface InitialPaymentConfirmationEmailProps {
   firstPaymentAmount: number; // in cents
   secondPaymentAmount: number; // in cents
   totalAmount: number; // in cents
+  /** Public progress page (/project/{accessToken}); replaces the old client portal */
+  projectUrl?: string;
 }
 
 export const InitialPaymentConfirmationEmail: React.FC<
@@ -32,6 +34,7 @@ export const InitialPaymentConfirmationEmail: React.FC<
   firstPaymentAmount,
   secondPaymentAmount,
   totalAmount,
+  projectUrl,
 }) => {
   const formattedFirstPayment = (firstPaymentAmount / 100).toFixed(2);
   const formattedSecondPayment = (secondPaymentAmount / 100).toFixed(2);
@@ -117,6 +120,17 @@ export const InitialPaymentConfirmationEmail: React.FC<
                 </tbody>
               </table>
             </Section>
+
+            {projectUrl && (
+              <Section style={styles.projectLinkBox}>
+                <Text style={styles.projectLinkText}>
+                  Follow the progress of your project at any time:
+                </Text>
+                <Link href={projectUrl} style={styles.projectButton}>
+                  View your project
+                </Link>
+              </Section>
+            )}
 
             <Hr style={styles.divider} />
 
@@ -290,6 +304,25 @@ const styles: Record<string, React.CSSProperties> = {
     color: EMAIL_COLORS.dark,
     fontWeight: 700,
     fontSize: "16px",
+  },
+  projectLinkBox: {
+    textAlign: "center" as const,
+    margin: "24px 0 0 0",
+  },
+  projectLinkText: {
+    color: EMAIL_COLORS.gray,
+    fontSize: "14px",
+    margin: "0 0 12px 0",
+  },
+  projectButton: {
+    display: "inline-block",
+    backgroundColor: EMAIL_COLORS.gold,
+    color: EMAIL_COLORS.dark,
+    padding: "12px 24px",
+    borderRadius: "8px",
+    fontSize: "14px",
+    fontWeight: 600,
+    textDecoration: "none",
   },
   divider: {
     border: "none",

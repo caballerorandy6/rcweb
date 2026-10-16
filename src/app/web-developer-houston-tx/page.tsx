@@ -80,7 +80,7 @@ const services = [
     icon: CurrencyDollarIcon,
     title: "Affordable Plans",
     description:
-      "Transparent pricing starting at $1,000. No hidden fees, 50/50 payment split, and a dedicated client portal to track progress.",
+      "Transparent pricing starting at $1,000. No hidden fees, 50/50 payment split, and a private link to track your project's progress.",
   },
 ];
 
@@ -291,7 +291,7 @@ export default function WebDeveloperHoustonPage() {
                 "Built-in SEO so Google can find your Houston business",
                 "Fast loading speeds (under 2 seconds) that keep visitors engaged",
                 "Bilingual support — I speak English and Spanish fluently",
-                "Dedicated client portal to track your project progress in real-time",
+                "Private link to track your project progress in real-time — no account needed",
                 "50/50 payment plan — pay half upfront, half on delivery",
                 "Free 30-minute consultation — no obligation, no pressure",
               ].map((item) => (

@@ -5,7 +5,6 @@ import Stripe from "stripe";
 import { prisma } from "@/lib/prisma";
 import stripe from "@/lib/stripe";
 import { Resend } from "resend";
-import crypto from "crypto";
 import { trackPaymentComplete } from "@/lib/analytics";
 import { createInvoiceAndSendEmail } from "@/lib/invoice/createInvoiceAndSendEmail";
 import { ADMIN_EMAIL } from "@/lib/email/adminEmail";
@@ -16,7 +15,6 @@ import {
   sendAdminFinalPaymentNotification,
   sendSubscriptionRenewalReminder,
   sendSubscriptionPaymentFailed,
-  sendSetupPasswordEmail,
 } from "@/lib/email";
 
 // Environment variables validation
@@ -111,38 +109,8 @@ export async function POST(req: Request) {
         }
 
         // CREATE Payment and TermsAcceptance if it doesn't exist
-        let clientWasCreated = false;
-        let clientSetupToken: string | null = null;
-
         if (!payment) {
           payment = await prisma.$transaction(async (tx) => {
-            // Try to find existing client by email (in case they registered before paying)
-            let existingClient = await tx.client.findUnique({
-              where: { email: customerEmail },
-            });
-
-            // If client doesn't exist, create it automatically (Opción 1)
-            if (!existingClient) {
-              const setupToken = crypto.randomBytes(32).toString("hex");
-              const setupTokenExpiry = new Date();
-              setupTokenExpiry.setDate(setupTokenExpiry.getDate() + 30); // 30 días de validez
-
-              existingClient = await tx.client.create({
-                data: {
-                  email: customerEmail,
-                  name: customerName || "Client",
-                  password: null, // Sin contraseña hasta que la establezca
-                  emailVerified: new Date(),
-                  isActive: true,
-                  setupToken,
-                  setupTokenExpiry,
-                },
-              });
-
-              clientWasCreated = true;
-              clientSetupToken = setupToken;
-            }
-
             const newPayment = await tx.payment.create({
               data: {
                 projectCode,
@@ -156,8 +124,6 @@ export async function POST(req: Request) {
                 firstPaidAt: new Date(),
                 firstSessionId: session.id,
                 projectStatus: "in_progress",
-                // Link to client (ya existe o fue creado arriba)
-                clientId: existingClient.id,
               },
               include: {
                 invoices: true,
@@ -203,34 +169,6 @@ export async function POST(req: Request) {
           } catch (invoiceError) {
             const errorMsg = `Error creating invoice: ${invoiceError instanceof Error ? invoiceError.message : String(invoiceError)}`;
             console.error("❌ Invoice error:", errorMsg);
-            emailErrors.push(errorMsg);
-          }
-        }
-
-        // ============= SEND SETUP PASSWORD EMAIL =============
-        // If client was created automatically, send setup password email
-        if (clientWasCreated && clientSetupToken && payment.accessToken) {
-          try {
-            const baseUrl =
-              process.env.NEXT_PUBLIC_BASE_URL || "https://rcweb.dev";
-            const setupPasswordUrl = `${baseUrl}/client/setup-password?token=${clientSetupToken}`;
-
-            const setupEmailResult = await sendSetupPasswordEmail({
-              customerEmail,
-              customerName: customerName || "Client",
-              setupPasswordUrl,
-              projectCode: payment.projectCode,
-              accessToken: payment.accessToken,
-            });
-
-            if (!setupEmailResult.success && setupEmailResult.error) {
-              emailErrors.push(
-                `Setup password email error: ${setupEmailResult.error}`
-              );
-            }
-          } catch (setupEmailError) {
-            const errorMsg = `Error sending setup password email: ${setupEmailError instanceof Error ? setupEmailError.message : String(setupEmailError)}`;
-            console.error("❌ Setup password email error:", errorMsg);
             emailErrors.push(errorMsg);
           }
         }

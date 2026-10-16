@@ -37,37 +37,15 @@ export {
   type SubscriptionPaymentFailedEmailProps,
 } from "./SubscriptionPaymentFailedEmail";
 
-export { WelcomeEmail, type WelcomeEmailProps } from "./WelcomeEmail";
-
 export {
   ContactConfirmationEmail,
   type ContactConfirmationEmailProps,
 } from "./ContactConfirmationEmail";
 
 export {
-  SetupPasswordEmail,
-  type SetupPasswordEmailProps,
-} from "./SetupPasswordEmail";
-
-export {
-  ResetPasswordEmail,
-  type ResetPasswordEmailProps,
-} from "./ResetPasswordEmail";
-
-export {
   BlogUnsubscribeEmail,
   type BlogUnsubscribeEmailProps,
 } from "./BlogUnsubscribeEmail";
-
-export {
-  NewClientMessageEmail,
-  type NewClientMessageEmailProps,
-} from "./NewClientMessageEmail";
-
-export {
-  NewAdminMessageEmail,
-  type NewAdminMessageEmailProps,
-} from "./NewAdminMessageEmail";
 
 // Admin email templates (React components)
 export {

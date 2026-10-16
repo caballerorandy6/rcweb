@@ -1,7 +1,7 @@
 import { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { getPublicMilestonesAction } from "@/actions/milestones/getPublicMilestonesAction";
-import ClientMilestoneView from "@/components/client/ClientMilestoneView";
+import ClientMilestoneView from "@/components/project/ClientMilestoneView";
 import {
   CodeBracketIcon,
   UserIcon,
