@@ -9,6 +9,7 @@ import { checkAndReserveEmailQuota, releaseEmailQuota } from "@/lib/emailQuota";
 import { escapeHtml, sanitizeEmail, sanitizePhone } from "@/lib/sanitize";
 import { ADMIN_EMAIL } from "@/lib/email/adminEmail";
 import { sendContactConfirmationEmail } from "@/lib/email/senders/sendContactConfirmationEmail";
+import { verifyRecaptcha } from "@/lib/recaptchaServer";
 
 export interface CreateContactAction {
   success: boolean;
@@ -29,50 +30,6 @@ export interface UTMData {
 const resend = new Resend(process.env.RESEND_API_KEY!);
 
 const RECAPTCHA_ACTION = "submit_contact_form";
-const RECAPTCHA_MIN_SCORE = 0.5;
-
-async function verifyRecaptcha(token: string | undefined): Promise<boolean> {
-  const secretKey = process.env.RECAPTCHA_SECRET_KEY;
-
-  if (!secretKey) {
-    console.warn("⚠️ reCAPTCHA secret key not configured; skipping verification");
-    return true;
-  }
-
-  // Sin token no hay forma de probar que es una persona: un bot podría omitirlo.
-  if (!token) {
-    return false;
-  }
-
-  try {
-    const response = await fetch("https://www.google.com/recaptcha/api/siteverify", {
-      method: "POST",
-      headers: { "Content-Type": "application/x-www-form-urlencoded" },
-      body: new URLSearchParams({ secret: secretKey, response: token }),
-    });
-
-    const data = await response.json();
-
-    // El token debe ser válido, venir de este formulario y tener score de humano
-    if (
-      data.success &&
-      data.action === RECAPTCHA_ACTION &&
-      data.score >= RECAPTCHA_MIN_SCORE
-    ) {
-      return true;
-    }
-
-    console.warn(
-      `🚫 reCAPTCHA failed. Score: ${data.score}, Action: ${data.action}, Success: ${data.success}, Hostname: ${data.hostname}, Errors: ${JSON.stringify(data["error-codes"] ?? [])}`
-    );
-    return false;
-  } catch (error) {
-    // Si Google no responde se deja pasar para no bloquear clientes reales;
-    // un atacante no puede provocar esta falla desde el navegador.
-    console.error("❌ reCAPTCHA verification error:", error);
-    return true;
-  }
-}
 
 export const createContactAction = async (
   data: FormData,
@@ -87,7 +44,7 @@ export const createContactAction = async (
   const skipBotChecks = isAdmin || process.env.NODE_ENV === "development";
 
   if (!skipBotChecks) {
-    const isHuman = await verifyRecaptcha(recaptchaToken);
+    const isHuman = await verifyRecaptcha(recaptchaToken, RECAPTCHA_ACTION);
     if (!isHuman) {
       console.warn("🚫 Bot detected: reCAPTCHA failed");
       return {

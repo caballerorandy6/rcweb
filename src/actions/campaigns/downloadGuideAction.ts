@@ -5,6 +5,9 @@ import { prisma } from "@/lib/prisma";
 import { checkAndReserveEmailQuota, releaseEmailQuota } from "@/lib/emailQuota";
 import { sendNewLeadNotification } from "@/lib/email/senders/sendNewLeadNotification";
 import { COMPANY, COMPANY_LOCATION } from "@/lib/company";
+import { headers } from "next/headers";
+import { rateLimiters } from "@/lib/rateLimit";
+import { verifyRecaptcha } from "@/lib/recaptchaServer";
 import fs from "fs";
 import path from "path";
 
@@ -20,8 +23,54 @@ export interface UTMData {
   landingPage?: string | null;
 }
 
-export async function downloadGuideAction(email: string, source: string = "guide_download", utmData?: UTMData) {
+export interface AntiBotData {
+  recaptchaToken?: string;
+  /** ms between the form being shown and submitted */
+  timeSpent?: number;
+  /** hidden field that only bots fill in */
+  honeypot?: string;
+}
+
+const RECAPTCHA_ACTION = "download_guide";
+const MIN_TIME_MS = 3000;
+
+export async function downloadGuideAction(
+  email: string,
+  source: string = "guide_download",
+  utmData?: UTMData,
+  antiBot: AntiBotData = {}
+) {
   try {
+    // Anti-bot: same layers as the contact form. The form used to be open and
+    // bots were creating "Guide Download" contacts and burning email quota.
+    if (process.env.NODE_ENV !== "development") {
+      const requestHeaders = await headers();
+      const ip =
+        requestHeaders.get("x-forwarded-for")?.split(",")[0].trim() ||
+        requestHeaders.get("x-real-ip") ||
+        "unknown";
+      const { success: withinLimit } = await rateLimiters.contact.limit(`guide:${ip}`);
+      if (!withinLimit) {
+        return { success: false, message: "Too many requests. Please try again in a minute." };
+      }
+
+      if (antiBot.honeypot) {
+        console.warn("🚫 Bot detected: honeypot filled (guide)");
+        return { success: false, message: "Verification failed. Please refresh the page and try again." };
+      }
+
+      if (antiBot.timeSpent !== undefined && antiBot.timeSpent < MIN_TIME_MS) {
+        console.warn(`🚫 Bot detected: guide form submitted too quickly (${antiBot.timeSpent}ms)`);
+        return { success: false, message: "Please take a moment before submitting." };
+      }
+
+      const isHuman = await verifyRecaptcha(antiBot.recaptchaToken, RECAPTCHA_ACTION);
+      if (!isHuman) {
+        console.warn("🚫 Bot detected: reCAPTCHA failed (guide)");
+        return { success: false, message: "Verification failed. Please refresh the page and try again." };
+      }
+    }
+
     // Validar email
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(email)) {
