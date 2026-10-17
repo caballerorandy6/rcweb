@@ -1,5 +1,6 @@
 "use client";
 
+import Button from "@/components/ui/Button";
 import React from "react";
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
@@ -150,26 +151,17 @@ const Process = () => {
                     >
                       Previous
                     </button>
-                    <button
+                    <Button
+                      size="lg"
                       onClick={() =>
                         setActiveStep(
                           Math.min(processSteps.length - 1, activeStep + 1)
                         )
                       }
                       disabled={activeStep === processSteps.length - 1}
-                      className={`relative px-6 py-4 rounded-xl font-inter text-base sm:text-lg font-semibold transition-all group overflow-hidden transform hover:scale-[1.02] active:scale-[0.98] ${
-                        activeStep === processSteps.length - 1
-                          ? "bg-gray-800 text-gray-600 cursor-not-allowed"
-                          : "text-black bg-linear-to-r from-gold via-gold-light to-gold hover:from-gold-light hover:via-gold hover:to-gold-light shadow-lg hover:shadow-gold/25"
-                      }`}
                     >
-                      {activeStep !== processSteps.length - 1 && (
-                        <div className="absolute inset-0 bg-white/20 -translate-x-full group-hover:translate-x-full transition-transform duration-700 skew-x-12"></div>
-                      )}
-                      <span className="relative flex items-center justify-center">
-                        Next Step
-                      </span>
-                    </button>
+                      Next Step
+                    </Button>
                   </div>
                 </div>
               </motion.div>

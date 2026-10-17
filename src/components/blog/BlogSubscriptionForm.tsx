@@ -1,5 +1,6 @@
 "use client";
 
+import Button from "@/components/ui/Button";
 import Link from "next/link";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -89,16 +90,9 @@ const BlogSubscriptionForm = () => {
           </div>
 
           {/* Submit Button */}
-          <button
-            type="submit"
-            disabled={isSubmitting}
-            className="relative w-full py-3 text-lg font-semibold text-black bg-linear-to-r from-gold via-gold-light to-gold hover:from-gold-light hover:via-gold hover:to-gold-light rounded-xl transition-all duration-300 shadow-lg hover:shadow-gold/25 font-inter group overflow-hidden transform hover:scale-[1.02] active:scale-[0.98] disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100"
-          >
-            <div className="absolute inset-0 bg-white/20 -translate-x-full group-hover:translate-x-full transition-transform duration-700 skew-x-12 disabled:-translate-x-full"></div>
-            <span className="relative flex items-center justify-center">
-              {isSubmitting ? "Subscribing..." : "Subscribe"}
-            </span>
-          </button>
+          <Button type="submit" size="lg" fullWidth disabled={isSubmitting}>
+            {isSubmitting ? "Subscribing..." : "Subscribe"}
+          </Button>
 
           <p className="text-gray-500 text-xs font-inter text-center">
             By subscribing you agree to receive emails from RC Web Solutions

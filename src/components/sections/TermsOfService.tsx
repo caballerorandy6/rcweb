@@ -149,7 +149,7 @@ const TermsOfService = () => {
             </p>
             <p className="mt-4 text-white/90 text-lg leading-relaxed font-inter">
               This agreement was last updated on{" "}
-              <strong className="text-gold">January 13, 2026</strong>.
+              <strong>January 13, 2026</strong>.
             </p>
           </div>
         </motion.div>
@@ -162,20 +162,20 @@ const TermsOfService = () => {
           viewport={{ once: true }}
           transition={{ type: "spring", stiffness: 200, damping: 20 }}
         >
-          <div className="prose prose-invert prose-gold max-w-none">
+          <div className="legal-prose max-w-none">
             <div className="bg-gray-900/60 backdrop-blur-md rounded-xl border border-gold/20 p-8 space-y-8">
               {/* Acceptance of Terms */}
               <section>
-                <h2 className="text-2xl font-bold text-gold font-iceland mb-4">
+                <h2>
                   1. Acceptance of Terms
                 </h2>
-                <p className="text-white/80 leading-relaxed font-inter mb-4">
+                <p>
                   By accessing and using RC Web Solutions LLC&apos;s services,
                   you accept and agree to be bound by the terms and provisions
                   of this agreement. If you do not agree to abide by the above,
                   please do not use this service.
                 </p>
-                <p className="text-white/80 leading-relaxed font-inter">
+                <p>
                   These Terms of Service constitute a legally binding agreement
                   between you (the &ldquo;Client&rdquo; or &ldquo;you&rdquo;)
                   and RC Web Solutions LLC (&ldquo;Company,&rdquo;
@@ -184,16 +184,16 @@ const TermsOfService = () => {
               </section>
 
               {/* Services Provided */}
-              <section className="pt-8 border-t border-gold/20">
-                <h2 className="text-2xl font-bold text-gold font-iceland mb-4">
+              <section>
+                <h2>
                   2. Services Provided
                 </h2>
-                <p className="text-white/80 leading-relaxed font-inter mb-3">
+                <p>
                   RC Web Solutions LLC provides professional web development,
                   design, and related digital services including but not limited
                   to:
                 </p>
-                <ul className="space-y-2 text-white/80 font-inter list-disc list-inside">
+                <ul>
                   <li>Custom website design and development</li>
                   <li>E-commerce solutions</li>
                   <li>Web application development</li>
@@ -205,54 +205,54 @@ const TermsOfService = () => {
               </section>
 
               {/* Payment Terms */}
-              <section className="pt-8 border-t border-gold/20">
-                <h2 className="text-2xl font-bold text-gold font-iceland mb-4">
+              <section>
+                <h2>
                   3. Payment Terms
                 </h2>
 
-                <h3 className="text-xl font-semibold text-gold/90 font-iceland mt-6 mb-3">
+                <h3>
                   3.1 Two-Payment Structure
                 </h3>
-                <p className="text-white/80 leading-relaxed font-inter mb-3">
+                <p>
                   All projects follow a two-payment structure:
                 </p>
-                <ul className="space-y-2 text-white/80 font-inter list-disc list-inside mb-4">
+                <ul>
                   <li>
-                    <strong className="text-gold">First Payment (50%):</strong>{" "}
+                    <strong>First Payment (50%):</strong>{" "}
                     Due before work begins to secure your project
                   </li>
                   <li>
-                    <strong className="text-gold">Second Payment (50%):</strong>{" "}
+                    <strong>Second Payment (50%):</strong>{" "}
                     Due upon project completion and before final delivery
                   </li>
                 </ul>
 
-                <h3 className="text-xl font-semibold text-gold/90 font-iceland mt-6 mb-3">
+                <h3>
                   3.2 Subscription Services (Recurring Payments)
                 </h3>
-                <p className="text-white/80 leading-relaxed font-inter mb-3">
+                <p>
                   The Monthly Website Maintenance and Support service operates on a
                   subscription basis with automatic recurring payments:
                 </p>
-                <ul className="space-y-2 text-white/80 font-inter list-disc list-inside mb-4">
+                <ul>
                   <li>
-                    <strong className="text-gold">Monthly Fee:</strong>{" "}
+                    <strong>Monthly Fee:</strong>{" "}
                     $200 USD charged automatically each month
                   </li>
                   <li>
-                    <strong className="text-gold">Billing Cycle:</strong>{" "}
+                    <strong>Billing Cycle:</strong>{" "}
                     Your card will be charged on the same day each month from your initial subscription date
                   </li>
                   <li>
-                    <strong className="text-gold">Cancellation:</strong>{" "}
+                    <strong>Cancellation:</strong>{" "}
                     You may cancel your subscription at any time. Cancellation takes effect at the end of the current billing period
                   </li>
                   <li>
-                    <strong className="text-gold">No Refunds:</strong>{" "}
+                    <strong>No Refunds:</strong>{" "}
                     Partial month refunds are not provided upon cancellation
                   </li>
                   <li>
-                    <strong className="text-gold">How to Manage:</strong>{" "}
+                    <strong>How to Manage:</strong>{" "}
                     You can manage your subscription, update payment methods, or cancel at any time by visiting{" "}
                     <Link href={"/manage-subscription" as Route} className="text-gold hover:text-gold/80 underline">
                       rcweb.dev/manage-subscription
@@ -261,22 +261,22 @@ const TermsOfService = () => {
                   </li>
                 </ul>
 
-                <h3 className="text-xl font-semibold text-gold/90 font-iceland mt-6 mb-3">
+                <h3>
                   3.3 Payment Methods
                 </h3>
-                <p className="text-white/80 leading-relaxed font-inter mb-3">
+                <p>
                   We accept the following payment methods:
                 </p>
-                <ul className="space-y-2 text-white/80 font-inter list-disc list-inside">
+                <ul>
                   <li>Credit/Debit Cards (via Stripe)</li>
                   <li>Bank Transfer (Zelle)</li>
                   <li>Other methods as agreed upon in writing</li>
                 </ul>
 
-                <h3 className="text-xl font-semibold text-gold/90 font-iceland mt-6 mb-3">
+                <h3>
                   3.4 Late Payments
                 </h3>
-                <p className="text-white/80 leading-relaxed font-inter">
+                <p>
                   If payment is not received within 30 days of the due date, we
                   reserve the right to suspend work, remove the website from
                   hosting, or take other appropriate action to collect payment.
@@ -284,8 +284,8 @@ const TermsOfService = () => {
               </section>
 
               {/* Refund Policy */}
-              <section className="pt-8 border-t border-gold/20">
-                <h2 className="text-2xl font-bold text-gold font-iceland mb-4">
+              <section>
+                <h2>
                   4. Refund Policy
                 </h2>
 
@@ -296,11 +296,11 @@ const TermsOfService = () => {
                   </p>
                 </div>
 
-                <p className="text-white/80 leading-relaxed font-inter mb-3">
+                <p>
                   Please refer to our complete Refund Policy for details. Key
                   points include:
                 </p>
-                <ul className="space-y-2 text-white/80 font-inter list-disc list-inside">
+                <ul>
                   <li>
                     Cancellation is allowed before the first payment without
                     penalty
@@ -317,14 +317,14 @@ const TermsOfService = () => {
               </section>
 
               {/* Client Responsibilities */}
-              <section className="pt-8 border-t border-gold/20">
-                <h2 className="text-2xl font-bold text-gold font-iceland mb-4">
+              <section>
+                <h2>
                   5. Client Responsibilities
                 </h2>
-                <p className="text-white/80 leading-relaxed font-inter mb-3">
+                <p>
                   To ensure successful project completion, the Client agrees to:
                 </p>
-                <ul className="space-y-2 text-white/80 font-inter list-disc list-inside">
+                <ul>
                   <li>
                     Provide all necessary content, materials, and information in
                     a timely manner
@@ -344,27 +344,27 @@ const TermsOfService = () => {
               </section>
 
               {/* Project Scope and Changes */}
-              <section className="pt-8 border-t border-gold/20">
-                <h2 className="text-2xl font-bold text-gold font-iceland mb-4">
+              <section>
+                <h2>
                   6. Project Scope and Changes
                 </h2>
 
-                <h3 className="text-xl font-semibold text-gold/90 font-iceland mt-6 mb-3">
+                <h3>
                   6.1 Scope Definition
                 </h3>
-                <p className="text-white/80 leading-relaxed font-inter mb-4">
+                <p>
                   All projects include a defined scope of work agreed upon
                   before the first payment. This scope outlines deliverables,
                   features, timeline, and other project specifications.
                 </p>
 
-                <h3 className="text-xl font-semibold text-gold/90 font-iceland mt-6 mb-3">
+                <h3>
                   6.2 Scope Changes
                 </h3>
-                <p className="text-white/80 leading-relaxed font-inter mb-3">
+                <p>
                   Changes to the project scope may result in:
                 </p>
-                <ul className="space-y-2 text-white/80 font-inter list-disc list-inside">
+                <ul>
                   <li>
                     Additional fees for expanded features or functionality
                   </li>
@@ -374,21 +374,21 @@ const TermsOfService = () => {
               </section>
 
               {/* Intellectual Property */}
-              <section className="pt-8 border-t border-gold/20">
-                <h2 className="text-2xl font-bold text-gold font-iceland mb-4">
+              <section>
+                <h2>
                   7. Intellectual Property Rights
                 </h2>
 
-                <h3 className="text-xl font-semibold text-gold/90 font-iceland mt-6 mb-3">
+                <h3>
                   7.1 Client Content
                 </h3>
-                <p className="text-white/80 leading-relaxed font-inter mb-4">
+                <p>
                   You retain all rights to content, images, and materials you
                   provide to us. You grant us a license to use these materials
                   for the purpose of completing your project.
                 </p>
 
-                <h3 className="text-xl font-semibold text-gold/90 font-iceland mt-6 mb-3">
+                <h3>
                   7.2 Completed Work (Work for Hire)
                 </h3>
                 <div className="bg-gold/10 border border-gold/30 rounded-lg p-4 mb-4">
@@ -400,10 +400,10 @@ const TermsOfService = () => {
                     such work shall transfer to the Client.
                   </p>
                 </div>
-                <p className="text-white/80 leading-relaxed font-inter mb-3">
+                <p>
                   This transfer of ownership is subject to the following conditions:
                 </p>
-                <ul className="space-y-2 text-white/80 font-inter list-disc list-inside">
+                <ul>
                   <li>
                     Third-party libraries, frameworks, and tools remain under
                     their respective licenses
@@ -418,33 +418,33 @@ const TermsOfService = () => {
                   </li>
                 </ul>
 
-                <h3 className="text-xl font-semibold text-gold/90 font-iceland mt-6 mb-3">
+                <h3>
                   7.3 Third-Party Licenses
                 </h3>
-                <p className="text-white/80 leading-relaxed font-inter mb-3">
+                <p>
                   Our work may incorporate third-party libraries, frameworks,
                   plugins, fonts, or other resources under various open-source or
                   commercial licenses. The Client acknowledges and agrees:
                 </p>
-                <ul className="space-y-2 text-white/80 font-inter list-disc list-inside">
+                <ul>
                   <li>
-                    <strong className="text-gold">License Compliance:</strong> The
+                    <strong>License Compliance:</strong> The
                     Client is responsible for complying with all third-party license
                     terms after project delivery
                   </li>
                   <li>
-                    <strong className="text-gold">Documentation:</strong> Upon
+                    <strong>Documentation:</strong> Upon
                     request, we will provide a list of major third-party dependencies
                     and their license types
                   </li>
                   <li>
-                    <strong className="text-gold">Commercial Licenses:</strong> If
+                    <strong>Commercial Licenses:</strong> If
                     your project requires commercial licenses for fonts, images, or
                     premium plugins, these costs are the responsibility of the Client
                     unless otherwise agreed in writing
                   </li>
                   <li>
-                    <strong className="text-gold">No Warranty:</strong> We are not
+                    <strong>No Warranty:</strong> We are not
                     liable for any issues arising from changes to third-party license
                     terms after project delivery
                   </li>
@@ -452,18 +452,18 @@ const TermsOfService = () => {
               </section>
 
               {/* Warranties and Disclaimers */}
-              <section className="pt-8 border-t border-gold/20">
-                <h2 className="text-2xl font-bold text-gold font-iceland mb-4">
+              <section>
+                <h2>
                   8. Warranties and Disclaimers
                 </h2>
 
-                <h3 className="text-xl font-semibold text-gold/90 font-iceland mt-6 mb-3">
+                <h3>
                   8.1 Our Commitment
                 </h3>
-                <p className="text-white/80 leading-relaxed font-inter mb-3">
+                <p>
                   We warrant that:
                 </p>
-                <ul className="space-y-2 text-white/80 font-inter list-disc list-inside mb-4">
+                <ul>
                   <li>
                     Services will be performed with professional care and skill
                   </li>
@@ -473,13 +473,13 @@ const TermsOfService = () => {
                   <li>We have the right to provide the services offered</li>
                 </ul>
 
-                <h3 className="text-xl font-semibold text-gold/90 font-iceland mt-6 mb-3">
+                <h3>
                   8.2 Disclaimers
                 </h3>
-                <p className="text-white/80 leading-relaxed font-inter mb-3">
+                <p>
                   Except as expressly stated:
                 </p>
-                <ul className="space-y-2 text-white/80 font-inter list-disc list-inside">
+                <ul>
                   <li>
                     Services are provided &ldquo;as is&rdquo; without warranties
                     of any kind
@@ -496,14 +496,14 @@ const TermsOfService = () => {
               </section>
 
               {/* Limitation of Liability */}
-              <section className="pt-8 border-t border-gold/20">
-                <h2 className="text-2xl font-bold text-gold font-iceland mb-4">
+              <section>
+                <h2>
                   9. Limitation of Liability
                 </h2>
-                <p className="text-white/80 leading-relaxed font-inter mb-3">
+                <p>
                   To the maximum extent permitted by law:
                 </p>
-                <ul className="space-y-2 text-white/80 font-inter list-disc list-inside">
+                <ul>
                   <li>
                     Our total liability shall not exceed the amount paid by you
                     for the specific service in question
@@ -524,58 +524,58 @@ const TermsOfService = () => {
               </section>
 
               {/* Confidentiality */}
-              <section className="pt-8 border-t border-gold/20">
-                <h2 className="text-2xl font-bold text-gold font-iceland mb-4">
+              <section>
+                <h2>
                   10. Confidentiality
                 </h2>
-                <p className="text-white/80 leading-relaxed font-inter mb-4">
+                <p>
                   We respect your privacy and will keep all client information
                   confidential. We will not share your proprietary information,
                   business strategies, or sensitive data with third parties
                   without your permission, except as required by law.
                 </p>
-                <p className="text-white/80 leading-relaxed font-inter">
+                <p>
                   Please refer to our Privacy Policy for details on how we
                   collect, use, and protect your personal information.
                 </p>
               </section>
 
               {/* Support and Maintenance */}
-              <section className="pt-8 border-t border-gold/20">
-                <h2 className="text-2xl font-bold text-gold font-iceland mb-4">
+              <section>
+                <h2>
                   11. Support and Maintenance
                 </h2>
 
-                <h3 className="text-xl font-semibold text-gold/90 font-iceland mt-6 mb-3">
+                <h3>
                   11.1 Post-Launch Support by Plan
                 </h3>
-                <p className="text-white/80 leading-relaxed font-inter mb-4">
+                <p>
                   Support duration varies by service tier and is included at no additional cost:
                 </p>
-                <ul className="space-y-2 text-white/80 font-inter list-disc list-inside mb-4">
-                  <li><strong className="text-gold">Landing Pages:</strong> 30 days</li>
-                  <li><strong className="text-gold">Business Websites:</strong> 30 days</li>
-                  <li><strong className="text-gold">Website Redesign:</strong> 45 days</li>
-                  <li><strong className="text-gold">Admin Dashboards:</strong> 60 days</li>
-                  <li><strong className="text-gold">E-Commerce Websites:</strong> 90 days</li>
-                  <li><strong className="text-gold">Custom Web Applications:</strong> 6 months (priority support)</li>
+                <ul>
+                  <li><strong>Landing Pages:</strong> 30 days</li>
+                  <li><strong>Business Websites:</strong> 30 days</li>
+                  <li><strong>Website Redesign:</strong> 45 days</li>
+                  <li><strong>Admin Dashboards:</strong> 60 days</li>
+                  <li><strong>E-Commerce Websites:</strong> 90 days</li>
+                  <li><strong>Custom Web Applications:</strong> 6 months (priority support)</li>
                 </ul>
 
-                <h3 className="text-xl font-semibold text-gold/90 font-iceland mt-6 mb-3">
+                <h3>
                   11.2 Support Coverage
                 </h3>
-                <p className="text-white/80 leading-relaxed font-inter mb-3">
+                <p>
                   Post-launch support covers:
                 </p>
-                <ul className="space-y-2 text-white/80 font-inter list-disc list-inside mb-4">
+                <ul>
                   <li>Bug fixes related to our delivered work</li>
                   <li>Technical issues caused by our code</li>
                   <li>Minor adjustments within the original scope</li>
                 </ul>
-                <p className="text-white/80 leading-relaxed font-inter mb-3">
+                <p>
                   Post-launch support does NOT cover:
                 </p>
-                <ul className="space-y-2 text-white/80 font-inter list-disc list-inside">
+                <ul>
                   <li>New features or functionality not in the original scope</li>
                   <li>Issues caused by client modifications to the code</li>
                   <li>Third-party service failures or changes</li>
@@ -583,13 +583,13 @@ const TermsOfService = () => {
                   <li>Issues caused by client&apos;s hosting or server configuration</li>
                 </ul>
 
-                <h3 className="text-xl font-semibold text-gold/90 font-iceland mt-6 mb-3">
+                <h3>
                   11.3 Ongoing Maintenance
                 </h3>
-                <p className="text-white/80 leading-relaxed font-inter mb-3">
+                <p>
                   After the included support period, ongoing maintenance can be arranged through:
                 </p>
-                <ul className="space-y-2 text-white/80 font-inter list-disc list-inside">
+                <ul>
                   <li>Monthly maintenance plans ($200/month)</li>
                   <li>Hourly support agreements</li>
                   <li>Project-based updates</li>
@@ -597,27 +597,27 @@ const TermsOfService = () => {
               </section>
 
               {/* Termination */}
-              <section className="pt-8 border-t border-gold/20">
-                <h2 className="text-2xl font-bold text-gold font-iceland mb-4">
+              <section>
+                <h2>
                   12. Termination
                 </h2>
 
-                <h3 className="text-xl font-semibold text-gold/90 font-iceland mt-6 mb-3">
+                <h3>
                   12.1 Termination by Client
                 </h3>
-                <p className="text-white/80 leading-relaxed font-inter mb-4">
+                <p>
                   You may terminate services at any time. However, payments
                   already made are non-refundable, and you will be billed for
                   work completed up to the termination date.
                 </p>
 
-                <h3 className="text-xl font-semibold text-gold/90 font-iceland mt-6 mb-3">
+                <h3>
                   12.2 Termination by Company
                 </h3>
-                <p className="text-white/80 leading-relaxed font-inter mb-3">
+                <p>
                   We reserve the right to terminate services if:
                 </p>
-                <ul className="space-y-2 text-white/80 font-inter list-disc list-inside">
+                <ul>
                   <li>Payment is not received within 30 days of due date</li>
                   <li>Client provides false or misleading information</li>
                   <li>
@@ -628,17 +628,17 @@ const TermsOfService = () => {
               </section>
 
               {/* Deliverable Acceptance */}
-              <section className="pt-8 border-t border-gold/20">
-                <h2 className="text-2xl font-bold text-gold font-iceland mb-4">
+              <section>
+                <h2>
                   13. Deliverable Acceptance and Revisions
                 </h2>
 
-                <h3 className="text-xl font-semibold text-gold/90 font-iceland mt-6 mb-3">
+                <h3>
                   13.1 Review Period
                 </h3>
-                <p className="text-white/80 leading-relaxed font-inter mb-4">
+                <p>
                   Upon delivery of each milestone or final deliverable, the Client has
-                  <strong className="text-gold"> seven (7) business days</strong> to review
+                  <strong> seven (7) business days</strong> to review
                   and request revisions within the agreed scope.
                 </p>
                 <div className="bg-amber-500/10 border border-amber-500/30 rounded-lg p-4 mb-4">
@@ -647,30 +647,30 @@ const TermsOfService = () => {
                     is considered ACCEPTED and approved.
                   </p>
                 </div>
-                <p className="text-white/80 leading-relaxed font-inter">
+                <p>
                   This automatic acceptance applies to milestone deliveries, design
                   approvals, and final project delivery. We encourage timely
                   communication to ensure your project meets expectations.
                 </p>
 
-                <h3 className="text-xl font-semibold text-gold/90 font-iceland mt-6 mb-3">
+                <h3>
                   13.2 Revision Rounds
                 </h3>
-                <p className="text-white/80 leading-relaxed font-inter mb-4">
+                <p>
                   Each project includes a limited number of revision rounds to ensure
                   efficient project completion:
                 </p>
-                <ul className="space-y-2 text-white/80 font-inter list-disc list-inside mb-4">
+                <ul>
                   <li>
-                    <strong className="text-gold">Design Phase:</strong>{" "}
+                    <strong>Design Phase:</strong>{" "}
                     Up to 2 rounds of revisions for mockups and visual design
                   </li>
                   <li>
-                    <strong className="text-gold">Development Phase:</strong>{" "}
+                    <strong>Development Phase:</strong>{" "}
                     Up to 2 rounds of revisions for functionality and content
                   </li>
                   <li>
-                    <strong className="text-gold">Final Review:</strong>{" "}
+                    <strong>Final Review:</strong>{" "}
                     1 final round for minor adjustments before launch
                   </li>
                 </ul>
@@ -681,28 +681,28 @@ const TermsOfService = () => {
                   <p className="text-white/80 font-inter">
                     Revisions beyond the included rounds, or changes outside the
                     original project scope, will be billed at our hourly rate of
-                    <strong className="text-gold"> $95/hour</strong>. We will notify
+                    <strong> $95/hour</strong>. We will notify
                     you before any additional charges are incurred.
                   </p>
                 </div>
               </section>
 
               {/* Client Delays and Project Abandonment */}
-              <section className="pt-8 border-t border-gold/20">
-                <h2 className="text-2xl font-bold text-gold font-iceland mb-4">
+              <section>
+                <h2>
                   14. Client Delays and Project Abandonment
                 </h2>
 
-                <h3 className="text-xl font-semibold text-gold/90 font-iceland mt-6 mb-3">
+                <h3>
                   14.1 Client Response Time
                 </h3>
-                <p className="text-white/80 leading-relaxed font-inter mb-4">
+                <p>
                   Timely communication is essential for project success. Clients are
                   expected to respond to requests for feedback, content, or approvals
                   within 5 business days unless otherwise agreed.
                 </p>
 
-                <h3 className="text-xl font-semibold text-gold/90 font-iceland mt-6 mb-3">
+                <h3>
                   14.2 Project Abandonment
                 </h3>
                 <div className="bg-red-500/10 border border-red-500/30 rounded-lg p-4 mb-4">
@@ -711,10 +711,10 @@ const TermsOfService = () => {
                     the project may be considered ABANDONED.
                   </p>
                 </div>
-                <p className="text-white/80 leading-relaxed font-inter mb-3">
+                <p>
                   In case of project abandonment:
                 </p>
-                <ul className="space-y-2 text-white/80 font-inter list-disc list-inside">
+                <ul>
                   <li>All payments made are non-refundable</li>
                   <li>RC Web Solutions LLC has no obligation to complete remaining work</li>
                   <li>Any work completed up to that point remains property of RC Web Solutions LLC until full payment</li>
@@ -723,17 +723,17 @@ const TermsOfService = () => {
               </section>
 
               {/* Indemnification */}
-              <section className="pt-8 border-t border-gold/20">
-                <h2 className="text-2xl font-bold text-gold font-iceland mb-4">
+              <section>
+                <h2>
                   15. Indemnification
                 </h2>
-                <p className="text-white/80 leading-relaxed font-inter mb-4">
+                <p>
                   The Client agrees to indemnify, defend, and hold harmless RC Web
                   Solutions LLC, its officers, directors, employees, and agents from
                   and against any claims, liabilities, damages, losses, and expenses
                   arising from:
                 </p>
-                <ul className="space-y-2 text-white/80 font-inter list-disc list-inside">
+                <ul>
                   <li>Content, materials, or information provided by the Client that infringes
                       on any third-party intellectual property rights (copyright, trademark, etc.)</li>
                   <li>The Client&apos;s use of the delivered work in violation of any applicable laws</li>
@@ -747,16 +747,16 @@ const TermsOfService = () => {
               </section>
 
               {/* Force Majeure */}
-              <section className="pt-8 border-t border-gold/20">
-                <h2 className="text-2xl font-bold text-gold font-iceland mb-4">
+              <section>
+                <h2>
                   16. Force Majeure
                 </h2>
-                <p className="text-white/80 leading-relaxed font-inter mb-4">
+                <p>
                   RC Web Solutions LLC shall not be liable for any failure or delay in
                   performing its obligations where such failure or delay results from
                   causes beyond its reasonable control, including but not limited to:
                 </p>
-                <ul className="space-y-2 text-white/80 font-inter list-disc list-inside">
+                <ul>
                   <li>Natural disasters, acts of God, or severe weather events</li>
                   <li>Pandemics, epidemics, or public health emergencies</li>
                   <li>War, terrorism, civil unrest, or government actions</li>
@@ -771,11 +771,11 @@ const TermsOfService = () => {
               </section>
 
               {/* Governing Law */}
-              <section className="pt-8 border-t border-gold/20">
-                <h2 className="text-2xl font-bold text-gold font-iceland mb-4">
+              <section>
+                <h2>
                   17. Governing Law and Jurisdiction
                 </h2>
-                <p className="text-white/80 leading-relaxed font-inter">
+                <p>
                   These Terms of Service shall be governed by and construed in
                   accordance with the laws of the State of Texas, United States,
                   without regard to its conflict of law provisions. Any disputes
@@ -785,11 +785,11 @@ const TermsOfService = () => {
               </section>
 
               {/* Changes to Terms */}
-              <section className="pt-8 border-t border-gold/20">
-                <h2 className="text-2xl font-bold text-gold font-iceland mb-4">
+              <section>
+                <h2>
                   18. Changes to Terms
                 </h2>
-                <p className="text-white/80 leading-relaxed font-inter">
+                <p>
                   We reserve the right to modify these Terms of Service at any
                   time. Changes will be effective immediately upon posting to
                   our website. Your continued use of our services after changes
@@ -798,17 +798,17 @@ const TermsOfService = () => {
               </section>
 
               {/* Contact Information */}
-              <section className="pt-8 border-t border-gold/20">
-                <h2 className="text-2xl font-bold text-gold font-iceland mb-4">
+              <section>
+                <h2>
                   19. Contact Information
                 </h2>
-                <p className="text-white/80 leading-relaxed font-inter mb-4">
+                <p>
                   If you have any questions about these Terms of Service, please
                   contact us:
                 </p>
                 <div className="space-y-2 text-white/80 font-inter">
                   <p>
-                    <strong className="text-gold">RC Web Solutions LLC</strong>
+                    <strong>RC Web Solutions LLC</strong>
                   </p>
                   <p>{COMPANY_ADDRESS}</p>
                   <p>

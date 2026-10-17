@@ -1,3 +1,5 @@
+import Button from "@/components/ui/Button";
+import { COMPANY } from "@/lib/company";
 import type { Metadata } from "next";
 import Link from "next/link";
 import type { Route } from "next";
@@ -156,20 +158,14 @@ export default function WebDeveloperHoustonPage() {
               </p>
 
               <div className="mt-10 flex flex-col sm:flex-row gap-4 justify-center">
-                <Link
-                  href="/schedule"
-                  className="inline-flex items-center justify-center gap-2 rounded-xl bg-linear-to-r from-gold via-gold-light to-gold px-6 py-4 text-base font-semibold text-black hover:from-gold-light hover:via-gold hover:to-gold-light transition-all duration-300 shadow-lg hover:shadow-gold/25 font-inter"
-                >
+                <Button href="/schedule" size="lg">
                   <CalendarDaysIcon className="h-5 w-5" />
                   Free Consultation
-                </Link>
-                <a
-                  href="tel:+13463757534"
-                  className="inline-flex items-center justify-center gap-2 rounded-lg border-2 border-gold/50 px-6 py-3 text-base font-semibold text-gold hover:bg-gold/10 hover:border-gold/60 transition-all duration-200 font-inter"
-                >
+                </Button>
+                <Button href={COMPANY.phoneHref} variant="secondary">
                   <PhoneIcon className="h-5 w-5" />
-                  (346) 375-7534
-                </a>
+                  {COMPANY.phoneDisplay}
+                </Button>
               </div>
             </div>
           </div>
@@ -320,13 +316,10 @@ export default function WebDeveloperHoustonPage() {
                 can bring more customers to your business.
               </p>
               <div className="mt-10 flex flex-col sm:flex-row gap-4 justify-center">
-                <Link
-                  href="/schedule"
-                  className="inline-flex items-center justify-center gap-2 rounded-xl bg-linear-to-r from-gold via-gold-light to-gold px-8 py-4 text-lg font-semibold text-black hover:from-gold-light hover:via-gold hover:to-gold-light transition-all duration-300 shadow-lg hover:shadow-gold/25 font-inter"
-                >
+                <Button href="/schedule" size="lg">
                   <CalendarDaysIcon className="h-5 w-5" />
                   Schedule Free Consultation
-                </Link>
+                </Button>
               </div>
               <p className="mt-6 text-sm text-gray-500 font-inter">
                 Or call directly:{" "}

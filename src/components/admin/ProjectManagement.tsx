@@ -1,5 +1,6 @@
 "use client";
 
+import Button from "@/components/ui/Button";
 import { useState, useTransition } from "react";
 import { toast } from "sonner";
 import { getAllProjectsAction } from "@/actions/projects/getAllProjectsAction";
@@ -305,7 +306,9 @@ export default function ProjectManagement({
                         project.firstPaid &&
                         !project.secondPaid && (
                           <div className="relative group">
-                            <button
+                            <Button
+                              size="sm"
+                              className="whitespace-nowrap"
                               onClick={() =>
                                 handleStatusUpdate(
                                   project.projectCode,
@@ -316,20 +319,16 @@ export default function ProjectManagement({
                                 )
                               }
                               disabled={isPending}
-                              className="relative inline-flex items-center justify-center px-3 sm:px-4 py-2 text-xs sm:text-sm font-semibold text-black bg-linear-to-r from-gold via-gold-light to-gold hover:from-gold-light hover:via-gold hover:to-gold-light rounded-lg transition-all duration-300 shadow-lg hover:shadow-gold/25 font-inter group/btn overflow-hidden transform hover:scale-[1.02] active:scale-[0.98] disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100 whitespace-nowrap"
                             >
-                              <div className="absolute inset-0 bg-white/20 -translate-x-full group-hover/btn:translate-x-full transition-transform duration-700 skew-x-12"></div>
-                              <span className="relative flex items-center justify-center">
-                                {isPending
-                                  ? "..."
-                                  : getNextStatus(
-                                        project.projectStatus,
-                                        project.secondPaid
-                                      ) === "ready_for_payment"
-                                    ? "📧 Mark Ready"
-                                    : `→ ${getNextStatus(project.projectStatus, project.secondPaid)?.replace("_", " ")}`}
-                              </span>
-                            </button>
+                              {isPending
+                                ? "..."
+                                : getNextStatus(
+                                      project.projectStatus,
+                                      project.secondPaid
+                                    ) === "ready_for_payment"
+                                  ? "📧 Mark Ready"
+                                  : `→ ${getNextStatus(project.projectStatus, project.secondPaid)?.replace("_", " ")}`}
+                            </Button>
                             <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-2 py-1 bg-gray-900 text-white text-xs rounded-sm opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none whitespace-nowrap z-10 border border-gray-700">
                               {getNextStatus(
                                 project.projectStatus,

@@ -1,5 +1,6 @@
 "use client";
 
+import Button from "@/components/ui/Button";
 import { useState, useTransition } from "react";
 import { useRouter } from "next/navigation";
 import useSectionObserver from "@/hooks/useSectionObserver";
@@ -131,21 +132,15 @@ const Pricing = () => {
                 {plan.ideal}
               </p>
 
-              <button
+              <Button
+                variant={plan.featured ? "primary" : "secondary"}
+                size="lg"
+                fullWidth
+                className="mt-8"
                 onClick={() => handlePlanSelection(plan.id)}
-                className={`mt-8 w-full relative inline-flex items-center justify-center py-4 text-lg font-semibold rounded-xl transition-all duration-300 font-inter group overflow-hidden transform hover:scale-[1.02] active:scale-[0.98] ${
-                  plan.featured
-                    ? "text-black bg-linear-to-r from-gold via-gold-light to-gold hover:from-gold-light hover:via-gold hover:to-gold-light shadow-lg hover:shadow-gold/25"
-                    : "text-gold border-2 border-gold/50 hover:bg-gold/10 hover:border-gold/60"
-                }`}
               >
-                {plan.featured && (
-                  <div className="absolute inset-0 bg-white/20 -translate-x-full group-hover:translate-x-full transition-transform duration-700 skew-x-12"></div>
-                )}
-                <span className="relative flex items-center justify-center">
-                  {plan.cta}
-                </span>
-              </button>
+                {plan.cta}
+              </Button>
             </motion.div>
           ))}
         </motion.div>
@@ -227,25 +222,22 @@ const Pricing = () => {
               </div>
 
               <div className="flex gap-4 mt-6 font-inter">
-                <button
+                <Button
+                  size="lg"
+                  className="flex-1"
                   onClick={handleGoToTerms}
                   disabled={isPending}
-                  className="relative flex-1 inline-flex items-center justify-center py-4 text-lg font-semibold text-black bg-linear-to-r from-gold via-gold-light to-gold hover:from-gold-light hover:via-gold hover:to-gold-light rounded-xl transition-all duration-300 shadow-lg hover:shadow-gold/25 font-inter group overflow-hidden transform hover:scale-[1.02] active:scale-[0.98] disabled:opacity-50 disabled:cursor-not-allowed"
                 >
-                  <div className="absolute inset-0 bg-white/20 -translate-x-full group-hover:translate-x-full transition-transform duration-700 skew-x-12"></div>
-                  <span className="relative flex items-center justify-center">
-                    {isPending ? "Loading..." : "Go to Terms & Pay"}
-                  </span>
-                </button>
-                <button
+                  {isPending ? "Loading..." : "Go to Terms & Pay"}
+                </Button>
+                <Button
+                  variant="secondary"
+                  className="flex-1"
                   onClick={() => setShowModal(false)}
                   disabled={isPending}
-                  className={`flex-1 inline-flex items-center justify-center px-6 py-3 text-sm sm:text-base font-semibold text-gold border-2 border-gold/50 hover:bg-gold/10 hover:border-gold/60 rounded-lg transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed ${
-                    isPending ? "cursor-wait" : ""
-                  }`}
                 >
                   Cancel
-                </button>
+                </Button>
               </div>
             </motion.div>
           </div>

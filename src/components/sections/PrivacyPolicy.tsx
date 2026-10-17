@@ -121,39 +121,39 @@ export default function PrivacyPolicy() {
           viewport={{ once: true }}
           transition={{ type: "spring", stiffness: 200, damping: 20 }}
         >
-          <div className="prose prose-invert prose-gold max-w-none">
+          <div className="legal-prose max-w-none">
             <div className="bg-gray-900/60 backdrop-blur-md rounded-xl border border-gold/20 p-8 space-y-8">
               {/* Interpretation and Definitions */}
               <section>
-                <h2 className="text-2xl font-bold text-gold font-iceland mb-4">
+                <h2>
                   Interpretation and Definitions
                 </h2>
 
-                <h3 className="text-xl font-semibold text-gold/90 font-iceland mt-6 mb-3">
+                <h3>
                   Interpretation
                 </h3>
-                <p className="text-white/80 leading-relaxed font-inter">
+                <p>
                   The words whose initial letters are capitalized have meanings
                   defined under the following conditions. The following
                   definitions shall have the same meaning regardless of whether
                   they appear in singular or in plural.
                 </p>
 
-                <h3 className="text-xl font-semibold text-gold/90 font-iceland mt-6 mb-3">
+                <h3>
                   Definitions
                 </h3>
-                <p className="text-white/80 leading-relaxed font-inter mb-4">
+                <p>
                   For the purposes of this Privacy Policy:
                 </p>
 
-                <ul className="space-y-3 text-white/80 font-inter list-disc list-inside">
+                <ul>
                   <li>
-                    <strong className="text-gold">Account</strong> means a
+                    <strong>Account</strong> means a
                     unique account created for You to access our Service or
                     parts of our Service.
                   </li>
                   <li>
-                    <strong className="text-gold">Affiliate</strong> means an
+                    <strong>Affiliate</strong> means an
                     entity that controls, is controlled by, or is under common
                     control with a party, where &ldquo;control&rdquo; means
                     ownership of 50% or more of the shares, equity interest or
@@ -161,94 +161,94 @@ export default function PrivacyPolicy() {
                     or other managing authority.
                   </li>
                   <li>
-                    <strong className="text-gold">Business</strong>, for the
+                    <strong>Business</strong>, for the
                     purpose of CCPA/CPRA, refers to the Company as the legal
                     entity that collects Consumers&apos; personal information
                     and determines the purposes and means of the processing of
                     Consumers&apos; personal information.
                   </li>
                   <li>
-                    <strong className="text-gold">CCPA and/or CPRA</strong>{" "}
+                    <strong>CCPA and/or CPRA</strong>{" "}
                     refers to the California Consumer Privacy Act (the
                     &ldquo;CCPA&rdquo;) as amended by the California Privacy
                     Rights Act of 2020 (the &ldquo;CPRA&rdquo;).
                   </li>
                   <li>
-                    <strong className="text-gold">Company</strong> (referred to
+                    <strong>Company</strong> (referred to
                     as either &ldquo;the Company&rdquo;, &ldquo;We&rdquo;,
                     &ldquo;Us&rdquo; or &ldquo;Our&rdquo; in this Agreement)
                     refers to {COMPANY.name}, {COMPANY_ADDRESS}. For the
                     purposes of the GDPR, the Company is the Data Controller.
                   </li>
                   <li>
-                    <strong className="text-gold">Consumer</strong>, for the
+                    <strong>Consumer</strong>, for the
                     purpose of the CCPA/CPRA, means a natural person who is a
                     California resident.
                   </li>
                   <li>
-                    <strong className="text-gold">Cookies</strong> are small
+                    <strong>Cookies</strong> are small
                     files that are placed on Your computer, mobile device or any
                     other device by a website, containing the details of Your
                     browsing history on that website among its many uses.
                   </li>
                   <li>
-                    <strong className="text-gold">Country</strong> refers to:
+                    <strong>Country</strong> refers to:
                     United States (State of Texas)
                   </li>
                   <li>
-                    <strong className="text-gold">Data Controller</strong>, for
+                    <strong>Data Controller</strong>, for
                     the purposes of the GDPR (General Data Protection
                     Regulation), refers to the Company as the legal person which
                     alone or jointly with others determines the purposes and
                     means of the processing of Personal Data.
                   </li>
                   <li>
-                    <strong className="text-gold">Device</strong> means any
+                    <strong>Device</strong> means any
                     device that can access the Service such as a computer, a
                     cell phone or a digital tablet.
                   </li>
                   <li>
-                    <strong className="text-gold">Do Not Track (DNT)</strong> is
+                    <strong>Do Not Track (DNT)</strong> is
                     a concept that has been promoted by US regulatory
                     authorities for the Internet industry to develop and
                     implement a mechanism for allowing internet users to control
                     the tracking of their online activities across websites.
                   </li>
                   <li>
-                    <strong className="text-gold">GDPR</strong> refers to EU
+                    <strong>GDPR</strong> refers to EU
                     General Data Protection Regulation.
                   </li>
                   <li>
-                    <strong className="text-gold">Personal Data</strong> is any
+                    <strong>Personal Data</strong> is any
                     information that relates to an identified or identifiable
                     individual.
                   </li>
                   <li>
-                    <strong className="text-gold">Service</strong> refers to the
+                    <strong>Service</strong> refers to the
                     Website.
                   </li>
                   <li>
-                    <strong className="text-gold">Service Provider</strong>{" "}
+                    <strong>Service Provider</strong>{" "}
                     means any natural or legal person who processes the data on
                     behalf of the Company.
                   </li>
                   <li>
-                    <strong className="text-gold">SMS Marketing</strong> refers
+                    <strong>SMS Marketing</strong> refers
                     to text message communications sent to Your mobile device
                     for marketing, promotional, transactional, or informational
                     purposes.
                   </li>
                   <li>
-                    <strong className="text-gold">Usage Data</strong> refers to
+                    <strong>Usage Data</strong> refers to
                     data collected automatically, either generated by the use of
                     the Service or from the Service infrastructure itself.
                   </li>
                   <li>
-                    <strong className="text-gold">Website</strong> refers to RC
+                    <strong>Website</strong> refers to RC
                     Web, accessible from rcweb.dev
                   </li>
                   <li>
-                    <strong className="text-gold">You</strong> means the
+                    <strong>You</strong> means the
                     individual accessing or using the Service, or the company,
                     or other legal entity on behalf of which such individual is
                     accessing or using the Service, as applicable.
@@ -257,25 +257,25 @@ export default function PrivacyPolicy() {
               </section>
 
               {/* Collecting and Using Your Personal Data */}
-              <section className="pt-8 border-t border-gold/20">
-                <h2 className="text-2xl font-bold text-gold font-iceland mb-4">
+              <section>
+                <h2>
                   Collecting and Using Your Personal Data
                 </h2>
 
-                <h3 className="text-xl font-semibold text-gold/90 font-iceland mt-6 mb-3">
+                <h3>
                   Types of Data Collected
                 </h3>
 
                 <h4 className="text-lg font-semibold text-gold/80 font-iceland mt-4 mb-2">
                   Personal Data
                 </h4>
-                <p className="text-white/80 leading-relaxed font-inter mb-3">
+                <p>
                   While using Our Service, We may ask You to provide Us with
                   certain personally identifiable information that can be used
                   to contact or identify You. Personally identifiable
                   information may include, but is not limited to:
                 </p>
-                <ul className="space-y-2 text-white/80 font-inter list-disc list-inside mb-4">
+                <ul>
                   <li>Email address</li>
                   <li>First name and last name</li>
                   <li>Phone number</li>
@@ -290,7 +290,7 @@ export default function PrivacyPolicy() {
                 <h4 className="text-lg font-semibold text-gold/80 font-iceland mt-4 mb-2">
                   Usage Data
                 </h4>
-                <p className="text-white/80 leading-relaxed font-inter">
+                <p>
                   Usage Data is collected automatically when using the Service.
                   Usage Data may include information such as Your Device&apos;s
                   Internet Protocol address (e.g. IP address), browser type,
@@ -302,11 +302,11 @@ export default function PrivacyPolicy() {
                 <h4 className="text-lg font-semibold text-gold/80 font-iceland mt-6 mb-2">
                   SMS and Text Messaging Data
                 </h4>
-                <p className="text-white/80 leading-relaxed font-inter mb-3">
+                <p>
                   When You opt-in to receive SMS communications from Us, We
                   collect and process:
                 </p>
-                <ul className="space-y-2 text-white/80 font-inter list-disc list-inside">
+                <ul>
                   <li>Your mobile phone number</li>
                   <li>Your consent records and opt-in date/time</li>
                   <li>Message delivery status and timestamps</li>
@@ -321,19 +321,19 @@ export default function PrivacyPolicy() {
               </section>
 
               {/* SMS Marketing Section */}
-              <section className="pt-8 border-t border-gold/20">
-                <h2 className="text-2xl font-bold text-gold font-iceland mb-4">
+              <section>
+                <h2>
                   SMS Marketing and Text Message Communications
                 </h2>
 
-                <h3 className="text-xl font-semibold text-gold/90 font-iceland mt-6 mb-3">
+                <h3>
                   How We Use SMS Marketing
                 </h3>
-                <p className="text-white/80 leading-relaxed font-inter mb-3">
+                <p>
                   We may use SMS (text messaging) to communicate with You for
                   various purposes, including but not limited to:
                 </p>
-                <ul className="space-y-2 text-white/80 font-inter list-disc list-inside mb-4">
+                <ul>
                   <li>
                     Marketing and promotional messages about our services and
                     special offers
@@ -350,7 +350,7 @@ export default function PrivacyPolicy() {
                   </li>
                 </ul>
 
-                <h3 className="text-xl font-semibold text-gold/90 font-iceland mt-6 mb-3">
+                <h3>
                   Your Consent to Receive SMS Messages
                 </h3>
                 <div className="bg-gold/10 border border-gold/30 rounded-lg p-4 mb-4">
@@ -362,10 +362,10 @@ export default function PrivacyPolicy() {
                     You provided. Consent is not a condition of purchase.
                   </p>
                 </div>
-                <p className="text-white/80 leading-relaxed font-inter mb-3">
+                <p>
                   You may opt-in to SMS communications by:
                 </p>
-                <ul className="space-y-2 text-white/80 font-inter list-disc list-inside">
+                <ul>
                   <li>Texting a keyword to our short code or phone number</li>
                   <li>Checking a consent box on our website or forms</li>
                   <li>
@@ -375,19 +375,19 @@ export default function PrivacyPolicy() {
                   <li>Enrolling during account creation or service setup</li>
                 </ul>
 
-                <h3 className="text-xl font-semibold text-gold/90 font-iceland mt-6 mb-3">
+                <h3>
                   Message Frequency and Charges
                 </h3>
-                <ul className="space-y-2 text-white/80 font-inter list-disc list-inside">
+                <ul>
                   <li>
-                    <strong className="text-gold">Message Frequency:</strong>{" "}
+                    <strong>Message Frequency:</strong>{" "}
                     The frequency of messages varies depending on your
                     interaction with our services. You may receive up to 4
                     marketing messages per month. Transactional and
                     service-related messages are sent as needed.
                   </li>
                   <li>
-                    <strong className="text-gold">
+                    <strong>
                       Message and Data Rates:
                     </strong>{" "}
                     Message and data rates may apply depending on your mobile
@@ -395,21 +395,21 @@ export default function PrivacyPolicy() {
                     details on your plan.
                   </li>
                   <li>
-                    <strong className="text-gold">Carrier Limitations:</strong>{" "}
+                    <strong>Carrier Limitations:</strong>{" "}
                     Messages are sent via supported carriers. Not all carriers
                     are supported. Check with your carrier for availability.
                   </li>
                 </ul>
 
-                <h3 className="text-xl font-semibold text-gold/90 font-iceland mt-6 mb-3">
+                <h3>
                   How to Opt-Out
                 </h3>
-                <p className="text-white/80 leading-relaxed font-inter mb-3">
+                <p>
                   You can opt-out of receiving SMS messages at any time by:
                 </p>
                 <ul className="space-y-2 text-white/80 font-inter list-disc list-inside mb-3">
                   <li>
-                    <strong className="text-gold">
+                    <strong>
                       Texting &ldquo;STOP&rdquo;
                     </strong>{" "}
                     to any message you receive from us
@@ -419,21 +419,21 @@ export default function PrivacyPolicy() {
                   <li>Contacting us via email at contactus@rcweb.dev</li>
                   <li>Calling us at +1 346-375-7534</li>
                 </ul>
-                <p className="text-white/80 leading-relaxed font-inter">
+                <p>
                   After you opt-out, you will receive one final confirmation
                   message. You will not receive any further messages unless you
                   opt back in.
                 </p>
 
-                <h3 className="text-xl font-semibold text-gold/90 font-iceland mt-6 mb-3">
+                <h3>
                   Help and Support
                 </h3>
-                <p className="text-white/80 leading-relaxed font-inter mb-3">
+                <p>
                   For help or more information about our SMS program, you can:
                 </p>
-                <ul className="space-y-2 text-white/80 font-inter list-disc list-inside">
+                <ul>
                   <li>
-                    <strong className="text-gold">
+                    <strong>
                       Text &ldquo;HELP&rdquo;
                     </strong>{" "}
                     to any message from us
@@ -443,14 +443,14 @@ export default function PrivacyPolicy() {
                   <li>Visit our website at rcweb.dev</li>
                 </ul>
 
-                <h3 className="text-xl font-semibold text-gold/90 font-iceland mt-6 mb-3">
+                <h3>
                   SMS Privacy and Data Security
                 </h3>
-                <p className="text-white/80 leading-relaxed font-inter mb-3">
+                <p>
                   We take the privacy and security of your phone number and SMS
                   data seriously:
                 </p>
-                <ul className="space-y-2 text-white/80 font-inter list-disc list-inside">
+                <ul>
                   <li>
                     Your phone number will not be shared with third parties for
                     their marketing purposes
@@ -469,13 +469,13 @@ export default function PrivacyPolicy() {
                   </li>
                 </ul>
 
-                <h3 className="text-xl font-semibold text-gold/90 font-iceland mt-6 mb-3">
+                <h3>
                   Compliance
                 </h3>
-                <p className="text-white/80 leading-relaxed font-inter mb-3">
+                <p>
                   Our SMS marketing practices comply with:
                 </p>
-                <ul className="space-y-2 text-white/80 font-inter list-disc list-inside">
+                <ul>
                   <li>Telephone Consumer Protection Act (TCPA)</li>
                   <li>CAN-SPAM Act</li>
                   <li>CTIA Guidelines</li>
@@ -486,21 +486,21 @@ export default function PrivacyPolicy() {
               </section>
 
               {/* Project Data */}
-              <section className="pt-8 border-t border-gold/20">
-                <h2 className="text-2xl font-bold text-gold font-iceland mb-4">
+              <section>
+                <h2>
                   Project Data
                 </h2>
-                <p className="text-white/80 leading-relaxed font-inter mb-3">
+                <p>
                   When You hire Us, We collect and store the information needed
                   to deliver and document Your project:
                 </p>
-                <ul className="space-y-2 text-white/80 font-inter list-disc list-inside mb-4">
+                <ul>
                   <li>Your name, email address and the plan You purchased</li>
                   <li>Project information and milestone status</li>
                   <li>Payment history and invoice records</li>
                   <li>Your acceptance of our Terms of Service</li>
                 </ul>
-                <p className="text-white/80 leading-relaxed font-inter">
+                <p>
                   You can follow Your project&apos;s progress through a private link
                   We send You by email; no account or password is required. This
                   data is used solely to provide You with project visibility and
@@ -509,25 +509,25 @@ export default function PrivacyPolicy() {
               </section>
 
               {/* AI Tools Disclosure */}
-              <section className="pt-8 border-t border-gold/20">
-                <h2 className="text-2xl font-bold text-gold font-iceland mb-4">
+              <section>
+                <h2>
                   AI Tools and Development Assistance
                 </h2>
-                <p className="text-white/80 leading-relaxed font-inter mb-3">
+                <p>
                   RC Web Solutions LLC may use artificial intelligence tools to
                   enhance our development process and service delivery:
                 </p>
-                <ul className="space-y-2 text-white/80 font-inter list-disc list-inside mb-4">
+                <ul>
                   <li>
-                    <strong className="text-gold">Code Development:</strong>{" "}
+                    <strong>Code Development:</strong>{" "}
                     AI assistants may be used to help write, review, and optimize code
                   </li>
                   <li>
-                    <strong className="text-gold">Content Generation:</strong>{" "}
+                    <strong>Content Generation:</strong>{" "}
                     AI may assist in drafting documentation, emails, or initial content
                   </li>
                   <li>
-                    <strong className="text-gold">Customer Support:</strong>{" "}
+                    <strong>Customer Support:</strong>{" "}
                     AI chatbots may provide initial responses to inquiries
                   </li>
                 </ul>
@@ -537,7 +537,7 @@ export default function PrivacyPolicy() {
                     information, or confidential project details with AI training datasets.
                   </p>
                 </div>
-                <p className="text-white/80 leading-relaxed font-inter">
+                <p>
                   All AI-generated content is reviewed and approved by our human team
                   before delivery. The use of AI tools does not affect our commitment
                   to quality, security, and confidentiality of your project.
@@ -545,40 +545,40 @@ export default function PrivacyPolicy() {
               </section>
 
               {/* Subscription Data */}
-              <section className="pt-8 border-t border-gold/20">
-                <h2 className="text-2xl font-bold text-gold font-iceland mb-4">
+              <section>
+                <h2>
                   Subscription and Payment Data
                 </h2>
-                <p className="text-white/80 leading-relaxed font-inter mb-3">
+                <p>
                   When You subscribe to Our services, We collect and store the
                   following information:
                 </p>
-                <ul className="space-y-2 text-white/80 font-inter list-disc list-inside mb-4">
+                <ul>
                   <li>Your name and email address</li>
                   <li>Subscription plan details and billing cycle</li>
                   <li>Payment history and invoice records</li>
                   <li>Subscription status (active, cancelled, past due)</li>
                 </ul>
-                <p className="text-white/80 leading-relaxed font-inter mb-3">
-                  <strong className="text-gold">Important:</strong> We do not
+                <p>
+                  <strong>Important:</strong> We do not
                   store your full credit card number. All payment processing is
                   handled securely by Stripe, which stores your payment details
                   in compliance with PCI-DSS standards.
                 </p>
 
-                <h3 className="text-xl font-semibold text-gold/90 font-iceland mt-6 mb-3">
+                <h3>
                   Stripe Customer Portal
                 </h3>
-                <p className="text-white/80 leading-relaxed font-inter mb-3">
+                <p>
                   We use the Stripe Customer Portal to allow You to manage Your
                   subscription. Through the portal, You can:
                 </p>
-                <ul className="space-y-2 text-white/80 font-inter list-disc list-inside mb-4">
+                <ul>
                   <li>Update Your payment method</li>
                   <li>View billing history and download invoices</li>
                   <li>Cancel Your subscription</li>
                 </ul>
-                <p className="text-white/80 leading-relaxed font-inter">
+                <p>
                   You can access the Customer Portal at any time by visiting{" "}
                   <Link
                     href={"/manage-subscription" as Route}
@@ -591,28 +591,28 @@ export default function PrivacyPolicy() {
               </section>
 
               {/* Use of Your Personal Data */}
-              <section className="pt-8 border-t border-gold/20">
-                <h2 className="text-2xl font-bold text-gold font-iceland mb-4">
+              <section>
+                <h2>
                   Use of Your Personal Data
                 </h2>
-                <p className="text-white/80 leading-relaxed font-inter mb-3">
+                <p>
                   The Company may use Personal Data for the following purposes:
                 </p>
-                <ul className="space-y-2 text-white/80 font-inter list-disc list-inside">
+                <ul>
                   <li>
-                    <strong className="text-gold">
+                    <strong>
                       To provide and maintain our Service
                     </strong>
                     , including to monitor the usage of our Service.
                   </li>
                   <li>
-                    <strong className="text-gold">
+                    <strong>
                       To manage Your Account
                     </strong>
                     : to manage Your registration as a user of the Service.
                   </li>
                   <li>
-                    <strong className="text-gold">
+                    <strong>
                       For the performance of a contract
                     </strong>
                     : the development, compliance and undertaking of the
@@ -620,23 +620,23 @@ export default function PrivacyPolicy() {
                     have purchased.
                   </li>
                   <li>
-                    <strong className="text-gold">To contact You</strong>: To
+                    <strong>To contact You</strong>: To
                     contact You by email, telephone calls, SMS, or other
                     equivalent forms of electronic communication.
                   </li>
                   <li>
-                    <strong className="text-gold">To provide You</strong> with
+                    <strong>To provide You</strong> with
                     news, special offers, and general information about other
                     goods, services and events which We offer.
                   </li>
                   <li>
-                    <strong className="text-gold">
+                    <strong>
                       To manage Your requests
                     </strong>
                     : To attend and manage Your requests to Us.
                   </li>
                   <li>
-                    <strong className="text-gold">
+                    <strong>
                       For business transfers
                     </strong>
                     : We may use Your information to evaluate or conduct a
@@ -648,66 +648,66 @@ export default function PrivacyPolicy() {
               </section>
 
               {/* Data Retention */}
-              <section className="pt-8 border-t border-gold/20">
-                <h2 className="text-2xl font-bold text-gold font-iceland mb-4">
+              <section>
+                <h2>
                   Data Retention
                 </h2>
-                <p className="text-white/80 leading-relaxed font-inter mb-4">
+                <p>
                   We retain Your Personal Data only for as long as necessary to fulfill
                   the purposes outlined in this Privacy Policy. Specifically:
                 </p>
-                <ul className="space-y-2 text-white/80 font-inter list-disc list-inside mb-4">
+                <ul>
                   <li>
-                    <strong className="text-gold">Client Project Data:</strong>{" "}
+                    <strong>Client Project Data:</strong>{" "}
                     Retained for 3 years after project completion for warranty, support,
                     and legal compliance purposes
                   </li>
                   <li>
-                    <strong className="text-gold">Payment Records:</strong>{" "}
+                    <strong>Payment Records:</strong>{" "}
                     Retained for 7 years as required by tax and accounting regulations
                   </li>
                   <li>
-                    <strong className="text-gold">Marketing Data:</strong>{" "}
+                    <strong>Marketing Data:</strong>{" "}
                     Retained until You opt-out or request deletion
                   </li>
                   <li>
-                    <strong className="text-gold">Website Usage Data:</strong>{" "}
+                    <strong>Website Usage Data:</strong>{" "}
                     Retained for 26 months (Google Analytics default)
                   </li>
                   <li>
-                    <strong className="text-gold">SMS Consent Records:</strong>{" "}
+                    <strong>SMS Consent Records:</strong>{" "}
                     Retained for 4 years after last interaction as required by TCPA
                   </li>
                 </ul>
-                <p className="text-white/80 leading-relaxed font-inter">
+                <p>
                   After the retention period expires, Your data will be securely deleted
                   or anonymized, unless a longer retention period is required by law.
                 </p>
               </section>
 
               {/* International Data Transfers */}
-              <section className="pt-8 border-t border-gold/20">
-                <h2 className="text-2xl font-bold text-gold font-iceland mb-4">
+              <section>
+                <h2>
                   International Data Transfers
                 </h2>
-                <p className="text-white/80 leading-relaxed font-inter mb-4">
+                <p>
                   Your information, including Personal Data, may be transferred to and
                   maintained on servers located outside of Your state, province, country,
                   or other governmental jurisdiction where data protection laws may differ
                   from those in Your jurisdiction.
                 </p>
-                <p className="text-white/80 leading-relaxed font-inter mb-4">
+                <p>
                   We use third-party service providers based in the United States,
                   including:
                 </p>
-                <ul className="space-y-2 text-white/80 font-inter list-disc list-inside mb-4">
+                <ul>
                   <li>Stripe (payment processing) - USA/EU</li>
                   <li>Twilio (SMS services) - USA</li>
                   <li>Resend (email services) - USA</li>
                   <li>Google (analytics) - USA/Global</li>
                   <li>Vercel (hosting) - USA/Global</li>
                 </ul>
-                <p className="text-white/80 leading-relaxed font-inter mb-4">
+                <p>
                   These providers comply with applicable data protection frameworks and
                   implement appropriate safeguards for international transfers, including
                   Standard Contractual Clauses (SCCs) where applicable.
@@ -722,16 +722,16 @@ export default function PrivacyPolicy() {
               </section>
 
               {/* Service Providers */}
-              <section className="pt-8 border-t border-gold/20">
-                <h2 className="text-2xl font-bold text-gold font-iceland mb-4">
+              <section>
+                <h2>
                   Service Providers
                 </h2>
 
-                <h3 className="text-xl font-semibold text-gold/90 font-iceland mt-6 mb-3">
+                <h3>
                   Analytics
                 </h3>
                 <div className="mb-4">
-                  <h4 className="text-lg font-semibold text-gold/80 font-iceland mb-2">
+                  <h4>
                     Google Analytics
                   </h4>
                   <p className="text-white/80 leading-relaxed font-inter mb-2">
@@ -750,14 +750,14 @@ export default function PrivacyPolicy() {
                   </p>
                 </div>
 
-                <h3 className="text-xl font-semibold text-gold/90 font-iceland mt-6 mb-3">
+                <h3>
                   Email Marketing
                 </h3>
                 <div className="mb-4">
-                  <h4 className="text-lg font-semibold text-gold/80 font-iceland mb-2">
+                  <h4>
                     Resend
                   </h4>
-                  <p className="text-white/80 leading-relaxed font-inter">
+                  <p>
                     Their Privacy Policy can be viewed at:{" "}
                     <a
                       href="https://resend.com/legal/privacy-policy"
@@ -770,11 +770,11 @@ export default function PrivacyPolicy() {
                   </p>
                 </div>
 
-                <h3 className="text-xl font-semibold text-gold/90 font-iceland mt-6 mb-3">
+                <h3>
                   SMS Service Providers
                 </h3>
                 <div className="mb-4">
-                  <h4 className="text-lg font-semibold text-gold/80 font-iceland mb-2">
+                  <h4>
                     Twilio
                   </h4>
                   <p className="text-white/80 leading-relaxed font-inter mb-2">
@@ -782,7 +782,7 @@ export default function PrivacyPolicy() {
                     messages. Twilio&apos;s services are subject to their
                     privacy policy and terms of service.
                   </p>
-                  <p className="text-white/80 leading-relaxed font-inter">
+                  <p>
                     Twilio Privacy Policy:{" "}
                     <a
                       href="https://www.twilio.com/legal/privacy"
@@ -795,15 +795,15 @@ export default function PrivacyPolicy() {
                   </p>
                 </div>
 
-                <h3 className="text-xl font-semibold text-gold/90 font-iceland mt-6 mb-3">
+                <h3>
                   Payments
                 </h3>
                 <div className="space-y-4">
                   <div>
-                    <h4 className="text-lg font-semibold text-gold/80 font-iceland mb-2">
+                    <h4>
                       Stripe
                     </h4>
-                    <p className="text-white/80 leading-relaxed font-inter">
+                    <p>
                       Their Privacy Policy can be viewed at:{" "}
                       <a
                         href="https://stripe.com/privacy"
@@ -816,10 +816,10 @@ export default function PrivacyPolicy() {
                     </p>
                   </div>
                   <div>
-                    <h4 className="text-lg font-semibold text-gold/80 font-iceland mb-2">
+                    <h4>
                       Zelle
                     </h4>
-                    <p className="text-white/80 leading-relaxed font-inter">
+                    <p>
                       Their Privacy Policy can be viewed at:{" "}
                       <a
                         href="https://www.zellepay.com/privacy-policy"
@@ -835,70 +835,70 @@ export default function PrivacyPolicy() {
               </section>
 
               {/* Cookies and Tracking Technologies */}
-              <section className="pt-8 border-t border-gold/20">
-                <h2 className="text-2xl font-bold text-gold font-iceland mb-4">
+              <section>
+                <h2>
                   Cookies and Tracking Technologies
                 </h2>
-                <p className="text-white/80 leading-relaxed font-inter mb-4">
+                <p>
                   We use cookies and similar tracking technologies to track activity on
                   Our Service and store certain information. The technologies We use include:
                 </p>
 
-                <h3 className="text-xl font-semibold text-gold/90 font-iceland mt-6 mb-3">
+                <h3>
                   Types of Cookies We Use
                 </h3>
                 <ul className="space-y-3 text-white/80 font-inter list-disc list-inside mb-4">
                   <li>
-                    <strong className="text-gold">Essential Cookies:</strong>{" "}
+                    <strong>Essential Cookies:</strong>{" "}
                     Required for the website to function properly (authentication,
                     security, session management)
                   </li>
                   <li>
-                    <strong className="text-gold">Analytics Cookies:</strong>{" "}
+                    <strong>Analytics Cookies:</strong>{" "}
                     Google Analytics cookies (_ga, _gid, _gat) to understand how visitors
                     interact with our website
                   </li>
                   <li>
-                    <strong className="text-gold">Advertising Cookies:</strong>{" "}
+                    <strong>Advertising Cookies:</strong>{" "}
                     Used by Google Ads and Facebook Pixel to measure ad performance and
                     deliver relevant advertisements
                   </li>
                   <li>
-                    <strong className="text-gold">Preference Cookies:</strong>{" "}
+                    <strong>Preference Cookies:</strong>{" "}
                     Remember Your preferences and settings for future visits
                   </li>
                 </ul>
 
-                <h3 className="text-xl font-semibold text-gold/90 font-iceland mt-6 mb-3">
+                <h3>
                   Third-Party Cookies
                 </h3>
-                <p className="text-white/80 leading-relaxed font-inter mb-3">
+                <p>
                   The following third parties may place cookies on Your device:
                 </p>
-                <ul className="space-y-2 text-white/80 font-inter list-disc list-inside mb-4">
+                <ul>
                   <li>Google Analytics - Website traffic analysis</li>
                   <li>Google Ads - Conversion tracking and remarketing</li>
                   <li>Meta (Facebook) Pixel - Ad conversion tracking</li>
                   <li>Stripe - Secure payment processing</li>
                 </ul>
 
-                <h3 className="text-xl font-semibold text-gold/90 font-iceland mt-6 mb-3">
+                <h3>
                   Managing Cookies
                 </h3>
-                <p className="text-white/80 leading-relaxed font-inter mb-3">
+                <p>
                   You can control and manage cookies in several ways:
                 </p>
-                <ul className="space-y-2 text-white/80 font-inter list-disc list-inside">
+                <ul>
                   <li>
-                    <strong className="text-gold">Browser Settings:</strong>{" "}
+                    <strong>Browser Settings:</strong>{" "}
                     Most browsers allow You to refuse or delete cookies through their settings
                   </li>
                   <li>
-                    <strong className="text-gold">Google Analytics Opt-Out:</strong>{" "}
+                    <strong>Google Analytics Opt-Out:</strong>{" "}
                     Install the Google Analytics Opt-out Browser Add-on
                   </li>
                   <li>
-                    <strong className="text-gold">Ad Personalization:</strong>{" "}
+                    <strong>Ad Personalization:</strong>{" "}
                     Opt out at aboutads.info or networkadvertising.org
                   </li>
                 </ul>
@@ -908,72 +908,72 @@ export default function PrivacyPolicy() {
               </section>
 
               {/* GDPR Privacy */}
-              <section className="pt-8 border-t border-gold/20">
-                <h2 className="text-2xl font-bold text-gold font-iceland mb-4">
+              <section>
+                <h2>
                   GDPR Privacy
                 </h2>
 
-                <h3 className="text-xl font-semibold text-gold/90 font-iceland mt-6 mb-3">
+                <h3>
                   Your Rights under the GDPR
                 </h3>
-                <p className="text-white/80 leading-relaxed font-inter mb-3">
+                <p>
                   You have the right under this Privacy Policy, and by law if
                   You are within the EU, to:
                 </p>
-                <ul className="space-y-2 text-white/80 font-inter list-disc list-inside">
+                <ul>
                   <li>
-                    <strong className="text-gold">
+                    <strong>
                       Request access to Your Personal Data
                     </strong>
                   </li>
                   <li>
-                    <strong className="text-gold">
+                    <strong>
                       Request correction of the Personal Data that We hold about
                       You
                     </strong>
                   </li>
                   <li>
-                    <strong className="text-gold">
+                    <strong>
                       Object to processing of Your Personal Data
                     </strong>
                   </li>
                   <li>
-                    <strong className="text-gold">
+                    <strong>
                       Request erasure of Your Personal Data
                     </strong>
                   </li>
                   <li>
-                    <strong className="text-gold">
+                    <strong>
                       Request the transfer of Your Personal Data
                     </strong>
                   </li>
                   <li>
-                    <strong className="text-gold">Withdraw Your consent</strong>
+                    <strong>Withdraw Your consent</strong>
                   </li>
                 </ul>
               </section>
 
               {/* CCPA/CPRA Privacy */}
-              <section className="pt-8 border-t border-gold/20">
-                <h2 className="text-2xl font-bold text-gold font-iceland mb-4">
+              <section>
+                <h2>
                   CCPA/CPRA Privacy Notice
                 </h2>
-                <p className="text-white/80 leading-relaxed font-inter mb-4">
+                <p>
                   This privacy notice section for California residents
                   supplements the information contained in Our Privacy Policy
                   and it applies solely to all visitors, users, and others who
                   reside in the State of California.
                 </p>
 
-                <h3 className="text-xl font-semibold text-gold/90 font-iceland mt-6 mb-3">
+                <h3>
                   Your Rights under the CCPA/CPRA
                 </h3>
-                <p className="text-white/80 leading-relaxed font-inter mb-3">
+                <p>
                   The CCPA/CPRA provides California residents with specific
                   rights regarding their personal information. If You are a
                   resident of California, You have the following rights:
                 </p>
-                <ul className="space-y-2 text-white/80 font-inter list-disc list-inside">
+                <ul>
                   <li>The right to notice</li>
                   <li>The right to know/access</li>
                   <li>
@@ -989,10 +989,10 @@ export default function PrivacyPolicy() {
                   <li>The right not to be discriminated against</li>
                 </ul>
 
-                <h3 className="text-xl font-semibold text-gold/90 font-iceland mt-6 mb-3">
+                <h3>
                   Exercising Your CCPA/CPRA Rights
                 </h3>
-                <p className="text-white/80 leading-relaxed font-inter mb-3">
+                <p>
                   To exercise any of Your rights under the CCPA/CPRA, You may
                   contact Us using the contact information provided at the
                   bottom of this Privacy Policy.
@@ -1003,21 +1003,21 @@ export default function PrivacyPolicy() {
                   </p>
                   <p className="text-white/80 font-inter">
                     Upon receiving Your request, We will respond within{" "}
-                    <strong className="text-gold">45 calendar days</strong>. If
+                    <strong>45 calendar days</strong>. If
                     We require more time (up to an additional 45 days), We will
                     inform You of the reason and extension period in writing.
                   </p>
                 </div>
-                <p className="text-white/80 leading-relaxed font-inter mb-3">
-                  <strong className="text-gold">Identity Verification:</strong>{" "}
+                <p>
+                  <strong>Identity Verification:</strong>{" "}
                   To protect Your privacy and security, We may ask You to verify
                   Your identity before responding to Your request. We will match
                   the identifying information You provide with the information
                   We have on file. If We cannot verify Your identity, We may
                   request additional information.
                 </p>
-                <p className="text-white/80 leading-relaxed font-inter">
-                  <strong className="text-gold">Authorized Agents:</strong> You
+                <p>
+                  <strong>Authorized Agents:</strong> You
                   may designate an authorized agent to make requests on Your
                   behalf. To do so, You must provide the agent with written
                   permission, and We may require proof of the agent&apos;s
@@ -1026,11 +1026,11 @@ export default function PrivacyPolicy() {
               </section>
 
               {/* Children's Privacy */}
-              <section className="pt-8 border-t border-gold/20">
-                <h2 className="text-2xl font-bold text-gold font-iceland mb-4">
+              <section>
+                <h2>
                   Children&apos;s Privacy
                 </h2>
-                <p className="text-white/80 leading-relaxed font-inter mb-3">
+                <p>
                   Our Service does not address anyone under the age of 13. We do
                   not knowingly collect personally identifiable information from
                   anyone under the age of 13. If You are a parent or guardian
@@ -1046,11 +1046,11 @@ export default function PrivacyPolicy() {
               </section>
 
               {/* Changes to Policy */}
-              <section className="pt-8 border-t border-gold/20">
-                <h2 className="text-2xl font-bold text-gold font-iceland mb-4">
+              <section>
+                <h2>
                   Changes to this Privacy Policy
                 </h2>
-                <p className="text-white/80 leading-relaxed font-inter">
+                <p>
                   We may update Our Privacy Policy from time to time. We will
                   notify You of any changes by posting the new Privacy Policy on
                   this page. We will let You know via email and/or a prominent
@@ -1127,7 +1127,7 @@ export default function PrivacyPolicy() {
 
               <div className="pt-4 text-sm text-white/60">
                 <p>
-                  <strong className="text-gold">RC Web Solutions LLC</strong>
+                  <strong>RC Web Solutions LLC</strong>
                 </p>
                 <p>{COMPANY_ADDRESS}</p>
                 <p className="mt-2">

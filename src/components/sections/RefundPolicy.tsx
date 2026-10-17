@@ -83,7 +83,7 @@ const RefundPolicy = () => {
             </p>
             <p className="mt-4 text-white/90 text-lg leading-relaxed font-inter">
               This policy was last updated on{" "}
-              <strong className="text-gold">January 13, 2026</strong>.
+              <strong>January 13, 2026</strong>.
             </p>
           </div>
         </motion.div>
@@ -96,25 +96,25 @@ const RefundPolicy = () => {
           viewport={{ once: true }}
           transition={{ type: "spring", stiffness: 200, damping: 20 }}
         >
-          <div className="prose prose-invert prose-gold max-w-none">
+          <div className="legal-prose max-w-none">
             <div className="bg-gray-900/60 backdrop-blur-md rounded-xl border border-gold/20 p-8 space-y-8">
               {/* Two-Payment Structure */}
               <section>
-                <h2 className="text-2xl font-bold text-gold font-iceland mb-4">
+                <h2>
                   Two-Payment Project Structure
                 </h2>
-                <p className="text-white/80 leading-relaxed font-inter mb-4">
+                <p>
                   All projects at RC Web Solutions LLC are structured with a
                   two-payment system designed to protect both parties and ensure
                   commitment to project success:
                 </p>
-                <ul className="space-y-3 text-white/80 font-inter list-disc list-inside">
+                <ul>
                   <li>
-                    <strong className="text-gold">First Payment (50%):</strong>{" "}
+                    <strong>First Payment (50%):</strong>{" "}
                     Required to initiate the project and begin development work
                   </li>
                   <li>
-                    <strong className="text-gold">Second Payment (50%):</strong>{" "}
+                    <strong>Second Payment (50%):</strong>{" "}
                     Due upon project completion and delivery
                   </li>
                 </ul>
@@ -126,8 +126,8 @@ const RefundPolicy = () => {
               </section>
 
               {/* NO Refunds Policy */}
-              <section className="pt-8 border-t border-gold/20">
-                <h2 className="text-2xl font-bold text-gold font-iceland mb-4">
+              <section>
+                <h2>
                   NO Refunds After First Payment
                 </h2>
 
@@ -138,13 +138,13 @@ const RefundPolicy = () => {
                   </p>
                 </div>
 
-                <p className="text-white/80 leading-relaxed font-inter mb-4">
+                <p>
                   When you make the first payment, the project starts
                   immediately and our team begins investing time, resources, and
                   expertise into your project. This includes:
                 </p>
 
-                <ul className="space-y-2 text-white/80 font-inter list-disc list-inside mb-4">
+                <ul>
                   <li>Project planning and architecture design</li>
                   <li>Resource allocation and team assignment</li>
                   <li>Initial development and setup</li>
@@ -152,7 +152,7 @@ const RefundPolicy = () => {
                   <li>Time committed by our development team</li>
                 </ul>
 
-                <p className="text-white/80 leading-relaxed font-inter">
+                <p>
                   If you decide not to continue with the project after the first
                   payment has been made, no refund will be issued as we have
                   already invested significant time and resources into
@@ -161,8 +161,8 @@ const RefundPolicy = () => {
               </section>
 
               {/* Cancellation Before Payment */}
-              <section className="pt-8 border-t border-gold/20">
-                <h2 className="text-2xl font-bold text-gold font-iceland mb-4">
+              <section>
+                <h2>
                   Cancellation Before Payment
                 </h2>
 
@@ -173,7 +173,7 @@ const RefundPolicy = () => {
                   </p>
                 </div>
 
-                <p className="text-white/80 leading-relaxed font-inter">
+                <p>
                   We understand that circumstances change. If you need to cancel
                   before making your first payment, simply contact us and
                   we&apos;ll close your project request with no charges or
@@ -183,15 +183,15 @@ const RefundPolicy = () => {
               </section>
 
               {/* Non-Refundable Items */}
-              <section className="pt-8 border-t border-gold/20">
-                <h2 className="text-2xl font-bold text-gold font-iceland mb-4">
+              <section>
+                <h2>
                   Non-Refundable Items
                 </h2>
-                <p className="text-white/80 leading-relaxed font-inter mb-3">
+                <p>
                   The following items and services are non-refundable under all
                   circumstances:
                 </p>
-                <ul className="space-y-2 text-white/80 font-inter list-disc list-inside">
+                <ul>
                   <li>Custom development work and coding</li>
                   <li>
                     Design services and mockups created specifically for your
@@ -212,11 +212,11 @@ const RefundPolicy = () => {
               </section>
 
               {/* Subscription Services */}
-              <section className="pt-8 border-t border-gold/20">
-                <h2 className="text-2xl font-bold text-gold font-iceland mb-4">
+              <section>
+                <h2>
                   Subscription Services (Monthly Maintenance)
                 </h2>
-                <p className="text-white/80 leading-relaxed font-inter mb-4">
+                <p>
                   The Monthly Website Maintenance and Support service operates
                   on a subscription basis with automatic recurring payments of
                   $200 USD per month.
@@ -229,14 +229,14 @@ const RefundPolicy = () => {
                   </p>
                 </div>
 
-                <ul className="space-y-3 text-white/80 font-inter list-disc list-inside">
+                <ul>
                   <li>
-                    <strong className="text-gold">Billing:</strong>{" "}
+                    <strong>Billing:</strong>{" "}
                     Your card will be charged $200 USD automatically on the same
                     day each month from your subscription start date
                   </li>
                   <li>
-                    <strong className="text-gold">Cancellation:</strong>{" "}
+                    <strong>Cancellation:</strong>{" "}
                     You may cancel your subscription at any time. Cancellation takes
                     effect at the end of your current billing period. To cancel, visit{" "}
                     <Link href={"/manage-subscription" as Route} className="text-gold hover:text-gold/80 underline">
@@ -245,13 +245,13 @@ const RefundPolicy = () => {
                     or contact us directly
                   </li>
                   <li>
-                    <strong className="text-gold">No Prorated Refunds:</strong>{" "}
+                    <strong>No Prorated Refunds:</strong>{" "}
                     If you cancel mid-month, you will continue to receive service
                     until the end of your paid period, but no refund will be issued
                     for the remaining days
                   </li>
                   <li>
-                    <strong className="text-gold">Failed Payments:</strong>{" "}
+                    <strong>Failed Payments:</strong>{" "}
                     If a payment fails, we will attempt to charge your card again.
                     After multiple failed attempts, your subscription may be suspended
                   </li>
@@ -259,27 +259,27 @@ const RefundPolicy = () => {
               </section>
 
               {/* Project Changes and Scope */}
-              <section className="pt-8 border-t border-gold/20">
-                <h2 className="text-2xl font-bold text-gold font-iceland mb-4">
+              <section>
+                <h2>
                   Project Changes and Scope Modifications
                 </h2>
-                <p className="text-white/80 leading-relaxed font-inter mb-4">
+                <p>
                   We understand that project requirements may evolve.
                   Here&apos;s how we handle changes:
                 </p>
-                <ul className="space-y-3 text-white/80 font-inter list-disc list-inside">
+                <ul>
                   <li>
-                    <strong className="text-gold">Minor Adjustments:</strong>{" "}
+                    <strong>Minor Adjustments:</strong>{" "}
                     Small tweaks and refinements within the original scope are
                     included at no extra charge
                   </li>
                   <li>
-                    <strong className="text-gold">Scope Increases:</strong>{" "}
+                    <strong>Scope Increases:</strong>{" "}
                     Significant additions or changes may require additional
                     payment, which will be quoted separately
                   </li>
                   <li>
-                    <strong className="text-gold">Communication:</strong> All
+                    <strong>Communication:</strong> All
                     changes will be discussed and agreed upon before
                     implementation
                   </li>
@@ -291,15 +291,15 @@ const RefundPolicy = () => {
               </section>
 
               {/* Quality Guarantee */}
-              <section className="pt-8 border-t border-gold/20">
-                <h2 className="text-2xl font-bold text-gold font-iceland mb-4">
+              <section>
+                <h2>
                   Our Quality Guarantee
                 </h2>
-                <p className="text-white/80 leading-relaxed font-inter mb-4">
+                <p>
                   While we maintain a strict no-refund policy, we are committed
                   to your satisfaction:
                 </p>
-                <ul className="space-y-2 text-white/80 font-inter list-disc list-inside">
+                <ul>
                   <li>
                     We work closely with you throughout the project to ensure it
                     meets your expectations
@@ -323,8 +323,8 @@ const RefundPolicy = () => {
               </section>
 
               {/* Contact Before Starting */}
-              <section className="pt-8 border-t border-gold/20">
-                <h2 className="text-2xl font-bold text-gold font-iceland mb-4">
+              <section>
+                <h2>
                   Questions? Contact Us First
                 </h2>
 
@@ -345,7 +345,7 @@ const RefundPolicy = () => {
                   <div className="flex items-center gap-3">
                     <EnvelopeIcon className="w-5 h-5 text-gold shrink-0" />
                     <div>
-                      <strong className="text-gold">Email:</strong>{" "}
+                      <strong>Email:</strong>{" "}
                       <a
                         href="mailto:contactus@rcweb.dev"
                         className="hover:text-gold transition-colors underline"
@@ -357,7 +357,7 @@ const RefundPolicy = () => {
                   <div className="flex items-center gap-3">
                     <CurrencyDollarIcon className="w-5 h-5 text-gold shrink-0" />
                     <div>
-                      <strong className="text-gold">Phone:</strong>{" "}
+                      <strong>Phone:</strong>{" "}
                       <a
                         href="tel:+13463757534"
                         className="hover:text-gold transition-colors"
@@ -370,11 +370,11 @@ const RefundPolicy = () => {
               </section>
 
               {/* Project Abandonment */}
-              <section className="pt-8 border-t border-gold/20">
-                <h2 className="text-2xl font-bold text-gold font-iceland mb-4">
+              <section>
+                <h2>
                   Project Abandonment
                 </h2>
-                <p className="text-white/80 leading-relaxed font-inter mb-4">
+                <p>
                   If a Client fails to respond to our communications for 30 consecutive
                   days without prior notice, the project may be considered abandoned.
                 </p>
@@ -384,7 +384,7 @@ const RefundPolicy = () => {
                     RC Web Solutions LLC has no obligation to complete remaining work.
                   </p>
                 </div>
-                <p className="text-white/80 leading-relaxed font-inter">
+                <p>
                   Clients may resume abandoned projects by contacting us, paying any
                   outstanding balance, and a project reactivation fee (quoted based on
                   project status and time elapsed).
@@ -392,8 +392,8 @@ const RefundPolicy = () => {
               </section>
 
               {/* Chargebacks */}
-              <section className="pt-8 border-t border-gold/20">
-                <h2 className="text-2xl font-bold text-gold font-iceland mb-4">
+              <section>
+                <h2>
                   Chargebacks and Payment Disputes
                 </h2>
                 <div className="bg-red-500/10 border border-red-500/30 rounded-lg p-4 mb-4">
@@ -402,16 +402,16 @@ const RefundPolicy = () => {
                     in legal action.
                   </p>
                 </div>
-                <p className="text-white/80 leading-relaxed font-inter mb-4">
+                <p>
                   If you have concerns about charges, please contact us directly before
                   initiating a chargeback with your bank. We are committed to resolving
                   issues amicably.
                 </p>
-                <p className="text-white/80 leading-relaxed font-inter mb-3">
+                <p>
                   In the event of an illegitimate or fraudulent chargeback, RC Web
                   Solutions LLC reserves the right to:
                 </p>
-                <ul className="space-y-2 text-white/80 font-inter list-disc list-inside">
+                <ul>
                   <li>Immediately suspend or terminate all services</li>
                   <li>Remove any deployed websites or applications</li>
                   <li>Contest the chargeback with full documentation</li>
@@ -422,11 +422,11 @@ const RefundPolicy = () => {
               </section>
 
               {/* Force Majeure */}
-              <section className="pt-8 border-t border-gold/20">
-                <h2 className="text-2xl font-bold text-gold font-iceland mb-4">
+              <section>
+                <h2>
                   Force Majeure Events
                 </h2>
-                <p className="text-white/80 leading-relaxed font-inter mb-4">
+                <p>
                   RC Web Solutions LLC shall not be liable for delays or failure to
                   perform due to circumstances beyond our reasonable control, including
                   but not limited to natural disasters, pandemics, war, government actions,
@@ -442,15 +442,15 @@ const RefundPolicy = () => {
               </section>
 
               {/* Dispute Resolution */}
-              <section className="pt-8 border-t border-gold/20">
-                <h2 className="text-2xl font-bold text-gold font-iceland mb-4">
+              <section>
+                <h2>
                   Dispute Resolution
                 </h2>
-                <p className="text-white/80 leading-relaxed font-inter mb-4">
+                <p>
                   In the unlikely event of a dispute regarding our services or
                   this refund policy:
                 </p>
-                <ul className="space-y-2 text-white/80 font-inter list-disc list-inside">
+                <ul>
                   <li>
                     We encourage open communication to resolve any issues
                     directly
@@ -471,11 +471,11 @@ const RefundPolicy = () => {
               </section>
 
               {/* Governing Law */}
-              <section className="pt-8 border-t border-gold/20">
-                <h2 className="text-2xl font-bold text-gold font-iceland mb-4">
+              <section>
+                <h2>
                   Governing Law and Jurisdiction
                 </h2>
-                <p className="text-white/80 leading-relaxed font-inter">
+                <p>
                   This Refund Policy shall be governed by and construed in accordance
                   with the laws of the State of Texas, United States, without regard
                   to its conflict of law provisions. Any disputes arising from this
@@ -484,15 +484,15 @@ const RefundPolicy = () => {
               </section>
 
               {/* Related Documents */}
-              <section className="pt-8 border-t border-gold/20">
-                <h2 className="text-2xl font-bold text-gold font-iceland mb-4">
+              <section>
+                <h2>
                   Related Legal Documents
                 </h2>
-                <p className="text-white/80 leading-relaxed font-inter mb-4">
+                <p>
                   This Refund Policy is part of our complete legal framework. For
                   full terms and conditions governing our services, please review:
                 </p>
-                <ul className="space-y-2 text-white/80 font-inter list-disc list-inside">
+                <ul>
                   <li>
                     <Link href={"/terms-of-service" as Route} className="text-gold hover:text-gold/80 underline">
                       Terms of Service
@@ -514,11 +514,11 @@ const RefundPolicy = () => {
               </section>
 
               {/* Agreement */}
-              <section className="pt-8 border-t border-gold/20">
-                <h2 className="text-2xl font-bold text-gold font-iceland mb-4">
+              <section>
+                <h2>
                   Your Agreement
                 </h2>
-                <p className="text-white/80 leading-relaxed font-inter">
+                <p>
                   By making a payment for our services, you acknowledge that you
                   have read, understood, and agree to this Refund Policy, our
                   Terms of Service, and our Privacy Policy. You understand that
