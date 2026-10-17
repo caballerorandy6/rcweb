@@ -1,5 +1,5 @@
+import Button from "@/components/ui/Button";
 import { genPageMetadata } from "@/utils/genPageMetadata";
-import Link from "next/link";
 import { CheckCircleIcon, EnvelopeIcon, ClockIcon } from "@heroicons/react/24/outline";
 
 export const metadata = genPageMetadata({
@@ -113,16 +113,14 @@ export default function ThankYouPage() {
 
           {/* Back to Home Button */}
           <div className="text-center">
-            <Link
-              href="/"
-              className="inline-flex items-center justify-center px-6 sm:px-8 py-3 sm:py-4 text-base sm:text-lg font-semibold text-black bg-linear-to-r from-gold via-gold-light to-gold hover:from-gold-light hover:via-gold hover:to-gold-light rounded-xl transition-all duration-300 shadow-lg hover:shadow-gold/25 font-inter group transform hover:scale-105 active:scale-95"
-            >
-              <span>Back to Home</span>
+            <Button href="/" size="lg">
+              Back to Home
               <svg
-                className="ml-2 w-4 h-4 sm:w-5 sm:h-5 transform group-hover:translate-x-1 transition-transform duration-300"
+                className="w-4 h-4 sm:w-5 sm:h-5 transform group-hover:translate-x-1 transition-transform duration-300"
                 fill="none"
                 stroke="currentColor"
                 viewBox="0 0 24 24"
+                aria-hidden="true"
               >
                 <path
                   strokeLinecap="round"
@@ -131,7 +129,7 @@ export default function ThankYouPage() {
                   d="M13 7l5 5m0 0l-5 5m5-5H6"
                 />
               </svg>
-            </Link>
+            </Button>
           </div>
         </div>
 

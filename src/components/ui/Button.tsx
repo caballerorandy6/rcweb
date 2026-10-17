@@ -73,6 +73,14 @@ const Button = ({
   );
 
   if (href) {
+    // tel:/mailto: open the dialer or mail client: plain anchor, same tab
+    if (/^(tel|mailto):/.test(href)) {
+      return (
+        <a href={href} className={classes} onClick={onClick} aria-label={ariaLabel}>
+          {content}
+        </a>
+      );
+    }
     if (external) {
       return (
         <a

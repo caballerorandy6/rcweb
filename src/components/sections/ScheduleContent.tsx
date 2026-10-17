@@ -9,7 +9,7 @@ import {
   PhoneIcon,
 } from "@heroicons/react/24/outline";
 import Link from "next/link";
-import HeadingStatic from "@/components/ui/HeadingStatic";
+import Heading from "@/components/ui/Heading";
 import { trackFBPhoneCall } from "@/components/tracking/FacebookPixel";
 import { trackManualContact } from "@/lib/analytics";
 import { trackLinkedInConversion } from "@/components/tracking/LinkedInInsightTag";
@@ -69,13 +69,13 @@ export default function ScheduleContent() {
         </div>
 
         <div className="mx-auto max-w-7xl px-6 lg:px-8">
-          <HeadingStatic
+          <Heading
             as="h1"
             icon={<CalendarDaysIcon className="w-8 text-gold" />}
             text="Let's Build Something Amazing Together"
           >
             Schedule Your Free Consultation
-          </HeadingStatic>
+          </Heading>
 
           {/* Hero Section */}
           <div className="mt-16 max-w-4xl mx-auto">

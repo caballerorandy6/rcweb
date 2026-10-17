@@ -1,7 +1,7 @@
 "use client";
 
+import Button from "@/components/ui/Button";
 import { motion } from "framer-motion";
-import Link from "next/link";
 import { BookOpenIcon, ArrowRightIcon } from "@heroicons/react/24/outline";
 import { event as trackEvent } from "@/lib/analytics";
 
@@ -83,14 +83,10 @@ const LeadMagnetBanner = () => {
               transition={{ delay: 0.25 }}
               className="shrink-0"
             >
-              <Link
-                href="/guide"
-                onClick={handleClick}
-                className="group inline-flex items-center gap-3 px-8 py-4 bg-linear-to-r from-gold via-gold-light to-gold hover:from-gold-light hover:via-gold hover:to-gold-dark text-gray-900 font-bold rounded-xl transition-all duration-300 shadow-lg shadow-gold/30 hover:shadow-xl hover:shadow-gold/40 font-inter text-lg"
-              >
+              <Button href="/guide" size="lg" onClick={handleClick}>
                 Download Now
                 <ArrowRightIcon className="w-5 h-5 transition-transform group-hover:translate-x-1" />
-              </Link>
+              </Button>
             </motion.div>
           </div>
 

@@ -68,6 +68,63 @@
   }
 }
 
+/* Legal documents (privacy, terms, refund): one place for the typography of
+   ~90 headings and ~100 paragraphs instead of repeating utilities per tag */
+@utility legal-prose {
+  & section + section {
+    padding-top: --spacing(8);
+    border-top: 1px solid --alpha(var(--color-gold) / 20%);
+  }
+  & h2 {
+    margin-bottom: --spacing(4);
+    font-family: var(--font-iceland);
+    font-size: var(--text-2xl);
+    line-height: var(--text-2xl--line-height);
+    font-weight: 700;
+    color: var(--color-gold);
+  }
+  & h3 {
+    margin-top: --spacing(6);
+    margin-bottom: --spacing(3);
+    font-family: var(--font-iceland);
+    font-size: var(--text-xl);
+    line-height: var(--text-xl--line-height);
+    font-weight: 600;
+    color: --alpha(var(--color-gold) / 90%);
+  }
+  & h4 {
+    margin-bottom: --spacing(2);
+    font-family: var(--font-iceland);
+    font-size: var(--text-lg);
+    line-height: var(--text-lg--line-height);
+    font-weight: 600;
+    color: --alpha(var(--color-gold) / 80%);
+  }
+  & p,
+  & ul,
+  & ol {
+    font-family: var(--font-inter);
+    color: --alpha(var(--color-white) / 80%);
+    line-height: var(--leading-relaxed);
+  }
+  & p + p,
+  & p + ul,
+  & ul + p,
+  & h3 + p {
+    margin-top: --spacing(3);
+  }
+  & ul,
+  & ol {
+    list-style: disc inside;
+    display: flex;
+    flex-direction: column;
+    gap: --spacing(2);
+  }
+  & strong {
+    color: var(--color-gold);
+  }
+}
+
 @utility image-gradient {
   mask-image: linear-gradient(black 50%, transparent);
 }
