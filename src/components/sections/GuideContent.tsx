@@ -9,9 +9,10 @@ import {
 } from "@heroicons/react/24/outline";
 import Link from "next/link";
 import Heading from "@/components/ui/Heading";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { toast } from "sonner";
 import { downloadGuideAction } from "@/actions/campaigns/downloadGuideAction";
+import { getRecaptchaToken, loadRecaptcha } from "@/lib/recaptcha";
 import { trackFBLead } from "@/components/tracking/FacebookPixel";
 import { trackLinkedInConversion } from "@/components/tracking/LinkedInInsightTag";
 import { trackSubmitLeadForm } from "@/lib/analytics";
@@ -19,27 +20,47 @@ import { getStoredUTMParams } from "@/hooks/useUTMParams";
 
 export default function GuideContent() {
   const [email, setEmail] = useState("");
+  const [honeypot, setHoneypot] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
+  // Anti-bot: when the form was first shown (bots submit in milliseconds)
+  const startedAt = useRef<number | null>(null);
+  useEffect(() => {
+    startedAt.current = Date.now();
+  }, []);
 
   const handleDownload = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
+    const timeSpent = startedAt.current ? Date.now() - startedAt.current : 0;
 
     try {
-      // 1. Trigger client-side PDF download
-      const link = document.createElement('a');
-      link.href = '/web-development-guide.pdf';
-      link.download = 'RC-Web-Development-Guide.pdf';
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
+      // 1. reCAPTCHA v3 token (the server rejects submissions without it)
+      let recaptchaToken = "";
+      try {
+        recaptchaToken = await getRecaptchaToken("download_guide");
+      } catch (error) {
+        console.error("reCAPTCHA unavailable:", error);
+      }
 
       // 2. Call Server Action to save email and send PDF via email
       const utmData = getStoredUTMParams();
-      const result = await downloadGuideAction(email, "guide_download", utmData || undefined);
+      const result = await downloadGuideAction(
+        email,
+        "guide_download",
+        utmData || undefined,
+        { recaptchaToken, timeSpent, honeypot }
+      );
 
       // 3. Handle result
       if (result.success) {
+        // Trigger client-side PDF download only for verified submissions
+        const link = document.createElement("a");
+        link.href = "/web-development-guide.pdf";
+        link.download = "RC-Web-Development-Guide.pdf";
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+
         // Track Facebook Lead conversion
         trackFBLead();
 
@@ -181,12 +202,27 @@ export default function GuideContent() {
               </p>
 
               <form onSubmit={handleDownload} className="space-y-4">
+                {/* Honeypot: hidden from people, filled by bots */}
+                <div className="absolute -left-[9999px] opacity-0" aria-hidden="true">
+                  <label htmlFor="guide-website">Website</label>
+                  <input
+                    id="guide-website"
+                    type="text"
+                    name="website"
+                    tabIndex={-1}
+                    autoComplete="off"
+                    value={honeypot}
+                    onChange={(e) => setHoneypot(e.target.value)}
+                  />
+                </div>
                 <div>
                   <input
                     type="email"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
+                    onFocus={() => loadRecaptcha().catch(() => {})}
                     placeholder="your@email.com"
+                    aria-label="Email address"
                     required
                     className="w-full p-4 bg-gray-800/80 text-white rounded-xl border border-gray-700/60 focus:outline-hidden focus:border-gold focus:ring-2 focus:ring-gold/20 transition-all duration-300 font-inter placeholder-gray-400"
                   />
@@ -215,6 +251,29 @@ export default function GuideContent() {
                 Web Solutions.
                 <br />
                 You can unsubscribe anytime.
+              </p>
+
+              {/* reCAPTCHA disclosure (required when hiding the badge) */}
+              <p className="text-white/40 font-inter text-xs mt-3 text-center leading-relaxed">
+                This site is protected by reCAPTCHA and the Google{" "}
+                <a
+                  href="https://policies.google.com/privacy"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-gold/60 hover:text-gold/80 transition-colors underline"
+                >
+                  Privacy Policy
+                </a>{" "}
+                and{" "}
+                <a
+                  href="https://policies.google.com/terms"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-gold/60 hover:text-gold/80 transition-colors underline"
+                >
+                  Terms of Service
+                </a>{" "}
+                apply.
               </p>
             </div>
           </div>
