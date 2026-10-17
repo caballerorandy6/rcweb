@@ -3,6 +3,7 @@
 import { useEffect } from "react";
 import { useRCWebStore } from "@/store/rcweb-store";
 import { navigation } from "@/lib/data";
+import { withViewTransition } from "@/lib/viewTransition";
 
 type SectionName = (typeof navigation)[number]["name"];
 
@@ -51,7 +52,7 @@ export function useScrollSpy(sectionIds: string[]) {
               }
 
               const navName = sectionNavName[id];
-              if (navName) setActiveSection(navName);
+              if (navName) withViewTransition(() => setActiveSection(navName));
             }
             break;
           }
