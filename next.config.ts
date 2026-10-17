@@ -127,6 +127,8 @@ const nextConfig: NextConfig = {
     return [
       // The blog had its own subscriber list; it is now part of the newsletter
       { source: "/blog/unsubscribe", destination: "/unsubscribe", permanent: true },
+      // The free guide was retired; keep indexed links alive
+      { source: "/guide", destination: "/#contact", permanent: true },
     ];
   },
 

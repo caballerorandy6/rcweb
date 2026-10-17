@@ -7,7 +7,6 @@ import Hero from "@/components/sections/Hero";
 
 // Lazy load sections below the fold for better LCP
 const Services = dynamic(() => import("@/components/sections/Services"));
-const LeadMagnetBanner = dynamic(() => import("@/components/sections/LeadMagnetBanner"));
 const Projects = dynamic(() => import("@/components/sections/Projects"));
 const Process = dynamic(() => import("@/components/sections/Process"));
 const Testimonials = dynamic(() => import("@/components/sections/Testimonials"));
@@ -53,7 +52,6 @@ export default function Home() {
       <ScrollSpy />
       <Hero />
       <Services />
-      <LeadMagnetBanner />
       <Projects />
       <Process />
       <Testimonials />
