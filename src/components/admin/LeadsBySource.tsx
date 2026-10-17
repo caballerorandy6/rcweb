@@ -162,8 +162,8 @@ export default async function LeadsBySource() {
       {data.sources.length > 0 && (
         <div className="mt-5 pt-4 border-t border-gray-700/50">
           <p className="text-[10px] sm:text-xs text-gray-500 font-inter">
-            Lead sources are tracked automatically from contact forms, guide
-            downloads, exit intent popups, and other conversion points.
+            Lead sources are tracked automatically from contact forms, blog
+            subscriptions and other conversion points.
           </p>
         </div>
       )}

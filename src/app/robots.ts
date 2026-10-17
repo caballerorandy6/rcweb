@@ -26,7 +26,6 @@ export default function robots(): MetadataRoute.Robots {
           "/blog",
           "/schedule",
           "/offer",
-          "/guide",
           "/privacy-policy",
           "/terms-of-service",
           "/refund-policy",

@@ -3,7 +3,7 @@ const RECAPTCHA_MIN_SCORE = 0.5;
 /**
  * Verifies a reCAPTCHA v3 token on the server. The token must be valid, come
  * from the expected action and score like a human. Shared by every public
- * form (contact, guide download).
+ * form.
  */
 export async function verifyRecaptcha(
   token: string | undefined,
