@@ -1,6 +1,5 @@
 "use client";
 
-import { motion } from "framer-motion";
 import { PaperAirplaneIcon, XMarkIcon } from "@heroicons/react/24/outline";
 import { useState, useEffect, useRef } from "react";
 import Image from "next/image";
@@ -129,13 +128,7 @@ export default function Chat({ onClose }: ChatProps) {
   };
 
   return (
-    <motion.div
-      initial={{ opacity: 0, scale: 0.95 }}
-      animate={{ opacity: 1, scale: 1 }}
-      exit={{ opacity: 0, scale: 0.95 }}
-      transition={{ type: "spring", stiffness: 300, damping: 25 }}
-      className="fixed bottom-6 right-6 z-50 w-96 h-[600px] bg-gray-900/95 backdrop-blur-xl border border-gold/20 rounded-2xl shadow-2xl flex flex-col"
-    >
+    <div className="fixed bottom-6 right-6 z-50 w-96 h-[600px] bg-gray-900/95 backdrop-blur-xl border border-gold/20 rounded-2xl shadow-2xl flex flex-col animate-slide-up">
       {/* Header */}
       <div className="flex items-center justify-between p-4 border-b border-gold/20">
         <div className="flex items-center gap-3">
@@ -144,6 +137,7 @@ export default function Chat({ onClose }: ChatProps) {
               src="/maria.avif"
               alt="Maria - AI Assistant"
               fill
+              sizes="40px"
               className="object-cover"
             />
           </div>
@@ -163,12 +157,9 @@ export default function Chat({ onClose }: ChatProps) {
       {/* Messages */}
       <div className="flex-1 overflow-y-auto p-4 space-y-4">
         {messages.map((message) => (
-          <motion.div
+          <div
             key={message.id}
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ type: "spring", stiffness: 300, damping: 25 }}
-            className={`flex gap-2 ${message.role === "user" ? "justify-end" : "justify-start"}`}
+            className={`flex gap-2 animate-enter ${message.role === "user" ? "justify-end" : "justify-start"}`}
           >
             {/* Avatar para mensajes del asistente */}
             {message.role === "assistant" && (
@@ -177,6 +168,7 @@ export default function Chat({ onClose }: ChatProps) {
                   src="/maria.avif"
                   alt="Maria"
                   fill
+                  sizes="32px"
                   className="object-cover"
                 />
               </div>
@@ -191,57 +183,29 @@ export default function Chat({ onClose }: ChatProps) {
             >
               {message.content}
             </div>
-          </motion.div>
+          </div>
         ))}
 
         {isLoading && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            className="flex gap-2 justify-start"
-          >
+          <div className="flex gap-2 justify-start animate-enter">
             <div className="relative w-8 h-8 rounded-full overflow-hidden ring-2 ring-gold/20 shrink-0">
               <Image
                 src="/maria.avif"
                 alt="Maria"
                 fill
+                sizes="32px"
                 className="object-cover"
               />
             </div>
             <div className="bg-gray-800 p-3 rounded-lg border border-gold/10">
-              <div className="flex space-x-2">
-                <motion.div
-                  className="w-2 h-2 bg-gold rounded-full"
-                  animate={{ y: [0, -8, 0] }}
-                  transition={{
-                    duration: 0.6,
-                    repeat: Infinity,
-                    ease: "easeInOut",
-                  }}
-                />
-                <motion.div
-                  className="w-2 h-2 bg-gold rounded-full"
-                  animate={{ y: [0, -8, 0] }}
-                  transition={{
-                    duration: 0.6,
-                    repeat: Infinity,
-                    ease: "easeInOut",
-                    delay: 0.2,
-                  }}
-                />
-                <motion.div
-                  className="w-2 h-2 bg-gold rounded-full"
-                  animate={{ y: [0, -8, 0] }}
-                  transition={{
-                    duration: 0.6,
-                    repeat: Infinity,
-                    ease: "easeInOut",
-                    delay: 0.4,
-                  }}
-                />
+              {/* Typing indicator */}
+              <div className="flex space-x-2" aria-label="Maria is typing">
+                <div className="w-2 h-2 bg-gold rounded-full animate-bounce" />
+                <div className="w-2 h-2 bg-gold rounded-full animate-bounce [animation-delay:150ms]" />
+                <div className="w-2 h-2 bg-gold rounded-full animate-bounce [animation-delay:300ms]" />
               </div>
             </div>
-          </motion.div>
+          </div>
         )}
 
         <div ref={messagesEndRef} />
@@ -258,31 +222,19 @@ export default function Chat({ onClose }: ChatProps) {
             className="flex-1 bg-gray-800 text-white px-4 py-2 rounded-lg border border-gold/20 focus:border-gold focus:outline-hidden focus:ring-2 focus:ring-gold/20 font-inter text-sm transition-all"
             disabled={isLoading}
           />
-          <motion.button
+          <button
             type="submit"
             disabled={isLoading || !input.trim()}
-            className="bg-gold text-gray-900 p-2 rounded-lg hover:bg-gold/90 disabled:opacity-50 disabled:cursor-not-allowed transition-all"
-            whileHover={
-              !isLoading && input.trim()
-                ? {
-                    scale: 1.05,
-                    transition: {
-                      type: "spring",
-                      stiffness: 400,
-                      damping: 17,
-                    },
-                  }
-                : {}
-            }
-            whileTap={!isLoading && input.trim() ? { scale: 0.95 } : {}}
+            aria-label="Send message"
+            className="bg-gold text-gray-900 p-2 rounded-lg hover:bg-gold/90 transition hover:scale-105 active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100"
           >
             <PaperAirplaneIcon className="w-5 h-5" />
-          </motion.button>
+          </button>
         </div>
         <p className="text-xs text-white/30 font-inter mt-2 text-center">
           AI can make mistakes. Verify important information.
         </p>
       </form>
-    </motion.div>
+    </div>
   );
 }

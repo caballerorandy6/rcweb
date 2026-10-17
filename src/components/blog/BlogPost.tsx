@@ -1,6 +1,3 @@
-"use client";
-
-import { motion } from "framer-motion";
 import Link from "next/link";
 import Image from "next/image";
 import ReactMarkdown from "react-markdown";
@@ -47,11 +44,7 @@ export default function BlogPost({ post }: BlogPostProps) {
 
       <div className="mx-auto max-w-4xl px-6 lg:px-8">
         {/* Back Button */}
-        <motion.div
-          initial={{ opacity: 0, y: -20 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="mb-8"
-        >
+        <div className="mb-8 animate-enter">
           <Link
             href="/blog"
             className="inline-flex items-center gap-2 px-4 py-2 bg-gray-800 hover:bg-gray-700 text-white rounded-lg transition-colors border border-gray-600 font-inter text-sm"
@@ -59,14 +52,11 @@ export default function BlogPost({ post }: BlogPostProps) {
             <ArrowLeftIcon className="w-4 h-4" />
             Back to Blog
           </Link>
-        </motion.div>
+        </div>
 
         {/* Article Header */}
-        <motion.article
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.1 }}
-          className="bg-linear-to-br from-gray-800/50 to-gray-900/50 backdrop-blur-lg rounded-2xl border border-gray-700/50 overflow-hidden"
+        <article
+          className="bg-linear-to-br from-gray-800/50 to-gray-900/50 backdrop-blur-lg rounded-2xl border border-gray-700/50 overflow-hidden animate-enter [animation-delay:100ms]"
         >
           {/* Featured Image */}
           {post.image && (
@@ -293,7 +283,7 @@ export default function BlogPost({ post }: BlogPostProps) {
               <BlogSubscriptionForm />
             </div>
           </div>
-        </motion.article>
+        </article>
       </div>
     </section>
   );

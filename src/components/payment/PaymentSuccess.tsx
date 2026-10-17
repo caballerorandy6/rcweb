@@ -2,7 +2,6 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
-import { motion } from "framer-motion";
 import {
   CheckCircleIcon,
   DocumentDuplicateIcon,
@@ -81,10 +80,8 @@ export default function PaymentSuccess({
   if (error) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-gray-900 px-4 py-24 sm:py-32">
-        <motion.div
-          initial={{ opacity: 0, scale: 0.95 }}
-          animate={{ opacity: 1, scale: 1 }}
-          className="max-w-md w-full bg-red-900/20 border border-red-500/50 rounded-2xl p-8 text-center"
+        <div
+          className="max-w-md w-full bg-red-900/20 border border-red-500/50 rounded-2xl p-8 text-center animate-enter"
         >
           <div className="text-red-500 mb-4">
             <ExclamationTriangleIcon className="w-16 h-16 mx-auto" />
@@ -103,30 +100,20 @@ export default function PaymentSuccess({
           >
             Contact Support
           </a>
-        </motion.div>
+        </div>
       </div>
     );
   }
 
   return (
     <div className="min-h-screen bg-linear-to-b from-gray-900 to-black flex items-center justify-center px-4  py-24 sm:py-32">
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ type: "spring", stiffness: 200, damping: 20 }}
-        className="max-w-2xl w-full"
-      >
+      <div className="max-w-2xl w-full animate-enter">
         {/* Success Icon */}
-        <motion.div
-          initial={{ scale: 0 }}
-          animate={{ scale: 1 }}
-          transition={{ delay: 0.2, type: "spring", stiffness: 200 }}
-          className="text-center mb-8"
-        >
+        <div className="text-center mb-8 animate-enter [animation-delay:200ms]">
           <div className="inline-flex items-center justify-center w-24 h-24 bg-green-500/20 rounded-full mb-4">
             <CheckCircleIcon className="w-16 h-16 text-green-500" />
           </div>
-        </motion.div>
+        </div>
 
         {/* Main Content */}
         <div className="bg-gray-800/50 backdrop-blur-xs rounded-2xl p-8 border border-gold/20">
@@ -159,11 +146,8 @@ export default function PaymentSuccess({
 
           {/* Project Code Display */}
           {projectCode && (
-            <motion.div
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ type: "spring", stiffness: 200, damping: 20, delay: 0.4 }}
-              className="bg-linear-to-r from-gold/20 to-yellow-500/20 rounded-xl p-6 mb-8 border border-gold/30 font-inter flex flex-col items-center"
+            <div
+              className="bg-linear-to-r from-gold/20 to-yellow-500/20 rounded-xl p-6 mb-8 border border-gold/30 font-inter flex flex-col items-center animate-enter [animation-delay:400ms]"
             >
               <p className="text-sm text-gold mb-2 text-center uppercase tracking-wide">
                 Your Project Code
@@ -185,7 +169,7 @@ export default function PaymentSuccess({
               <p className="text-xs text-center mt-3 text-gray-400">
                 Save this code - you&#39;ll need it for the final payment
               </p>
-            </motion.div>
+            </div>
           )}
 
           {/* Payment Details */}
@@ -257,7 +241,7 @@ export default function PaymentSuccess({
         <p className="text-center text-gray-400 text-sm mt-6 font-inter mx-auto">
           You&#39;ll receive a confirmation email shortly with all the details.
         </p>
-      </motion.div>
+      </div>
     </div>
   );
 }

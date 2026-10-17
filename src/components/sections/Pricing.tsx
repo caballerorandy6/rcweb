@@ -1,61 +1,11 @@
-"use client";
-
-import Button from "@/components/ui/Button";
-import { useState, useTransition } from "react";
-import { useRouter } from "next/navigation";
 import { CheckIcon } from "@heroicons/react/24/outline";
 import { pricingPlans } from "@/lib/data";
 import Heading from "../ui/Heading";
-import { motion, Variants } from "framer-motion";
-import { toast } from "sonner";
-import { saveCheckoutCustomer } from "@/lib/checkoutCustomer";
+import PlanCTA from "@/components/sections/PlanCTA";
+import CheckoutModal from "@/components/sections/CheckoutModal";
 
+/** Cards render on the server; PlanCTA + CheckoutModal are the client islands */
 const Pricing = () => {
-  const [selectedPlan, setSelectedPlan] = useState<string | null>(null);
-  const [showModal, setShowModal] = useState(false);
-  const [customerEmail, setCustomerEmail] = useState("");
-  const [customerName, setCustomerName] = useState("");
-  const [isPending, startTransition] = useTransition();
-  const router = useRouter();
-
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    show: { opacity: 1, transition: { staggerChildren: 0.15 } },
-  };
-
-  const cardVariants: Variants = {
-    hidden: { opacity: 0, y: 50, scale: 0.95 },
-    show: {
-      opacity: 1,
-      y: 0,
-      scale: 1,
-      transition: { type: "spring", stiffness: 200, damping: 20 },
-    },
-  };
-
-  const handlePlanSelection = (planId: string) => {
-    setSelectedPlan(planId);
-    setShowModal(true);
-  };
-
-  const handleGoToTerms = () => {
-    const plan = pricingPlans.find((p) => p.id === selectedPlan);
-    if (!plan) return;
-    if (!customerEmail || !customerName) {
-      toast.error("Please fill in all fields");
-      return;
-    }
-
-    // Nombre y email se guardan en sessionStorage; la URL solo lleva el ID del plan.
-    startTransition(() => {
-      saveCheckoutCustomer({
-        name: customerName.trim(),
-        email: customerEmail.trim(),
-      });
-      router.push(`/terms-of-service?plan=${encodeURIComponent(plan.id)}`);
-    });
-  };
-
   return (
     <section
       id="pricing"
@@ -69,23 +19,15 @@ const Pricing = () => {
           Clear & Transparent Pricing
         </Heading>
 
-        <motion.div
-          variants={containerVariants}
-          initial={false}
-          whileInView="show"
-          viewport={{ once: true, amount: 0.1 }}
-          className="mx-auto mt-16 flex flex-wrap justify-center gap-8"
-          style={{ opacity: 1 }}
-        >
+        <div className="mx-auto mt-16 flex flex-wrap justify-center gap-8">
           {pricingPlans.map((plan) => (
-            <motion.div
+            <div
               key={plan.name}
-              variants={cardVariants}
-              className={`relative rounded-2xl ${
+              className={`reveal relative rounded-2xl ${
                 plan.featured
                   ? "border-2 border-gold ring-2 ring-gold/20 scale-105"
                   : "border border-gold/20"
-              } bg-gray-900/50 p-8 backdrop-blur-xs transition-all duration-200 hover:border-gold/50 hover:bg-gold/5 w-full sm:w-[calc(50%-1rem)] lg:w-[calc(33.333%-1.5rem)]`}
+              } bg-gray-900/50 p-8 backdrop-blur-xs transition-colors duration-200 hover:border-gold/50 hover:bg-gold/5 w-full sm:w-[calc(50%-1rem)] lg:w-[calc(33.333%-1.5rem)]`}
             >
               {plan.featured && (
                 <div className="absolute -top-4 left-1/2 -translate-x-1/2">
@@ -128,116 +70,14 @@ const Pricing = () => {
                 {plan.ideal}
               </p>
 
-              <Button
-                variant={plan.featured ? "primary" : "secondary"}
-                size="lg"
-                fullWidth
-                className="mt-8"
-                onClick={() => handlePlanSelection(plan.id)}
-              >
+              <PlanCTA planId={plan.id} featured={plan.featured}>
                 {plan.cta}
-              </Button>
-            </motion.div>
+              </PlanCTA>
+            </div>
           ))}
-        </motion.div>
+        </div>
 
-        {/* Modal */}
-        {showModal && (
-          <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 backdrop-blur-xs p-4">
-            <motion.div
-              initial={{ opacity: 0, scale: 0.95 }}
-              animate={{ opacity: 1, scale: 1 }}
-              exit={{ opacity: 0, scale: 0.95 }}
-              transition={{ type: "spring", stiffness: 300, damping: 25 }}
-              className="bg-gray-900/95 rounded-2xl p-8 max-w-md w-full border border-gold/20 shadow-2xl shadow-gold/10"
-            >
-              <h2 className="text-4xl font-bold text-gold mb-6 font-iceland">
-                Complete Your Order
-              </h2>
-
-              <div className="bg-gray-800/50 rounded-lg p-4 mb-6 border border-gold/10 font-inter">
-                <div className="flex justify-between items-center mb-2">
-                  <span className="text-gray-400 text-sm">Selected Plan:</span>
-                  <span className="text-gold font-bold">
-                    {pricingPlans.find((p) => p.id === selectedPlan)?.name}
-                  </span>
-                </div>
-                <div className="flex justify-between items-center">
-                  <span className="text-gray-400 text-sm">
-                    {selectedPlan === "website-maintenance"
-                      ? "Monthly Payment:"
-                      : "Initial Payment (50%):"}
-                  </span>
-                  <span className="text-2xl font-bold text-gold">
-                    $
-                    {selectedPlan === "website-maintenance"
-                      ? (
-                          (pricingPlans.find((p) => p.id === selectedPlan)
-                            ?.priceInCents || 0) / 100
-                        ).toFixed(2)
-                      : (
-                          ((pricingPlans.find((p) => p.id === selectedPlan)
-                            ?.priceInCents || 0) *
-                            0.5) /
-                          100
-                        ).toFixed(2)}
-                    {selectedPlan === "website-maintenance" && (
-                      <span className="text-sm font-normal text-gold/70">
-                        /month
-                      </span>
-                    )}
-                  </span>
-                </div>
-              </div>
-
-              <div className="space-y-4 font-inter">
-                <div>
-                  <label className="block text-sm text-gray-300 mb-2 font-medium">
-                    Your Name
-                  </label>
-                  <input
-                    type="text"
-                    value={customerName}
-                    onChange={(e) => setCustomerName(e.target.value)}
-                    className="w-full p-3 bg-gray-800/70 text-white rounded-lg border border-gray-700 focus:border-gold focus:outline-hidden focus:ring-2 focus:ring-gold/20 transition-all"
-                    placeholder="John Doe"
-                  />
-                </div>
-                <div>
-                  <label className="block text-sm text-gray-300 mb-2 font-medium">
-                    Email Address
-                  </label>
-                  <input
-                    type="email"
-                    value={customerEmail}
-                    onChange={(e) => setCustomerEmail(e.target.value)}
-                    className="w-full p-3 bg-gray-800/70 text-white rounded-lg border border-gray-700 focus:border-gold focus:outline-hidden focus:ring-2 focus:ring-gold/20 transition-all"
-                    placeholder="john@example.com"
-                  />
-                </div>
-              </div>
-
-              <div className="flex gap-4 mt-6 font-inter">
-                <Button
-                  size="lg"
-                  className="flex-1"
-                  onClick={handleGoToTerms}
-                  disabled={isPending}
-                >
-                  {isPending ? "Loading..." : "Go to Terms & Pay"}
-                </Button>
-                <Button
-                  variant="secondary"
-                  className="flex-1"
-                  onClick={() => setShowModal(false)}
-                  disabled={isPending}
-                >
-                  Cancel
-                </Button>
-              </div>
-            </motion.div>
-          </div>
-        )}
+        <CheckoutModal />
 
         <div className="mx-auto mt-10 max-w-2xl text-center">
           <p className="text-sm font-inter text-white/50">

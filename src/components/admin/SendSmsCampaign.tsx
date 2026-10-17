@@ -64,16 +64,8 @@ export default function SendSmsCampaign({ initialStats }: SendSmsCampaignProps) 
       text: "RC Web Solutions: Get more customers online! Professional websites for small businesses. FREE consult: https://rcweb.dev +1 (346)375-7534 Reply STOP",
     },
     {
-      name: "Special Offer",
-      text: "Hi! RC Web: 20% OFF this week only. Visit rcweb.com/offer Reply STOP to unsubscribe",
-    },
-    {
       name: "Appointment",
       text: "Reminder: Your consultation is tomorrow at 3 PM. Reply YES to confirm.",
-    },
-    {
-      name: "New Service",
-      text: "RC Web now offers mobile apps! 15% off for existing clients. Info: rcweb.com",
     },
   ];
 

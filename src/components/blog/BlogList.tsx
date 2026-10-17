@@ -1,6 +1,3 @@
-"use client";
-
-import { motion } from "framer-motion";
 import Link from "next/link";
 import Image from "next/image";
 import type { Route } from "next";
@@ -117,12 +114,7 @@ export default function BlogList({ posts }: BlogListProps) {
           </div>
         ) : (
           /* Empty State */
-          <motion.div
-            className="mt-16 text-center max-w-2xl mx-auto"
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-          >
+          <div className="mt-16 text-center max-w-2xl mx-auto reveal">
             <div className="bg-gray-800/30 backdrop-blur-md rounded-2xl border border-gold/20 p-12">
               <BookOpenIcon className="w-16 h-16 text-gold/40 mx-auto mb-4" />
               <h3 className="text-2xl font-bold text-gold font-iceland mb-3">
@@ -139,7 +131,7 @@ export default function BlogList({ posts }: BlogListProps) {
                 Contact Us
               </Link>
             </div>
-          </motion.div>
+          </div>
         )}
       </div>
     </section>

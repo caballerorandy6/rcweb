@@ -1,8 +1,5 @@
-"use client";
-
 import { BriefcaseIcon } from "@heroicons/react/24/outline";
 import { experience } from "@/lib/data";
-import { motion } from "framer-motion";
 import Heading from "../ui/Heading";
 
 export interface ExperienceProps {
@@ -35,19 +32,9 @@ const Experience = () => {
           <div className="hidden lg:block absolute left-1/2 transform -translate-x-1/2 w-0.5 h-full bg-linear-to-b from-gold/20 via-gold/40 to-gold/20"></div>
 
           {experience.map((item, index) => (
-            <motion.div
+            <div
               key={`${item.title}-${item.company}`}
-              initial={false}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              transition={{
-                type: "spring",
-                stiffness: 200,
-                damping: 20,
-                delay: index * 0.1,
-              }}
-              style={{ opacity: 1 }}
-              className={`relative flex items-center mb-12 lg:mb-16 ${
+              className={`reveal relative flex items-center mb-12 lg:mb-16 ${
                 index % 2 === 0 ? "lg:flex-row" : "lg:flex-row-reverse"
               }`}
             >
@@ -97,7 +84,7 @@ const Experience = () => {
                   </p>
                 </div>
               </div>
-            </motion.div>
+            </div>
           ))}
         </div>
       </div>

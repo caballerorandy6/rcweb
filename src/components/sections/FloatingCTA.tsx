@@ -1,11 +1,10 @@
 "use client";
 
-import { motion, AnimatePresence } from "framer-motion";
 import { useEffect, useState } from "react";
 import dynamic from "next/dynamic";
 import Image from "next/image";
+import clsx from "clsx";
 import { XMarkIcon, ChatBubbleLeftRightIcon } from "@heroicons/react/24/solid";
-import ClientOnly from "@/components/ui/ClientOnly";
 import { trackFBContact, trackFBPhoneCall } from "@/components/tracking/FacebookPixel";
 import { trackLinkedInConversion } from "@/components/tracking/LinkedInInsightTag";
 import { event as trackEvent } from "@/lib/analytics";
@@ -14,37 +13,9 @@ const Chat = dynamic(() => import("@/components/ui/Chat"), {
   ssr: false,
 });
 
-// Animation variants - defined outside component for performance
-const menuVariants = {
-  hidden: { opacity: 0, scale: 0.8, y: 20 },
-  visible: {
-    opacity: 1,
-    scale: 1,
-    y: 0,
-    transition: {
-      type: "spring" as const,
-      stiffness: 300,
-      damping: 25,
-      staggerChildren: 0.05,
-    },
-  },
-  exit: {
-    opacity: 0,
-    scale: 0.8,
-    y: 20,
-    transition: { duration: 0.2 },
-  },
-};
-
-const itemVariants = {
-  hidden: { opacity: 0, x: 20, scale: 0.8 },
-  visible: {
-    opacity: 1,
-    x: 0,
-    scale: 1,
-    transition: { type: "spring" as const, stiffness: 300, damping: 25 },
-  },
-};
+// Menu items replay the entrance each time the menu leaves display:none
+const menuItemClass = "animate-enter";
+const menuItemDelay = (index: number) => ({ animationDelay: `${index * 50}ms` });
 
 // Inline SVG icons with proper fill for contrast
 const WhatsAppIcon = ({ className = "h-6 w-6" }: { className?: string }) => (
@@ -208,147 +179,126 @@ const FloatingCTA = () => {
   };
 
   return (
-    <ClientOnly>
-      {/* Main Container */}
-      <motion.div
-        className="fixed bottom-6 right-6 z-50 flex flex-col items-end gap-3"
-        initial={{ opacity: 0, y: 50 }}
-        animate={{
-          opacity: isContactInView ? 0 : 1,
-          y: isContactInView ? 50 : 0,
-          pointerEvents: isContactInView ? "none" : "auto",
-        }}
-        transition={{ type: "spring", stiffness: 200, damping: 25 }}
-      >
-        {/* Expanded Menu with Glass Effect */}
-        <AnimatePresence>
-          {isOpen && (
-            <motion.div
-              className="flex flex-col gap-2 mb-2 p-3 rounded-2xl bg-gray-950/80 backdrop-blur-xl border border-white/10 shadow-2xl shadow-black/50"
-              variants={menuVariants}
-              initial="hidden"
-              animate="visible"
-              exit="exit"
-            >
-              {/* AI Chat Button - Priority */}
-              <motion.button
-                variants={itemVariants}
-                onClick={handleChatOpen}
-                className="group flex items-center gap-3 rounded-xl bg-linear-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 pl-3 pr-4 py-2.5 text-white shadow-lg hover:shadow-purple-500/25 transition-all duration-200 hover:scale-[1.02]"
-                aria-label="Chat with AI Assistant"
-              >
-                <div className="relative h-8 w-8 rounded-full overflow-hidden ring-2 ring-white/30">
-                  <Image
-                    src="/maria.avif"
-                    alt="Maria AI"
-                    fill
-                    className="object-cover"
-                    sizes="32px"
-                  />
-                </div>
-                <span className="font-inter font-medium text-sm whitespace-nowrap pr-1">
-                  Chat with Maria
-                </span>
-              </motion.button>
-
-              {/* Primary Contact Actions */}
-              {primaryActions.map((action) => (
-                <motion.button
-                  key={action.id}
-                  variants={itemVariants}
-                  onClick={() => handlePrimaryClick(action)}
-                  className={`group flex items-center gap-3 rounded-xl ${action.bgClass} pl-3 pr-4 py-2.5 text-white shadow-lg hover:shadow-xl transition-all duration-200 hover:scale-[1.02]`}
-                  aria-label={action.label}
-                >
-                  <action.Icon className="h-6 w-6" />
-                  <span className="font-inter font-medium text-sm whitespace-nowrap pr-1">
-                    {action.label}
-                  </span>
-                </motion.button>
-              ))}
-
-              {/* Divider */}
-              <div className="w-full h-px bg-white/10 my-1" />
-
-              {/* Social Links - Secondary (smaller, horizontal group) */}
-              <motion.div
-                variants={itemVariants}
-                className="flex items-center justify-center gap-2 px-1"
-              >
-                {socialActions.map((action) => (
-                  <button
-                    key={action.id}
-                    onClick={() => handleSocialClick(action)}
-                    className={`flex h-9 w-9 items-center justify-center rounded-lg ${action.bgClass} text-white shadow-md hover:shadow-lg transition-all duration-200 hover:scale-110`}
-                    aria-label={`Connect on ${action.name}`}
-                  >
-                    <action.Icon />
-                  </button>
-                ))}
-              </motion.div>
-            </motion.div>
+    <>
+      {/* Main Container: enters once on mount (outer), slides away while the
+          contact section is in view (inner) */}
+      <div className="fixed bottom-6 right-6 z-50 animate-enter">
+        <div
+          className={clsx(
+            "flex flex-col items-end gap-3 transition duration-300 ease-out",
+            isContactInView && "opacity-0 translate-y-12 pointer-events-none",
           )}
-        </AnimatePresence>
-
-        {/* Toggle Button */}
-        <motion.button
-          onClick={() => setIsOpen(!isOpen)}
-          className={`relative flex h-14 w-14 items-center justify-center rounded-full shadow-xl transition-all duration-300 ${
-            isOpen
-              ? "bg-gray-800 hover:bg-gray-700 ring-1 ring-white/10"
-              : "bg-linear-to-br from-gold via-gold-light to-gold hover:from-gold-light hover:via-gold hover:to-gold-dark shadow-gold/30"
-          }`}
-          whileHover={{ scale: 1.1 }}
-          whileTap={{ scale: 0.95 }}
-          aria-label={isOpen ? "Close contact menu" : "Open contact menu"}
         >
-          <AnimatePresence mode="wait">
-            {isOpen ? (
-              <motion.div
-                key="close"
-                initial={{ rotate: -90, opacity: 0 }}
-                animate={{ rotate: 0, opacity: 1 }}
-                exit={{ rotate: 90, opacity: 0 }}
-                transition={{ duration: 0.15 }}
-              >
-                <XMarkIcon className="h-6 w-6 text-white" />
-              </motion.div>
-            ) : (
-              <motion.div
-                key="open"
-                initial={{ rotate: 90, opacity: 0 }}
-                animate={{ rotate: 0, opacity: 1 }}
-                exit={{ rotate: -90, opacity: 0 }}
-                transition={{ duration: 0.15 }}
-              >
-                <ChatBubbleLeftRightIcon className="h-6 w-6 text-gray-900" />
-              </motion.div>
+          {/* Expanded Menu with Glass Effect: display toggles at the end of the
+            transition (allow-discrete) and @starting-style drives the entrance */}
+          <div
+            className={clsx(
+              "flex flex-col gap-2 mb-2 p-3 rounded-2xl bg-gray-950/80 backdrop-blur-xl border border-white/10 shadow-2xl shadow-black/50 origin-bottom-right transition-all transition-discrete duration-200 ease-out",
+              isOpen
+                ? "starting:opacity-0 starting:scale-90 starting:translate-y-4"
+                : "hidden opacity-0 scale-90 translate-y-4",
             )}
-          </AnimatePresence>
+          >
+            {/* AI Chat Button - Priority */}
+            <button
+              type="button"
+              style={menuItemDelay(0)}
+              onClick={handleChatOpen}
+              className={`${menuItemClass} group flex items-center gap-3 rounded-xl bg-linear-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 pl-3 pr-4 py-2.5 text-white shadow-lg hover:shadow-purple-500/25 transition-all duration-200 hover:scale-[1.02]`}
+              aria-label="Chat with AI Assistant"
+            >
+              <div className="relative h-8 w-8 rounded-full overflow-hidden ring-2 ring-white/30">
+                <Image
+                  src="/maria.avif"
+                  alt="Maria AI"
+                  fill
+                  className="object-cover"
+                  sizes="32px"
+                />
+              </div>
+              <span className="font-inter font-medium text-sm whitespace-nowrap pr-1">
+                Chat with Maria
+              </span>
+            </button>
 
-          {/* Pulse animation when closed */}
-          {!isOpen && (
-            <motion.div
-              className="absolute inset-0 rounded-full bg-gold/40"
-              animate={{
-                scale: [1, 1.5, 1.5],
-                opacity: [0.6, 0, 0],
-              }}
-              transition={{
-                duration: 2,
-                repeat: 3,
-                ease: "easeOut",
-              }}
-            />
-          )}
-        </motion.button>
-      </motion.div>
+            {/* Primary Contact Actions */}
+            {primaryActions.map((action, index) => (
+              <button
+                key={action.id}
+                type="button"
+                style={menuItemDelay(index + 1)}
+                onClick={() => handlePrimaryClick(action)}
+                className={`${menuItemClass} group flex items-center gap-3 rounded-xl ${action.bgClass} pl-3 pr-4 py-2.5 text-white shadow-lg hover:shadow-xl transition-all duration-200 hover:scale-[1.02]`}
+                aria-label={action.label}
+              >
+                <action.Icon className="h-6 w-6" />
+                <span className="font-inter font-medium text-sm whitespace-nowrap pr-1">
+                  {action.label}
+                </span>
+              </button>
+            ))}
+
+            {/* Divider */}
+            <div className="w-full h-px bg-white/10 my-1" />
+
+            {/* Social Links - Secondary (smaller, horizontal group) */}
+            <div
+              style={menuItemDelay(primaryActions.length + 1)}
+              className={`${menuItemClass} flex items-center justify-center gap-2 px-1`}
+            >
+              {socialActions.map((action) => (
+                <button
+                  key={action.id}
+                  type="button"
+                  onClick={() => handleSocialClick(action)}
+                  className={`flex h-9 w-9 items-center justify-center rounded-lg ${action.bgClass} text-white shadow-md hover:shadow-lg transition-all duration-200 hover:scale-110`}
+                  aria-label={`Connect on ${action.name}`}
+                >
+                  <action.Icon />
+                </button>
+              ))}
+            </div>
+          </div>
+
+          {/* Toggle Button */}
+          <button
+            type="button"
+            onClick={() => setIsOpen(!isOpen)}
+            className={`relative flex h-14 w-14 items-center justify-center rounded-full shadow-xl transition-all duration-300 hover:scale-110 active:scale-95 ${
+              isOpen
+                ? "bg-gray-800 hover:bg-gray-700 ring-1 ring-white/10"
+                : "bg-linear-to-br from-gold via-gold-light to-gold hover:from-gold-light hover:via-gold hover:to-gold-dark shadow-gold/30"
+            }`}
+            aria-expanded={isOpen}
+            aria-label={isOpen ? "Close contact menu" : "Open contact menu"}
+          >
+            {/* The key remounts the icon so the swap replays the entrance */}
+            {isOpen ? (
+              <XMarkIcon
+                key="close"
+                className="h-6 w-6 text-white animate-enter"
+              />
+            ) : (
+              <ChatBubbleLeftRightIcon
+                key="open"
+                className="h-6 w-6 text-gray-900 animate-enter"
+              />
+            )}
+
+            {/* Pulse ring when closed (three beats, then rests) */}
+            {!isOpen && (
+              <div
+                aria-hidden="true"
+                className="absolute inset-0 rounded-full bg-gold/40 animate-pulse-ring"
+              />
+            )}
+          </button>
+        </div>
+      </div>
 
       {/* Chat Modal */}
-      <AnimatePresence>
-        {isChatOpen && <Chat onClose={() => setIsChatOpen(false)} />}
-      </AnimatePresence>
-    </ClientOnly>
+      {isChatOpen && <Chat onClose={() => setIsChatOpen(false)} />}
+    </>
   );
 };
 

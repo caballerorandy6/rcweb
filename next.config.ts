@@ -129,6 +129,8 @@ const nextConfig: NextConfig = {
       { source: "/blog/unsubscribe", destination: "/unsubscribe", permanent: true },
       // The free guide was retired; keep indexed links alive
       { source: "/guide", destination: "/#contact", permanent: true },
+      // No more promotions: old campaign links to the offer land on pricing
+      { source: "/offer", destination: "/#pricing", permanent: true },
     ];
   },
 

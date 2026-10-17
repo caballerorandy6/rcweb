@@ -33,7 +33,6 @@
     "canvas-confetti": "^1.9.4",
     "clsx": "^2.1.1",
     "embla-carousel-react": "^8.6.0",
-    "framer-motion": "^14.3.0",
     "gray-matter": "^4.0.3",
     "next": "^16.4.2",
     "next-auth": "^5.0.0-beta.32",

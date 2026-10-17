@@ -63,12 +63,6 @@ const sitemapConfig: SitemapConfig = {
       priority: 0.9,
     },
     {
-      route: "/offer",
-      lastModified: new Date().toISOString().split("T")[0],
-      changeFrequency: "weekly",
-      priority: 0.9,
-    },
-    {
       route: "/projects-portfolio",
       lastModified: new Date().toISOString().split("T")[0],
       changeFrequency: "monthly",

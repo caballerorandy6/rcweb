@@ -1,60 +1,12 @@
-"use client";
-
-import { useState } from "react";
 import {
   ChevronDownIcon,
   QuestionMarkCircleIcon,
 } from "@heroicons/react/24/outline";
 import { faqs } from "@/lib/data";
 import Heading from "../ui/Heading";
-import { motion, Variants, AnimatePresence } from "framer-motion";
 
+/** Native exclusive accordion: <details name> needs no JS and stays crawlable */
 const FAQ = () => {
-  const [openIndex, setOpenIndex] = useState<string | null>(faqs[0]?.question ?? null);
-
-  // Variantes para la animación de las tarjetas
-  const containerVariants: Variants = {
-    hidden: { opacity: 0 },
-    show: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.15,
-      },
-    },
-  };
-
-  const cardVariants: Variants = {
-    hidden: { opacity: 0, y: 40, scale: 0.98 },
-    show: {
-      opacity: 1,
-      y: 0,
-      scale: 1,
-      transition: {
-        type: "spring",
-        stiffness: 200,
-        damping: 20,
-      },
-    },
-  };
-
-  const answerVariants: Variants = {
-    hidden: { opacity: 0, height: 0 },
-    show: {
-      opacity: 1,
-      height: "auto",
-      transition: {
-        type: "spring",
-        stiffness: 260,
-        damping: 25,
-      },
-    },
-    exit: {
-      opacity: 0,
-      height: 0,
-      transition: { type: "spring", stiffness: 300, damping: 30 },
-    },
-  };
-
   return (
     <section
       id="faq"
@@ -68,57 +20,32 @@ const FAQ = () => {
           Frequently Asked Questions
         </Heading>
 
-        <motion.div
-          variants={containerVariants}
-          initial={false}
-          whileInView="show"
-          viewport={{ once: true, amount: 0.2 }}
-          style={{ opacity: 1 }}
-          className="mx-auto mt-16 max-w-3xl"
-        >
-          <div className="space-y-4">
-            {faqs.map((faq) => (
-              <motion.div
-                key={faq.question}
-                variants={cardVariants}
-                className="rounded-lg border border-gold/20 bg-gray-900/50 backdrop-blur-xs transition-all duration-200 hover:border-gold/50 shadow-lg shadow-black/20"
-              >
-                <button
-                  onClick={() =>
-                    setOpenIndex(openIndex === faq.question ? null : faq.question)
-                  }
-                  className="flex w-full items-center justify-between px-6 py-4 text-left"
-                >
-                  <h2 className="text-lg font-iceland text-gold">
-                    {faq.question}
-                  </h2>
-                  <ChevronDownIcon
-                    className={`h-5 w-5 text-gold transition-transform duration-200 ${
-                      openIndex === faq.question ? "rotate-180" : ""
-                    }`}
-                  />
-                </button>
+        <div className="mx-auto mt-16 max-w-3xl space-y-4">
+          {faqs.map((faq, index) => (
+            <details
+              key={faq.question}
+              name="faq"
+              open={index === 0}
+              className="accordion group reveal rounded-lg border border-gold/20 bg-gray-900/50 backdrop-blur-xs transition-colors duration-200 hover:border-gold/50 shadow-lg shadow-black/20"
+            >
+              <summary className="flex cursor-pointer list-none items-center justify-between gap-4 px-6 py-4 text-left [&::-webkit-details-marker]:hidden">
+                <h2 className="text-lg font-iceland text-gold">
+                  {faq.question}
+                </h2>
+                <ChevronDownIcon
+                  aria-hidden="true"
+                  className="h-5 w-5 shrink-0 text-gold transition-transform duration-200 group-open:rotate-180"
+                />
+              </summary>
 
-                <AnimatePresence initial={false}>
-                  {openIndex === faq.question && (
-                    <motion.div
-                      key="answer"
-                      variants={answerVariants}
-                      initial="hidden"
-                      animate="show"
-                      exit="exit"
-                      className="px-6 pb-4 overflow-hidden"
-                    >
-                      <p className="text-sm sm:text-base font-inter text-white/80 leading-relaxed">
-                        {faq.answer}
-                      </p>
-                    </motion.div>
-                  )}
-                </AnimatePresence>
-              </motion.div>
-            ))}
-          </div>
-        </motion.div>
+              <div className="px-6 pb-4">
+                <p className="text-sm sm:text-base font-inter text-white/80 leading-relaxed">
+                  {faq.answer}
+                </p>
+              </div>
+            </details>
+          ))}
+        </div>
       </div>
     </section>
   );

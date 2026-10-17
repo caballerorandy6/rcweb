@@ -2,18 +2,18 @@ import type { Metadata } from "next";
 import dynamic from "next/dynamic";
 import { siteConfig } from "@/config/site";
 
-// Hero loads immediately (above the fold)
+// Sections are Server Components: they ship HTML, not JS, so there is
+// nothing to lazy-load. Only the floating CTA (client) is split off.
 import Hero from "@/components/sections/Hero";
+import Services from "@/components/sections/Services";
+import Projects from "@/components/sections/Projects";
+import Process from "@/components/sections/Process";
+import Testimonials from "@/components/sections/Testimonials";
+import Pricing from "@/components/sections/Pricing";
+import BlogPreview from "@/components/sections/BlogPreview";
+import FAQ from "@/components/sections/FAQ";
+import Contact from "@/components/sections/Contact";
 
-// Lazy load sections below the fold for better LCP
-const Services = dynamic(() => import("@/components/sections/Services"));
-const Projects = dynamic(() => import("@/components/sections/Projects"));
-const Process = dynamic(() => import("@/components/sections/Process"));
-const Testimonials = dynamic(() => import("@/components/sections/Testimonials"));
-const Pricing = dynamic(() => import("@/components/sections/Pricing"));
-const BlogPreview = dynamic(() => import("@/components/sections/BlogPreview"));
-const FAQ = dynamic(() => import("@/components/sections/FAQ"));
-const Contact = dynamic(() => import("@/components/sections/Contact"));
 const CTA = dynamic(() => import("@/components/sections/FloatingCTA"));
 
 import ScrollSpy from "@/components/ui/ScrollSpy";

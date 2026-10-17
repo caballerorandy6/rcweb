@@ -28,6 +28,59 @@
     }
   }
 
+  /* Bottom sheets and banners (cookie consent, chat) sliding in from below */
+  --animate-slide-up: slide-up 0.4s cubic-bezier(0.16, 1, 0.3, 1) both;
+
+  @keyframes slide-up {
+    from {
+      opacity: 0;
+      transform: translateY(40px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  /* 404 heading: a half-second shake every 3.5 s (one small text node) */
+  --animate-glitch: glitch 3.5s linear infinite;
+
+  @keyframes glitch {
+    0%,
+    14%,
+    100% {
+      transform: none;
+      text-shadow: none;
+    }
+    3% {
+      transform: translateX(-2px);
+      text-shadow: 2px 2px 0 #fbbf24;
+    }
+    7% {
+      transform: translateX(2px);
+      text-shadow: -2px -2px 0 #f59e0b;
+    }
+    11% {
+      transform: translateX(-2px);
+      text-shadow: 2px -2px 0 #fbbf24;
+    }
+  }
+
+  /* Attention ring behind the floating CTA: three beats, then rests */
+  --animate-pulse-ring: pulse-ring 2s ease-out 3;
+
+  @keyframes pulse-ring {
+    from {
+      opacity: 0.6;
+      transform: scale(1);
+    }
+    50%,
+    to {
+      opacity: 0;
+      transform: scale(1.5);
+    }
+  }
+
   /* Scroll-reveal animations (used by /schedule) */
   --animate-fade-in-up: fade-in-up 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
   --animate-fade-in-left: fade-in-left 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
@@ -106,6 +159,33 @@
     opacity: 1;
     transform: none;
   }
+}
+
+/* <details> that slides open where ::details-content is supported; elsewhere
+   it just toggles. Animates height, so keep it to small items (FAQ answers). */
+@utility accordion {
+  interpolate-size: allow-keywords;
+  &::details-content {
+    height: 0;
+    overflow: clip;
+    transition:
+      height 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+      content-visibility 0.3s allow-discrete;
+  }
+  &[open]::details-content {
+    height: auto;
+  }
+}
+
+/* Same-document View Transitions are only used to slide the navbar's active
+   pill (see withViewTransition): don't snapshot or cross-fade the page */
+:root {
+  view-transition-name: none;
+}
+::view-transition-group(navbar-active-tab),
+::view-transition-group(navbar-active-tab-tablet) {
+  animation-duration: 0.3s;
+  animation-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 /* Legal documents (privacy, terms, refund): one place for the typography of

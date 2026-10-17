@@ -1,6 +1,3 @@
-"use client";
-
-import { motion } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
 import type { Route } from "next";
@@ -93,11 +90,7 @@ export default function CaseStudyTemplate({ data }: { data: CaseStudyData }) {
         </div>
 
         <div className="mx-auto max-w-7xl px-6 lg:px-8">
-          <motion.div
-            initial={{ opacity: 0, x: -20 }}
-            animate={{ opacity: 1, x: 0 }}
-            className="mb-8"
-          >
+          <div className="mb-8 animate-enter">
             <Link
               href={"/#projects" as Route}
               className="inline-flex items-center gap-2 text-gold hover:text-gold/80 transition-colors font-inter text-sm"
@@ -105,14 +98,10 @@ export default function CaseStudyTemplate({ data }: { data: CaseStudyData }) {
               <ArrowLeftIcon className="w-4 h-4" />
               Back to Projects
             </Link>
-          </motion.div>
+          </div>
 
           <div className="grid lg:grid-cols-2 gap-12 items-center">
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.1 }}
-            >
+            <div className="animate-enter [animation-delay:100ms]">
               <div className="inline-flex items-center gap-2 px-4 py-2 bg-gold/10 border border-gold/30 rounded-full mb-6">
                 <span className="text-gold text-sm font-inter font-medium">
                   Case Study
@@ -145,14 +134,9 @@ export default function CaseStudyTemplate({ data }: { data: CaseStudyData }) {
                   Start Your Project
                 </Link>
               </div>
-            </motion.div>
+            </div>
 
-            <motion.div
-              initial={{ opacity: 0, scale: 0.95 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ delay: 0.2 }}
-              className="relative"
-            >
+            <div className="relative animate-enter [animation-delay:200ms]">
               <div className="relative aspect-video rounded-2xl overflow-hidden border border-gold/20 shadow-2xl shadow-black/50">
                 <Image
                   src={data.image}
@@ -162,15 +146,12 @@ export default function CaseStudyTemplate({ data }: { data: CaseStudyData }) {
                   priority
                 />
               </div>
-            </motion.div>
+            </div>
           </div>
 
           {/* Stats */}
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.3 }}
-            className="grid grid-cols-2 md:grid-cols-4 gap-6 mt-16"
+          <div
+            className="grid grid-cols-2 md:grid-cols-4 gap-6 mt-16 animate-enter [animation-delay:300ms]"
           >
             {data.stats.map((stat) => (
               <div
@@ -186,38 +167,41 @@ export default function CaseStudyTemplate({ data }: { data: CaseStudyData }) {
                 </div>
               </div>
             ))}
-          </motion.div>
+          </div>
         </div>
       </section>
 
       {/* Tech Stack */}
       <section className="py-16 border-t border-white/5">
         <div className="mx-auto max-w-7xl px-6 lg:px-8">
-          <motion.div initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} className="text-center mb-8">
+          <div className="text-center mb-8 reveal">
             <h2 className="text-sm font-semibold text-gold font-inter uppercase tracking-wider">Technologies Used</h2>
-          </motion.div>
-          <motion.div initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} className="flex flex-wrap justify-center gap-3">
+          </div>
+          <div className="flex flex-wrap justify-center gap-3 reveal">
             {data.techStack.map((tech) => (
               <span key={tech} className="px-4 py-2 bg-gray-800 text-white/80 rounded-lg text-sm font-inter border border-gray-700">{tech}</span>
             ))}
-          </motion.div>
+          </div>
         </div>
       </section>
 
       {/* Challenges */}
       <section className="py-20">
         <div className="mx-auto max-w-7xl px-6 lg:px-8">
-          <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="text-center mb-16">
+          <div className="text-center mb-16 reveal">
             <h2 className="text-3xl sm:text-4xl font-bold text-white font-iceland mb-4">The <span className="text-gold">Challenges</span></h2>
             <p className="text-white/60 font-inter max-w-2xl mx-auto">{data.challengesIntro}</p>
-          </motion.div>
+          </div>
           <div className="grid md:grid-cols-3 gap-8">
-            {data.challenges.map((challenge, index) => (
-              <motion.div key={challenge.title} initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: index * 0.1 }} className="bg-gray-800/50 backdrop-blur-xs rounded-xl p-8 border border-red-500/20">
+            {data.challenges.map((challenge) => (
+              <div
+                key={challenge.title}
+                className="bg-gray-800/50 backdrop-blur-xs rounded-xl p-8 border border-red-500/20 reveal"
+              >
                 {(() => { const Icon = iconMap[challenge.icon]; return Icon ? <Icon className="w-10 h-10 text-red-400 mb-4" /> : null; })()}
                 <h3 className="text-xl font-bold text-white font-iceland mb-3">{challenge.title}</h3>
                 <p className="text-white/60 font-inter text-sm">{challenge.description}</p>
-              </motion.div>
+              </div>
             ))}
           </div>
         </div>
@@ -226,13 +210,16 @@ export default function CaseStudyTemplate({ data }: { data: CaseStudyData }) {
       {/* Solutions */}
       <section className="py-20 bg-gray-800/30">
         <div className="mx-auto max-w-7xl px-6 lg:px-8">
-          <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="text-center mb-16">
+          <div className="text-center mb-16 reveal">
             <h2 className="text-3xl sm:text-4xl font-bold text-white font-iceland mb-4">Our <span className="text-gold">Solutions</span></h2>
             <p className="text-white/60 font-inter max-w-2xl mx-auto">{data.solutionsIntro}</p>
-          </motion.div>
+          </div>
           <div className="space-y-12">
-            {data.solutions.map((solution, index) => (
-              <motion.div key={solution.title} initial={{ opacity: 0, x: index % 2 === 0 ? -30 : 30 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} className="bg-gray-900/80 backdrop-blur-xs rounded-2xl p-8 border border-gold/20">
+            {data.solutions.map((solution) => (
+              <div
+                key={solution.title}
+                className="bg-gray-900/80 backdrop-blur-xs rounded-2xl p-8 border border-gold/20 reveal"
+              >
                 <div className="grid md:grid-cols-2 gap-8">
                   <div>
                     <h3 className="text-2xl font-bold text-gold font-iceland mb-4">{solution.title}</h3>
@@ -249,7 +236,7 @@ export default function CaseStudyTemplate({ data }: { data: CaseStudyData }) {
                     </ul>
                   </div>
                 </div>
-              </motion.div>
+              </div>
             ))}
           </div>
         </div>
@@ -258,16 +245,19 @@ export default function CaseStudyTemplate({ data }: { data: CaseStudyData }) {
       {/* Results */}
       <section className="py-20">
         <div className="mx-auto max-w-7xl px-6 lg:px-8">
-          <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="text-center mb-16">
+          <div className="text-center mb-16 reveal">
             <h2 className="text-3xl sm:text-4xl font-bold text-white font-iceland mb-4">The <span className="text-gold">Results</span></h2>
-          </motion.div>
+          </div>
           <div className="grid md:grid-cols-3 gap-8">
-            {data.results.map((result, index) => (
-              <motion.div key={result.metric} initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: index * 0.1 }} className="bg-linear-to-b from-gold/10 to-transparent rounded-xl p-8 border border-gold/30 text-center">
+            {data.results.map((result) => (
+              <div
+                key={result.metric}
+                className="bg-linear-to-b from-gold/10 to-transparent rounded-xl p-8 border border-gold/30 text-center reveal"
+              >
                 {(() => { const Icon = iconMap[result.icon]; return Icon ? <Icon className="w-12 h-12 text-gold mx-auto mb-4" /> : null; })()}
                 <h3 className="text-xl font-bold text-gold font-iceland mb-2">{result.metric}</h3>
                 <p className="text-white/60 font-inter text-sm">{result.description}</p>
-              </motion.div>
+              </div>
             ))}
           </div>
         </div>
@@ -277,7 +267,9 @@ export default function CaseStudyTemplate({ data }: { data: CaseStudyData }) {
       {data.testimonial && (
         <section className="py-20 bg-gray-800/30">
           <div className="mx-auto max-w-4xl px-6 lg:px-8">
-            <motion.div initial={{ opacity: 0, scale: 0.95 }} whileInView={{ opacity: 1, scale: 1 }} viewport={{ once: true }} className="bg-gray-900/80 backdrop-blur-xs rounded-2xl p-8 sm:p-12 border border-gold/20 text-center">
+            <div
+              className="bg-gray-900/80 backdrop-blur-xs rounded-2xl p-8 sm:p-12 border border-gold/20 text-center reveal"
+            >
               <div className="flex justify-center gap-1 mb-6">
                 {[...Array(5)].map((_, i) => (
                   <StarIcon key={i} className="w-6 h-6 text-gold fill-current" />
@@ -290,7 +282,7 @@ export default function CaseStudyTemplate({ data }: { data: CaseStudyData }) {
                 <div className="text-gold font-bold font-iceland text-lg">{data.testimonial.author}</div>
                 <div className="text-white/60 font-inter text-sm">{data.testimonial.company}</div>
               </div>
-            </motion.div>
+            </div>
           </div>
         </section>
       )}
@@ -298,7 +290,7 @@ export default function CaseStudyTemplate({ data }: { data: CaseStudyData }) {
       {/* CTA */}
       <section className={`py-20 ${data.testimonial ? "" : "bg-gray-800/30"}`}>
         <div className="mx-auto max-w-4xl px-6 lg:px-8 text-center">
-          <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>
+          <div className="reveal">
             <h2 className="text-3xl sm:text-4xl font-bold text-white font-iceland mb-4">
               {data.ctaTitle} <span className="text-gold">{data.ctaTitleHighlight}</span>
             </h2>
@@ -318,7 +310,7 @@ export default function CaseStudyTemplate({ data }: { data: CaseStudyData }) {
                 </Link>
               ))}
             </div>
-          </motion.div>
+          </div>
         </div>
       </section>
     </main>

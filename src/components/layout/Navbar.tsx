@@ -3,13 +3,13 @@
 import Link from "next/link";
 import type { Route } from "next";
 import clsx from "clsx";
-import { motion } from "framer-motion";
 import { Dialog, DialogPanel } from "@headlessui/react";
 import { useRCWebStore } from "@/store/rcweb-store";
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
 import Logo from "@/components/layout/Logo";
 import Button from "@/components/ui/Button";
 import { navigation, secondaryNavigation } from "@/lib/data";
+import { withViewTransition } from "@/lib/viewTransition";
 import { usePathname } from "next/navigation";
 import { useEffect } from "react";
 
@@ -88,7 +88,7 @@ const Navbar = () => {
                     key={item.name}
                     href={getHref(item.hash)}
                     onClick={() => {
-                      setActiveSection(item.name);
+                      withViewTransition(() => setActiveSection(item.name));
                       // Asegurar que el estado se mantenga después del scroll
                       setTimeout(() => {
                         setActiveSection(item.name);
@@ -106,17 +106,9 @@ const Navbar = () => {
                     >
                       {item.name}
                     </span>
+                    {/* The pill slides between items via a View Transition */}
                     {isActive && (
-                      <motion.span
-                        className="bg-gold/20 rounded-full absolute inset-0 -z-10"
-                        layoutId="navbar-active-tab"
-                        transition={{
-                          type: "spring",
-                          stiffness: 500,
-                          damping: 35,
-                          mass: 0.8,
-                        }}
-                      />
+                      <span className="bg-gold/20 rounded-full absolute inset-0 -z-10 [view-transition-name:navbar-active-tab]" />
                     )}
                   </Link>
                 );
@@ -146,7 +138,9 @@ const Navbar = () => {
                   <Link
                     key={item.name}
                     href={getHref(item.hash)}
-                    onClick={() => setActiveSection(item.name)}
+                    onClick={() =>
+                      withViewTransition(() => setActiveSection(item.name))
+                    }
                     className={clsx(
                       "px-2 py-1 text-sm font-inter transition-colors duration-300 cursor-pointer relative group",
                       isActive ? "text-gold" : "text-white/80 hover:text-gold"
@@ -154,16 +148,7 @@ const Navbar = () => {
                   >
                     <span className="relative z-10">{item.name}</span>
                     {isActive && (
-                      <motion.span
-                        className="bg-gold/20 rounded-full absolute inset-0 -z-10"
-                        layoutId="navbar-active-tab-tablet"
-                        transition={{
-                          type: "spring",
-                          stiffness: 500,
-                          damping: 35,
-                          mass: 0.8,
-                        }}
-                      />
+                      <span className="bg-gold/20 rounded-full absolute inset-0 -z-10 [view-transition-name:navbar-active-tab-tablet]" />
                     )}
                   </Link>
                 );
