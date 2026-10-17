@@ -108,6 +108,22 @@
   }
 }
 
+/* <details> that slides open where ::details-content is supported; elsewhere
+   it just toggles. Animates height, so keep it to small items (FAQ answers). */
+@utility accordion {
+  interpolate-size: allow-keywords;
+  &::details-content {
+    height: 0;
+    overflow: clip;
+    transition:
+      height 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+      content-visibility 0.3s allow-discrete;
+  }
+  &[open]::details-content {
+    height: auto;
+  }
+}
+
 /* Legal documents (privacy, terms, refund): one place for the typography of
    ~90 headings and ~100 paragraphs instead of repeating utilities per tag */
 @utility legal-prose {
