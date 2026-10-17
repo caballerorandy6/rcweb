@@ -1,6 +1,5 @@
 "use client";
 
-import { motion } from "framer-motion";
 import {
   SparklesIcon,
   RocketLaunchIcon,
@@ -9,8 +8,6 @@ import {
 import Link from "next/link";
 import Heading from "@/components/ui/Heading";
 import { useState, useEffect } from "react";
-
-const MotionLink = motion(Link);
 
 export default function OfferContent() {
   // Countdown timer (7 days from now)
@@ -127,27 +124,19 @@ export default function OfferContent() {
 
             {/* CTA Button */}
             <div className="text-center">
-              <MotionLink
+              <Link
                 href="/#contact"
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                className="inline-flex items-center justify-center gap-3 px-10 py-5 bg-gold text-gray-900 font-black rounded-xl hover:bg-gold/90 transition-colors font-inter text-xl shadow-xl shadow-gold/30"
+                className="inline-flex items-center justify-center gap-3 px-10 py-5 bg-gold text-gray-900 font-black rounded-xl hover:bg-gold/90 transition hover:scale-105 active:scale-95 font-inter text-xl shadow-xl shadow-gold/30"
               >
                 <RocketLaunchIcon className="w-7 h-7" />
                 Claim Your 15% Discount Now
-              </MotionLink>
+              </Link>
             </div>
           </div>
         </div>
 
         {/* What's Included */}
-        <motion.div
-          className="mt-16 max-w-4xl mx-auto"
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ delay: 0.2 }}
-        >
+        <div className="mt-16 max-w-4xl mx-auto reveal">
           <div className="bg-gray-900/60 backdrop-blur-md rounded-xl border border-gold/20 p-8">
             <h2 className="text-3xl font-bold text-gold font-iceland mb-8 text-center">
               This Offer Applies To
@@ -163,29 +152,17 @@ export default function OfferContent() {
                 "Progressive Web Apps (PWA)",
                 "Mobile-Responsive Websites",
               ].map((service) => (
-                <motion.div
-                  key={service}
-                  className="flex items-center gap-3"
-                  initial={{ opacity: 0, x: -20 }}
-                  whileInView={{ opacity: 1, x: 0 }}
-                  viewport={{ once: true }}
-                >
+                <div key={service} className="flex items-center gap-3 reveal">
                   <CheckCircleIcon className="w-6 h-6 text-gold shrink-0" />
                   <span className="text-gray-300 font-inter">{service}</span>
-                </motion.div>
+                </div>
               ))}
             </div>
           </div>
-        </motion.div>
+        </div>
 
         {/* Terms */}
-        <motion.div
-          className="mt-12 max-w-4xl mx-auto"
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          viewport={{ once: true }}
-          transition={{ delay: 0.3 }}
-        >
+        <div className="mt-12 max-w-4xl mx-auto reveal">
           <div className="bg-gray-900/40 backdrop-blur-xs rounded-lg border border-gold/10 p-6">
             <h3 className="text-lg font-bold text-gold font-iceland mb-3">
               Offer Terms:
@@ -199,15 +176,11 @@ export default function OfferContent() {
               <li>• Project must be started within 30 days of agreement</li>
             </ul>
           </div>
-        </motion.div>
+        </div>
 
         {/* Social Proof */}
-        <motion.div
-          className="mt-12 text-center flex justify-center flex-col items-center gap-4"
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          viewport={{ once: true }}
-          transition={{ delay: 0.4 }}
+        <div
+          className="mt-12 text-center flex justify-center flex-col items-center gap-4 reveal"
         >
           <p className="text-white/70 font-inter text-sm">
             Join 50+ satisfied clients who&apos;ve transformed their digital
@@ -219,7 +192,7 @@ export default function OfferContent() {
           >
             Read testimonials →
           </Link>
-        </motion.div>
+        </div>
       </div>
     </section>
   );

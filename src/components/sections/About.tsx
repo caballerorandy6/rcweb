@@ -1,46 +1,11 @@
-"use client";
-
 import { siteConfig } from "@/config/site";
 
 import Image from "next/image";
 import Heading from "@/components/ui/Heading";
 import { UserPlusIcon, MapPinIcon } from "@heroicons/react/24/outline";
-import { motion, Variants } from "framer-motion";
 import Script from "next/script";
 
 const About = () => {
-
-  const containerVariants: Variants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.2,
-        delayChildren: 0.1,
-      },
-    },
-  };
-
-  const paragraphVariants: Variants = {
-    hidden: { opacity: 0, y: 30, filter: "blur(10px)" },
-    visible: {
-      opacity: 1,
-      y: 0,
-      filter: "blur(0px)",
-      transition: { type: "spring", stiffness: 200, damping: 20 },
-    },
-  };
-
-  const imageVariants: Variants = {
-    hidden: { opacity: 0, scale: 0.8, rotateY: -30 },
-    visible: {
-      opacity: 1,
-      scale: 1,
-      rotateY: 0,
-      transition: { type: "spring", stiffness: 150, damping: 20, delay: 0.3 },
-    },
-  };
-
   return (
     <>
       {/* Schema Markup para SEO */}
@@ -102,18 +67,8 @@ const About = () => {
           </Heading>
 
           <div className="mt-16 grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center">
-            <motion.div
-              className="text-base font-inter max-w-xl mx-auto lg:mx-0 lg:max-w-none w-full"
-              variants={containerVariants}
-              initial={false}
-              whileInView="visible"
-              viewport={{ once: true, amount: 0.3 }}
-              style={{ opacity: 1 }}
-            >
-              <motion.p
-                className="text-sm sm:text-base text-gray-100 leading-relaxed pb-10 text-justify lg:text-left"
-                variants={paragraphVariants}
-              >
+            <div className="text-base font-inter max-w-xl mx-auto lg:mx-0 lg:max-w-none w-full">
+              <p className="text-sm sm:text-base text-gray-100 leading-relaxed pb-10 text-justify lg:text-left reveal">
                 Full-stack developer with{" "}
                 <strong className="text-gold font-semibold">
                   6+ years of experience
@@ -131,12 +86,9 @@ const About = () => {
                   full-stack application development
                 </strong>{" "}
                 in Agile teams.
-              </motion.p>
+              </p>
 
-              <motion.p
-                className="text-sm sm:text-base text-gray-100 leading-relaxed text-justify lg:text-left"
-                variants={paragraphVariants}
-              >
+              <p className="text-sm sm:text-base text-gray-100 leading-relaxed text-justify lg:text-left reveal">
                 I work across the full stack with{" "}
                 <span className="text-gold font-medium">
                   Next.js, TypeScript, Node.js, PostgreSQL, and Prisma
@@ -147,18 +99,11 @@ const About = () => {
                 </span>
                 . On one client site I cut load time from 7–8 seconds to under 1
                 second, which restored the performance of their paid campaigns.
-              </motion.p>
-            </motion.div>
+              </p>
+            </div>
 
-            <motion.div
-              initial={false}
-              whileInView="visible"
-              viewport={{ once: true, amount: 0.3 }}
-              variants={imageVariants}
-              style={{ opacity: 1 }}
-              className="flex flex-col items-center lg:items-end"
-            >
-              <motion.figure className="relative">
+            <div className="flex flex-col items-center lg:items-end reveal">
+              <figure className="relative">
                 <Image
                   src="/randy-caballero-web-developer.avif"
                   alt="Randy Caballero - Full-Stack Web Developer in Houston, TX"
@@ -178,7 +123,7 @@ const About = () => {
                     </span>
                   </div>
                 </div>
-              </motion.figure>
+              </figure>
 
               {/* Texto de ubicación debajo de la foto */}
               <div className="text-center lg:text-right mt-6 space-y-1">
@@ -191,18 +136,16 @@ const About = () => {
               </div>
 
               {/* Download CV Button */}
-              <motion.a
+              <a
                 href="/resume.pdf"
                 download="Randy Caballero - Resume.pdf"
                 target="_blank"
                 rel="noopener noreferrer"
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                className="mt-6 inline-flex items-center justify-center gap-2 px-6 py-3 text-sm sm:text-base font-inter font-semibold text-gold border-2 border-gold/50 hover:bg-gold/10 hover:border-gold/60 rounded-lg transition-all duration-200"
+                className="mt-6 inline-flex items-center justify-center gap-2 px-6 py-3 text-sm sm:text-base font-inter font-semibold text-gold border-2 border-gold/50 hover:bg-gold/10 hover:border-gold/60 rounded-lg transition-all duration-200 hover:scale-105 active:scale-95"
               >
                 Download CV
-              </motion.a>
-            </motion.div>
+              </a>
+            </div>
           </div>
         </div>
       </section>
