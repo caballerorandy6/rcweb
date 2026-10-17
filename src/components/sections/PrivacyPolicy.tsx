@@ -1,46 +1,17 @@
-"use client";
-
-import { motion } from "framer-motion";
-import { useRouter } from "next/navigation";
 import Link from "next/link";
 import type { Route } from "next";
 import Heading from "@/components/ui/Heading";
+import BackButton from "@/components/ui/BackButton";
+import PhoneLink from "@/components/tracking/PhoneLink";
 import {
   ShieldCheckIcon,
   EnvelopeIcon,
   PhoneIcon,
   InformationCircleIcon,
-  ArrowLeftIcon,
 } from "@heroicons/react/24/outline";
 import { COMPANY, COMPANY_ADDRESS } from "@/lib/company";
-import { trackFBPhoneCall } from "@/components/tracking/FacebookPixel";
-import { trackLinkedInConversion } from "@/components/tracking/LinkedInInsightTag";
-
-// Phone Conversion Tracking (Google Ads + Facebook + LinkedIn)
-const trackPhoneConversion = () => {
-  // Google Ads conversion
-  if (typeof window !== "undefined" && window.gtag) {
-    window.gtag("event", "conversion", {
-      send_to: "AW-17661176254/wW9-CKCVjLAbEL7TwOVB",
-      value: 1.0,
-      currency: "USD",
-    });
-  }
-
-  // Facebook Pixel conversion
-  trackFBPhoneCall();
-
-  // LinkedIn conversion
-  trackLinkedInConversion();
-};
 
 export default function PrivacyPolicy() {
-  const router = useRouter();
-
-  const handleGoBack = () => {
-    router.back();
-  };
-
   return (
     <section
       id="privacy"
@@ -55,25 +26,9 @@ export default function PrivacyPolicy() {
 
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
         {/* Botón de regresar */}
-        <motion.div
-          initial={{ opacity: 0, y: -20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ type: "spring", stiffness: 220, damping: 22 }}
-          className="mb-8 max-w-5xl mx-auto flex justify-end"
-        >
-          <motion.button
-            whileHover={{
-              scale: 1.05,
-              transition: { type: "spring", stiffness: 400, damping: 17 },
-            }}
-            whileTap={{ scale: 0.95 }}
-            onClick={handleGoBack}
-            className="inline-flex items-center gap-2 px-4 py-2 bg-gray-800 hover:bg-gray-700 text-white rounded-lg transition-colors border border-gray-600 font-inter"
-          >
-            <ArrowLeftIcon className="w-4 h-4" />
-            Go Back
-          </motion.button>
-        </motion.div>
+        <div className="mb-8 max-w-5xl mx-auto flex justify-end animate-enter">
+          <BackButton />
+        </div>
 
         <Heading
           as="h1"
@@ -84,13 +39,7 @@ export default function PrivacyPolicy() {
         </Heading>
 
         {/* Introduction Card */}
-        <motion.div
-          className="mt-16 max-w-5xl mx-auto"
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ type: "spring", stiffness: 200, damping: 20 }}
-        >
+        <div className="mt-16 max-w-5xl mx-auto reveal">
           <div className="bg-linear-to-r from-gold/10 to-gold/5 backdrop-blur-lg rounded-2xl p-8 border border-gold/20 shadow-xl shadow-black/50">
             <p className="text-white/90 text-lg leading-relaxed font-inter">
               This Privacy Policy describes Our policies and procedures on the
@@ -108,16 +57,10 @@ export default function PrivacyPolicy() {
               <span className="font-inter">Last updated: January 13, 2026</span>
             </div>
           </div>
-        </motion.div>
+        </div>
 
         {/* Main Content */}
-        <motion.div
-          className="mt-12 max-w-5xl mx-auto"
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          viewport={{ once: true }}
-          transition={{ type: "spring", stiffness: 200, damping: 20 }}
-        >
+        <div className="mt-12 max-w-5xl mx-auto reveal">
           <div className="legal-prose max-w-none">
             <div className="bg-gray-900/60 backdrop-blur-md rounded-xl border border-gold/20 p-8 space-y-8">
               {/* Interpretation and Definitions */}
@@ -1058,16 +1001,10 @@ export default function PrivacyPolicy() {
               </section>
             </div>
           </div>
-        </motion.div>
+        </div>
 
         {/* Contact Information */}
-        <motion.div
-          className="mt-12 max-w-5xl mx-auto"
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ type: "spring", stiffness: 200, damping: 20 }}
-        >
+        <div className="mt-12 max-w-5xl mx-auto reveal">
           <div className="bg-linear-to-r from-gold/10 to-transparent backdrop-blur-md rounded-xl border border-gold/20 p-8">
             <h2 className="text-2xl font-bold text-gold font-iceland mb-6">
               Contact Us
@@ -1089,9 +1026,8 @@ export default function PrivacyPolicy() {
                 </div>
               </a>
 
-              <a
+              <PhoneLink
                 href="tel:+13463757534"
-                onClick={trackPhoneConversion}
                 className="flex items-center gap-3 text-white/80 hover:text-gold transition-colors group"
               >
                 <PhoneIcon className="w-5 h-5 text-gold group-hover:scale-110 transition-transform" />
@@ -1099,7 +1035,7 @@ export default function PrivacyPolicy() {
                   <div className="font-semibold">By phone:</div>
                   <div className="text-sm">+1 346-375-7534</div>
                 </div>
-              </a>
+              </PhoneLink>
 
               <div className="pt-4 border-t border-gold/20">
                 <p className="text-gold font-semibold mb-2">
@@ -1138,25 +1074,14 @@ export default function PrivacyPolicy() {
               </div>
             </div>
           </div>
-        </motion.div>
+        </div>
 
         {/* Footer Note */}
-        <motion.div
-          className="mt-8 text-center flex justify-center items-center"
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          viewport={{ once: true }}
-          transition={{
-            type: "spring",
-            stiffness: 200,
-            damping: 20,
-            delay: 0.2,
-          }}
-        >
+        <div className="mt-8 text-center flex justify-center items-center reveal">
           <p className="text-white/50 text-sm font-inter">
             For GDPR purposes, RC Web Solutions LLC is the Data Controller
           </p>
-        </motion.div>
+        </div>
       </div>
     </section>
   );

@@ -1,25 +1,15 @@
-"use client";
-
-import { motion } from "framer-motion";
-import { useRouter } from "next/navigation";
 import Link from "next/link";
 import type { Route } from "next";
 import Heading from "@/components/ui/Heading";
+import BackButton from "@/components/ui/BackButton";
 import {
   CurrencyDollarIcon,
   CalendarIcon,
-  ArrowLeftIcon,
   EnvelopeIcon,
 } from "@heroicons/react/24/outline";
 import { COMPANY, COMPANY_LOCATION } from "@/lib/company";
 
 const RefundPolicy = () => {
-  const router = useRouter();
-
-  const handleGoBack = () => {
-    router.back();
-  };
-
   return (
     <section
       id="refund-policy"
@@ -34,25 +24,9 @@ const RefundPolicy = () => {
 
       <div className="relative z-10 mx-auto max-w-7xl px-6 lg:px-8">
         {/* Botón de regresar */}
-        <motion.div
-          initial={{ opacity: 0, y: -20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ type: "spring", stiffness: 220, damping: 22 }}
-          className="mb-8 max-w-5xl mx-auto flex justify-end"
-        >
-          <motion.button
-            whileHover={{
-              scale: 1.05,
-              transition: { type: "spring", stiffness: 400, damping: 17 },
-            }}
-            whileTap={{ scale: 0.95 }}
-            onClick={handleGoBack}
-            className="inline-flex items-center gap-2 px-4 py-2 bg-gray-800 hover:bg-gray-700 text-white rounded-lg transition-colors border border-gray-600 font-inter"
-          >
-            <ArrowLeftIcon className="w-4 h-4" />
-            Go Back
-          </motion.button>
-        </motion.div>
+        <div className="mb-8 max-w-5xl mx-auto flex justify-end animate-enter">
+          <BackButton />
+        </div>
 
         <Heading
           as="h1"
@@ -63,13 +37,7 @@ const RefundPolicy = () => {
         </Heading>
 
         {/* Introduction Card */}
-        <motion.div
-          className="mt-16 max-w-5xl mx-auto"
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ type: "spring", stiffness: 200, damping: 20 }}
-        >
+        <div className="mt-16 max-w-5xl mx-auto reveal">
           <div className="bg-linear-to-r from-gold/10 to-gold/5 backdrop-blur-lg rounded-2xl p-8 border border-gold/20 shadow-xl shadow-black/50">
             <p className="text-white/90 text-lg leading-relaxed font-inter">
               At{" "}
@@ -83,16 +51,10 @@ const RefundPolicy = () => {
               <strong>January 13, 2026</strong>.
             </p>
           </div>
-        </motion.div>
+        </div>
 
         {/* Main Content */}
-        <motion.div
-          className="mt-12 max-w-5xl mx-auto"
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          viewport={{ once: true }}
-          transition={{ type: "spring", stiffness: 200, damping: 20 }}
-        >
+        <div className="mt-12 max-w-5xl mx-auto reveal">
           <div className="legal-prose max-w-none">
             <div className="bg-gray-900/60 backdrop-blur-md rounded-xl border border-gold/20 p-8 space-y-8">
               {/* Two-Payment Structure */}
@@ -525,62 +487,34 @@ const RefundPolicy = () => {
               </section>
             </div>
           </div>
-        </motion.div>
+        </div>
 
         {/* Date Information */}
-        <motion.div
-          className="mt-12 max-w-5xl mx-auto"
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          viewport={{ once: true }}
-          transition={{ type: "spring", stiffness: 200, damping: 20 }}
-        >
+        <div className="mt-12 max-w-5xl mx-auto reveal">
           <div className="bg-gray-900/60 backdrop-blur-md rounded-xl border border-gold/10 p-6 text-center">
             <div className="flex items-center justify-center gap-2 text-white/50 text-sm font-inter">
               <CalendarIcon className="w-4 h-4" />
               <span>Last updated: January 13, 2026</span>
             </div>
           </div>
-        </motion.div>
+        </div>
 
         {/* Return to Pricing */}
-        <motion.div
-          className="mt-8 text-center"
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          viewport={{ once: true }}
-          transition={{
-            type: "spring",
-            stiffness: 200,
-            damping: 20,
-            delay: 0.2,
-          }}
-        >
-          <button
-            onClick={() => router.push("/#pricing")}
+        <div className="mt-8 text-center reveal">
+          <Link
+            href="/#pricing"
             className="text-white/50 hover:text-gold underline text-sm transition-colors font-inter"
           >
             Return to Pricing Plans
-          </button>
-        </motion.div>
+          </Link>
+        </div>
 
         {/* Footer Note */}
-        <motion.div
-          className="mt-4 text-center flex justify-center items-center"
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          viewport={{ once: true }}
-          transition={{
-            type: "spring",
-            stiffness: 200,
-            damping: 20,
-            delay: 0.3,
-          }}
-        >
+        <div className="mt-4 text-center flex justify-center items-center reveal">
           <p className="text-white/50 text-sm font-inter">
             {COMPANY.name} - {COMPANY_LOCATION}
           </p>
-        </motion.div>
+        </div>
       </div>
     </section>
   );
