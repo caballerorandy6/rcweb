@@ -28,6 +28,21 @@
     }
   }
 
+  /* Attention ring behind the floating CTA: three beats, then rests */
+  --animate-pulse-ring: pulse-ring 2s ease-out 3;
+
+  @keyframes pulse-ring {
+    from {
+      opacity: 0.6;
+      transform: scale(1);
+    }
+    50%,
+    to {
+      opacity: 0;
+      transform: scale(1.5);
+    }
+  }
+
   /* Scroll-reveal animations (used by /schedule) */
   --animate-fade-in-up: fade-in-up 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
   --animate-fade-in-left: fade-in-left 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
