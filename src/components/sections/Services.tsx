@@ -1,12 +1,8 @@
-"use client";
-
-import Link from "next/link";
 import type { Route } from "next";
-import { motion } from "framer-motion";
-import useSectionObserver from "@/hooks/useSectionObserver";
 import { Cog6ToothIcon } from "@heroicons/react/24/outline";
 import { services } from "@/lib/data";
 import Heading from "@/components/ui/Heading";
+import Button from "@/components/ui/Button";
 
 const FEATURED_SLUGS = [
   "web-design-houston",
@@ -14,21 +10,20 @@ const FEATURED_SLUGS = [
   "ecommerce-houston",
 ];
 
+// Server Component: cards are in the HTML; reveal-on-scroll is CSS only
 const Services = () => {
-  const ref = useSectionObserver({ sectionName: "Services" });
-
   // Show only the 3 most commercial services
-  const featuredServices = services.filter((s) =>
-    "slug" in s && FEATURED_SLUGS.includes(s.slug as string)
+  const featuredServices = services.filter(
+    (s) => "slug" in s && FEATURED_SLUGS.includes(s.slug as string)
   );
 
   // Fallback to first 3 if no slug match (keeps backward compatibility)
-  const displayServices = featuredServices.length > 0 ? featuredServices : services.slice(0, 3);
+  const displayServices =
+    featuredServices.length > 0 ? featuredServices : services.slice(0, 3);
 
   return (
     <section
       id="services"
-      ref={ref}
       className="relative isolate overflow-hidden pt-24 sm:pt-32 pb-16 sm:pb-24 bg-gray-900"
     >
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
@@ -40,20 +35,10 @@ const Services = () => {
         </Heading>
 
         <ul className="mx-auto mt-16 flex flex-wrap justify-center gap-6 lg:gap-8">
-          {displayServices.map((service, index) => (
-            <motion.li
+          {displayServices.map((service) => (
+            <li
               key={service.title}
-              initial={false}
-              whileInView={{ opacity: 1, y: 0, scale: 1 }}
-              viewport={{ once: true, amount: 0.2 }}
-              style={{ opacity: 1 }}
-              transition={{
-                type: "spring",
-                stiffness: 200,
-                damping: 20,
-                delay: index * 0.1,
-              }}
-              className="group relative flex flex-col gap-6 rounded-2xl border border-gold/20 bg-gray-900/50 p-6 lg:p-8 backdrop-blur-xs transition-all duration-200 hover:scale-105 hover:border-gold/50 hover:bg-gold/5 shadow-lg shadow-black/20 w-full sm:w-[calc(50%-0.75rem)] lg:w-[calc(33.333%-1.5rem)]"
+              className="reveal group relative flex flex-col gap-6 rounded-2xl border border-gold/20 bg-gray-900/50 p-6 lg:p-8 backdrop-blur-xs transition-all duration-200 hover:scale-105 hover:border-gold/50 hover:bg-gold/5 shadow-lg shadow-black/20 w-full sm:w-[calc(50%-0.75rem)] lg:w-[calc(33.333%-1.5rem)]"
             >
               <div className="flex items-center gap-4">
                 <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-gold/10 ring-1 ring-gold/30">
@@ -90,30 +75,24 @@ const Services = () => {
                 </div>
               </div>
 
-              <button
-                onClick={() => {
-                  document
-                    .getElementById("pricing")
-                    ?.scrollIntoView({ behavior: "smooth" });
-                }}
-                className="mt-4 w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-3 text-sm sm:text-base font-inter font-semibold text-gold border-2 border-gold/50 hover:bg-gold/10 hover:border-gold/60 rounded-lg transition-all duration-200 hover:scale-105"
+              <Button
+                href={"#pricing" as Route}
+                variant="secondary"
+                className="mt-4 w-full sm:w-auto"
               >
                 Get Quote
-                <span>→</span>
-              </button>
-            </motion.li>
+                <span aria-hidden="true">→</span>
+              </Button>
+            </li>
           ))}
         </ul>
 
         {/* View All Services */}
         <div className="mt-12 text-center">
-          <Link
-            href={"/services" as Route}
-            className="inline-flex items-center justify-center gap-2 px-8 py-4 text-base font-inter font-semibold text-gold border-2 border-gold/50 hover:bg-gold/10 hover:border-gold/60 rounded-xl transition-all duration-200 hover:scale-105"
-          >
+          <Button href={"/services" as Route} variant="secondary" size="lg">
             View All Services
-            <span>→</span>
-          </Link>
+            <span aria-hidden="true">→</span>
+          </Button>
         </div>
       </div>
     </section>

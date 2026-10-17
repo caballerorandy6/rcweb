@@ -13,6 +13,21 @@
   --font-iceland: var(--font-iceland), cursive;
   --font-inter: var(--font-inter), sans-serif;
 
+  /* Entrance on load (hero): fill both so delayed items stay hidden until
+     their turn; disabled under prefers-reduced-motion by the global rule */
+  --animate-enter: enter 0.5s cubic-bezier(0.16, 1, 0.3, 1) both;
+
+  @keyframes enter {
+    from {
+      opacity: 0;
+      transform: translateY(12px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
   /* Scroll-reveal animations (used by /schedule) */
   --animate-fade-in-up: fade-in-up 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
   --animate-fade-in-left: fade-in-left 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
@@ -65,6 +80,31 @@
   ::backdrop,
   ::file-selector-button {
     border-color: var(--color-gray-200, currentcolor);
+  }
+}
+
+/* Reveal-on-scroll without JavaScript: scroll-driven animation where the
+   browser supports it, plain visible content everywhere else (and for
+   crawlers, screenshots and prefers-reduced-motion). Compositor-only:
+   opacity + transform. */
+@utility reveal {
+  @supports (animation-timeline: view()) {
+    @media (prefers-reduced-motion: no-preference) {
+      animation: reveal-up linear both;
+      animation-timeline: view();
+      animation-range: entry 0% entry 35%;
+    }
+  }
+}
+
+@keyframes reveal-up {
+  from {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
   }
 }
 
@@ -182,6 +222,13 @@
   /* Typography - critical for readability */
 }
 @layer base {
+  /* In-page anchors (#pricing, #services) scroll smoothly without JS */
+  @media (prefers-reduced-motion: no-preference) {
+    html {
+      scroll-behavior: smooth;
+    }
+  }
+
   p {
     max-width: 65ch;
   }

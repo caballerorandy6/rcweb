@@ -5,12 +5,10 @@ import { siteConfig } from "@/config/site";
 import Image from "next/image";
 import Heading from "@/components/ui/Heading";
 import { UserPlusIcon, MapPinIcon } from "@heroicons/react/24/outline";
-import useSectionObserver from "@/hooks/useSectionObserver";
 import { motion, Variants } from "framer-motion";
 import Script from "next/script";
 
 const About = () => {
-  const ref = useSectionObserver({ sectionName: "About" });
 
   const containerVariants: Variants = {
     hidden: { opacity: 0 },
@@ -93,7 +91,7 @@ const About = () => {
         }}
       />
 
-      <section ref={ref} id="about" className="pt-24 sm:pt-32 pb-16 sm:pb-24">
+      <section id="about" className="pt-24 sm:pt-32 pb-16 sm:pb-24">
         <div className="mx-auto max-w-7xl px-6 lg:px-8">
           <Heading
           as="h1"

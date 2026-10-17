@@ -15,7 +15,6 @@ import {
   ArrowLeftIcon,
   ExclamationTriangleIcon,
 } from "@heroicons/react/24/outline";
-import useSectionObserver from "@/hooks/useSectionObserver";
 import { COMPANY, COMPANY_ADDRESS, COMPANY_LOCATION } from "@/lib/company";
 import { createStripeCheckoutAction } from "@/actions/payments/createStripeCheckoutAction";
 import { getCheckoutCustomer } from "@/lib/checkoutCustomer";
@@ -23,7 +22,6 @@ import { getCheckoutCustomer } from "@/lib/checkoutCustomer";
 const TermsOfService = () => {
   const router = useRouter();
   const searchParams = useSearchParams();
-  const ref = useSectionObserver({ sectionName: "Terms of Service" });
   const [isPending, startTransition] = useTransition();
 
   // La URL solo trae el ID del plan; los datos del cliente vienen de sessionStorage.
@@ -74,7 +72,6 @@ const TermsOfService = () => {
 
   return (
     <section
-      ref={ref}
       id="terms"
       className="relative py-24 sm:py-32 overflow-hidden bg-linear-to-b from-gray-900 via-gray-900/95 to-gray-900"
     >

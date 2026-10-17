@@ -1,3 +1,6 @@
+"use client";
+
+import { useRCWebStore } from "@/store/rcweb-store";
 import Button from "@/components/ui/Button";
 import { useEffect, useTransition, useRef, useState } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
@@ -14,10 +17,15 @@ import { getRecaptchaToken, loadRecaptcha } from "@/lib/recaptcha";
 import { useRouter } from "next/navigation";
 
 interface DialogFormProps {
-  closeModal: () => void;
+  /** Optional: by default closes the "Let's contact" dialog in the store */
+  closeModal?: () => void;
 }
 
-const DialogForm = ({ closeModal }: DialogFormProps) => {
+const DialogForm = ({ closeModal: closeModalProp }: DialogFormProps) => {
+  const setOpenLetsContactDialog = useRCWebStore(
+    (state) => state.setOpenLetsContactDialog
+  );
+  const closeModal = closeModalProp ?? (() => setOpenLetsContactDialog(false));
   const router = useRouter();
   const [isPending, startTransition] = useTransition();
   const formMountTime = useRef<number | null>(null);

@@ -12,7 +12,6 @@ import {
   InformationCircleIcon,
   ArrowLeftIcon,
 } from "@heroicons/react/24/outline";
-import useSectionObserver from "@/hooks/useSectionObserver";
 import { COMPANY, COMPANY_ADDRESS } from "@/lib/company";
 import { trackFBPhoneCall } from "@/components/tracking/FacebookPixel";
 import { trackLinkedInConversion } from "@/components/tracking/LinkedInInsightTag";
@@ -37,7 +36,6 @@ const trackPhoneConversion = () => {
 
 export default function PrivacyPolicy() {
   const router = useRouter();
-  const ref = useSectionObserver({ sectionName: "Privacy Policy" });
 
   const handleGoBack = () => {
     router.back();
@@ -46,7 +44,6 @@ export default function PrivacyPolicy() {
   return (
     <section
       id="privacy"
-      ref={ref}
       className="relative isolate overflow-hidden py-24 sm:py-32 bg-linear-to-b from-gray-900 via-gray-900/95 to-gray-900"
     >
       {/* Background decoration */}

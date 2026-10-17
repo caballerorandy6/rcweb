@@ -11,12 +11,10 @@ import {
   ArrowLeftIcon,
   EnvelopeIcon,
 } from "@heroicons/react/24/outline";
-import useSectionObserver from "@/hooks/useSectionObserver";
 import { COMPANY, COMPANY_LOCATION } from "@/lib/company";
 
 const RefundPolicy = () => {
   const router = useRouter();
-  const ref = useSectionObserver({ sectionName: "Refund Policy" });
 
   const handleGoBack = () => {
     router.back();
@@ -24,7 +22,6 @@ const RefundPolicy = () => {
 
   return (
     <section
-      ref={ref}
       id="refund-policy"
       className="relative py-24 sm:py-32 overflow-hidden bg-linear-to-b from-gray-900 via-gray-900/95 to-gray-900"
     >

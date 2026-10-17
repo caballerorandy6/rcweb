@@ -1,42 +1,21 @@
-"use client";
-
 import Image from "next/image";
 import Link from "next/link";
 import type { Route } from "next";
 import Button from "@/components/ui/Button";
 import CustomBadge from "@/components/ui/CustomBadge";
-import useSectionObserver from "@/hooks/useSectionObserver";
+import PhoneLink from "@/components/tracking/PhoneLink";
+import { COMPANY } from "@/lib/company";
 import heroImage from "../../../public/hero.webp";
-import { motion } from "framer-motion";
 import { PhoneIcon, CalendarDaysIcon } from "@heroicons/react/24/outline";
-import { trackFBPhoneCall } from "@/components/tracking/FacebookPixel";
-import { trackLinkedInConversion } from "@/components/tracking/LinkedInInsightTag";
 
-// Phone Conversion Tracking (Google Ads + Facebook + LinkedIn)
-const trackPhoneConversion = () => {
-  // Google Ads conversion
-  if (typeof window !== "undefined" && window.gtag) {
-    window.gtag("event", "conversion", {
-      send_to: "AW-17661176254/wW9-CKCVjLAbEL7TwOVB",
-      value: 1.0,
-      currency: "USD",
-    });
-  }
-
-  // Facebook Pixel conversion
-  trackFBPhoneCall();
-
-  // LinkedIn conversion
-  trackLinkedInConversion();
-};
-
+/**
+ * Server Component: the headline (LCP) and every CTA are in the initial HTML.
+ * Entrance motion is CSS only (animate-enter), so nothing waits for JS.
+ */
 const Hero = () => {
-  const ref = useSectionObserver({ sectionName: "Home" });
-
   return (
     <section
       id="home"
-      ref={ref}
       className="relative isolate overflow-hidden pt-24 sm:pt-32 pb-16 sm:pb-24 min-h-svh"
     >
       <div className="absolute inset-0 -z-10 h-full w-full">
@@ -59,133 +38,56 @@ const Hero = () => {
             RC Web Solutions · Houston, TX
           </p>
 
-          {/* h1 fuera de motion.div para no bloquear LCP */}
+          {/* h1 = LCP: sin opacidad animada, solo transform */}
           <h1 className="mt-4 text-5xl sm:text-7xl lg:text-8xl font-iceland tracking-tight text-gold animate-hero-title">
             Websites That Win Customers
           </h1>
 
-          <motion.div
-            initial={{ opacity: 0, scale: 0.8 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{
-              type: "spring",
-              stiffness: 200,
-              damping: 20,
-              delay: 0.1,
-            }}
-          >
+          <div className="animate-enter [animation-delay:100ms]">
             <CustomBadge>Your Digital Partner</CustomBadge>
-          </motion.div>
+          </div>
 
-          <motion.p
-            className="mt-8 mx-auto font-inter text-white/80 text-base sm:text-lg"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{
-              type: "spring",
-              stiffness: 220,
-              damping: 22,
-              delay: 0.1,
-            }}
-          >
+          <p className="mt-8 mx-auto font-inter text-white/80 text-base sm:text-lg animate-enter [animation-delay:150ms]">
             High-performance websites and web apps for small businesses — built
             to load fast, rank on Google, and turn visitors into clients.
-          </motion.p>
+          </p>
 
           {/* Señales de calidad concretas */}
-          <motion.div
-            className="mt-6 flex flex-wrap justify-center gap-x-8 gap-y-2 sm:gap-x-12 text-sm sm:text-base md:text-lg font-inter font-semibold text-gold"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{
-              type: "spring",
-              stiffness: 200,
-              damping: 20,
-              delay: 0.1,
-            }}
-          >
-            <motion.span
-              whileHover={{ scale: 1.1, color: "#D9C98A" }}
-              transition={{ type: "spring", stiffness: 300 }}
-            >
-              Sub-second Load Times
-            </motion.span>
-            <motion.span
-              whileHover={{ scale: 1.1, color: "#D9C98A" }}
-              transition={{ type: "spring", stiffness: 300 }}
-            >
-              95+ Lighthouse Scores
-            </motion.span>
-            <motion.span
-              whileHover={{ scale: 1.1, color: "#D9C98A" }}
-              transition={{ type: "spring", stiffness: 300 }}
-            >
-              English &amp; Español
-            </motion.span>
-          </motion.div>
+          <ul className="mt-6 flex flex-wrap justify-center gap-x-8 gap-y-2 sm:gap-x-12 text-sm sm:text-base md:text-lg font-inter font-semibold text-gold animate-enter [animation-delay:200ms]">
+            {["Sub-second Load Times", "95+ Lighthouse Scores", "English & Español"].map(
+              (signal) => (
+                <li
+                  key={signal}
+                  className="transition-[color,transform] duration-200 hover:scale-110 hover:text-gold-light"
+                >
+                  {signal}
+                </li>
+              )
+            )}
+          </ul>
 
-          <motion.div
-            className="mt-10 flex flex-col sm:flex-row gap-4 items-center justify-center"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{
-              type: "spring",
-              stiffness: 200,
-              damping: 20,
-              delay: 0.25,
-            }}
-          >
-            <motion.div
-              whileHover={{
-                scale: 1.05,
-                transition: { type: "spring", stiffness: 400, damping: 17 },
-              }}
-              whileTap={{ scale: 0.95 }}
-            >
-              <Button href={"#services" as Route} size="lg">
-                View Services
-              </Button>
-            </motion.div>
-
-            <motion.div
-              whileHover={{
-                scale: 1.05,
-                transition: { type: "spring", stiffness: 400, damping: 17 },
-              }}
-              whileTap={{ scale: 0.95 }}
-            >
-              <Button href={"/schedule" as Route} variant="secondary" size="md">
-                Schedule a Call
-              </Button>
-            </motion.div>
-          </motion.div>
+          <div className="mt-10 flex flex-col sm:flex-row gap-4 items-center justify-center animate-enter [animation-delay:250ms]">
+            <Button href={"#services" as Route} size="lg">
+              View Services
+            </Button>
+            <Button href={"/schedule" as Route} variant="secondary" size="md">
+              Schedule a Call
+            </Button>
+          </div>
 
           {/* Quick Contact Options */}
-          <motion.div
-            className="mt-8 text-center mx-auto flex flex-col items-center"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{
-              type: "spring",
-              stiffness: 200,
-              damping: 20,
-              delay: 0.35,
-            }}
-          >
+          <div className="mt-8 text-center mx-auto flex flex-col items-center animate-enter [animation-delay:350ms]">
             <p className="text-white/70 font-inter text-sm mb-3 text-center">
               Ready to start? Choose your preferred way:
             </p>
             <div className="flex flex-col sm:flex-row gap-3 items-center">
-              <motion.a
-                href="tel:+13463757534"
-                onClick={trackPhoneConversion}
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                className="inline-flex items-center gap-2 text-gold hover:text-gold/80 transition-colors duration-200 font-inter text-sm sm:text-base font-semibold"
+              <PhoneLink
+                href={COMPANY.phoneHref}
+                className="inline-flex items-center gap-2 text-gold hover:text-gold/80 transition-[color,transform] duration-200 hover:scale-105 font-inter text-sm sm:text-base font-semibold"
               >
                 <PhoneIcon className="w-5 h-5" />
-                +1 (346) 375-7534
-              </motion.a>
+                {COMPANY.phone}
+              </PhoneLink>
               <span className="text-white/40 hidden sm:inline" aria-hidden="true">|</span>
               <Link
                 href={"/schedule" as Route}
@@ -195,7 +97,7 @@ const Hero = () => {
                 Book on Calendly
               </Link>
             </div>
-          </motion.div>
+          </div>
         </div>
       </div>
     </section>

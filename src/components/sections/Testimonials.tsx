@@ -1,9 +1,5 @@
-"use client";
-
-import useSectionObserver from "@/hooks/useSectionObserver";
 import { StarIcon } from "@heroicons/react/24/solid";
 import Heading from "../ui/Heading";
-import { motion } from "framer-motion";
 import { testimonials, GOOGLE_REVIEW_URL } from "@/lib/data";
 
 const GoogleIcon = () => (
@@ -27,37 +23,12 @@ const GoogleIcon = () => (
   </svg>
 );
 
+// Server Component: testimonials are in the HTML (SEO + no-JS)
 const Testimonials = () => {
-  const ref = useSectionObserver({ sectionName: "Testimonials" });
-
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    show: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.2,
-      },
-    },
-  };
-
-  const cardVariants = {
-    hidden: { opacity: 0, y: 50, scale: 0.95 },
-    show: {
-      opacity: 1,
-      y: 0,
-      scale: 1,
-      transition: {
-        type: "spring" as const,
-        stiffness: 200,
-        damping: 20,
-      },
-    },
-  };
 
   return (
     <section
       id="testimonials"
-      ref={ref}
       className="relative isolate overflow-hidden pt-24 sm:pt-32 pb-16 sm:pb-24"
     >
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
@@ -68,19 +39,11 @@ const Testimonials = () => {
           What My Clients Say
         </Heading>
 
-        <motion.div
-          variants={containerVariants}
-          initial={false}
-          whileInView="show"
-          viewport={{ once: true, amount: 0.2 }}
-          style={{ opacity: 1 }}
-          className="mx-auto mt-16 flex flex-wrap justify-center gap-6 lg:gap-8"
-        >
+        <div className="mx-auto mt-16 flex flex-wrap justify-center gap-6 lg:gap-8">
           {testimonials.map((testimonial) => (
-            <motion.div
+            <div
               key={testimonial.author}
-              variants={cardVariants}
-              className="group relative rounded-2xl border border-gold/20 bg-gray-900/50 p-6 lg:p-8 backdrop-blur-xs transition-all duration-200 hover:border-gold/50 hover:bg-gold/5 hover:scale-105 shadow-lg shadow-black/20 w-full sm:w-[calc(50%-0.75rem)] lg:w-[calc(33.333%-1.5rem)]"
+              className="reveal group relative rounded-2xl border border-gold/20 bg-gray-900/50 p-6 lg:p-8 backdrop-blur-xs transition-all duration-200 hover:border-gold/50 hover:bg-gold/5 hover:scale-105 shadow-lg shadow-black/20 w-full sm:w-[calc(50%-0.75rem)] lg:w-[calc(33.333%-1.5rem)]"
             >
               {/* Google badge */}
               <div className="absolute top-4 right-4">
@@ -119,9 +82,9 @@ const Testimonials = () => {
                   </p>
                 </div>
               </div>
-            </motion.div>
+            </div>
           ))}
-        </motion.div>
+        </div>
 
         {/* Link to leave a review */}
         <div className="text-center mt-12">
