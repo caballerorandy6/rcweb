@@ -37,7 +37,7 @@ const iceland = localFont({
 });
 
 const inter = localFont({
-  src: "./fonts/InterVF.woff2",
+  src: "./fonts/InterVF-latin.woff2", // latin + latin-ext subset (85 KB vs 230 KB)
   variable: "--font-inter",
   display: "swap",
   preload: true,

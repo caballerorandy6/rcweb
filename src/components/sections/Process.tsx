@@ -4,13 +4,11 @@ import Button from "@/components/ui/Button";
 import React from "react";
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import useSectionObserver from "@/hooks/useSectionObserver";
 import { ChevronRightIcon } from "@heroicons/react/24/outline";
 import { processSteps } from "@/lib/data";
 import Heading from "@/components/ui/Heading";
 
 const Process = () => {
-  const ref = useSectionObserver({ sectionName: "Process" });
   const [activeStep, setActiveStep] = useState(0);
   const [mobileActiveStep, setMobileActiveStep] = useState<number | null>(null);
 
@@ -18,7 +16,7 @@ const Process = () => {
   const currentStep = processSteps[activeStep] || processSteps[0];
 
   return (
-    <section id="process" ref={ref} className="pt-24 sm:pt-32 pb-16 sm:pb-24">
+    <section id="process" className="pt-24 sm:pt-32 pb-16 sm:pb-24">
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
         <Heading
           icon={<ChevronRightIcon className="w-8 text-gold" />}

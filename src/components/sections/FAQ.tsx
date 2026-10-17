@@ -1,7 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import useSectionObserver from "@/hooks/useSectionObserver";
 import {
   ChevronDownIcon,
   QuestionMarkCircleIcon,
@@ -11,7 +10,6 @@ import Heading from "../ui/Heading";
 import { motion, Variants, AnimatePresence } from "framer-motion";
 
 const FAQ = () => {
-  const ref = useSectionObserver({ sectionName: "FAQ" });
   const [openIndex, setOpenIndex] = useState<string | null>(faqs[0]?.question ?? null);
 
   // Variantes para la animación de las tarjetas
@@ -60,7 +58,6 @@ const FAQ = () => {
   return (
     <section
       id="faq"
-      ref={ref}
       className="relative isolate overflow-hidden pt-24 sm:pt-32 pb-16 sm:pb-24"
     >
       <div className="mx-auto max-w-7xl px-6 lg:px-8">

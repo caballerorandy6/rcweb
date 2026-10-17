@@ -3,7 +3,6 @@
 import Button from "@/components/ui/Button";
 import { useState, useTransition } from "react";
 import { useRouter } from "next/navigation";
-import useSectionObserver from "@/hooks/useSectionObserver";
 import { CheckIcon } from "@heroicons/react/24/outline";
 import { pricingPlans } from "@/lib/data";
 import Heading from "../ui/Heading";
@@ -17,8 +16,6 @@ const Pricing = () => {
   const [customerEmail, setCustomerEmail] = useState("");
   const [customerName, setCustomerName] = useState("");
   const [isPending, startTransition] = useTransition();
-
-  const ref = useSectionObserver({ sectionName: "Pricing" });
   const router = useRouter();
 
   const containerVariants = {
@@ -62,7 +59,6 @@ const Pricing = () => {
   return (
     <section
       id="pricing"
-      ref={ref}
       className="relative isolate overflow-hidden pt-24 sm:pt-32 pb-16 sm:pb-24"
     >
       <div className="mx-auto max-w-7xl px-6 lg:px-8">

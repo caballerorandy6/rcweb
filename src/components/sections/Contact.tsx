@@ -1,8 +1,5 @@
-"use client";
-
 import Button from "@/components/ui/Button";
 import { COMPANY } from "@/lib/company";
-import { useRCWebStore } from "@/store/rcweb-store";
 import Heading from "@/components/ui/Heading";
 import {
   EnvelopeIcon,
@@ -10,15 +7,11 @@ import {
   PhoneIcon,
 } from "@heroicons/react/24/outline";
 import DialogForm from "@/components/forms/DialogForm";
-import useSectionObserver from "@/hooks/useSectionObserver";
 
+// Server Component; the form inside is the client island
 const Contact = () => {
-  const setOpenLetsContactDialog = useRCWebStore((state) => state.setOpenLetsContactDialog);
-  const ref = useSectionObserver({ sectionName: "Contact" });
-
   return (
     <section
-      ref={ref}
       id="contact"
       className="relative isolate overflow-hidden pt-24 sm:pt-32 pb-16 sm:pb-24"
     >
@@ -48,7 +41,7 @@ const Contact = () => {
       </div>
 
         <div className="mx-auto w-full sm:w-10/12 md:w-8/12 lg:w-6/12 animateProjectCard">
-          <DialogForm closeModal={() => setOpenLetsContactDialog(false)} />
+          <DialogForm />
         </div>
       </div>
     </section>

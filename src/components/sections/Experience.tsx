@@ -2,7 +2,6 @@
 
 import { BriefcaseIcon } from "@heroicons/react/24/outline";
 import { experience } from "@/lib/data";
-import useSectionObserver from "@/hooks/useSectionObserver";
 import { motion } from "framer-motion";
 import Heading from "../ui/Heading";
 
@@ -16,11 +15,9 @@ export interface ExperienceProps {
 }
 
 const Experience = () => {
-  const ref = useSectionObserver({ sectionName: "Experience" });
 
   return (
     <section
-      ref={ref}
       id="experience"
       className="pt-24 sm:pt-32 pb-16 sm:pb-24"
     >

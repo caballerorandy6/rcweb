@@ -1,6 +1,10 @@
 "use client";
 
 import { useEffect } from "react";
+import { useRCWebStore } from "@/store/rcweb-store";
+import { navigation } from "@/lib/data";
+
+type SectionName = (typeof navigation)[number]["name"];
 
 const sectionTitle: Record<string, string> = {
   home: "RC WEB | Home",
@@ -17,7 +21,19 @@ const sectionTitle: Record<string, string> = {
   cta: "RC WEB | CTA",
 };
 
+// Section id → navigation item it highlights in the navbar
+const sectionNavName: Record<string, SectionName> = Object.fromEntries(
+  navigation.map((item) => [item.hash.replace(/^\/?#?/, ""), item.name])
+) as Record<string, SectionName>;
+
+/**
+ * One IntersectionObserver for the whole page: updates the URL hash, the
+ * document title and the navbar's active item. Sections themselves stay
+ * Server Components.
+ */
 export function useScrollSpy(sectionIds: string[]) {
+  const setActiveSection = useRCWebStore((state) => state.setActiveSection);
+
   useEffect(() => {
     const observer = new IntersectionObserver(
       (entries) => {
@@ -33,6 +49,9 @@ export function useScrollSpy(sectionIds: string[]) {
               if (document.title !== newTitle) {
                 document.title = newTitle;
               }
+
+              const navName = sectionNavName[id];
+              if (navName) setActiveSection(navName);
             }
             break;
           }
@@ -51,5 +70,5 @@ export function useScrollSpy(sectionIds: string[]) {
     elements.forEach((el) => observer.observe(el!));
 
     return () => observer.disconnect();
-  }, [sectionIds]);
+  }, [sectionIds, setActiveSection]);
 }
