@@ -19,7 +19,8 @@ export type SiteConfig = {
 };
 
 export const siteConfig: SiteConfig = {
-  baseUrl: "https://rcweb.dev",
+  // Canonical host: the apex redirects here, so sitemap/JSON-LD must use www
+  baseUrl: "https://www.rcweb.dev",
   siteName: "RC Web Solutions LLC",
   siteNameShort: "RC Web Solutions",
   defaultOgImg: "/og-image.jpg",

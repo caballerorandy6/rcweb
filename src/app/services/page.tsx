@@ -16,7 +16,7 @@ import {
 } from "@heroicons/react/24/outline";
 
 export const metadata = genPageMetadata({
-  title: "Web Development Services Houston TX | RC Web Solutions",
+  title: "Web Development Services Houston TX",
   description:
     "Professional web development services in Houston, TX. Web design, Next.js development, bilingual websites, e-commerce, and local SEO. Free consultation.",
   pageRoute: "/services",
@@ -78,7 +78,9 @@ export default function ServicesPage() {
                     </p>
                     <div className="mt-4 flex items-center justify-between">
                       <span className="text-sm font-inter font-semibold text-gold">
-                        From {service.priceFrom}
+                        {service.priceFrom.startsWith("$")
+                          ? `From ${service.priceFrom}`
+                          : service.priceFrom}
                       </span>
                       <span className="inline-flex items-center gap-1 text-sm font-inter text-gold group-hover:underline">
                         Learn more

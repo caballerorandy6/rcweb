@@ -135,10 +135,13 @@ export default async function ServicePage({
                 {service.subheadline}
               </p>
 
+              {/* Plans show a price; bilingual and local SEO come with every site */}
               <div className="mt-8 flex items-center gap-4">
-                <span className="text-sm font-inter text-gold/70">
-                  Starting at
-                </span>
+                {service.priceFrom.startsWith("$") && (
+                  <span className="text-sm font-inter text-gold/70">
+                    Starting at
+                  </span>
+                )}
                 <span className="text-2xl font-bold font-iceland text-gold">
                   {service.priceFrom}
                 </span>
