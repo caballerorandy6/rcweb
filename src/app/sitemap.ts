@@ -93,6 +93,12 @@ const sitemapConfig: SitemapConfig = {
       priority: 0.7,
     },
     {
+      route: "/case-study/gsmactx",
+      lastModified: new Date().toISOString().split("T")[0],
+      changeFrequency: "monthly",
+      priority: 0.7,
+    },
+    {
       route: "/web-developer-houston-tx",
       lastModified: new Date().toISOString().split("T")[0],
       changeFrequency: "monthly",

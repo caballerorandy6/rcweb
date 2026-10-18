@@ -4,9 +4,10 @@ import { services } from "@/lib/data";
 import Heading from "@/components/ui/Heading";
 import Button from "@/components/ui/Button";
 
+// The three plans people buy most; each one exists in Pricing with that price
 const FEATURED_SLUGS = [
   "web-design-houston",
-  "bilingual-websites-houston",
+  "nextjs-development-houston",
   "ecommerce-houston",
 ];
 

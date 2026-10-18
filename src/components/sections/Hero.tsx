@@ -1,5 +1,4 @@
 import Image from "next/image";
-import Link from "next/link";
 import type { Route } from "next";
 import Button from "@/components/ui/Button";
 import CustomBadge from "@/components/ui/CustomBadge";
@@ -54,7 +53,7 @@ const Hero = () => {
 
           {/* Señales de calidad concretas */}
           <ul className="mt-6 flex flex-wrap justify-center gap-x-8 gap-y-2 sm:gap-x-12 text-sm sm:text-base md:text-lg font-inter font-semibold text-gold animate-enter [animation-delay:200ms]">
-            {["Sub-second Load Times", "95+ Lighthouse Scores", "English & Español"].map(
+            {["Loads in Under 2 Seconds", "Local SEO Built In", "English & Español"].map(
               (signal) => (
                 <li
                   key={signal}
@@ -66,38 +65,28 @@ const Hero = () => {
             )}
           </ul>
 
+          {/* One primary action (free call), one secondary (services); the
+              phone line below is the only other way in, not a third CTA */}
           <div className="mt-10 flex flex-col sm:flex-row gap-4 items-center justify-center animate-enter [animation-delay:250ms]">
-            <Button href={"#services" as Route} size="lg">
-              View Services
+            <Button href={"/schedule" as Route} size="lg">
+              <CalendarDaysIcon className="w-5 h-5" />
+              Schedule a Free Call
             </Button>
-            <Button href={"/schedule" as Route} variant="secondary" size="md">
-              Schedule a Call
+            <Button href={"#services" as Route} variant="secondary" size="md">
+              View Services
             </Button>
           </div>
 
-          {/* Quick Contact Options */}
-          <div className="mt-8 text-center mx-auto flex flex-col items-center animate-enter [animation-delay:350ms]">
-            <p className="text-white/70 font-inter text-sm mb-3 text-center">
-              Ready to start? Choose your preferred way:
-            </p>
-            <div className="flex flex-col sm:flex-row gap-3 items-center">
-              <PhoneLink
-                href={COMPANY.phoneHref}
-                className="inline-flex items-center gap-2 text-gold hover:text-gold/80 transition-[color,transform] duration-200 hover:scale-105 font-inter text-sm sm:text-base font-semibold"
-              >
-                <PhoneIcon className="w-5 h-5" />
-                {COMPANY.phone}
-              </PhoneLink>
-              <span className="text-white/40 hidden sm:inline" aria-hidden="true">|</span>
-              <Link
-                href={"/schedule" as Route}
-                className="inline-flex items-center gap-2 text-gold hover:text-gold/80 transition-colors duration-200 font-inter text-sm sm:text-base font-semibold"
-              >
-                <CalendarDaysIcon className="w-5 h-5" />
-                Book on Calendly
-              </Link>
-            </div>
-          </div>
+          <p className="mt-8 text-center font-inter text-sm sm:text-base text-white/70 animate-enter [animation-delay:350ms]">
+            Or call directly:{" "}
+            <PhoneLink
+              href={COMPANY.phoneHref}
+              className="inline-flex items-center gap-2 font-semibold text-gold hover:text-gold/80 transition-[color,transform] duration-200 hover:scale-105"
+            >
+              <PhoneIcon className="w-5 h-5" />
+              {COMPANY.phone}
+            </PhoneLink>
+          </p>
         </div>
       </div>
     </section>

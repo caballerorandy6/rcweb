@@ -568,17 +568,7 @@ export const services = [
     description:
       "Custom, mobile-first websites optimized for conversions and lead generation. Perfect for Houston businesses starting their online presence.",
     features: ["Responsive", "SEO", "Fast Loading", "Contact Forms"],
-    highlight: "95+ Lighthouse Score",
-    price: "$1,000",
-  },
-  {
-    slug: "bilingual-websites-houston",
-    icon: ChatBubbleLeftRightIcon,
-    title: "Bilingual Websites",
-    description:
-      "English and Spanish websites that reach Houston's diverse community. Native localization, not machine translation. Built by a Latino developer.",
-    features: ["English & Spanish", "Native Localization", "Hreflang SEO", "Cultural Context"],
-    highlight: "44% of Houston is Hispanic",
+    highlight: "Loads in under 2 seconds",
     price: "$1,000",
   },
   {
@@ -631,10 +621,10 @@ export const services = [
   {
     slug: "seo-local-houston",
     icon: ShieldCheckIcon,
-    title: "Monthly Website Maintenance & SEO",
+    title: "Monthly Website Maintenance & Support",
     description:
-      "Ongoing maintenance, security updates, local SEO optimization, and technical support to keep your Houston business visible on Google.",
-    features: ["Security Updates", "Local SEO", "Content Updates", "Priority Support"],
+      "Ongoing maintenance, security updates, backups, and technical support so your website keeps working while you run your business.",
+    features: ["Security Updates", "Uptime Monitoring", "Content Updates", "Priority Support"],
     highlight: "Peace of mind guaranteed",
     price: "$200/month",
   },
@@ -1061,7 +1051,7 @@ export const servicePages: ServicePage[] = [
     title: "Bilingual Websites",
     metaTitle: "Bilingual Website Houston TX | English & Spanish Web Design",
     metaDescription:
-      "Bilingual website development in Houston, TX. English and Spanish websites for businesses serving the Hispanic community. Latino-owned. From $1,000.",
+      "Bilingual website development in Houston, TX. English and Spanish websites for businesses serving the Hispanic community. Latino-owned. Included with every website.",
     headline: "Bilingual Websites in Houston, TX",
     subheadline:
       "English and Spanish websites that reach Houston's diverse community. Built by a Latino developer who understands both cultures and both markets.",
@@ -1090,7 +1080,7 @@ export const servicePages: ServicePage[] = [
       },
     ],
     relatedProjects: ["Clínica Hispana Gessner", "Clínica Hispana Airline", "Dulce Antojo Snack Carts"],
-    priceFrom: "$1,000",
+    priceFrom: "Included with every website",
     cta: "Get a Bilingual Website",
   },
   {
@@ -1135,7 +1125,7 @@ export const servicePages: ServicePage[] = [
     title: "Local SEO",
     metaTitle: "Local SEO Houston TX | Get Found on Google by Houston Customers",
     metaDescription:
-      "Local SEO services in Houston, TX. Google Business Profile optimization, schema markup, and SEO-optimized websites that rank for Houston searches. From $200/mo.",
+      "Local SEO services in Houston, TX. Google Business Profile optimization, schema markup, and SEO-optimized websites that rank for Houston searches. Included with every website.",
     headline: "Local SEO in Houston, TX",
     subheadline:
       "Get your Houston business found on Google. Technical SEO, schema markup, and content strategy that puts you in front of customers searching for your services.",
@@ -1164,7 +1154,7 @@ export const servicePages: ServicePage[] = [
       },
     ],
     relatedProjects: ["Clínica Hispana Gessner", "Leo's Home Experts", "GSM AC & General Contractor"],
-    priceFrom: "$200/mo",
+    priceFrom: "Included with every website",
     cta: "Improve Your Rankings",
   },
 ];
