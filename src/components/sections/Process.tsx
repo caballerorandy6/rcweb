@@ -15,7 +15,7 @@ const Process = () => {
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
         <Heading
           icon={<ChevronRightIcon className="w-8 text-gold" />}
-          text="From idea to reality in 4-6 weeks with complete transparency"
+          text="Four steps from the first call to launch, with weekly demos along the way"
         >
           My Work Process
         </Heading>
