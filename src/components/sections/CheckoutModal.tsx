@@ -18,7 +18,7 @@ export default function CheckoutModal() {
   const router = useRouter();
 
   const plan = pricingPlans.find((p) => p.id === planId);
-  if (!plan) return null;
+  if (!plan?.purchasable) return null;
 
   const isMonthly = plan.id === "website-maintenance";
   const amount = (plan.priceInCents * (isMonthly ? 1 : 0.5)) / 100;

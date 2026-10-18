@@ -30,8 +30,9 @@ export async function createStripeCheckoutAction(
   const { planId, customer } = parsed.data;
 
   // El precio nunca viene del navegador: se busca el plan en el servidor.
+  // Solo los planes de alcance fijo se cobran aquí; el resto va por presupuesto.
   const pricingPlan = pricingPlans.find((p) => p.id === planId);
-  if (!pricingPlan) {
+  if (!pricingPlan || !pricingPlan.purchasable) {
     return { success: false, error: "Selected plan is not available" };
   }
 
