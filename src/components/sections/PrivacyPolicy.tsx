@@ -275,8 +275,7 @@ export default function PrivacyPolicy() {
                 </p>
                 <ul>
                   <li>
-                    Marketing and promotional messages about our services and
-                    special offers
+                    Promotional and informational messages about our services
                   </li>
                   <li>
                     Transactional messages related to your account or services
@@ -566,8 +565,8 @@ export default function PrivacyPolicy() {
                   </li>
                   <li>
                     <strong>To provide You</strong> with
-                    news, special offers, and general information about other
-                    goods, services and events which We offer.
+                    news and general information about the services which We
+                    offer.
                   </li>
                   <li>
                     <strong>
