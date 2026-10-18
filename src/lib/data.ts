@@ -514,68 +514,47 @@ export const processSteps = [
   },
 ];
 
+// Home "How I Can Help You": one card per offer; the detail per plan lives in pricingPlans
 export const services = [
   {
-    slug: "web-design-houston",
     icon: RocketLaunchIcon,
-    title: "Web Design & Landing Pages",
+    title: "Business Website",
     description:
-      "Custom, mobile-first websites optimized for conversions and lead generation. Perfect for Houston businesses starting their online presence.",
-    features: ["Responsive", "SEO", "Fast Loading", "Contact Forms"],
-    highlight: "Loads in under 2 seconds",
-    price: "$1,000",
+      "From a one-page landing to a full 5-10 page site: custom design, mobile-first, built to turn visitors into calls and form submissions.",
+    features: ["Custom Design", "Local SEO", "Contact Forms", "Loads in under 2 seconds"],
+    highlight: "Like Clínica Gessner & Leo's Home Experts",
+    price: "From $1,000",
   },
   {
-    slug: "ecommerce-houston",
-    icon: CurrencyDollarIcon,
-    title: "E-Commerce Website Development",
+    icon: CubeTransparentIcon,
+    title: "Website Redesign & Modernization",
     description:
-      "Full-featured online stores with secure Stripe payments, inventory management, and admin dashboard. No monthly platform fees.",
-    features: ["Payment Integration", "Shopping Cart", "Admin Dashboard", "Order Management"],
-    highlight: "90-day Support Included",
-    price: "$8,000",
-  },
-  {
-    slug: "nextjs-development-houston",
-    icon: CodeBracketIcon,
-    title: "Professional Business Website",
-    description:
-      "Complete 5-10 page websites with custom design tailored to your brand. Ideal for established businesses, professional services, and portfolios.",
-    features: ["Custom Design", "SEO Optimization", "Analytics", "30-day Support"],
-    highlight: "Like GSM AC & RC Beauty Salon",
-    price: "$3,000",
+      "Your current site rebuilt on modern technology: faster, mobile-friendly, and easier for customers to use, with your content migrated.",
+    features: ["Modern Design", "Performance Boost", "Mobile Optimization", "Content Migration"],
+    highlight: "Like GSM A/C",
+    price: "From $3,500",
   },
   {
     icon: ChartBarIcon,
-    title: "Custom Business Management Dashboard",
+    title: "Admin Dashboard & Automation",
     description:
-      "Tailored admin dashboards to automate and streamline your business operations. Perfect for service businesses.",
-    features: ["Custom Forms", "Data Visualization", "Email Automation", "User Management"],
-    highlight: "Save 15 hours/week",
-    price: "$7,500",
+      "A private panel to manage leads, customers, payments and campaigns from one place, with the repetitive work automated.",
+    features: ["Lead & Customer Management", "Email & SMS Campaigns", "Stripe Payments", "Reports"],
+    highlight: "GSM saves 15 hours/week",
+    price: "From $7,500",
   },
   {
-    icon: CubeTransparentIcon,
-    title: "Website Redesign and Modernization",
+    icon: CodeBracketIcon,
+    title: "Online Store & Custom Web Apps",
     description:
-      "Transform your outdated website into a modern, high-performance platform. I rebuild with current technology replacing legacy code.",
-    features: ["Modern Design", "Performance Boost", "Mobile Optimization", "Content Migration"],
-    highlight: "From Outdated to Outstanding",
-    price: "$3,500",
+      "Full-featured online stores with Stripe and custom platforms: booking systems, member areas, internal tools. No monthly platform fees.",
+    features: ["Stripe Checkout", "Booking Systems", "User Accounts", "API Integrations"],
+    highlight: "Like RC Beauty Salon",
+    price: "From $8,000",
   },
   {
-    icon: CubeTransparentIcon,
-    title: "Custom Web Application Development",
-    description:
-      "Full-stack custom web applications built with Next.js, React, and TypeScript. Specialized functionality for booking systems and platforms.",
-    features: ["Database Integration", "User Authentication", "API Development", "6-month Support"],
-    highlight: "Built for scalability",
-    price: "$12,000",
-  },
-  {
-    slug: "seo-local-houston",
     icon: ShieldCheckIcon,
-    title: "Monthly Website Maintenance & Support",
+    title: "Monthly Maintenance & Support",
     description:
       "Ongoing maintenance, security updates, backups, and technical support so your website keeps working while you run your business.",
     features: ["Security Updates", "Uptime Monitoring", "Content Updates", "Priority Support"],
@@ -608,7 +587,7 @@ export const faqs = [
   {
     question: "How does the payment process work?",
     answer:
-      "I use a two-payment structure — 50% upfront to kick off your project and 50% once it's completed and delivered. Payment plans are available for projects over $3,000. You can pay conveniently via Zelle or through Stripe on our website.",
+      "Two payments: 50% to start and 50% when the project is delivered. The landing page and the maintenance plan can be paid directly on this site through Stripe. For everything else we agree on the scope and the final price first, and then you receive a secure Stripe payment link. Zelle is also accepted.",
   },
   {
     question: "Can I see progress during development?",
@@ -617,36 +596,7 @@ export const faqs = [
   },
 ];
 
-export const additionalServices = [
-  {
-    service: "Monthly Maintenance",
-    price: "$200-$500/month",
-    description:
-      "Security updates, content changes, performance monitoring, priority support",
-  },
-  {
-    service: "Content Creation",
-    price: "$500-$2,000",
-    description: "Professional copywriting and content strategy",
-  },
-  {
-    service: "Email Marketing Setup",
-    price: "$999",
-    description: "Complete email automation and campaign setup",
-  },
-  {
-    service: "Social Media Integration",
-    price: "$799",
-    description: "Full social media feed integration and automation",
-  },
-];
-
-export const paymentTerms = {
-  upfront: "50%",
-  completion: "50%",
-  description: "Simple two-payment structure: 50% to start, 50% upon completion",
-};
-
+// `purchasable`: fixed scope, can be paid on the site. The rest get a quote first.
 export const pricingPlans = [
   {
     id: "landing-page",
@@ -666,6 +616,7 @@ export const pricingPlans = [
       "Basic SEO setup",
     ],
     ideal: "Perfect for: New businesses, product launches, event promotion",
+    purchasable: true,
     featured: false,
     cta: "Start Your Project",
   },
@@ -689,8 +640,9 @@ export const pricingPlans = [
     ],
     ideal:
       "Perfect for: Established businesses, professional services, portfolios",
+    purchasable: false,
     featured: true,
-    cta: "Most Popular Choice",
+    cta: "Get a Quote",
   },
   {
     id: "business-dashboard",
@@ -711,8 +663,9 @@ export const pricingPlans = [
     ],
     ideal:
       "Perfect for: Service businesses, operations management, automation",
+    purchasable: false,
     featured: false,
-    cta: "Automate Your Business",
+    cta: "Get a Quote",
   },
   {
     id: "ecommerce",
@@ -734,8 +687,9 @@ export const pricingPlans = [
     ],
     ideal:
       "Perfect for: Retail businesses, online stores, product-based companies",
+    purchasable: false,
     featured: false,
-    cta: "Launch Your Store",
+    cta: "Get a Quote",
   },
   {
     id: "website-redesign",
@@ -756,15 +710,16 @@ export const pricingPlans = [
     ],
     ideal:
       "Perfect for: Businesses with old websites, legacy code, poor performance",
+    purchasable: false,
     featured: false,
-    cta: "Redesign My Site",
+    cta: "Get a Quote",
   },
   {
     id: "web-application",
     name: "Custom Web Application Development",
     price: "$12,000",
     priceInCents: 1200000, // $12,000.00
-    range: "Starting at $12,000",
+    range: "$12,000+",
     duration: "8-12+ weeks",
     description: "Custom platforms and systems",
     features: [
@@ -778,8 +733,9 @@ export const pricingPlans = [
       "6-month priority support",
     ],
     ideal: "Perfect for: Startups, enterprise solutions, custom applications",
+    purchasable: false,
     featured: false,
-    cta: "Build Your Platform",
+    cta: "Get a Quote",
   },
   {
     id: "website-maintenance",
@@ -799,6 +755,7 @@ export const pricingPlans = [
       "Same-day response for urgent issues",
     ],
     ideal: "Perfect for: All businesses wanting peace of mind",
+    purchasable: true,
     featured: false,
     cta: "Start Maintenance Plan",
   },

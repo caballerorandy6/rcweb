@@ -1,10 +1,14 @@
 import { CheckIcon } from "@heroicons/react/24/outline";
 import { pricingPlans } from "@/lib/data";
 import Heading from "../ui/Heading";
+import Button from "@/components/ui/Button";
 import PlanCTA from "@/components/sections/PlanCTA";
 import CheckoutModal from "@/components/sections/CheckoutModal";
 
-/** Cards render on the server; PlanCTA + CheckoutModal are the client islands */
+/**
+ * Cards render on the server; PlanCTA + CheckoutModal are the client islands.
+ * Only fixed-scope plans open the checkout; the rest link to a free call.
+ */
 const Pricing = () => {
   return (
     <section
@@ -42,6 +46,11 @@ const Pricing = () => {
                   {plan.name}
                 </h3>
                 <p className="mt-4 flex items-baseline gap-x-2">
+                  {!plan.purchasable && (
+                    <span className="text-sm font-inter text-white/60">
+                      From
+                    </span>
+                  )}
                   <span className="text-4xl font-iceland text-gold">
                     {plan.price}
                   </span>
@@ -70,9 +79,21 @@ const Pricing = () => {
                 {plan.ideal}
               </p>
 
-              <PlanCTA planId={plan.id} featured={plan.featured}>
-                {plan.cta}
-              </PlanCTA>
+              {plan.purchasable ? (
+                <PlanCTA planId={plan.id} featured={plan.featured}>
+                  {plan.cta}
+                </PlanCTA>
+              ) : (
+                <Button
+                  href="/schedule"
+                  variant={plan.featured ? "primary" : "secondary"}
+                  size="lg"
+                  fullWidth
+                  className="mt-8"
+                >
+                  {plan.cta}
+                </Button>
+              )}
             </div>
           ))}
         </div>
@@ -82,7 +103,9 @@ const Pricing = () => {
         <div className="mx-auto mt-10 max-w-2xl text-center">
           <p className="text-sm font-inter text-white/50">
             All projects include: Source code • Domain & hosting setup •
-            Training • Payment terms: 50% deposit, 50% on project completion
+            Training • 50% deposit, 50% on completion. &ldquo;From&rdquo;
+            prices are quoted after a free call; the final price depends on
+            the scope.
           </p>
         </div>
       </div>

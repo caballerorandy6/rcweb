@@ -4,24 +4,8 @@ import { services } from "@/lib/data";
 import Heading from "@/components/ui/Heading";
 import Button from "@/components/ui/Button";
 
-// The three plans people buy most; each one exists in Pricing with that price
-const FEATURED_SLUGS = [
-  "web-design-houston",
-  "nextjs-development-houston",
-  "ecommerce-houston",
-];
-
 // Server Component: cards are in the HTML; reveal-on-scroll is CSS only
 const Services = () => {
-  // Show only the 3 most commercial services
-  const featuredServices = services.filter(
-    (s) => "slug" in s && FEATURED_SLUGS.includes(s.slug as string)
-  );
-
-  // Fallback to first 3 if no slug match (keeps backward compatibility)
-  const displayServices =
-    featuredServices.length > 0 ? featuredServices : services.slice(0, 3);
-
   return (
     <section
       id="services"
@@ -36,7 +20,7 @@ const Services = () => {
         </Heading>
 
         <ul className="mx-auto mt-16 flex flex-wrap justify-center gap-6 lg:gap-8">
-          {displayServices.map((service) => (
+          {services.map((service) => (
             <li
               key={service.title}
               className="reveal group relative flex flex-col gap-6 rounded-2xl border border-gold/20 bg-gray-900/50 p-6 lg:p-8 backdrop-blur-xs transition-all duration-200 hover:scale-105 hover:border-gold/50 hover:bg-gold/5 shadow-lg shadow-black/20 w-full sm:w-[calc(50%-0.75rem)] lg:w-[calc(33.333%-1.5rem)]"
@@ -81,7 +65,7 @@ const Services = () => {
                 variant="secondary"
                 className="mt-4 w-full sm:w-auto"
               >
-                Get Quote
+                See Pricing
                 <span aria-hidden="true">→</span>
               </Button>
             </li>
