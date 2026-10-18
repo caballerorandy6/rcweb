@@ -131,6 +131,24 @@ const nextConfig: NextConfig = {
       { source: "/guide", destination: "/#contact", permanent: true },
       // No more promotions: old campaign links to the offer land on pricing
       { source: "/offer", destination: "/#pricing", permanent: true },
+      // Posts about features that no longer exist (n8n, Upstash, client
+      // portal, 2025 pricing, promotions) were removed; keep indexed links alive
+      ...[
+        "n8n-automation-lead-nurturing-nextjs",
+        "n8n-automation-marketing-small-business",
+        "n8n-milestone-notifications-client-portal",
+        "learn-n8n-fast-claude-ai-assistant",
+        "rate-limiting-nextjs-upstash-redis",
+        "client-admin-messaging-system-nextjs",
+        "client-project-tracker-nextjs-transparency",
+        "updated-web-development-services-pricing-2025",
+        "welcome-to-rc-web-solutions",
+        "black-friday-cyber-monday-2025-ecommerce-preparation",
+      ].map((slug) => ({
+        source: `/blog/${slug}`,
+        destination: "/blog",
+        permanent: true,
+      })),
     ];
   },
 
