@@ -6,7 +6,7 @@ import CaseStudyTemplate from "@/components/sections/CaseStudyTemplate";
 export const metadata = genPageMetadata({
   title: "Clinica Hispana Gessner Case Study - Bilingual Healthcare Website",
   description:
-    "How we helped Clinica Hispana Gessner replace their outdated WordPress site with a modern bilingual website. Lead capture, Google Business integration, and local SEO.",
+    "How I helped Clinica Hispana Gessner replace their outdated WordPress site with a modern bilingual website. Lead capture, Google Business integration, and local SEO.",
   pageRoute: "/case-study/clinica-gessner",
 });
 
@@ -25,7 +25,7 @@ export default function ClinicaGessnerCaseStudyPage() {
           name: "Clinica Hispana",
           nameHighlight: "Gessner",
           subtitle:
-            "How we replaced an outdated WordPress site with a modern bilingual website that helps Houston's Hispanic community find and contact the clinic online.",
+            "How I replaced an outdated WordPress site with a modern bilingual website that helps Houston's Hispanic community find and contact the clinic online.",
           siteUrl: "https://www.clinicagessner.com/",
           image: "/clinica-gessner.avif",
           imageAlt: "Clinica Hispana Gessner website screenshot",
@@ -37,7 +37,7 @@ export default function ClinicaGessnerCaseStudyPage() {
           ],
           techStack: ["Next.js", "React", "TypeScript", "Tailwind CSS", "Shadcn UI", "Zod"],
           challengesIntro:
-            "Before working with us, Clinica Gessner was struggling to connect with patients online despite serving a large Hispanic community in Houston.",
+            "Before working with me, Clinica Gessner was struggling to connect with patients online despite serving a large Hispanic community in Houston.",
           challenges: [
             {
               icon: "phone",
@@ -59,7 +59,7 @@ export default function ClinicaGessnerCaseStudyPage() {
             },
           ],
           solutionsIntro:
-            "We built a complete digital presence from scratch that connects the clinic with Houston's Hispanic community.",
+            "I built a complete digital presence from scratch that connects the clinic with Houston's Hispanic community.",
           solutions: [
             {
               title: "Modern Bilingual Website",

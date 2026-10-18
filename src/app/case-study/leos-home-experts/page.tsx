@@ -6,7 +6,7 @@ import CaseStudyTemplate from "@/components/sections/CaseStudyTemplate";
 export const metadata = genPageMetadata({
   title: "Leo's Home Experts Case Study - Home Services Website Houston",
   description:
-    "How we built a modern website for Leo's Home Experts, a Houston home services company. Lead capture, video gallery, local SEO, and Google Business integration.",
+    "How I built a modern website for Leo's Home Experts, a Houston home services company. Lead capture, video gallery, local SEO, and Google Business integration.",
   pageRoute: "/case-study/leos-home-experts",
 });
 
@@ -25,7 +25,7 @@ export default function LeosHomeExpertsCaseStudyPage() {
           name: "Leo's Home",
           nameHighlight: "Experts",
           subtitle:
-            "How we built a professional website for a Houston home services company specializing in patio construction, motorized screens, and awning installations.",
+            "How I built a professional website for a Houston home services company specializing in patio construction, motorized screens, and awning installations.",
           siteUrl: "https://www.ac-remodelingservice.com/",
           image: "/leos-home-experts.webp",
           imageAlt: "Leo's Home Experts website screenshot",
@@ -37,7 +37,7 @@ export default function LeosHomeExpertsCaseStudyPage() {
           ],
           techStack: ["Next.js", "React", "TypeScript", "Tailwind CSS", "Shadcn UI", "Zod", "React Hook Form"],
           challengesIntro:
-            "Before working with us, Leo's Home Experts had no professional online presence to showcase their quality craftsmanship to Houston homeowners.",
+            "Before working with me, Leo's Home Experts had no professional online presence to showcase their quality craftsmanship to Houston homeowners.",
           challenges: [
             {
               icon: "phone",
@@ -59,7 +59,7 @@ export default function LeosHomeExpertsCaseStudyPage() {
             },
           ],
           solutionsIntro:
-            "We built a professional landing page optimized for lead generation and local visibility across the Greater Houston area.",
+            "I built a professional landing page optimized for lead generation and local visibility across the Greater Houston area.",
           solutions: [
             {
               title: "Professional Landing Page",

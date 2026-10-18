@@ -614,7 +614,7 @@ export const services = [
     icon: CubeTransparentIcon,
     title: "Website Redesign and Modernization",
     description:
-      "Transform your outdated website into a modern, high-performance platform. We rebuild with current technology replacing legacy code.",
+      "Transform your outdated website into a modern, high-performance platform. I rebuild with current technology replacing legacy code.",
     features: ["Modern Design", "Performance Boost", "Mobile Optimization", "Content Migration"],
     highlight: "From Outdated to Outstanding",
     price: "$3,500",
@@ -644,12 +644,12 @@ export const faqs = [
   {
     question: "Do you work with clients outside USA?",
     answer:
-      "We work with clients worldwide. Our projects are fully remote, and we use tools like Zoom and Slack to communicate and collaborate effectively. Payments are easy and secure through Stripe, so you can work with us from anywhere.",
+      "I work with clients worldwide. Projects are fully remote, and I use tools like Zoom and Slack to communicate and collaborate effectively. Payments are easy and secure through Stripe, so you can work with me from anywhere.",
   },
   {
     question: "How long does a typical project take?",
     answer:
-      "It depends on the scope: Landing pages: 1-2 weeks, Professional websites: 3-4 weeks, Admin dashboards: 5-6 weeks, E-commerce: 6-10 weeks, Web applications: 8-12+ weeks. We always provide realistic timelines and meet them.",
+      "It depends on the scope: Landing pages: 1-2 weeks, Professional websites: 3-4 weeks, Admin dashboards: 5-6 weeks, E-commerce: 6-10 weeks, Web applications: 8-12+ weeks. I always provide realistic timelines and meet them.",
   },
   {
     question: "Do you offer post-launch support?",
@@ -659,17 +659,17 @@ export const faqs = [
   {
     question: "Do you work with technologies besides Next.js?",
     answer:
-      "Our specialty is the React/Next.js ecosystem with TypeScript, Node.js, and PostgreSQL - enterprise technology at small business pricing. We also have experience with vanilla JavaScript, and can adapt to project needs. We always recommend the best technology for each case.",
+      "My specialty is the React/Next.js ecosystem with TypeScript, Node.js, and PostgreSQL - enterprise technology at small business pricing. I also have experience with vanilla JavaScript, and can adapt to project needs. I always recommend the best technology for each case.",
   },
   {
     question: "How does the payment process work?",
     answer:
-      "We use a two-payment structure — 50% upfront to kick off your project and 50% once it's completed and delivered. Payment plans are available for projects over $3,000. You can pay conveniently via Zelle or through Stripe on our website.",
+      "I use a two-payment structure — 50% upfront to kick off your project and 50% once it's completed and delivered. Payment plans are available for projects over $3,000. You can pay conveniently via Zelle or through Stripe on our website.",
   },
   {
     question: "Can I see progress during development?",
     answer:
-      "Absolutely! We provide weekly progress updates and you'll have access to a staging environment where you can see real-time progress. We respond within 24 hours (usually much faster) to any questions or concerns. Transparency is key to our process.",
+      "Absolutely! I provide weekly progress updates and you'll have access to a staging environment where you can see real-time progress. I respond within 24 hours (usually much faster) to any questions or concerns. Transparency is key to my process.",
   },
 ];
 
