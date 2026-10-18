@@ -96,7 +96,7 @@ If updating your own website feels impossible, that's a design problem.
 
 **The fix:** A properly built website should be easy to maintain. I give every client:
 - Full ownership of their code and domain
-- A client portal to track projects and communicate
+- A private link to follow the project's progress, no account needed
 - Documentation for basic content updates
 - Optional maintenance plans starting at $200/month
 

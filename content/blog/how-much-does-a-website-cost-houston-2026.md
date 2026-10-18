@@ -117,7 +117,7 @@ I offer something most agencies in Houston don't:
 - **50/50 payment split** — Half upfront, half on delivery. No paying 100% before seeing results
 - **Bilingual service** — Native English and Spanish. I understand the Houston Hispanic market
 - **Modern technology** — Next.js and React, the same tech behind Nike and Netflix
-- **Client portal** — Track your project progress in real-time
+- **Project link** — Follow your project's progress through a private link, no account needed
 
 ---
 
