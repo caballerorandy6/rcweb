@@ -31,9 +31,9 @@ export default function GsmacCaseStudyPage() {
           imageAlt: "GSM AC Website Screenshot",
           stats: [
             { value: "15", label: "Hours Saved Weekly", suffix: "+" },
-            { value: "3", label: "Week Delivery", suffix: "" },
+            { value: "2", label: "Systems: Website + Admin", suffix: "" },
             { value: "95", label: "Lighthouse Score", suffix: "+" },
-            { value: "24/7", label: "Availability", suffix: "" },
+            { value: "1", label: "Send Reaches Every Customer", suffix: "" },
           ],
           techStack: [
             "Next.js",

@@ -77,9 +77,6 @@ const Testimonials = () => {
                       {testimonial.company}
                     </p>
                   )}
-                  <p className="text-xs font-inter text-white/60">
-                    {testimonial.time}
-                  </p>
                 </div>
               </div>
             </div>

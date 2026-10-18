@@ -128,7 +128,45 @@ export const experience: ExperienceProps[] = [
 ];
 
 export const projects: ProjectProps[] = [
-  // Real client projects — ordered by niche strength and credibility
+  // Client work first (most complete projects lead), then live personal apps;
+  // demos and course exercises are not listed
+  {
+    name: "GSM AC & General Contractor",
+    tecnologies: [
+      "NextJS",
+      "TypeScript",
+      "TailwindCSS",
+      "Tailwind UI",
+      "Zod",
+      "Zustand",
+      "Prisma",
+      "PostgreSQL",
+      "Docker",
+    ],
+    description:
+      "Custom website and admin dashboard for a Houston HVAC company. Automated email campaigns, service request management, and real-time client-side rendering. Saved the business 15+ hours per week.",
+    image: "/gsmactx.avif",
+    url: "https://www.gsmactx.com/",
+    caseStudy: "/case-study/gsmactx",
+  },
+  {
+    name: "Dulce Antojo Snack Carts",
+    tecnologies: [
+      "NextJS",
+      "React",
+      "TypeScript",
+      "TailwindCSS",
+      "Shadcn UI",
+      "Zod",
+      "Stripe",
+    ],
+    description:
+      "Official website and private admin dashboard with Stripe payment links for a Houston snack cart rental business. Booking form, local SEO, and card payments that let them book companies and schools.",
+    image: "/dulce-antojo.avif",
+    github: "https://github.com/caballerorandy6/dulce-antojo",
+    url: "https://www.dulcesantojosnackcarts.com/",
+    caseStudy: "/case-study/dulce-antojo",
+  },
   {
     name: "Clínica Hispana Gessner",
     tecnologies: [
@@ -162,26 +200,6 @@ export const projects: ProjectProps[] = [
     caseStudy: "/case-study/clinica-airline",
   },
   {
-    name: "GSM AC & General Contractor",
-    tecnologies: [
-      "NextJS",
-      "TypeScript",
-      "TailwindCSS",
-      "Tailwind UI",
-      "Zod",
-      "Zustand",
-      "Prisma",
-      "PostgreSQL",
-      "Docker",
-    ],
-    description:
-      "Custom website and admin dashboard for a Houston HVAC company. Automated email campaigns, service request management, and real-time client-side rendering. Saved the business 15+ hours per week.",
-    image: "/gsmactx.avif",
-    github: "https://github.com/caballerorandy6/gsmactx_2.0",
-    url: "https://www.gsmactx.com/",
-    caseStudy: "/case-study/gsmactx",
-  },
-  {
     name: "Leo's Home Experts",
     tecnologies: [
       "NextJS",
@@ -198,23 +216,6 @@ export const projects: ProjectProps[] = [
     github: "https://github.com/caballerorandy6/leos-home-experts",
     url: "https://www.ac-remodelingservice.com/",
     caseStudy: "/case-study/leos-home-experts",
-  },
-  {
-    name: "Dulce Antojo Snack Carts",
-    tecnologies: [
-      "NextJS",
-      "React",
-      "TypeScript",
-      "TailwindCSS",
-      "Shadcn UI",
-      "Zod",
-    ],
-    description:
-      "A modern landing page for a snack cart rental business in Houston, TX. Features service showcases, interactive booking forms, and optimized conversions for event catering services.",
-    image: "/dulce-antojo.avif",
-    github: "https://github.com/caballerorandy6/dulce-antojo",
-    url: "https://www.dulcesantojosnackcarts.com/",
-    caseStudy: "/case-study/dulce-antojo",
   },
   {
     name: "RC Beauty Salon",
@@ -235,26 +236,6 @@ export const projects: ProjectProps[] = [
     github: "https://github.com/caballerorandy6/rcbeautysalon",
     url: "https://www.rcbeautysalon.org/",
   },
-  // Personal/demo projects
-  {
-    name: "Family Timeline",
-    tecnologies: [
-      "NextJS",
-      "React",
-      "TypeScript",
-      "TailwindCSS",
-      "Shadcn UI",
-      "NodeJS",
-      "Express",
-      "Cloudinary",
-      "Turborepo",
-    ],
-    description:
-      "A modern fullstack monorepo application for creating and managing digital family trees. Build genealogies, preserve memories, and share family history with a beautiful timeline interface.",
-    image: "/family-timeline.avif",
-    github: "https://github.com/caballerorandy6/family-tree",
-    url: "https://family-tree-web-two.vercel.app/",
-  },
   {
     name: "Limo Renting",
     tecnologies: [
@@ -270,33 +251,6 @@ export const projects: ProjectProps[] = [
     image: "/limo-renting.avif",
     github: "https://github.com/caballerorandy6/Limo-Renting-NextJS",
     url: "https://limo-renting-next-js-nu.vercel.app/",
-  },
-  {
-    name: "Little Lemon Restaurant",
-    tecnologies: [
-      "NextJS",
-      "TypeScript",
-      "TailwindCSS",
-      "Shadcn UI",
-      "Zod",
-      "Zustand",
-      "Prisma",
-      "PostgreSQL",
-    ],
-    description:
-      "A restaurant website that showcases the menu, location, and contact information, built with Next.js and Tailwind CSS.",
-    image: "/littlelemon.avif",
-    github: "https://github.com/caballerorandy6/little-lemon-restaurant",
-    url: "https://little-lemon-restaurant-nine-omega.vercel.app/",
-  },
-  {
-    name: "Photographer Portfolio",
-    tecnologies: ["HTML", "CSS", "SASS"],
-    description:
-      "The website is an online portfolio showcasing a photographer's work, providing visitors with a collection of images and information about their services.",
-    image: "/photographer.avif",
-    github: "https://github.com/caballerorandy6/photographer-portfolio",
-    url: "https://photographerportfolio1.netlify.app",
   },
 ];
 
@@ -921,7 +875,6 @@ export const testimonials = [
     author: "Michel Chapelli",
     company: "GSM A/C & General Contractor Inc.",
     rating: 5,
-    time: "a month ago",
     highlight: "Saving 15 hours per week",
   },
   {
@@ -930,7 +883,6 @@ export const testimonials = [
     author: "Leonardo Lecour Acosta",
     company: "Leo's Home Experts",
     rating: 5,
-    time: "a week ago",
     highlight: "Clean, modern, and easy to use",
   },
   {
@@ -939,7 +891,6 @@ export const testimonials = [
     author: "Yoannis Aguilar Fonseca",
     company: "",
     rating: 5,
-    time: "2 days ago",
     highlight: "Optimized speed and SEO",
   },
 ];
