@@ -6,7 +6,7 @@ import CaseStudyTemplate from "@/components/sections/CaseStudyTemplate";
 export const metadata = genPageMetadata({
   title: "GSM AC Case Study - HVAC Business Automation",
   description:
-    "How we helped GSM A/C & General Contractor save 15 hours per week with a custom admin dashboard, automated email campaigns, and modern website. Full case study with results.",
+    "How I helped GSM A/C & General Contractor save 15 hours per week with a custom admin dashboard, automated email campaigns, and modern website. Full case study with results.",
   pageRoute: "/case-study/gsmactx",
 });
 
@@ -25,7 +25,7 @@ export default function GsmacCaseStudyPage() {
           name: "GSM A/C &",
           nameHighlight: "General Contractor",
           subtitle:
-            "How we helped a Houston HVAC company save 15+ hours per week with a custom admin dashboard and automated email marketing system.",
+            "How I helped a Houston HVAC company save 15+ hours per week with a custom admin dashboard and automated email marketing system.",
           siteUrl: "https://www.gsmactx.com/",
           image: "/gsmactx.avif",
           imageAlt: "GSM AC Website Screenshot",
@@ -47,7 +47,7 @@ export default function GsmacCaseStudyPage() {
             "Zustand",
           ],
           challengesIntro:
-            "Before working with us, GSM AC faced several operational challenges that were holding back business growth.",
+            "Before working with me, GSM AC faced several operational challenges that were holding back business growth.",
           challenges: [
             {
               icon: "clock",
@@ -56,20 +56,20 @@ export default function GsmacCaseStudyPage() {
                 "Michel was spending 15+ hours per week on repetitive administrative tasks like managing service requests, tracking leads, and sending follow-up emails manually.",
             },
             {
-              icon: "envelope",
-              title: "No Email Marketing System",
+              icon: "wrench",
+              title: "No Admin System",
               description:
-                "No efficient way to reach potential and existing customers. All marketing was done through word-of-mouth and expensive traditional advertising.",
+                "Service requests, customer details and follow-ups were all managed by hand, and there was no way to email their customers: marketing relied on word-of-mouth and expensive traditional advertising.",
             },
             {
               icon: "phone",
               title: "Outdated Website",
               description:
-                "The old website was not mobile-friendly, slow to load, and didn't convert visitors into leads effectively.",
+                "The old website ran on obsolete technology: slow to load, poor on phones, and it was not turning visitors into service requests.",
             },
           ],
           solutionsIntro:
-            "We built a comprehensive solution that addressed all challenges and transformed their business operations.",
+            "I built a comprehensive solution that addressed all challenges and transformed their business operations.",
           solutions: [
             {
               title: "Custom Admin Dashboard",
@@ -89,19 +89,19 @@ export default function GsmacCaseStudyPage() {
               features: [
                 "Email template builder",
                 "Contact list management",
-                "Campaign scheduling",
-                "Open & click tracking",
+                "Offers and updates to all customers in one send",
+                "Admin accounts with password recovery",
               ],
             },
             {
               title: "Modern Responsive Website",
               description:
-                "Redesigned the entire public-facing website with a focus on conversions, SEO, and mobile experience.",
+                "Rebuilt the public website from scratch with Next.js: a page for each service, online appointment booking, click-to-call and a financing link, with a focus on conversions and mobile experience.",
               features: [
-                "95+ Lighthouse performance score",
+                "Online appointment booking and click-to-call",
                 "Mobile-first responsive design",
-                "SEO optimization for local search",
-                "Fast loading with Next.js",
+                "Local SEO for Cypress and Houston",
+                "95+ Lighthouse performance score",
               ],
             },
           ],
@@ -127,14 +127,14 @@ export default function GsmacCaseStudyPage() {
           ],
           testimonial: {
             quote:
-              "Randy and his team transformed our business operations. The admin dashboard alone saves me over 15 hours every week. The email system lets me reach all my customers with just a few clicks. Highly recommend RC Web Solutions!",
+              "Randy transformed our business operations. The admin dashboard alone saves me over 15 hours every week. The email system lets me reach all my customers with just a few clicks. Highly recommend RC Web Solutions!",
             author: "Michel Chapelli",
             company: "Owner, GSM A/C & General Contractor Inc.",
           },
           ctaTitle: "Ready to Transform",
           ctaTitleHighlight: "Your Business?",
           ctaDescription:
-            "Let's discuss how we can build a custom solution that saves you time and grows your business.",
+            "Let's discuss how I can build a custom solution that saves you time and grows your business.",
           ctaLinks: [
             { label: "Start Your Project", href: "/#contact", primary: true },
             { label: "Schedule a Call", href: "/schedule" },

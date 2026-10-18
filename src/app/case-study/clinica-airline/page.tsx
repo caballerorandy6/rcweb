@@ -6,7 +6,7 @@ import CaseStudyTemplate from "@/components/sections/CaseStudyTemplate";
 export const metadata = genPageMetadata({
   title: "Clinica Hispana Airline Case Study - Bilingual Healthcare Website",
   description:
-    "How we helped Clinica Hispana Airline replace their WordPress site with a modern bilingual website. Lead capture, Google Business integration, and local SEO for Houston.",
+    "How I helped Clinica Hispana Airline replace their WordPress site with a modern bilingual website. Lead capture, Google Business integration, and local SEO for Houston.",
   pageRoute: "/case-study/clinica-airline",
 });
 
@@ -25,7 +25,7 @@ export default function ClinicaAirlineCaseStudyPage() {
           name: "Clinica Hispana",
           nameHighlight: "Airline",
           subtitle:
-            "How we built a modern bilingual website that connects a Houston clinic near Airline Drive with the Hispanic community they serve.",
+            "How I built a modern bilingual website that connects a Houston clinic near Airline Drive with the Hispanic community they serve.",
           siteUrl: "https://www.clinicahispanaairline.com/",
           image: "/clinica-hispana-airline.avif",
           imageAlt: "Clinica Hispana Airline website screenshot",
@@ -37,7 +37,7 @@ export default function ClinicaAirlineCaseStudyPage() {
           ],
           techStack: ["Next.js", "React", "TypeScript", "Tailwind CSS", "Shadcn UI", "Zod"],
           challengesIntro:
-            "Before working with us, Clinica Hispana Airline was missing the online presence needed to serve their community effectively.",
+            "Before working with me, Clinica Hispana Airline was missing the online presence needed to serve their community effectively.",
           challenges: [
             {
               icon: "phone",
@@ -59,7 +59,7 @@ export default function ClinicaAirlineCaseStudyPage() {
             },
           ],
           solutionsIntro:
-            "We built a modern bilingual website that serves as the clinic's primary patient acquisition channel.",
+            "I built a modern bilingual website that serves as the clinic's primary patient acquisition channel.",
           solutions: [
             {
               title: "Modern Bilingual Website",

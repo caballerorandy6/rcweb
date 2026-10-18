@@ -211,7 +211,7 @@ export default function CaseStudyTemplate({ data }: { data: CaseStudyData }) {
       <section className="py-20 bg-gray-800/30">
         <div className="mx-auto max-w-7xl px-6 lg:px-8">
           <div className="text-center mb-16 reveal">
-            <h2 className="text-3xl sm:text-4xl font-bold text-white font-iceland mb-4">Our <span className="text-gold">Solutions</span></h2>
+            <h2 className="text-3xl sm:text-4xl font-bold text-white font-iceland mb-4">The <span className="text-gold">Solution</span></h2>
             <p className="text-white/60 font-inter max-w-2xl mx-auto">{data.solutionsIntro}</p>
           </div>
           <div className="space-y-12">
