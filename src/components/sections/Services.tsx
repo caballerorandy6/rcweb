@@ -1,4 +1,5 @@
 import type { Route } from "next";
+import Link from "next/link";
 import { Cog6ToothIcon } from "@heroicons/react/24/outline";
 import { services } from "@/lib/data";
 import Heading from "@/components/ui/Heading";
@@ -25,6 +26,15 @@ const Services = () => {
               key={service.title}
               className="reveal group relative flex flex-col gap-6 rounded-2xl border border-gold/20 bg-gray-900/50 p-6 lg:p-8 backdrop-blur-xs transition-all duration-200 hover:scale-105 hover:border-gold/50 hover:bg-gold/5 shadow-lg shadow-black/20 w-full sm:w-[calc(50%-0.75rem)] lg:w-[calc(33.333%-1.5rem)]"
             >
+              {/* Stretched link: the whole card goes where "See Pricing" goes.
+                  Hidden from keyboard/AT so the button remains the only tab stop. */}
+              <Link
+                href={"#pricing" as Route}
+                className="absolute inset-0 rounded-2xl"
+                aria-hidden="true"
+                tabIndex={-1}
+              />
+
               <div className="flex items-center gap-4">
                 <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-gold/10 ring-1 ring-gold/30">
                   <service.icon className="h-6 w-6 text-gold" />
@@ -63,7 +73,7 @@ const Services = () => {
               <Button
                 href={"#pricing" as Route}
                 variant="secondary"
-                className="mt-4 w-full sm:w-auto"
+                className="relative mt-4 w-full sm:w-auto"
               >
                 See Pricing
                 <span aria-hidden="true">→</span>
