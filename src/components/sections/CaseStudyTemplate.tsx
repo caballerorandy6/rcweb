@@ -156,7 +156,7 @@ export default function CaseStudyTemplate({ data }: { data: CaseStudyData }) {
             {data.stats.map((stat) => (
               <div
                 key={stat.label}
-                className="text-center p-6 bg-gray-800/50 backdrop-blur-xs rounded-xl border border-gold/10"
+                className="text-center p-6 bg-gray-800/50 rounded-xl border border-gold/10"
               >
                 <div className="text-3xl sm:text-4xl font-bold text-gold font-iceland">
                   {stat.value}
@@ -196,7 +196,7 @@ export default function CaseStudyTemplate({ data }: { data: CaseStudyData }) {
             {data.challenges.map((challenge) => (
               <div
                 key={challenge.title}
-                className="bg-gray-800/50 backdrop-blur-xs rounded-xl p-8 border border-red-500/20 reveal"
+                className="bg-gray-800/50 rounded-xl p-8 border border-red-500/20 reveal"
               >
                 {(() => { const Icon = iconMap[challenge.icon]; return Icon ? <Icon className="w-10 h-10 text-red-400 mb-4" /> : null; })()}
                 <h3 className="text-xl font-bold text-white font-iceland mb-3">{challenge.title}</h3>
@@ -218,7 +218,7 @@ export default function CaseStudyTemplate({ data }: { data: CaseStudyData }) {
             {data.solutions.map((solution) => (
               <div
                 key={solution.title}
-                className="bg-gray-900/80 backdrop-blur-xs rounded-2xl p-8 border border-gold/20 reveal"
+                className="bg-gray-900/80 rounded-2xl p-8 border border-gold/20 reveal"
               >
                 <div className="grid md:grid-cols-2 gap-8">
                   <div>
@@ -268,7 +268,7 @@ export default function CaseStudyTemplate({ data }: { data: CaseStudyData }) {
         <section className="py-20 bg-gray-800/30">
           <div className="mx-auto max-w-4xl px-6 lg:px-8">
             <div
-              className="bg-gray-900/80 backdrop-blur-xs rounded-2xl p-8 sm:p-12 border border-gold/20 text-center reveal"
+              className="bg-gray-900/80 rounded-2xl p-8 sm:p-12 border border-gold/20 text-center reveal"
             >
               <div className="flex justify-center gap-1 mb-6">
                 {[...Array(5)].map((_, i) => (

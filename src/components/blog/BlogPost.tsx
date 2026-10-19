@@ -38,8 +38,8 @@ export default function BlogPost({ post }: BlogPostProps) {
       {/* Background decoration */}
       <div className="absolute inset-0 -z-10">
         <div className="absolute inset-0 bg-[url('/grid.svg')] bg-center opacity-10"></div>
-        <div className="absolute top-0 -left-4 w-96 h-96 bg-gold/10 rounded-full blur-3xl animate-pulse"></div>
-        <div className="absolute bottom-0 -right-4 w-96 h-96 bg-gold/10 rounded-full blur-3xl animate-pulse delay-1000"></div>
+        <div className="absolute top-0 -left-4 w-96 h-96 rounded-full bg-radial from-gold/10 to-transparent to-70%"></div>
+        <div className="absolute bottom-0 -right-4 w-96 h-96 rounded-full bg-radial from-gold/10 to-transparent to-70%"></div>
       </div>
 
       <div className="mx-auto max-w-4xl px-6 lg:px-8">
@@ -56,7 +56,7 @@ export default function BlogPost({ post }: BlogPostProps) {
 
         {/* Article Header */}
         <article
-          className="bg-linear-to-br from-gray-800/50 to-gray-900/50 backdrop-blur-lg rounded-2xl border border-gray-700/50 overflow-hidden animate-enter [animation-delay:100ms]"
+          className="bg-linear-to-br from-gray-800/50 to-gray-900/50 rounded-2xl border border-gray-700/50 overflow-hidden animate-enter [animation-delay:100ms]"
         >
           {/* Featured Image */}
           {post.image && (

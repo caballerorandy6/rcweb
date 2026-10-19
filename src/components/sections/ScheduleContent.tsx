@@ -64,8 +64,8 @@ export default function ScheduleContent() {
         {/* Background decoration */}
         <div className="absolute inset-0 -z-10">
           <div className="absolute inset-0 bg-[url('/grid.svg')] bg-center opacity-10"></div>
-          <div className="absolute top-0 -left-4 w-72 h-72 bg-gold/10 rounded-full blur-3xl animate-pulse"></div>
-          <div className="absolute bottom-0 -right-4 w-72 h-72 bg-gold/10 rounded-full blur-3xl animate-pulse delay-1000"></div>
+          <div className="absolute top-0 -left-4 w-72 h-72 rounded-full bg-radial from-gold/10 to-transparent to-70%"></div>
+          <div className="absolute bottom-0 -right-4 w-72 h-72 rounded-full bg-radial from-gold/10 to-transparent to-70%"></div>
         </div>
 
         <div className="mx-auto max-w-7xl px-6 lg:px-8">
@@ -79,7 +79,7 @@ export default function ScheduleContent() {
 
           {/* Hero Section */}
           <div className="mt-16 max-w-4xl mx-auto">
-            <div className="bg-linear-to-r from-gold/10 to-gold/5 backdrop-blur-lg rounded-2xl p-8 border border-gold/20 shadow-xl shadow-black/50">
+            <div className="bg-linear-to-r from-gold/10 to-gold/5 rounded-2xl p-8 border border-gold/20 shadow-xl shadow-black/50">
               <p className="text-white/90 text-lg leading-relaxed font-inter text-center">
                 Book a{" "}
                 <span className="text-gold font-bold">
@@ -116,7 +116,7 @@ export default function ScheduleContent() {
             ].map((benefit) => (
               <div
                 key={benefit.title}
-                className="bg-gray-900/60 backdrop-blur-md rounded-xl border border-gold/20 p-6 hover:border-gold/40 hover:scale-105 transition-all duration-300"
+                className="bg-gray-900/60 rounded-xl border border-gold/20 p-6 hover:border-gold/40 hover:scale-105 transition-all duration-300"
               >
                 <div className="text-gold mb-4">{benefit.icon}</div>
                 <h2 className="text-xl font-bold text-gold font-iceland mb-2">
@@ -134,7 +134,7 @@ export default function ScheduleContent() {
             ref={discussRef}
             className={`mt-16 max-w-4xl mx-auto ${discussInView ? 'animate-fade-in-up' : 'opacity-0'}`}
           >
-            <div className="bg-gray-900/60 backdrop-blur-md rounded-xl border border-gold/20 p-8">
+            <div className="bg-gray-900/60 rounded-xl border border-gold/20 p-8">
               <h2 className="text-3xl font-bold text-gold font-iceland mb-6 text-center">
                 What We&apos;ll Discuss
               </h2>
@@ -163,7 +163,7 @@ export default function ScheduleContent() {
 
           {/* Embedded Calendly Widget - Lazy loaded on click */}
           <div className="mt-16 max-w-4xl mx-auto">
-            <div className="bg-gray-900/60 backdrop-blur-md rounded-xl border border-gold/20 p-4 overflow-hidden">
+            <div className="bg-gray-900/60 rounded-xl border border-gold/20 p-4 overflow-hidden">
               {showCalendly ? (
                 <div
                   className="calendly-inline-widget"

@@ -204,7 +204,7 @@ const Navbar = () => {
           <div className="absolute inset-0 overflow-hidden">
             <div className="pointer-events-none fixed inset-y-0 right-0 flex max-w-full">
               <DialogPanel className="pointer-events-auto w-screen max-w-sm">
-                <div className="flex h-full flex-col bg-linear-to-b from-gray-900 via-gray-900 to-gray-950 backdrop-blur-xl shadow-2xl border-l border-gold/10">
+                <div className="flex h-full flex-col bg-linear-to-b from-gray-900 via-gray-900 to-gray-950 shadow-2xl border-l border-gold/10">
                   {/* Header */}
                   <div className="flex items-center justify-between px-6 py-5 border-b border-gold/20 bg-gold/5">
                     <Logo className="w-32 h-auto" onClick={handleClickModal} />

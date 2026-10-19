@@ -15,8 +15,8 @@ export default function BlogList({ posts }: BlogListProps) {
       {/* Background decoration */}
       <div className="absolute inset-0 -z-10">
         <div className="absolute inset-0 bg-[url('/grid.svg')] bg-center opacity-10"></div>
-        <div className="absolute top-0 -left-4 w-96 h-96 bg-gold/20 rounded-full blur-3xl animate-pulse"></div>
-        <div className="absolute bottom-0 -right-4 w-96 h-96 bg-gold/20 rounded-full blur-3xl animate-pulse delay-1000"></div>
+        <div className="absolute top-0 -left-4 w-96 h-96 rounded-full bg-radial from-gold/20 to-transparent to-70%"></div>
+        <div className="absolute bottom-0 -right-4 w-96 h-96 rounded-full bg-radial from-gold/20 to-transparent to-70%"></div>
       </div>
 
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
@@ -43,7 +43,7 @@ export default function BlogList({ posts }: BlogListProps) {
         ) : (
           /* Empty State */
           <div className="mt-16 text-center max-w-2xl mx-auto reveal">
-            <div className="bg-gray-800/30 backdrop-blur-md rounded-2xl border border-gold/20 p-12">
+            <div className="bg-gray-800/30 rounded-2xl border border-gold/20 p-12">
               <BookOpenIcon className="w-16 h-16 text-gold/40 mx-auto mb-4" />
               <h3 className="text-2xl font-bold text-gold font-iceland mb-3">
                 Coming Soon

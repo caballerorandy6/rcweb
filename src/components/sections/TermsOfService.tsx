@@ -73,14 +73,14 @@ const TermsOfService = () => {
       {/* Background decoration */}
       <div className="absolute inset-0 -z-10">
         <div className="absolute inset-0 bg-[url('/grid.svg')] bg-center opacity-10"></div>
-        <div className="absolute top-0 -left-4 w-72 h-72 bg-gold/10 rounded-full blur-3xl animate-pulse"></div>
-        <div className="absolute bottom-0 -right-4 w-72 h-72 bg-gold/10 rounded-full blur-3xl animate-pulse delay-1000"></div>
+        <div className="absolute top-0 -left-4 w-72 h-72 rounded-full bg-radial from-gold/10 to-transparent to-70%"></div>
+        <div className="absolute bottom-0 -right-4 w-72 h-72 rounded-full bg-radial from-gold/10 to-transparent to-70%"></div>
       </div>
 
       <div className="relative z-10 mx-auto max-w-7xl px-6 lg:px-8">
         {/* Mensaje de advertencia y botón de regresar */}
         <div className="mb-8 max-w-5xl mx-auto animate-enter">
-          <div className="bg-amber-500/10 border border-amber-500/30 rounded-xl p-4 sm:p-6 backdrop-blur-xs">
+          <div className="bg-amber-500/10 border border-amber-500/30 rounded-xl p-4 sm:p-6">
             <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4">
               <div className="shrink-0">
                 <ExclamationTriangleIcon className="w-10 h-10 text-amber-500" />
@@ -110,7 +110,7 @@ const TermsOfService = () => {
 
         {/* Introduction Card */}
         <div className="mt-16 max-w-5xl mx-auto reveal">
-          <div className="bg-linear-to-r from-gold/10 to-gold/5 backdrop-blur-lg rounded-2xl p-8 border border-gold/20 shadow-xl shadow-black/50">
+          <div className="bg-linear-to-r from-gold/10 to-gold/5 rounded-2xl p-8 border border-gold/20 shadow-xl shadow-black/50">
             <p className="text-white/90 text-lg leading-relaxed font-inter">
               Welcome to{" "}
               <span className="text-gold font-bold">RC Web Solutions LLC</span>.
@@ -127,7 +127,7 @@ const TermsOfService = () => {
         {/* Main Content */}
         <div className="mt-12 max-w-5xl mx-auto reveal">
           <div className="legal-prose max-w-none">
-            <div className="bg-gray-900/60 backdrop-blur-md rounded-xl border border-gold/20 p-8 space-y-8">
+            <div className="bg-gray-900/60 rounded-xl border border-gold/20 p-8 space-y-8">
               {/* Acceptance of Terms */}
               <section>
                 <h2>
@@ -810,7 +810,7 @@ const TermsOfService = () => {
 
         {/* Date Information */}
         <div className="mt-12 max-w-5xl mx-auto reveal">
-          <div className="bg-gray-900/60 backdrop-blur-md rounded-xl border border-gold/10 p-6 text-center">
+          <div className="bg-gray-900/60 rounded-xl border border-gold/10 p-6 text-center">
             <div className="flex items-center justify-center gap-2 text-white/50 text-sm font-inter">
               <CalendarIcon className="w-4 h-4" />
               <span>Last updated: January 13, 2026</span>

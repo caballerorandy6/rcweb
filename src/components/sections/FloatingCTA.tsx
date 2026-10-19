@@ -193,7 +193,7 @@ const FloatingCTA = () => {
             transition (allow-discrete) and @starting-style drives the entrance */}
           <div
             className={clsx(
-              "flex flex-col gap-2 mb-2 p-3 rounded-2xl bg-gray-950/80 backdrop-blur-xl border border-white/10 shadow-2xl shadow-black/50 origin-bottom-right transition-all transition-discrete duration-200 ease-out",
+              "flex flex-col gap-2 mb-2 p-3 rounded-2xl bg-gray-950/95 border border-white/10 shadow-2xl shadow-black/50 origin-bottom-right transition-all transition-discrete duration-200 ease-out",
               isOpen
                 ? "starting:opacity-0 starting:scale-90 starting:translate-y-4"
                 : "hidden opacity-0 scale-90 translate-y-4",

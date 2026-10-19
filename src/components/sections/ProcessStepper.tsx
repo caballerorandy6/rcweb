@@ -63,7 +63,7 @@ export default function ProcessStepper({ steps }: ProcessStepperProps) {
 
       {/* Active Step Content: the key remounts it so the entrance replays */}
       <div key={activeStep} className="max-w-3xl mx-auto animate-enter">
-        <div className="bg-gray-900/50 backdrop-blur-xs rounded-2xl p-6 lg:p-8 border border-gold/20 shadow-lg shadow-black/20">
+        <div className="bg-gray-900/50 rounded-2xl p-6 lg:p-8 border border-gold/20 shadow-lg shadow-black/20">
           <div className="flex items-center gap-4 mb-6">
             <div className="w-14 h-14 bg-gold/10 rounded-xl flex items-center justify-center">
               {currentStep.icon}
