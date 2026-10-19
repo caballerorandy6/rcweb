@@ -108,7 +108,7 @@ export default function CaseStudyTemplate({ data }: { data: CaseStudyData }) {
                 </span>
               </div>
 
-              <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-white font-iceland mb-6">
+              <h1 className="text-4xl sm:text-5xl lg:text-6xl text-white font-iceland mb-6">
                 {data.name}{" "}
                 <span className="text-gold">{data.nameHighlight}</span>
               </h1>
@@ -158,7 +158,7 @@ export default function CaseStudyTemplate({ data }: { data: CaseStudyData }) {
                 key={stat.label}
                 className="text-center p-6 bg-gray-800/50 rounded-xl border border-gold/10"
               >
-                <div className="text-3xl sm:text-4xl font-bold text-gold font-iceland">
+                <div className="text-3xl sm:text-4xl text-gold font-iceland">
                   {stat.value}
                   {stat.suffix}
                 </div>
@@ -189,7 +189,7 @@ export default function CaseStudyTemplate({ data }: { data: CaseStudyData }) {
       <section className="py-20">
         <div className="mx-auto max-w-7xl px-6 lg:px-8">
           <div className="text-center mb-16 reveal">
-            <h2 className="text-3xl sm:text-4xl font-bold text-white font-iceland mb-4">The <span className="text-gold">Challenges</span></h2>
+            <h2 className="text-3xl sm:text-4xl text-white font-iceland mb-4">The <span className="text-gold">Challenges</span></h2>
             <p className="text-white/60 font-inter max-w-2xl mx-auto">{data.challengesIntro}</p>
           </div>
           <div className="grid md:grid-cols-3 gap-8">
@@ -199,7 +199,7 @@ export default function CaseStudyTemplate({ data }: { data: CaseStudyData }) {
                 className="bg-gray-800/50 rounded-xl p-8 border border-red-500/20 reveal"
               >
                 {(() => { const Icon = iconMap[challenge.icon]; return Icon ? <Icon className="w-10 h-10 text-red-400 mb-4" /> : null; })()}
-                <h3 className="text-xl font-bold text-white font-iceland mb-3">{challenge.title}</h3>
+                <h3 className="text-2xl text-white font-iceland mb-3">{challenge.title}</h3>
                 <p className="text-white/60 font-inter text-sm">{challenge.description}</p>
               </div>
             ))}
@@ -211,7 +211,7 @@ export default function CaseStudyTemplate({ data }: { data: CaseStudyData }) {
       <section className="py-20 bg-gray-800/30">
         <div className="mx-auto max-w-7xl px-6 lg:px-8">
           <div className="text-center mb-16 reveal">
-            <h2 className="text-3xl sm:text-4xl font-bold text-white font-iceland mb-4">The <span className="text-gold">Solution</span></h2>
+            <h2 className="text-3xl sm:text-4xl text-white font-iceland mb-4">The <span className="text-gold">Solution</span></h2>
             <p className="text-white/60 font-inter max-w-2xl mx-auto">{data.solutionsIntro}</p>
           </div>
           <div className="space-y-12">
@@ -222,7 +222,7 @@ export default function CaseStudyTemplate({ data }: { data: CaseStudyData }) {
               >
                 <div className="grid md:grid-cols-2 gap-8">
                   <div>
-                    <h3 className="text-2xl font-bold text-gold font-iceland mb-4">{solution.title}</h3>
+                    <h3 className="text-2xl text-gold font-iceland mb-4">{solution.title}</h3>
                     <p className="text-white/70 font-inter">{solution.description}</p>
                   </div>
                   <div>
@@ -246,7 +246,7 @@ export default function CaseStudyTemplate({ data }: { data: CaseStudyData }) {
       <section className="py-20">
         <div className="mx-auto max-w-7xl px-6 lg:px-8">
           <div className="text-center mb-16 reveal">
-            <h2 className="text-3xl sm:text-4xl font-bold text-white font-iceland mb-4">The <span className="text-gold">Results</span></h2>
+            <h2 className="text-3xl sm:text-4xl text-white font-iceland mb-4">The <span className="text-gold">Results</span></h2>
           </div>
           <div className="grid md:grid-cols-3 gap-8">
             {data.results.map((result) => (
@@ -255,7 +255,7 @@ export default function CaseStudyTemplate({ data }: { data: CaseStudyData }) {
                 className="bg-linear-to-b from-gold/10 to-transparent rounded-xl p-8 border border-gold/30 text-center reveal"
               >
                 {(() => { const Icon = iconMap[result.icon]; return Icon ? <Icon className="w-12 h-12 text-gold mx-auto mb-4" /> : null; })()}
-                <h3 className="text-xl font-bold text-gold font-iceland mb-2">{result.metric}</h3>
+                <h3 className="text-2xl text-gold font-iceland mb-2">{result.metric}</h3>
                 <p className="text-white/60 font-inter text-sm">{result.description}</p>
               </div>
             ))}
@@ -279,7 +279,7 @@ export default function CaseStudyTemplate({ data }: { data: CaseStudyData }) {
                 &ldquo;{data.testimonial.quote}&rdquo;
               </blockquote>
               <div>
-                <div className="text-gold font-bold font-iceland text-lg">{data.testimonial.author}</div>
+                <div className="text-gold font-inter font-semibold text-base">{data.testimonial.author}</div>
                 <div className="text-white/60 font-inter text-sm">{data.testimonial.company}</div>
               </div>
             </div>
@@ -291,7 +291,7 @@ export default function CaseStudyTemplate({ data }: { data: CaseStudyData }) {
       <section className={`py-20 ${data.testimonial ? "" : "bg-gray-800/30"}`}>
         <div className="mx-auto max-w-4xl px-6 lg:px-8 text-center">
           <div className="reveal">
-            <h2 className="text-3xl sm:text-4xl font-bold text-white font-iceland mb-4">
+            <h2 className="text-3xl sm:text-4xl text-white font-iceland mb-4">
               {data.ctaTitle} <span className="text-gold">{data.ctaTitleHighlight}</span>
             </h2>
             <p className="text-white/60 font-inter mb-8 max-w-xl mx-auto">{data.ctaDescription}</p>

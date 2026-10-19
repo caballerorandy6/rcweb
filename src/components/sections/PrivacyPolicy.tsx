@@ -206,7 +206,7 @@ export default function PrivacyPolicy() {
                   Types of Data Collected
                 </h3>
 
-                <h4 className="text-lg font-semibold text-gold/80 font-iceland mt-4 mb-2">
+                <h4 className="text-lg text-gold/80 font-inter font-semibold mt-4 mb-2">
                   Personal Data
                 </h4>
                 <p>
@@ -227,7 +227,7 @@ export default function PrivacyPolicy() {
                   <li>Usage Data</li>
                 </ul>
 
-                <h4 className="text-lg font-semibold text-gold/80 font-iceland mt-4 mb-2">
+                <h4 className="text-lg text-gold/80 font-inter font-semibold mt-4 mb-2">
                   Usage Data
                 </h4>
                 <p>
@@ -239,7 +239,7 @@ export default function PrivacyPolicy() {
                   unique device identifiers and other diagnostic data.
                 </p>
 
-                <h4 className="text-lg font-semibold text-gold/80 font-iceland mt-6 mb-2">
+                <h4 className="text-lg text-gold/80 font-inter font-semibold mt-6 mb-2">
                   SMS and Text Messaging Data
                 </h4>
                 <p>
@@ -1005,7 +1005,7 @@ export default function PrivacyPolicy() {
         {/* Contact Information */}
         <div className="mt-12 max-w-5xl mx-auto reveal">
           <div className="bg-linear-to-r from-gold/10 to-transparent rounded-xl border border-gold/20 p-8">
-            <h2 className="text-2xl font-bold text-gold font-iceland mb-6">
+            <h2 className="text-2xl text-gold font-iceland mb-6">
               Contact Us
             </h2>
             <p className="text-white/80 font-inter mb-6">

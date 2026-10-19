@@ -64,12 +64,12 @@ const Testimonials = () => {
 
               <div className="mt-8 flex items-center gap-4">
                 <div className="h-12 w-12 rounded-full bg-gold/10 flex items-center justify-center">
-                  <span className="text-lg font-iceland text-gold">
+                  <span className="text-base font-inter font-semibold text-gold">
                     {testimonial.author.charAt(0)}
                   </span>
                 </div>
                 <div>
-                  <p className="text-sm font-iceland text-white">
+                  <p className="text-sm font-inter text-white">
                     {testimonial.author}
                   </p>
                   {testimonial.company && (

@@ -202,23 +202,23 @@
   & h2 {
     margin-bottom: --spacing(4);
     font-family: var(--font-iceland);
-    font-size: var(--text-2xl);
-    line-height: var(--text-2xl--line-height);
-    font-weight: 700;
+    font-size: var(--text-3xl);
+    line-height: var(--text-3xl--line-height);
+    font-weight: 400;
     color: var(--color-gold);
   }
   & h3 {
     margin-top: --spacing(6);
     margin-bottom: --spacing(3);
     font-family: var(--font-iceland);
-    font-size: var(--text-xl);
-    line-height: var(--text-xl--line-height);
-    font-weight: 600;
+    font-size: var(--text-2xl);
+    line-height: var(--text-2xl--line-height);
+    font-weight: 400;
     color: --alpha(var(--color-gold) / 90%);
   }
   & h4 {
     margin-bottom: --spacing(2);
-    font-family: var(--font-iceland);
+    font-family: var(--font-inter);
     font-size: var(--text-lg);
     line-height: var(--text-lg--line-height);
     font-weight: 600;

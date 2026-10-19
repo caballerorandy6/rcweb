@@ -127,7 +127,7 @@ export default async function ServicePage({
                 All Services
               </Link>
 
-              <h1 className="text-4xl font-bold tracking-tight text-white sm:text-6xl font-iceland">
+              <h1 className="text-4xl tracking-tight text-white sm:text-6xl font-iceland">
                 {service.headline}
               </h1>
 
@@ -142,7 +142,7 @@ export default async function ServicePage({
                     Starting at
                   </span>
                 )}
-                <span className="text-2xl font-bold font-iceland text-gold">
+                <span className="text-2xl font-iceland text-gold">
                   {service.priceFrom}
                 </span>
               </div>
@@ -176,7 +176,7 @@ export default async function ServicePage({
         <section className="py-20 sm:py-28 bg-white/2">
           <div className="mx-auto max-w-7xl px-6 lg:px-8">
             <div className="mx-auto max-w-2xl text-center mb-16">
-              <h2 className="text-3xl font-bold tracking-tight text-white sm:text-4xl font-iceland">
+              <h2 className="text-3xl tracking-tight text-white sm:text-4xl font-iceland">
                 What&apos;s Included
               </h2>
             </div>
@@ -187,7 +187,7 @@ export default async function ServicePage({
                   key={feature.title}
                   className="rounded-2xl border border-white/10 bg-white/5 p-8"
                 >
-                  <h3 className="text-xl font-semibold text-white font-iceland">
+                  <h3 className="text-2xl text-white font-iceland">
                     {feature.title}
                   </h3>
                   <p className="mt-3 text-gray-400 font-inter leading-7">
@@ -204,7 +204,7 @@ export default async function ServicePage({
           <section className="py-20 sm:py-28">
             <div className="mx-auto max-w-7xl px-6 lg:px-8">
               <div className="mx-auto max-w-2xl text-center mb-16">
-                <h2 className="text-3xl font-bold tracking-tight text-white sm:text-4xl font-iceland">
+                <h2 className="text-3xl tracking-tight text-white sm:text-4xl font-iceland">
                   Related Projects
                 </h2>
                 <p className="mt-4 text-lg text-gray-400 font-inter">
@@ -221,7 +221,7 @@ export default async function ServicePage({
                     rel="noopener noreferrer"
                     className="group rounded-2xl border border-white/10 bg-white/5 p-8 hover:border-gold/30 transition-all duration-300"
                   >
-                    <h3 className="text-xl font-semibold text-white font-iceland group-hover:text-gold transition-colors">
+                    <h3 className="text-2xl text-white font-iceland group-hover:text-gold transition-colors">
                       {project.name}
                     </h3>
                     <p className="mt-3 text-gray-400 font-inter leading-7 line-clamp-3">
@@ -241,7 +241,7 @@ export default async function ServicePage({
         <section className="py-20 sm:py-28 bg-white/2">
           <div className="mx-auto max-w-7xl px-6 lg:px-8">
             <div className="mx-auto max-w-2xl text-center">
-              <h2 className="text-3xl font-bold tracking-tight text-white sm:text-4xl font-iceland">
+              <h2 className="text-3xl tracking-tight text-white sm:text-4xl font-iceland">
                 Ready to Get Started?
               </h2>
               <p className="mt-6 text-lg text-gray-400 font-inter">

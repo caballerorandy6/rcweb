@@ -57,7 +57,7 @@ export default function NotFound() {
 
         {/* 404 Text */}
         <div className="mb-4 animate-enter" style={enter(1)}>
-          <h1 className="text-8xl sm:text-9xl lg:text-[12rem] font-iceland font-bold text-gold animate-glitch">
+          <h1 className="text-8xl sm:text-9xl lg:text-[12rem] font-iceland text-gold animate-glitch">
             404
           </h1>
         </div>

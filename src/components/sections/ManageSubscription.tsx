@@ -51,7 +51,7 @@ export default function ManageSubscription() {
 
             {/* Header */}
             <div className="relative">
-              <h1 className="text-4xl md:text-5xl text-gold font-bold text-center font-iceland tracking-wide">
+              <h1 className="text-4xl md:text-5xl text-gold text-center font-iceland tracking-wide">
                 Manage Subscription
               </h1>
               <div className="w-24 h-1 bg-linear-to-r from-transparent via-gold to-transparent mx-auto mt-4 rounded-full"></div>
@@ -66,7 +66,7 @@ export default function ManageSubscription() {
                 <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-green-500/20 mb-6">
                   <CheckCircleIcon className="w-8 h-8 text-green-400" />
                 </div>
-                <h2 className="text-2xl font-bold font-iceland text-white mb-4">
+                <h2 className="text-2xl font-iceland text-white mb-4">
                   Check Your Email
                 </h2>
                 <p className="text-gray-400 font-inter mb-6">

@@ -22,7 +22,7 @@ const Heading = ({ children, icon, text, as: Tag = "h2" }: HeadingProps) => {
           {icon}
         </span>
 
-        <Tag className="text-2xl font-semibold text-gold font-iceland sm:text-3xl md:text-4xl lg:text-5xl">
+        <Tag className="text-2xl text-gold font-iceland sm:text-3xl md:text-4xl lg:text-5xl">
           {children}
         </Tag>
       </div>

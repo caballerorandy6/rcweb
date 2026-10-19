@@ -142,7 +142,7 @@ export default function Chat({ onClose }: ChatProps) {
             />
           </div>
           <div>
-            <h3 className="text-gold font-iceland text-xl">Maria</h3>
+            <h3 className="text-gold font-iceland text-2xl">Maria</h3>
             <p className="text-xs text-white/50 font-inter">AI Assistant</p>
           </div>
         </div>

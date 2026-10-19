@@ -54,7 +54,7 @@ const BlogSubscriptionForm = () => {
       <div className="bg-gray-900/80 border border-gray-700/50 rounded-2xl p-6">
         <div className="flex items-center gap-2 mb-4">
           <EnvelopeIcon className="w-6 h-6 text-gold" />
-          <h2 className="text-xl font-bold text-white font-iceland">
+          <h2 className="text-2xl text-white font-iceland">
             Subscribe to Blog
           </h2>
         </div>

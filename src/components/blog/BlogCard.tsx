@@ -98,7 +98,7 @@ export default function BlogCard({ post, as: Heading = "h2" }: BlogCardProps) {
           <span className="sr-only">Read: {post.title}</span>
         </Link>
 
-        <Heading className="text-2xl font-bold text-gold font-iceland mb-3 group-hover:text-gold/90 transition-colors">
+        <Heading className="text-2xl text-gold font-iceland mb-3 group-hover:text-gold/90 transition-colors">
           {post.title}
         </Heading>
 

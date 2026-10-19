@@ -23,7 +23,7 @@ export default function ThankYouPage() {
 
         {/* Main Content */}
         <div className="bg-linear-to-br from-gray-800/95 to-gray-900/95 rounded-2xl p-6 sm:p-8 md:p-10 lg:p-12 shadow-2xl border border-gray-700/50">
-          <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-gold text-center mb-4 md:mb-6 font-iceland">
+          <h1 className="text-3xl sm:text-4xl md:text-5xl text-gold text-center mb-4 md:mb-6 font-iceland">
             Thank You!
           </h1>
 

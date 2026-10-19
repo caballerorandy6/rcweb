@@ -49,7 +49,7 @@ export default function CheckoutModal() {
       <div className="bg-gray-900/95 rounded-2xl p-8 max-w-md w-full border border-gold/20 shadow-2xl shadow-gold/10 animate-enter">
         <h2
           id="checkout-title"
-          className="text-4xl font-bold text-gold mb-6 font-iceland"
+          className="text-4xl text-gold mb-6 font-iceland"
         >
           Complete Your Order
         </h2>

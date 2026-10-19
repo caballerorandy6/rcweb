@@ -119,7 +119,7 @@ export default function ScheduleContent() {
                 className="bg-gray-900/60 rounded-xl border border-gold/20 p-6 hover:border-gold/40 hover:scale-105 transition-all duration-300"
               >
                 <div className="text-gold mb-4">{benefit.icon}</div>
-                <h2 className="text-xl font-bold text-gold font-iceland mb-2">
+                <h2 className="text-2xl text-gold font-iceland mb-2">
                   {benefit.title}
                 </h2>
                 <p className="text-gray-300 text-sm font-inter">
@@ -135,7 +135,7 @@ export default function ScheduleContent() {
             className={`mt-16 max-w-4xl mx-auto ${discussInView ? 'animate-fade-in-up' : 'opacity-0'}`}
           >
             <div className="bg-gray-900/60 rounded-xl border border-gold/20 p-8">
-              <h2 className="text-3xl font-bold text-gold font-iceland mb-6 text-center">
+              <h2 className="text-3xl text-gold font-iceland mb-6 text-center">
                 What We&apos;ll Discuss
               </h2>
               <ul className="space-y-4 font-inter">
@@ -179,7 +179,7 @@ export default function ScheduleContent() {
                     <CalendarDaysIcon className="w-12 h-12 text-gold" />
                   </div>
                   <div className="text-center">
-                    <h3 className="text-2xl font-bold text-gold font-iceland mb-2">
+                    <h3 className="text-2xl text-gold font-iceland mb-2">
                       View Available Times
                     </h3>
                     <p className="text-gray-400 font-inter text-sm max-w-md">

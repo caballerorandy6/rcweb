@@ -60,7 +60,7 @@ const Experience = () => {
                     <div
                       className={`${index % 2 === 0 ? "lg:text-right" : ""}`}
                     >
-                      <h2 className="text-xl font-iceland text-white">
+                      <h2 className="text-2xl font-iceland text-white">
                         {item.title}
                       </h2>
                       <p className="text-sm font-inter text-gold/80">

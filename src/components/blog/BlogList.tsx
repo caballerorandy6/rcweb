@@ -45,7 +45,7 @@ export default function BlogList({ posts }: BlogListProps) {
           <div className="mt-16 text-center max-w-2xl mx-auto reveal">
             <div className="bg-gray-800/30 rounded-2xl border border-gold/20 p-12">
               <BookOpenIcon className="w-16 h-16 text-gold/40 mx-auto mb-4" />
-              <h3 className="text-2xl font-bold text-gold font-iceland mb-3">
+              <h3 className="text-2xl text-gold font-iceland mb-3">
                 Coming Soon
               </h3>
               <p className="text-white/60 font-inter leading-relaxed mb-6">

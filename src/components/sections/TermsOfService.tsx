@@ -86,7 +86,7 @@ const TermsOfService = () => {
                 <ExclamationTriangleIcon className="w-10 h-10 text-amber-500" />
               </div>
               <div className="grow">
-                <h2 className="text-amber-500 font-bold text-2xl mb-1 font-iceland">
+                <h2 className="text-amber-500 text-2xl mb-1 font-iceland">
                   Important: Review Required
                 </h2>
                 <p className="text-white/80 text-sm sm:text-base font-inter">

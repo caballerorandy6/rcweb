@@ -39,7 +39,7 @@ const Process = () => {
                     {index + 1}
                   </span>
                   <div className="text-left">
-                    <h2 className="font-iceland text-white">{step.title}</h2>
+                    <h2 className="font-inter font-semibold text-white">{step.title}</h2>
                     <p className="text-xs sm:text-sm font-inter text-gold/80">
                       {step.week}
                     </p>

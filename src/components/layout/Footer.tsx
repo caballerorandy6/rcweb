@@ -177,7 +177,7 @@ export default function Footer() {
 
             {/* Copyright - Centrado */}
             <div className="flex flex-col sm:flex-row items-center justify-center gap-2 sm:gap-4">
-              <p className="text-gold font-iceland text-xl lg:text-2xl flex items-center gap-2">
+              <p className="text-gold font-iceland text-2xl flex items-center gap-2">
                 © {new Date().getFullYear()} RC Web Solutions LLC
                 {/* <span className="relative flex h-2 w-2">
                   <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-gold opacity-75" />
