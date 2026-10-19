@@ -193,7 +193,7 @@ const FloatingCTA = () => {
             transition (allow-discrete) and @starting-style drives the entrance */}
           <div
             className={clsx(
-              "flex flex-col gap-2 mb-2 p-3 rounded-2xl bg-gray-950/95 border border-white/10 shadow-2xl shadow-black/50 origin-bottom-right transition-all transition-discrete duration-200 ease-out",
+              "flex flex-col gap-2 mb-2 p-3 rounded-2xl bg-gray-950/95 border border-white/10 shadow-2xl shadow-black/50 origin-bottom-right transition transition-discrete duration-200 ease-out",
               isOpen
                 ? "starting:opacity-0 starting:scale-90 starting:translate-y-4"
                 : "hidden opacity-0 scale-90 translate-y-4",
@@ -204,7 +204,7 @@ const FloatingCTA = () => {
               type="button"
               style={menuItemDelay(0)}
               onClick={handleChatOpen}
-              className={`${menuItemClass} group flex items-center gap-3 rounded-xl bg-linear-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 pl-3 pr-4 py-2.5 text-white shadow-lg hover:shadow-purple-500/25 transition-all duration-200 hover:scale-[1.02]`}
+              className={`${menuItemClass} group flex items-center gap-3 rounded-xl bg-linear-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 pl-3 pr-4 py-2.5 text-white shadow-lg hover:shadow-purple-500/25 transition duration-200 hover:scale-[1.02]`}
               aria-label="Chat with AI Assistant"
             >
               <div className="relative h-8 w-8 rounded-full overflow-hidden ring-2 ring-white/30">
@@ -228,7 +228,7 @@ const FloatingCTA = () => {
                 type="button"
                 style={menuItemDelay(index + 1)}
                 onClick={() => handlePrimaryClick(action)}
-                className={`${menuItemClass} group flex items-center gap-3 rounded-xl ${action.bgClass} pl-3 pr-4 py-2.5 text-white shadow-lg hover:shadow-xl transition-all duration-200 hover:scale-[1.02]`}
+                className={`${menuItemClass} group flex items-center gap-3 rounded-xl ${action.bgClass} pl-3 pr-4 py-2.5 text-white shadow-lg hover:shadow-xl transition duration-200 hover:scale-[1.02]`}
                 aria-label={action.label}
               >
                 <action.Icon className="h-6 w-6" />
@@ -251,7 +251,7 @@ const FloatingCTA = () => {
                   key={action.id}
                   type="button"
                   onClick={() => handleSocialClick(action)}
-                  className={`flex h-9 w-9 items-center justify-center rounded-lg ${action.bgClass} text-white shadow-md hover:shadow-lg transition-all duration-200 hover:scale-110`}
+                  className={`flex h-9 w-9 items-center justify-center rounded-lg ${action.bgClass} text-white shadow-md hover:shadow-lg transition duration-200 hover:scale-110`}
                   aria-label={`Connect on ${action.name}`}
                 >
                   <action.Icon />
@@ -264,7 +264,7 @@ const FloatingCTA = () => {
           <button
             type="button"
             onClick={() => setIsOpen(!isOpen)}
-            className={`relative flex h-14 w-14 items-center justify-center rounded-full shadow-xl transition-all duration-300 hover:scale-110 active:scale-95 ${
+            className={`relative flex h-14 w-14 items-center justify-center rounded-full shadow-xl transition duration-300 hover:scale-110 active:scale-95 ${
               isOpen
                 ? "bg-gray-800 hover:bg-gray-700 ring-1 ring-white/10"
                 : "bg-linear-to-br from-gold via-gold-light to-gold hover:from-gold-light hover:via-gold hover:to-gold-dark shadow-gold/30"

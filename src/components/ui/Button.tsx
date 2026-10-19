@@ -51,7 +51,7 @@ const Button = ({
   "aria-label": ariaLabel,
 }: ButtonProps) => {
   const classes = clsx(
-    "relative inline-flex items-center justify-center gap-2 font-inter font-semibold rounded-xl transition-all duration-300 overflow-hidden group",
+    "relative inline-flex items-center justify-center gap-2 font-inter font-semibold rounded-xl transition duration-300 overflow-hidden group",
     sizeClasses[size],
     variantClasses[variant],
     fullWidth && "w-full",

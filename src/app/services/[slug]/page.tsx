@@ -255,7 +255,7 @@ export default async function ServicePage({
                   Schedule Free Consultation
                 </Button>
               </div>
-              <p className="mt-6 text-sm text-gray-500 font-inter">
+              <p className="mt-6 text-sm text-gray-400 font-inter">
                 Or call directly:{" "}
                 <a
                   href="tel:+13463757534"

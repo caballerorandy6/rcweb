@@ -38,7 +38,7 @@ export default function Footer() {
               {contactItem && (
                 <Link
                   href={contactItem.hash as Route}
-                  className="inline-flex items-center gap-2 px-6 py-3 bg-linear-to-r from-gold to-gold-light text-gray-900 rounded-lg text-sm font-inter font-semibold hover:from-gold-light hover:to-gold transition-all duration-300 hover:shadow-lg hover:shadow-gold/20 hover:-translate-y-0.5 group"
+                  className="inline-flex items-center gap-2 px-6 py-3 bg-linear-to-r from-gold to-gold-light text-gray-900 rounded-lg text-sm font-inter font-semibold hover:from-gold-light hover:to-gold transition duration-300 hover:shadow-lg hover:shadow-gold/20 hover:-translate-y-0.5 group"
                 >
                   Get In Touch
                   <svg
@@ -69,7 +69,7 @@ export default function Footer() {
                   <li key={item.name}>
                     <Link
                       href={item.hash as Route}
-                      className="text-white/60 hover:text-gold transition-all duration-200 font-inter text-sm inline-flex items-center justify-center sm:justify-start w-full sm:w-auto group"
+                      className="text-white/60 hover:text-gold transition duration-200 font-inter text-sm inline-flex items-center justify-center sm:justify-start w-full sm:w-auto group"
                     >
                       <span className="w-1 h-1 bg-gold/50 rounded-full mr-2 opacity-0 group-hover:opacity-100 transition-opacity duration-200" />
                       {item.name}
@@ -89,7 +89,7 @@ export default function Footer() {
                   <li key={item.name}>
                     <Link
                       href={item.hash as Route}
-                      className="text-white/60 hover:text-gold transition-all duration-200 font-inter text-sm inline-flex items-center justify-center sm:justify-start w-full sm:w-auto group"
+                      className="text-white/60 hover:text-gold transition duration-200 font-inter text-sm inline-flex items-center justify-center sm:justify-start w-full sm:w-auto group"
                     >
                       <span className="w-1 h-1 bg-gold/50 rounded-full mr-2 opacity-0 group-hover:opacity-100 transition-opacity duration-200" />
                       {item.name}
@@ -100,7 +100,7 @@ export default function Footer() {
                   <li key={item.name}>
                     <Link
                       href={item.hash as Route}
-                      className="text-white/60 hover:text-gold transition-all duration-200 font-inter text-sm inline-flex items-center justify-center sm:justify-start w-full sm:w-auto group"
+                      className="text-white/60 hover:text-gold transition duration-200 font-inter text-sm inline-flex items-center justify-center sm:justify-start w-full sm:w-auto group"
                     >
                       <span className="w-1 h-1 bg-gold/50 rounded-full mr-2 opacity-0 group-hover:opacity-100 transition-opacity duration-200" />
                       {item.name}
@@ -155,7 +155,7 @@ export default function Footer() {
                     className="text-white/50 hover:text-gold transition-colors duration-200 font-inter text-xs relative group"
                   >
                     {item.name}
-                    <span className="absolute -bottom-0.5 left-0 w-0 h-px bg-gold transition-all duration-300 group-hover:w-full" />
+                    <span className="absolute -bottom-0.5 left-0 w-full h-px bg-gold scale-x-0 origin-left transition-transform duration-300 group-hover:scale-x-100" />
                   </Link>
                 ))}
               </nav>
@@ -169,7 +169,7 @@ export default function Footer() {
                     className="text-white/50 hover:text-gold transition-colors duration-200 font-inter text-xs relative group"
                   >
                     {link.name}
-                    <span className="absolute -bottom-0.5 left-0 w-0 h-px bg-gold transition-all duration-300 group-hover:w-full" />
+                    <span className="absolute -bottom-0.5 left-0 w-full h-px bg-gold scale-x-0 origin-left transition-transform duration-300 group-hover:scale-x-100" />
                   </Link>
                 ))}
               </nav>

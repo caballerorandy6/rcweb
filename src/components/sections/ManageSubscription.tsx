@@ -156,7 +156,7 @@ export default function ManageSubscription() {
 
             {/* Footer */}
             <div className="relative text-center">
-              <p className="text-gray-500 text-xs font-inter">
+              <p className="text-gray-400 text-xs font-inter">
                 Need help?{" "}
                 <a
                   href="mailto:contactus@rcweb.dev"

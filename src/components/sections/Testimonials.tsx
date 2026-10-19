@@ -43,7 +43,7 @@ const Testimonials = () => {
           {testimonials.map((testimonial) => (
             <div
               key={testimonial.author}
-              className="reveal group relative rounded-2xl border border-gold/20 bg-gray-900/50 p-6 lg:p-8 transition-all duration-200 hover:border-gold/50 hover:bg-gold/5 hover:scale-105 shadow-lg shadow-black/20 w-full sm:w-[calc(50%-0.75rem)] lg:w-[calc(33.333%-1.5rem)]"
+              className="reveal group relative rounded-2xl border border-gold/20 bg-gray-900/50 p-6 lg:p-8 transition duration-200 hover:border-gold/50 hover:bg-gold/5 hover:scale-105 shadow-lg shadow-black/20 w-full sm:w-[calc(50%-0.75rem)] lg:w-[calc(33.333%-1.5rem)]"
             >
               {/* Google badge */}
               <div className="absolute top-4 right-4">
@@ -89,7 +89,7 @@ const Testimonials = () => {
             href={GOOGLE_REVIEW_URL}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 px-6 py-3 text-sm font-inter font-semibold text-gold border-2 border-gold/50 hover:bg-gold/10 hover:border-gold/60 rounded-lg transition-all duration-200"
+            className="inline-flex items-center gap-2 px-6 py-3 text-sm font-inter font-semibold text-gold border-2 border-gold/50 hover:bg-gold/10 hover:border-gold/60 rounded-lg transition duration-200"
           >
             <GoogleIcon />
             Write a Review on Google

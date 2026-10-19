@@ -65,7 +65,7 @@ export default function BlogCard({ post, as: Heading = "h2" }: BlogCardProps) {
   const { label, icon: Icon } = getCategory(post.tags);
 
   return (
-    <article className="group relative flex flex-col overflow-hidden rounded-2xl bg-linear-to-br from-gray-800/50 to-gray-900/50 border border-gray-700/50 hover:border-gold/30 transition-all duration-300">
+    <article className="group relative flex flex-col overflow-hidden rounded-2xl bg-linear-to-br from-gray-800/50 to-gray-900/50 border border-gray-700/50 hover:border-gold/30 transition duration-300">
       {/* Category band */}
       <div className="relative flex items-center gap-3 px-6 py-5 bg-linear-to-r from-gold/15 via-gold/5 to-transparent border-b border-gray-700/50">
         <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-gold/10 border border-gold/20 text-gold group-hover:bg-gold/20 transition-colors">

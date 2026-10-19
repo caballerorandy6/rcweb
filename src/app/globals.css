@@ -317,6 +317,11 @@
   /* Typography - critical for readability */
 }
 @layer base {
+  /* Dark-only site: native scrollbars, form controls and autofill follow suit */
+  html {
+    color-scheme: dark;
+  }
+
   /* In-page anchors (#pricing, #services) scroll smoothly without JS */
   @media (prefers-reduced-motion: no-preference) {
     html {
