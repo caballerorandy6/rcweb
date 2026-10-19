@@ -278,9 +278,8 @@ const DialogForm = ({ closeModal: closeModalProp }: DialogFormProps) => {
               </div>
               <div className="flex-1">
                 <span className="text-sm text-gray-300 font-inter leading-relaxed">
-                  I would like to receive promotional emails and SMS marketing
-                  messages from RC Web Solutions LLC about special offers,
-                  discounts, and exclusive deals.
+                  I would like to receive promotional and informational emails
+                  and SMS messages from RC Web Solutions LLC about its services.
                   <span className="text-gray-500 block mt-1 text-xs">
                     Message frequency may vary. Message & data rates may apply.
                     Reply STOP to opt-out. Consent is not a condition of

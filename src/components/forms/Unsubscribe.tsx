@@ -76,7 +76,7 @@ export default function Unsubscribe() {
             <p className="text-sm text-gray-400">You will no longer receive:</p>
             <ul className="mt-2 text-sm text-gray-300 space-y-1">
               <li>• Marketing updates</li>
-              <li>• Special offers</li>
+              <li>• Service updates</li>
               <li>• Newsletter</li>
             </ul>
           </div>

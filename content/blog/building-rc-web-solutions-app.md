@@ -93,7 +93,6 @@ The current version includes:
 - Comprehensive analytics (GA4, Facebook Pixel)
 - SMS marketing integration (Twilio)
 - Advanced contact management
-- Special offer system with countdown timers
 
 **Result:** A complete business ecosystem in one application.
 
@@ -294,9 +293,9 @@ await resend.emails.send({
 
 #### **Twilio (SMS Marketing)**
 ```typescript
-// SMS campaigns for promotional offers
+// SMS campaigns to contacts who opted in
 await twilio.messages.create({
-  body: 'Special offer: 20% OFF web development!',
+  body: 'New on the RC Web blog: how much a website costs in Houston in 2026.',
   from: '+1234567890',
   to: customer.phone,
 });
@@ -419,7 +418,7 @@ async function sendBatchCampaign(campaignId: string) {
 - ✅ Track progress (emails sent, remaining, completion %)
 - ✅ Resume failed campaigns
 - ✅ Preview emails before sending
-- ✅ Multiple templates (Halloween, 20% OFF, etc.)
+- ✅ Multiple templates (newsletter, announcements, etc.)
 
 ### **2. Payment Processing with Stripe**
 
@@ -526,32 +525,6 @@ date: "2025-01-22"
 - ✅ Fast (static generation)
 - ✅ SEO optimized automatically
 - ✅ Easy to migrate
-
-### **6. Special Offers with Countdown Timer**
-
-```typescript
-// Real countdown that actually counts down
-useEffect(() => {
-  const endDate = new Date();
-  endDate.setDate(endDate.getDate() + 7); // 7 days from now
-  const endTime = endDate.getTime();
-
-  const updateTimer = () => {
-    const now = new Date().getTime();
-    const distance = endTime - now;
-
-    setTimeLeft({
-      days: Math.floor(distance / (1000 * 60 * 60 * 24)),
-      hours: Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)),
-      minutes: Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60)),
-      seconds: Math.floor((distance % (1000 * 60)) / 1000),
-    });
-  };
-
-  const timer = setInterval(updateTimer, 1000);
-  return () => clearInterval(timer);
-}, []);
-```
 
 ---
 
