@@ -1,8 +1,7 @@
 import Link from "next/link";
-import Image from "next/image";
-import type { Route } from "next";
-import { BookOpenIcon, CalendarIcon, ClockIcon } from "@heroicons/react/24/outline";
+import { BookOpenIcon } from "@heroicons/react/24/outline";
 import Heading from "@/components/ui/Heading";
+import BlogCard from "@/components/blog/BlogCard";
 import BlogSubscriptionForm from "@/components/blog/BlogSubscriptionForm";
 import type { BlogPost } from "@/lib/blog";
 
@@ -11,13 +10,6 @@ interface BlogListProps {
 }
 
 export default function BlogList({ posts }: BlogListProps) {
-  // Calculate read time (rough estimate: 200 words per minute)
-  const calculateReadTime = (content: string) => {
-    const words = content.trim().split(/\s+/).length;
-    const minutes = Math.ceil(words / 200);
-    return minutes;
-  };
-
   return (
     <section className="relative isolate overflow-hidden py-24 sm:py-32 bg-linear-to-b from-gray-900 via-gray-900/95 to-gray-900">
       {/* Background decoration */}
@@ -44,72 +36,8 @@ export default function BlogList({ posts }: BlogListProps) {
         {/* Blog Posts Grid */}
         {posts.length > 0 ? (
           <div className="mt-16 grid gap-8 md:grid-cols-2 lg:grid-cols-3">
-            {posts.map((post, index) => (
-              <article
-                key={post.slug}
-                className="group relative flex flex-col overflow-hidden rounded-2xl bg-linear-to-br from-gray-800/50 to-gray-900/50 backdrop-blur-lg border border-gray-700/50 hover:border-gold/30 transition-all duration-300"
-              >
-                {/* Featured Image */}
-                {post.image && (
-                  <div className="relative h-48 overflow-hidden bg-gray-800">
-                    <Image
-                      src={post.image}
-                      alt={post.title}
-                      fill
-                      priority={index === 0}
-                      sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
-                      className="object-cover group-hover:scale-105 transition-transform duration-300"
-                    />
-                    <div className="absolute inset-0 bg-linear-to-t from-gray-900 to-transparent opacity-60"></div>
-                  </div>
-                )}
-
-                <div className="flex flex-1 flex-col p-6">
-                  {/* Tags */}
-                  {post.tags && post.tags.length > 0 && (
-                    <div className="flex flex-wrap gap-2 mb-4">
-                      {post.tags.slice(0, 3).map((tag) => (
-                        <span
-                          key={tag}
-                          className="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold bg-gold/10 text-gold border border-gold/20 font-inter"
-                        >
-                          {tag}
-                        </span>
-                      ))}
-                    </div>
-                  )}
-
-                  {/* Title */}
-                  <Link href={`/blog/${post.slug}` as Route} className="absolute inset-0" aria-hidden="true">
-                    <span className="sr-only">{post.title}</span>
-                  </Link>
-                  <h2 className="text-2xl font-bold text-gold font-iceland mb-3 group-hover:text-gold/90 transition-colors relative">
-                    {post.title}
-                  </h2>
-
-                  {/* Description */}
-                  <p className="text-white/70 font-inter text-sm leading-relaxed mb-4 grow">
-                    {post.description}
-                  </p>
-
-                  {/* Meta information */}
-                  <div className="flex items-center gap-4 text-xs text-white/50 font-inter border-t border-gray-700/50 pt-4">
-                    <div className="flex items-center gap-1">
-                      <CalendarIcon className="w-4 h-4" />
-                      <time dateTime={post.date}>
-                        {post.date}
-                      </time>
-                    </div>
-                    <div className="flex items-center gap-1">
-                      <ClockIcon className="w-4 h-4" />
-                      <span>{calculateReadTime(post.content)} min read</span>
-                    </div>
-                  </div>
-                </div>
-
-                {/* Hover effect border */}
-                <div className="absolute inset-0 rounded-2xl bg-linear-to-r from-gold/0 via-gold/5 to-gold/0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"></div>
-              </article>
+            {posts.map((post) => (
+              <BlogCard key={post.slug} post={post} />
             ))}
           </div>
         ) : (
