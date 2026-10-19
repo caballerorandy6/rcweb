@@ -38,8 +38,8 @@ export default function BlogPost({ post }: BlogPostProps) {
       {/* Background decoration */}
       <div className="absolute inset-0 -z-10">
         <div className="absolute inset-0 bg-[url('/grid.svg')] bg-center opacity-10"></div>
-        <div className="absolute top-0 -left-4 w-96 h-96 bg-gold/10 rounded-full blur-3xl animate-pulse"></div>
-        <div className="absolute bottom-0 -right-4 w-96 h-96 bg-gold/10 rounded-full blur-3xl animate-pulse delay-1000"></div>
+        <div className="absolute top-0 -left-4 w-96 h-96 rounded-full bg-radial from-gold/10 to-transparent to-70%"></div>
+        <div className="absolute bottom-0 -right-4 w-96 h-96 rounded-full bg-radial from-gold/10 to-transparent to-70%"></div>
       </div>
 
       <div className="mx-auto max-w-4xl px-6 lg:px-8">
@@ -56,7 +56,7 @@ export default function BlogPost({ post }: BlogPostProps) {
 
         {/* Article Header */}
         <article
-          className="bg-linear-to-br from-gray-800/50 to-gray-900/50 backdrop-blur-lg rounded-2xl border border-gray-700/50 overflow-hidden animate-enter [animation-delay:100ms]"
+          className="bg-linear-to-br from-gray-800/50 to-gray-900/50 rounded-2xl border border-gray-700/50 overflow-hidden animate-enter [animation-delay:100ms]"
         >
           {/* Featured Image */}
           {post.image && (
@@ -89,7 +89,7 @@ export default function BlogPost({ post }: BlogPostProps) {
             )}
 
             {/* Title */}
-            <h1 className="text-4xl md:text-5xl font-bold text-gold font-iceland mb-6 leading-tight">
+            <h1 className="text-4xl md:text-5xl text-gold font-iceland mb-6 leading-tight">
               {post.title}
             </h1>
 
@@ -118,7 +118,7 @@ export default function BlogPost({ post }: BlogPostProps) {
 
             {/* Mid-Post Subscription CTA */}
             <div className="mt-8 p-6 bg-gray-800/50 border border-gold/20 rounded-xl">
-              <p className="text-gold font-bold font-iceland text-lg mb-2">
+              <p className="text-gold font-inter font-semibold text-lg mb-2">
                 Enjoying this article?
               </p>
               <p className="text-gray-400 text-sm font-inter mb-4">
@@ -134,22 +134,22 @@ export default function BlogPost({ post }: BlogPostProps) {
                 remarkPlugins={[remarkGfm]}
                 components={{
                   h1: ({ children }) => (
-                    <h1 className="text-3xl font-bold text-gold font-iceland mt-8 mb-4">
+                    <h1 className="text-3xl text-gold font-iceland mt-8 mb-4">
                       {children}
                     </h1>
                   ),
                   h2: ({ children }) => (
-                    <h2 className="text-2xl font-bold text-gold font-iceland mt-8 mb-4">
+                    <h2 className="text-2xl text-gold font-iceland mt-8 mb-4">
                       {children}
                     </h2>
                   ),
                   h3: ({ children }) => (
-                    <h3 className="text-xl font-bold text-gold/90 font-iceland mt-6 mb-3">
+                    <h3 className="text-xl text-gold/90 font-inter font-semibold mt-6 mb-3">
                       {children}
                     </h3>
                   ),
                   h4: ({ children }) => (
-                    <h4 className="text-lg font-bold text-gold/80 font-iceland mt-4 mb-2">
+                    <h4 className="text-lg text-gold/80 font-inter font-semibold mt-4 mb-2">
                       {children}
                     </h4>
                   ),
@@ -263,7 +263,7 @@ export default function BlogPost({ post }: BlogPostProps) {
 
             {/* Call to Action */}
             <div className="mt-12 p-8 bg-linear-to-r from-gold/10 to-gold/5 rounded-xl border border-gold/20">
-              <h3 className="text-2xl font-bold text-gold font-iceland mb-3">
+              <h3 className="text-2xl text-gold font-iceland mb-3">
                 Ready to Start Your Project?
               </h3>
               <p className="text-white/70 font-inter mb-6">

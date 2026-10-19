@@ -51,10 +51,10 @@ const BlogSubscriptionForm = () => {
 
   return (
     <div id="newsletter" className="w-full max-w-md mx-auto">
-      <div className="bg-gray-900/80 backdrop-blur-xs border border-gray-700/50 rounded-2xl p-6">
+      <div className="bg-gray-900/80 border border-gray-700/50 rounded-2xl p-6">
         <div className="flex items-center gap-2 mb-4">
           <EnvelopeIcon className="w-6 h-6 text-gold" />
-          <h2 className="text-xl font-bold text-white font-iceland">
+          <h2 className="text-2xl text-white font-iceland">
             Subscribe to Blog
           </h2>
         </div>
@@ -76,7 +76,7 @@ const BlogSubscriptionForm = () => {
               type="email"
               placeholder="your@email.com"
               aria-label="Email address for blog subscription"
-              className="w-full p-3 bg-gray-800/80 text-white rounded-xl border border-gray-700/60 focus:outline-hidden focus:border-gold focus:ring-2 focus:ring-gold/20 transition-all duration-300 font-inter placeholder-gray-500"
+              className="w-full p-3 bg-gray-800/80 text-white rounded-xl border border-gray-700/60 focus:outline-hidden focus:border-gold focus:ring-2 focus:ring-gold/20 transition duration-300 font-inter placeholder-gray-500"
             />
             <ErrorMessage
               errors={errors}
@@ -94,7 +94,7 @@ const BlogSubscriptionForm = () => {
             {isSubmitting ? "Subscribing..." : "Subscribe"}
           </Button>
 
-          <p className="text-gray-500 text-xs font-inter text-center">
+          <p className="text-gray-400 text-xs font-inter text-center">
             By subscribing you agree to receive emails from RC Web Solutions
             LLC. No spam.{" "}
             <Link

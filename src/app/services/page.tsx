@@ -46,7 +46,7 @@ export default function ServicesPage() {
           <div className="absolute inset-0 bg-linear-to-b from-gold/5 via-transparent to-transparent" />
           <div className="relative mx-auto max-w-7xl px-6 lg:px-8">
             <div className="mx-auto max-w-3xl text-center">
-              <h1 className="text-4xl font-bold tracking-tight text-white sm:text-6xl font-iceland">
+              <h1 className="text-4xl tracking-tight text-white sm:text-6xl font-iceland">
                 Web Development Services in{" "}
                 <span className="text-gold">Houston, TX</span>
               </h1>

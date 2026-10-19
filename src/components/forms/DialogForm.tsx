@@ -141,18 +141,16 @@ const DialogForm = ({ closeModal: closeModalProp }: DialogFormProps) => {
   return (
     <>
       <div className="relative">
-        <div className="absolute inset-0 bg-linear-to-br from-gold/5 via-transparent to-purple-500/5 rounded-2xl blur-xl"></div>
-
         <form
           onSubmit={(event) => handleSubmit(onSubmit)(event)}
           onFocus={handleFormInteraction}
-          className="relative space-y-6 bg-linear-to-br from-gray-900/95 to-gray-800/95 p-8 rounded-2xl shadow-2xl backdrop-blur-xs border border-gray-700/50 hover:border-gold/30 transition-all duration-500"
+          className="relative space-y-6 bg-linear-to-br from-gray-900/95 to-gray-800/95 p-8 rounded-2xl shadow-2xl border border-gray-700/50 hover:border-gold/30 transition duration-500"
         >
           <div className="absolute top-0 left-0 w-20 h-20 bg-gold/10 rounded-full blur-2xl"></div>
           <div className="absolute bottom-0 right-0 w-16 h-16 bg-purple-500/10 rounded-full blur-2xl"></div>
 
           <div className="relative">
-            <h2 className="text-4xl md:text-5xl text-gold  font-bold text-center font-iceland tracking-wide">
+            <h2 className="text-4xl md:text-5xl text-gold  text-center font-iceland tracking-wide">
               Let&apos;s Connect
             </h2>
             <div className="w-24 h-1 bg-linear-to-r from-transparent via-gold to-transparent mx-auto mt-4 rounded-full"></div>
@@ -177,7 +175,7 @@ const DialogForm = ({ closeModal: closeModalProp }: DialogFormProps) => {
                 {...register("name")}
                 type="text"
                 id="name"
-                className="w-full p-4 bg-gray-800/80 text-white rounded-xl border border-gray-700/60 focus:outline-hidden focus:border-gold focus:ring-2 focus:ring-gold/20 transition-all duration-300 font-inter placeholder-gray-400 hover:bg-gray-800 peer backdrop-blur-xs"
+                className="w-full p-4 bg-gray-800/80 text-white rounded-xl border border-gray-700/60 focus:outline-hidden focus:border-gold focus:ring-2 focus:ring-gold/20 transition duration-300 font-inter placeholder-gray-400 hover:bg-gray-800 peer"
                 placeholder="Full Name"
               />
               <div className="absolute inset-0 rounded-xl bg-linear-to-r from-gold/0 via-gold/5 to-gold/0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"></div>
@@ -201,7 +199,7 @@ const DialogForm = ({ closeModal: closeModalProp }: DialogFormProps) => {
                 {...register("email")}
                 type="email"
                 id="email"
-                className="w-full p-4 bg-gray-800/80 text-white rounded-xl border border-gray-700/60 focus:outline-hidden focus:border-gold focus:ring-2 focus:ring-gold/20 transition-all duration-300 font-inter placeholder-gray-400 hover:bg-gray-800 peer backdrop-blur-xs"
+                className="w-full p-4 bg-gray-800/80 text-white rounded-xl border border-gray-700/60 focus:outline-hidden focus:border-gold focus:ring-2 focus:ring-gold/20 transition duration-300 font-inter placeholder-gray-400 hover:bg-gray-800 peer"
                 placeholder="Email"
               />
               <div className="absolute inset-0 rounded-xl bg-linear-to-r from-gold/0 via-gold/5 to-gold/0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"></div>
@@ -225,7 +223,7 @@ const DialogForm = ({ closeModal: closeModalProp }: DialogFormProps) => {
                 {...register("phone")}
                 type="tel"
                 id="phone"
-                className="w-full p-4 bg-gray-800/80 text-white rounded-xl border border-gray-700/60 focus:outline-hidden focus:border-gold focus:ring-2 focus:ring-gold/20 transition-all duration-300 font-inter placeholder-gray-400 hover:bg-gray-800 peer backdrop-blur-xs"
+                className="w-full p-4 bg-gray-800/80 text-white rounded-xl border border-gray-700/60 focus:outline-hidden focus:border-gold focus:ring-2 focus:ring-gold/20 transition duration-300 font-inter placeholder-gray-400 hover:bg-gray-800 peer"
                 placeholder="Phone Number"
               />
               <div className="absolute inset-0 rounded-xl bg-linear-to-r from-gold/0 via-gold/5 to-gold/0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"></div>
@@ -248,7 +246,7 @@ const DialogForm = ({ closeModal: closeModalProp }: DialogFormProps) => {
               <textarea
                 {...register("message")}
                 id="message"
-                className="w-full p-4 bg-gray-800/80 text-white rounded-xl border border-gray-700/60 focus:outline-hidden focus:border-gold focus:ring-2 focus:ring-gold/20 transition-all duration-300 font-inter placeholder-gray-400 hover:bg-gray-800 peer backdrop-blur-xs resize-none"
+                className="w-full p-4 bg-gray-800/80 text-white rounded-xl border border-gray-700/60 focus:outline-hidden focus:border-gold focus:ring-2 focus:ring-gold/20 transition duration-300 font-inter placeholder-gray-400 hover:bg-gray-800 peer resize-none"
                 placeholder="Type your message..."
                 rows={5}
               />
@@ -268,19 +266,19 @@ const DialogForm = ({ closeModal: closeModalProp }: DialogFormProps) => {
 
           {/** Marketing Consent Checkbox */}
           <div className="group">
-            <label className="flex items-start space-x-3 cursor-pointer hover:bg-gray-800/30 p-3 rounded-lg transition-all duration-200">
+            <label className="flex items-start space-x-3 cursor-pointer hover:bg-gray-800/30 p-3 rounded-lg transition duration-200">
               <div className="flex items-center h-5 mt-1">
                 <input
                   {...register("marketingConsent")}
                   type="checkbox"
-                  className="w-5 h-5 bg-gray-800/80 border-2 border-gray-700/60 rounded-sm text-gold focus:ring-2 focus:ring-gold/20 focus:ring-offset-0 focus:ring-offset-gray-900 checked:bg-gold checked:border-gold cursor-pointer transition-all duration-200 hover:border-gold/50"
+                  className="w-5 h-5 bg-gray-800/80 border-2 border-gray-700/60 rounded-sm text-gold focus:ring-2 focus:ring-gold/20 focus:ring-offset-0 focus:ring-offset-gray-900 checked:bg-gold checked:border-gold cursor-pointer transition duration-200 hover:border-gold/50"
                 />
               </div>
               <div className="flex-1">
                 <span className="text-sm text-gray-300 font-inter leading-relaxed">
                   I would like to receive promotional and informational emails
                   and SMS messages from RC Web Solutions LLC about its services.
-                  <span className="text-gray-500 block mt-1 text-xs">
+                  <span className="text-gray-400 block mt-1 text-xs">
                     Message frequency may vary. Message & data rates may apply.
                     Reply STOP to opt-out. Consent is not a condition of
                     purchase or service. You can unsubscribe at any time.

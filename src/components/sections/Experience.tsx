@@ -49,7 +49,7 @@ const Experience = () => {
               <div
                 className={`w-full lg:w-5/12 ${index % 2 === 0 ? "lg:pr-12 lg:text-right" : "lg:pl-12"}`}
               >
-                <div className="group bg-gray-900/50 backdrop-blur-xs rounded-2xl p-6 lg:p-8 border border-gold/20 hover:border-gold/50 hover:bg-gold/5 transition-all duration-300 shadow-lg shadow-black/20">
+                <div className="group bg-gray-900/50 rounded-2xl p-6 lg:p-8 border border-gold/20 hover:border-gold/50 hover:bg-gold/5 transition-all duration-300 shadow-lg shadow-black/20">
                   {/* Icon */}
                   <div
                     className={`flex items-center gap-4 mb-4 ${index % 2 === 0 ? "lg:flex-row-reverse" : ""}`}
@@ -60,7 +60,7 @@ const Experience = () => {
                     <div
                       className={`${index % 2 === 0 ? "lg:text-right" : ""}`}
                     >
-                      <h2 className="text-xl font-iceland text-white">
+                      <h2 className="text-2xl font-iceland text-white">
                         {item.title}
                       </h2>
                       <p className="text-sm font-inter text-gold/80">

@@ -26,7 +26,7 @@ export default function ProjectsPortfolioPage() {
         <section className="pt-8 pb-20 sm:pt-12 sm:pb-28">
           <div className="mx-auto max-w-7xl px-6 lg:px-8">
             <div className="mx-auto max-w-3xl text-center mb-16">
-              <h1 className="text-4xl font-bold tracking-tight text-white sm:text-6xl font-iceland">
+              <h1 className="text-4xl tracking-tight text-white sm:text-6xl font-iceland">
                 Projects & <span className="text-gold">Case Studies</span>
               </h1>
               <p className="mt-6 text-lg leading-8 text-gray-300 font-inter">

@@ -45,13 +45,13 @@ export default function ManageSubscription() {
         <div className="relative">
           <div className="absolute inset-0 bg-linear-to-br from-gold/5 via-transparent to-purple-500/5 rounded-2xl blur-xl"></div>
 
-          <div className="relative space-y-6 bg-linear-to-br from-gray-900/95 to-gray-800/95 p-8 rounded-2xl shadow-2xl backdrop-blur-xs border border-gray-700/50 hover:border-gold/30 transition-all duration-500">
+          <div className="relative space-y-6 bg-linear-to-br from-gray-900/95 to-gray-800/95 p-8 rounded-2xl shadow-2xl border border-gray-700/50 hover:border-gold/30 transition-all duration-500">
             <div className="absolute top-0 left-0 w-20 h-20 bg-gold/10 rounded-full blur-2xl"></div>
             <div className="absolute bottom-0 right-0 w-16 h-16 bg-purple-500/10 rounded-full blur-2xl"></div>
 
             {/* Header */}
             <div className="relative">
-              <h1 className="text-4xl md:text-5xl text-gold font-bold text-center font-iceland tracking-wide">
+              <h1 className="text-4xl md:text-5xl text-gold text-center font-iceland tracking-wide">
                 Manage Subscription
               </h1>
               <div className="w-24 h-1 bg-linear-to-r from-transparent via-gold to-transparent mx-auto mt-4 rounded-full"></div>
@@ -66,7 +66,7 @@ export default function ManageSubscription() {
                 <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-green-500/20 mb-6">
                   <CheckCircleIcon className="w-8 h-8 text-green-400" />
                 </div>
-                <h2 className="text-2xl font-bold font-iceland text-white mb-4">
+                <h2 className="text-2xl font-iceland text-white mb-4">
                   Check Your Email
                 </h2>
                 <p className="text-gray-400 font-inter mb-6">
@@ -90,7 +90,7 @@ export default function ManageSubscription() {
                       {...register("email")}
                       type="email"
                       id="email"
-                      className="w-full p-4 bg-gray-800/80 text-white rounded-xl border border-gray-700/60 focus:outline-hidden focus:border-gold focus:ring-2 focus:ring-gold/20 transition-all duration-300 font-inter placeholder-gray-400 hover:bg-gray-800 peer backdrop-blur-xs"
+                      className="w-full p-4 bg-gray-800/80 text-white rounded-xl border border-gray-700/60 focus:outline-hidden focus:border-gold focus:ring-2 focus:ring-gold/20 transition-all duration-300 font-inter placeholder-gray-400 hover:bg-gray-800 peer"
                       placeholder="your@email.com"
                       autoComplete="email"
                     />
@@ -156,7 +156,7 @@ export default function ManageSubscription() {
 
             {/* Footer */}
             <div className="relative text-center">
-              <p className="text-gray-500 text-xs font-inter">
+              <p className="text-gray-400 text-xs font-inter">
                 Need help?{" "}
                 <a
                   href="mailto:contactus@rcweb.dev"

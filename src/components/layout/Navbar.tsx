@@ -204,14 +204,14 @@ const Navbar = () => {
           <div className="absolute inset-0 overflow-hidden">
             <div className="pointer-events-none fixed inset-y-0 right-0 flex max-w-full">
               <DialogPanel className="pointer-events-auto w-screen max-w-sm">
-                <div className="flex h-full flex-col bg-linear-to-b from-gray-900 via-gray-900 to-gray-950 backdrop-blur-xl shadow-2xl border-l border-gold/10">
+                <div className="flex h-full flex-col bg-linear-to-b from-gray-900 via-gray-900 to-gray-950 shadow-2xl border-l border-gold/10">
                   {/* Header */}
                   <div className="flex items-center justify-between px-6 py-5 border-b border-gold/20 bg-gold/5">
                     <Logo className="w-32 h-auto" onClick={handleClickModal} />
                     <button
                       type="button"
                       onClick={() => setIsOpen(false)}
-                      className="rounded-lg p-2 text-white/80 hover:text-gold hover:bg-gold/10 transition-all duration-300 cursor-pointer"
+                      className="rounded-lg p-2 text-white/80 hover:text-gold hover:bg-gold/10 transition duration-300 cursor-pointer"
                       aria-label="Close menu"
                     >
                       <XMarkIcon aria-hidden="true" className="w-6 h-6" />
@@ -255,7 +255,7 @@ const Navbar = () => {
                               handleClickModal();
                             }}
                             className={clsx(
-                              "relative block px-4 py-3.5 rounded-xl text-base font-inter font-medium transition-all duration-300 cursor-pointer group overflow-hidden",
+                              "relative block px-4 py-3.5 rounded-xl text-base font-inter font-medium transition duration-300 cursor-pointer group overflow-hidden",
                               isActive
                                 ? "bg-gold/20 text-gold border border-gold/30 shadow-lg shadow-gold/10"
                                 : "text-white/80 hover:text-gold border border-transparent hover:border-gold/30 hover:bg-gold/10 hover:shadow-md hover:shadow-gold/5 transform hover:scale-[1.02] active:scale-[0.98]"

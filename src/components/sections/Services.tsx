@@ -24,7 +24,7 @@ const Services = () => {
           {services.map((service) => (
             <li
               key={service.title}
-              className="reveal group relative flex flex-col gap-6 rounded-2xl border border-gold/20 bg-gray-900/50 p-6 lg:p-8 backdrop-blur-xs transition-all duration-200 hover:scale-105 hover:border-gold/50 hover:bg-gold/5 shadow-lg shadow-black/20 w-full sm:w-[calc(50%-0.75rem)] lg:w-[calc(33.333%-1.5rem)]"
+              className="reveal group relative flex flex-col gap-6 rounded-2xl border border-gold/20 bg-gray-900/50 p-6 lg:p-8 transition duration-200 hover:scale-105 hover:border-gold/50 hover:bg-gold/5 shadow-lg shadow-black/20 w-full sm:w-[calc(50%-0.75rem)] lg:w-[calc(33.333%-1.5rem)]"
             >
               {/* Stretched link: the whole card goes where "See Pricing" goes.
                   Hidden from keyboard/AT so the button remains the only tab stop. */}
@@ -39,7 +39,7 @@ const Services = () => {
                 <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-gold/10 ring-1 ring-gold/30">
                   <service.icon className="h-6 w-6 text-gold" />
                 </div>
-                <h3 className="text-xl font-iceland text-white">
+                <h3 className="text-2xl font-iceland text-white">
                   {service.title}
                 </h3>
               </div>

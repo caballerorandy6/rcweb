@@ -44,7 +44,7 @@ export default function Unsubscribe() {
               d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
             />
           </svg>
-          <h1 className="text-4xl font-bold text-gold mb-2 font-iceland">
+          <h1 className="text-4xl text-gold mb-2 font-iceland">
             Unsubscribed Successfully
           </h1>
           <p className="text-gray-300 font-inter">
@@ -62,7 +62,7 @@ export default function Unsubscribe() {
         </div>
       ) : (
         <div className="max-w-md w-full bg-gray-800 rounded-lg p-8">
-          <h1 className="text-4xl font-bold text-gold mb-2 font-iceland">
+          <h1 className="text-4xl text-gold mb-2 font-iceland">
             Unsubscribe from Emails
           </h1>
 

@@ -20,8 +20,8 @@ export default function PrivacyPolicy() {
       {/* Background decoration */}
       <div className="absolute inset-0 -z-10">
         <div className="absolute inset-0 bg-[url('/grid.svg')] bg-center opacity-10"></div>
-        <div className="absolute top-0 -left-4 w-72 h-72 bg-gold/10 rounded-full blur-3xl animate-pulse"></div>
-        <div className="absolute bottom-0 -right-4 w-72 h-72 bg-gold/10 rounded-full blur-3xl animate-pulse delay-1000"></div>
+        <div className="absolute top-0 -left-4 w-72 h-72 rounded-full bg-radial from-gold/10 to-transparent to-70%"></div>
+        <div className="absolute bottom-0 -right-4 w-72 h-72 rounded-full bg-radial from-gold/10 to-transparent to-70%"></div>
       </div>
 
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
@@ -40,7 +40,7 @@ export default function PrivacyPolicy() {
 
         {/* Introduction Card */}
         <div className="mt-16 max-w-5xl mx-auto reveal">
-          <div className="bg-linear-to-r from-gold/10 to-gold/5 backdrop-blur-lg rounded-2xl p-8 border border-gold/20 shadow-xl shadow-black/50">
+          <div className="bg-linear-to-r from-gold/10 to-gold/5 rounded-2xl p-8 border border-gold/20 shadow-xl shadow-black/50">
             <p className="text-white/90 text-lg leading-relaxed font-inter">
               This Privacy Policy describes Our policies and procedures on the
               collection, use and disclosure of Your information when You use
@@ -62,7 +62,7 @@ export default function PrivacyPolicy() {
         {/* Main Content */}
         <div className="mt-12 max-w-5xl mx-auto reveal">
           <div className="legal-prose max-w-none">
-            <div className="bg-gray-900/60 backdrop-blur-md rounded-xl border border-gold/20 p-8 space-y-8">
+            <div className="bg-gray-900/60 rounded-xl border border-gold/20 p-8 space-y-8">
               {/* Interpretation and Definitions */}
               <section>
                 <h2>
@@ -206,7 +206,7 @@ export default function PrivacyPolicy() {
                   Types of Data Collected
                 </h3>
 
-                <h4 className="text-lg font-semibold text-gold/80 font-iceland mt-4 mb-2">
+                <h4 className="text-lg text-gold/80 font-inter font-semibold mt-4 mb-2">
                   Personal Data
                 </h4>
                 <p>
@@ -227,7 +227,7 @@ export default function PrivacyPolicy() {
                   <li>Usage Data</li>
                 </ul>
 
-                <h4 className="text-lg font-semibold text-gold/80 font-iceland mt-4 mb-2">
+                <h4 className="text-lg text-gold/80 font-inter font-semibold mt-4 mb-2">
                   Usage Data
                 </h4>
                 <p>
@@ -239,7 +239,7 @@ export default function PrivacyPolicy() {
                   unique device identifiers and other diagnostic data.
                 </p>
 
-                <h4 className="text-lg font-semibold text-gold/80 font-iceland mt-6 mb-2">
+                <h4 className="text-lg text-gold/80 font-inter font-semibold mt-6 mb-2">
                   SMS and Text Messaging Data
                 </h4>
                 <p>
@@ -1004,8 +1004,8 @@ export default function PrivacyPolicy() {
 
         {/* Contact Information */}
         <div className="mt-12 max-w-5xl mx-auto reveal">
-          <div className="bg-linear-to-r from-gold/10 to-transparent backdrop-blur-md rounded-xl border border-gold/20 p-8">
-            <h2 className="text-2xl font-bold text-gold font-iceland mb-6">
+          <div className="bg-linear-to-r from-gold/10 to-transparent rounded-xl border border-gold/20 p-8">
+            <h2 className="text-2xl text-gold font-iceland mb-6">
               Contact Us
             </h2>
             <p className="text-white/80 font-inter mb-6">

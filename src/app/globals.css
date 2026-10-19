@@ -143,7 +143,11 @@
 @utility reveal {
   @supports (animation-timeline: view()) {
     @media (prefers-reduced-motion: no-preference) {
-      animation: reveal-up linear both;
+      /* Longhands on purpose: the CSS minifier folds `animation` +
+         `animation-timeline` into one shorthand that browsers reject */
+      animation-name: reveal-up;
+      animation-timing-function: linear;
+      animation-fill-mode: both;
       animation-timeline: view();
       animation-range: entry 0% entry 35%;
     }
@@ -198,23 +202,23 @@
   & h2 {
     margin-bottom: --spacing(4);
     font-family: var(--font-iceland);
-    font-size: var(--text-2xl);
-    line-height: var(--text-2xl--line-height);
-    font-weight: 700;
+    font-size: var(--text-3xl);
+    line-height: var(--text-3xl--line-height);
+    font-weight: 400;
     color: var(--color-gold);
   }
   & h3 {
     margin-top: --spacing(6);
     margin-bottom: --spacing(3);
     font-family: var(--font-iceland);
-    font-size: var(--text-xl);
-    line-height: var(--text-xl--line-height);
-    font-weight: 600;
+    font-size: var(--text-2xl);
+    line-height: var(--text-2xl--line-height);
+    font-weight: 400;
     color: --alpha(var(--color-gold) / 90%);
   }
   & h4 {
     margin-bottom: --spacing(2);
-    font-family: var(--font-iceland);
+    font-family: var(--font-inter);
     font-size: var(--text-lg);
     line-height: var(--text-lg--line-height);
     font-weight: 600;
@@ -258,14 +262,6 @@
   animation: hero-title 0.6s ease-out forwards;
 }
 
-@utility animateProjectCard {
-  view-timeline-name: --image;
-  view-timeline-axis: block;
-  animation-timeline: --image;
-  animation-fill-mode: both;
-  animation-name: show;
-}
-
 @utility animateHeadingDialog {
   /* Fallback estático: navbar siempre legible aunque el navegador no
      soporte scroll-driven animations (Firefox estable, Safari viejos) */
@@ -277,9 +273,28 @@
     background: transparent;
     backdrop-filter: none;
     box-shadow: none;
-    animation: blur linear both;
-    animation-timeline: scroll();
-    animation-range: 0 500px;
+    isolation: isolate;
+
+    /* The frosted layer is static; only its opacity follows the scroll, so
+       the browser never re-rasterizes a changing blur radius or shadow */
+    &::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      z-index: -1;
+      background: rgba(0, 0, 0, 0.4);
+      backdrop-filter: blur(10px);
+      box-shadow:
+        0px 5px 50px -5px hsla(0, 0%, 100%, 0.2),
+        0px 0px 0px 1px hsla(0, 0%, 100%, 0.1);
+      opacity: 0;
+      /* Longhands on purpose, see `reveal` */
+      animation-name: navbar-backdrop;
+      animation-timing-function: linear;
+      animation-fill-mode: both;
+      animation-timeline: scroll();
+      animation-range: 0 500px;
+    }
   }
 }
 
@@ -302,6 +317,11 @@
   /* Typography - critical for readability */
 }
 @layer base {
+  /* Dark-only site: native scrollbars, form controls and autofill follow suit */
+  html {
+    color-scheme: dark;
+  }
+
   /* In-page anchors (#pricing, #services) scroll smoothly without JS */
   @media (prefers-reduced-motion: no-preference) {
     html {
@@ -353,24 +373,9 @@
 
 /* Below-the-fold animations - defer loaded */
 @layer components {
-  @keyframes show {
-    from {
-      opacity: 0;
-      scale: 90%;
-    }
+  @keyframes navbar-backdrop {
     to {
       opacity: 1;
-      scale: 100%;
-    }
-  }
-
-  @keyframes blur {
-    to {
-      box-shadow:
-        0px 5px 50px -5px hsla(0, 0%, 100%, 0.2),
-        0px 0px 0px 1px hsla(0, 0%, 100%, 0.1);
-      background: rgba(0, 0, 0, 0.4);
-      backdrop-filter: blur(10px);
     }
   }
 }
