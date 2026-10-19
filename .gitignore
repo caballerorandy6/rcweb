@@ -54,3 +54,6 @@ node_modules/
 
 # Playwright CLI workspace (snapshots, sessions)
 /.playwright-cli/
+
+# Impeccable per-machine overrides
+/.impeccable/config.local.json
