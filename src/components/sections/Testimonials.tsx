@@ -50,7 +50,11 @@ const Testimonials = () => {
                 <GoogleIcon />
               </div>
 
-              <div className="flex gap-1">
+              <div
+                className="flex gap-1"
+                role="img"
+                aria-label={`${testimonial.rating} out of 5 stars`}
+              >
                 {[...Array(testimonial.rating)].map((_, i) => (
                   <StarIcon key={`star-${testimonial.author}-${i}`} className="h-5 w-5 text-yellow-400" />
                 ))}

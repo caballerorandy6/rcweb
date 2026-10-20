@@ -29,9 +29,9 @@ const FAQ = () => {
               className="accordion group reveal rounded-lg border border-gold/20 bg-gray-900/50 transition-colors duration-200 hover:border-gold/50 shadow-lg shadow-black/20"
             >
               <summary className="flex cursor-pointer list-none items-center justify-between gap-4 px-6 py-4 text-left [&::-webkit-details-marker]:hidden">
-                <h2 className="text-base sm:text-lg font-inter font-semibold text-gold">
+                <h3 className="text-base sm:text-lg font-inter font-semibold text-gold">
                   {faq.question}
-                </h2>
+                </h3>
                 <ChevronDownIcon
                   aria-hidden="true"
                   className="h-5 w-5 shrink-0 text-gold transition-transform duration-200 group-open:rotate-180"

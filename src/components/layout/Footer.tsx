@@ -147,7 +147,7 @@ export default function Footer() {
             {/* Links navegación y legales */}
             <div className="flex flex-col sm:flex-row justify-between items-center gap-6">
               {/* Links principales */}
-              <nav className="flex flex-wrap justify-center sm:justify-start gap-x-6 gap-y-2">
+              <nav aria-label="Footer" className="flex flex-wrap justify-center sm:justify-start gap-x-6 gap-y-2">
                 {mainNavigation.slice(0, 4).map((item) => (
                   <Link
                     key={item.name}
@@ -161,7 +161,7 @@ export default function Footer() {
               </nav>
 
               {/* Links legales */}
-              <nav className="flex flex-wrap justify-center sm:justify-end gap-x-6 gap-y-2">
+              <nav aria-label="Legal" className="flex flex-wrap justify-center sm:justify-end gap-x-6 gap-y-2">
                 {extraFooterLinks.map((link) => (
                   <Link
                     key={link.name}

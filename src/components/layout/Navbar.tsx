@@ -87,6 +87,8 @@ const Navbar = () => {
                   <Link
                     key={item.name}
                     href={getHref(item.hash)}
+
+                    aria-current={isActive ? "page" : undefined}
                     onClick={() => {
                       withViewTransition(() => setActiveSection(item.name));
                       // Asegurar que el estado se mantenga después del scroll
@@ -138,6 +140,8 @@ const Navbar = () => {
                   <Link
                     key={item.name}
                     href={getHref(item.hash)}
+
+                    aria-current={isActive ? "page" : undefined}
                     onClick={() =>
                       withViewTransition(() => setActiveSection(item.name))
                     }
@@ -169,8 +173,10 @@ const Navbar = () => {
               <button
                 type="button"
                 onClick={handleClickModal}
-                className="text-white/80 hover:text-gold transition-colors cursor-pointer"
-                aria-label="Open navigation menu"
+                className="p-2.5 -m-2.5 rounded-lg text-white/80 hover:text-gold transition-colors cursor-pointer"
+                aria-label="Open menu"
+                aria-expanded={isOpen}
+                aria-controls="site-menu"
               >
                 <Bars3Icon className="w-6 h-6" aria-hidden="true" />
               </button>
@@ -180,8 +186,10 @@ const Navbar = () => {
             <button
               type="button"
               onClick={handleClickModal}
-              className="lg:hidden inline-flex items-center justify-center rounded-md text-white/80 hover:text-gold transition-colors cursor-pointer"
-              aria-label="Open mobile menu"
+              className="lg:hidden inline-flex items-center justify-center p-2.5 -m-2.5 rounded-lg text-white/80 hover:text-gold transition-colors cursor-pointer"
+              aria-label="Open menu"
+              aria-expanded={isOpen}
+              aria-controls="site-menu"
             >
               <Bars3Icon aria-hidden="true" className="w-6 h-6" />
             </button>
@@ -203,7 +211,7 @@ const Navbar = () => {
         <div className="fixed inset-0 overflow-hidden">
           <div className="absolute inset-0 overflow-hidden">
             <div className="pointer-events-none fixed inset-y-0 right-0 flex max-w-full">
-              <DialogPanel className="pointer-events-auto w-screen max-w-sm">
+              <DialogPanel id="site-menu" className="pointer-events-auto w-screen max-w-sm">
                 <div className="flex h-full flex-col bg-linear-to-b from-gray-900 via-gray-900 to-gray-950 shadow-2xl border-l border-gold/10">
                   {/* Header */}
                   <div className="flex items-center justify-between px-6 py-5 border-b border-gold/20 bg-gold/5">
@@ -220,7 +228,7 @@ const Navbar = () => {
 
                   {/* Navigation Items */}
                   <div className="flex-1 overflow-y-auto px-6 py-6">
-                    <nav className="space-y-2">
+                    <nav aria-label="Site" className="space-y-2">
                       {allNavigationItems.map((item) => {
                         // Skip CTA from regular menu
                         if (item.name === "CTA") return null;
@@ -233,6 +241,8 @@ const Navbar = () => {
                             <Button
                               key={item.name}
                               href={getHref(item.hash)}
+
+                              aria-current={isActive ? "page" : undefined}
                               size="lg"
                               fullWidth
                               className="mt-6"
@@ -250,6 +260,8 @@ const Navbar = () => {
                           <Link
                             key={item.name}
                             href={getHref(item.hash)}
+
+                            aria-current={isActive ? "page" : undefined}
                             onClick={() => {
                               setActiveSection(item.name);
                               handleClickModal();

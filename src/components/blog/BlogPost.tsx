@@ -133,10 +133,11 @@ export default function BlogPost({ post }: BlogPostProps) {
               <ReactMarkdown
                 remarkPlugins={[remarkGfm]}
                 components={{
+                  // The post title is already the page h1
                   h1: ({ children }) => (
-                    <h1 className="text-3xl text-gold font-iceland mt-8 mb-4">
+                    <h2 className="text-3xl text-gold font-iceland mt-8 mb-4">
                       {children}
-                    </h1>
+                    </h2>
                   ),
                   h2: ({ children }) => (
                     <h2 className="text-2xl text-gold font-iceland mt-8 mb-4">

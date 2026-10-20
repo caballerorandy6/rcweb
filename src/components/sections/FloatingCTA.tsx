@@ -189,6 +189,7 @@ const FloatingCTA = () => {
           contact section is in view (inner) */}
       <div className="fixed bottom-6 right-6 z-50 animate-enter">
         <div
+          inert={isContactInView}
           className={clsx(
             "flex flex-col items-end gap-3 transition duration-300 ease-out",
             isContactInView && "opacity-0 translate-y-12 pointer-events-none",
