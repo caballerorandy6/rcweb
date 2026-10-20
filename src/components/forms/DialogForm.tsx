@@ -171,12 +171,19 @@ const DialogForm = ({ closeModal: closeModalProp }: DialogFormProps) => {
           {/** Name Field */}
           <div className="group">
             <div className="relative">
+              <label htmlFor="name" className="sr-only">
+                Full name
+              </label>
               <input
                 {...register("name")}
+                autoComplete="name"
+                aria-required="true"
+                aria-invalid={errors.name ? true : undefined}
+                aria-describedby={errors.name ? "name-error" : undefined}
                 type="text"
                 id="name"
                 className="w-full p-4 bg-gray-800/80 text-white rounded-xl border border-gray-700/60 focus:outline-hidden focus:border-gold focus:ring-2 focus:ring-gold/20 transition duration-300 font-inter placeholder-gray-400 hover:bg-gray-800 peer"
-                placeholder="Full Name"
+                placeholder="Your full name…"
               />
               <div className="absolute inset-0 rounded-xl bg-linear-to-r from-gold/0 via-gold/5 to-gold/0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"></div>
             </div>
@@ -184,7 +191,7 @@ const DialogForm = ({ closeModal: closeModalProp }: DialogFormProps) => {
               errors={errors}
               name="name"
               render={({ message }) => (
-                <p className="text-red-400 text-sm mt-2 font-inter animate-pulse flex items-center">
+                <p id="name-error" role="alert" className="text-red-400 text-sm mt-2 font-inter flex items-center">
                   <span className="w-1 h-1 bg-red-400 rounded-full mr-2"></span>
                   {message}
                 </p>
@@ -195,12 +202,21 @@ const DialogForm = ({ closeModal: closeModalProp }: DialogFormProps) => {
           {/** Email Field */}
           <div className="group">
             <div className="relative">
+              <label htmlFor="email" className="sr-only">
+                Email address
+              </label>
               <input
                 {...register("email")}
+                autoComplete="email"
+                inputMode="email"
+                spellCheck={false}
+                aria-required="true"
+                aria-invalid={errors.email ? true : undefined}
+                aria-describedby={errors.email ? "email-error" : undefined}
                 type="email"
                 id="email"
                 className="w-full p-4 bg-gray-800/80 text-white rounded-xl border border-gray-700/60 focus:outline-hidden focus:border-gold focus:ring-2 focus:ring-gold/20 transition duration-300 font-inter placeholder-gray-400 hover:bg-gray-800 peer"
-                placeholder="Email"
+                placeholder="you@yourbusiness.com…"
               />
               <div className="absolute inset-0 rounded-xl bg-linear-to-r from-gold/0 via-gold/5 to-gold/0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"></div>
             </div>
@@ -208,7 +224,7 @@ const DialogForm = ({ closeModal: closeModalProp }: DialogFormProps) => {
               errors={errors}
               name="email"
               render={({ message }) => (
-                <p className="text-red-400 text-sm mt-2 font-inter animate-pulse flex items-center">
+                <p id="email-error" role="alert" className="text-red-400 text-sm mt-2 font-inter flex items-center">
                   <span className="w-1 h-1 bg-red-400 rounded-full mr-2"></span>
                   {message}
                 </p>
@@ -219,12 +235,20 @@ const DialogForm = ({ closeModal: closeModalProp }: DialogFormProps) => {
           {/** Phone Field */}
           <div className="group">
             <div className="relative">
+              <label htmlFor="phone" className="sr-only">
+                Phone number
+              </label>
               <input
                 {...register("phone")}
+                autoComplete="tel"
+                inputMode="tel"
+                aria-required="true"
+                aria-invalid={errors.phone ? true : undefined}
+                aria-describedby={errors.phone ? "phone-error" : undefined}
                 type="tel"
                 id="phone"
                 className="w-full p-4 bg-gray-800/80 text-white rounded-xl border border-gray-700/60 focus:outline-hidden focus:border-gold focus:ring-2 focus:ring-gold/20 transition duration-300 font-inter placeholder-gray-400 hover:bg-gray-800 peer"
-                placeholder="Phone Number"
+                placeholder="(346) 555-0123…"
               />
               <div className="absolute inset-0 rounded-xl bg-linear-to-r from-gold/0 via-gold/5 to-gold/0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"></div>
             </div>
@@ -232,7 +256,7 @@ const DialogForm = ({ closeModal: closeModalProp }: DialogFormProps) => {
               errors={errors}
               name="phone"
               render={({ message }) => (
-                <p className="text-red-400 text-sm mt-2 font-inter animate-pulse flex items-center">
+                <p id="phone-error" role="alert" className="text-red-400 text-sm mt-2 font-inter flex items-center">
                   <span className="w-1 h-1 bg-red-400 rounded-full mr-2"></span>
                   {message}
                 </p>
@@ -243,11 +267,16 @@ const DialogForm = ({ closeModal: closeModalProp }: DialogFormProps) => {
           {/** Message Field */}
           <div className="group">
             <div className="relative">
+              <label htmlFor="message" className="sr-only">
+                Your message
+              </label>
               <textarea
                 {...register("message")}
+                aria-invalid={errors.message ? true : undefined}
+                aria-describedby={errors.message ? "message-error" : undefined}
                 id="message"
                 className="w-full p-4 bg-gray-800/80 text-white rounded-xl border border-gray-700/60 focus:outline-hidden focus:border-gold focus:ring-2 focus:ring-gold/20 transition duration-300 font-inter placeholder-gray-400 hover:bg-gray-800 peer resize-none"
-                placeholder="Type your message..."
+                placeholder="Tell me about your project…"
                 rows={5}
               />
               <div className="absolute inset-0 rounded-xl bg-linear-to-r from-gold/0 via-gold/5 to-gold/0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"></div>
@@ -256,7 +285,7 @@ const DialogForm = ({ closeModal: closeModalProp }: DialogFormProps) => {
               errors={errors}
               name="message"
               render={({ message }) => (
-                <p className="text-red-400 text-sm mt-2 font-inter animate-pulse flex items-center">
+                <p id="message-error" role="alert" className="text-red-400 text-sm mt-2 font-inter flex items-center">
                   <span className="w-1 h-1 bg-red-400 rounded-full mr-2"></span>
                   {message}
                 </p>
@@ -291,7 +320,7 @@ const DialogForm = ({ closeModal: closeModalProp }: DialogFormProps) => {
           {/** Submit Button */}
           <div className="pt-2">
             <Button type="submit" size="lg" fullWidth disabled={isPending}>
-              {isPending ? "Sending..." : "Send Message"}
+              {isPending ? "Sending…" : "Send Message"}
               <svg
                 className="w-5 h-5 transform group-hover:translate-x-1 transition-transform duration-300"
                 fill="none"

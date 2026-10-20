@@ -8,11 +8,14 @@ export const FormSchema = z.object({
     .string()
     .min(10, { message: "Phone number is too short" })
     .max(15, { message: "Phone number is too long" }),
+  // Optional for quick lead capture: an empty field must not fail min()
   message: z
     .string()
-    .min(2, { message: "Message is too short" })
     .max(500, { message: "Message is too long" })
-    .optional(), // mensaje opcional para captura rápida de contactos
+    .refine((value) => value.length === 0 || value.trim().length >= 2, {
+      message: "Message is too short",
+    })
+    .optional(),
   marketingConsent: z
     .boolean()
     .describe("Consent to receive marketing emails and messages"),
