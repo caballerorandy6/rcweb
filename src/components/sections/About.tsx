@@ -110,7 +110,7 @@ const About = () => {
                   width={500}
                   height={500}
                   sizes="(max-width: 768px) 100vw, 500px"
-                  className="image-gradient rounded-lg shadow-lg shadow-gray-900/50 hover:scale-105 transition-transform duration-300 ease-in-out border-2 border-gold/50 sepia w-full max-w-md lg:max-w-full animateProjectCard"
+                  className="image-gradient rounded-2xl shadow-lg shadow-gray-900/50 hover:scale-105 transition-transform duration-300 ease-in-out border-2 border-gold/50 sepia w-full max-w-md lg:max-w-full animateProjectCard"
                   priority
                 />
 

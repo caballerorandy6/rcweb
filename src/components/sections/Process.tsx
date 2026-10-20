@@ -31,7 +31,7 @@ const Process = () => {
             <details
               key={step.title}
               name="process"
-              className="accordion group reveal bg-gray-900/50 rounded-xl border border-gold/20 hover:border-gold/50 transition-colors shadow-lg shadow-black/20"
+              className="accordion group reveal bg-gray-900/50 rounded-2xl border border-gold/20 hover:border-gold/50 transition-colors shadow-lg shadow-black/20"
             >
               <summary className="flex cursor-pointer list-none items-center justify-between gap-3 p-4 [&::-webkit-details-marker]:hidden">
                 <div className="flex items-center gap-3">

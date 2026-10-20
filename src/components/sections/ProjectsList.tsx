@@ -9,7 +9,7 @@ const ProjectsList = ({ projects }: { projects: ProjectProps[] }) => {
         {projects.map((project) => (
           <li
             key={project.name}
-            className="reveal flex flex-col h-full bg-gray-900 text-center border border-gold/50 rounded-lg shadow-md transition-[transform,border-color,box-shadow] duration-200 hover:scale-[1.03] hover:border-gold/80 hover:shadow-lg w-full max-w-sm lg:max-w-[calc((100%-4rem)/3)]"
+            className="reveal flex flex-col h-full bg-gray-900 text-center border border-gold/50 rounded-2xl shadow-md transition-[transform,border-color,box-shadow] duration-200 hover:scale-[1.03] hover:border-gold/80 hover:shadow-lg w-full max-w-sm lg:max-w-[calc((100%-4rem)/3)]"
           >
             <Project
               name={project.name}

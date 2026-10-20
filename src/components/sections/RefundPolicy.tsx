@@ -56,7 +56,7 @@ const RefundPolicy = () => {
         {/* Main Content */}
         <div className="mt-12 max-w-5xl mx-auto reveal">
           <div className="legal-prose max-w-none">
-            <div className="bg-gray-900/60 rounded-xl border border-gold/20 p-8 space-y-8">
+            <div className="bg-gray-900/60 rounded-2xl border border-gold/20 p-8 space-y-8">
               {/* Two-Payment Structure */}
               <section>
                 <h2>
@@ -491,7 +491,7 @@ const RefundPolicy = () => {
 
         {/* Date Information */}
         <div className="mt-12 max-w-5xl mx-auto reveal">
-          <div className="bg-gray-900/60 rounded-xl border border-gold/10 p-6 text-center">
+          <div className="bg-gray-900/60 rounded-2xl border border-gold/10 p-6 text-center">
             <div className="flex items-center justify-center gap-2 text-white/50 text-sm font-inter">
               <CalendarIcon className="w-4 h-4" />
               <span>Last updated: January 13, 2026</span>

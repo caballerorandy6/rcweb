@@ -32,7 +32,7 @@ const Certification = ({
           width={550}
           height={144}
           sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-          className="w-full h-36 object-cover rounded-t-lg transition-transform duration-300 hover:scale-110"
+          className="w-full h-36 object-cover rounded-t-2xl transition-transform duration-300 hover:scale-110"
           priority={false}
           onError={() => setImageError(true)}
         />
@@ -71,7 +71,7 @@ const Certification = ({
         width={550}
         height={144}
         sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-        className="w-full h-36 object-cover rounded-t-lg transition-transform duration-300 hover:scale-110"
+        className="w-full h-36 object-cover rounded-t-2xl transition-transform duration-300 hover:scale-110"
         priority={false}
         onError={() => setImageError(true)}
       />
@@ -80,7 +80,7 @@ const Certification = ({
 
   return (
     <div className="flex flex-col h-full">
-      <div className="overflow-hidden rounded-t-lg bg-gray-800 relative group shrink-0">
+      <div className="overflow-hidden rounded-t-2xl bg-gray-800 relative group shrink-0">
         {renderPreview()}
 
         {isPDF && (
@@ -102,7 +102,7 @@ const Certification = ({
           href={url}
           target="_blank"
           rel="noopener noreferrer"
-          className="flex-1 py-3 text-base font-inter text-gold hover:bg-gray-800 transition rounded-bl-lg border-r border-gold/50 text-center flex items-center justify-center gap-2"
+          className="flex-1 py-3 text-base font-inter text-gold hover:bg-gray-800 transition rounded-bl-2xl border-r border-gold/50 text-center flex items-center justify-center gap-2"
         >
           <svg
             className="w-4 h-4"
@@ -131,7 +131,7 @@ const Certification = ({
               window.open(url, "_blank");
             }
           }}
-          className="flex-1 py-3 text-base font-inter text-gold hover:bg-gray-800 transition rounded-br-lg flex items-center justify-center gap-2"
+          className="flex-1 py-3 text-base font-inter text-gold hover:bg-gray-800 transition rounded-br-2xl flex items-center justify-center gap-2"
         >
           <svg
             className="w-4 h-4"

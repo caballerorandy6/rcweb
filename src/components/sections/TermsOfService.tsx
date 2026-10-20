@@ -80,7 +80,7 @@ const TermsOfService = () => {
       <div className="relative z-10 mx-auto max-w-7xl px-6 lg:px-8">
         {/* Mensaje de advertencia y botón de regresar */}
         <div className="mb-8 max-w-5xl mx-auto animate-enter">
-          <div className="bg-amber-500/10 border border-amber-500/30 rounded-xl p-4 sm:p-6">
+          <div className="bg-amber-500/10 border border-amber-500/30 rounded-2xl p-4 sm:p-6">
             <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4">
               <div className="shrink-0">
                 <ExclamationTriangleIcon className="w-10 h-10 text-amber-500" />
@@ -127,7 +127,7 @@ const TermsOfService = () => {
         {/* Main Content */}
         <div className="mt-12 max-w-5xl mx-auto reveal">
           <div className="legal-prose max-w-none">
-            <div className="bg-gray-900/60 rounded-xl border border-gold/20 p-8 space-y-8">
+            <div className="bg-gray-900/60 rounded-2xl border border-gold/20 p-8 space-y-8">
               {/* Acceptance of Terms */}
               <section>
                 <h2>
@@ -810,7 +810,7 @@ const TermsOfService = () => {
 
         {/* Date Information */}
         <div className="mt-12 max-w-5xl mx-auto reveal">
-          <div className="bg-gray-900/60 rounded-xl border border-gold/10 p-6 text-center">
+          <div className="bg-gray-900/60 rounded-2xl border border-gold/10 p-6 text-center">
             <div className="flex items-center justify-center gap-2 text-white/50 text-sm font-inter">
               <CalendarIcon className="w-4 h-4" />
               <span>Last updated: January 13, 2026</span>

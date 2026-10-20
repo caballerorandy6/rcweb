@@ -62,7 +62,7 @@ export default function PrivacyPolicy() {
         {/* Main Content */}
         <div className="mt-12 max-w-5xl mx-auto reveal">
           <div className="legal-prose max-w-none">
-            <div className="bg-gray-900/60 rounded-xl border border-gold/20 p-8 space-y-8">
+            <div className="bg-gray-900/60 rounded-2xl border border-gold/20 p-8 space-y-8">
               {/* Interpretation and Definitions */}
               <section>
                 <h2>
@@ -1004,7 +1004,7 @@ export default function PrivacyPolicy() {
 
         {/* Contact Information */}
         <div className="mt-12 max-w-5xl mx-auto reveal">
-          <div className="bg-linear-to-r from-gold/10 to-transparent rounded-xl border border-gold/20 p-8">
+          <div className="bg-linear-to-r from-gold/10 to-transparent rounded-2xl border border-gold/20 p-8">
             <h2 className="text-2xl text-gold font-iceland mb-6">
               Contact Us
             </h2>
