@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import dynamic from "next/dynamic";
 import Image from "next/image";
 import clsx from "clsx";
@@ -123,6 +123,11 @@ const FloatingCTA = () => {
   const [isContactInView, setIsContactInView] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const [isChatOpen, setIsChatOpen] = useState(false);
+  const toggleRef = useRef<HTMLButtonElement>(null);
+
+  const closeMenuOnEscape = (e: React.KeyboardEvent) => {
+    if (e.key === "Escape") setIsOpen(false);
+  };
 
   // Hide when contact section is visible
   useEffect(() => {
@@ -192,6 +197,8 @@ const FloatingCTA = () => {
           {/* Expanded Menu with Glass Effect: display toggles at the end of the
             transition (allow-discrete) and @starting-style drives the entrance */}
           <div
+            id="floating-contact-menu"
+            onKeyDown={closeMenuOnEscape}
             className={clsx(
               "flex flex-col gap-2 mb-2 p-3 rounded-2xl bg-gray-950/95 border border-white/10 shadow-2xl shadow-black/50 origin-bottom-right transition transition-discrete duration-200 ease-out",
               isOpen
@@ -205,12 +212,13 @@ const FloatingCTA = () => {
               style={menuItemDelay(0)}
               onClick={handleChatOpen}
               className={`${menuItemClass} group flex items-center gap-3 rounded-xl bg-linear-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 pl-3 pr-4 py-2.5 text-white shadow-lg hover:shadow-purple-500/25 transition duration-200 hover:scale-[1.02]`}
-              aria-label="Chat with AI Assistant"
+              aria-expanded={isChatOpen}
+              aria-controls="maria-chat"
             >
               <div className="relative h-8 w-8 rounded-full overflow-hidden ring-2 ring-white/30">
                 <Image
                   src="/maria.avif"
-                  alt="Maria AI"
+                  alt=""
                   fill
                   className="object-cover"
                   sizes="32px"
@@ -262,14 +270,17 @@ const FloatingCTA = () => {
 
           {/* Toggle Button */}
           <button
+            ref={toggleRef}
             type="button"
             onClick={() => setIsOpen(!isOpen)}
+            onKeyDown={closeMenuOnEscape}
             className={`relative flex h-14 w-14 items-center justify-center rounded-full shadow-xl transition duration-300 hover:scale-110 active:scale-95 ${
               isOpen
                 ? "bg-gray-800 hover:bg-gray-700 ring-1 ring-white/10"
                 : "bg-linear-to-br from-gold via-gold-light to-gold hover:from-gold-light hover:via-gold hover:to-gold-dark shadow-gold/30"
             }`}
             aria-expanded={isOpen}
+            aria-controls="floating-contact-menu"
             aria-label={isOpen ? "Close contact menu" : "Open contact menu"}
           >
             {/* The key remounts the icon so the swap replays the entrance */}
@@ -297,7 +308,14 @@ const FloatingCTA = () => {
       </div>
 
       {/* Chat Modal */}
-      {isChatOpen && <Chat onClose={() => setIsChatOpen(false)} />}
+      {isChatOpen ? (
+        <Chat
+          onClose={() => {
+            setIsChatOpen(false);
+            toggleRef.current?.focus();
+          }}
+        />
+      ) : null}
     </>
   );
 };
