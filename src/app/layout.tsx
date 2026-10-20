@@ -211,7 +211,7 @@ export default function RootLayout({
           <UTMTracker />
         </Suspense>
 
-        <Toaster position="bottom-right" richColors closeButton={true} />
+        <Toaster position="top-center" richColors closeButton />
         <ConditionalLayout>{children}</ConditionalLayout>
       </body>
     </html>

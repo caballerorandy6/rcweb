@@ -146,8 +146,8 @@ const FloatingCTA = () => {
     return () => observer.disconnect();
   }, []);
 
+  // Links navigate on their own; the handlers only track and close the menu
   const handlePrimaryClick = (action: (typeof primaryActions)[0]) => {
-    // Track conversions
     if (action.id === "whatsapp") {
       trackFBContact();
     } else if (action.id === "phone") {
@@ -159,8 +159,6 @@ const FloatingCTA = () => {
       category: "engagement",
       label: action.name,
     });
-
-    window.open(action.url, action.id === "phone" ? "_self" : "_blank");
     setIsOpen(false);
   };
 
@@ -180,7 +178,6 @@ const FloatingCTA = () => {
       category: "engagement",
       label: action.name,
     });
-    window.open(action.url, "_blank");
   };
 
   return (
@@ -232,19 +229,21 @@ const FloatingCTA = () => {
 
             {/* Primary Contact Actions */}
             {primaryActions.map((action, index) => (
-              <button
+              <a
                 key={action.id}
-                type="button"
+                href={action.url}
+                {...(action.id === "phone"
+                  ? {}
+                  : { target: "_blank", rel: "noopener noreferrer" })}
                 style={menuItemDelay(index + 1)}
                 onClick={() => handlePrimaryClick(action)}
                 className={`${menuItemClass} group flex items-center gap-3 rounded-xl ${action.bgClass} pl-3 pr-4 py-2.5 text-white shadow-lg hover:shadow-xl transition duration-200 hover:scale-[1.02]`}
-                aria-label={action.label}
               >
                 <action.Icon className="h-6 w-6" />
                 <span className="font-inter font-medium text-sm whitespace-nowrap pr-1">
                   {action.label}
                 </span>
-              </button>
+              </a>
             ))}
 
             {/* Divider */}
@@ -256,15 +255,17 @@ const FloatingCTA = () => {
               className={`${menuItemClass} flex items-center justify-center gap-2 px-1`}
             >
               {socialActions.map((action) => (
-                <button
+                <a
                   key={action.id}
-                  type="button"
+                  href={action.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
                   onClick={() => handleSocialClick(action)}
                   className={`flex h-9 w-9 items-center justify-center rounded-lg ${action.bgClass} text-white shadow-md hover:shadow-lg transition duration-200 hover:scale-110`}
                   aria-label={`Connect on ${action.name}`}
                 >
                   <action.Icon />
-                </button>
+                </a>
               ))}
             </div>
           </div>
@@ -278,7 +279,7 @@ const FloatingCTA = () => {
             className={`relative flex h-14 w-14 items-center justify-center rounded-full shadow-xl transition duration-300 hover:scale-110 active:scale-95 ${
               isOpen
                 ? "bg-gray-800 hover:bg-gray-700 ring-1 ring-white/10"
-                : "bg-linear-to-br from-gold via-gold-light to-gold hover:from-gold-light hover:via-gold hover:to-gold-dark shadow-gold/30"
+                : "bg-linear-to-br from-gold via-gold-light to-gold hover:from-gold-light hover:via-gold hover:to-gold-dark"
             }`}
             aria-expanded={isOpen}
             aria-controls="floating-contact-menu"

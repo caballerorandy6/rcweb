@@ -177,26 +177,11 @@ export default function Footer() {
             <div className="flex flex-col sm:flex-row items-center justify-center gap-2 sm:gap-4">
               <p className="text-gold font-iceland text-2xl flex items-center gap-2">
                 © {new Date().getFullYear()} RC Web Solutions LLC
-                {/* <span className="relative flex h-2 w-2">
-                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-gold opacity-75" />
-                  <span className="relative inline-flex rounded-full h-2 w-2 bg-gold" />
-                </span> */}
               </p>
               <span className="text-white/30">•</span>
               <p className="text-white/50 font-inter text-xs">
                 All Rights Reserved
               </p>
-            </div>
-
-            {/* Decoración final */}
-            <div className="flex justify-center gap-3">
-              {[...Array(3)].map((_, i) => (
-                <div
-                  key={i}
-                  className="w-1 h-1 bg-gold/40 rounded-full animate-pulse"
-                  style={{ animationDelay: `${i * 150}ms` }}
-                />
-              ))}
             </div>
           </div>
         </div>
