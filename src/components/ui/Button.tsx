@@ -3,7 +3,7 @@ import type { Route } from "next";
 import clsx from "clsx";
 import type { ReactNode, MouseEventHandler } from "react";
 
-type ButtonVariant = "primary" | "secondary";
+type ButtonVariant = "primary" | "secondary" | "danger";
 type ButtonSize = "sm" | "md" | "lg";
 
 interface ButtonProps {
@@ -12,6 +12,8 @@ interface ButtonProps {
   size?: ButtonSize;
   href?: Route | string;
   external?: boolean;
+  /** Download attribute for file links (served as a plain anchor) */
+  download?: string;
   type?: "button" | "submit";
   disabled?: boolean;
   fullWidth?: boolean;
@@ -31,6 +33,8 @@ const variantClasses: Record<ButtonVariant, string> = {
     "text-black bg-linear-to-r from-gold via-gold-light to-gold hover:from-gold-light hover:via-gold hover:to-gold-light shadow-lg hover:shadow-gold/25 transform hover:scale-[1.02] active:scale-[0.98] disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100",
   secondary:
     "text-gold border-2 border-gold/50 hover:bg-gold/10 hover:border-gold disabled:opacity-50 disabled:cursor-not-allowed",
+  danger:
+    "text-white bg-red-600 hover:bg-red-700 disabled:opacity-50 disabled:cursor-not-allowed",
 };
 
 /**
@@ -43,6 +47,7 @@ const Button = ({
   size = "md",
   href,
   external = false,
+  download,
   type = "button",
   disabled = false,
   fullWidth = false,
@@ -87,6 +92,7 @@ const Button = ({
           href={href}
           target="_blank"
           rel="noopener noreferrer"
+          download={download}
           className={classes}
           onClick={onClick}
           aria-label={ariaLabel}

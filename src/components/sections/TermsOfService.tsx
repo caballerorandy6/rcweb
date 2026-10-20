@@ -8,6 +8,7 @@ import type { Route } from "next";
 import { toast } from "sonner";
 import Heading from "@/components/ui/Heading";
 import BackButton from "@/components/ui/BackButton";
+import Button from "@/components/ui/Button";
 import {
   DocumentTextIcon,
   ShieldCheckIcon,
@@ -831,16 +832,10 @@ const TermsOfService = () => {
 
           {/* Botón de aceptar */}
           <div className="flex justify-center">
-            <button
-              className={`hover:scale-105 active:scale-95 inline-flex items-center gap-2 px-8 py-3 bg-gold text-gray-900 font-bold rounded-lg hover:bg-gold/90 transition-colors font-inter ${
-                isPending ? "opacity-70 cursor-wait" : ""
-              }`}
-              onClick={handleAcceptTerms}
-              disabled={isPending}
-            >
+            <Button onClick={handleAcceptTerms} disabled={isPending}>
               <ShieldCheckIcon className="w-5 h-5" />
               {isPending ? "Processing..." : "I Accept These Terms"}
-            </button>
+            </Button>
           </div>
 
           {/* Botón para volver al inicio */}

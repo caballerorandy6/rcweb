@@ -2,6 +2,7 @@ import { siteConfig } from "@/config/site";
 
 import Image from "next/image";
 import Heading from "@/components/ui/Heading";
+import Button from "@/components/ui/Button";
 import { UserPlusIcon, MapPinIcon } from "@heroicons/react/24/outline";
 import Script from "next/script";
 
@@ -136,15 +137,15 @@ const About = () => {
               </div>
 
               {/* Download CV Button */}
-              <a
+              <Button
                 href="/resume.pdf"
                 download="Randy Caballero - Resume.pdf"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="mt-6 inline-flex items-center justify-center gap-2 px-6 py-3 text-sm sm:text-base font-inter font-semibold text-gold border-2 border-gold/50 hover:bg-gold/10 hover:border-gold/60 rounded-lg transition-all duration-200 hover:scale-105 active:scale-95"
+                external
+                variant="secondary"
+                className="mt-6"
               >
                 Download CV
-              </a>
+              </Button>
             </div>
           </div>
         </div>

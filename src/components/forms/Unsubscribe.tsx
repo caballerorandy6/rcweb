@@ -4,6 +4,7 @@ import { useSearchParams } from "next/navigation";
 import { useState, useTransition } from "react";
 import { unsubscribeFromEmailAction } from "@/actions/campaigns/unsubscribeFromEmailAction";
 import Link from "next/link";
+import Button from "@/components/ui/Button";
 
 export default function Unsubscribe() {
   const searchParams = useSearchParams();
@@ -82,19 +83,17 @@ export default function Unsubscribe() {
           </div>
 
           <div className="flex gap-4">
-            <button
+            <Button
+              variant="danger"
               onClick={handleUnsubscribe}
               disabled={isPending}
-              className="flex-1 bg-red-600 text-white py-2 rounded-sm hover:bg-red-700 disabled:opacity-50 font-inter"
+              className="flex-1"
             >
               {isPending ? "Processing..." : "Yes, Unsubscribe"}
-            </button>
-            <Link
-              href="/"
-              className="flex-1 bg-gray-700 text-white py-2 rounded-sm hover:bg-gray-600 text-center font-inter"
-            >
+            </Button>
+            <Button href="/" variant="secondary" className="flex-1">
               Cancel
-            </Link>
+            </Button>
           </div>
         </div>
       )}

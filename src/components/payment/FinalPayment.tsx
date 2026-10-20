@@ -4,6 +4,7 @@ import { useState, useTransition } from "react";
 import { createFinalPaymentSessionAction } from "@/actions/payments/createFinalPaymentSessionAction";
 import { verifyProjectAccessAction } from "@/actions/projects/verifyProjectAccessAction";
 import { toast } from "sonner";
+import Button from "@/components/ui/Button";
 
 type ProjectInfo = {
   planName: string;
@@ -101,13 +102,14 @@ export default function FinalPayment() {
               </div>
             </div>
 
-            <button
+            <Button
               onClick={handleVerify}
               disabled={isPending}
-              className="w-full mt-6 bg-gold text-gray-900 py-3 rounded-lg font-semibold hover:bg-gold/90 transition-colors disabled:opacity-50 font-inter"
+              fullWidth
+              className="mt-6"
             >
               {isPending ? "Verifying..." : "Verify Project"}
-            </button>
+            </Button>
           </>
         ) : (
           <>
@@ -136,13 +138,9 @@ export default function FinalPayment() {
               </div>
             </div>
 
-            <button
-              onClick={handlePayment}
-              disabled={isPending}
-              className="w-full bg-gold text-gray-900 py-3 rounded-lg font-semibold hover:bg-gold/90 transition-colors disabled:opacity-50 font-inter"
-            >
+            <Button onClick={handlePayment} disabled={isPending} fullWidth>
               {isPending ? "Processing..." : "Proceed to Payment"}
-            </button>
+            </Button>
 
             {/* <button
               onClick={() => {

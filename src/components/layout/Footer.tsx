@@ -1,6 +1,7 @@
 import Link from "next/link";
 import type { Route } from "next";
 import { navigation, secondaryNavigation, footerNavigation, extraFooterLinks } from "@/lib/data";
+import Button from "@/components/ui/Button";
 import Logo from "@/components/layout/Logo";
 
 export default function Footer() {
@@ -36,10 +37,7 @@ export default function Footer() {
 
               {/* Contact CTA */}
               {contactItem && (
-                <Link
-                  href={contactItem.hash as Route}
-                  className="inline-flex items-center gap-2 px-6 py-3 bg-linear-to-r from-gold to-gold-light text-gray-900 rounded-lg text-sm font-inter font-semibold hover:from-gold-light hover:to-gold transition duration-300 hover:shadow-lg hover:shadow-gold/20 hover:-translate-y-0.5 group"
-                >
+                <Button href={contactItem.hash as Route} size="sm">
                   Get In Touch
                   <svg
                     className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1"
@@ -54,7 +52,7 @@ export default function Footer() {
                       d="M17 8l4 4m0 0l-4 4m4-4H3"
                     />
                   </svg>
-                </Link>
+                </Button>
               )}
             </div>
 

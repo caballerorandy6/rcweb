@@ -3,6 +3,7 @@
 
 import Link from "next/link";
 import type { Route } from "next";
+import Button from "@/components/ui/Button";
 import {
   HomeIcon,
   ArrowLeftIcon,
@@ -98,22 +99,19 @@ export default function NotFound() {
           className="flex flex-col sm:flex-row gap-4 justify-center items-center animate-enter"
           style={enter(4)}
         >
-          <Link
-            href="/"
-            className="inline-flex items-center gap-2 px-8 py-4 bg-gold text-gray-900 font-bold rounded-lg hover:bg-gold/90 transition duration-200 hover:scale-105 active:scale-95 font-inter group"
-          >
+          <Button href="/" size="lg">
             <HomeIcon className="w-5 h-5 group-hover:-translate-x-1 transition-transform" />
             Go Back Home
-          </Link>
+          </Button>
 
-          <button
-            type="button"
+          <Button
+            variant="secondary"
+            size="lg"
             onClick={() => window.history.back()}
-            className="inline-flex items-center gap-2 px-8 py-4 bg-transparent border-2 border-gold text-gold font-bold rounded-lg hover:bg-gold/10 transition duration-200 hover:scale-105 active:scale-95 font-inter group"
           >
             <ArrowLeftIcon className="w-5 h-5 group-hover:-translate-x-1 transition-transform" />
             Previous Page
-          </button>
+          </Button>
         </div>
 
         {/* Sitemap Suggestion */}

@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import type { Route } from "next";
+import Button from "@/components/ui/Button";
 import {
   ArrowLeftIcon,
   CheckCircleIcon,
@@ -118,21 +119,13 @@ export default function CaseStudyTemplate({ data }: { data: CaseStudyData }) {
               </p>
 
               <div className="flex flex-wrap gap-4">
-                <a
-                  href={data.siteUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 px-6 py-3 bg-gold text-gray-900 font-bold rounded-xl hover:bg-gold/90 transition-colors font-inter"
-                >
+                <Button href={data.siteUrl} external>
                   Visit Live Site
                   <ArrowTopRightOnSquareIcon className="w-5 h-5" />
-                </a>
-                <Link
-                  href={"/schedule" as Route}
-                  className="inline-flex items-center gap-2 px-6 py-3 border-2 border-gold/50 text-gold font-semibold rounded-xl hover:bg-gold/10 transition-colors font-inter"
-                >
+                </Button>
+                <Button href={"/schedule" as Route} variant="secondary">
                   Start Your Project
-                </Link>
+                </Button>
               </div>
             </div>
 
@@ -297,17 +290,14 @@ export default function CaseStudyTemplate({ data }: { data: CaseStudyData }) {
             <p className="text-white/60 font-inter mb-8 max-w-xl mx-auto">{data.ctaDescription}</p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               {data.ctaLinks.map((link) => (
-                <Link
+                <Button
                   key={link.label}
                   href={link.href as Route}
-                  className={`inline-flex items-center justify-center gap-2 px-8 py-4 font-semibold rounded-xl transition-colors font-inter ${
-                    link.primary
-                      ? "bg-gold text-gray-900 font-bold hover:bg-gold/90 text-lg"
-                      : "border-2 border-gold/50 text-gold hover:bg-gold/10"
-                  }`}
+                  variant={link.primary ? "primary" : "secondary"}
+                  size="lg"
                 >
                   {link.label}
-                </Link>
+                </Button>
               ))}
             </div>
           </div>

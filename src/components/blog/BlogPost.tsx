@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Button from "@/components/ui/Button";
 import Image from "next/image";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
@@ -271,12 +272,7 @@ export default function BlogPost({ post }: BlogPostProps) {
                 Let&apos;s bring your vision to life. Contact us today for a
                 free consultation.
               </p>
-              <Link
-                href="/#contact"
-                className="inline-flex items-center gap-2 px-6 py-3 bg-gold text-gray-900 font-semibold rounded-lg hover:bg-gold/90 transition-colors font-inter"
-              >
-                Get Started
-              </Link>
+              <Button href="/#contact">Get Started</Button>
             </div>
 
             {/* Blog Subscription */}
