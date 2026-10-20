@@ -22,9 +22,9 @@ test.describe("contact form", () => {
     await form.getByRole("button", { name: "Send Message" }).click();
     await expect(form.getByText("Name is too short")).toBeVisible();
 
-    await form.getByPlaceholder("Full Name").fill("Ana Test");
-    await form.getByPlaceholder("Email").fill("ana@example.com");
-    await form.getByPlaceholder("Phone Number").fill("3463757534");
+    await form.getByLabel("Full name").fill("Ana Test");
+    await form.getByLabel("Email address").fill("ana@example.com");
+    await form.getByLabel("Phone number").fill("3463757534");
 
     await expect(form.getByText("Name is too short")).toBeHidden();
     await expect(form.getByText("Invalid email address")).toBeHidden();
@@ -34,7 +34,7 @@ test.describe("contact form", () => {
   test("rejects a malformed email", async ({ page }) => {
     await page.goto("/#contact");
     const form = page.locator("#contact form");
-    const email = form.getByPlaceholder("Email");
+    const email = form.getByLabel("Email address");
 
     // The input is type="email", so the browser itself blocks obviously
     // broken values before React Hook Form runs: no Zod message appears.
