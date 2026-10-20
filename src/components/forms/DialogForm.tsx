@@ -345,7 +345,7 @@ const DialogForm = ({ closeModal: closeModalProp }: DialogFormProps) => {
                   href="https://policies.google.com/privacy"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-gold/60 hover:text-gold/80 transition-colors underline"
+                  className="text-gold/80 hover:text-gold transition-colors underline"
                 >
                   Privacy Policy
                 </a>{" "}
@@ -354,7 +354,7 @@ const DialogForm = ({ closeModal: closeModalProp }: DialogFormProps) => {
                   href="https://policies.google.com/terms"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-gold/60 hover:text-gold/80 transition-colors underline"
+                  className="text-gold/80 hover:text-gold transition-colors underline"
                 >
                   Terms of Service
                 </a>{" "}
