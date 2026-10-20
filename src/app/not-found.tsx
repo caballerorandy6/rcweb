@@ -120,7 +120,7 @@ export default function NotFound() {
             <MapIcon className="w-4 h-4" />
             <span>Lost? Try the </span>
             <Link
-              href={"/sitemap" as Route}
+              href={"/sitemap.xml" as Route}
               className="text-gold hover:text-gold/80 transition-colors underline"
             >
               sitemap
