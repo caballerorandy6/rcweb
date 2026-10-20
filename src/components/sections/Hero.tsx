@@ -32,13 +32,8 @@ const Hero = () => {
 
       <div className="mx-auto max-w-7xl px-6 lg:px-8 min-h-[calc(100svh-8rem)] flex flex-col justify-center">
         <div className="mx-auto max-w-3xl text-center">
-          {/* Eyebrow: marca como contexto, no como titular */}
-          <p className="mx-auto text-center text-sm sm:text-base font-inter font-semibold tracking-[0.25em] uppercase text-gold/80">
-            RC Web Solutions · Houston, TX
-          </p>
-
           {/* h1 = LCP: sin opacidad animada, solo transform */}
-          <h1 className="mt-4 text-5xl sm:text-7xl lg:text-8xl font-iceland tracking-tight text-gold animate-hero-title">
+          <h1 className="text-5xl sm:text-7xl lg:text-8xl font-iceland tracking-tight text-gold animate-hero-title">
             Websites That Win Customers
           </h1>
 
@@ -46,9 +41,10 @@ const Hero = () => {
             <CustomBadge>Your Digital Partner</CustomBadge>
           </div>
 
-          <p className="mt-8 mx-auto font-inter text-white/80 text-base sm:text-lg animate-enter [animation-delay:150ms]">
-            High-performance websites and web apps for small businesses — built
-            to load fast, rank on Google, and turn visitors into clients.
+          <p className="mt-8 mx-auto max-w-xl font-inter text-white/80 text-base sm:text-lg animate-enter [animation-delay:150ms]">
+            High-performance websites and web apps for Houston small
+            businesses, built to load fast, rank on Google, and turn visitors
+            into clients.
           </p>
 
           {/* Señales de calidad concretas */}
@@ -72,7 +68,7 @@ const Hero = () => {
               <CalendarDaysIcon className="w-5 h-5" />
               Schedule a Free Call
             </Button>
-            <Button href={"#services" as Route} variant="secondary" size="md">
+            <Button href={"#services" as Route} variant="secondary" size="lg">
               View Services
             </Button>
           </div>

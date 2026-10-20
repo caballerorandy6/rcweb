@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect } from "react";
-import Link from "next/link";
+import Button from "@/components/ui/Button";
 import {
   CheckCircleIcon,
   CalendarIcon,
@@ -12,7 +12,7 @@ import { toast } from "sonner";
 import confetti from "canvas-confetti";
 import type { Subscription } from "@/generated/prisma/client";
 import { trackLeadConversion, trackPurchase } from "@/lib/analytics";
-import { formatDate as formatDateUtil } from "@/lib/utils";
+import { formatCurrency, formatDate as formatDateUtil } from "@/lib/utils";
 import { trackFBPurchase } from "@/components/tracking/FacebookPixel";
 import { trackLinkedInConversion } from "@/components/tracking/LinkedInInsightTag";
 
@@ -52,7 +52,7 @@ export default function SubscriptionSuccess({
       if (fallbackUsed) {
         toast.warning("Subscription processed with fallback method", {
           description:
-            "Your subscription was successful but processed through our backup system.",
+            "Your subscription was successful but processed through a backup system.",
         });
       }
     }
@@ -77,15 +77,10 @@ export default function SubscriptionSuccess({
           </h2>
           <p className="text-gray-300 mb-6">{error}</p>
           <p className="text-sm text-gray-400 mb-6">
-            Don&apos;t worry! If your payment was successful in Stripe, we&apos;ll
+            Don&apos;t worry! If your payment was successful in Stripe, I&apos;ll
             process it shortly. Please check your email for confirmation.
           </p>
-          <a
-            href="mailto:contactus@rcweb.dev"
-            className="inline-block px-6 py-3 bg-gold text-gray-900 rounded-lg hover:bg-gold/90 transition-colors"
-          >
-            Contact Support
-          </a>
+          <Button href="mailto:contactus@rcweb.dev">Contact Support</Button>
         </div>
       </div>
     );
@@ -108,7 +103,7 @@ export default function SubscriptionSuccess({
           </h1>
 
           <p className="text-gray-300 text-center mb-8 font-inter">
-            Thank you for subscribing to our maintenance plan. Your website is
+            Thank you for subscribing to the maintenance plan. Your website is
             now protected and supported.
           </p>
 
@@ -145,7 +140,7 @@ export default function SubscriptionSuccess({
                   <div>
                     <span className="text-gray-400">Monthly Amount:</span>
                     <p className="text-white font-semibold text-lg">
-                      ${(subscription.amount / 100).toFixed(2)}/mo
+                      {formatCurrency(subscription.amount)}/mo
                     </p>
                   </div>
                   <div>
@@ -219,18 +214,12 @@ export default function SubscriptionSuccess({
 
           {/* Actions */}
           <div className="flex flex-col sm:flex-row gap-4 font-inter">
-            <Link
-              href="/"
-              className="flex-1 text-center px-6 py-3 bg-gold text-gray-900 rounded-lg hover:bg-gold/90 transition-colors font-semibold"
-            >
+            <Button href="/" className="flex-1">
               Return to Home
-            </Link>
-            <Link
-              href="mailto:contactus@rcweb.dev"
-              className="flex-1 text-center px-6 py-3 border border-gold/50 text-gold rounded-lg hover:bg-gold/10 transition-colors font-semibold"
-            >
+            </Button>
+            <Button href="mailto:contactus@rcweb.dev" variant="secondary" className="flex-1">
               Contact Support
-            </Link>
+            </Button>
           </div>
         </div>
 

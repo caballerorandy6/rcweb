@@ -1,3 +1,4 @@
+import { formatDate } from "@/lib/utils";
 import {
   CheckCircleIcon,
   ClockIcon,
@@ -138,13 +139,13 @@ export default function ClientMilestoneView({
                 <div className="flex gap-4 mt-2 text-xs text-gray-500 font-inter">
                   {milestone.dueDate && (
                     <span>
-                      Due: {new Date(milestone.dueDate).toLocaleDateString()}
+                      Due: {formatDate(milestone.dueDate)}
                     </span>
                   )}
                   {milestone.completedAt && (
                     <span className="text-green-500">
                       Completed:{" "}
-                      {new Date(milestone.completedAt).toLocaleDateString()}
+                      {formatDate(milestone.completedAt)}
                     </span>
                   )}
                 </div>

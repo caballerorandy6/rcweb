@@ -2,6 +2,7 @@ import { siteConfig } from "@/config/site";
 
 import Image from "next/image";
 import Heading from "@/components/ui/Heading";
+import Button from "@/components/ui/Button";
 import { UserPlusIcon, MapPinIcon } from "@heroicons/react/24/outline";
 import Script from "next/script";
 
@@ -110,7 +111,7 @@ const About = () => {
                   width={500}
                   height={500}
                   sizes="(max-width: 768px) 100vw, 500px"
-                  className="image-gradient rounded-lg shadow-lg shadow-gray-900/50 hover:scale-105 transition-transform duration-300 ease-in-out border-2 border-gold/50 sepia w-full max-w-md lg:max-w-full animateProjectCard"
+                  className="image-gradient rounded-2xl shadow-lg shadow-gray-900/50 hover:scale-105 transition-transform duration-300 ease-in-out border-2 border-gold/50 sepia w-full max-w-md lg:max-w-full animateProjectCard"
                   priority
                 />
 
@@ -136,15 +137,15 @@ const About = () => {
               </div>
 
               {/* Download CV Button */}
-              <a
+              <Button
                 href="/resume.pdf"
                 download="Randy Caballero - Resume.pdf"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="mt-6 inline-flex items-center justify-center gap-2 px-6 py-3 text-sm sm:text-base font-inter font-semibold text-gold border-2 border-gold/50 hover:bg-gold/10 hover:border-gold/60 rounded-lg transition-all duration-200 hover:scale-105 active:scale-95"
+                external
+                variant="secondary"
+                className="mt-6"
               >
                 Download CV
-              </a>
+              </Button>
             </div>
           </div>
         </div>

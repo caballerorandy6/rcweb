@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import Link from "next/link";
+import Button from "@/components/ui/Button";
 import {
   CheckCircleIcon,
   DocumentDuplicateIcon,
@@ -11,6 +11,7 @@ import { toast } from "sonner";
 import confetti from "canvas-confetti";
 import type { Payment } from "@/generated/prisma/client";
 import { trackLeadConversion, trackPurchase } from "@/lib/analytics";
+import { formatCurrency } from "@/lib/utils";
 import { trackFBPurchase } from "@/components/tracking/FacebookPixel";
 import { trackLinkedInConversion } from "@/components/tracking/LinkedInInsightTag";
 
@@ -62,7 +63,7 @@ export default function PaymentSuccess({
       if (fallbackUsed) {
         toast.warning("Payment processed with fallback method", {
           description:
-            "Your payment was successful but processed through our backup system.",
+            "Your payment was successful but processed through a backup system.",
         });
       }
     }
@@ -91,15 +92,10 @@ export default function PaymentSuccess({
           </h2>
           <p className="text-gray-300 mb-6">{error}</p>
           <p className="text-sm text-gray-400 mb-6">
-            Don&apos;t worry! If your payment was successful in Stripe, we&apos;ll
+            Don&apos;t worry! If your payment was successful in Stripe, I&apos;ll
             process it shortly. Please save your confirmation email.
           </p>
-          <a
-            href="mailto:contactus@rcweb.dev"
-            className="inline-block px-6 py-3 bg-gold text-gray-900 rounded-lg hover:bg-gold/90 transition-colors"
-          >
-            Contact Support
-          </a>
+          <Button href="mailto:contactus@rcweb.dev">Contact Support</Button>
         </div>
       </div>
     );
@@ -123,7 +119,7 @@ export default function PaymentSuccess({
 
           <p className="text-gray-300 text-center mb-8 font-inter">
             Thank you for your payment. Your project has been initiated and
-            we&#39;ll be in touch within 24 hours.
+            I&#39;ll be in touch within 24 hours.
           </p>
 
           {/* Fallback Warning if used */}
@@ -136,7 +132,7 @@ export default function PaymentSuccess({
                     Backup Processing Used
                   </p>
                   <p className="text-gold-light/80 text-xs mt-1">
-                    Your payment was processed successfully through our backup
+                    Your payment was processed successfully through a backup
                     system. Everything is fine!
                   </p>
                 </div>
@@ -184,13 +180,13 @@ export default function PaymentSuccess({
               <div className="flex justify-between text-sm">
                 <span className="text-gray-400">Amount Paid:</span>
                 <span className="text-green-500 font-medium">
-                  ${(payment.firstPayment / 100).toFixed(2)}
+                  {formatCurrency(payment.firstPayment)}
                 </span>
               </div>
               <div className="flex justify-between text-sm">
                 <span className="text-gray-400">Remaining Balance:</span>
                 <span className="text-yellow-500 font-medium">
-                  ${(payment.secondPayment / 100).toFixed(2)}
+                  {formatCurrency(payment.secondPayment)}
                 </span>
               </div>
               <div className="flex justify-between text-sm">
@@ -207,7 +203,7 @@ export default function PaymentSuccess({
             </h3>
             <ul className="text-sm text-gray-300 space-y-1">
               <li>
-                • We&#39;ll contact you within 24 hours to discuss project
+                • I&#39;ll contact you within 24 hours to discuss project
                 details
               </li>
               <li>
@@ -222,18 +218,12 @@ export default function PaymentSuccess({
 
           {/* Actions */}
           <div className="flex flex-col sm:flex-row gap-4 font-inter">
-            <Link
-              href="/"
-              className="flex-1 text-center px-6 py-3 bg-gold text-gray-900 rounded-lg hover:bg-gold/90 transition-colors font-semibold"
-            >
+            <Button href="/" className="flex-1">
               Return to Home
-            </Link>
-            <Link
-              href="mailto:contactus@rcweb.dev"
-              className="flex-1 text-center px-6 py-3 border border-gold/50 text-gold rounded-lg hover:bg-gold/10 transition-colors font-semibold"
-            >
+            </Button>
+            <Button href="mailto:contactus@rcweb.dev" variant="secondary" className="flex-1">
               Contact Support
-            </Link>
+            </Button>
           </div>
         </div>
 

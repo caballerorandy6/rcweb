@@ -26,7 +26,7 @@ const FAQ = () => {
               key={faq.question}
               name="faq"
               open={index === 0}
-              className="accordion group reveal rounded-lg border border-gold/20 bg-gray-900/50 transition-colors duration-200 hover:border-gold/50 shadow-lg shadow-black/20"
+              className="accordion group reveal rounded-2xl border border-gold/20 bg-gray-900/50 transition-colors duration-200 hover:border-gold/50 shadow-lg shadow-black/20"
             >
               <summary className="flex cursor-pointer list-none items-center justify-between gap-4 px-6 py-4 text-left [&::-webkit-details-marker]:hidden">
                 <h3 className="text-base sm:text-lg font-inter font-semibold text-gold">

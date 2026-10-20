@@ -4,6 +4,8 @@ import { useState, useTransition } from "react";
 import { createFinalPaymentSessionAction } from "@/actions/payments/createFinalPaymentSessionAction";
 import { verifyProjectAccessAction } from "@/actions/projects/verifyProjectAccessAction";
 import { toast } from "sonner";
+import Button from "@/components/ui/Button";
+import { formatCurrency } from "@/lib/utils";
 
 type ProjectInfo = {
   planName: string;
@@ -101,13 +103,14 @@ export default function FinalPayment() {
               </div>
             </div>
 
-            <button
+            <Button
               onClick={handleVerify}
               disabled={isPending}
-              className="w-full mt-6 bg-gold text-gray-900 py-3 rounded-lg font-semibold hover:bg-gold/90 transition-colors disabled:opacity-50 font-inter"
+              fullWidth
+              className="mt-6"
             >
-              {isPending ? "Verifying..." : "Verify Project"}
-            </button>
+              {isPending ? "Verifying…" : "Verify Project"}
+            </Button>
           </>
         ) : (
           <>
@@ -127,22 +130,15 @@ export default function FinalPayment() {
                 <p className="text-gray-300">
                   <span className="text-gray-400">Final Payment:</span>{" "}
                   <span className="text-gold text-xl font-bold">
-                    $
-                    {projectInfo?.secondPayment
-                      ? (projectInfo.secondPayment / 100).toFixed(2)
-                      : "0.00"}
+                    {formatCurrency(projectInfo?.secondPayment ?? 0)}
                   </span>
                 </p>
               </div>
             </div>
 
-            <button
-              onClick={handlePayment}
-              disabled={isPending}
-              className="w-full bg-gold text-gray-900 py-3 rounded-lg font-semibold hover:bg-gold/90 transition-colors disabled:opacity-50 font-inter"
-            >
-              {isPending ? "Processing..." : "Proceed to Payment"}
-            </button>
+            <Button onClick={handlePayment} disabled={isPending} fullWidth>
+              {isPending ? "Processing…" : "Proceed to Payment"}
+            </Button>
 
             {/* <button
               onClick={() => {

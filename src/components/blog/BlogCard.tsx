@@ -10,6 +10,7 @@ import {
   ShieldCheckIcon,
 } from "@heroicons/react/24/outline";
 import type { BlogPost } from "@/lib/blog";
+import { formatDate } from "@/lib/utils";
 
 type Category = {
   label: string;
@@ -45,15 +46,6 @@ function getCategory(tags: string[] = []): Category {
 function getReadTime(content: string): number {
   return Math.ceil(content.trim().split(/\s+/).length / 200);
 }
-
-// Frontmatter dates are plain YYYY-MM-DD; format in UTC so the day never
-// shifts with the server's timezone
-const dateFormatter = new Intl.DateTimeFormat("en-US", {
-  year: "numeric",
-  month: "short",
-  day: "numeric",
-  timeZone: "UTC",
-});
 
 type BlogCardProps = {
   post: BlogPost;
@@ -110,7 +102,7 @@ export default function BlogCard({ post, as: Heading = "h2" }: BlogCardProps) {
           <span className="flex items-center gap-1">
             <CalendarIcon className="w-4 h-4" aria-hidden="true" />
             <time dateTime={post.date}>
-              {dateFormatter.format(new Date(post.date))}
+              {formatDate(post.date, { timeZone: "UTC" })}
             </time>
           </span>
           <span className="flex items-center gap-1">

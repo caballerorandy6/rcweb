@@ -5,7 +5,7 @@ import { CheckCircleIcon, EnvelopeIcon, ClockIcon } from "@heroicons/react/24/ou
 export const metadata = genPageMetadata({
   title: "Thank You - Message Received",
   description:
-    "Thank you for contacting RC Web Solutions LLC. We have received your message and will get back to you shortly.",
+    "Thank you for contacting RC Web Solutions LLC. Your message has been received and I will get back to you shortly.",
   pageRoute: "/thank-you",
 });
 
@@ -65,7 +65,7 @@ export default function ThankYouPage() {
                     Quick Response Time
                   </h3>
                   <p className="text-gray-400 text-sm sm:text-base font-inter">
-                    Our team will review your message and respond within 24-48 hours during business days.
+                    I review every message personally and respond within 24-48 hours on business days.
                   </p>
                 </div>
               </div>
@@ -80,7 +80,7 @@ export default function ThankYouPage() {
                     Personalized Consultation
                   </h3>
                   <p className="text-gray-400 text-sm sm:text-base font-inter">
-                    We&apos;ll discuss your project requirements and provide a customized solution for your needs.
+                    I&apos;ll discuss your project requirements and propose a solution tailored to your needs.
                   </p>
                 </div>
               </div>

@@ -87,7 +87,7 @@ const DialogForm = ({ closeModal: closeModalProp }: DialogFormProps) => {
       return;
     }
 
-    const toastId = toast.loading("Sending message...");
+    const toastId = toast.loading("Sending message…");
 
     // Get UTM params from session storage
     const utmData = getStoredUTMParams();

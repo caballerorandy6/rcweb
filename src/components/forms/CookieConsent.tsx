@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
+import Button from "@/components/ui/Button";
 
 interface CookieConsentProps {
   onAccept: () => void;
@@ -97,20 +98,10 @@ const CookieConsent = ({ onAccept, onReject }: CookieConsentProps) => {
 
             {/* Buttons */}
             <div className="flex flex-col sm:flex-row gap-3 w-full sm:w-auto">
-              <button
-                type="button"
-                onClick={handleReject}
-                className="min-h-11 px-6 py-2.5 rounded-lg font-inter text-sm text-white/80 border-2 border-gold/30 hover:border-gold/50 hover:bg-gold/5 transition duration-200"
-              >
+              <Button variant="secondary" onClick={handleReject}>
                 Essential Only
-              </button>
-              <button
-                type="button"
-                onClick={handleAccept}
-                className="min-h-11 px-6 py-2.5 rounded-lg font-inter text-sm bg-gold text-gray-900 hover:bg-gold/90 transition duration-200 font-semibold"
-              >
-                Accept All
-              </button>
+              </Button>
+              <Button onClick={handleAccept}>Accept All</Button>
             </div>
           </div>
         </div>

@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { formatDateTime } from "@/lib/utils";
 import Image from "next/image";
 import { COMPANY_LOCATION } from "@/lib/company";
 import {
@@ -847,7 +848,7 @@ export default function SendNewsletterCampaign({
               type="text"
               value={subject}
               onChange={(e) => setSubject(e.target.value)}
-              placeholder="Your amazing subject line..."
+              placeholder="Your amazing subject line…"
               className="w-full p-3 bg-gray-800 text-white rounded-lg border border-gray-700 focus:border-gold focus:outline-hidden font-inter"
             />
           </div>
@@ -896,7 +897,7 @@ export default function SendNewsletterCampaign({
             <textarea
               value={content}
               onChange={(e) => setContent(e.target.value)}
-              placeholder="<h1>Your email content here...</h1>..."
+              placeholder="<h1>Your email content here…</h1>..."
               rows={12}
               className="w-full p-3 bg-gray-800 text-white rounded-lg border border-gray-700 focus:border-gold focus:outline-hidden font-mono text-sm"
             />
@@ -944,7 +945,7 @@ export default function SendNewsletterCampaign({
               } ${loading ? "opacity-50 cursor-not-allowed" : ""}`}
             >
               {loading
-                ? "Sending..."
+                ? "Sending…"
                 : testMode
                   ? "Send Test Email"
                   : "Send Campaign"}
@@ -1076,7 +1077,7 @@ export default function SendNewsletterCampaign({
                         </h4>
                         <p className="text-sm text-gray-400 mt-1">
                           Created:{" "}
-                          {new Date(campaign.createdAt).toLocaleString()}
+                          {formatDateTime(campaign.createdAt)}
                         </p>
                       </div>
                       <span

@@ -26,7 +26,7 @@ export default function ManageSubscription() {
   });
 
   const onSubmit: SubmitHandler<ManageSubscriptionData> = async (data) => {
-    const toastId = toast.loading("Sending management link...");
+    const toastId = toast.loading("Sending management link…");
 
     const result = await sendPortalLinkAction(data.email);
 
@@ -70,7 +70,7 @@ export default function ManageSubscription() {
                   Check Your Email
                 </h2>
                 <p className="text-gray-400 font-inter mb-6">
-                  If you have an active subscription, we&apos;ve sent a secure link to manage it.
+                  If you have an active subscription, I&apos;ve sent a secure link to manage it.
                   The link will expire in 24 hours.
                 </p>
                 <button
@@ -111,7 +111,7 @@ export default function ManageSubscription() {
                 {/* Submit Button */}
                 <div className="pt-2">
                   <Button type="submit" size="lg" fullWidth disabled={isSubmitting}>
-                    {isSubmitting ? "Sending..." : "Send Management Link"}
+                    {isSubmitting ? "Sending…" : "Send Management Link"}
                     {!isSubmitting && (
                       <svg
                         className="w-5 h-5 transform group-hover:translate-x-1 transition-transform duration-300"

@@ -1,6 +1,7 @@
 import Link from "next/link";
 import type { Route } from "next";
 import { navigation, secondaryNavigation, footerNavigation, extraFooterLinks } from "@/lib/data";
+import Button from "@/components/ui/Button";
 import Logo from "@/components/layout/Logo";
 
 export default function Footer() {
@@ -36,10 +37,7 @@ export default function Footer() {
 
               {/* Contact CTA */}
               {contactItem && (
-                <Link
-                  href={contactItem.hash as Route}
-                  className="inline-flex items-center gap-2 px-6 py-3 bg-linear-to-r from-gold to-gold-light text-gray-900 rounded-lg text-sm font-inter font-semibold hover:from-gold-light hover:to-gold transition duration-300 hover:shadow-lg hover:shadow-gold/20 hover:-translate-y-0.5 group"
-                >
+                <Button href={contactItem.hash as Route} size="sm">
                   Get In Touch
                   <svg
                     className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1"
@@ -54,7 +52,7 @@ export default function Footer() {
                       d="M17 8l4 4m0 0l-4 4m4-4H3"
                     />
                   </svg>
-                </Link>
+                </Button>
               )}
             </div>
 
@@ -179,26 +177,11 @@ export default function Footer() {
             <div className="flex flex-col sm:flex-row items-center justify-center gap-2 sm:gap-4">
               <p className="text-gold font-iceland text-2xl flex items-center gap-2">
                 © {new Date().getFullYear()} RC Web Solutions LLC
-                {/* <span className="relative flex h-2 w-2">
-                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-gold opacity-75" />
-                  <span className="relative inline-flex rounded-full h-2 w-2 bg-gold" />
-                </span> */}
               </p>
               <span className="text-white/30">•</span>
               <p className="text-white/50 font-inter text-xs">
                 All Rights Reserved
               </p>
-            </div>
-
-            {/* Decoración final */}
-            <div className="flex justify-center gap-3">
-              {[...Array(3)].map((_, i) => (
-                <div
-                  key={i}
-                  className="w-1 h-1 bg-gold/40 rounded-full animate-pulse"
-                  style={{ animationDelay: `${i * 150}ms` }}
-                />
-              ))}
             </div>
           </div>
         </div>

@@ -1,6 +1,7 @@
 import { prisma } from "@/lib/prisma";
 import Link from "next/link";
 import { formatInvoiceDate } from "@/lib/invoice/types";
+import { formatCurrency } from "@/lib/utils";
 
 // Página de admin: datos siempre frescos, nunca prerenderizar en build
 export const dynamic = "force-dynamic";
@@ -118,11 +119,11 @@ export default async function ManageInvoicesPage() {
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap">
                         <div className="text-sm font-semibold text-green-400">
-                          ${(invoice.total / 100).toFixed(2)}
+                          {formatCurrency(invoice.total)}
                         </div>
                         {invoice.taxAmount > 0 && (
                           <div className="text-xs text-gray-400">
-                            Tax: ${(invoice.taxAmount / 100).toFixed(2)}
+                            Tax: {formatCurrency(invoice.taxAmount)}
                           </div>
                         )}
                       </td>
@@ -183,12 +184,11 @@ export default async function ManageInvoicesPage() {
           <div className="bg-gray-800 rounded-lg p-6">
             <div className="text-gray-400 text-sm mb-1">Total Revenue</div>
             <div className="text-2xl font-bold text-gold">
-              $
-              {(
+              {formatCurrency(
                 invoices
                   .filter((i) => i.type === "summary")
-                  .reduce((sum, inv) => sum + inv.total, 0) / 100
-              ).toFixed(2)}
+                  .reduce((sum, inv) => sum + inv.total, 0)
+              )}
             </div>
           </div>
         </div>

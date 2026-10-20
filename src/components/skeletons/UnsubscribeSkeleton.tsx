@@ -1,7 +1,7 @@
 export default function UnsubscribeSkeleton() {
   return (
     <div className="min-h-screen bg-gray-900 flex items-center justify-center px-4 py-24 lg:py-32">
-      <div className="max-w-md w-full bg-gray-800 rounded-2xl p-8 text-center border border-gold/20 animate-pulse">
+      <div className="max-w-md w-full rounded-2xl border border-gold/20 bg-gray-900/50 p-6 lg:p-8 shadow-lg shadow-black/20 text-center animate-pulse">
         {/* Icon Skeleton */}
         <div className="mb-6 flex justify-center">
           <div className="h-16 w-16 bg-gray-700 rounded-full"></div>

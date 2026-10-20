@@ -1,6 +1,7 @@
 "use client";
 
 import Button from "@/components/ui/Button";
+import { formatCurrency } from "@/lib/utils";
 import { useState, useTransition } from "react";
 import { toast } from "sonner";
 import { getAllProjectsAction } from "@/actions/projects/getAllProjectsAction";
@@ -235,7 +236,7 @@ export default function ProjectManagement({
                         </div>
                         <div>
                           <span className="text-xs sm:text-sm font-semibold text-gold">
-                            ${(project.totalAmount / 100).toFixed(2)}
+                            {formatCurrency(project.totalAmount)}
                           </span>
                         </div>
                       </div>
@@ -252,7 +253,7 @@ export default function ProjectManagement({
                     {project.planName}
                   </td>
                   <td className="hidden lg:table-cell px-8 py-4 sm:py-5 text-sm sm:text-base text-white font-semibold">
-                    ${(project.totalAmount / 100).toFixed(2)}
+                    {formatCurrency(project.totalAmount)}
                   </td>
                   <td className="px-4 sm:px-6 lg:px-8 py-4 sm:py-5">
                     <div className="flex flex-wrap gap-2">

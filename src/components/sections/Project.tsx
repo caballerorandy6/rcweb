@@ -27,13 +27,13 @@ const Project = ({
 }: ProjectProps) => {
   return (
     <>
-      <div className="overflow-hidden rounded-t-lg">
+      <div className="overflow-hidden rounded-t-2xl">
         <Image
           alt={name}
           src={image}
           width={1000}
           height={1000}
-          className="w-full h-36 object-cover rounded-t-lg transition-transform duration-300 hover:scale-110"
+          className="w-full h-36 object-cover rounded-t-2xl transition-transform duration-300 hover:scale-110"
           priority={false}
         />
       </div>
@@ -62,7 +62,7 @@ const Project = ({
             href={github}
             target="_blank"
             rel="noopener noreferrer"
-            className="flex-1 py-3 text-base font-inter text-gold hover:bg-gray-800 transition rounded-bl-lg border-r border-gold/50"
+            className="flex-1 py-3 text-base font-inter text-gold hover:bg-gray-800 transition rounded-bl-2xl border-r border-gold/50"
           >
             <GithubIcon className="inline-block w-5 h-5 mr-2" />
             GitHub
@@ -71,7 +71,7 @@ const Project = ({
         {caseStudy && (
           <Link
             href={caseStudy as Route}
-            className={`flex-1 py-3 text-base font-inter text-gold hover:bg-gray-800 transition border-r border-gold/50 ${!github ? "rounded-bl-lg" : ""}`}
+            className={`flex-1 py-3 text-base font-inter text-gold hover:bg-gray-800 transition border-r border-gold/50 ${!github ? "rounded-bl-2xl" : ""}`}
           >
             Case Study
           </Link>
@@ -80,7 +80,7 @@ const Project = ({
           href={url}
           target="_blank"
           rel="noopener noreferrer"
-          className={`flex-1 py-3 text-base font-inter text-gold hover:bg-gray-800 transition ${github || caseStudy ? "rounded-br-lg" : "rounded-b-lg"}`}
+          className={`flex-1 py-3 text-base font-inter text-gold hover:bg-gray-800 transition ${github || caseStudy ? "rounded-br-2xl" : "rounded-b-2xl"}`}
         >
           <Website className="inline-block w-5 h-5 mr-2" />
           Preview

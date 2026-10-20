@@ -2,8 +2,8 @@
 
 import * as Sentry from "@sentry/nextjs";
 import { useEffect } from "react";
-import Link from "next/link";
 import type { Route } from "next";
+import Button from "@/components/ui/Button";
 
 export default function Error({
   error,
@@ -40,23 +40,15 @@ export default function Error({
             Something went wrong
           </h1>
           <p className="text-white/60 font-inter mb-8">
-            We apologize for the inconvenience. An unexpected error has occurred.
+            Sorry, an unexpected error has occurred.
           </p>
         </div>
 
         <div className="flex flex-col sm:flex-row gap-4 justify-center">
-          <button
-            onClick={reset}
-            className="px-6 py-3 bg-gold text-black font-semibold rounded-lg hover:bg-gold/90 transition-colors font-inter"
-          >
-            Try again
-          </button>
-          <Link
-            href={"/" as Route}
-            className="px-6 py-3 border border-gold/50 text-gold font-semibold rounded-lg hover:bg-gold/10 transition-colors font-inter"
-          >
+          <Button onClick={reset}>Try again</Button>
+          <Button href={"/" as Route} variant="secondary">
             Go home
-          </Link>
+          </Button>
         </div>
 
         {error.digest && (

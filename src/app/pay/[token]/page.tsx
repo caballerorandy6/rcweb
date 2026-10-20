@@ -5,7 +5,7 @@ import { createFinalPaymentSessionAction } from "@/actions/payments/createFinalP
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Processing Payment...",
+  title: "Processing Payment…",
   description: "Redirecting to secure payment checkout.",
   robots: {
     index: false,

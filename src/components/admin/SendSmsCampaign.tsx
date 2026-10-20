@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useTransition } from "react";
+import { formatDollars } from "@/lib/utils";
 import { sendSmsCampaignAction } from "@/actions/campaigns/sendSMSCampaignAction";
 import { getSmsStatsAction } from "@/actions/stats/getSmsStatsAction";
 
@@ -39,7 +40,7 @@ export default function SendSmsCampaign({ initialStats }: SendSmsCampaignProps) 
     if (message.length > 160) {
       const segments = Math.ceil(message.length / 160);
       const confirm = window.confirm(
-        `Your message is ${message.length} characters and will be sent as ${segments} SMS segments (cost: $${(0.0079 * segments * stats.eligibleContacts).toFixed(2)}). Continue?`
+        `Your message is ${message.length} characters and will be sent as ${segments} SMS segments (cost: ${formatDollars(0.0079 * segments * stats.eligibleContacts)}). Continue?`
       );
       if (!confirm) return;
     }
@@ -100,7 +101,7 @@ export default function SendSmsCampaign({ initialStats }: SendSmsCampaignProps) 
           <div>
             <span className="text-gray-400">Estimated total cost:</span>
             <span className="text-green-400 ml-2 font-bold">
-              ${(segmentCost * stats.eligibleContacts).toFixed(2)}
+              {formatDollars(segmentCost * stats.eligibleContacts)}
             </span>
           </div>
         </div>
@@ -130,7 +131,7 @@ export default function SendSmsCampaign({ initialStats }: SendSmsCampaignProps) 
             <textarea
               value={message}
               onChange={(e) => setMessage(e.target.value)}
-              placeholder="Your message here... (Always include: Reply STOP to unsubscribe)"
+              placeholder="Your message here… (Always include: Reply STOP to unsubscribe)"
               rows={4}
               maxLength={480} // Max 3 SMS segments
               className="w-full p-3 bg-gray-800 text-white rounded-lg border border-gray-700 focus:border-blue-400 focus:outline-hidden font-inter"
@@ -200,10 +201,10 @@ export default function SendSmsCampaign({ initialStats }: SendSmsCampaignProps) 
               } ${isPending || !message ? "opacity-50 cursor-not-allowed" : ""}`}
             >
               {isPending
-                ? "Sending..."
+                ? "Sending…"
                 : testMode
                   ? `Send Test SMS ($${segmentCost.toFixed(4)})`
-                  : `Send to ${stats.eligibleContacts} Contacts ($${(segmentCost * stats.eligibleContacts).toFixed(2)})`}
+                  : `Send to ${stats.eligibleContacts} Contacts (${formatDollars(segmentCost * stats.eligibleContacts)})`}
             </button>
           </div>
         </div>

@@ -1,18 +1,12 @@
 import { getRevenueAttributionAction } from "@/actions/stats/getRevenueAttributionAction";
+import { formatCurrency } from "@/lib/utils";
 import {
   CurrencyDollarIcon,
   ChartPieIcon,
 } from "@heroicons/react/24/outline";
 
-// Format cents to dollars
-function formatCurrency(cents: number): string {
-  return new Intl.NumberFormat("en-US", {
-    style: "currency",
-    currency: "USD",
-    minimumFractionDigits: 0,
-    maximumFractionDigits: 0,
-  }).format(cents / 100);
-}
+// Revenue is shown in whole dollars
+const formatRevenue = (cents: number) => formatCurrency(cents, true);
 
 // Source labels
 const sourceLabels: Record<string, string> = {
@@ -58,7 +52,7 @@ export default async function RevenueAttribution() {
         <div className="sm:ml-auto text-sm font-inter">
           <span className="text-gray-400">Total: </span>
           <span className="text-green-400 font-bold text-lg font-iceland">
-            {formatCurrency(data.totalRevenue)}
+            {formatRevenue(data.totalRevenue)}
           </span>
         </div>
       </div>
@@ -81,7 +75,7 @@ export default async function RevenueAttribution() {
                       <span className="text-xs sm:text-sm text-gray-300 truncate">{label}</span>
                       <div className="flex items-center gap-2 shrink-0">
                         <span className="text-xs sm:text-sm font-bold text-green-400">
-                          {formatCurrency(source.revenue)}
+                          {formatRevenue(source.revenue)}
                         </span>
                         <span className="text-[10px] sm:text-xs text-gray-500">
                           ({source.count})
@@ -124,7 +118,7 @@ export default async function RevenueAttribution() {
                       <p className="text-xs text-gray-500">{utm.count} payment{utm.count !== 1 ? "s" : ""}</p>
                     </div>
                     <span className="text-sm font-bold text-green-400 ml-2">
-                      {formatCurrency(utm.revenue)}
+                      {formatRevenue(utm.revenue)}
                     </span>
                   </div>
                 ))}
@@ -147,7 +141,7 @@ export default async function RevenueAttribution() {
                     <p className="text-xs text-gray-500">{data.unattributed.count} payment{data.unattributed.count !== 1 ? "s" : ""}</p>
                   </div>
                   <span className="text-sm font-semibold text-gray-400">
-                    {formatCurrency(data.unattributed.revenue)}
+                    {formatRevenue(data.unattributed.revenue)}
                   </span>
                 </div>
               </div>

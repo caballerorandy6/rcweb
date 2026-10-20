@@ -8,6 +8,7 @@ import type { Route } from "next";
 import { toast } from "sonner";
 import Heading from "@/components/ui/Heading";
 import BackButton from "@/components/ui/BackButton";
+import Button from "@/components/ui/Button";
 import {
   DocumentTextIcon,
   ShieldCheckIcon,
@@ -37,7 +38,7 @@ const TermsOfService = () => {
 
     startTransition(async () => {
       try {
-        toast.loading("Processing...");
+        toast.loading("Processing…");
 
         // El servidor calcula precio y fecha de aceptación de términos.
         const result = await createStripeCheckoutAction({ planId, customer });
@@ -45,7 +46,7 @@ const TermsOfService = () => {
         toast.dismiss();
 
         if (result.success && result.sessionUrl) {
-          toast.success("Redirecting to secure payment...");
+          toast.success("Redirecting to secure payment…");
 
           // Guardar projectCode temporalmente
           if (result.projectCode) {
@@ -80,7 +81,7 @@ const TermsOfService = () => {
       <div className="relative z-10 mx-auto max-w-7xl px-6 lg:px-8">
         {/* Mensaje de advertencia y botón de regresar */}
         <div className="mb-8 max-w-5xl mx-auto animate-enter">
-          <div className="bg-amber-500/10 border border-amber-500/30 rounded-xl p-4 sm:p-6">
+          <div className="bg-amber-500/10 border border-amber-500/30 rounded-2xl p-4 sm:p-6">
             <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4">
               <div className="shrink-0">
                 <ExclamationTriangleIcon className="w-10 h-10 text-amber-500" />
@@ -127,7 +128,7 @@ const TermsOfService = () => {
         {/* Main Content */}
         <div className="mt-12 max-w-5xl mx-auto reveal">
           <div className="legal-prose max-w-none">
-            <div className="bg-gray-900/60 rounded-xl border border-gold/20 p-8 space-y-8">
+            <div className="bg-gray-900/60 rounded-2xl border border-gold/20 p-8 space-y-8">
               {/* Acceptance of Terms */}
               <section>
                 <h2>
@@ -810,7 +811,7 @@ const TermsOfService = () => {
 
         {/* Date Information */}
         <div className="mt-12 max-w-5xl mx-auto reveal">
-          <div className="bg-gray-900/60 rounded-xl border border-gold/10 p-6 text-center">
+          <div className="bg-gray-900/60 rounded-2xl border border-gold/10 p-6 text-center">
             <div className="flex items-center justify-center gap-2 text-white/50 text-sm font-inter">
               <CalendarIcon className="w-4 h-4" />
               <span>Last updated: January 13, 2026</span>
@@ -831,16 +832,10 @@ const TermsOfService = () => {
 
           {/* Botón de aceptar */}
           <div className="flex justify-center">
-            <button
-              className={`hover:scale-105 active:scale-95 inline-flex items-center gap-2 px-8 py-3 bg-gold text-gray-900 font-bold rounded-lg hover:bg-gold/90 transition-colors font-inter ${
-                isPending ? "opacity-70 cursor-wait" : ""
-              }`}
-              onClick={handleAcceptTerms}
-              disabled={isPending}
-            >
+            <Button onClick={handleAcceptTerms} disabled={isPending}>
               <ShieldCheckIcon className="w-5 h-5" />
-              {isPending ? "Processing..." : "I Accept These Terms"}
-            </button>
+              {isPending ? "Processing…" : "I Accept These Terms"}
+            </Button>
           </div>
 
           {/* Botón para volver al inicio */}

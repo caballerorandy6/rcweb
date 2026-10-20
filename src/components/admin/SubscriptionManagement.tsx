@@ -19,7 +19,7 @@ import {
   ArrowDownTrayIcon,
 } from "@heroicons/react/24/outline";
 import { toast } from "sonner";
-import { formatCurrency, formatDate } from "@/lib/utils";
+import { formatCurrency, formatDate, formatDollars } from "@/lib/utils";
 
 interface SubscriptionManagementProps {
   initialSubscriptions: SubscriptionData[];
@@ -197,7 +197,7 @@ export default function SubscriptionManagement({
         <div className="bg-gray-800/50 rounded-lg p-4 border border-gray-700/50">
           <p className="text-gray-400 text-sm font-inter">Monthly Revenue</p>
           <p className="text-2xl font-bold text-gold font-iceland">
-            ${stats.mrr.toFixed(2)}
+            {formatDollars(stats.mrr)}
           </p>
         </div>
       </div>
@@ -209,7 +209,7 @@ export default function SubscriptionManagement({
           <MagnifyingGlassIcon className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-gray-400" />
           <input
             type="text"
-            placeholder="Search by name or email..."
+            placeholder="Search by name or email…"
             value={search}
             onChange={(e) => setSearch(e.target.value)}
             className="w-full pl-10 pr-4 py-2 bg-gray-800/50 border border-gray-700/50 rounded-lg text-white font-inter placeholder-gray-500 focus:outline-hidden focus:border-gold/50 transition-colors"

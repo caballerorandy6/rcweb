@@ -27,7 +27,7 @@ const BlogSubscriptionForm = () => {
   });
 
   const onSubmit: SubmitHandler<BlogSubscriptionData> = async (data) => {
-    const toastId = toast.loading("Subscribing...");
+    const toastId = toast.loading("Subscribing…");
 
     try {
       const result = await subscribeToBlogAction(data);
