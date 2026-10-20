@@ -5,6 +5,7 @@ import { createFinalPaymentSessionAction } from "@/actions/payments/createFinalP
 import { verifyProjectAccessAction } from "@/actions/projects/verifyProjectAccessAction";
 import { toast } from "sonner";
 import Button from "@/components/ui/Button";
+import { formatCurrency } from "@/lib/utils";
 
 type ProjectInfo = {
   planName: string;
@@ -108,7 +109,7 @@ export default function FinalPayment() {
               fullWidth
               className="mt-6"
             >
-              {isPending ? "Verifying..." : "Verify Project"}
+              {isPending ? "Verifying…" : "Verify Project"}
             </Button>
           </>
         ) : (
@@ -129,17 +130,14 @@ export default function FinalPayment() {
                 <p className="text-gray-300">
                   <span className="text-gray-400">Final Payment:</span>{" "}
                   <span className="text-gold text-xl font-bold">
-                    $
-                    {projectInfo?.secondPayment
-                      ? (projectInfo.secondPayment / 100).toFixed(2)
-                      : "0.00"}
+                    {formatCurrency(projectInfo?.secondPayment ?? 0)}
                   </span>
                 </p>
               </div>
             </div>
 
             <Button onClick={handlePayment} disabled={isPending} fullWidth>
-              {isPending ? "Processing..." : "Proceed to Payment"}
+              {isPending ? "Processing…" : "Proceed to Payment"}
             </Button>
 
             {/* <button

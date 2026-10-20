@@ -195,7 +195,7 @@ export default function PaymentComplete() {
             A detailed receipt has been sent to your email address.
           </p>
           <p className="text-xs text-gray-500 mt-2 font-inter">
-            For any questions, please contact us at contactus@rcweb.dev
+            For any questions, please contact me at contactus@rcweb.dev
           </p>
         </div>
       </div>

@@ -41,7 +41,7 @@ export default function LoginForm({
   });
 
   const onSubmit: SubmitHandler<LoginData> = async (data) => {
-    const toastId = toast.loading("Signing in...");
+    const toastId = toast.loading("Signing in…");
 
     try {
       const result = await signIn("credentials", {
@@ -200,7 +200,7 @@ export default function LoginForm({
               {/* Submit Button */}
               <div className="pt-2">
                 <Button type="submit" size="lg" fullWidth disabled={isSubmitting}>
-                  {isSubmitting ? "Signing in..." : "Sign In"}
+                  {isSubmitting ? "Signing in…" : "Sign In"}
                   {!isSubmitting && (
                     <svg
                       className="w-5 h-5 transform group-hover:translate-x-1 transition-transform duration-300"

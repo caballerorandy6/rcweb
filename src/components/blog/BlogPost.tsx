@@ -10,21 +10,12 @@ import {
   UserIcon,
 } from "@heroicons/react/24/outline";
 import type { BlogPost as BlogPostType } from "@/lib/blog";
+import { formatDate } from "@/lib/utils";
 import BlogSubscriptionForm from "@/components/blog/BlogSubscriptionForm";
 
 interface BlogPostProps {
   post: BlogPostType;
 }
-
-// Format date consistently to avoid hydration mismatch
-const formatDate = (dateString: string): string => {
-  const date = new Date(dateString);
-  const months = [
-    "January", "February", "March", "April", "May", "June",
-    "July", "August", "September", "October", "November", "December"
-  ];
-  return `${months[date.getMonth()]} ${date.getDate()}, ${date.getFullYear()}`;
-};
 
 // Calculate read time
 const calculateReadTime = (content: string): number => {
@@ -108,7 +99,7 @@ export default function BlogPost({ post }: BlogPostProps) {
               <div className="flex items-center gap-2">
                 <CalendarIcon className="w-5 h-5" />
                 <time dateTime={post.date}>
-                  {formatDate(post.date)}
+                  {formatDate(post.date, { month: "long", timeZone: "UTC" })}
                 </time>
               </div>
               <div className="flex items-center gap-2">
@@ -269,7 +260,7 @@ export default function BlogPost({ post }: BlogPostProps) {
                 Ready to Start Your Project?
               </h3>
               <p className="text-white/70 font-inter mb-6">
-                Let&apos;s bring your vision to life. Contact us today for a
+                Let&apos;s bring your vision to life. Contact me today for a
                 free consultation.
               </p>
               <Button href="/#contact">Get Started</Button>

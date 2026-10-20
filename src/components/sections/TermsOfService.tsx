@@ -38,7 +38,7 @@ const TermsOfService = () => {
 
     startTransition(async () => {
       try {
-        toast.loading("Processing...");
+        toast.loading("Processing…");
 
         // El servidor calcula precio y fecha de aceptación de términos.
         const result = await createStripeCheckoutAction({ planId, customer });
@@ -46,7 +46,7 @@ const TermsOfService = () => {
         toast.dismiss();
 
         if (result.success && result.sessionUrl) {
-          toast.success("Redirecting to secure payment...");
+          toast.success("Redirecting to secure payment…");
 
           // Guardar projectCode temporalmente
           if (result.projectCode) {
@@ -834,7 +834,7 @@ const TermsOfService = () => {
           <div className="flex justify-center">
             <Button onClick={handleAcceptTerms} disabled={isPending}>
               <ShieldCheckIcon className="w-5 h-5" />
-              {isPending ? "Processing..." : "I Accept These Terms"}
+              {isPending ? "Processing…" : "I Accept These Terms"}
             </Button>
           </div>
 

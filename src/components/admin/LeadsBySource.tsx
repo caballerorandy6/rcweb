@@ -1,4 +1,5 @@
 import { getLeadsBySourceAction } from "@/actions/stats/getLeadsBySourceAction";
+import { formatNumber } from "@/lib/utils";
 import {
   ChartBarIcon,
   UserGroupIcon,
@@ -94,7 +95,7 @@ export default async function LeadsBySource() {
           </h2>
         </div>
         <span className="sm:ml-auto text-sm text-gray-400 font-inter">
-          Total: <span className="text-gold font-semibold">{data.total.toLocaleString()}</span> leads
+          Total: <span className="text-gold font-semibold">{formatNumber(data.total)}</span> leads
         </span>
       </div>
 
@@ -108,7 +109,7 @@ export default async function LeadsBySource() {
             <span className={`${card.color} shrink-0`}>{card.icon}</span>
             <div className="min-w-0 flex-1">
               <span className="text-xs text-gray-400 block truncate">{card.label}</span>
-              <span className={`font-bold text-sm ${card.color}`}>{card.value.toLocaleString()}</span>
+              <span className={`font-bold text-sm ${card.color}`}>{formatNumber(card.value)}</span>
             </div>
           </div>
         ))}
@@ -128,7 +129,7 @@ export default async function LeadsBySource() {
                   <span className="text-xs sm:text-sm text-gray-300 truncate">{label}</span>
                   <div className="flex items-center gap-1.5 sm:gap-2 shrink-0">
                     <span className="text-xs sm:text-sm font-semibold text-white">
-                      {source.count.toLocaleString()}
+                      {formatNumber(source.count)}
                     </span>
                     <span className="text-[10px] sm:text-xs text-gray-500">
                       ({source.percentage}%)

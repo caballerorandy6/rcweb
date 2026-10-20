@@ -1,4 +1,5 @@
 import { getProjectStatsAction } from "@/actions/projects/getProjectStatsAction";
+import { formatNumber } from "@/lib/utils";
 import { getRevenueStatsAction } from "@/actions/stats/getRevenueStatsAction";
 import { getNewLeadsAction } from "@/actions/stats/getNewLeadsAction";
 import { getTotalContactsAction } from "@/actions/contacts/getTotalContactsAction";
@@ -70,7 +71,7 @@ export default async function StatsGrid() {
     },
     {
       label: "Total Contacts",
-      value: totalContacts.toLocaleString(),
+      value: formatNumber(totalContacts),
       icon: <UserGroupIcon className="w-7 h-7 sm:w-8 sm:h-8 text-gold" />,
     },
   ];

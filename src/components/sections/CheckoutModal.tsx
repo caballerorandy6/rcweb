@@ -12,11 +12,7 @@ import Button from "@/components/ui/Button";
 import { pricingPlans } from "@/lib/data";
 import { saveCheckoutCustomer } from "@/lib/checkoutCustomer";
 import { useCheckoutStore } from "@/store/checkout-store";
-
-const usd = new Intl.NumberFormat("en-US", {
-  style: "currency",
-  currency: "USD",
-});
+import { formatDollars } from "@/lib/utils";
 
 const inputClasses =
   "w-full p-3 bg-gray-800/70 text-white rounded-xl border border-gray-700 placeholder:text-white/40 focus:border-gold focus:outline-hidden focus:ring-2 focus:ring-gold/20 aria-invalid:border-red-500/70 transition";
@@ -85,7 +81,7 @@ export default function CheckoutModal() {
                     {isMonthly ? "Monthly payment" : "Initial payment (50%)"}
                   </dt>
                   <dd className="text-2xl font-semibold text-gold tabular-nums">
-                    {usd.format(amount)}
+                    {formatDollars(amount)}
                     {isMonthly ? (
                       <span className="text-sm font-normal text-gold/70">/month</span>
                     ) : null}

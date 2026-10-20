@@ -86,7 +86,7 @@ export default function ScheduleContent() {
                   free 30-minute consultation
                 </span>{" "}
                 to discuss your web development project. No commitment required –
-                just an opportunity to explore how we can help bring your vision
+                just an opportunity to explore how I can help bring your vision
                 to life.
               </p>
             </div>
@@ -222,7 +222,7 @@ export default function ScheduleContent() {
                 href="mailto:contactus@rcweb.dev"
                 className="text-gold hover:text-gold/80 transition-colors font-bold"
               >
-                Email us directly
+                Email me directly
               </a>
             </p>
           </div>

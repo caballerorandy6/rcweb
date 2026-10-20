@@ -14,38 +14,88 @@ export function generateProjectCode(): string {
   return code;
 }
 
-/**
- * Formatea un monto en centavos a formato de moneda USD
- */
-export function formatCurrency(amount: number): string {
-  return new Intl.NumberFormat("en-US", {
-    style: "currency",
-    currency: "USD",
-  }).format(amount / 100);
+// Intl formatters are expensive to build, so each distinct configuration is
+// created once and reused (the site is en-US only).
+const usdFormatter = new Intl.NumberFormat("en-US", {
+  style: "currency",
+  currency: "USD",
+});
+const usdWholeFormatter = new Intl.NumberFormat("en-US", {
+  style: "currency",
+  currency: "USD",
+  maximumFractionDigits: 0,
+});
+const numberFormatter = new Intl.NumberFormat("en-US");
+const dateFormatters = new Map<string, Intl.DateTimeFormat>();
+
+/** Cents → "$1,000.00". `whole` drops the cents: "$1,000". */
+export function formatCurrency(cents: number, whole = false): string {
+  return (whole ? usdWholeFormatter : usdFormatter).format(cents / 100);
+}
+
+/** Dollars (not cents) → "$12.34"; for amounts computed in dollars */
+export function formatDollars(dollars: number): string {
+  return usdFormatter.format(dollars);
+}
+
+/** Integer counts with thousands separators: 1234 → "1,234" */
+export function formatNumber(value: number): string {
+  return numberFormatter.format(value);
+}
+
+type DateFormatOptions = {
+  year?: "numeric" | "2-digit";
+  month?: "numeric" | "2-digit" | "long" | "short" | "narrow";
+  day?: "numeric" | "2-digit";
+  /** Pass "UTC" for date-only values (YYYY-MM-DD) so the day never shifts */
+  timeZone?: string;
+};
+
+function toDate(date: Date | string | null): Date | null {
+  if (!date) return null;
+  const dateObj = typeof date === "string" ? new Date(date) : date;
+  return isNaN(dateObj.getTime()) ? null : dateObj;
+}
+
+function getDateFormatter(options: Intl.DateTimeFormatOptions): Intl.DateTimeFormat {
+  const key = JSON.stringify(options);
+  let formatter = dateFormatters.get(key);
+  if (!formatter) {
+    formatter = new Intl.DateTimeFormat("en-US", options);
+    dateFormatters.set(key, formatter);
+  }
+  return formatter;
 }
 
 /**
- * Formatea una fecha a formato legible (ej: "Jan 15, 2025")
- * Maneja Date, string ISO, o null
+ * Readable date ("Jan 15, 2025"). Accepts Date, ISO string or null.
  */
 export function formatDate(
   date: Date | string | null,
-  options?: {
-    year?: "numeric" | "2-digit";
-    month?: "numeric" | "2-digit" | "long" | "short" | "narrow";
-    day?: "numeric" | "2-digit";
-  }
+  options?: DateFormatOptions
 ): string {
-  if (!date) return "N/A";
+  const dateObj = toDate(date);
+  if (!dateObj) return "N/A";
 
-  const dateObj = typeof date === "string" ? new Date(date) : date;
-
-  if (isNaN(dateObj.getTime())) return "N/A";
-
-  return new Intl.DateTimeFormat("en-US", {
+  return getDateFormatter({
     year: options?.year || "numeric",
     month: options?.month || "short",
     day: options?.day || "numeric",
+    timeZone: options?.timeZone,
+  }).format(dateObj);
+}
+
+/** Date with time ("Jan 15, 2025, 3:42 PM") for logs and sent timestamps */
+export function formatDateTime(date: Date | string | null): string {
+  const dateObj = toDate(date);
+  if (!dateObj) return "N/A";
+
+  return getDateFormatter({
+    year: "numeric",
+    month: "short",
+    day: "numeric",
+    hour: "numeric",
+    minute: "2-digit",
   }).format(dateObj);
 }
 

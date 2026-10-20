@@ -112,7 +112,7 @@ export default async function ProjectPage(props: { params: Params }) {
               href="mailto:contactus@rcweb.dev"
               className="text-gold hover:underline"
             >
-              Contact us
+              Contact me
             </a>
           </p>
         </div>

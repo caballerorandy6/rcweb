@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useTransition } from "react";
+import { formatDate } from "@/lib/utils";
 import { toast } from "sonner";
 import { getContactsAction } from "@/actions/contacts/getContactsAction";
 import { createContactAction } from "@/actions/contacts/createContactAction";
@@ -139,7 +140,7 @@ export default function ContactManagement({
       <div className="font-inter">
         <input
           type="text"
-          placeholder="Search by name, email, or phone..."
+          placeholder="Search by name, email, or phone…"
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
           className="w-full md:w-96 p-3 bg-gray-800 text-white rounded-lg border border-gray-700 focus:border-gold focus:outline-hidden"
@@ -357,7 +358,7 @@ export default function ContactManagement({
 
                   {/* Created */}
                   <td className="px-6 py-4 text-sm text-gray-400">
-                    {new Date(contact.createdAt).toLocaleDateString()}
+                    {formatDate(contact.createdAt)}
                   </td>
 
                   {/* Actions */}
@@ -478,7 +479,7 @@ export default function ContactManagement({
                 disabled={isPending}
                 className="flex-1 bg-gold text-gray-900 py-2 rounded-sm font-semibold hover:bg-gold/90 disabled:opacity-50 font-inter"
               >
-                {isPending ? "Creating..." : "Create Contact"}
+                {isPending ? "Creating…" : "Create Contact"}
               </button>
               <button
                 onClick={() => {

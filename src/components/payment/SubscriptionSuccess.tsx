@@ -12,7 +12,7 @@ import { toast } from "sonner";
 import confetti from "canvas-confetti";
 import type { Subscription } from "@/generated/prisma/client";
 import { trackLeadConversion, trackPurchase } from "@/lib/analytics";
-import { formatDate as formatDateUtil } from "@/lib/utils";
+import { formatCurrency, formatDate as formatDateUtil } from "@/lib/utils";
 import { trackFBPurchase } from "@/components/tracking/FacebookPixel";
 import { trackLinkedInConversion } from "@/components/tracking/LinkedInInsightTag";
 
@@ -52,7 +52,7 @@ export default function SubscriptionSuccess({
       if (fallbackUsed) {
         toast.warning("Subscription processed with fallback method", {
           description:
-            "Your subscription was successful but processed through our backup system.",
+            "Your subscription was successful but processed through a backup system.",
         });
       }
     }
@@ -77,7 +77,7 @@ export default function SubscriptionSuccess({
           </h2>
           <p className="text-gray-300 mb-6">{error}</p>
           <p className="text-sm text-gray-400 mb-6">
-            Don&apos;t worry! If your payment was successful in Stripe, we&apos;ll
+            Don&apos;t worry! If your payment was successful in Stripe, I&apos;ll
             process it shortly. Please check your email for confirmation.
           </p>
           <Button href="mailto:contactus@rcweb.dev">Contact Support</Button>
@@ -103,7 +103,7 @@ export default function SubscriptionSuccess({
           </h1>
 
           <p className="text-gray-300 text-center mb-8 font-inter">
-            Thank you for subscribing to our maintenance plan. Your website is
+            Thank you for subscribing to the maintenance plan. Your website is
             now protected and supported.
           </p>
 
@@ -140,7 +140,7 @@ export default function SubscriptionSuccess({
                   <div>
                     <span className="text-gray-400">Monthly Amount:</span>
                     <p className="text-white font-semibold text-lg">
-                      ${(subscription.amount / 100).toFixed(2)}/mo
+                      {formatCurrency(subscription.amount)}/mo
                     </p>
                   </div>
                   <div>

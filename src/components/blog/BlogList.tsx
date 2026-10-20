@@ -49,10 +49,10 @@ export default function BlogList({ posts }: BlogListProps) {
                 Coming Soon
               </h3>
               <p className="text-white/60 font-inter leading-relaxed mb-6">
-                We&apos;re working on amazing content about web development, SEO, and
+                I&apos;m working on new content about web development, SEO, and
                 digital marketing. Check back soon!
               </p>
-              <Button href="/#contact">Contact Us</Button>
+              <Button href="/#contact">Contact Me</Button>
             </div>
           </div>
         )}

@@ -56,7 +56,7 @@ const Certification = ({
           </div>
 
           {/* Opción B: Si quieres usar react-pdf, descomentar esto */}
-          {/* <Document file={image} loading={<div>Cargando...</div>}>
+          {/* <Document file={image} loading={<div>Cargando…</div>}>
             <Page pageNumber={1} width={300} height={144} />
           </Document> */}
         </div>

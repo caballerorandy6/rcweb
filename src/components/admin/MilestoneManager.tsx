@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { formatDate } from "@/lib/utils";
 import {
   PlusIcon,
   PencilIcon,
@@ -251,7 +252,7 @@ export default function MilestoneManager({
                     {milestone.completedAt && (
                       <p className="text-xs text-green-400 mt-1 font-inter">
                         Completed:{" "}
-                        {new Date(milestone.completedAt).toLocaleDateString()}
+                        {formatDate(milestone.completedAt)}
                       </p>
                     )}
                   </div>
@@ -305,7 +306,7 @@ export default function MilestoneManager({
                 type="text"
                 value={newTitle}
                 onChange={(e) => setNewTitle(e.target.value)}
-                placeholder="Milestone title..."
+                placeholder="Milestone title…"
                 className="w-full bg-gray-700 text-white px-3 py-2 rounded-sm border border-gray-600 focus:outline-hidden focus:border-gold font-inter mb-2"
                 autoFocus
               />
@@ -322,7 +323,7 @@ export default function MilestoneManager({
                   disabled={isLoading || !newTitle.trim()}
                   className="px-4 py-2 bg-gold text-gray-900 rounded-sm font-semibold hover:bg-gold/90 transition-colors font-inter disabled:opacity-50"
                 >
-                  {isLoading ? "Adding..." : "Add Milestone"}
+                  {isLoading ? "Adding…" : "Add Milestone"}
                 </button>
                 <button
                   onClick={() => {

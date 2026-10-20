@@ -118,7 +118,7 @@ export default function NotFound() {
         <div className="mt-12 animate-enter" style={enter(5)}>
           <div className="inline-flex items-center gap-2 text-gray-400 font-inter text-sm">
             <MapIcon className="w-4 h-4" />
-            <span>Lost? Try our </span>
+            <span>Lost? Try the </span>
             <Link
               href={"/sitemap" as Route}
               className="text-gold hover:text-gold/80 transition-colors underline"
@@ -130,7 +130,7 @@ export default function NotFound() {
               href={"/#contact" as Route}
               className="text-gold hover:text-gold/80 transition-colors underline"
             >
-              contact us
+              contact me
             </Link>
           </div>
         </div>

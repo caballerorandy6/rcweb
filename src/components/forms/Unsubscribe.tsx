@@ -48,7 +48,7 @@ export default function Unsubscribe() {
             Unsubscribed Successfully
           </h1>
           <p className="text-gray-300 font-inter">
-            {email} has been removed from our marketing emails.
+            {email} has been removed from RC Web Solutions marketing emails.
           </p>
           <p className="text-sm text-gray-400 mt-4 font-inter">
             You will still receive transactional emails about your projects.
@@ -85,7 +85,7 @@ export default function Unsubscribe() {
               disabled={isPending}
               className="flex-1"
             >
-              {isPending ? "Processing..." : "Unsubscribe"}
+              {isPending ? "Processing…" : "Unsubscribe"}
             </Button>
             <Button href="/" variant="secondary" className="flex-1">
               Cancel

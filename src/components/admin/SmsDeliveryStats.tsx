@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useTransition } from "react";
+import { formatDateTime } from "@/lib/utils";
 import {
   getSmsDeliveryStatsAction,
   type SmsDeliveryStats,
@@ -139,7 +140,7 @@ export default function SmsDeliveryStats() {
               disabled={isPending || isLoading}
               className="px-6 py-3 bg-gold text-gray-900 rounded-lg font-semibold hover:bg-gold/90 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
             >
-              {isLoading ? "Loading..." : "Get Report"}
+              {isLoading ? "Loading…" : "Get Report"}
             </button>
           </div>
         </div>
@@ -318,7 +319,7 @@ export default function SmsDeliveryStats() {
                     className="px-4 py-2 bg-red-600 text-white rounded-lg font-semibold hover:bg-red-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
                   >
                     {isDeleting
-                      ? "Deleting..."
+                      ? "Deleting…"
                       : `Delete ${selectedPhones.size} Selected`}
                   </button>
                 </div>
@@ -399,7 +400,7 @@ export default function SmsDeliveryStats() {
                           {msg.errorMessage || "—"}
                         </td>
                         <td className="px-4 py-3 text-gray-400 text-sm">
-                          {new Date(msg.dateSent).toLocaleString()}
+                          {formatDateTime(msg.dateSent)}
                         </td>
                       </tr>
                     ))}

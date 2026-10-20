@@ -36,7 +36,7 @@ const Contact = () => {
           </Button>
         </div>
         <p className="text-center text-white/70 mt-4 font-inter text-sm sm:text-base">
-          Or send us a message below
+          Or send me a message below
         </p>
       </div>
 

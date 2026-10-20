@@ -40,7 +40,7 @@ export default function Error({
             Something went wrong
           </h1>
           <p className="text-white/60 font-inter mb-8">
-            We apologize for the inconvenience. An unexpected error has occurred.
+            Sorry, an unexpected error has occurred.
           </p>
         </div>
 

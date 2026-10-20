@@ -24,7 +24,7 @@ export default function GlobalError({
         <div className="text-center max-w-md px-6">
           <h1 className="text-4xl text-gold mb-4 font-iceland">Something went wrong</h1>
           <p className="text-gray-400 mb-8">
-            We have been notified and are looking into it.
+            The error has been reported automatically.
           </p>
           <Button onClick={reset}>Try again</Button>
         </div>
