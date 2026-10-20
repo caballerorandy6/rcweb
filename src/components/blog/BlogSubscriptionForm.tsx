@@ -61,7 +61,7 @@ const BlogSubscriptionForm = () => {
 
         <p className="text-gray-400 text-sm font-inter mb-6">
           Get new articles about web development, React and Next.js, plus
-          occasional offers from RC Web Solutions, by email.
+          news from RC Web Solutions, by email.
         </p>
 
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
@@ -74,15 +74,20 @@ const BlogSubscriptionForm = () => {
               {...register("email")}
               id="blog-email"
               type="email"
-              placeholder="your@email.com"
-              aria-label="Email address for blog subscription"
-              className="w-full p-3 bg-gray-800/80 text-white rounded-xl border border-gray-700/60 focus:outline-hidden focus:border-gold focus:ring-2 focus:ring-gold/20 transition duration-300 font-inter placeholder-gray-500"
+              autoComplete="email"
+              inputMode="email"
+              spellCheck={false}
+              aria-required="true"
+              aria-invalid={errors.email ? true : undefined}
+              aria-describedby={errors.email ? "blog-email-error" : undefined}
+              placeholder="you@email.com…"
+              className="w-full p-3 bg-gray-800/80 text-white rounded-xl border border-gray-700/60 focus:outline-hidden focus:border-gold focus:ring-2 focus:ring-gold/20 transition duration-300 font-inter placeholder-gray-400"
             />
             <ErrorMessage
               errors={errors}
               name="email"
               render={({ message }) => (
-                <p className="text-red-400 text-sm mt-2 font-inter">
+                <p id="blog-email-error" role="alert" className="text-red-400 text-sm mt-2 font-inter">
                   {message}
                 </p>
               )}
@@ -91,7 +96,7 @@ const BlogSubscriptionForm = () => {
 
           {/* Submit Button */}
           <Button type="submit" size="lg" fullWidth disabled={isSubmitting}>
-            {isSubmitting ? "Subscribing..." : "Subscribe"}
+            {isSubmitting ? "Subscribing…" : "Subscribe"}
           </Button>
 
           <p className="text-gray-400 text-xs font-inter text-center">

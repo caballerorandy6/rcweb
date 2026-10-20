@@ -42,9 +42,8 @@ const CookieConsent = ({ onAccept, onReject }: CookieConsentProps) => {
   return (
     <div
       className="fixed bottom-0 left-0 right-0 z-50 p-4 sm:p-6 animate-slide-up"
-      role="dialog"
-      aria-live="polite"
-      aria-label="Cookie consent banner"
+      role="region"
+      aria-labelledby="cookie-settings-title"
     >
       <div className="mx-auto max-w-5xl">
         <div className="relative overflow-hidden rounded-2xl border border-gold/30 bg-gray-900/95 backdrop-blur-lg p-6 sm:p-8 shadow-2xl">
@@ -57,6 +56,7 @@ const CookieConsent = ({ onAccept, onReject }: CookieConsentProps) => {
               <div className="flex items-center gap-2 mb-2">
                 <svg
                   className="w-5 h-5 text-gold shrink-0"
+                  aria-hidden="true"
                   fill="none"
                   stroke="currentColor"
                   viewBox="0 0 24 24"
@@ -69,7 +69,7 @@ const CookieConsent = ({ onAccept, onReject }: CookieConsentProps) => {
                     d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4"
                   />
                 </svg>
-                <h2 className="text-lg font-inter font-semibold text-white">
+                <h2 id="cookie-settings-title" className="text-lg font-inter font-semibold text-white">
                   Cookie Settings
                 </h2>
               </div>
@@ -98,16 +98,16 @@ const CookieConsent = ({ onAccept, onReject }: CookieConsentProps) => {
             {/* Buttons */}
             <div className="flex flex-col sm:flex-row gap-3 w-full sm:w-auto">
               <button
+                type="button"
                 onClick={handleReject}
-                className="px-6 py-2.5 rounded-lg font-inter text-sm text-white/80 border-2 border-gold/30 hover:border-gold/50 hover:bg-gold/5 transition-all duration-200"
-                aria-label="Reject optional cookies (essential cookies will remain active)"
+                className="min-h-11 px-6 py-2.5 rounded-lg font-inter text-sm text-white/80 border-2 border-gold/30 hover:border-gold/50 hover:bg-gold/5 transition duration-200"
               >
                 Essential Only
               </button>
               <button
+                type="button"
                 onClick={handleAccept}
-                className="px-6 py-2.5 rounded-lg font-inter text-sm bg-gold text-gray-900 hover:bg-gold/90 transition-all duration-200 font-semibold"
-                aria-label="Accept all cookies including marketing and analytics"
+                className="min-h-11 px-6 py-2.5 rounded-lg font-inter text-sm bg-gold text-gray-900 hover:bg-gold/90 transition duration-200 font-semibold"
               >
                 Accept All
               </button>

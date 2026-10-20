@@ -69,9 +69,9 @@ export default function ProcessStepper({ steps }: ProcessStepperProps) {
               {currentStep.icon}
             </div>
             <div>
-              <h2 className="text-2xl font-iceland text-white">
+              <h3 className="text-2xl font-iceland text-white">
                 Step {activeStep + 1}: {currentStep.title}
-              </h2>
+              </h3>
               <p className="text-sm font-inter text-gold/80">
                 {currentStep.week}
               </p>

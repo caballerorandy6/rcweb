@@ -332,8 +332,6 @@ export const teachMarqueeData: TeachMarqueeProps[] = [
   // },
 ];
 
-export const repeatedIcons = [...teachMarqueeData, ...teachMarqueeData];
-
 export const certifications = [
   {
     name: "Evaluation of the Bachelor's Degree in Software Engineering",
