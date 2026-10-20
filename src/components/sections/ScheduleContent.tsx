@@ -8,8 +8,8 @@ import {
   VideoCameraIcon,
   PhoneIcon,
 } from "@heroicons/react/24/outline";
-import Link from "next/link";
 import Heading from "@/components/ui/Heading";
+import Button from "@/components/ui/Button";
 import { trackFBPhoneCall } from "@/components/tracking/FacebookPixel";
 import { trackManualContact } from "@/lib/analytics";
 import { trackLinkedInConversion } from "@/components/tracking/LinkedInInsightTag";
@@ -60,7 +60,7 @@ export default function ScheduleContent() {
         />
       )}
 
-      <section className="relative isolate overflow-hidden py-24 sm:py-32 bg-linear-to-b from-gray-900 via-gray-900/95 to-gray-900">
+      <section className="relative isolate overflow-hidden pt-8 pb-20 sm:pt-12 sm:pb-28 bg-linear-to-b from-gray-900 via-gray-900/95 to-gray-900">
         {/* Background decoration */}
         <div className="absolute inset-0 -z-10">
           <div className="absolute inset-0 bg-[url('/grid.svg')] bg-center opacity-10"></div>
@@ -171,26 +171,23 @@ export default function ScheduleContent() {
                   style={{ minWidth: "320px", height: "700px" }}
                 />
               ) : (
-                <button
-                  onClick={() => setShowCalendly(true)}
-                  className="w-full py-16 flex flex-col items-center justify-center gap-6 hover:bg-gold/5 transition-colors duration-300 rounded-lg group"
-                >
-                  <div className="w-24 h-24 rounded-full bg-gold/20 flex items-center justify-center group-hover:bg-gold/30 transition-colors">
-                    <CalendarDaysIcon className="w-12 h-12 text-gold" />
+                <div className="w-full py-16 flex flex-col items-center justify-center gap-6">
+                  <div className="w-24 h-24 rounded-full bg-gold/20 flex items-center justify-center">
+                    <CalendarDaysIcon className="w-12 h-12 text-gold" aria-hidden="true" />
                   </div>
                   <div className="text-center">
                     <h3 className="text-2xl text-gold font-iceland mb-2">
                       View Available Times
                     </h3>
                     <p className="text-gray-400 font-inter text-sm max-w-md">
-                      Click to load the calendar and choose a time that works for you
+                      Load the calendar and choose a time that works for you
                     </p>
                   </div>
-                  <div className="px-8 py-4 bg-gold text-gray-900 font-bold rounded-xl hover:bg-gold/90 transition-colors font-inter text-lg flex items-center gap-2">
-                    <CalendarDaysIcon className="w-6 h-6" />
+                  <Button size="lg" onClick={() => setShowCalendly(true)}>
+                    <CalendarDaysIcon className="w-6 h-6" aria-hidden="true" />
                     Open Calendar
-                  </div>
-                </button>
+                  </Button>
+                </div>
               )}
             </div>
           </div>
@@ -202,21 +199,14 @@ export default function ScheduleContent() {
               contactInView ? 'animate-fade-in-up' : 'opacity-0'
             }`}
           >
-            <a
-              href="tel:+13463757534"
-              onClick={trackPhoneConversion}
-              className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-gold text-gray-900 font-bold rounded-lg hover:bg-gold/90 hover:scale-105 active:scale-95 transition-all duration-200 font-inter text-lg"
-            >
-              <PhoneIcon className="w-6 h-6" />
+            <Button href="tel:+13463757534" onClick={trackPhoneConversion} size="lg">
+              <PhoneIcon className="w-6 h-6" aria-hidden="true" />
               Call (346) 375-7534
-            </a>
+            </Button>
 
-            <Link
-              href="/#contact"
-              className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-transparent border-2 border-gold text-gold font-bold rounded-lg hover:bg-gold/10 hover:scale-105 active:scale-95 transition-all duration-200 font-inter text-lg"
-            >
+            <Button href="/#contact" variant="secondary" size="lg">
               Send a Message
-            </Link>
+            </Button>
           </div>
 
           {/* Contact Alternative - Animated on scroll */}

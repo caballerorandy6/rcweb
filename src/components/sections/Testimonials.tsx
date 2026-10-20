@@ -1,5 +1,6 @@
 import { StarIcon } from "@heroicons/react/24/solid";
 import Heading from "../ui/Heading";
+import Button from "../ui/Button";
 import { testimonials, GOOGLE_REVIEW_URL } from "@/lib/data";
 
 const GoogleIcon = () => (
@@ -89,15 +90,10 @@ const Testimonials = () => {
 
         {/* Link to leave a review */}
         <div className="text-center mt-12">
-          <a
-            href={GOOGLE_REVIEW_URL}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 px-6 py-3 text-sm font-inter font-semibold text-gold border-2 border-gold/50 hover:bg-gold/10 hover:border-gold/60 rounded-lg transition duration-200"
-          >
+          <Button href={GOOGLE_REVIEW_URL} external variant="secondary">
             <GoogleIcon />
             Write a Review on Google
-          </a>
+          </Button>
         </div>
       </div>
     </section>

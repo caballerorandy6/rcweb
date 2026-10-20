@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect } from "react";
-import Link from "next/link";
+import Button from "@/components/ui/Button";
 import {
   CheckCircleIcon,
   CalendarIcon,
@@ -80,12 +80,7 @@ export default function SubscriptionSuccess({
             Don&apos;t worry! If your payment was successful in Stripe, we&apos;ll
             process it shortly. Please check your email for confirmation.
           </p>
-          <a
-            href="mailto:contactus@rcweb.dev"
-            className="inline-block px-6 py-3 bg-gold text-gray-900 rounded-lg hover:bg-gold/90 transition-colors"
-          >
-            Contact Support
-          </a>
+          <Button href="mailto:contactus@rcweb.dev">Contact Support</Button>
         </div>
       </div>
     );
@@ -219,18 +214,12 @@ export default function SubscriptionSuccess({
 
           {/* Actions */}
           <div className="flex flex-col sm:flex-row gap-4 font-inter">
-            <Link
-              href="/"
-              className="flex-1 text-center px-6 py-3 bg-gold text-gray-900 rounded-lg hover:bg-gold/90 transition-colors font-semibold"
-            >
+            <Button href="/" className="flex-1">
               Return to Home
-            </Link>
-            <Link
-              href="mailto:contactus@rcweb.dev"
-              className="flex-1 text-center px-6 py-3 border border-gold/50 text-gold rounded-lg hover:bg-gold/10 transition-colors font-semibold"
-            >
+            </Button>
+            <Button href="mailto:contactus@rcweb.dev" variant="secondary" className="flex-1">
               Contact Support
-            </Link>
+            </Button>
           </div>
         </div>
 

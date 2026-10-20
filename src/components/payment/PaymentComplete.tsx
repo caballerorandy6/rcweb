@@ -1,7 +1,7 @@
 "use client";
 
 import { useSearchParams } from "next/navigation";
-import Link from "next/link";
+import Button from "@/components/ui/Button";
 import { useEffect } from "react";
 
 export default function PaymentComplete() {
@@ -182,18 +182,12 @@ export default function PaymentComplete() {
         )}
 
         <div className="space-y-3 font-inter">
-          <Link
-            href="/"
-            className="block w-full bg-gold text-gray-900 px-6 py-3 rounded-lg font-semibold hover:bg-gold/90 transition-colors"
-          >
+          <Button href="/" fullWidth>
             Return to Home
-          </Link>
-          <a
-            href="mailto:contactus@rcweb.dev"
-            className="block w-full border border-gold/50 text-gold px-6 py-3 rounded-lg font-semibold hover:bg-gold/10 transition-colors"
-          >
+          </Button>
+          <Button href="mailto:contactus@rcweb.dev" variant="secondary" fullWidth>
             Contact Support
-          </a>
+          </Button>
         </div>
 
         <div className="mt-8 pt-6 border-t border-gray-700">

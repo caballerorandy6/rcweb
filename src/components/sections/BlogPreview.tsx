@@ -1,5 +1,5 @@
-import Link from "next/link";
 import type { Route } from "next";
+import Button from "@/components/ui/Button";
 import { BookOpenIcon } from "@heroicons/react/24/outline";
 import Heading from "@/components/ui/Heading";
 import BlogCard from "@/components/blog/BlogCard";
@@ -31,13 +31,10 @@ export default function BlogPreview() {
 
         {/* View All Posts */}
         <div className="mt-12 text-center">
-          <Link
-            href={"/blog" as Route}
-            className="inline-flex items-center justify-center gap-2 px-8 py-4 text-base font-inter font-semibold text-gold border-2 border-gold/50 hover:bg-gold/10 hover:border-gold/60 rounded-xl transition-all duration-200 hover:scale-105"
-          >
+          <Button href={"/blog" as Route} variant="secondary" size="lg">
             View All Posts
-            <span>&rarr;</span>
-          </Link>
+            <span aria-hidden="true">&rarr;</span>
+          </Button>
         </div>
       </div>
     </section>

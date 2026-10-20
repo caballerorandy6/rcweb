@@ -188,7 +188,7 @@ export default function WebDeveloperHoustonPage() {
               {services.map((service) => (
                 <div
                   key={service.title}
-                  className="rounded-2xl border border-white/10 bg-white/5 p-8 hover:border-gold/30 transition-colors duration-300"
+                  className="rounded-2xl border border-gold/20 bg-gray-900/50 p-6 lg:p-8 shadow-lg shadow-black/20 transition duration-200 hover:border-gold/50 hover:bg-gold/5"
                 >
                   <service.icon className="h-8 w-8 text-gold mb-4" />
                   <h3 className="text-2xl text-white font-iceland">
@@ -223,7 +223,7 @@ export default function WebDeveloperHoustonPage() {
                   href={study.url as Route}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="group rounded-2xl border border-white/10 bg-white/5 p-8 hover:border-gold/30 transition-all duration-300"
+                  className="group rounded-2xl border border-gold/20 bg-gray-900/50 p-6 lg:p-8 shadow-lg shadow-black/20 transition duration-200 hover:border-gold/50 hover:bg-gold/5"
                 >
                   <span className="text-sm font-medium text-gold/70 font-inter">
                     {study.industry}

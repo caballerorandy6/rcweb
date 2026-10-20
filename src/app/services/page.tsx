@@ -65,7 +65,7 @@ export default function ServicesPage() {
                   <Link
                     key={service.slug}
                     href={`/services/${service.slug}` as Route}
-                    className="group rounded-2xl border border-white/10 bg-white/5 p-8 hover:border-gold/30 transition-all duration-300"
+                    className="group rounded-2xl border border-gold/20 bg-gray-900/50 p-6 lg:p-8 shadow-lg shadow-black/20 transition duration-200 hover:border-gold/50 hover:bg-gold/5"
                   >
                     {Icon && (
                       <Icon className="h-8 w-8 text-gold mb-4" />

@@ -1,4 +1,4 @@
-import Link from "next/link";
+import Button from "@/components/ui/Button";
 import { BookOpenIcon } from "@heroicons/react/24/outline";
 import Heading from "@/components/ui/Heading";
 import BlogCard from "@/components/blog/BlogCard";
@@ -11,7 +11,7 @@ interface BlogListProps {
 
 export default function BlogList({ posts }: BlogListProps) {
   return (
-    <section className="relative isolate overflow-hidden py-24 sm:py-32 bg-linear-to-b from-gray-900 via-gray-900/95 to-gray-900">
+    <section className="relative isolate overflow-hidden pt-8 pb-20 sm:pt-12 sm:pb-28 bg-linear-to-b from-gray-900 via-gray-900/95 to-gray-900">
       {/* Background decoration */}
       <div className="absolute inset-0 -z-10">
         <div className="absolute inset-0 bg-[url('/grid.svg')] bg-center opacity-10"></div>
@@ -29,7 +29,7 @@ export default function BlogList({ posts }: BlogListProps) {
         </Heading>
 
         {/* Newsletter Subscription */}
-        <div className="mt-12 mb-8">
+        <div className="mt-12">
           <BlogSubscriptionForm />
         </div>
 
@@ -52,12 +52,7 @@ export default function BlogList({ posts }: BlogListProps) {
                 We&apos;re working on amazing content about web development, SEO, and
                 digital marketing. Check back soon!
               </p>
-              <Link
-                href="/#contact"
-                className="inline-flex items-center gap-2 px-6 py-3 bg-gold text-gray-900 font-semibold rounded-lg hover:bg-gold/90 transition-colors"
-              >
-                Contact Us
-              </Link>
+              <Button href="/#contact">Contact Us</Button>
             </div>
           </div>
         )}
