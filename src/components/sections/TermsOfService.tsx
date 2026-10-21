@@ -1,71 +1,13 @@
-"use client";
-
-import { useTransition } from "react";
-import { useRouter } from "next/navigation";
-import { useSearchParams } from "next/navigation";
+import { Suspense } from "react";
 import Link from "next/link";
 import type { Route } from "next";
-import { toast } from "sonner";
 import Heading from "@/components/ui/Heading";
-import BackButton from "@/components/ui/BackButton";
-import Button from "@/components/ui/Button";
-import {
-  DocumentTextIcon,
-  ShieldCheckIcon,
-  CalendarIcon,
-  ExclamationTriangleIcon,
-} from "@heroicons/react/24/outline";
-import { COMPANY, COMPANY_ADDRESS, COMPANY_LOCATION } from "@/lib/company";
-import { createStripeCheckoutAction } from "@/actions/payments/createStripeCheckoutAction";
-import { getCheckoutCustomer } from "@/lib/checkoutCustomer";
+import { DocumentTextIcon, CalendarIcon } from "@heroicons/react/24/outline";
+import { COMPANY, COMPANY_ADDRESS, COMPANY_LOCATION, LEGAL_LAST_UPDATED } from "@/lib/company";
+import { TermsReviewNotice, TermsAcceptActions } from "@/components/sections/TermsAcceptance";
 
+/** Legal text is static server output; only the checkout bits are client. */
 const TermsOfService = () => {
-  const router = useRouter();
-  const searchParams = useSearchParams();
-  const [isPending, startTransition] = useTransition();
-
-  // La URL solo trae el ID del plan; los datos del cliente vienen de sessionStorage.
-  const planId = searchParams.get("plan");
-
-  const handleAcceptTerms = () => {
-    const customer = getCheckoutCustomer();
-
-    if (!planId || !customer) {
-      toast.error("Missing information. Please start from pricing.");
-      router.push("/#pricing");
-      return;
-    }
-
-    startTransition(async () => {
-      try {
-        toast.loading("Processing…");
-
-        // El servidor calcula precio y fecha de aceptación de términos.
-        const result = await createStripeCheckoutAction({ planId, customer });
-
-        toast.dismiss();
-
-        if (result.success && result.sessionUrl) {
-          toast.success("Redirecting to secure payment…");
-
-          // Guardar projectCode temporalmente
-          if (result.projectCode) {
-            sessionStorage.setItem("tempProjectCode", result.projectCode);
-          }
-
-          // Redirigir a Stripe
-          window.location.href = result.sessionUrl;
-        } else if (!result.success) {
-          toast.error(result.error || "Failed to process");
-        }
-      } catch (error) {
-        toast.dismiss();
-        toast.error("An error occurred");
-        console.error("Error in handleAcceptTerms:", error);
-      }
-    });
-  };
-
   return (
     <section
       id="terms"
@@ -79,27 +21,9 @@ const TermsOfService = () => {
       </div>
 
       <div className="relative z-10 mx-auto max-w-7xl px-6 lg:px-8">
-        {/* Mensaje de advertencia y botón de regresar */}
-        <div className="mb-8 max-w-5xl mx-auto animate-enter">
-          <div className="bg-amber-500/10 border border-amber-500/30 rounded-2xl p-4 sm:p-6">
-            <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4">
-              <div className="shrink-0">
-                <ExclamationTriangleIcon className="w-10 h-10 text-amber-500" />
-              </div>
-              <div className="grow">
-                <h2 className="text-amber-500 text-2xl mb-1 font-iceland">
-                  Important: Review Required
-                </h2>
-                <p className="text-white/80 text-sm sm:text-base font-inter">
-                  Please carefully review and accept our Terms of Service before
-                  proceeding to payment. This legal agreement outlines the
-                  conditions of our service.
-                </p>
-              </div>
-              <BackButton className="shrink-0" />
-            </div>
-          </div>
-        </div>
+        <Suspense fallback={null}>
+          <TermsReviewNotice />
+        </Suspense>
 
         <Heading
           as="h1"
@@ -120,7 +44,7 @@ const TermsOfService = () => {
             </p>
             <p className="mt-4 text-white/90 text-lg leading-relaxed font-inter">
               This agreement was last updated on{" "}
-              <strong>January 13, 2026</strong>.
+              <strong>{LEGAL_LAST_UPDATED.label}</strong>.
             </p>
           </div>
         </div>
@@ -814,40 +738,14 @@ const TermsOfService = () => {
           <div className="bg-gray-900/60 rounded-2xl border border-gold/10 p-6 text-center">
             <div className="flex items-center justify-center gap-2 text-white/50 text-sm font-inter">
               <CalendarIcon className="w-4 h-4" />
-              <span>Last updated: January 13, 2026</span>
+              <span>Last updated: {LEGAL_LAST_UPDATED.label}</span>
             </div>
           </div>
         </div>
 
-        {/* Accept Terms Button */}
-        <div className="mt-12 max-w-5xl mx-auto reveal">
-          {/* Mensaje de recordatorio antes de aceptar */}
-          <div className="text-center mb-6 font-inter flex flex-col items-center">
-            <p className="text-white/70 text-sm">
-              By clicking &quot;I Accept These Terms&quot;, you confirm that you
-              have read, understood, and agree to be bound by these Terms of
-              Service.
-            </p>
-          </div>
-
-          {/* Botón de aceptar */}
-          <div className="flex justify-center">
-            <Button onClick={handleAcceptTerms} disabled={isPending}>
-              <ShieldCheckIcon className="w-5 h-5" />
-              {isPending ? "Processing…" : "I Accept These Terms"}
-            </Button>
-          </div>
-
-          {/* Botón para volver al inicio */}
-          <div className="mt-6 text-center font-inter">
-            <Link
-              href="/#pricing"
-              className="text-white/50 hover:text-gold underline text-sm transition-colors"
-            >
-              Return to Pricing Plans
-            </Link>
-          </div>
-        </div>
+        <Suspense fallback={null}>
+          <TermsAcceptActions />
+        </Suspense>
 
         {/* Footer Note */}
         <div className="mt-8 text-center flex justify-center items-center reveal">

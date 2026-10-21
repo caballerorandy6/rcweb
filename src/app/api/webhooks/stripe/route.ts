@@ -8,6 +8,7 @@ import { Resend } from "resend";
 import { trackPaymentComplete } from "@/lib/analytics";
 import { createInvoiceAndSendEmail } from "@/lib/invoice/createInvoiceAndSendEmail";
 import { ADMIN_EMAIL } from "@/lib/email/adminEmail";
+import { LEGAL_LAST_UPDATED } from "@/lib/company";
 import {
   sendSubscriptionConfirmation,
   sendAdminSubscriptionNotification,
@@ -26,7 +27,7 @@ if (!process.env.RESEND_API_KEY) {
 }
 
 const endpointSecret = process.env.STRIPE_WEBHOOK_SECRET;
-const TERMS_VERSION = "2025-09-25"; // Centralized terms version
+const TERMS_VERSION = LEGAL_LAST_UPDATED.version;
 
 export async function POST(req: Request) {
   const body = await req.text();
