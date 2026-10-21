@@ -8,10 +8,6 @@
 
   --color-dark: #1a1a1a;
 
-  --font-sans: var(--font-geist-sans), sans-serif;
-  --font-mono: var(--font-geist-mono), monospace;
-  --font-iceland: var(--font-iceland), cursive;
-  --font-inter: var(--font-inter), sans-serif;
 
   /* Entrance on load (hero): fill both so delayed items stay hidden until
      their turn; disabled under prefers-reduced-motion by the global rule */
@@ -118,6 +114,16 @@
   }
 }
 
+/* Fonts come from next/font (variables set on <html> in layout.tsx). Inline so
+   utilities and the preflight default resolve to the next/font variables
+   directly, with no self-referencing --font-* custom property on :root. */
+@theme inline {
+  --font-sans: var(--next-font-inter), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  --font-iceland: var(--next-font-iceland), cursive;
+  --font-inter: var(--next-font-inter), sans-serif;
+}
+
 /*
   The default border color has changed to `currentcolor` in Tailwind CSS v4,
   so we've added these compatibility styles to make sure everything still
@@ -201,7 +207,7 @@
   }
   & h2 {
     margin-bottom: --spacing(4);
-    font-family: var(--font-iceland);
+    font-family: var(--next-font-iceland);
     font-size: var(--text-3xl);
     line-height: var(--text-3xl--line-height);
     font-weight: 400;
@@ -210,7 +216,7 @@
   & h3 {
     margin-top: --spacing(6);
     margin-bottom: --spacing(3);
-    font-family: var(--font-iceland);
+    font-family: var(--next-font-iceland);
     font-size: var(--text-2xl);
     line-height: var(--text-2xl--line-height);
     font-weight: 400;
@@ -218,7 +224,7 @@
   }
   & h4 {
     margin-bottom: --spacing(2);
-    font-family: var(--font-inter);
+    font-family: var(--next-font-inter);
     font-size: var(--text-lg);
     line-height: var(--text-lg--line-height);
     font-weight: 600;
@@ -227,7 +233,7 @@
   & p,
   & ul,
   & ol {
-    font-family: var(--font-inter);
+    font-family: var(--next-font-inter);
     color: --alpha(var(--color-white) / 80%);
     line-height: var(--leading-relaxed);
   }

@@ -26,7 +26,7 @@ export default async function AdminDashboard() {
       {/* Page Title */}
       <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-2">
         <div>
-          <h1 className="text-3xl sm:text-4xl font-bold text-gold font-iceland">
+          <h1 className="text-3xl sm:text-4xl text-gold font-iceland">
             Dashboard
           </h1>
           <p className="text-gray-400 font-inter text-sm sm:text-base mt-1">

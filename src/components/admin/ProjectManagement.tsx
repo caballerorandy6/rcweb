@@ -136,7 +136,7 @@ export default function ProjectManagement({
   return (
     <div className="space-y-6 sm:space-y-8 px-4 sm:px-6 lg:px-8 py-4 sm:py-6">
       <div className="mb-6">
-        <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-gold font-iceland mb-2">
+        <h1 className="text-3xl sm:text-4xl md:text-5xl text-gold font-iceland mb-2">
           Project Management
         </h1>
         <p className="text-base sm:text-lg text-gray-400 font-inter">
@@ -150,7 +150,7 @@ export default function ProjectManagement({
             <h3 className="text-gray-400 text-xs sm:text-sm mb-2 font-medium">
               Total Projects
             </h3>
-            <p className="text-2xl sm:text-3xl font-bold text-white font-iceland">
+            <p className="text-2xl sm:text-3xl text-white font-iceland">
               {stats.total}
             </p>
           </div>
@@ -158,7 +158,7 @@ export default function ProjectManagement({
             <h3 className="text-gray-400 text-xs sm:text-sm mb-2 font-medium">
               In Progress
             </h3>
-            <p className="text-2xl sm:text-3xl font-bold text-blue-400 font-iceland">
+            <p className="text-2xl sm:text-3xl text-blue-400 font-iceland">
               {stats.inProgress}
             </p>
           </div>
@@ -166,7 +166,7 @@ export default function ProjectManagement({
             <h3 className="text-gray-400 text-xs sm:text-sm mb-2 font-medium">
               Awaiting Payment
             </h3>
-            <p className="text-2xl sm:text-3xl font-bold text-orange-400 font-iceland">
+            <p className="text-2xl sm:text-3xl text-orange-400 font-iceland">
               {stats.awaitingPayment}
             </p>
           </div>
@@ -174,7 +174,7 @@ export default function ProjectManagement({
             <h3 className="text-gray-400 text-xs sm:text-sm mb-2 font-medium">
               Completed
             </h3>
-            <p className="text-2xl sm:text-3xl font-bold text-green-400 font-iceland">
+            <p className="text-2xl sm:text-3xl text-green-400 font-iceland">
               {stats.completed}
             </p>
           </div>

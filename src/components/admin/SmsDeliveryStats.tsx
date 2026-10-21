@@ -106,7 +106,7 @@ export default function SmsDeliveryStats() {
     <div className="space-y-6 font-inter">
       {/* Header */}
       <div>
-        <h2 className="text-3xl font-bold text-gold font-iceland">
+        <h2 className="text-3xl text-gold font-iceland">
           SMS Delivery Report
         </h2>
         <p className="text-gray-400 mt-2">

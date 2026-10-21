@@ -16,7 +16,7 @@ export default function SmsTabs({ children }: SmsTabsProps) {
       <div className="max-w-6xl mx-auto">
         {/* Tabs Header */}
         <div className="mb-8">
-          <h1 className="text-4xl font-bold text-gold mb-6 font-iceland">
+          <h1 className="text-4xl text-gold mb-6 font-iceland">
             SMS Campaigns
           </h1>
 

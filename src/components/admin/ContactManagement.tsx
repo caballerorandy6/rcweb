@@ -119,7 +119,7 @@ export default function ContactManagement({
       {/* Header */}
       <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
         <div>
-          <h1 className="text-4xl font-bold text-gold font-iceland">
+          <h1 className="text-4xl text-gold font-iceland">
             Contact Management
           </h1>
           <p className="text-gray-400 font-inter mt-2">
@@ -408,7 +408,7 @@ export default function ContactManagement({
       {showAddModal && (
         <div className="fixed inset-0 bg-black/50 flex items-center justify-center p-4 z-50">
           <div className="bg-gray-800 rounded-lg p-6 max-w-md w-full">
-            <h2 className="text-2xl font-bold text-gold mb-4 font-iceland">
+            <h2 className="text-2xl text-gold mb-4 font-iceland">
               Add New Contact
             </h2>
 

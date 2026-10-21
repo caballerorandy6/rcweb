@@ -161,7 +161,7 @@ export default function MilestoneManager({
         {/* Header */}
         <div className="p-6 border-b border-gray-700 flex justify-between items-center">
           <div>
-            <h2 className="text-2xl font-bold text-gold font-iceland">
+            <h2 className="text-2xl text-gold font-iceland">
               Project Milestones
             </h2>
             <p className="text-gray-400 text-sm font-inter mt-1">

@@ -78,7 +78,7 @@ export default function ClientMilestoneView({
           <h3 className="text-lg font-semibold text-white font-inter">
             Overall Progress
           </h3>
-          <span className="text-2xl font-bold text-gold font-iceland">
+          <span className="text-2xl text-gold font-iceland">
             {progressPercent}%
           </span>
         </div>
