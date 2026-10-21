@@ -10,7 +10,7 @@ import { toast } from "sonner";
 import { EnvelopeIcon } from "@heroicons/react/24/outline";
 import { subscribeToBlogAction } from "@/actions/subscriptions/subscribeToBlogAction";
 import { trackFBLead } from "@/components/tracking/FacebookPixel";
-import { trackLinkedInConversion } from "@/components/tracking/LinkedInInsightTag";
+import { trackLinkedInConversion } from "@/lib/linkedin";
 import { trackSubmitLeadForm } from "@/lib/analytics";
 
 const BlogSubscriptionForm = () => {

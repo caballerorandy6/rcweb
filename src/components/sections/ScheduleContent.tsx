@@ -12,7 +12,7 @@ import Heading from "@/components/ui/Heading";
 import Button from "@/components/ui/Button";
 import { trackFBPhoneCall } from "@/components/tracking/FacebookPixel";
 import { trackManualContact } from "@/lib/analytics";
-import { trackLinkedInConversion } from "@/components/tracking/LinkedInInsightTag";
+import { trackLinkedInConversion } from "@/lib/linkedin";
 import { useInView } from "@/hooks/useInView";
 
 // Calendly configuration

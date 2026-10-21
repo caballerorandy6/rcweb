@@ -10,7 +10,6 @@ import ConditionalLayout from "@/components/layout/ConditionalLayout";
 import CookieConsentProvider from "@/components/forms/CookieConsentProvider";
 import Analytics from "@/components/tracking/Analytics";
 import FacebookPixel from "@/components/tracking/FacebookPixel";
-import LinkedInInsightTag from "@/components/tracking/LinkedInInsightTag";
 import UTMTracker from "@/components/tracking/UTMTracker";
 import { siteConfig } from "@/config/site";
 
@@ -200,7 +199,6 @@ export default function RootLayout({
         <Suspense fallback={null}>
           <Analytics />
           <FacebookPixel />
-          <LinkedInInsightTag />
           <UTMTracker />
         </Suspense>
 

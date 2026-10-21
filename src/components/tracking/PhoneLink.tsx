@@ -2,7 +2,7 @@
 
 import type { ReactNode } from "react";
 import { trackFBPhoneCall } from "@/components/tracking/FacebookPixel";
-import { trackLinkedInConversion } from "@/components/tracking/LinkedInInsightTag";
+import { trackLinkedInConversion } from "@/lib/linkedin";
 
 // Phone Conversion Tracking (Google Ads + Facebook + LinkedIn)
 const trackPhoneConversion = () => {

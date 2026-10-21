@@ -1,93 +1,36 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 import Script from "next/script";
 import Image from "next/image";
 import CookieConsent from "./CookieConsent";
-import ClientOnly from "@/components/ui/ClientOnly";
+import { syncGtagConsent, useCookieConsent } from "@/lib/cookieConsent";
 
 const FACEBOOK_PIXEL_ID = process.env.NEXT_PUBLIC_FACEBOOK_PIXEL_ID;
 const LINKEDIN_PARTNER_ID = process.env.NEXT_PUBLIC_LINKEDIN_PARTNER_ID;
 const GOOGLE_ADS_ID = process.env.NEXT_PUBLIC_GOOGLE_ADS_ID;
 
-function readStoredConsent(): string | null {
-  if (typeof window === "undefined") return null;
-  return localStorage.getItem("cookie-consent");
-}
-
+/**
+ * Renders the consent banner and, only after "Accept All", the optional
+ * marketing scripts. Consent state comes from `@/lib/cookieConsent`, whose
+ * server snapshot is "no choice", so nothing here is part of the HTML.
+ */
 export default function CookieConsentProvider() {
-  // Nothing below renders until ClientOnly mounts, so reading localStorage
-  // in the initializers cannot cause a hydration mismatch.
-  const [hasConsent, setHasConsent] = useState(
-    () => readStoredConsent() === "accepted"
-  );
-  const [showBanner, setShowBanner] = useState(() => {
-    const consent = readStoredConsent();
-    return consent !== "accepted" && consent !== "rejected";
-  });
+  const { consent } = useCookieConsent();
+  const hasConsent = consent === "accepted";
 
+  // Returning visitors: tell gtag about the stored choice on every page load.
   useEffect(() => {
-    if (readStoredConsent() === "accepted") {
-      // Update consent mode for returning visitors
-      if (typeof window !== 'undefined' && window.gtag) {
-        window.gtag('consent', 'update', {
-          'ad_storage': 'granted',
-          'ad_user_data': 'granted',
-          'ad_personalization': 'granted',
-          'analytics_storage': 'granted',
-          'functionality_storage': 'granted',
-          'personalization_storage': 'granted'
-        });
-      }
-    }
+    syncGtagConsent();
   }, []);
 
-  const handleAccept = () => {
-    setHasConsent(true);
-    setShowBanner(false);
-
-    // Update Google Consent Mode to allow tracking
-    if (typeof window !== 'undefined' && window.gtag) {
-      window.gtag('consent', 'update', {
-        'ad_storage': 'granted',
-        'ad_user_data': 'granted',
-        'ad_personalization': 'granted',
-        'analytics_storage': 'granted',
-        'functionality_storage': 'granted',
-        'personalization_storage': 'granted'
-      });
-    }
-  };
-
-  const handleReject = () => {
-    setHasConsent(false);
-    setShowBanner(false);
-
-    // Keep consent denied (already set as default)
-    if (typeof window !== 'undefined' && window.gtag) {
-      window.gtag('consent', 'update', {
-        'ad_storage': 'denied',
-        'ad_user_data': 'denied',
-        'ad_personalization': 'denied',
-        'analytics_storage': 'denied',
-        'functionality_storage': 'denied',
-        'personalization_storage': 'denied'
-      });
-    }
-  };
-
   return (
-    <ClientOnly>
-      {/* Cookie Consent Banner */}
-      {showBanner && (
-        <CookieConsent onAccept={handleAccept} onReject={handleReject} />
-      )}
+    <>
+      <CookieConsent />
 
-      {/* Only load tracking scripts if user has consented */}
-      {hasConsent && (
+      {hasConsent ? (
         <>
-          {/* Facebook Pixel */}
-          {FACEBOOK_PIXEL_ID && (
+          {FACEBOOK_PIXEL_ID ? (
             <>
               <Script id="facebook-pixel" strategy="lazyOnload">
                 {`
@@ -113,10 +56,9 @@ export default function CookieConsentProvider() {
                 />
               </noscript>
             </>
-          )}
+          ) : null}
 
-          {/* LinkedIn Insight Tag */}
-          {LINKEDIN_PARTNER_ID && (
+          {LINKEDIN_PARTNER_ID ? (
             <>
               <Script id="linkedin-insight" strategy="lazyOnload">
                 {`
@@ -144,12 +86,12 @@ export default function CookieConsentProvider() {
                 />
               </noscript>
             </>
-          )}
+          ) : null}
 
           {/* Google Ads conversion tracking. gtag.js is already loaded once by
               the root layout for Analytics; a second config call is all Ads
               needs, and the dataLayer queues it until the library runs. */}
-          {GOOGLE_ADS_ID && (
+          {GOOGLE_ADS_ID ? (
             <Script id="google-ads-config" strategy="lazyOnload">
               {`
                 window.dataLayer = window.dataLayer || [];
@@ -157,9 +99,9 @@ export default function CookieConsentProvider() {
                 gtag('config', '${GOOGLE_ADS_ID}');
               `}
             </Script>
-          )}
+          ) : null}
         </>
-      )}
-    </ClientOnly>
+      ) : null}
+    </>
   );
 }
