@@ -225,4 +225,10 @@ export default withSentryConfig(nextConfig, {
   // needs no CSP change
   tunnelRoute: "/monitoring",
   silent: !process.env.CI,
+  // Errors only on the client: tree-shake tracing (and debug logging) so the
+  // chunk every page loads stays ~30 KB gzip smaller
+  bundleSizeOptimizations: {
+    excludeDebugStatements: true,
+    excludeTracing: true,
+  },
 });
