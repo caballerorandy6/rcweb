@@ -785,7 +785,7 @@ export default function SendNewsletterCampaign({
       <div className="max-w-4xl mx-auto">
         {/* Header */}
         <div className="mb-8">
-          <h1 className="text-4xl font-bold text-gold mb-4 font-iceland">
+          <h1 className="text-4xl text-gold mb-4 font-iceland">
             Send Newsletter
           </h1>
 
@@ -985,7 +985,7 @@ export default function SendNewsletterCampaign({
         {showPreview && content && (
           <div className="mt-8 p-6 bg-gray-800/50 rounded-lg">
             <div className="flex justify-between items-center mb-4">
-              <h3 className="text-2xl font-bold text-gold font-iceland">
+              <h3 className="text-2xl text-gold font-iceland">
                 Email Preview
               </h3>
               <button

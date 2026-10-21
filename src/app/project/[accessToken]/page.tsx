@@ -39,7 +39,7 @@ export default async function ProjectPage(props: { params: Params }) {
       <div className="max-w-3xl mx-auto">
         {/* Header */}
         <div className="text-center mb-8">
-          <h1 className="text-4xl font-bold text-gold font-iceland mb-2">
+          <h1 className="text-4xl text-gold font-iceland mb-2">
             Project Progress
           </h1>
           <p className="text-gray-400 font-inter mx-auto">
@@ -98,7 +98,7 @@ export default async function ProjectPage(props: { params: Params }) {
 
         {/* Milestones */}
         <div className="bg-gray-800 rounded-xl p-6 border border-gray-700">
-          <h2 className="text-xl font-bold text-white font-iceland mb-6">
+          <h2 className="text-xl text-white font-iceland mb-6">
             Project Milestones
           </h2>
           <ClientMilestoneView milestones={milestones} />

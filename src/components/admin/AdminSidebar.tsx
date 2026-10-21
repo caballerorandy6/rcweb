@@ -149,7 +149,7 @@ export default function AdminSidebar() {
         <div className="flex items-center justify-between px-4 py-3">
           <Link
             href="/admin-dashboard"
-            className="text-xl font-bold text-gold font-iceland"
+            className="text-xl text-gold font-iceland"
           >
             RC Web Admin
           </Link>
@@ -185,7 +185,7 @@ export default function AdminSidebar() {
           <div className="flex items-center justify-between px-5 py-4 border-b border-gray-800 bg-gray-900">
             <Link
               href="/admin-dashboard"
-              className="text-xl font-bold text-gold font-iceland hover:text-gold/80 transition-colors"
+              className="text-xl text-gold font-iceland hover:text-gold/80 transition-colors"
               onClick={() => setSidebarOpen(false)}
             >
               RC Web Admin

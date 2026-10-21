@@ -48,7 +48,7 @@ export default function LeadsTrendChart({
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
         <div className="flex items-center gap-3">
           <ChartBarIcon className="w-5 h-5 sm:w-6 sm:h-6 text-gold shrink-0" />
-          <h2 className="text-xl sm:text-2xl font-bold text-white font-iceland">
+          <h2 className="text-xl sm:text-2xl text-white font-iceland">
             Lead Trends
           </h2>
         </div>
@@ -76,19 +76,19 @@ export default function LeadsTrendChart({
       <div className="grid grid-cols-3 gap-3 mb-6">
         <div className="bg-gray-700/30 rounded-lg p-3 text-center">
           <p className="text-xs text-gray-400 font-inter">Total Leads</p>
-          <p className="text-xl sm:text-2xl font-bold text-white font-iceland">
+          <p className="text-xl sm:text-2xl text-white font-iceland">
             {data.totalLeads}
           </p>
         </div>
         <div className="bg-gray-700/30 rounded-lg p-3 text-center">
           <p className="text-xs text-gray-400 font-inter">Conversions</p>
-          <p className="text-xl sm:text-2xl font-bold text-green-400 font-iceland">
+          <p className="text-xl sm:text-2xl text-green-400 font-iceland">
             {data.totalConversions}
           </p>
         </div>
         <div className="bg-gray-700/30 rounded-lg p-3 text-center">
           <p className="text-xs text-gray-400 font-inter">Conv. Rate</p>
-          <p className="text-xl sm:text-2xl font-bold text-gold font-iceland">
+          <p className="text-xl sm:text-2xl text-gold font-iceland">
             {data.conversionRate}%
           </p>
         </div>
@@ -116,14 +116,14 @@ export default function LeadsTrendChart({
               dataKey="label"
               stroke="#6B7280"
               fontSize={11}
-              fontFamily="var(--font-inter)"
+              fontFamily="var(--next-font-inter)"
               tickLine={false}
               axisLine={false}
             />
             <YAxis
               stroke="#6B7280"
               fontSize={11}
-              fontFamily="var(--font-inter)"
+              fontFamily="var(--next-font-inter)"
               tickLine={false}
               axisLine={false}
               allowDecimals={false}
@@ -134,12 +134,12 @@ export default function LeadsTrendChart({
                 border: "1px solid #374151",
                 borderRadius: "8px",
                 fontSize: "12px",
-                fontFamily: "var(--font-inter)",
+                fontFamily: "var(--next-font-inter)",
               }}
-              labelStyle={{ color: "#9CA3AF", fontFamily: "var(--font-inter)" }}
+              labelStyle={{ color: "#9CA3AF", fontFamily: "var(--next-font-inter)" }}
             />
             <Legend
-              wrapperStyle={{ fontSize: "12px", paddingTop: "10px", fontFamily: "var(--font-inter)" }}
+              wrapperStyle={{ fontSize: "12px", paddingTop: "10px", fontFamily: "var(--next-font-inter)" }}
             />
             <Area
               type="monotone"

@@ -91,7 +91,7 @@ export default function LoginForm({
             <div className="absolute bottom-0 right-0 w-16 h-16 bg-purple-500/10 rounded-full blur-2xl"></div>
 
             <div className="relative">
-              <h2 className="text-4xl md:text-5xl text-gold font-bold text-center font-iceland tracking-wide">
+              <h2 className="text-4xl md:text-5xl text-gold text-center font-iceland tracking-wide">
                 {title}
               </h2>
               <div className="w-24 h-1 bg-linear-to-r from-transparent via-gold to-transparent mx-auto mt-4 rounded-full"></div>

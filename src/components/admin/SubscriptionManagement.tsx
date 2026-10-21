@@ -178,25 +178,25 @@ export default function SubscriptionManagement({
           <p className="text-gray-400 text-sm font-inter">
             Total Subscriptions
           </p>
-          <p className="text-2xl font-bold text-white font-iceland">
+          <p className="text-2xl text-white font-iceland">
             {stats.total}
           </p>
         </div>
         <div className="bg-gray-800/50 rounded-lg p-4 border border-gray-700/50">
           <p className="text-gray-400 text-sm font-inter">Active</p>
-          <p className="text-2xl font-bold text-green-400 font-iceland">
+          <p className="text-2xl text-green-400 font-iceland">
             {stats.active}
           </p>
         </div>
         <div className="bg-gray-800/50 rounded-lg p-4 border border-gray-700/50">
           <p className="text-gray-400 text-sm font-inter">Cancelled</p>
-          <p className="text-2xl font-bold text-red-400 font-iceland">
+          <p className="text-2xl text-red-400 font-iceland">
             {stats.cancelled}
           </p>
         </div>
         <div className="bg-gray-800/50 rounded-lg p-4 border border-gray-700/50">
           <p className="text-gray-400 text-sm font-inter">Monthly Revenue</p>
-          <p className="text-2xl font-bold text-gold font-iceland">
+          <p className="text-2xl text-gold font-iceland">
             {formatDollars(stats.mrr)}
           </p>
         </div>
@@ -389,7 +389,7 @@ export default function SubscriptionManagement({
             {/* Modal Header */}
             <div className="flex items-center justify-between px-6 py-4 border-b border-gray-700">
               <div>
-                <h3 className="text-lg font-bold text-white font-iceland">
+                <h3 className="text-lg text-white font-iceland">
                   Payment History
                 </h3>
                 <p className="text-sm text-gray-400 font-inter">

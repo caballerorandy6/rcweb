@@ -62,7 +62,7 @@ export default function FinalPayment() {
   return (
     <div className="min-h-screen bg-gray-900 flex items-center justify-center px-4">
       <div className="max-w-md w-full bg-gray-800 rounded-2xl p-8">
-        <h1 className="text-4xl font-bold mb-2 font-iceland text-gold">
+        <h1 className="text-4xl mb-2 font-iceland text-gold">
           Complete Your Payment
         </h1>
         <p className="text-gray-400 mb-6 font-inter">

@@ -41,7 +41,7 @@ export default async function ManageInvoicesPage() {
     <div className="min-h-screen bg-gray-900 text-white p-8 font-inter">
       <div className="max-w-7xl mx-auto">
         <div className="mb-8">
-          <h1 className="text-3xl font-bold text-gold mb-2 font-iceland">
+          <h1 className="text-3xl text-gold mb-2 font-iceland">
             Manage Invoices
           </h1>
           <p className="text-gray-400">

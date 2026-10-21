@@ -33,7 +33,7 @@ export default async function LeadsByUTM() {
       <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-3 mb-5">
         <div className="flex items-center gap-3">
           <LinkIcon className="w-5 h-5 sm:w-6 sm:h-6 text-gold shrink-0" />
-          <h2 className="text-xl sm:text-2xl font-bold text-white font-iceland">
+          <h2 className="text-xl sm:text-2xl text-white font-iceland">
             UTM Tracking
           </h2>
         </div>

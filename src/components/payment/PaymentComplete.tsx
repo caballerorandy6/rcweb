@@ -80,7 +80,7 @@ export default function PaymentComplete() {
           </svg>
         </div>
 
-        <h1 className="text-4xl font-bold mb-2 font-iceland text-gold">
+        <h1 className="text-4xl mb-2 font-iceland text-gold">
           Project Fully Paid! 🎉
         </h1>
 

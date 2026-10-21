@@ -14,23 +14,9 @@ import LinkedInInsightTag from "@/components/tracking/LinkedInInsightTag";
 import UTMTracker from "@/components/tracking/UTMTracker";
 import { siteConfig } from "@/config/site";
 
-const geistSans = localFont({
-  src: "./fonts/GeistVF.woff2",
-  variable: "--font-geist-sans",
-  display: "swap",
-  preload: true,
-});
-
-const geistMono = localFont({
-  src: "./fonts/GeistMonoVF.woff2",
-  variable: "--font-geist-mono",
-  display: "swap",
-  preload: false,
-});
-
 const iceland = localFont({
   src: "./fonts/Iceland.woff2",
-  variable: "--font-iceland",
+  variable: "--next-font-iceland",
   display: "swap",
   weight: "400",
   preload: true,
@@ -38,7 +24,7 @@ const iceland = localFont({
 
 const inter = localFont({
   src: "./fonts/InterVF-latin.woff2", // latin + latin-ext subset (85 KB vs 230 KB)
-  variable: "--font-inter",
+  variable: "--next-font-inter",
   display: "swap",
   preload: true,
 });
@@ -121,7 +107,12 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" data-scroll-behavior="smooth" suppressHydrationWarning>
+    <html
+      lang="en"
+      data-scroll-behavior="smooth"
+      className={`${iceland.variable} ${inter.variable}`}
+      suppressHydrationWarning
+    >
       <head>
         {/* Note: next/font handles font preconnects automatically */}
 
@@ -193,7 +184,7 @@ export default function RootLayout({
         {/* Note: Tracking preconnects moved to CookieConsentProvider (conditional based on consent) */}
       </head>
       <body
-        className={`${geistSans.variable} ${geistMono.variable} ${iceland.variable} ${inter.variable} antialiased text-pretty bg-gray-950`}
+        className="antialiased text-pretty bg-gray-950"
       >
         {/* Skip to main content link for accessibility (WCAG 2.1 Level A) */}
         <a
