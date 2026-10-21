@@ -149,7 +149,9 @@ export default function RootLayout({
           }}
         />
 
-        {/* Google Analytics gtag.js - Lazy load para no bloquear render */}
+        {/* Google tag (gtag.js), loaded once for Analytics and Google Ads.
+            lazyOnload keeps it out of the TBT window; Ads is configured in
+            CookieConsentProvider after consent on this same library. */}
         <Script
           src={`https://www.googletagmanager.com/gtag/js?id=${process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID}`}
           strategy="lazyOnload"
