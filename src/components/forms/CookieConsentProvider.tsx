@@ -146,22 +146,17 @@ export default function CookieConsentProvider() {
             </>
           )}
 
-          {/* Google Ads Conversion Tracking */}
+          {/* Google Ads conversion tracking. gtag.js is already loaded once by
+              the root layout for Analytics; a second config call is all Ads
+              needs, and the dataLayer queues it until the library runs. */}
           {GOOGLE_ADS_ID && (
-            <>
-              <Script
-                src={`https://www.googletagmanager.com/gtag/js?id=${GOOGLE_ADS_ID}`}
-                strategy="afterInteractive"
-              />
-              <Script id="google-ads-config" strategy="afterInteractive">
-                {`
-                  window.dataLayer = window.dataLayer || [];
-                  function gtag(){dataLayer.push(arguments);}
-                  gtag('js', new Date());
-                  gtag('config', '${GOOGLE_ADS_ID}');
-                `}
-              </Script>
-            </>
+            <Script id="google-ads-config" strategy="lazyOnload">
+              {`
+                window.dataLayer = window.dataLayer || [];
+                function gtag(){dataLayer.push(arguments);}
+                gtag('config', '${GOOGLE_ADS_ID}');
+              `}
+            </Script>
           )}
         </>
       )}
