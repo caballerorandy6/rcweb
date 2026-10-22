@@ -24,7 +24,7 @@ export const siteConfig: SiteConfig = {
   siteNameShort: "RC Web Solutions",
   defaultOgImg: "/og-image.jpg",
   description:
-    "Randy Caballero builds and maintains fast websites and web apps for small service businesses: booking, Stripe payments and local SEO built in. Based in Houston, TX, working with small businesses anywhere in the US. Next.js, React, English & Spanish.",
+    "Randy Caballero builds and maintains fast websites and web apps for small service businesses: booking, Stripe payments and local SEO built in. Based in Houston, TX, working with small businesses anywhere. Next.js, React, English & Spanish.",
   author: {
     name: "Randy Caballero",
     email: "contactus@rcweb.dev",

@@ -1,16 +1,16 @@
 # RC Web Solutions LLC
 
-> Custom websites and web applications for small service businesses, built and maintained by one developer, Randy Caballero. Based in Houston, TX, working with clients anywhere in the US. Next.js, React and TypeScript. Bilingual English & Spanish.
+> Custom websites and web applications for small service businesses, built and maintained by one developer, Randy Caballero. Based in Houston, TX, working with clients anywhere. Next.js, React and TypeScript. Bilingual English & Spanish.
 
 ## About
 
-RC Web Solutions LLC is a one-person web development company based in Houston, Texas, founded by Randy Caballero in September 2022. It builds fast, custom websites and web applications for small service businesses (clinics, HVAC, home services, event rentals, salons) with booking, Stripe payments and local SEO built in. Most clients so far are in the Houston area; Randy works remotely with clients anywhere in the US through video calls, an online staging site and Stripe payments. Every project uses a modern stack (Next.js, React, TypeScript) and includes mobile-first design and bilingual (English/Spanish) support.
+RC Web Solutions LLC is a one-person web development company based in Houston, Texas, founded by Randy Caballero in September 2022. It builds fast, custom websites and web applications for small service businesses (clinics, HVAC, home services, event rentals, salons) with booking, Stripe payments and local SEO built in. Most clients so far are in the Houston area; Randy works remotely with clients anywhere through video calls, an online staging site and Stripe payments. Every project uses a modern stack (Next.js, React, TypeScript) and includes mobile-first design and bilingual (English/Spanish) support.
 
 - [Website](https://www.rcweb.dev/)
 - [About Randy Caballero](https://www.rcweb.dev/about)
 - Phone: +1 (346) 375-7534
 - Email: contactus@rcweb.dev
-- Location: Houston, TX, USA (remote clients anywhere in the US)
+- Location: Houston, TX, USA (remote clients anywhere)
 - Languages: English, Spanish (native)
 - Founded: 2022
 

@@ -27,7 +27,7 @@ import { faqs, pricingPlans } from "@/lib/data";
 export const metadata: Metadata = {
   title: "Custom Websites & Web Apps for Small Businesses | RC Web Solutions",
   description:
-    "Randy Caballero builds fast websites and web apps for small service businesses: booking, Stripe payments and local SEO built in. Based in Houston, TX, working with clients anywhere in the US. From $1,000. Free consultation.",
+    "Randy Caballero builds fast websites and web apps for small service businesses: booking, Stripe payments and local SEO built in. Based in Houston, TX, working with clients anywhere. From $1,000. Free consultation.",
   alternates: {
     canonical: siteConfig.baseUrl,
   },

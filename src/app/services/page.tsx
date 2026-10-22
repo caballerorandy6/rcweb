@@ -18,7 +18,7 @@ import {
 export const metadata = genPageMetadata({
   title: "Web Development Services for Small Businesses",
   description:
-    "Web design, Next.js development, bilingual websites, e-commerce and local SEO for small businesses. Based in Houston, TX, working with clients anywhere in the US. Free consultation.",
+    "Web design, Next.js development, bilingual websites, e-commerce and local SEO for small businesses. Based in Houston, TX, working with clients anywhere. Free consultation.",
   pageRoute: "/services",
 });
 
@@ -55,7 +55,7 @@ export default function ServicesPage() {
                 from landing pages to full-stack platforms. Built with modern
                 technology, optimized for Google, available in English and
                 Spanish, and delivered remotely from Houston, TX to clients
-                anywhere in the US.
+                anywhere.
               </p>
             </div>
 

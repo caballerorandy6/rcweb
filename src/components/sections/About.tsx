@@ -81,7 +81,7 @@ const About = () => {
                 </strong>{" "}
                 for small businesses, most of them in the Houston area, from
                 the frontend and APIs to the database and deployment. I work
-                remotely with clients anywhere in the US: video calls, a staging
+                remotely with clients anywhere: video calls, a staging
                 site you can check at any time, and Stripe payments. Before founding the agency I worked as a
                 software developer at Atser Systems Inc. and Revature, contributing
                 to{" "}
@@ -134,7 +134,7 @@ const About = () => {
                   Based in Houston, TX
                 </p>
                 <p className="text-gray-400 font-inter text-xs">
-                  Working with clients anywhere in the US
+                  Working with clients anywhere
                 </p>
               </div>
 
