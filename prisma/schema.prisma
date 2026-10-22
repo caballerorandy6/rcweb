@@ -210,6 +210,11 @@ model Subscription {
   // Stripe session/checkout info
   stripeSessionId String?
 
+  // Magic link to the Stripe Customer Portal (/manage-subscription/[token]).
+  // Regenerated on every request; the Stripe session is created on click.
+  portalToken          String?   @unique
+  portalTokenExpiresAt DateTime?
+
   // Timestamps
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt

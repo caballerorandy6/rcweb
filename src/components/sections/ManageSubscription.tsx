@@ -8,10 +8,23 @@ import { ErrorMessage } from "@hookform/error-message";
 import { toast } from "sonner";
 import { sendPortalLinkAction } from "@/actions/subscriptions/sendPortalLinkAction";
 import { ManageSubscriptionSchema, ManageSubscriptionData } from "@/lib/zod";
-import { CheckCircleIcon } from "@heroicons/react/24/outline";
+import { CheckCircleIcon, ExclamationTriangleIcon } from "@heroicons/react/24/outline";
 
-export default function ManageSubscription() {
+const LINK_ERRORS: Record<string, string> = {
+  "expired-link":
+    "That link has expired or was replaced by a newer one. Enter your email to get a fresh link.",
+  "portal-unavailable":
+    "We could not open the subscription portal right now. Please try again in a few minutes or contact us.",
+};
+
+interface ManageSubscriptionProps {
+  /** `error` query param set by /manage-subscription/[token] */
+  error?: string;
+}
+
+export default function ManageSubscription({ error }: ManageSubscriptionProps) {
   const [isSuccess, setIsSuccess] = useState(false);
+  const linkError = error ? LINK_ERRORS[error] : undefined;
 
   const {
     register,
@@ -59,6 +72,16 @@ export default function ManageSubscription() {
                 Enter your email to receive a secure management link
               </p>
             </div>
+
+            {linkError && !isSuccess ? (
+              <div
+                role="alert"
+                className="relative flex items-start gap-3 rounded-xl border border-amber-500/30 bg-amber-500/10 p-4 text-sm font-inter text-amber-100"
+              >
+                <ExclamationTriangleIcon className="w-5 h-5 shrink-0 text-amber-400" aria-hidden="true" />
+                <p>{linkError}</p>
+              </div>
+            ) : null}
 
             {isSuccess ? (
               /* Success State */
