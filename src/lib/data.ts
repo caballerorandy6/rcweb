@@ -464,7 +464,7 @@ export const processSteps = [
     title: "Discovery",
     week: "Week 1",
     description:
-      "Free video call to understand your needs and objectives, wherever you are in the US.",
+      "Free video call to understand your needs and objectives, wherever you are.",
     details: [
       "Requirements analysis",
       "Competition research",
