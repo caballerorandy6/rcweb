@@ -50,7 +50,6 @@ export async function generateMetadata({
       title: `${service.metaTitle} | ${siteConfig.siteName}`,
       description: service.metaDescription,
       images: [siteConfig.defaultOgImg],
-      creator: siteConfig.social.twitter,
     },
   };
 }

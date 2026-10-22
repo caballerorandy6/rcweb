@@ -16,9 +16,9 @@ import {
 } from "@heroicons/react/24/outline";
 
 export const metadata = genPageMetadata({
-  title: "Web Development Services Houston TX",
+  title: "Web Development Services for Small Businesses",
   description:
-    "Professional web development services in Houston, TX. Web design, Next.js development, bilingual websites, e-commerce, and local SEO. Free consultation.",
+    "Web design, Next.js development, bilingual websites, e-commerce and local SEO for small businesses. Based in Houston, TX, working with clients anywhere in the US. Free consultation.",
   pageRoute: "/services",
 });
 
@@ -47,14 +47,15 @@ export default function ServicesPage() {
           <div className="relative mx-auto max-w-7xl px-6 lg:px-8">
             <div className="mx-auto max-w-3xl text-center">
               <h1 className="text-4xl tracking-tight text-white sm:text-6xl font-iceland">
-                Web Development Services in{" "}
-                <span className="text-gold">Houston, TX</span>
+                Web Development Services for{" "}
+                <span className="text-gold">Small Businesses</span>
               </h1>
               <p className="mt-6 text-lg leading-8 text-gray-300 font-inter">
-                Custom websites and web applications for Houston businesses.
-                From landing pages to full-stack platforms — built with modern
-                technology, optimized for Google, and available in English and
-                Spanish.
+                Custom websites and web applications for service businesses,
+                from landing pages to full-stack platforms. Built with modern
+                technology, optimized for Google, available in English and
+                Spanish, and delivered remotely from Houston, TX to clients
+                anywhere in the US.
               </p>
             </div>
 

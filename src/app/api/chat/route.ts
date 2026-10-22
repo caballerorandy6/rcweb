@@ -26,7 +26,7 @@ export async function POST(req: Request) {
 
 Company Info:
 - Owner: Randy Caballero
-- Location: Houston, TX
+- Location: based in Houston, TX; works remotely with clients anywhere in the US (video calls, online staging site, Stripe payments)
 - Specialties: React, Next.js, Full-Stack Development
 - Services: Custom websites, web applications, e-commerce solutions
 - Experience: 6+ years, 20+ production sites shipped

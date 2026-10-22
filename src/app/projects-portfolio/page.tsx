@@ -6,9 +6,9 @@ import ProjectsList from "@/components/sections/ProjectsList";
 import { projects } from "@/lib/data";
 
 export const metadata = genPageMetadata({
-  title: "Projects & Case Studies | Houston Web Development Portfolio",
+  title: "Projects & Case Studies | Web Development Portfolio",
   description:
-    "View our portfolio of Houston web development projects. Case studies from clinics, HVAC companies, home services, and more. Real results for real businesses.",
+    "Websites and web apps I have built for small businesses: clinics, HVAC, home services, event rentals and more. Most are in the Houston area; all are real results for real businesses.",
   pageRoute: "/projects-portfolio",
 });
 
@@ -30,7 +30,7 @@ export default function ProjectsPortfolioPage() {
                 Projects & <span className="text-gold">Case Studies</span>
               </h1>
               <p className="mt-6 text-lg leading-8 text-gray-300 font-inter">
-                Real websites built for real Houston businesses. Click
+                Real websites built for real small businesses. Click
                 &ldquo;Case Study&rdquo; on any project to see the full story —
                 challenges, solutions, and results.
               </p>

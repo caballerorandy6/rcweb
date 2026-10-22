@@ -8,13 +8,12 @@ export type SiteConfig = {
     name: string;
     email: string;
   };
+  /** Public profiles Randy actually keeps; used for JSON-LD sameAs */
   social: {
-    twitter: string;
     linkedin: string;
+    github: string;
     facebook: string;
     instagram: string;
-    tiktok: string;
-    nextdoor: string;
   };
 };
 
@@ -25,17 +24,15 @@ export const siteConfig: SiteConfig = {
   siteNameShort: "RC Web Solutions",
   defaultOgImg: "/og-image.jpg",
   description:
-    "Houston TX web developer specializing in high-performance websites and web applications for small businesses. Custom digital solutions with Next.js, React, and modern technologies. Bilingual English & Spanish.",
+    "Randy Caballero builds and maintains fast websites and web apps for small service businesses: booking, Stripe payments and local SEO built in. Based in Houston, TX, working with small businesses anywhere in the US. Next.js, React, English & Spanish.",
   author: {
     name: "Randy Caballero",
     email: "contactus@rcweb.dev",
   },
   social: {
-    twitter: "@RCWeb2025",
-    linkedin: "https://www.linkedin.com/company/rcwebsolutions",
+    linkedin: "https://www.linkedin.com/company/109039912/",
+    github: "https://github.com/caballerorandy6",
     facebook: "https://www.facebook.com/rcwebsolutionsllc",
-    instagram: "https://www.instagram.com/rcwebsolutionsllc",
-    tiktok: "https://www.tiktok.com/@rcwebsolutionsllc",
-    nextdoor: "https://nextdoor.com/page/rc-web-solutions-llc",
+    instagram: "https://www.instagram.com/rcwebsolutionsllc/",
   },
 };

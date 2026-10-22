@@ -26,7 +26,7 @@ const Projects = () => {
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
         <Heading
           icon={<CodeBracketIcon className="w-8 text-gold" />}
-          text="Real results for real Houston businesses"
+          text="Real results for real small businesses"
         >
           Featured Projects
         </Heading>

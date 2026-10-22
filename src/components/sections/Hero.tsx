@@ -42,9 +42,9 @@ const Hero = () => {
           </div>
 
           <p className="mt-8 mx-auto max-w-xl font-inter text-white/80 text-base sm:text-lg animate-enter [animation-delay:150ms]">
-            High-performance websites and web apps for Houston small
-            businesses, built to load fast, rank on Google, and turn visitors
-            into clients.
+            Fast websites and web apps for small service businesses, with
+            booking, payments and local SEO built in. Based in Houston, working
+            with clients anywhere in the US.
           </p>
 
           {/* Señales de calidad concretas */}

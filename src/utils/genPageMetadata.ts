@@ -74,7 +74,6 @@ export function genPageMetadata({
       title: `${title} | ${siteConfig.siteName}`,
       description,
       images: [ogImage],
-      creator: siteConfig.social.twitter,
     },
   };
 }

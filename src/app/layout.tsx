@@ -32,8 +32,8 @@ const inter = localFont({
 export const metadata: Metadata = {
   metadataBase: new URL(siteConfig.baseUrl),
   title: {
-    default: `Web Developer Houston TX | ${siteConfig.siteNameShort} - Custom Websites & Web Apps`,
-    template: `%s | ${siteConfig.siteNameShort} - Houston TX`,
+    default: `${siteConfig.siteNameShort} | Custom Websites & Web Apps for Small Businesses`,
+    template: `%s | ${siteConfig.siteNameShort}`,
   },
   description: siteConfig.description,
   authors: [{ name: siteConfig.author.name }],
@@ -44,7 +44,7 @@ export const metadata: Metadata = {
     locale: "en_US",
     url: siteConfig.baseUrl,
     siteName: siteConfig.siteName,
-    title: `Web Developer Houston TX | ${siteConfig.siteNameShort} - Custom Websites & Web Apps`,
+    title: `${siteConfig.siteNameShort} | Custom Websites & Web Apps for Small Businesses`,
     description: siteConfig.description,
     images: [
       {
@@ -57,10 +57,9 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: `Web Developer Houston TX | ${siteConfig.siteNameShort}`,
+    title: `${siteConfig.siteNameShort} | Custom Websites & Web Apps for Small Businesses`,
     description: siteConfig.description,
     images: [siteConfig.defaultOgImg],
-    creator: siteConfig.social.twitter,
   },
   robots: {
     index: true,
