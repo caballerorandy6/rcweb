@@ -8,7 +8,6 @@ import { Toaster } from "sonner";
 
 import ConditionalLayout from "@/components/layout/ConditionalLayout";
 import CookieConsentProvider from "@/components/forms/CookieConsentProvider";
-import Analytics from "@/components/tracking/Analytics";
 import FacebookPixel from "@/components/tracking/FacebookPixel";
 import UTMTracker from "@/components/tracking/UTMTracker";
 import { siteConfig } from "@/config/site";
@@ -195,9 +194,10 @@ export default function RootLayout({
         {/* Cookie Consent & Tracking Scripts */}
         <CookieConsentProvider />
 
-        {/* Client-side tracking for route changes (only fires if user consented) */}
+        {/* Route-change tracking for Meta Pixel and UTM capture. GA4 page views
+            on navigation come from its own enhanced measurement (history
+            changes), so there is no manual page_view here. */}
         <Suspense fallback={null}>
-          <Analytics />
           <FacebookPixel />
           <UTMTracker />
         </Suspense>

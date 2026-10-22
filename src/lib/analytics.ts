@@ -1,30 +1,22 @@
+/**
+ * Google Analytics 4 / Google Ads events.
+ *
+ * The site loads gtag.js only (no Google Tag Manager), so every event goes
+ * through `gtag('event', …)`. Pushing `{ event }` objects into `dataLayer`
+ * would reach nobody. All helpers are browser-only and no-ops on the server;
+ * Consent Mode decides whether the hit carries cookies.
+ */
+
 export const GA_MEASUREMENT_ID = process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID;
 
-// Extend Window interface to include dataLayer
-declare global {
-  interface Window {
-    dataLayer?: Array<Record<string, unknown>>;
-  }
-}
+type EventParams = Record<string, string | number | boolean | undefined>;
 
-// Helper para enviar eventos a GTM dataLayer
-const pushToDataLayer = (eventName: string, parameters?: Record<string, unknown>) => {
-  if (typeof window !== "undefined" && window.dataLayer) {
-    window.dataLayer.push({
-      event: eventName,
-      ...parameters,
-    });
-  }
+const sendEvent = (eventName: string, params: EventParams = {}) => {
+  if (typeof window === "undefined" || !window.gtag) return;
+  window.gtag("event", eventName, { send_to: GA_MEASUREMENT_ID, ...params });
 };
 
-// Track page views
-export const pageview = (url: string) => {
-  pushToDataLayer("page_view", {
-    page_path: url,
-  });
-};
-
-// Track custom events (legacy - mantener por compatibilidad)
+/** Generic engagement event: `category`/`label` become GA4 event parameters. */
 export const event = ({
   action,
   category,
@@ -36,155 +28,57 @@ export const event = ({
   label?: string;
   value?: number;
 }) => {
-  pushToDataLayer(action, {
-    event_category: category,
-    event_label: label,
-    value: value,
-  });
+  sendEvent(action, { event_category: category, event_label: label, value });
 };
 
-// Specific event trackers for RC Web Solutions (GTM-ready)
-
-// 1. Contact form submit
 export const trackContactFormSubmit = (formLocation: string) => {
-  pushToDataLayer("contact_form_submit", {
-    form_location: formLocation, // e.g., "homepage", "contact_section"
-  });
+  sendEvent("contact_form_submit", { form_location: formLocation });
 };
 
-// 2. Quote request
-export const trackQuoteRequest = (packageType: string) => {
-  pushToDataLayer("quote_request", {
-    package_type: packageType, // "starter", "growth", "premium"
-  });
-};
-
-// 3. Payment complete (Legacy - kept for backward compatibility)
-export const trackPaymentComplete = (amount: number, paymentType: string) => {
-  pushToDataLayer("purchase", {
-    value: amount,
-    currency: "USD",
-    payment_type: paymentType, // "initial_deposit", "final_payment"
-  });
-};
-
-// 4. Campaign clicks
-export const trackCampaignClick = (
-  campaignType: "sms" | "email",
-  campaignName?: string
-) => {
-  event({
-    action: "campaign_click",
-    category: "marketing",
-    label: `${campaignType}${campaignName ? `_${campaignName}` : ""}`,
-  });
-};
-
-// 5. Portfolio view
-export const trackPortfolioView = (projectName?: string) => {
-  event({
-    action: "portfolio_view",
-    category: "engagement",
-    label: projectName,
-  });
-};
-
-// Additional useful events
-
-// Button clicks (CTA)
-export const trackButtonClick = (buttonName: string, location: string) => {
-  event({
-    action: "button_click",
-    category: "engagement",
-    label: `${buttonName}_${location}`,
-  });
-};
-
-// Outbound link clicks
-export const trackOutboundClick = (url: string) => {
-  event({
-    action: "outbound_click",
-    category: "engagement",
-    label: url,
-  });
-};
-
-// Email campaign sent (admin action)
-export const trackEmailCampaignSent = (recipientCount: number) => {
-  event({
-    action: "email_campaign_sent",
-    category: "marketing_admin",
-    label: "campaign",
-    value: recipientCount,
-  });
-};
-
-// SMS campaign sent (admin action)
-export const trackSMSCampaignSent = (recipientCount: number) => {
-  event({
-    action: "sms_campaign_sent",
-    category: "marketing_admin",
-    label: "campaign",
-    value: recipientCount,
-  });
-};
-
-// Google Ads Conversion Events
-// These events match the conversion actions created in Google Ads
-// Events are sent to GA4 which then reports to Google Ads
-
-// 1. Manual Contact Event (for phone calls, direct contact)
+/**
+ * Google Ads conversion "manual_event_CONTACT" (phone calls and other direct
+ * contact), imported into Ads from GA4.
+ */
 export const trackManualContact = () => {
-  if (typeof window !== 'undefined' && window.gtag) {
-    // Send to GA4 (which Google Ads listens to)
-    window.gtag('event', 'manual_event_CONTACT', {
-      send_to: GA_MEASUREMENT_ID,
-    });
-  }
+  sendEvent("manual_event_CONTACT");
 };
 
-// 2. Lead Conversion Event (when a lead is closed/converted)
+/** Google Ads conversion "close_convert_lead": a lead became a customer. */
 export const trackLeadConversion = () => {
-  if (typeof window !== 'undefined' && window.gtag) {
-    // Send to GA4 (which Google Ads listens to)
-    window.gtag('event', 'close_convert_lead', {
-      send_to: GA_MEASUREMENT_ID,
-    });
-  }
+  sendEvent("close_convert_lead");
 };
 
-// 3. Submit Lead Form Event
+/** E.164 as Google expects it for user-provided data; US numbers get +1. */
+const toE164 = (phone: string): string | undefined => {
+  const digits = phone.replace(/\D/g, "");
+  if (digits.length === 10) return `+1${digits}`;
+  if (digits.length === 11 && digits.startsWith("1")) return `+${digits}`;
+  return undefined;
+};
+
+/**
+ * Google Ads conversion "SUBMIT_LEAD_FORM" (name must match the Ads action).
+ * Email and phone go through `user_data` (enhanced conversions, hashed by
+ * gtag before leaving the browser), never as plain event parameters, since
+ * GA4 forbids personally identifiable information in events.
+ */
 export const trackSubmitLeadForm = (email?: string, phone?: string) => {
-  if (typeof window !== 'undefined' && window.gtag) {
-    // Send to GA4 (which Google Ads listens to)
-    // Event name must match exactly what's in Google Ads: "SUBMIT_LEAD_FORM"
-    window.gtag('event', 'SUBMIT_LEAD_FORM', {
-      send_to: GA_MEASUREMENT_ID,
-      email,
-      phone_number: phone,
-    });
+  if (typeof window === "undefined" || !window.gtag) return;
+  const userData: Record<string, string> = {};
+  if (email) userData.email = email.trim().toLowerCase();
+  const phoneNumber = phone ? toE164(phone) : undefined;
+  if (phoneNumber) userData.phone_number = phoneNumber;
+  if (Object.keys(userData).length > 0) {
+    window.gtag("set", "user_data", userData);
   }
+  sendEvent("SUBMIT_LEAD_FORM");
 };
 
-// 4. Purchase Event (for completed payments)
-export const trackPurchase = (value: number, currency: string = 'USD', transactionId?: string) => {
-  if (typeof window !== 'undefined' && window.gtag) {
-    // Send to GA4 (which Google Ads listens to)
-    window.gtag('event', 'purchase', {
-      send_to: GA_MEASUREMENT_ID,
-      value,
-      currency,
-      transaction_id: transactionId,
-    });
-  }
-};
-
-// 5. Qualify Lead Event (when a lead is qualified)
-export const trackQualifyLead = () => {
-  if (typeof window !== 'undefined' && window.gtag) {
-    // Send to GA4 (which Google Ads listens to)
-    window.gtag('event', 'qualify_lead', {
-      send_to: GA_MEASUREMENT_ID,
-    });
-  }
+/** GA4 `purchase` event, also the Ads purchase conversion. */
+export const trackPurchase = (
+  value: number,
+  currency: string = "USD",
+  transactionId?: string
+) => {
+  sendEvent("purchase", { value, currency, transaction_id: transactionId });
 };
