@@ -11,7 +11,7 @@ import { toast } from "sonner";
 import { createContactAction } from "@/actions/contacts/createContactAction";
 import { trackContactFormSubmit, trackSubmitLeadForm } from "@/lib/analytics";
 import { trackFBLead } from "@/components/tracking/FacebookPixel";
-import { trackLinkedInConversion } from "@/components/tracking/LinkedInInsightTag";
+import { trackLinkedInConversion } from "@/lib/linkedin";
 import { getStoredUTMParams } from "@/hooks/useUTMParams";
 import { getRecaptchaToken, loadRecaptcha } from "@/lib/recaptcha";
 import { useRouter } from "next/navigation";

@@ -31,6 +31,7 @@ declare global {
       (command: 'config', targetId: string, config?: Record<string, unknown>): void;
       (command: 'event', eventName: string, params?: EventParams): void;
       (command: 'set', params: Record<string, unknown>): void;
+      (command: 'set', key: 'user_data', params: Record<string, string>): void;
       (command: 'js', date: Date): void;
       (command: string, ...args: unknown[]): void;
     };

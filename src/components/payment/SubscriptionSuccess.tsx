@@ -14,7 +14,7 @@ import type { Subscription } from "@/generated/prisma/client";
 import { trackLeadConversion, trackPurchase } from "@/lib/analytics";
 import { formatCurrency, formatDate as formatDateUtil } from "@/lib/utils";
 import { trackFBPurchase } from "@/components/tracking/FacebookPixel";
-import { trackLinkedInConversion } from "@/components/tracking/LinkedInInsightTag";
+import { trackLinkedInConversion } from "@/lib/linkedin";
 
 interface SubscriptionSuccessProps {
   subscription?: Subscription | null;

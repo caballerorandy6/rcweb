@@ -1,17 +1,22 @@
 "use server";
 
+import { randomBytes } from "node:crypto";
 import { Resend } from "resend";
 import { prisma } from "@/lib/prisma";
-import stripe from "@/lib/stripe";
 import { sendSubscriptionPortalLink } from "@/lib/email/senders";
 import type { ActionResultSimple } from "@/types/common";
 import { checkActionRateLimit, rateLimiters } from "@/lib/rateLimit";
+import { ManageSubscriptionSchema } from "@/lib/zod";
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 
+/** The emailed link stays valid this long; the email copy promises 24 hours. */
+export const PORTAL_LINK_TTL_MS = 24 * 60 * 60 * 1000;
+
 /**
- * Sends a magic link email to the customer to access their Stripe Customer Portal
- * This allows customers to manage their subscription without needing an account
+ * Emails a magic link to /manage-subscription/[token]. That page creates the
+ * Stripe Customer Portal session at click time, because a portal session
+ * URL itself expires five minutes after creation.
  */
 export async function sendPortalLinkAction(
   email: string
@@ -22,35 +27,35 @@ export async function sendPortalLinkAction(
       return { success: false, error: rateCheck.error! };
     }
 
-    // Validate email format
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailRegex.test(email)) {
+    const parsed = ManageSubscriptionSchema.safeParse({ email });
+    if (!parsed.success) {
       return { success: false, error: "Please enter a valid email address" };
     }
 
-    // Find subscription by email
     const subscription = await prisma.subscription.findFirst({
-      where: { email: email.toLowerCase() },
+      where: { email: parsed.data.email.toLowerCase() },
       orderBy: { createdAt: "desc" },
+      select: { id: true, email: true, name: true, planName: true },
     });
 
+    // Same answer whether or not the email exists, to avoid enumeration.
     if (!subscription) {
-      // For security, don't reveal if email exists or not
-      // But still return success to prevent email enumeration
       return { success: true };
     }
 
-    // Create customer portal session
-    const session = await stripe.billingPortal.sessions.create({
-      customer: subscription.stripeCustomerId,
-      return_url: `${process.env.NEXT_PUBLIC_BASE_URL}/`,
+    const token = randomBytes(32).toString("base64url");
+    await prisma.subscription.update({
+      where: { id: subscription.id },
+      data: {
+        portalToken: token,
+        portalTokenExpiresAt: new Date(Date.now() + PORTAL_LINK_TTL_MS),
+      },
     });
 
-    // Send email with portal link
     const emailResult = await sendSubscriptionPortalLink(resend, {
       customerEmail: subscription.email,
       customerName: subscription.name,
-      portalUrl: session.url,
+      portalUrl: `${process.env.NEXT_PUBLIC_BASE_URL}/manage-subscription/${token}`,
       planName: subscription.planName,
     });
 

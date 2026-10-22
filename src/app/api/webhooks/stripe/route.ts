@@ -5,9 +5,9 @@ import Stripe from "stripe";
 import { prisma } from "@/lib/prisma";
 import stripe from "@/lib/stripe";
 import { Resend } from "resend";
-import { trackPaymentComplete } from "@/lib/analytics";
 import { createInvoiceAndSendEmail } from "@/lib/invoice/createInvoiceAndSendEmail";
 import { ADMIN_EMAIL } from "@/lib/email/adminEmail";
+import { LEGAL_LAST_UPDATED } from "@/lib/company";
 import {
   sendSubscriptionConfirmation,
   sendAdminSubscriptionNotification,
@@ -26,7 +26,7 @@ if (!process.env.RESEND_API_KEY) {
 }
 
 const endpointSecret = process.env.STRIPE_WEBHOOK_SECRET;
-const TERMS_VERSION = "2025-09-25"; // Centralized terms version
+const TERMS_VERSION = LEGAL_LAST_UPDATED.version;
 
 export async function POST(req: Request) {
   const body = await req.text();
@@ -145,9 +145,6 @@ export async function POST(req: Request) {
 
             return newPayment;
           });
-
-          // Track payment completion in Google Analytics
-          trackPaymentComplete(firstPaymentAmount / 100, "initial_deposit");
         }
 
         // ============= CREATE INVOICE AND SEND EMAIL =============
@@ -350,8 +347,6 @@ export async function POST(req: Request) {
             },
             include: { invoices: true },
           });
-          // Track final payment completion in Google Analytics
-          trackPaymentComplete(payment.secondPayment / 100, "final_payment");
         } else {
           // Update session ID if not set
           if (!payment.secondSessionId) {

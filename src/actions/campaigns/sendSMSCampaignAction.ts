@@ -2,7 +2,6 @@
 
 import { prisma } from "@/lib/prisma";
 import twilio from "twilio";
-import { trackSMSCampaignSent } from "@/lib/analytics";
 import { deleteFailedPhonesAction } from "@/actions/contacts/deleteFailedPhonesAction";
 import { requireAdmin } from "@/lib/authGuard";
 
@@ -305,11 +304,6 @@ export const sendSmsCampaignAction = async (
     // 7. Automatically delete failed phones from contacts
     if (failedPhones.length > 0) {
       await deleteFailedPhonesAction(failedPhones);
-    }
-
-    // Track SMS campaign sent in Google Analytics
-    if (successCount > 0) {
-      trackSMSCampaignSent(successCount);
     }
 
     // 8. Preparar mensaje de respuesta

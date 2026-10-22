@@ -10,6 +10,7 @@ import {
 } from "@/lib/email/senders";
 import { linkPaymentToContact } from "@/actions/stats/getRevenueAttributionAction";
 import { getProjectUrl } from "@/lib/projectUrl";
+import { LEGAL_LAST_UPDATED } from "@/lib/company";
 
 export async function handlePaymentSuccessAction(
   sessionId: string,
@@ -165,7 +166,7 @@ export async function handlePaymentSuccessAction(
             data: {
               paymentId: newPayment.id,
               acceptedAt: new Date(metadata.termsAcceptedAt),
-              termsVersion: "2025-09-25",
+              termsVersion: LEGAL_LAST_UPDATED.version,
               plan: planName,
               ipAddress: "payment-success-fallback",
               userAgent: "payment-success-fallback",

@@ -7,7 +7,7 @@ import {
   CalendarIcon,
   EnvelopeIcon,
 } from "@heroicons/react/24/outline";
-import { COMPANY, COMPANY_LOCATION } from "@/lib/company";
+import { COMPANY, COMPANY_LOCATION, LEGAL_LAST_UPDATED } from "@/lib/company";
 
 const RefundPolicy = () => {
   return (
@@ -48,7 +48,7 @@ const RefundPolicy = () => {
             </p>
             <p className="mt-4 text-white/90 text-lg leading-relaxed font-inter">
               This policy was last updated on{" "}
-              <strong>January 13, 2026</strong>.
+              <strong>{LEGAL_LAST_UPDATED.label}</strong>.
             </p>
           </div>
         </div>
@@ -79,8 +79,7 @@ const RefundPolicy = () => {
                 </ul>
                 <p className="text-white/80 leading-relaxed font-inter mt-4">
                   Once the first payment is processed, your project begins
-                  immediately and our team commences work on your
-                  specifications.
+                  immediately and we start working on your specifications.
                 </p>
               </section>
 
@@ -99,16 +98,16 @@ const RefundPolicy = () => {
 
                 <p>
                   When you make the first payment, the project starts
-                  immediately and our team begins investing time, resources, and
-                  expertise into your project. This includes:
+                  immediately and we begin investing time and expertise into
+                  your project. This includes:
                 </p>
 
                 <ul>
                   <li>Project planning and architecture design</li>
-                  <li>Resource allocation and team assignment</li>
+                  <li>Scheduling the project in our calendar</li>
                   <li>Initial development and setup</li>
                   <li>Communication and project management</li>
-                  <li>Time committed by our development team</li>
+                  <li>Development time committed to your project</li>
                 </ul>
 
                 <p>
@@ -494,7 +493,7 @@ const RefundPolicy = () => {
           <div className="bg-gray-900/60 rounded-2xl border border-gold/10 p-6 text-center">
             <div className="flex items-center justify-center gap-2 text-white/50 text-sm font-inter">
               <CalendarIcon className="w-4 h-4" />
-              <span>Last updated: January 13, 2026</span>
+              <span>Last updated: {LEGAL_LAST_UPDATED.label}</span>
             </div>
           </div>
         </div>

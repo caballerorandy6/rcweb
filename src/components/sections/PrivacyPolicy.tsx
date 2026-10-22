@@ -9,7 +9,8 @@ import {
   PhoneIcon,
   InformationCircleIcon,
 } from "@heroicons/react/24/outline";
-import { COMPANY, COMPANY_ADDRESS } from "@/lib/company";
+import CookieSettingsButton from "@/components/forms/CookieSettingsButton";
+import { COMPANY, COMPANY_ADDRESS, LEGAL_LAST_UPDATED } from "@/lib/company";
 
 export default function PrivacyPolicy() {
   return (
@@ -54,7 +55,7 @@ export default function PrivacyPolicy() {
             </p>
             <div className="mt-4 flex items-center gap-2 text-gold/70 text-sm">
               <InformationCircleIcon className="w-5 h-5" />
-              <span className="font-inter">Last updated: January 13, 2026</span>
+              <span className="font-inter">Last updated: {LEGAL_LAST_UPDATED.label}</span>
             </div>
           </div>
         </div>
@@ -88,9 +89,10 @@ export default function PrivacyPolicy() {
 
                 <ul>
                   <li>
-                    <strong>Account</strong> means a
-                    unique account created for You to access our Service or
-                    parts of our Service.
+                    <strong>Access Link</strong> means the
+                    private, token-based link We email You to follow Your
+                    project or pay an invoice. The Service has no client
+                    accounts or passwords.
                   </li>
                   <li>
                     <strong>Affiliate</strong> means an
@@ -221,8 +223,9 @@ export default function PrivacyPolicy() {
                   <li>Phone number</li>
                   <li>Physical address</li>
                   <li>
-                    Bank account information in order to pay for products and/or
-                    services within the Service
+                    Payment details: card payments are processed by Stripe, which
+                    never shares Your full card number with Us; Zelle transfers
+                    are handled by Your bank
                   </li>
                   <li>Usage Data</li>
                 </ul>
@@ -305,13 +308,13 @@ export default function PrivacyPolicy() {
                   You may opt-in to SMS communications by:
                 </p>
                 <ul>
-                  <li>Texting a keyword to our short code or phone number</li>
+                  <li>Texting a keyword to our business phone number (+1 346-375-7534)</li>
                   <li>Checking a consent box on our website or forms</li>
                   <li>
                     Verbally providing consent during customer service
                     interactions
                   </li>
-                  <li>Enrolling during account creation or service setup</li>
+                  <li>Opting in when You hire Us or set up a service</li>
                 </ul>
 
                 <h3>
@@ -467,7 +470,8 @@ export default function PrivacyPolicy() {
                   </li>
                   <li>
                     <strong>Customer Support:</strong>{" "}
-                    AI chatbots may provide initial responses to inquiries
+                    the chat assistant on this website generates its replies
+                    with OpenAI (see Service Providers below)
                   </li>
                 </ul>
                 <div className="bg-gold/10 border border-gold/30 rounded-lg p-4 mb-4">
@@ -546,9 +550,10 @@ export default function PrivacyPolicy() {
                   </li>
                   <li>
                     <strong>
-                      To manage Your Account
+                      To deliver Your project
                     </strong>
-                    : to manage Your registration as a user of the Service.
+                    : to send You the private Access Links for Your project
+                    status, invoices and payments.
                   </li>
                   <li>
                     <strong>
@@ -611,7 +616,7 @@ export default function PrivacyPolicy() {
                   </li>
                   <li>
                     <strong>Website Usage Data:</strong>{" "}
-                    Retained for 26 months (Google Analytics default)
+                    Retained for up to 14 months (our Google Analytics event data retention setting)
                   </li>
                   <li>
                     <strong>SMS Consent Records:</strong>{" "}
@@ -643,7 +648,11 @@ export default function PrivacyPolicy() {
                   <li>Stripe (payment processing) - USA/EU</li>
                   <li>Twilio (SMS services) - USA</li>
                   <li>Resend (email services) - USA</li>
-                  <li>Google (analytics) - USA/Global</li>
+                  <li>Google (analytics, advertising, reCAPTCHA) - USA/Global</li>
+                  <li>Meta and LinkedIn (advertising measurement) - USA/Global</li>
+                  <li>OpenAI (AI chat assistant) - USA</li>
+                  <li>Sentry (error monitoring) - USA</li>
+                  <li>Calendly (appointment scheduling) - USA</li>
                   <li>Vercel (hosting) - USA/Global</li>
                 </ul>
                 <p>
@@ -771,6 +780,132 @@ export default function PrivacyPolicy() {
                     </p>
                   </div>
                 </div>
+
+                <h3>
+                  Advertising Measurement
+                </h3>
+                <div className="mb-4">
+                  <p className="text-white/80 leading-relaxed font-inter mb-2">
+                    Only after You choose &ldquo;Accept All&rdquo; in the cookie
+                    banner, We load Google Ads, the Meta Pixel and the LinkedIn
+                    Insight Tag to measure whether our ads lead to contacts or
+                    purchases. Their privacy policies:
+                  </p>
+                  <ul>
+                    <li>
+                      Google Ads:{" "}
+                      <a
+                      href="https://policies.google.com/privacy"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-gold hover:text-gold/80 underline"
+                    >
+                      https://policies.google.com/privacy
+                    </a>
+                    </li>
+                    <li>
+                      Meta:{" "}
+                      <a
+                      href="https://www.facebook.com/privacy/policy"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-gold hover:text-gold/80 underline"
+                    >
+                      https://www.facebook.com/privacy/policy
+                    </a>
+                    </li>
+                    <li>
+                      LinkedIn:{" "}
+                      <a
+                      href="https://www.linkedin.com/legal/privacy-policy"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-gold hover:text-gold/80 underline"
+                    >
+                      https://www.linkedin.com/legal/privacy-policy
+                    </a>
+                    </li>
+                  </ul>
+                </div>
+
+                <h3>
+                  AI Chat Assistant
+                </h3>
+                <div className="mb-4">
+                  <h4>
+                    OpenAI
+                  </h4>
+                  <p className="text-white/80 leading-relaxed font-inter mb-2">
+                    The messages You type into the chat widget on this website
+                    are sent to OpenAI to generate the reply. We do not store
+                    chat transcripts, and under OpenAI&apos;s API terms Your
+                    messages are not used to train their models. Please do not
+                    share passwords, payment details or other sensitive
+                    information in the chat.
+                  </p>
+                  <p>
+                    OpenAI Privacy Policy:{" "}
+                    <a
+                      href="https://openai.com/policies/privacy-policy"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-gold hover:text-gold/80 underline"
+                    >
+                      https://openai.com/policies/privacy-policy
+                    </a>
+                  </p>
+                </div>
+
+                <h3>
+                  Error Monitoring
+                </h3>
+                <div className="mb-4">
+                  <h4>
+                    Sentry
+                  </h4>
+                  <p className="text-white/80 leading-relaxed font-inter mb-2">
+                    When something breaks on the website, technical details
+                    about the error (page, browser type and, in some cases, the
+                    IP address of the request) are sent to Sentry so We can fix it. This data
+                    is kept for 90 days.
+                  </p>
+                  <p>
+                    Sentry Privacy Policy:{" "}
+                    <a
+                      href="https://sentry.io/privacy/"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-gold hover:text-gold/80 underline"
+                    >
+                      https://sentry.io/privacy/
+                    </a>
+                  </p>
+                </div>
+
+                <h3>
+                  Appointment Scheduling
+                </h3>
+                <div className="mb-4">
+                  <h4>
+                    Calendly
+                  </h4>
+                  <p className="text-white/80 leading-relaxed font-inter mb-2">
+                    When You book a call on our Schedule page, Calendly collects
+                    Your name, email address and the chosen time to create the
+                    appointment.
+                  </p>
+                  <p>
+                    Calendly Privacy Policy:{" "}
+                    <a
+                      href="https://calendly.com/privacy"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-gold hover:text-gold/80 underline"
+                    >
+                      https://calendly.com/privacy
+                    </a>
+                  </p>
+                </div>
               </section>
 
               {/* Cookies and Tracking Technologies */}
@@ -789,8 +924,9 @@ export default function PrivacyPolicy() {
                 <ul className="space-y-3 text-white/80 font-inter list-disc list-inside mb-4">
                   <li>
                     <strong>Essential Cookies:</strong>{" "}
-                    Required for the website to function properly (authentication,
-                    security, session management)
+                    Required for the website to function (Your cookie choice,
+                    the Stripe payment session, and spam protection on forms
+                    through Google reCAPTCHA)
                   </li>
                   <li>
                     <strong>Analytics Cookies:</strong>{" "}
@@ -799,12 +935,14 @@ export default function PrivacyPolicy() {
                   </li>
                   <li>
                     <strong>Advertising Cookies:</strong>{" "}
-                    Used by Google Ads and Facebook Pixel to measure ad performance and
-                    deliver relevant advertisements
+                    Used by Google Ads, the Meta Pixel and the LinkedIn Insight Tag to
+                    measure ad performance; only set after You choose &ldquo;Accept
+                    All&rdquo;
                   </li>
                   <li>
-                    <strong>Preference Cookies:</strong>{" "}
-                    Remember Your preferences and settings for future visits
+                    <strong>Preference Storage:</strong>{" "}
+                    Your cookie choice is kept in Your browser&apos;s local storage so
+                    We do not ask again on every visit
                   </li>
                 </ul>
 
@@ -818,6 +956,9 @@ export default function PrivacyPolicy() {
                   <li>Google Analytics - Website traffic analysis</li>
                   <li>Google Ads - Conversion tracking and remarketing</li>
                   <li>Meta (Facebook) Pixel - Ad conversion tracking</li>
+                  <li>LinkedIn Insight Tag - Ad conversion tracking</li>
+                  <li>Google reCAPTCHA - Spam protection when You submit a form</li>
+                  <li>Calendly - Booking widget on the Schedule page</li>
                   <li>Stripe - Secure payment processing</li>
                 </ul>
 
@@ -828,6 +969,14 @@ export default function PrivacyPolicy() {
                   You can control and manage cookies in several ways:
                 </p>
                 <ul>
+                  <li>
+                    <strong>Cookie Settings:</strong>{" "}
+                    Change Your choice at any time with the{" "}
+                    <CookieSettingsButton className="text-gold hover:text-gold/80 underline cursor-pointer">
+                      Cookie Settings
+                    </CookieSettingsButton>{" "}
+                    link, also available in the footer of every page
+                  </li>
                   <li>
                     <strong>Browser Settings:</strong>{" "}
                     Most browsers allow You to refuse or delete cookies through their settings
@@ -991,11 +1140,10 @@ export default function PrivacyPolicy() {
                 </h2>
                 <p>
                   We may update Our Privacy Policy from time to time. We will
-                  notify You of any changes by posting the new Privacy Policy on
-                  this page. We will let You know via email and/or a prominent
-                  notice on Our Service, prior to the change becoming effective
-                  and update the &ldquo;Last updated&rdquo; date at the top of
-                  this Privacy Policy.
+                  post the new Privacy Policy on this page and update the
+                  &ldquo;Last updated&rdquo; date at the top. For material
+                  changes We will also show a prominent notice on Our Service
+                  before the change takes effect.
                 </p>
               </section>
             </div>

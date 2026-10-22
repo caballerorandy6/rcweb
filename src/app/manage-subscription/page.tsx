@@ -10,7 +10,10 @@ export const metadata = genPageMetadata({
   pageRoute: "/manage-subscription",
 });
 
-export default function ManageSubscriptionPage() {
+type SearchParams = Promise<{ error?: string }>;
+
+export default async function ManageSubscriptionPage(props: { searchParams: SearchParams }) {
+  const { error } = await props.searchParams;
   return (
     <section id="manage-subscription">
       <JsonLdForBreadcrumb
@@ -19,7 +22,7 @@ export default function ManageSubscriptionPage() {
           { name: "Manage Subscription", item: `${siteConfig.baseUrl}/manage-subscription` },
         ]}
       />
-      <ManageSubscription />
+      <ManageSubscription error={error} />
     </section>
   );
 }

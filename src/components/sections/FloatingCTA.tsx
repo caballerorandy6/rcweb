@@ -6,7 +6,7 @@ import Image from "next/image";
 import clsx from "clsx";
 import { XMarkIcon, ChatBubbleLeftRightIcon } from "@heroicons/react/24/solid";
 import { trackFBContact, trackFBPhoneCall } from "@/components/tracking/FacebookPixel";
-import { trackLinkedInConversion } from "@/components/tracking/LinkedInInsightTag";
+import { trackLinkedInConversion } from "@/lib/linkedin";
 import { event as trackEvent } from "@/lib/analytics";
 
 const Chat = dynamic(() => import("@/components/ui/Chat"), {
