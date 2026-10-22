@@ -20,7 +20,7 @@ type Category = {
 // Every post shares the same OG image, so the card header is a typographic
 // band whose label and icon come from the post's tags instead of a photo.
 const categories = {
-  houston: { label: "Houston Business", icon: BuildingOffice2Icon },
+  houston: { label: "Small Business", icon: BuildingOffice2Icon },
   caseStudy: { label: "Case Study", icon: CodeBracketIcon },
   technical: { label: "Performance & Security", icon: ShieldCheckIcon },
   business: { label: "Business", icon: BriefcaseIcon },

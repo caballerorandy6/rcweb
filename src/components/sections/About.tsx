@@ -20,7 +20,7 @@ const About = () => {
             name: "Randy Caballero",
             jobTitle: "Full-Stack Web Developer",
             description:
-              "Full-stack developer with 6+ years building React and Next.js applications. Founder of RC Web Solutions LLC in Houston, TX, with 20+ production sites shipped.",
+              "Full-stack developer with 6+ years building React and Next.js applications. Founder of RC Web Solutions LLC, based in Houston, TX, with 20+ production sites shipped for small businesses across the US.",
             image: `${siteConfig.baseUrl}/randy-caballero-web-developer.avif`,
             url: `${siteConfig.baseUrl}/about`,
             sameAs: [
@@ -79,8 +79,10 @@ const About = () => {
                 <strong className="text-gold font-semibold">
                   20+ production sites
                 </strong>{" "}
-                for Houston businesses, from the frontend and APIs to the
-                database and deployment. Before founding the agency I worked as a
+                for small businesses, most of them in the Houston area, from
+                the frontend and APIs to the database and deployment. I work
+                remotely with clients anywhere: video calls, a staging
+                site you can check at any time, and Stripe payments. Before founding the agency I worked as a
                 software developer at Atser Systems Inc. and Revature, contributing
                 to{" "}
                 <strong className="text-gold font-semibold">
@@ -132,7 +134,7 @@ const About = () => {
                   Based in Houston, TX
                 </p>
                 <p className="text-gray-400 font-inter text-xs">
-                  Serving clients nationwide
+                  Working with clients anywhere
                 </p>
               </div>
 

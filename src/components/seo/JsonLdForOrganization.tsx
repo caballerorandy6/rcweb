@@ -17,11 +17,9 @@ export function JsonLdForOrganization() {
     },
     sameAs: [
       siteConfig.social.linkedin,
-      `https://x.com/${siteConfig.social.twitter.replace("@", "")}`,
       siteConfig.social.facebook,
       siteConfig.social.instagram,
-      siteConfig.social.tiktok,
-      siteConfig.social.nextdoor,
+      siteConfig.social.github,
     ],
     address: {
       "@type": "PostalAddress",

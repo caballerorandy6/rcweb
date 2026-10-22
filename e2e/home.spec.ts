@@ -4,7 +4,7 @@ test.describe("home page", () => {
   test("loads with the hero and the main navigation", async ({ page }) => {
     await page.goto("/");
 
-    await expect(page).toHaveTitle(/Web Developer Houston TX/);
+    await expect(page).toHaveTitle(/Custom Websites & Web Apps for Small Businesses/);
     await expect(
       page.getByRole("heading", { level: 1, name: "Websites That Win Customers" })
     ).toBeVisible();

@@ -18,7 +18,7 @@ export default function BlogPreview() {
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
         <Heading
           icon={<BookOpenIcon className="w-8 text-gold" />}
-          text="Tips and insights for Houston business owners"
+          text="Tips and insights for small business owners"
         >
           From the Blog
         </Heading>

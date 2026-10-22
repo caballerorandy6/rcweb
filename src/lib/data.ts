@@ -70,7 +70,7 @@ export const experience: ExperienceProps[] = [
     company: "RC Web Solutions LLC",
     location: "Houston, TX",
     description:
-      "Built and deployed 20+ production Next.js sites for Houston-area businesses, owning the full cycle from requirements to post-launch maintenance, plus the analytics and paid-acquisition layer.",
+      "Built and deployed 20+ production Next.js sites for small businesses, most of them in the Houston area, owning the full cycle from requirements to post-launch maintenance, plus the analytics and paid-acquisition layer.",
     icon: React.createElement(BriefcaseIcon),
     date: "Sept 2022 - Present",
   },
@@ -464,7 +464,7 @@ export const processSteps = [
     title: "Discovery",
     week: "Week 1",
     description:
-      "Free initial consultation to understand your needs and objectives.",
+      "Free video call to understand your needs and objectives, wherever you are.",
     details: [
       "Requirements analysis",
       "Competition research",
@@ -1142,7 +1142,7 @@ export const thirdPartyLinks = [
 export const socialLinks = [
   {
     name: "LinkedIn",
-    url: "https://www.linkedin.com/company/rcwebsolutions",
+    url: "https://www.linkedin.com/company/109039912/",
     ariaLabel: "Connect on LinkedIn",
     bgColor: "bg-[#0A66C2]",
     hoverColor: "hover:bg-[#004182]",
@@ -1195,15 +1195,6 @@ export const socialLinks = [
     hoverColor: "hover:bg-[#C13584]",
     delay: 0.3,
     iconSize: "w-6 h-6 lg:w-8 lg:h-8",
-  },
-  {
-    name: "X",
-    url: "https://x.com/RCWeb2025",
-    ariaLabel: "Connect on X",
-    bgColor: "bg-gray-900",
-    hoverColor: "hover:bg-gray-700",
-    delay: 0.35,
-    iconSize: "w-5 h-5 lg:w-6 lg:h-6",
   },
 ];
 
