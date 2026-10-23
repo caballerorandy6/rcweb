@@ -36,7 +36,7 @@ export default function ProjectsPortfolioPage() {
               </p>
             </div>
 
-            <ProjectsList projects={projects} />
+            <ProjectsList projects={projects} priorityCount={3} />
           </div>
         </section>
       </div>
