@@ -3,7 +3,7 @@
 import Link from "next/link";
 import type { Route } from "next";
 import clsx from "clsx";
-import { Dialog, DialogPanel } from "@headlessui/react";
+import Modal from "@/components/ui/Modal";
 import { useRCWebStore } from "@/store/rcweb-store";
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
 import Logo from "@/components/layout/Logo";
@@ -11,7 +11,7 @@ import Button from "@/components/ui/Button";
 import { navigation, secondaryNavigation } from "@/lib/navigation";
 import { withViewTransition } from "@/lib/viewTransition";
 import { usePathname } from "next/navigation";
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 
 const Navbar = () => {
   // Use individual selectors to prevent unnecessary re-renders
@@ -21,6 +21,7 @@ const Navbar = () => {
   const setIsOpen = useRCWebStore((state) => state.setIsOpen);
   const handleClickModal = useRCWebStore((state) => state.handleClickModal);
 
+  const closeButtonRef = useRef<HTMLButtonElement>(null);
   const pathname = usePathname();
   const isHomePage = pathname === "/";
 
@@ -196,22 +197,20 @@ const Navbar = () => {
       {!isHomePage && <div className="h-[72px]" />}
 
       {/* Mobile/Tablet Drawer */}
-      <Dialog
+      <Modal
+        id="site-menu"
+        aria-label="Site menu"
         open={isOpen}
-        onClose={handleClickModal}
-        className="relative z-50"
+        onClose={() => setIsOpen(false)}
+        initialFocus={closeButtonRef}
+        className="fixed inset-y-0 right-0 left-auto m-0 h-dvh max-h-none w-screen max-w-sm bg-transparent p-0 text-inherit backdrop:bg-black/50"
       >
-        <div className="fixed inset-0 bg-black/50" />
-
-        <div className="fixed inset-0 overflow-hidden">
-          <div className="absolute inset-0 overflow-hidden">
-            <div className="pointer-events-none fixed inset-y-0 right-0 flex max-w-full">
-              <DialogPanel id="site-menu" className="pointer-events-auto w-screen max-w-sm">
                 <div className="flex h-full flex-col bg-linear-to-b from-gray-900 via-gray-900 to-gray-950 shadow-2xl border-l border-gold/10">
                   {/* Header */}
                   <div className="flex items-center justify-between px-6 py-5 border-b border-gold/20 bg-gold/5">
                     <Logo className="w-32 h-auto" onClick={handleClickModal} />
                     <button
+                      ref={closeButtonRef}
                       type="button"
                       onClick={() => setIsOpen(false)}
                       className="rounded-lg p-2 text-white/80 hover:text-gold hover:bg-gold/10 transition duration-300 cursor-pointer"
@@ -285,11 +284,7 @@ const Navbar = () => {
                     </p>
                   </div>
                 </div>
-              </DialogPanel>
-            </div>
-          </div>
-        </div>
-      </Dialog>
+      </Modal>
     </>
   );
 };

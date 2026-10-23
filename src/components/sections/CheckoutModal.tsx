@@ -2,12 +2,7 @@
 
 import { useRef, useState, useTransition } from "react";
 import { useRouter } from "next/navigation";
-import {
-  Dialog,
-  DialogBackdrop,
-  DialogPanel,
-  DialogTitle,
-} from "@headlessui/react";
+import Modal from "@/components/ui/Modal";
 import Button from "@/components/ui/Button";
 import { saveCheckoutCustomer } from "@/lib/checkoutCustomer";
 import { useCheckoutStore } from "@/store/checkout-store";
@@ -62,19 +57,23 @@ export default function CheckoutModal({ plans }: { plans: CheckoutPlan[] }) {
     });
   };
 
-  // Headless UI traps focus, closes on Escape and returns focus to the
+  // The native dialog traps focus, closes on Escape and returns focus to the
   // pricing button; the initial focus goes to the first field.
   return (
-    <Dialog open={isOpen} onClose={isPending ? () => {} : close} className="relative z-50">
-      <DialogBackdrop className="fixed inset-0 bg-black/70 backdrop-blur-xs animate-fade-in" />
-
-      <div className="fixed inset-0 flex items-center justify-center p-4">
-        <DialogPanel className="w-full max-w-md max-h-[calc(100dvh-2rem)] overflow-y-auto overscroll-contain bg-gray-900/95 rounded-2xl p-8 border border-gold/20 shadow-2xl shadow-gold/10 animate-enter">
+    <Modal
+      open={isOpen}
+      onClose={close}
+      preventClose={isPending}
+      initialFocus={nameRef}
+      aria-labelledby="checkout-title"
+      className="m-auto w-[calc(100%-2rem)] max-w-md max-h-[calc(100dvh-2rem)] bg-transparent p-0 text-inherit backdrop:bg-black/70 backdrop:backdrop-blur-xs backdrop:animate-fade-in"
+    >
+      <div className="max-h-[calc(100dvh-2rem)] overflow-y-auto overscroll-contain bg-gray-900/95 rounded-2xl p-8 border border-gold/20 shadow-2xl shadow-gold/10 animate-enter">
           {plan ? (
             <form onSubmit={handleSubmit} noValidate>
-              <DialogTitle className="text-4xl text-gold mb-6 font-iceland">
+              <h2 id="checkout-title" className="text-4xl text-gold mb-6 font-iceland">
                 Complete Your Order
-              </DialogTitle>
+              </h2>
 
               <dl className="bg-gray-800/50 rounded-xl p-4 mb-6 border border-gold/10 font-inter">
                 <div className="flex justify-between items-center mb-2">
@@ -108,7 +107,6 @@ export default function CheckoutModal({ plans }: { plans: CheckoutPlan[] }) {
                     name="name"
                     type="text"
                     autoComplete="name"
-                    autoFocus
                     required
                     aria-required="true"
                     aria-invalid={errors.name ? true : undefined}
@@ -172,8 +170,7 @@ export default function CheckoutModal({ plans }: { plans: CheckoutPlan[] }) {
               </div>
             </form>
           ) : null}
-        </DialogPanel>
       </div>
-    </Dialog>
+    </Modal>
   );
 }
