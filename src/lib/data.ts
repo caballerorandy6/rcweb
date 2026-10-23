@@ -17,7 +17,6 @@ import Jira from "@/components/icons/Jira";
 import NodeJS from "@/components/icons/NodeJS";
 import { TeachMarqueeProps } from "@/components/ui/TechMarquee";
 import { BriefcaseIcon, AcademicCapIcon } from "@heroicons/react/24/outline";
-import { NavigationProps } from "@/components/layout/Navbar";
 import { ExperienceProps } from "@/components/sections/Experience";
 import {
   ChatBubbleLeftRightIcon,
@@ -37,31 +36,6 @@ import {
   DocumentTextIcon,
   DevicePhoneMobileIcon,
 } from "@heroicons/react/24/outline";
-
-// Main navigation - Only essential links (5 max for optimal UX)
-export const navigation: NavigationProps[] = [
-  { name: "Services", hash: "/#services" },
-  { name: "Projects", hash: "/#projects" },
-  { name: "Pricing", hash: "/#pricing" },
-  { name: "Blog", hash: "/#blog" },
-  { name: "About", hash: "/about" },
-  { name: "Contact", hash: "/#contact" },
-  { name: "CTA", hash: "/#cta" }, // Hidden, used for scroll behavior
-];
-
-// Secondary navigation - For footer or "More" menu
-export const secondaryNavigation: NavigationProps[] = [
-  { name: "Process", hash: "/#process" },
-  { name: "FAQ", hash: "/#faq" },
-];
-
-// Footer-only navigation
-export const footerNavigation: NavigationProps[] = [
-  { name: "About", hash: "/about" },
-  { name: "Testimonials", hash: "/#testimonials" },
-  { name: "Schedule", hash: "/schedule" },
-  { name: "Houston, TX", hash: "/web-developer-houston-tx" },
-];
 
 // Fuente: resume de Randy Caballero (actualizado septiembre 2026)
 export const experience: ExperienceProps[] = [
@@ -787,13 +761,6 @@ export const testimonials = [
 
 // Google Reviews - Link to leave a review
 export const GOOGLE_REVIEW_URL = "https://g.page/r/CaUssahd8MITEAE/review";
-
-export const extraFooterLinks = [
-  { name: "Privacy Policy", hash: "/privacy-policy" },
-  { name: "Terms of Service", hash: "/terms-of-service" },
-  { name: "Refund Policy", hash: "/refund-policy" },
-  { name: "Manage Subscription", hash: "/manage-subscription" },
-];
 
 export type ServicePage = {
   slug: string;

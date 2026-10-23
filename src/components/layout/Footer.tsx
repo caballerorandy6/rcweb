@@ -1,6 +1,11 @@
 import Link from "next/link";
 import type { Route } from "next";
-import { navigation, secondaryNavigation, footerNavigation, extraFooterLinks } from "@/lib/data";
+import {
+  navigation,
+  secondaryNavigation,
+  footerNavigation,
+  extraFooterLinks,
+} from "@/lib/navigation";
 import Button from "@/components/ui/Button";
 import Logo from "@/components/layout/Logo";
 import CookieSettingsButton from "@/components/forms/CookieSettingsButton";

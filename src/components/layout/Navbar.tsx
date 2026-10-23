@@ -8,15 +8,10 @@ import { useRCWebStore } from "@/store/rcweb-store";
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
 import Logo from "@/components/layout/Logo";
 import Button from "@/components/ui/Button";
-import { navigation, secondaryNavigation } from "@/lib/data";
+import { navigation, secondaryNavigation } from "@/lib/navigation";
 import { withViewTransition } from "@/lib/viewTransition";
 import { usePathname } from "next/navigation";
 import { useEffect } from "react";
-
-export interface NavigationProps {
-  name: string;
-  hash: string;
-}
 
 const Navbar = () => {
   // Use individual selectors to prevent unnecessary re-renders

@@ -2,7 +2,7 @@ import type { Route } from "next";
 import { CodeBracketIcon } from "@heroicons/react/24/outline";
 import Heading from "@/components/ui/Heading";
 import Button from "@/components/ui/Button";
-import { projects } from "@/lib/data";
+import { projects, teachMarqueeData } from "@/lib/data";
 import ProjectsList from "@/components/sections/ProjectsList";
 import TechMarquee from "@/components/ui/TechMarquee";
 
@@ -46,7 +46,7 @@ const Projects = () => {
         </div>
 
         <div className="mt-16 sm:mt-20 pt-12">
-          <TechMarquee />
+          <TechMarquee items={teachMarqueeData} />
         </div>
       </div>
     </section>

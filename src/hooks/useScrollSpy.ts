@@ -2,7 +2,7 @@
 
 import { useEffect } from "react";
 import { useRCWebStore } from "@/store/rcweb-store";
-import { navigation } from "@/lib/data";
+import { navigation } from "@/lib/navigation";
 import { withViewTransition } from "@/lib/viewTransition";
 
 type SectionName = (typeof navigation)[number]["name"];

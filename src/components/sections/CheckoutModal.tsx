@@ -9,7 +9,6 @@ import {
   DialogTitle,
 } from "@headlessui/react";
 import Button from "@/components/ui/Button";
-import { pricingPlans } from "@/lib/data";
 import { saveCheckoutCustomer } from "@/lib/checkoutCustomer";
 import { useCheckoutStore } from "@/store/checkout-store";
 import { formatDollars } from "@/lib/utils";
@@ -17,8 +16,14 @@ import { formatDollars } from "@/lib/utils";
 const inputClasses =
   "w-full p-3 bg-gray-800/70 text-white rounded-xl border border-gray-700 placeholder:text-white/40 focus:border-gold focus:outline-hidden focus:ring-2 focus:ring-gold/20 aria-invalid:border-red-500/70 transition";
 
+export interface CheckoutPlan {
+  id: string;
+  name: string;
+  priceInCents: number;
+}
+
 /** Name + email before the terms page; opened by PlanCTA through the store */
-export default function CheckoutModal() {
+export default function CheckoutModal({ plans }: { plans: CheckoutPlan[] }) {
   const planId = useCheckoutStore((state) => state.planId);
   const close = useCheckoutStore((state) => state.close);
   const [customerEmail, setCustomerEmail] = useState("");
@@ -29,8 +34,8 @@ export default function CheckoutModal() {
   const emailRef = useRef<HTMLInputElement>(null);
   const router = useRouter();
 
-  const plan = pricingPlans.find((p) => p.id === planId);
-  const isOpen = Boolean(plan?.purchasable);
+  const plan = plans.find((p) => p.id === planId);
+  const isOpen = Boolean(plan);
 
   const isMonthly = plan?.id === "website-maintenance";
   const amount = plan ? (plan.priceInCents * (isMonthly ? 1 : 0.5)) / 100 : 0;

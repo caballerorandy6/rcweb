@@ -1,6 +1,6 @@
 import { create } from "zustand";
 import { persist, createJSONStorage } from "zustand/middleware";
-import { navigation } from "@/lib/data";
+import { navigation } from "@/lib/navigation";
 
 type SectionName = (typeof navigation)[number]["name"];
 
