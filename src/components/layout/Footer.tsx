@@ -8,7 +8,6 @@ import {
 } from "@/lib/navigation";
 import Button from "@/components/ui/Button";
 import Logo from "@/components/layout/Logo";
-import CookieSettingsButton from "@/components/forms/CookieSettingsButton";
 
 export default function Footer() {
   const mainNavigation = navigation.slice(0, -2);
@@ -37,8 +36,9 @@ export default function Footer() {
             <div className="sm:col-span-2 lg:col-span-2 flex flex-col items-center lg:items-start">
               <Logo className="w-36 lg:w-40 h-auto mb-6" />
               <p className="text-white/60 font-inter text-sm leading-relaxed mb-6 text-center lg:text-left max-w-sm mx-auto lg:mx-0">
-                Crafting exceptional digital experiences with modern web
-                technologies. Let&apos;s build something amazing together.
+                Websites and web apps for small businesses, built and
+                maintained by me. Based in Houston, working with clients
+                anywhere.
               </p>
 
               {/* Contact CTA */}
@@ -73,7 +73,7 @@ export default function Footer() {
                   <li key={item.name}>
                     <Link
                       href={item.hash as Route}
-                      className="text-white/60 hover:text-gold transition duration-200 font-inter text-sm inline-flex items-center justify-center sm:justify-start w-full sm:w-auto group"
+                      className="text-white/60 hover:text-gold transition duration-200 font-inter text-sm inline-flex items-center justify-center sm:justify-start w-full sm:w-auto py-1 group"
                     >
                       <span className="w-1 h-1 bg-gold/50 rounded-full mr-2 opacity-0 group-hover:opacity-100 transition-opacity duration-200" />
                       {item.name}
@@ -93,7 +93,7 @@ export default function Footer() {
                   <li key={item.name}>
                     <Link
                       href={item.hash as Route}
-                      className="text-white/60 hover:text-gold transition duration-200 font-inter text-sm inline-flex items-center justify-center sm:justify-start w-full sm:w-auto group"
+                      className="text-white/60 hover:text-gold transition duration-200 font-inter text-sm inline-flex items-center justify-center sm:justify-start w-full sm:w-auto py-1 group"
                     >
                       <span className="w-1 h-1 bg-gold/50 rounded-full mr-2 opacity-0 group-hover:opacity-100 transition-opacity duration-200" />
                       {item.name}
@@ -104,7 +104,7 @@ export default function Footer() {
                   <li key={item.name}>
                     <Link
                       href={item.hash as Route}
-                      className="text-white/60 hover:text-gold transition duration-200 font-inter text-sm inline-flex items-center justify-center sm:justify-start w-full sm:w-auto group"
+                      className="text-white/60 hover:text-gold transition duration-200 font-inter text-sm inline-flex items-center justify-center sm:justify-start w-full sm:w-auto py-1 group"
                     >
                       <span className="w-1 h-1 bg-gold/50 rounded-full mr-2 opacity-0 group-hover:opacity-100 transition-opacity duration-200" />
                       {item.name}
@@ -156,10 +156,10 @@ export default function Footer() {
                   <Link
                     key={item.name}
                     href={item.hash as Route}
-                    className="text-white/50 hover:text-gold transition-colors duration-200 font-inter text-xs relative group"
+                    className="text-white/50 hover:text-gold transition-colors duration-200 font-inter text-xs relative inline-block py-1 group"
                   >
                     {item.name}
-                    <span className="absolute -bottom-0.5 left-0 w-full h-px bg-gold scale-x-0 origin-left transition-transform duration-300 group-hover:scale-x-100" />
+                    <span className="absolute bottom-0.5 left-0 w-full h-px bg-gold scale-x-0 origin-left transition-transform duration-300 group-hover:scale-x-100" />
                   </Link>
                 ))}
               </nav>
@@ -170,16 +170,12 @@ export default function Footer() {
                   <Link
                     key={link.name}
                     href={link.hash as Route}
-                    className="text-white/50 hover:text-gold transition-colors duration-200 font-inter text-xs relative group"
+                    className="text-white/50 hover:text-gold transition-colors duration-200 font-inter text-xs relative inline-block py-1 group"
                   >
                     {link.name}
-                    <span className="absolute -bottom-0.5 left-0 w-full h-px bg-gold scale-x-0 origin-left transition-transform duration-300 group-hover:scale-x-100" />
+                    <span className="absolute bottom-0.5 left-0 w-full h-px bg-gold scale-x-0 origin-left transition-transform duration-300 group-hover:scale-x-100" />
                   </Link>
                 ))}
-                <CookieSettingsButton className="text-white/50 hover:text-gold transition-colors duration-200 font-inter text-xs relative group cursor-pointer">
-                  Cookie Settings
-                  <span className="absolute -bottom-0.5 left-0 w-full h-px bg-gold scale-x-0 origin-left transition-transform duration-300 group-hover:scale-x-100" />
-                </CookieSettingsButton>
               </nav>
             </div>
 

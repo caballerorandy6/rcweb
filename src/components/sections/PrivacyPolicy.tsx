@@ -9,7 +9,7 @@ import {
   PhoneIcon,
   InformationCircleIcon,
 } from "@heroicons/react/24/outline";
-import CookieSettingsButton from "@/components/forms/CookieSettingsButton";
+import AnalyticsOptOut from "@/components/forms/AnalyticsOptOut";
 import { COMPANY, COMPANY_ADDRESS, LEGAL_LAST_UPDATED } from "@/lib/company";
 
 export default function PrivacyPolicy() {
@@ -648,8 +648,7 @@ export default function PrivacyPolicy() {
                   <li>Stripe (payment processing) - USA/EU</li>
                   <li>Twilio (SMS services) - USA</li>
                   <li>Resend (email services) - USA</li>
-                  <li>Google (analytics, advertising, reCAPTCHA) - USA/Global</li>
-                  <li>Meta and LinkedIn (advertising measurement) - USA/Global</li>
+                  <li>Google (analytics, reCAPTCHA) - USA/Global</li>
                   <li>OpenAI (AI chat assistant) - USA</li>
                   <li>Sentry (error monitoring) - USA</li>
                   <li>Calendly (appointment scheduling) - USA</li>
@@ -786,10 +785,13 @@ export default function PrivacyPolicy() {
                 </h3>
                 <div className="mb-4">
                   <p className="text-white/80 leading-relaxed font-inter mb-2">
-                    Only after You choose &ldquo;Accept All&rdquo; in the cookie
-                    banner, We load Google Ads, the Meta Pixel and the LinkedIn
-                    Insight Tag to measure whether our ads lead to contacts or
-                    purchases. Their privacy policies:
+                    We are not running paid advertising at the moment, so no ad
+                    pixel is loaded. If We run campaigns in the future, We may
+                    load Google Ads, the Meta Pixel or the LinkedIn Insight Tag
+                    to measure whether those ads lead to contacts or purchases;
+                    this policy will be updated, and the measurement switch in
+                    the Cookies section below turns them off together with
+                    Analytics. Their privacy policies:
                   </p>
                   <ul>
                     <li>
@@ -909,7 +911,7 @@ export default function PrivacyPolicy() {
               </section>
 
               {/* Cookies and Tracking Technologies */}
-              <section>
+              <section id="cookies" className="scroll-mt-28">
                 <h2>
                   Cookies and Tracking Technologies
                 </h2>
@@ -924,25 +926,26 @@ export default function PrivacyPolicy() {
                 <ul className="space-y-3 text-white/80 font-inter list-disc list-inside mb-4">
                   <li>
                     <strong>Essential Cookies:</strong>{" "}
-                    Required for the website to function (Your cookie choice,
-                    the Stripe payment session, and spam protection on forms
-                    through Google reCAPTCHA)
+                    Required for the website to function (the Stripe payment
+                    session and spam protection on forms through Google
+                    reCAPTCHA)
                   </li>
                   <li>
                     <strong>Analytics Cookies:</strong>{" "}
-                    Google Analytics cookies (_ga, _gid, _gat) to understand how visitors
-                    interact with our website
+                    Google Analytics cookies (_ga, _ga_*) to understand how
+                    visitors use the website. They are on by default; You can
+                    turn them off for Your browser with the switch below
                   </li>
                   <li>
                     <strong>Advertising Cookies:</strong>{" "}
-                    Used by Google Ads, the Meta Pixel and the LinkedIn Insight Tag to
-                    measure ad performance; only set after You choose &ldquo;Accept
-                    All&rdquo;
+                    Not in use. Only while We run ad campaigns would Google
+                    Ads, the Meta Pixel or the LinkedIn Insight Tag set them
+                    (see Advertising Measurement above)
                   </li>
                   <li>
                     <strong>Preference Storage:</strong>{" "}
-                    Your cookie choice is kept in Your browser&apos;s local storage so
-                    We do not ask again on every visit
+                    If You turn measurement off, that choice is kept in Your
+                    browser&apos;s local storage so it applies on every visit
                   </li>
                 </ul>
 
@@ -954,9 +957,10 @@ export default function PrivacyPolicy() {
                 </p>
                 <ul>
                   <li>Google Analytics - Website traffic analysis</li>
-                  <li>Google Ads - Conversion tracking and remarketing</li>
-                  <li>Meta (Facebook) Pixel - Ad conversion tracking</li>
-                  <li>LinkedIn Insight Tag - Ad conversion tracking</li>
+                  <li>
+                    Google Ads, Meta Pixel, LinkedIn Insight Tag - only while We
+                    run ad campaigns (none at the moment)
+                  </li>
                   <li>Google reCAPTCHA - Spam protection when You submit a form</li>
                   <li>Calendly - Booking widget on the Schedule page</li>
                   <li>Stripe - Secure payment processing</li>
@@ -970,12 +974,11 @@ export default function PrivacyPolicy() {
                 </p>
                 <ul>
                   <li>
-                    <strong>Cookie Settings:</strong>{" "}
-                    Change Your choice at any time with the{" "}
-                    <CookieSettingsButton className="text-gold hover:text-gold/80 underline cursor-pointer">
-                      Cookie Settings
-                    </CookieSettingsButton>{" "}
-                    link, also available in the footer of every page
+                    <strong>Measurement switch:</strong>{" "}
+                    Turn Google Analytics (and any ad pixel) off for this
+                    browser. The &ldquo;Privacy Choices&rdquo; link in the
+                    footer of every page brings You back here.
+                    <AnalyticsOptOut />
                   </li>
                   <li>
                     <strong>Browser Settings:</strong>{" "}

@@ -24,6 +24,19 @@
     }
   }
 
+  /* Transform-only entrance for hero text that is an LCP candidate: an
+     opacity fade delays the paint the browser counts as LCP */
+  --animate-rise: rise 0.5s cubic-bezier(0.16, 1, 0.3, 1) both;
+
+  @keyframes rise {
+    from {
+      transform: translateY(12px);
+    }
+    to {
+      transform: translateY(0);
+    }
+  }
+
   /* Bottom sheets and banners (cookie consent, chat) sliding in from below */
   --animate-slide-up: slide-up 0.4s cubic-bezier(0.16, 1, 0.3, 1) both;
 

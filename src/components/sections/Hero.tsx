@@ -41,7 +41,8 @@ const Hero = () => {
             <CustomBadge>Your Digital Partner</CustomBadge>
           </div>
 
-          <p className="mt-8 mx-auto max-w-xl font-inter text-white/80 text-base sm:text-lg animate-enter [animation-delay:150ms]">
+          {/* LCP candidate on phones (larger than the h1): transform only, no fade */}
+          <p className="mt-8 mx-auto max-w-xl font-inter text-white/80 text-base sm:text-lg animate-rise [animation-delay:150ms]">
             Fast websites and web apps for small service businesses, with
             booking, payments and local SEO built in. Based in Houston, working
             with clients anywhere.

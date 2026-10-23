@@ -39,4 +39,5 @@ export const extraFooterLinks: NavigationProps[] = [
   { name: "Terms of Service", hash: "/terms-of-service" },
   { name: "Refund Policy", hash: "/refund-policy" },
   { name: "Manage Subscription", hash: "/manage-subscription" },
+  { name: "Privacy Choices", hash: "/privacy-policy#cookies" },
 ];

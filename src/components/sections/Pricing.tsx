@@ -105,7 +105,7 @@ const Pricing = () => {
 
         <CheckoutModal plans={checkoutPlans} />
 
-        <div className="mx-auto mt-10 max-w-2xl text-center">
+        <div className="mx-auto mt-10 max-w-lg text-center">
           <p className="text-sm font-inter text-white/50">
             All projects include: Source code • Domain & hosting setup •
             Training • 50% deposit, 50% on completion. &ldquo;From&rdquo;
