@@ -8,7 +8,6 @@ import {
 } from "@/lib/navigation";
 import Button from "@/components/ui/Button";
 import Logo from "@/components/layout/Logo";
-import CookieSettingsButton from "@/components/forms/CookieSettingsButton";
 
 export default function Footer() {
   const mainNavigation = navigation.slice(0, -2);
@@ -176,10 +175,6 @@ export default function Footer() {
                     <span className="absolute -bottom-0.5 left-0 w-full h-px bg-gold scale-x-0 origin-left transition-transform duration-300 group-hover:scale-x-100" />
                   </Link>
                 ))}
-                <CookieSettingsButton className="text-white/50 hover:text-gold transition-colors duration-200 font-inter text-xs relative group cursor-pointer">
-                  Cookie Settings
-                  <span className="absolute -bottom-0.5 left-0 w-full h-px bg-gold scale-x-0 origin-left transition-transform duration-300 group-hover:scale-x-100" />
-                </CookieSettingsButton>
               </nav>
             </div>
 

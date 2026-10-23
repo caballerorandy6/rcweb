@@ -7,7 +7,7 @@ import "./globals.css";
 import { Toaster } from "sonner";
 
 import ConditionalLayout from "@/components/layout/ConditionalLayout";
-import CookieConsentProvider from "@/components/forms/CookieConsentProvider";
+import MarketingPixels from "@/components/tracking/MarketingPixels";
 import FacebookPixel from "@/components/tracking/FacebookPixel";
 import UTMTracker from "@/components/tracking/UTMTracker";
 import { siteConfig } from "@/config/site";
@@ -98,6 +98,13 @@ export const metadata: Metadata = {
   },
 };
 
+/** Ad pixels ship only while a paid campaign is configured (see MarketingPixels). */
+const hasMarketingPixels = Boolean(
+  process.env.NEXT_PUBLIC_FACEBOOK_PIXEL_ID ||
+    process.env.NEXT_PUBLIC_LINKEDIN_PARTNER_ID ||
+    process.env.NEXT_PUBLIC_GOOGLE_ADS_ID
+);
+
 export default function RootLayout({
   children,
 }: {
@@ -113,7 +120,9 @@ export default function RootLayout({
       <head>
         {/* Note: next/font handles font preconnects automatically */}
 
-        {/* Google Consent Mode v2 - Must load BEFORE gtag */}
+        {/* Google Consent Mode v2. Measurement is on by default; a visitor who
+            switched it off in the Privacy Policy is honoured before gtag.js
+            runs. The key must match ANALYTICS_OPT_OUT_KEY in lib/analyticsOptOut. */}
         <Script
           id="google-consent-mode"
           strategy="beforeInteractive"
@@ -121,25 +130,25 @@ export default function RootLayout({
             __html: `
               window.dataLayer = window.dataLayer || [];
               function gtag(){dataLayer.push(arguments);}
-
-              // Default consent to denied for everything
-              gtag('consent', 'default', {
-                'ad_storage': 'denied',
-                'ad_user_data': 'denied',
-                'ad_personalization': 'denied',
-                'analytics_storage': 'denied',
-                'functionality_storage': 'denied',
-                'personalization_storage': 'denied',
-                'security_storage': 'granted',
-                'wait_for_update': 500
-              });
+              try {
+                if (localStorage.getItem('analytics-opt-out') === '1') {
+                  gtag('consent', 'default', {
+                    'ad_storage': 'denied',
+                    'ad_user_data': 'denied',
+                    'ad_personalization': 'denied',
+                    'analytics_storage': 'denied',
+                    'functionality_storage': 'denied',
+                    'personalization_storage': 'denied'
+                  });
+                }
+              } catch (e) {}
             `,
           }}
         />
 
         {/* Google tag (gtag.js), loaded once for Analytics and Google Ads.
             lazyOnload keeps it out of the TBT window; Ads is configured in
-            CookieConsentProvider after consent on this same library. */}
+            MarketingPixels on this same library when a campaign runs. */}
         <Script
           src={`https://www.googletagmanager.com/gtag/js?id=${process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID}`}
           strategy="lazyOnload"
@@ -159,26 +168,6 @@ export default function RootLayout({
             `,
           }}
         />
-
-        {/* COMMENTED: Google Tag Manager - Not using ads, uncomment if running ad campaigns
-        {process.env.NEXT_PUBLIC_GTM_ID && (
-          <Script
-            id="google-tag-manager"
-            strategy="afterInteractive"
-            dangerouslySetInnerHTML={{
-              __html: `
-                (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-                new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-                j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-                'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-                })(window,document,'script','dataLayer','${process.env.NEXT_PUBLIC_GTM_ID}');
-              `,
-            }}
-          />
-        )}
-        */}
-
-        {/* Note: Tracking preconnects moved to CookieConsentProvider (conditional based on consent) */}
       </head>
       <body
         className="antialiased text-pretty bg-gray-950"
@@ -190,8 +179,8 @@ export default function RootLayout({
         >
           Skip to main content
         </a>
-        {/* Cookie Consent & Tracking Scripts */}
-        <CookieConsentProvider />
+        {/* Ad pixels only while a paid campaign is configured (see MarketingPixels) */}
+        {hasMarketingPixels ? <MarketingPixels /> : null}
 
         {/* Route-change tracking for Meta Pixel and UTM capture. GA4 page views
             on navigation come from its own enhanced measurement (history

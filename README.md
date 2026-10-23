@@ -96,7 +96,7 @@ This application serves as the central hub for managing client relationships, au
 - Smooth animations with Framer Motion
 - Loading states with skeleton screens
 - Toast notifications
-- Cookie consent management
+- Analytics opt-out (Google Consent Mode v2, no cookie banner)
 - AI-powered chat assistant (OpenAI)
 
 ### 📞 Communication Features
