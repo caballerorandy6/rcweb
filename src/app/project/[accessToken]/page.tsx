@@ -35,7 +35,7 @@ export default async function ProjectPage(props: { params: Params }) {
   const status = getProjectStatusLabel(project.projectStatus);
 
   return (
-    <main className="min-h-screen bg-gray-900 pt-28 pb-12 px-4">
+    <div className="min-h-screen bg-gray-900 pt-28 pb-12 px-4">
       <div className="max-w-3xl mx-auto">
         {/* Header */}
         <div className="text-center mb-8">
@@ -117,6 +117,6 @@ export default async function ProjectPage(props: { params: Params }) {
           </p>
         </div>
       </div>
-    </main>
+    </div>
   );
 }

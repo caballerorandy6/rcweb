@@ -35,7 +35,7 @@ export const metadata: Metadata = {
 
 export default function Home() {
   return (
-    <main>
+    <div>
       <JsonLdForOrganization />
       <JsonLdForLocalBusiness />
       <JsonLdForWebSite />
@@ -60,6 +60,6 @@ export default function Home() {
       <FAQ />
       <Contact />
       <CTA />
-    </main>
+    </div>
   );
 }

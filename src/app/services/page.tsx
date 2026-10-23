@@ -40,7 +40,7 @@ export default function ServicesPage() {
         ]}
       />
 
-      <main className="bg-gray-950">
+      <div className="bg-gray-950">
         <BackLink href="/#services" label="Back to Home" />
         <section className="relative pt-8 pb-20 sm:pt-12 sm:pb-28">
           <div className="absolute inset-0 bg-linear-to-b from-gold/5 via-transparent to-transparent" />
@@ -94,7 +94,7 @@ export default function ServicesPage() {
             </div>
           </div>
         </section>
-      </main>
+      </div>
     </>
   );
 }

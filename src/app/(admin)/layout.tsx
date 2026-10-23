@@ -22,7 +22,7 @@ export default async function AdminLayout({
       {/* Main content wrapper */}
       <div className="lg:pl-64 min-h-[calc(100vh-48px)] lg:min-h-[calc(100vh-72px)]">
         {/* Page content */}
-        <main className="p-4 sm:p-6 lg:p-8">{children}</main>
+        <div className="p-4 sm:p-6 lg:p-8">{children}</div>
       </div>
     </div>
   );

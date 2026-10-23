@@ -82,7 +82,7 @@ export type CaseStudyData = {
 
 export default function CaseStudyTemplate({ data }: { data: CaseStudyData }) {
   return (
-    <main className="bg-gray-900 min-h-screen">
+    <div className="bg-gray-900 min-h-screen">
       {/* Hero Section */}
       <section className="relative pt-24 pb-16 sm:pt-32 sm:pb-24 overflow-hidden">
         <div className="absolute inset-0 -z-10">
@@ -303,6 +303,6 @@ export default function CaseStudyTemplate({ data }: { data: CaseStudyData }) {
           </div>
         </div>
       </section>
-    </main>
+    </div>
   );
 }

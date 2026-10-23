@@ -14,6 +14,8 @@ export interface ProjectProps {
   github?: string;
   url: string;
   caseStudy?: string;
+  /** Above the fold on the page that renders it (first row of the portfolio) */
+  priority?: boolean;
 }
 
 const Project = ({
@@ -24,6 +26,7 @@ const Project = ({
   github,
   url,
   caseStudy,
+  priority = false,
 }: ProjectProps) => {
   return (
     <>
@@ -33,8 +36,9 @@ const Project = ({
           src={image}
           width={1000}
           height={1000}
+          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 384px, 400px"
           className="w-full h-36 object-cover rounded-t-2xl transition-transform duration-300 hover:scale-110"
-          priority={false}
+          priority={priority}
         />
       </div>
 
