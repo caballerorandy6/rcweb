@@ -334,127 +334,62 @@ export const teachMarqueeData: TeachMarqueeProps[] = [
 
 export const certifications = [
   {
-    name: "Evaluation of the Bachelor's Degree in Software Engineering",
-    platform: "Universidad de Camaguey, Cuba",
+    name: "B.S., Software Engineering",
+    platform: "Universidad de Camagüey, Cuba",
     description:
-      "An evaluation of the Bachelor's degree program in Software Engineering.",
-    tutor: "Universidad de Camaguey, Cuba",
+      "Bachelor's degree in Software Engineering, evaluated as equivalent to a U.S. bachelor's degree.",
+    tutor: "Universidad de Camagüey, Cuba",
     image:
       "https://res.cloudinary.com/caballerorandy/image/upload/f_auto,w_1200,c_fill,q_auto/v1755196091/RC%20Web/randy_caballero-software_engineer_title_evaluation_bq77pk.webp",
-    url: "https://res.cloudinary.com/caballerorandy/image/upload/v1755196091/RC%20Web/randy_caballero-software_engineer_title_evaluation_bq77pk.ai",
+    url: "https://res.cloudinary.com/caballerorandy/image/upload/f_auto,q_auto/v1755196091/RC%20Web/randy_caballero-software_engineer_title_evaluation_bq77pk.webp",
     pdfThumbnail:
       "https://res.cloudinary.com/caballerorandy/image/upload/pg_1,w_200,h_200,c_fill/v1755196091/RC%20Web/randy_caballero-software_engineer_title_evaluation_bq77pk.avif",
   },
   {
-    name: "Master of Science",
+    name: "M.S., Education",
     platform: "Nova Southeastern University",
-    description: "Master of Science in Education",
+    description: "Master of Science in Education.",
     tutor: "Nova Southeastern University",
     image:
       "https://res.cloudinary.com/caballerorandy/image/upload/f_auto,w_1200,c_fill,q_auto/v1755196091/RC%20Web/Master_of_Science_Title_zapkmh.webp",
-    url: "https://res.cloudinary.com/caballerorandy/image/upload/v1755196091/RC%20Web/Master_of_Science_Title_zapkmh.ai",
+    url: "https://res.cloudinary.com/caballerorandy/image/upload/f_auto,q_auto/v1755196091/RC%20Web/Master_of_Science_Title_zapkmh.webp",
     pdfThumbnail:
       "https://res.cloudinary.com/caballerorandy/image/upload/pg_1,w_200,h_200,c_fill/v1755196091/RC%20Web/Master_of_Science_Title_zapkmh.avif",
   },
   {
-    name: "Modern JavaScript from Beginning",
-    platform: "Udemy",
-    description: "Learn modern JavaScript from the beginning.",
-    tutor: "Brad Traversy",
-    image:
-      "https://res.cloudinary.com/caballerorandy/image/upload/v1761020506/RC%20Web/Modern_JavaScript_from_the_beginning_s1lmqm.jpg",
-    url: "https://res.cloudinary.com/caballerorandy/image/upload/v1761020506/RC%20Web/Modern_JavaScript_from_the_beginning_s1lmqm.jpg",
-    pdfThumbnail:
-      "https://res.cloudinary.com/caballerorandy/image/upload/c_thumb,w_200,g_face/v1761020506/RC%20Web/Modern_JavaScript_from_the_beginning_s1lmqm.jpg",
-  },
-  {
-    name: "HTML and CSS from the Beginning Including SASS",
-    platform: "Udemy",
-    description: "Learn HTML and CSS from the beginning, including SASS.",
-    tutor: "Brad Traversy",
-    image:
-      "https://res.cloudinary.com/caballerorandy/image/upload/v1761020530/RC%20Web/HTML_and_CSS_From_The_Beginning_Including_Sass_ijoey5.jpg",
-    url: "https://res.cloudinary.com/caballerorandy/image/upload/v1761020530/RC%20Web/HTML_and_CSS_From_The_Beginning_Including_Sass_ijoey5.jpg",
-    pdfThumbnail:
-      "https://res.cloudinary.com/caballerorandy/image/upload/c_thumb,w_200,g_face/v1761020530/RC%20Web/HTML_and_CSS_From_The_Beginning_Including_Sass_ijoey5.jpg",
-  },
-  {
-    name: "Git + GitHub todo un Sistea de Control de Versiones",
-    platform: "Udemy",
-    description:
-      "Aprende a utilizar Git y GitHub para el control de versiones.",
-    tutor: "Fernando Herrera",
-    image:
-      "https://res.cloudinary.com/caballerorandy/image/upload/v1761020549/RC%20Web/Git_GitHub_gj28lk.jpg",
-    url: "https://res.cloudinary.com/caballerorandy/image/upload/v1761020549/RC%20Web/Git_GitHub_gj28lk.jpg",
-    pdfThumbnail:
-      "https://res.cloudinary.com/caballerorandy/image/upload/c_thumb,w_200,g_face/v1761020549/RC%20Web/Git_GitHub_gj28lk.jpg",
-  },
-  {
-    name: "React Basics",
-    platform: "Coursera",
-    description: "Learn the fundamentals of React.",
-    tutor: "Coursera",
-    image:
-      "https://res.cloudinary.com/caballerorandy/image/upload/f_auto,w_1200,c_fill,q_auto/v1755196091/RC%20Web/Coursera_-_React_Basics_oiuwkw.webp",
-    url: "https://res.cloudinary.com/caballerorandy/image/upload/v1755196091/RC%20Web/Coursera_-_React_Basics_oiuwkw.ai",
-    pdfThumbnail:
-      "https://res.cloudinary.com/caballerorandy/image/upload/pg_1,w_200,h_200,c_fill/v1755196091/RC%20Web/Coursera_-_React_Basics_oiuwkw.avif",
-  },
-  {
     name: "Advanced React",
-    platform: "Coursera",
-    description: "Build on your React knowledge with advanced concepts.",
-    tutor: "Coursera",
+    platform: "Meta on Coursera",
+    description:
+      "Hooks, context, higher-order components, testing and performance in React applications.",
+    tutor: "Meta",
     image:
       "https://res.cloudinary.com/caballerorandy/image/upload/f_auto,w_1200,c_fill,q_auto/v1755196091/RC%20Web/Coursera_-_Advanced_React_gilkkk.webp",
-    url: "https://res.cloudinary.com/caballerorandy/image/upload/v1755196092/RC%20Web/Coursera_-_Advanced_React_gilkkk.ai",
+    url: "https://res.cloudinary.com/caballerorandy/image/upload/f_auto,q_auto/v1755196091/RC%20Web/Coursera_-_Advanced_React_gilkkk.webp",
     pdfThumbnail:
       "https://res.cloudinary.com/caballerorandy/image/upload/pg_1,w_200,h_200,c_fill/v1755196091/RC%20Web/Coursera_-_Advanced_React_gilkkk.avif",
   },
   {
-    name: "Introduction to Front-End Development",
-    platform: "Coursera",
-    description: "Learn the basics of frontend development.",
-    tutor: "Coursera",
+    name: "React Basics",
+    platform: "Meta on Coursera",
+    description: "Components, state, props and routing in React.",
+    tutor: "Meta",
     image:
-      "https://res.cloudinary.com/caballerorandy/image/upload/f_auto,w_1200,c_fill,q_auto/v1755196091/RC%20Web/Coursera_-_Introduction_to_Front-End_Development_mdyuav.webp",
-    url: "https://res.cloudinary.com/caballerorandy/image/upload/v1755196091/RC%20Web/Coursera_-_Introduction_to_Front-End_Development_mdyuav.ai",
+      "https://res.cloudinary.com/caballerorandy/image/upload/f_auto,w_1200,c_fill,q_auto/v1755196091/RC%20Web/Coursera_-_React_Basics_oiuwkw.webp",
+    url: "https://res.cloudinary.com/caballerorandy/image/upload/f_auto,q_auto/v1755196091/RC%20Web/Coursera_-_React_Basics_oiuwkw.webp",
     pdfThumbnail:
-      "https://res.cloudinary.com/caballerorandy/image/upload/pg_1,w_200,h_200,c_fill/v1755196091/RC%20Web/Coursera_-_Introduction_to_Front-End_Development_mdyuav.avif",
+      "https://res.cloudinary.com/caballerorandy/image/upload/pg_1,w_200,h_200,c_fill/v1755196091/RC%20Web/Coursera_-_React_Basics_oiuwkw.avif",
   },
   {
     name: "Programming with JavaScript",
-    platform: "Coursera",
-    description: "Learn the fundamentals of JavaScript.",
-    tutor: "Coursera",
+    platform: "Meta on Coursera",
+    description:
+      "JavaScript fundamentals, data structures and testing with Jest.",
+    tutor: "Meta",
     image:
       "https://res.cloudinary.com/caballerorandy/image/upload/f_auto,w_1200,c_fill,q_auto/v1755196091/RC%20Web/Coursera_-_Programming_with_JavaScript_ioxvot.webp",
-    url: "https://res.cloudinary.com/caballerorandy/image/upload/v1755196091/RC%20Web/Coursera_-_Programming_with_JavaScript_ioxvot.ai",
+    url: "https://res.cloudinary.com/caballerorandy/image/upload/f_auto,q_auto/v1755196091/RC%20Web/Coursera_-_Programming_with_JavaScript_ioxvot.webp",
     pdfThumbnail:
       "https://res.cloudinary.com/caballerorandy/image/upload/pg_1,w_200,h_200,c_fill/v1755196091/RC%20Web/Coursera_-_Programming_with_JavaScript_ioxvot.avif",
-  },
-  {
-    name: "Version Control",
-    platform: "Coursera",
-    description: "Learn the basics of version control with Git.",
-    tutor: "Coursera",
-    image:
-      "https://res.cloudinary.com/caballerorandy/image/upload/f_auto,w_1200,c_fill,q_auto/v1755196091/RC%20Web/Coursera_Version_Control_jcakao.webp",
-    url: "https://res.cloudinary.com/caballerorandy/image/upload/v1755196091/RC%20Web/Coursera_Version_Control_jcakao.ai",
-    pdfThumbnail:
-      "https://res.cloudinary.com/caballerorandy/image/upload/pg_1,w_200,h_200,c_fill/v1755196091/RC%20Web/Coursera_Version_Control_jcakao.avif",
-  },
-  {
-    name: "HTML and CSS in Depth",
-    platform: "Coursera",
-    description: "Master the fundamentals of HTML and CSS.",
-    tutor: "Coursera",
-    image:
-      "https://res.cloudinary.com/caballerorandy/image/upload/f_auto,w_1200,c_fill,q_auto/v1755196091/RC%20Web/Coursera_-_HTML_and_CSS_in_depth_qwz3ec.webp",
-    url: "https://res.cloudinary.com/caballerorandy/image/upload/v1755196091/RC%20Web/Coursera_-_HTML_and_CSS_in_depth_qwz3ec.ai",
-    pdfThumbnail:
-      "https://res.cloudinary.com/caballerorandy/image/upload/pg_1,w_200,h_200,c_fill/v1755196091/RC%20Web/Coursera_-_HTML_and_CSS_in_depth_qwz3ec.avif",
   },
 ];
 

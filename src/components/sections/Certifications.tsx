@@ -12,7 +12,7 @@ const Certifications = () => {
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
         <Heading
           icon={<CheckCircleIcon className="w-8 text-gold" />}
-          text="Learn and grow is my priority"
+          text="Degrees and the courses that shaped how I build"
         >
           Degrees & Certifications
         </Heading>

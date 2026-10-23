@@ -82,9 +82,9 @@ const About = () => {
                 for small businesses, most of them in the Houston area, from
                 the frontend and APIs to the database and deployment. I work
                 remotely with clients anywhere: video calls, a staging
-                site you can check at any time, and Stripe payments. Before founding the agency I worked as a
-                software developer at Atser Systems Inc. and Revature, contributing
-                to{" "}
+                site you can check at any time, and Stripe payments. I started at
+                Revature in 2022 and, alongside RC Web Solutions, spent 2024–2025
+                as a software developer at Atser Systems Inc., contributing to{" "}
                 <strong className="text-gold font-semibold">
                   full-stack application development
                 </strong>{" "}
@@ -110,10 +110,10 @@ const About = () => {
                 <Image
                   src="/randy-caballero-web-developer.avif"
                   alt="Randy Caballero - Full-Stack Web Developer in Houston, TX"
-                  width={500}
-                  height={500}
-                  sizes="(max-width: 768px) 100vw, 500px"
-                  className="image-gradient rounded-2xl shadow-lg shadow-gray-900/50 hover:scale-105 transition-transform duration-300 ease-in-out border-2 border-gold/50 sepia w-full max-w-md lg:max-w-full animateProjectCard"
+                  width={510}
+                  height={340}
+                  sizes="(max-width: 768px) 100vw, 510px"
+                  className="image-gradient rounded-2xl shadow-lg shadow-gray-900/50 hover:scale-105 transition-transform duration-300 ease-in-out border-2 border-gold/50 sepia w-full h-auto max-w-md lg:max-w-full animateProjectCard"
                   priority
                 />
 

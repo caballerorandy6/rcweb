@@ -29,11 +29,9 @@ const Certification = ({
         <Image
           alt={name}
           src={pdfThumbnail}
-          width={550}
-          height={144}
+          fill
           sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-          className="w-full h-36 object-cover rounded-t-2xl transition-transform duration-300 hover:scale-110"
-          priority={false}
+          className="object-cover transition-transform duration-300 hover:scale-110"
           onError={() => setImageError(true)}
         />
       );
@@ -52,7 +50,7 @@ const Certification = ({
             >
               <path d="M14,2H6A2,2 0 0,0 4,4V20A2,2 0 0,0 6,22H18A2,2 0 0,0 20,20V8L14,2M18,20H6V4H13V9H18V20M10,19L8,14H10L12,19H10M14,19L12,14H14L16,19H14Z" />
             </svg>
-            <p className="text-xs text-white/60 font-inter">Certificado PDF</p>
+            <p className="text-xs text-white/60 font-inter">PDF certificate</p>
           </div>
 
           {/* Opción B: Si quieres usar react-pdf, descomentar esto */}
@@ -68,11 +66,9 @@ const Certification = ({
       <Image
         alt={name}
         src={imageError ? "/placeholder-certificate.jpg" : image}
-        width={550}
-        height={144}
+        fill
         sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-        className="w-full h-36 object-cover rounded-t-2xl transition-transform duration-300 hover:scale-110"
-        priority={false}
+        className="object-cover transition-transform duration-300 hover:scale-110"
         onError={() => setImageError(true)}
       />
     );
@@ -80,7 +76,7 @@ const Certification = ({
 
   return (
     <div className="flex flex-col h-full">
-      <div className="overflow-hidden rounded-t-2xl bg-gray-800 relative group shrink-0">
+      <div className="relative h-36 overflow-hidden rounded-t-2xl bg-gray-800 group shrink-0">
         {renderPreview()}
 
         {isPDF && (
