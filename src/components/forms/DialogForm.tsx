@@ -15,6 +15,7 @@ import { trackLinkedInConversion } from "@/lib/linkedin";
 import { getStoredUTMParams } from "@/hooks/useUTMParams";
 import { getRecaptchaToken, loadRecaptcha } from "@/lib/recaptcha";
 import { useRouter } from "next/navigation";
+import { PaperAirplaneIcon } from "@heroicons/react/24/outline";
 
 interface DialogFormProps {
   /** Optional: by default closes the "Let's contact" dialog in the store */
@@ -321,20 +322,10 @@ const DialogForm = ({ closeModal: closeModalProp }: DialogFormProps) => {
           <div className="pt-2">
             <Button type="submit" size="lg" fullWidth disabled={isPending}>
               {isPending ? "Sending…" : "Send Message"}
-              <svg
-                className="w-5 h-5 transform group-hover:translate-x-1 transition-transform duration-300"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
+              <PaperAirplaneIcon
+                className="w-5 h-5 transition-transform duration-300 group-hover:translate-x-1"
                 aria-hidden="true"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"
-                />
-              </svg>
+              />
             </Button>
 
             {/* reCAPTCHA disclosure (required when hiding badge) */}

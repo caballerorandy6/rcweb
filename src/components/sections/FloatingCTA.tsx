@@ -209,7 +209,7 @@ const FloatingCTA = () => {
               type="button"
               style={menuItemDelay(0)}
               onClick={handleChatOpen}
-              className={`${menuItemClass} group flex items-center gap-3 rounded-xl bg-linear-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 pl-3 pr-4 py-2.5 text-white shadow-lg hover:shadow-purple-500/25 transition duration-200 hover:scale-[1.02]`}
+              className={`${menuItemClass} group flex items-center gap-3 rounded-xl bg-linear-to-r from-gold via-gold-light to-gold hover:from-gold-light hover:via-gold hover:to-gold-light pl-3 pr-4 py-2.5 text-gray-900 shadow-lg hover:shadow-gold/25 transition duration-200 hover:scale-[1.02]`}
               aria-expanded={isChatOpen}
               aria-controls="maria-chat"
             >
