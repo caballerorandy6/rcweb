@@ -178,7 +178,7 @@ export const projects: ProjectProps[] = [
       "Zod",
     ],
     description:
-      "Bilingual website for a Houston Hispanic clinic featuring online appointment booking, service information, and local SEO optimization to reach the Spanish-speaking community.",
+      "Bilingual website for a Houston clinic featuring online appointment booking, service information, and local SEO to reach Spanish-speaking patients.",
     image: "/clinica-gessner.avif",
     url: "https://www.clinicagessner.com/",
     caseStudy: "/case-study/clinica-gessner",
@@ -194,7 +194,7 @@ export const projects: ProjectProps[] = [
       "Zod",
     ],
     description:
-      "Professional bilingual website for a Houston clinic serving the Hispanic community. Features local SEO, service pages, and patient-friendly design optimized for mobile.",
+      "Professional bilingual website for a Houston clinic with Spanish-speaking patients. Features local SEO, service pages, and patient-friendly design optimized for mobile.",
     image: "/clinica-hispana-airline.avif",
     url: "https://www.clinicahispanaairline.com/",
     caseStudy: "/case-study/clinica-airline",
@@ -892,12 +892,12 @@ export const servicePages: ServicePage[] = [
     title: "Bilingual Websites",
     metaTitle: "Bilingual Website Houston TX | English & Spanish Web Design",
     metaDescription:
-      "Bilingual website development in Houston, TX. English and Spanish websites for businesses serving the Hispanic community. Latino-owned. Included with every website.",
+      "Bilingual website development in Houston, TX. English and Spanish websites for businesses with Spanish-speaking customers, written by a native speaker. Included with every website.",
     headline: "Bilingual Websites in Houston, TX",
     subheadline:
-      "English and Spanish websites that reach Houston's diverse community. Built by a Latino developer who understands both cultures and both markets.",
+      "English and Spanish websites for businesses with Spanish-speaking customers, written and localized by a native Spanish speaker.",
     content:
-      "Houston is one of the most diverse cities in the country, with over 44% Hispanic population. If your business serves Spanish-speaking customers but your website is English-only, you're leaving money on the table. As a bilingual developer (native Spanish speaker from Cuba), I don't just translate your website — I localize it. That means the Spanish version reads naturally, uses the right tone for your audience, and includes cultural context that automated translators miss. This is especially important for healthcare clinics, legal services, restaurants, and home services where trust is built through language. I've built bilingual websites for Houston clinics like Clínica Hispana Gessner and Clínica Hispana Airline, helping them reach patients who prefer to browse in Spanish. Every bilingual site includes proper hreflang tags so Google shows the right language version to the right searcher.",
+      "Houston is one of the most diverse cities in the country. If your business serves Spanish-speaking customers but your website is English-only, you're leaving money on the table. As a bilingual developer (native Spanish speaker from Cuba), I don't just translate your website — I localize it. That means the Spanish version reads naturally, uses the right tone for your audience, and includes cultural context that automated translators miss. This is especially important for healthcare clinics, legal services, restaurants, and home services where trust is built through language. I've built bilingual websites for Houston clinics like Clínica Hispana Gessner and Clínica Hispana Airline, helping them reach patients who prefer to browse in Spanish. Every bilingual site includes proper hreflang tags so Google shows the right language version to the right searcher.",
     features: [
       {
         title: "Native Spanish Localization",
@@ -912,7 +912,7 @@ export const servicePages: ServicePage[] = [
       {
         title: "Cultural Context",
         description:
-          "Design and messaging that resonates with the Hispanic community. Colors, imagery, and tone adapted for your target audience.",
+          "Messaging that reads naturally to Spanish-speaking customers. Tone, examples, and calls to action adapted to your audience instead of translated word for word.",
       },
       {
         title: "Single Codebase",

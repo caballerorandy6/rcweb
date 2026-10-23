@@ -112,7 +112,7 @@ export default async function ServicePage({
         dangerouslySetInnerHTML={{ __html: JSON.stringify(serviceJsonLd) }}
       />
 
-      <main className="bg-gray-950">
+      <div className="bg-gray-950">
         {/* Hero */}
         <section className="relative pt-32 pb-20 sm:pt-40 sm:pb-28">
           <div className="absolute inset-0 bg-linear-to-b from-gold/5 via-transparent to-transparent" />
@@ -266,7 +266,7 @@ export default async function ServicePage({
             </div>
           </div>
         </section>
-      </main>
+      </div>
     </>
   );
 }

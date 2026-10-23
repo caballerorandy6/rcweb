@@ -58,7 +58,7 @@ const services = [
     icon: DevicePhoneMobileIcon,
     title: "Mobile-First Design",
     description:
-      "Every site is designed mobile-first because over 60% of your Houston customers are searching from their phones.",
+      "Every site is designed mobile-first, because most people looking for a local business are searching from their phones.",
   },
   {
     icon: RocketLaunchIcon,
@@ -76,26 +76,26 @@ const services = [
     icon: ChatBubbleLeftRightIcon,
     title: "Bilingual Websites",
     description:
-      "English and Spanish websites that reach Houston's diverse community. Latino-owned business that understands the market.",
+      "English and Spanish versions of your site, written by a native Spanish speaker, so customers can read it in the language they prefer.",
   },
   {
     icon: CurrencyDollarIcon,
     title: "Affordable Plans",
     description:
-      "Transparent pricing starting at $1,000. No hidden fees, 50/50 payment split, and a private link to track your project's progress.",
+      "Transparent pricing starting at $1,000. No hidden fees, 50/50 payment split, and a private link to follow your project's progress.",
   },
 ];
 
 const caseStudies = [
   {
     name: "Clínica Hispana Gessner",
-    result: "Professional bilingual website for a Houston Hispanic clinic with online appointment booking",
+    result: "Bilingual clinic website with online appointment booking",
     industry: "Healthcare",
     url: "https://www.clinicagessner.com/",
   },
   {
     name: "Clínica Hispana Airline",
-    result: "Bilingual clinic website with local SEO targeting the Hispanic community in Houston",
+    result: "Bilingual clinic website with local SEO for Spanish-speaking patients in Houston",
     industry: "Healthcare",
     url: "https://www.clinicahispanaairline.com/",
   },
@@ -133,7 +133,7 @@ export default function WebDeveloperHoustonPage() {
       />
       <JsonLdForLocalBusiness />
 
-      <main className="bg-gray-950">
+      <div className="bg-gray-950">
         <BackLink href="/" label="Back to Home" />
         {/* Hero Section */}
         <section className="relative pt-8 pb-20 sm:pt-12 sm:pb-28">
@@ -287,7 +287,7 @@ export default function WebDeveloperHoustonPage() {
                 "Built-in SEO so Google can find your Houston business",
                 "Fast loading speeds (under 2 seconds) that keep visitors engaged",
                 "Bilingual support — I speak English and Spanish fluently",
-                "Private link to track your project progress in real-time — no account needed",
+                "Private link to follow your project's progress — no account needed",
                 "50/50 payment plan — pay half upfront, half on delivery",
                 "Free 30-minute consultation — no obligation, no pressure",
               ].map((item) => (
@@ -323,17 +323,14 @@ export default function WebDeveloperHoustonPage() {
               </div>
               <p className="mt-6 text-sm text-gray-500 font-inter">
                 Or call directly:{" "}
-                <a
-                  href="tel:+13463757534"
-                  className="text-gold hover:underline"
-                >
-                  (346) 375-7534
+                <a href={COMPANY.phoneHref} className="text-gold hover:underline">
+                  {COMPANY.phoneDisplay}
                 </a>
               </p>
             </div>
           </div>
         </section>
-      </main>
+      </div>
     </>
   );
 }

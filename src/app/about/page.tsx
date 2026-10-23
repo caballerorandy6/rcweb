@@ -22,12 +22,12 @@ export default function AboutPage() {
           { name: "About", item: `${siteConfig.baseUrl}/about` },
         ]}
       />
-      <main className="bg-gray-900 min-h-screen">
+      <div className="bg-gray-900 min-h-screen">
         <BackLink href="/" label="Back to Home" />
         <About />
         <Experience />
         <Certifications />
-      </main>
+      </div>
     </>
   );
 }

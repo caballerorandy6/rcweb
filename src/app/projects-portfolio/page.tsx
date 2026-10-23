@@ -21,7 +21,7 @@ export default function ProjectsPortfolioPage() {
           { name: "Projects", item: `${siteConfig.baseUrl}/projects-portfolio` },
         ]}
       />
-      <main className="bg-gray-950 min-h-screen">
+      <div className="bg-gray-950 min-h-screen">
         <BackLink href="/#projects" label="Back to Home" />
         <section className="pt-8 pb-20 sm:pt-12 sm:pb-28">
           <div className="mx-auto max-w-7xl px-6 lg:px-8">
@@ -39,7 +39,7 @@ export default function ProjectsPortfolioPage() {
             <ProjectsList projects={projects} />
           </div>
         </section>
-      </main>
+      </div>
     </>
   );
 }
