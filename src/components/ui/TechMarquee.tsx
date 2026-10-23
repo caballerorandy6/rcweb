@@ -3,7 +3,6 @@
 import Marquee from "react-fast-marquee";
 import { PauseIcon, PlayIcon } from "@heroicons/react/24/solid";
 import { useEffect, useRef, useState } from "react";
-import { teachMarqueeData } from "@/lib/data";
 
 export interface TeachMarqueeProps {
   href: string;
@@ -17,7 +16,7 @@ export interface TeachMarqueeProps {
  * carries the real links. The strip only runs while on screen and can be
  * paused by the visitor.
  */
-const TechMarquee = () => {
+const TechMarquee = ({ items }: { items: TeachMarqueeProps[] }) => {
   const containerRef = useRef<HTMLDivElement>(null);
   const [inView, setInView] = useState(false);
   const [paused, setPaused] = useState(false);
@@ -44,7 +43,7 @@ const TechMarquee = () => {
           play={inView && !paused}
         >
           <div className="flex items-center">
-            {teachMarqueeData.map((item) => (
+            {items.map((item) => (
               <a
                 key={item.name}
                 href={item.href}
@@ -61,7 +60,7 @@ const TechMarquee = () => {
       </div>
 
       <ul className="sr-only" aria-label="Technologies I work with">
-        {teachMarqueeData.map((item) => (
+        {items.map((item) => (
           <li key={item.name}>
             <a href={item.href} target="_blank" rel="noopener noreferrer">
               {item.name}

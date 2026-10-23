@@ -9,6 +9,11 @@ import CheckoutModal from "@/components/sections/CheckoutModal";
  * Cards render on the server; PlanCTA + CheckoutModal are the client islands.
  * Only fixed-scope plans open the checkout; the rest link to a free call.
  */
+// Only what the modal shows; the full catalogue stays on the server
+const checkoutPlans = pricingPlans
+  .filter((plan) => plan.purchasable)
+  .map(({ id, name, priceInCents }) => ({ id, name, priceInCents }));
+
 const Pricing = () => {
   return (
     <section
@@ -98,7 +103,7 @@ const Pricing = () => {
           ))}
         </div>
 
-        <CheckoutModal />
+        <CheckoutModal plans={checkoutPlans} />
 
         <div className="mx-auto mt-10 max-w-2xl text-center">
           <p className="text-sm font-inter text-white/50">

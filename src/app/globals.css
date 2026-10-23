@@ -133,6 +133,11 @@
   color utility to any element that depends on these defaults.
 */
 @layer base {
+  /* Native modals: keep the page from scrolling under the dialog */
+  body:has(dialog:modal) {
+    overflow: hidden;
+  }
+
   *,
   ::after,
   ::before,

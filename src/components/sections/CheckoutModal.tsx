@@ -2,14 +2,8 @@
 
 import { useRef, useState, useTransition } from "react";
 import { useRouter } from "next/navigation";
-import {
-  Dialog,
-  DialogBackdrop,
-  DialogPanel,
-  DialogTitle,
-} from "@headlessui/react";
+import Modal from "@/components/ui/Modal";
 import Button from "@/components/ui/Button";
-import { pricingPlans } from "@/lib/data";
 import { saveCheckoutCustomer } from "@/lib/checkoutCustomer";
 import { useCheckoutStore } from "@/store/checkout-store";
 import { formatDollars } from "@/lib/utils";
@@ -17,8 +11,14 @@ import { formatDollars } from "@/lib/utils";
 const inputClasses =
   "w-full p-3 bg-gray-800/70 text-white rounded-xl border border-gray-700 placeholder:text-white/40 focus:border-gold focus:outline-hidden focus:ring-2 focus:ring-gold/20 aria-invalid:border-red-500/70 transition";
 
+export interface CheckoutPlan {
+  id: string;
+  name: string;
+  priceInCents: number;
+}
+
 /** Name + email before the terms page; opened by PlanCTA through the store */
-export default function CheckoutModal() {
+export default function CheckoutModal({ plans }: { plans: CheckoutPlan[] }) {
   const planId = useCheckoutStore((state) => state.planId);
   const close = useCheckoutStore((state) => state.close);
   const [customerEmail, setCustomerEmail] = useState("");
@@ -29,8 +29,8 @@ export default function CheckoutModal() {
   const emailRef = useRef<HTMLInputElement>(null);
   const router = useRouter();
 
-  const plan = pricingPlans.find((p) => p.id === planId);
-  const isOpen = Boolean(plan?.purchasable);
+  const plan = plans.find((p) => p.id === planId);
+  const isOpen = Boolean(plan);
 
   const isMonthly = plan?.id === "website-maintenance";
   const amount = plan ? (plan.priceInCents * (isMonthly ? 1 : 0.5)) / 100 : 0;
@@ -57,19 +57,23 @@ export default function CheckoutModal() {
     });
   };
 
-  // Headless UI traps focus, closes on Escape and returns focus to the
+  // The native dialog traps focus, closes on Escape and returns focus to the
   // pricing button; the initial focus goes to the first field.
   return (
-    <Dialog open={isOpen} onClose={isPending ? () => {} : close} className="relative z-50">
-      <DialogBackdrop className="fixed inset-0 bg-black/70 backdrop-blur-xs animate-fade-in" />
-
-      <div className="fixed inset-0 flex items-center justify-center p-4">
-        <DialogPanel className="w-full max-w-md max-h-[calc(100dvh-2rem)] overflow-y-auto overscroll-contain bg-gray-900/95 rounded-2xl p-8 border border-gold/20 shadow-2xl shadow-gold/10 animate-enter">
+    <Modal
+      open={isOpen}
+      onClose={close}
+      preventClose={isPending}
+      initialFocus={nameRef}
+      aria-labelledby="checkout-title"
+      className="m-auto w-[calc(100%-2rem)] max-w-md max-h-[calc(100dvh-2rem)] bg-transparent p-0 text-inherit backdrop:bg-black/70 backdrop:backdrop-blur-xs backdrop:animate-fade-in"
+    >
+      <div className="max-h-[calc(100dvh-2rem)] overflow-y-auto overscroll-contain bg-gray-900/95 rounded-2xl p-8 border border-gold/20 shadow-2xl shadow-gold/10 animate-enter">
           {plan ? (
             <form onSubmit={handleSubmit} noValidate>
-              <DialogTitle className="text-4xl text-gold mb-6 font-iceland">
+              <h2 id="checkout-title" className="text-4xl text-gold mb-6 font-iceland">
                 Complete Your Order
-              </DialogTitle>
+              </h2>
 
               <dl className="bg-gray-800/50 rounded-xl p-4 mb-6 border border-gold/10 font-inter">
                 <div className="flex justify-between items-center mb-2">
@@ -103,7 +107,6 @@ export default function CheckoutModal() {
                     name="name"
                     type="text"
                     autoComplete="name"
-                    autoFocus
                     required
                     aria-required="true"
                     aria-invalid={errors.name ? true : undefined}
@@ -167,8 +170,7 @@ export default function CheckoutModal() {
               </div>
             </form>
           ) : null}
-        </DialogPanel>
       </div>
-    </Dialog>
+    </Modal>
   );
 }

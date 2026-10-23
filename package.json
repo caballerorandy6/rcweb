@@ -19,7 +19,6 @@
     "seed:dev": "tsx prisma/seed-dev.ts"
   },
   "dependencies": {
-    "@headlessui/react": "^2.2.10",
     "@heroicons/react": "^2.2.0",
     "@hookform/error-message": "^2.0.1",
     "@hookform/resolvers": "^5.9.1",
