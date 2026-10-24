@@ -4,6 +4,8 @@ import { prisma } from "@/lib/prisma";
 import type { AdminProject } from "@/types/project";
 import type { ActionResult } from "@/types/common";
 import { requireAdmin } from "@/lib/authGuard";
+import { PaymentKind } from "@/generated/prisma/enums";
+import { isPaid } from "@/lib/project/charges";
 
 export async function getAllProjectsAction(): Promise<
   ActionResult<{ projects: AdminProject[] }>
@@ -30,10 +32,10 @@ export async function getAllProjectsAction(): Promise<
           planName: project.planName,
           totalAmount: project.totalAmount,
           depositPaid: project.payments.some(
-            (p) => p.kind === "deposit" && p.status === "paid"
+            (p) => p.kind === PaymentKind.deposit && isPaid(p)
           ),
           finalPaid: project.payments.some(
-            (p) => p.kind === "final" && p.status === "paid"
+            (p) => p.kind === PaymentKind.final && isPaid(p)
           ),
           status: project.status,
           createdAt: project.createdAt,

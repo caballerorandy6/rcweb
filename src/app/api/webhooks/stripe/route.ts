@@ -10,6 +10,7 @@ import { ADMIN_EMAIL } from "@/lib/email/adminEmail";
 import { LEGAL_LAST_UPDATED } from "@/lib/company";
 import { toSubscriptionStatus } from "@/lib/subscriptionStatus";
 import { getProjectCharges, isPaid } from "@/lib/project/charges";
+import type { Prisma } from "@/generated/prisma/client";
 import {
   sendSubscriptionConfirmation,
   sendAdminSubscriptionNotification,
@@ -29,6 +30,15 @@ if (!process.env.RESEND_API_KEY) {
 
 const endpointSecret = process.env.STRIPE_WEBHOOK_SECRET;
 const TERMS_VERSION = LEGAL_LAST_UPDATED.version;
+
+function isUniqueConstraintError(err: unknown): boolean {
+  return (
+    typeof err === "object" &&
+    err !== null &&
+    "code" in err &&
+    (err as { code?: string }).code === "P2002"
+  );
+}
 
 export async function POST(req: Request) {
   const body = await req.text();
@@ -103,23 +113,26 @@ export async function POST(req: Request) {
           // Make sure the deposit row records this Checkout Session
           const { deposit } = getProjectCharges(project.payments);
           if (!deposit.stripeSessionId) {
-            await prisma.payment.update({
-              where: { id: deposit.id },
-              data: {
-                stripeSessionId: session.id,
-                status: "paid",
-                paidAt: deposit.paidAt ?? new Date(),
-              },
-            });
-            project = await prisma.project.findUniqueOrThrow({
+            project = await prisma.project.update({
               where: { id: project.id },
+              data: {
+                payments: {
+                  update: {
+                    where: { id: deposit.id },
+                    data: {
+                      stripeSessionId: session.id,
+                      status: "paid",
+                      paidAt: deposit.paidAt ?? new Date(),
+                    },
+                  },
+                },
+              },
               include: { payments: true, invoices: true },
             });
           }
         } else {
           // CREATE Project with its two charges (and TermsAcceptance) atomically
-          project = await prisma.project.create({
-            data: {
+          const data = {
               projectCode,
               email: customerEmail,
               name: customerName || "Client",
@@ -149,9 +162,27 @@ export async function POST(req: Request) {
                   },
                 },
               }),
-            },
-            include: { payments: true, invoices: true },
-          });
+          } satisfies Prisma.ProjectCreateInput;
+
+          try {
+            project = await prisma.project.create({
+              data,
+              include: { payments: true, invoices: true },
+            });
+          } catch (createError) {
+            // The /payment-success fallback won the race (unique projectCode or
+            // stripeSessionId): reload its row and continue with the invoice
+            if (!isUniqueConstraintError(createError)) throw createError;
+            project = await prisma.project.findFirstOrThrow({
+              where: {
+                OR: [
+                  { projectCode },
+                  { payments: { some: { stripeSessionId: session.id } } },
+                ],
+              },
+              include: { payments: true, invoices: true },
+            });
+          }
         }
 
         // ============= CREATE INVOICE AND SEND EMAIL =============
@@ -199,24 +230,20 @@ export async function POST(req: Request) {
           ...(emailErrors.length > 0 && { emailErrors }),
         });
       } catch (err: unknown) {
-        // If it's a Prisma unique constraint error, it means it was already processed
-        if (
-          typeof err === "object" &&
-          err !== null &&
-          "code" in err &&
-          (err as { code?: string }).code === "P2002"
-        ) {
-          return NextResponse.json({ received: true, duplicate: "constraint" });
-        }
-
         console.error("❌ Error processing initial payment:", err);
         throw err;
       }
     }
 
     // ============= FINAL PAYMENT =============
-    else if (paymentType === "final" && metadata.projectId && customerEmail) {
-      const projectId = metadata.projectId;
+    else if (
+      paymentType === "final" &&
+      (metadata.projectId || metadata.paymentId) &&
+      customerEmail
+    ) {
+      // Sessions created before the Project/Payment split carry `paymentId`;
+      // Project kept those ids, so both name the same row
+      const projectId = metadata.projectId || metadata.paymentId;
 
       try {
         // Check if the project exists and get current state
@@ -232,33 +259,39 @@ export async function POST(req: Request) {
         const { final } = getProjectCharges(project.payments);
 
         if (!isPaid(final)) {
-          // Mark the final charge as paid and complete the project
-          await prisma.$transaction([
-            prisma.payment.update({
-              where: { id: final.id },
-              data: {
-                status: "paid",
-                paidAt: new Date(),
-                stripeSessionId: session.id,
+          // Mark the final charge as paid and complete the project (one atomic write)
+          project = await prisma.project.update({
+            where: { id: projectId },
+            data: {
+              status: "completed",
+              payments: {
+                update: {
+                  where: { id: final.id },
+                  data: {
+                    status: "paid",
+                    paidAt: new Date(),
+                    stripeSessionId: session.id,
+                  },
+                },
               },
-            }),
-            prisma.project.update({
-              where: { id: projectId },
-              data: { status: "completed" },
-            }),
-          ]);
+            },
+            include: { payments: true, invoices: true },
+          });
         } else if (!final.stripeSessionId) {
           // Already paid (retry): only record the session if missing
-          await prisma.payment.update({
-            where: { id: final.id },
-            data: { stripeSessionId: session.id },
+          project = await prisma.project.update({
+            where: { id: projectId },
+            data: {
+              payments: {
+                update: {
+                  where: { id: final.id },
+                  data: { stripeSessionId: session.id },
+                },
+              },
+            },
+            include: { payments: true, invoices: true },
           });
         }
-
-        project = await prisma.project.findUniqueOrThrow({
-          where: { id: projectId },
-          include: { payments: true, invoices: true },
-        });
 
         // ============= CREATE INVOICES AND SEND EMAILS =============
         const emailErrors: string[] = [];
@@ -455,12 +488,7 @@ export async function POST(req: Request) {
         });
       } catch (err: unknown) {
         // Handle Prisma unique constraint error (already processed)
-        if (
-          typeof err === "object" &&
-          err !== null &&
-          "code" in err &&
-          (err as { code?: string }).code === "P2002"
-        ) {
+        if (isUniqueConstraintError(err)) {
           return NextResponse.json({ received: true, duplicate: "constraint" });
         }
 

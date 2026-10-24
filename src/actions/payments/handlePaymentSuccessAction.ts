@@ -33,15 +33,14 @@ function toSuccessData(project: ProjectWithPayments): PaymentSuccessData {
   };
 }
 
-// The webhook usually creates the Project first; find it by project code or by
-// the Checkout Session that paid the deposit.
+// The webhook usually creates the Project first. The Checkout Session that
+// paid the deposit is the credential here: the project code alone is printed
+// in every customer email and must not be enough to read a project.
 function findProject(sessionId: string, projectCode?: string) {
   return prisma.project.findFirst({
     where: {
-      OR: [
-        ...(projectCode ? [{ projectCode }] : []),
-        { payments: { some: { stripeSessionId: sessionId } } },
-      ],
+      ...(projectCode && { projectCode }),
+      payments: { some: { stripeSessionId: sessionId } },
     },
     include: { payments: true },
   });

@@ -18,7 +18,7 @@ export function getProjectCharges(payments: Payment[]): ProjectCharges {
   return { deposit, final };
 }
 
-export function isPaid(payment: Payment): boolean {
+export function isPaid(payment: Pick<Payment, "status">): boolean {
   return payment.status === PaymentStatus.paid;
 }
 

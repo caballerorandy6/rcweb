@@ -120,9 +120,13 @@ export async function createInvoiceSummary(
 
     const { deposit, final } = getProjectCharges(project.payments);
 
-    if (!isPaid(deposit) || !isPaid(final) || !deposit.paidAt || !final.paidAt) {
+    if (!isPaid(deposit) || !isPaid(final)) {
       throw new Error("Cannot create summary invoice: project not fully paid");
     }
+
+    // Rows migrated from the old schema may be paid without a date
+    const depositPaidAt = deposit.paidAt ?? deposit.updatedAt;
+    const finalPaidAt = final.paidAt ?? final.updatedAt;
 
     // 2. Generar número de invoice único
     const invoiceNumber = await generateInvoiceNumber();
@@ -144,12 +148,12 @@ export async function createInvoiceSummary(
         {
           description: `Initial Payment - 50% Deposit for ${project.planName}`,
           amount: deposit.amount,
-          paidDate: deposit.paidAt,
+          paidDate: depositPaidAt,
         },
         {
           description: `Final Payment - 50% Balance for ${project.planName}`,
           amount: final.amount,
-          paidDate: final.paidAt,
+          paidDate: finalPaidAt,
         },
       ],
       subtotal: subtotalBeforeTax,
@@ -159,7 +163,7 @@ export async function createInvoiceSummary(
       currency: "USD",
       status: "paid",
       issueDate: new Date(),
-      paidDate: final.paidAt,
+      paidDate: finalPaidAt,
     };
 
     // 5. Generar PDF
@@ -192,7 +196,7 @@ export async function createInvoiceSummary(
         pdfBlobKey,
         status: "paid",
         issueDate: new Date(),
-        paidDate: final.paidAt,
+        paidDate: finalPaidAt,
       },
     });
 
