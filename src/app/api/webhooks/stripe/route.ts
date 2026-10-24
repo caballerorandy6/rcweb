@@ -9,6 +9,7 @@ import { createInvoiceAndSendEmail } from "@/lib/invoice/createInvoiceAndSendEma
 import { ADMIN_EMAIL } from "@/lib/email/adminEmail";
 import { LEGAL_LAST_UPDATED } from "@/lib/company";
 import { toSubscriptionStatus } from "@/lib/subscriptionStatus";
+import { getProjectCharges, isPaid } from "@/lib/project/charges";
 import {
   sendSubscriptionConfirmation,
   sendAdminSubscriptionNotification,
@@ -87,64 +88,69 @@ export async function POST(req: Request) {
           );
         }
 
-        // CHECK if Payment already exists (created by fallback)
-        let payment = await prisma.payment.findFirst({
+        // CHECK if the Project already exists (created by the /payment-success fallback)
+        let project = await prisma.project.findFirst({
           where: {
-            OR: [{ projectCode }, { firstSessionId: session.id }],
+            OR: [
+              { projectCode },
+              { payments: { some: { stripeSessionId: session.id } } },
+            ],
           },
-          include: {
-            invoices: true,
-          },
+          include: { payments: true, invoices: true },
         });
 
-        // If payment exists but has no invoices, we'll create the invoice below
-        if (payment) {
-          // If payment doesn't have the session ID, update it
-          if (!payment.firstSessionId) {
-            payment = await prisma.payment.update({
-              where: { id: payment.id },
-              data: { firstSessionId: session.id },
-              include: { invoices: true },
+        if (project) {
+          // Make sure the deposit row records this Checkout Session
+          const { deposit } = getProjectCharges(project.payments);
+          if (!deposit.stripeSessionId) {
+            await prisma.payment.update({
+              where: { id: deposit.id },
+              data: {
+                stripeSessionId: session.id,
+                status: "paid",
+                paidAt: deposit.paidAt ?? new Date(),
+              },
+            });
+            project = await prisma.project.findUniqueOrThrow({
+              where: { id: project.id },
+              include: { payments: true, invoices: true },
             });
           }
-        }
-
-        // CREATE Payment and TermsAcceptance if it doesn't exist
-        if (!payment) {
-          payment = await prisma.$transaction(async (tx) => {
-            const newPayment = await tx.payment.create({
-              data: {
-                projectCode,
-                email: customerEmail,
-                name: customerName || "Client",
-                planName: planName || "Unknown Plan",
-                totalAmount,
-                firstPayment: firstPaymentAmount,
-                secondPayment: secondPaymentAmount,
-                firstPaid: true,
-                firstPaidAt: new Date(),
-                firstSessionId: session.id,
-                projectStatus: "in_progress",
+        } else {
+          // CREATE Project with its two charges (and TermsAcceptance) atomically
+          project = await prisma.project.create({
+            data: {
+              projectCode,
+              email: customerEmail,
+              name: customerName || "Client",
+              planName: planName || "Unknown Plan",
+              totalAmount,
+              status: "in_progress",
+              payments: {
+                create: [
+                  {
+                    kind: "deposit",
+                    amount: firstPaymentAmount,
+                    status: "paid",
+                    paidAt: new Date(),
+                    stripeSessionId: session.id,
+                  },
+                  { kind: "final", amount: secondPaymentAmount },
+                ],
               },
-              include: {
-                invoices: true,
-              },
-            });
-
-            if (metadata.termsAcceptedAt) {
-              await tx.termsAcceptance.create({
-                data: {
-                  paymentId: newPayment.id,
-                  acceptedAt: new Date(metadata.termsAcceptedAt),
-                  termsVersion: TERMS_VERSION,
-                  plan: planName,
-                  ipAddress: "stripe-checkout",
-                  userAgent: "stripe-checkout",
+              ...(metadata.termsAcceptedAt && {
+                termsAcceptance: {
+                  create: {
+                    acceptedAt: new Date(metadata.termsAcceptedAt),
+                    termsVersion: TERMS_VERSION,
+                    plan: planName,
+                    ipAddress: "stripe-checkout",
+                    userAgent: "stripe-checkout",
+                  },
                 },
-              });
-            }
-
-            return newPayment;
+              }),
+            },
+            include: { payments: true, invoices: true },
           });
         }
 
@@ -152,14 +158,14 @@ export async function POST(req: Request) {
         const emailErrors: string[] = [];
 
         // Check if initial invoice already exists
-        const hasInitialInvoice = payment.invoices.some(
+        const hasInitialInvoice = project.invoices.some(
           (inv) => inv.type === "initial"
         );
 
         if (!hasInitialInvoice) {
           try {
             await createInvoiceAndSendEmail({
-              payment,
+              project,
               type: "initial",
               resend,
               stripeSessionId: session.id,
@@ -171,106 +177,6 @@ export async function POST(req: Request) {
           }
         }
 
-        // ============= CLIENT EMAIL (OLD - COMMENTED OUT) =============
-        // NOTE: The email with invoice PDF is now sent by createInvoiceAndSendEmail above
-        // The old email code has been commented out to avoid duplicate emails
-
-        /*
-        try {
-          await resend.emails.send({
-            from: "RC Web Solutions <no-reply@rcweb.dev>",
-            to: customerEmail,
-            subject: `✅ Payment Confirmed - Your Project Code`,
-            html: `
-              <!DOCTYPE html>
-              <html>
-                <head>
-                  <meta charset="utf-8">
-                  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-                </head>
-                <body style="margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif; background-color: #f3f4f6;">
-                  <table cellpadding="0" cellspacing="0" border="0" width="100%" style="background-color: #f3f4f6; padding: 40px 20px;">
-                    <tr>
-                      <td align="center">
-                        <table cellpadding="0" cellspacing="0" border="0" width="600" style="background-color: #ffffff; border-radius: 16px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); overflow: hidden;">
-                          <tr>
-                            <td style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 48px 32px; text-align: center;">
-                              <div style="display: inline-block; background: rgba(255, 255, 255, 0.2); border-radius: 50%; padding: 16px; margin-bottom: 16px;">
-                                <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                  <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
-                                  <polyline points="22 4 12 14.01 9 11.01"></polyline>
-                                </svg>
-                              </div>
-                              <h1 style="color: #ffffff; margin: 0; font-size: 32px; font-weight: 700;">Payment Confirmed!</h1>
-                              <p style="color: rgba(255, 255, 255, 0.9); margin: 8px 0 0 0; font-size: 16px;">Your project has been initiated</p>
-                            </td>
-                          </tr>
-                          <tr>
-                            <td style="padding: 40px 32px;">
-                              <p style="color: #374151; font-size: 16px; line-height: 1.6; margin: 0 0 24px 0;">
-                                Hi <strong>${customerName || "Client"}</strong>,
-                              </p>
-                              <p style="color: #374151; font-size: 16px; line-height: 1.6; margin: 0 0 32px 0;">
-                                Thank you for your initial payment. We've started working on your <strong style="color: #7c3aed;">${planName}</strong> project!
-                              </p>
-                              <div style="background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%); border: 2px solid #f59e0b; border-radius: 12px; padding: 24px; text-align: center; margin: 0 0 32px 0;">
-                                <p style="margin: 0 0 8px 0; color: #92400e; font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 1px;">
-                                  Your Project Code
-                                </p>
-                                <p style="margin: 8px 0; font-family: 'Courier New', monospace; font-size: 36px; color: #d97706; font-weight: bold; letter-spacing: 4px;">
-                                  ${projectCode}
-                                </p>
-                                <p style="margin: 8px 0 0 0; color: #92400e; font-size: 13px;">
-                                  Save this code - Required for final payment
-                                </p>
-                              </div>
-                              <div style="background-color: #f9fafb; border-radius: 12px; padding: 24px; margin: 0 0 32px 0;">
-                                <h3 style="color: #111827; font-size: 18px; font-weight: 600; margin: 0 0 16px 0;">What Happens Next?</h3>
-                                <ol style="color: #4b5563; font-size: 15px; line-height: 1.8; margin: 0; padding-left: 20px;">
-                                  <li style="margin-bottom: 8px;">We'll contact you within <strong>24 hours</strong> to discuss project details</li>
-                                  <li style="margin-bottom: 8px;">Project development time based on your plan</li>
-                                  <li style="margin-bottom: 8px;">We'll notify you when ready for final payment</li>
-                                  <li>All deliverables provided after final payment</li>
-                                </ol>
-                              </div>
-                              <div style="background-color: #f3f4f6; border-radius: 12px; padding: 20px; margin: 0 0 32px 0;">
-                                <h3 style="color: #111827; font-size: 16px; font-weight: 600; margin: 0 0 12px 0;">Payment Summary</h3>
-                                <table style="width: 100%; font-size: 14px;">
-                                  <tr>
-                                    <td style="padding: 4px 0; color: #6b7280;">Initial Payment (50%):</td>
-                                    <td style="text-align: right; color: #059669; font-weight: 600;">$${(firstPaymentAmount / 100).toFixed(2)} ✓</td>
-                                  </tr>
-                                  <tr>
-                                    <td style="padding: 4px 0; color: #6b7280;">Final Payment (50%):</td>
-                                    <td style="text-align: right; color: #6b7280;">$${(secondPaymentAmount / 100).toFixed(2)}</td>
-                                  </tr>
-                                  <tr style="border-top: 1px solid #d1d5db;">
-                                    <td style="padding: 8px 0 0 0; color: #374151; font-weight: 600;">Total Project Cost:</td>
-                                    <td style="padding: 8px 0 0 0; text-align: right; color: #374151; font-weight: 600;">$${(totalAmount / 100).toFixed(2)}</td>
-                                  </tr>
-                                </table>
-                              </div>
-                              <hr style="border: none; border-top: 1px solid #e5e7eb; margin: 32px 0;">
-                              <p style="text-align: center; color: #6b7280; font-size: 14px; margin: 0;">
-                                Questions? Contact us at <a href="mailto:contactus@rcweb.dev" style="color: #7c3aed; text-decoration: none;">contactus@rcweb.dev</a>
-                              </p>
-                            </td>
-                          </tr>
-                        </table>
-                      </td>
-                    </tr>
-                  </table>
-                </body>
-              </html>
-            `,
-          });
-                  } catch (emailError) {
-          const errorMsg = `Error sending email to client: ${emailError instanceof Error ? emailError.message : String(emailError)}`;
-          console.error("❌", errorMsg);
-          // emailErrors.push(errorMsg);
-        }
-        */
-
         // ============= ADMIN EMAIL =============
         const adminResult = await sendAdminInitialPaymentNotification(resend, {
           projectCode,
@@ -279,7 +185,7 @@ export async function POST(req: Request) {
           planName: planName || "Unknown Plan",
           firstPaymentAmount,
           secondPaymentAmount,
-          paymentId: payment.id,
+          projectId: project.id,
         });
 
         if (!adminResult.success && adminResult.error) {
@@ -289,23 +195,10 @@ export async function POST(req: Request) {
         // If there were email errors, include them in response (but don't fail)
         return NextResponse.json({
           received: true,
-          paymentId: payment.id,
+          projectId: project.id,
           ...(emailErrors.length > 0 && { emailErrors }),
         });
       } catch (err: unknown) {
-        // Handle duplicates in an idempotent way
-        if (err instanceof Error) {
-          if (
-            err.message === "DUPLICATE_PROJECT_CODE" ||
-            err.message === "DUPLICATE_SESSION_ID"
-          ) {
-            return NextResponse.json({
-              received: true,
-              duplicate: err.message,
-            });
-          }
-        }
-
         // If it's a Prisma unique constraint error, it means it was already processed
         if (
           typeof err === "object" &&
@@ -322,51 +215,59 @@ export async function POST(req: Request) {
     }
 
     // ============= FINAL PAYMENT =============
-    else if (paymentType === "final" && metadata.paymentId && customerEmail) {
-      const paymentId = metadata.paymentId;
+    else if (paymentType === "final" && metadata.projectId && customerEmail) {
+      const projectId = metadata.projectId;
 
       try {
-        // Check if payment exists and get current state
-        let payment = await prisma.payment.findUnique({
-          where: { id: paymentId },
-          include: { invoices: true },
+        // Check if the project exists and get current state
+        let project = await prisma.project.findUnique({
+          where: { id: projectId },
+          include: { payments: true, invoices: true },
         });
 
-        if (!payment) {
-          throw new Error("PAYMENT_NOT_FOUND");
+        if (!project) {
+          throw new Error("PROJECT_NOT_FOUND");
         }
 
-        // If payment not marked as secondPaid yet, update it
-        if (!payment.secondPaid) {
-          payment = await prisma.payment.update({
-            where: { id: paymentId },
-            data: {
-              secondPaid: true,
-              secondPaidAt: new Date(),
-              secondSessionId: session.id,
-              projectStatus: "completed",
-            },
-            include: { invoices: true },
+        const { final } = getProjectCharges(project.payments);
+
+        if (!isPaid(final)) {
+          // Mark the final charge as paid and complete the project
+          await prisma.$transaction([
+            prisma.payment.update({
+              where: { id: final.id },
+              data: {
+                status: "paid",
+                paidAt: new Date(),
+                stripeSessionId: session.id,
+              },
+            }),
+            prisma.project.update({
+              where: { id: projectId },
+              data: { status: "completed" },
+            }),
+          ]);
+        } else if (!final.stripeSessionId) {
+          // Already paid (retry): only record the session if missing
+          await prisma.payment.update({
+            where: { id: final.id },
+            data: { stripeSessionId: session.id },
           });
-        } else {
-          // Update session ID if not set
-          if (!payment.secondSessionId) {
-            payment = await prisma.payment.update({
-              where: { id: paymentId },
-              data: { secondSessionId: session.id },
-              include: { invoices: true },
-            });
-          }
         }
+
+        project = await prisma.project.findUniqueOrThrow({
+          where: { id: projectId },
+          include: { payments: true, invoices: true },
+        });
 
         // ============= CREATE INVOICES AND SEND EMAILS =============
         const emailErrors: string[] = [];
 
         // Check if invoices already exist
-        const hasFinalInvoice = payment.invoices.some(
+        const hasFinalInvoice = project.invoices.some(
           (inv) => inv.type === "final"
         );
-        const hasSummaryInvoice = payment.invoices.some(
+        const hasSummaryInvoice = project.invoices.some(
           (inv) => inv.type === "summary"
         );
 
@@ -374,7 +275,7 @@ export async function POST(req: Request) {
         if (!hasFinalInvoice) {
           try {
             await createInvoiceAndSendEmail({
-              payment,
+              project,
               type: "final",
               resend,
               stripeSessionId: session.id,
@@ -390,7 +291,7 @@ export async function POST(req: Request) {
         if (!hasSummaryInvoice) {
           try {
             await createInvoiceAndSendEmail({
-              payment,
+              project,
               type: "summary",
               resend,
             });
@@ -401,74 +302,14 @@ export async function POST(req: Request) {
           }
         }
 
-        // ============= PROJECT COMPLETION EMAIL (OLD - COMMENTED OUT) =============
-        // NOTE: Emails with invoice PDFs are now sent by createInvoiceAndSendEmail above
-        // The old email code has been commented out to avoid duplicate emails
-
-        /*
-        const oldEmailErrors: string[] = [];
-
-        try {
-          await resend.emails.send({
-            from: "RC Web Solutions <no-reply@rcweb.dev>",
-            to: customerEmail,
-            subject: `🎉 Project Complete - ${payment.planName} Website Ready!`,
-            html: `
-              <!DOCTYPE html>
-              <html>
-                <head>
-                  <meta charset="utf-8">
-                  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-                </head>
-                <body style="margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif; background-color: #f3f4f6;">
-                  <table cellpadding="0" cellspacing="0" border="0" width="100%" style="background-color: #f3f4f6; padding: 40px 20px;">
-                    <tr>
-                      <td align="center">
-                        <table cellpadding="0" cellspacing="0" border="0" width="600" style="background-color: #ffffff; border-radius: 16px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); overflow: hidden;">
-                          <tr>
-                            <td style="background: linear-gradient(135deg, #10b981 0%, #059669 100%); padding: 48px 32px; text-align: center;">
-                              <h1 style="color: #ffffff; margin: 0; font-size: 32px; font-weight: 700;">Project Complete!</h1>
-                              <p style="color: rgba(255, 255, 255, 0.9); margin: 8px 0 0 0; font-size: 16px;">Your ${payment.planName} website is ready</p>
-                            </td>
-                          </tr>
-                          <tr>
-                            <td style="padding: 40px 32px;">
-                              <p style="color: #374151; font-size: 16px; line-height: 1.6; margin: 0 0 24px 0;">
-                                Hi <strong>${payment.name}</strong>,
-                              </p>
-                              <p style="color: #374151; font-size: 16px; line-height: 1.6; margin: 0 0 32px 0;">
-                                Congratulations! Your project has been successfully completed and your final payment of 
-                                <strong style="color: #059669; font-size: 18px;">$${(payment.secondPayment / 100).toFixed(2)}</strong> has been received.
-                              </p>
-                              <div style="background-color: #f3f4f6; border-radius: 12px; padding: 20px; text-align: center;">
-                                <p style="color: #4b5563; font-size: 14px; margin: 0 0 8px 0;">Need help? We're here for you!</p>
-                                <a href="mailto:contactus@rcweb.dev" style="display: inline-block; background: #7c3aed; color: white; padding: 10px 24px; border-radius: 8px; text-decoration: none; font-weight: 600;">Email Support</a>
-                              </div>
-                            </td>
-                          </tr>
-                        </table>
-                      </td>
-                    </tr>
-                  </table>
-                </body>
-              </html>
-            `,
-          });
-                  } catch (emailError) {
-          const errorMsg = `Error sending completion email: ${emailError instanceof Error ? emailError.message : String(emailError)}`;
-          console.error("❌", errorMsg);
-          // oldEmailErrors.push(errorMsg);
-        }
-        */
-
         // ============= ADMIN EMAIL =============
         const adminResult = await sendAdminFinalPaymentNotification(resend, {
-          projectCode: payment.projectCode,
-          customerName: payment.name,
+          projectCode: project.projectCode,
+          customerName: project.name,
           customerEmail,
-          planName: payment.planName,
-          finalPaymentAmount: payment.secondPayment,
-          totalAmount: payment.totalAmount,
+          planName: project.planName,
+          finalPaymentAmount: final.amount,
+          totalAmount: project.totalAmount,
         });
 
         if (!adminResult.success && adminResult.error) {
@@ -482,30 +323,17 @@ export async function POST(req: Request) {
           ...(emailErrors.length > 0 && { emailErrors }),
         });
       } catch (err: unknown) {
-        // Handle idempotency-specific errors
-        if (err instanceof Error) {
-          if (err.message === "PAYMENT_NOT_FOUND") {
-            console.error("❌ Payment not found:", paymentId);
-            return NextResponse.json(
-              { received: true, error: "Payment not found" },
-              { status: 404 }
-            );
-          }
-
-          if (
-            err.message === "DUPLICATE_FINAL_SESSION" ||
-            err.message === "ALREADY_PAID"
-          ) {
-            return NextResponse.json({
-              received: true,
-              duplicate: err.message,
-            });
-          }
+        if (err instanceof Error && err.message === "PROJECT_NOT_FOUND") {
+          console.error("❌ Project not found:", projectId);
+          return NextResponse.json(
+            { received: true, error: "Project not found" },
+            { status: 404 }
+          );
         }
 
         console.error("❌ Error processing final payment:", {
           error: err instanceof Error ? err.message : String(err),
-          paymentId,
+          projectId,
           sessionId: session.id,
         });
         throw err; // Re-throw for Stripe to retry

@@ -6,7 +6,7 @@ import { requireAdmin } from "@/lib/authGuard";
 export interface RevenueStats {
   totalRevenue: number; // In dollars
   thisMonthRevenue: number;
-  pendingPayments: number; // Count of unpaid invoices
+  pendingPayments: number; // Count of charges still due
   pendingAmount: number; // Total pending in dollars
 }
 
@@ -19,80 +19,41 @@ export async function getRevenueStatsAction(): Promise<RevenueStats> {
   const now = new Date();
   const startOfMonth = new Date(now.getFullYear(), now.getMonth(), 1);
 
-  const [paidPayments, thisMonthPayments, pendingFirst, pendingSecond] =
+  const [paid, paidThisMonth, pendingDeposits, pendingFinals] =
     await Promise.all([
-      // Total revenue from all paid payments
-      prisma.payment.findMany({
-        where: {
-          OR: [{ firstPaid: true }, { secondPaid: true }],
-        },
-        select: {
-          firstPayment: true,
-          secondPayment: true,
-          firstPaid: true,
-          secondPaid: true,
-        },
+      // Total revenue from all paid charges
+      prisma.payment.aggregate({
+        where: { status: "paid" },
+        _sum: { amount: true },
       }),
-      // This month's paid payments
-      prisma.payment.findMany({
-        where: {
-          OR: [
-            { firstPaidAt: { gte: startOfMonth } },
-            { secondPaidAt: { gte: startOfMonth } },
-          ],
-        },
-        select: {
-          firstPayment: true,
-          secondPayment: true,
-          firstPaid: true,
-          secondPaid: true,
-          firstPaidAt: true,
-          secondPaidAt: true,
-        },
+      // This month's paid charges
+      prisma.payment.aggregate({
+        where: { status: "paid", paidAt: { gte: startOfMonth } },
+        _sum: { amount: true },
       }),
-      // Pending first payments (not paid yet)
-      prisma.payment.findMany({
-        where: { firstPaid: false },
-        select: { firstPayment: true },
+      // Deposits not paid yet
+      prisma.payment.aggregate({
+        where: { kind: "deposit", status: "pending" },
+        _sum: { amount: true },
+        _count: true,
       }),
-      // Pending second payments (first paid but second not)
-      prisma.payment.findMany({
+      // Final payments due (project ready, final not paid)
+      prisma.payment.aggregate({
         where: {
-          firstPaid: true,
-          secondPaid: false,
-          projectStatus: "ready_for_payment",
+          kind: "final",
+          status: "pending",
+          project: { status: "ready_for_payment" },
         },
-        select: { secondPayment: true },
+        _sum: { amount: true },
+        _count: true,
       }),
     ]);
 
-  // Calculate total revenue (in cents, then convert to dollars)
-  const totalRevenueCents = paidPayments.reduce((sum, p) => {
-    let amount = 0;
-    if (p.firstPaid) amount += p.firstPayment;
-    if (p.secondPaid) amount += p.secondPayment;
-    return sum + amount;
-  }, 0);
-
-  // Calculate this month's revenue
-  const thisMonthRevenueCents = thisMonthPayments.reduce((sum, p) => {
-    let amount = 0;
-    if (p.firstPaid && p.firstPaidAt && p.firstPaidAt >= startOfMonth) {
-      amount += p.firstPayment;
-    }
-    if (p.secondPaid && p.secondPaidAt && p.secondPaidAt >= startOfMonth) {
-      amount += p.secondPayment;
-    }
-    return sum + amount;
-  }, 0);
-
-  // Pending payments count
-  const pendingPayments = pendingFirst.length + pendingSecond.length;
-
-  // Pending amount in cents
+  const totalRevenueCents = paid._sum.amount ?? 0;
+  const thisMonthRevenueCents = paidThisMonth._sum.amount ?? 0;
+  const pendingPayments = pendingDeposits._count + pendingFinals._count;
   const pendingAmountCents =
-    pendingFirst.reduce((sum, p) => sum + p.firstPayment, 0) +
-    pendingSecond.reduce((sum, p) => sum + p.secondPayment, 0);
+    (pendingDeposits._sum.amount ?? 0) + (pendingFinals._sum.amount ?? 0);
 
   return {
     totalRevenue: Math.round(totalRevenueCents / 100),

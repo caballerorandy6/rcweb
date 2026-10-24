@@ -40,7 +40,7 @@ async function main() {
 
   // Sample project reachable at /project/{accessToken}; the customer is not a
   // user: there is no client login
-  const project = await prisma.payment.upsert({
+  const project = await prisma.project.upsert({
     where: { projectCode: "TEST-001" },
     update: {},
     create: {
@@ -49,12 +49,13 @@ async function main() {
       name: "Test Customer",
       planName: "Starter",
       totalAmount: 100000,
-      firstPayment: 50000,
-      secondPayment: 50000,
-      firstPaid: true,
-      firstPaidAt: new Date(),
-      projectStatus: "in_progress",
-      projectStarted: new Date(),
+      status: "in_progress",
+      payments: {
+        create: [
+          { kind: "deposit", amount: 50000, status: "paid", paidAt: new Date() },
+          { kind: "final", amount: 50000 },
+        ],
+      },
     },
   });
   console.log(`✅ Project: ${project.projectCode} → /project/${project.accessToken}`);

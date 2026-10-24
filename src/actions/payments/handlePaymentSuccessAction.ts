@@ -8,61 +8,88 @@ import {
   sendInitialPaymentConfirmation,
   sendAdminInitialPaymentFallback,
 } from "@/lib/email/senders";
-import { linkPaymentToContact } from "@/actions/stats/getRevenueAttributionAction";
+import { linkProjectToContact } from "@/actions/stats/getRevenueAttributionAction";
 import { getProjectUrl } from "@/lib/projectUrl";
 import { LEGAL_LAST_UPDATED } from "@/lib/company";
+import type { PaymentSuccessData } from "@/types/project";
+import {
+  getProjectCharges,
+  type ProjectWithPayments,
+} from "@/lib/project/charges";
+
+export type HandlePaymentSuccessResult =
+  | { success: true; project: PaymentSuccessData; fallbackUsed: boolean }
+  | { success: false; error: string };
+
+function toSuccessData(project: ProjectWithPayments): PaymentSuccessData {
+  const { deposit, final } = getProjectCharges(project.payments);
+  return {
+    projectCode: project.projectCode,
+    planName: project.planName,
+    totalAmount: project.totalAmount,
+    depositAmount: deposit.amount,
+    finalAmount: final.amount,
+    stripeSessionId: deposit.stripeSessionId,
+  };
+}
+
+// The webhook usually creates the Project first; find it by project code or by
+// the Checkout Session that paid the deposit.
+function findProject(sessionId: string, projectCode?: string) {
+  return prisma.project.findFirst({
+    where: {
+      OR: [
+        ...(projectCode ? [{ projectCode }] : []),
+        { payments: { some: { stripeSessionId: sessionId } } },
+      ],
+    },
+    include: { payments: true },
+  });
+}
 
 export async function handlePaymentSuccessAction(
   sessionId: string,
   projectCode?: string
-) {
+): Promise<HandlePaymentSuccessResult> {
   if (!sessionId) {
     return { success: false, error: "No session ID provided" };
   }
 
   try {
     // BEST PRACTICE: Check database FIRST before calling external APIs
-    // The webhook usually processes faster and creates the Payment
 
-    // 1. Quick initial check - Payment might already exist
-    const quickCheck = await prisma.payment.findFirst({
-      where: {
-        OR: [
-          ...(projectCode ? [{ projectCode }] : []),
-          { firstSessionId: sessionId },
-        ],
-      },
-    });
+    // 1. Quick initial check - the Project might already exist
+    const quickCheck = await findProject(sessionId, projectCode);
 
     if (quickCheck) {
       // Link to contact for revenue attribution (fire and forget)
-      linkPaymentToContact(quickCheck.id).catch(console.error);
-      return { success: true, payment: quickCheck, fallbackUsed: false };
+      linkProjectToContact(quickCheck.id).catch(console.error);
+      return {
+        success: true,
+        project: toSuccessData(quickCheck),
+        fallbackUsed: false,
+      };
     }
 
     // 2. Poll database - give webhook time to process
-    let payment = null;
     let attempts = 0;
     const maxAttempts = 30; // 30 attempts × 1s = 30 seconds max
     const delayMs = 1000;
 
-    while (attempts < maxAttempts && !payment) {
+    while (attempts < maxAttempts) {
       await new Promise((resolve) => setTimeout(resolve, delayMs));
       attempts++;
 
-      payment = await prisma.payment.findFirst({
-        where: {
-          OR: [
-            ...(projectCode ? [{ projectCode }] : []),
-            { firstSessionId: sessionId },
-          ],
-        },
-      });
+      const project = await findProject(sessionId, projectCode);
 
-      if (payment) {
+      if (project) {
         // Link to contact for revenue attribution (fire and forget)
-        linkPaymentToContact(payment.id).catch(console.error);
-        return { success: true, payment, fallbackUsed: false };
+        linkProjectToContact(project.id).catch(console.error);
+        return {
+          success: true,
+          project: toSuccessData(project),
+          fallbackUsed: false,
+        };
       }
     }
 
@@ -74,17 +101,14 @@ export async function handlePaymentSuccessAction(
       console.error("❌ Error retrieving Stripe session:", stripeError);
 
       // Final check - maybe webhook processed while we were trying Stripe
-      const finalCheck = await prisma.payment.findFirst({
-        where: {
-          OR: [
-            ...(projectCode ? [{ projectCode }] : []),
-            { firstSessionId: sessionId },
-          ],
-        },
-      });
+      const finalCheck = await findProject(sessionId, projectCode);
 
       if (finalCheck) {
-        return { success: true, payment: finalCheck, fallbackUsed: false };
+        return {
+          success: true,
+          project: toSuccessData(finalCheck),
+          fallbackUsed: false,
+        };
       }
 
       return {
@@ -106,14 +130,14 @@ export async function handlePaymentSuccessAction(
     }
 
     // Final check before creating
-    const existingPayment = await prisma.payment.findFirst({
-      where: {
-        OR: [{ projectCode: finalProjectCode }, { firstSessionId: session.id }],
-      },
-    });
+    const existingProject = await findProject(session.id, finalProjectCode);
 
-    if (existingPayment) {
-      return { success: true, payment: existingPayment, fallbackUsed: false };
+    if (existingProject) {
+      return {
+        success: true,
+        project: toSuccessData(existingProject),
+        fallbackUsed: false,
+      };
     }
 
     // Prepare data for fallback creation
@@ -128,57 +152,46 @@ export async function handlePaymentSuccessAction(
       return { success: false, error: "Customer email not found" };
     }
 
-    // Create Payment with optimistic lock to avoid duplicates
+    // Create the Project with its two charges; unique constraints on
+    // projectCode and stripeSessionId protect against the webhook racing us
     try {
-      payment = await prisma.$transaction(async (tx) => {
-        // Verify once more within transaction
-        const checkAgain = await tx.payment.findFirst({
-          where: {
-            OR: [
-              { projectCode: finalProjectCode },
-              { firstSessionId: session.id },
+      const project = await prisma.project.create({
+        data: {
+          projectCode: finalProjectCode,
+          email: customerEmail,
+          name: customerName,
+          planName,
+          totalAmount,
+          status: "in_progress",
+          payments: {
+            create: [
+              {
+                kind: "deposit",
+                amount: firstPaymentAmount,
+                status: "paid",
+                paidAt: new Date(),
+                stripeSessionId: session.id,
+              },
+              { kind: "final", amount: secondPaymentAmount },
             ],
           },
-        });
-
-        if (checkAgain) {
-          return checkAgain;
-        }
-
-        const newPayment = await tx.payment.create({
-          data: {
-            projectCode: finalProjectCode,
-            email: customerEmail,
-            name: customerName,
-            planName: planName,
-            totalAmount,
-            firstPayment: firstPaymentAmount,
-            secondPayment: secondPaymentAmount,
-            firstPaid: true,
-            firstPaidAt: new Date(),
-            firstSessionId: session.id,
-            projectStatus: "in_progress",
-          },
-        });
-
-        if (metadata.termsAcceptedAt) {
-          await tx.termsAcceptance.create({
-            data: {
-              paymentId: newPayment.id,
-              acceptedAt: new Date(metadata.termsAcceptedAt),
-              termsVersion: LEGAL_LAST_UPDATED.version,
-              plan: planName,
-              ipAddress: "payment-success-fallback",
-              userAgent: "payment-success-fallback",
+          ...(metadata.termsAcceptedAt && {
+            termsAcceptance: {
+              create: {
+                acceptedAt: new Date(metadata.termsAcceptedAt),
+                termsVersion: LEGAL_LAST_UPDATED.version,
+                plan: planName,
+                ipAddress: "payment-success-fallback",
+                userAgent: "payment-success-fallback",
+              },
             },
-          });
-        }
-
-        return newPayment;
+          }),
+        },
+        include: { payments: true },
       });
 
       // Link to contact for revenue attribution (fire and forget)
-      linkPaymentToContact(payment.id).catch(console.error);
+      linkProjectToContact(project.id).catch(console.error);
 
       // Send emails from fallback (parallel, independent)
       const resend = new Resend(process.env.RESEND_API_KEY!);
@@ -192,7 +205,7 @@ export async function handlePaymentSuccessAction(
           firstPaymentAmount,
           secondPaymentAmount,
           totalAmount,
-          projectUrl: getProjectUrl(payment.accessToken),
+          projectUrl: getProjectUrl(project.accessToken),
         }),
         sendAdminInitialPaymentFallback(resend, {
           projectCode: finalProjectCode,
@@ -200,7 +213,7 @@ export async function handlePaymentSuccessAction(
           customerEmail,
           planName,
           firstPaymentAmount,
-          paymentId: payment.id,
+          projectId: project.id,
         }),
       ]);
 
@@ -211,7 +224,11 @@ export async function handlePaymentSuccessAction(
         }
       });
 
-      return { success: true, payment, fallbackUsed: true };
+      return {
+        success: true,
+        project: toSuccessData(project),
+        fallbackUsed: true,
+      };
     } catch (error: unknown) {
       if (
         typeof error === "object" &&
@@ -220,18 +237,11 @@ export async function handlePaymentSuccessAction(
         (error as { code?: string }).code === "P2002"
       ) {
         // Unique constraint - webhook processed while we were in fallback
-        const existingPayment = await prisma.payment.findFirst({
-          where: {
-            OR: [
-              { projectCode: finalProjectCode },
-              { firstSessionId: session.id },
-            ],
-          },
-        });
-        if (existingPayment) {
+        const existingProject = await findProject(session.id, finalProjectCode);
+        if (existingProject) {
           return {
             success: true,
-            payment: existingPayment,
+            project: toSuccessData(existingProject),
             fallbackUsed: false,
           };
         }

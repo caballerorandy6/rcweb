@@ -211,7 +211,8 @@ The application uses Prisma ORM with PostgreSQL. The schema includes:
 - **User** - Admin users with authentication
 - **Contact** - Customer contact information
 - **ContactPhone** - Phone numbers for contacts
-- **Payment** - Payment records with project tracking
+- **Project** - Sold projects (customer, plan, status, access token)
+- **Payment** - One row per charge of a project (deposit and final)
 - **Invoice** - Generated invoices with PDF links
 - **NewsletterLog** - Email campaign tracking
 - **SmsLog** - SMS interaction logging

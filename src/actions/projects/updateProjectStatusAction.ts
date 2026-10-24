@@ -7,30 +7,26 @@ import type { ProjectStatus } from "@/generated/prisma/enums";
 import type { ActionResult } from "@/types/common";
 import { requireAdmin } from "@/lib/authGuard";
 
-type PaymentInfo = {
+type ProjectInfo = {
   id: string;
   projectCode: string;
   planName: string;
-  projectStatus: ProjectStatus;
+  status: ProjectStatus;
 };
 
 export async function updateProjectStatusAction(
   projectCode: string,
   status: UpdateableProjectStatus
-): Promise<ActionResult<{ payment: PaymentInfo }>> {
+): Promise<ActionResult<{ project: ProjectInfo }>> {
   try {
     const authCheck = await requireAdmin();
     if (!authCheck.authorized) {
       return { success: false, error: authCheck.error };
     }
 
-    const payment = await prisma.payment.update({
+    const project = await prisma.project.update({
       where: { projectCode },
-      data: {
-        projectStatus: status,
-        projectStarted: status === "in_progress" ? new Date() : undefined,
-        projectReady: status === "ready_for_payment" ? new Date() : undefined,
-      },
+      data: { status },
     });
 
     // Si el proyecto está listo, enviar email automáticamente
@@ -41,11 +37,11 @@ export async function updateProjectStatusAction(
     return {
       success: true,
       data: {
-        payment: {
-          id: payment.id,
-          projectCode: payment.projectCode,
-          planName: payment.planName,
-          projectStatus: payment.projectStatus,
+        project: {
+          id: project.id,
+          projectCode: project.projectCode,
+          planName: project.planName,
+          status: project.status,
         },
       },
     };

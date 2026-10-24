@@ -17,9 +17,9 @@ export type AdminProject = {
   name: string;
   planName: string;
   totalAmount: number;
-  firstPaid: boolean;
-  secondPaid: boolean;
-  projectStatus: ProjectStatus;
+  depositPaid: boolean;
+  finalPaid: boolean;
+  status: ProjectStatus;
   createdAt: string | Date;
 };
 
@@ -36,7 +36,19 @@ export type VerifiedProjectAccess = {
   id: string;
   projectCode: string;
   planName: string;
-  secondPayment: number;
+  finalAmount: number;
   accessToken: string;
 };
 
+/**
+ * What the /payment-success page shows after the deposit is paid.
+ * Serializable: it crosses the server → client boundary.
+ */
+export type PaymentSuccessData = {
+  projectCode: string;
+  planName: string;
+  totalAmount: number;
+  depositAmount: number;
+  finalAmount: number;
+  stripeSessionId: string | null;
+};

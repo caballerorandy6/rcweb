@@ -18,7 +18,7 @@ export interface RevenueByUTM {
 
 export interface RevenueAttributionResult {
   totalRevenue: number;
-  totalPaidPayments: number;
+  totalPaidProjects: number;
   byLeadSource: RevenueBySource[];
   byUTMSource: RevenueByUTM[];
   unattributed: {
@@ -33,20 +33,15 @@ export async function getRevenueAttributionAction(): Promise<RevenueAttributionR
     throw new Error(authCheck.error);
   }
 
-  // Get all paid payments with their linked contacts
-  const payments = await prisma.payment.findMany({
-    where: {
-      OR: [{ firstPaid: true }, { secondPaid: true }],
-    },
+  // Projects with at least one paid charge, with their linked contact
+  const projects = await prisma.project.findMany({
+    where: { payments: { some: { status: "paid" } } },
     select: {
       id: true,
-      email: true,
-      totalAmount: true,
-      firstPaid: true,
-      secondPaid: true,
-      firstPayment: true,
-      secondPayment: true,
-      contactId: true,
+      payments: {
+        where: { status: "paid" },
+        select: { amount: true },
+      },
       contact: {
         select: {
           source: true,
@@ -57,14 +52,14 @@ export async function getRevenueAttributionAction(): Promise<RevenueAttributionR
     },
   });
 
-  // Calculate paid amount for each payment
-  const paymentsWithRevenue = payments.map((p) => ({
-    ...p,
-    paidAmount: (p.firstPaid ? p.firstPayment : 0) + (p.secondPaid ? p.secondPayment : 0),
+  // Paid amount per project
+  const projectsWithRevenue = projects.map((p) => ({
+    contact: p.contact,
+    paidAmount: p.payments.reduce((sum, payment) => sum + payment.amount, 0),
   }));
 
-  const totalRevenue = paymentsWithRevenue.reduce((acc, p) => acc + p.paidAmount, 0);
-  const totalPaidPayments = payments.length;
+  const totalRevenue = projectsWithRevenue.reduce((acc, p) => acc + p.paidAmount, 0);
+  const totalPaidProjects = projects.length;
 
   // Group by lead source
   const bySourceMap = new Map<string, { revenue: number; count: number }>();
@@ -72,26 +67,26 @@ export async function getRevenueAttributionAction(): Promise<RevenueAttributionR
   let unattributedRevenue = 0;
   let unattributedCount = 0;
 
-  for (const payment of paymentsWithRevenue) {
-    if (payment.contact) {
+  for (const project of projectsWithRevenue) {
+    if (project.contact) {
       // By lead source
-      const source = payment.contact.source || "unknown";
+      const source = project.contact.source || "unknown";
       const existing = bySourceMap.get(source) || { revenue: 0, count: 0 };
       bySourceMap.set(source, {
-        revenue: existing.revenue + payment.paidAmount,
+        revenue: existing.revenue + project.paidAmount,
         count: existing.count + 1,
       });
 
       // By UTM source
-      if (payment.contact.utmSource) {
-        const utmExisting = byUTMMap.get(payment.contact.utmSource) || { revenue: 0, count: 0 };
-        byUTMMap.set(payment.contact.utmSource, {
-          revenue: utmExisting.revenue + payment.paidAmount,
+      if (project.contact.utmSource) {
+        const utmExisting = byUTMMap.get(project.contact.utmSource) || { revenue: 0, count: 0 };
+        byUTMMap.set(project.contact.utmSource, {
+          revenue: utmExisting.revenue + project.paidAmount,
           count: utmExisting.count + 1,
         });
       }
     } else {
-      unattributedRevenue += payment.paidAmount;
+      unattributedRevenue += project.paidAmount;
       unattributedCount++;
     }
   }
@@ -116,7 +111,7 @@ export async function getRevenueAttributionAction(): Promise<RevenueAttributionR
 
   return {
     totalRevenue,
-    totalPaidPayments,
+    totalPaidProjects,
     byLeadSource,
     byUTMSource,
     unattributed: {
@@ -127,29 +122,29 @@ export async function getRevenueAttributionAction(): Promise<RevenueAttributionR
 }
 
 /**
- * Links a Payment to an existing Contact based on email.
- * Call this when creating a new Payment to enable revenue attribution.
+ * Links a Project to an existing Contact based on email.
+ * Call this when creating a new Project to enable revenue attribution.
  */
-export async function linkPaymentToContact(paymentId: string): Promise<boolean> {
+export async function linkProjectToContact(projectId: string): Promise<boolean> {
   try {
-    const payment = await prisma.payment.findUnique({
-      where: { id: paymentId },
+    const project = await prisma.project.findUnique({
+      where: { id: projectId },
       select: { email: true, contactId: true },
     });
 
-    if (!payment || payment.contactId) return false; // Already linked or not found
+    if (!project || project.contactId) return false; // Already linked or not found
 
     // Find contact by email
     const contactEmail = await prisma.contactEmail.findUnique({
-      where: { email: payment.email },
+      where: { email: project.email },
       select: { contactId: true },
     });
 
     if (!contactEmail) return false;
 
-    // Link the payment to the contact
-    await prisma.payment.update({
-      where: { id: paymentId },
+    // Link the project to the contact
+    await prisma.project.update({
+      where: { id: projectId },
       data: { contactId: contactEmail.contactId },
     });
 
@@ -161,7 +156,7 @@ export async function linkPaymentToContact(paymentId: string): Promise<boolean> 
 
     return true;
   } catch (error) {
-    console.error("Error linking payment to contact:", error);
+    console.error("Error linking project to contact:", error);
     return false;
   }
 }

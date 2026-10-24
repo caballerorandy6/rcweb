@@ -14,24 +14,30 @@ export async function getAllProjectsAction(): Promise<
       return { success: false, error: authCheck.error };
     }
 
-    const projects = await prisma.payment.findMany({
+    const projects = await prisma.project.findMany({
       orderBy: { createdAt: "desc" },
+      include: { payments: { select: { kind: true, status: true } } },
     });
+
     return {
       success: true,
       data: {
         projects: projects.map((project) => ({
-        id: project.id,
-        projectCode: project.projectCode,
-        email: project.email,
-        name: project.name,
-        planName: project.planName,
-        totalAmount: project.totalAmount,
-        firstPaid: project.firstPaid,
-        secondPaid: project.secondPaid,
-        projectStatus: project.projectStatus,
-        createdAt: project.createdAt,
-      })),
+          id: project.id,
+          projectCode: project.projectCode,
+          email: project.email,
+          name: project.name,
+          planName: project.planName,
+          totalAmount: project.totalAmount,
+          depositPaid: project.payments.some(
+            (p) => p.kind === "deposit" && p.status === "paid"
+          ),
+          finalPaid: project.payments.some(
+            (p) => p.kind === "final" && p.status === "paid"
+          ),
+          status: project.status,
+          createdAt: project.createdAt,
+        })),
       },
     };
   } catch (error) {

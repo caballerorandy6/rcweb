@@ -9,21 +9,21 @@ import {
 } from "@heroicons/react/24/outline";
 import { toast } from "sonner";
 import confetti from "canvas-confetti";
-import type { Payment } from "@/generated/prisma/client";
+import type { PaymentSuccessData } from "@/types/project";
 import { trackLeadConversion, trackPurchase } from "@/lib/analytics";
 import { formatCurrency } from "@/lib/utils";
 import { trackFBPurchase } from "@/components/tracking/FacebookPixel";
 import { trackLinkedInConversion } from "@/lib/linkedin";
 
 interface PaymentSuccessClientProps {
-  payment?: Payment | null;
+  project?: PaymentSuccessData | null;
   error?: string;
   projectCode?: string;
   fallbackUsed?: boolean;
 }
 
 export default function PaymentSuccess({
-  payment,
+  project,
   error,
   projectCode,
   fallbackUsed,
@@ -31,24 +31,20 @@ export default function PaymentSuccess({
   const [copied, setCopied] = useState(false);
 
   useEffect(() => {
-    if (payment && !error) {
+    if (project && !error) {
       confetti({
         particleCount: 100,
         spread: 70,
         origin: { y: 0.6 },
       });
 
-      // Track purchase conversion (payment completed)
-      const paymentAmount = payment.firstPaid && payment.secondPaid
-        ? payment.totalAmount
-        : payment.firstPaid
-          ? payment.firstPayment
-          : payment.secondPayment;
+      // Track purchase conversion (deposit paid)
+      const paymentAmount = project.depositAmount;
 
       trackPurchase(
         paymentAmount / 100, // Convert cents to dollars
         'USD',
-        payment.firstSessionId || payment.secondSessionId || undefined
+        project.stripeSessionId ?? undefined
       );
 
       // Track Facebook Pixel Purchase
@@ -67,7 +63,7 @@ export default function PaymentSuccess({
         });
       }
     }
-  }, [payment, error, fallbackUsed]);
+  }, [project, error, fallbackUsed]);
 
   const copyToClipboard = () => {
     if (projectCode) {
@@ -169,24 +165,24 @@ export default function PaymentSuccess({
           )}
 
           {/* Payment Details */}
-          {payment && (
+          {project && (
             <div className="space-y-3 mb-8 font-inter">
               <div className="flex justify-between text-sm">
                 <span className="text-gray-400">Plan:</span>
                 <span className="text-white font-medium">
-                  {payment.planName}
+                  {project.planName}
                 </span>
               </div>
               <div className="flex justify-between text-sm">
                 <span className="text-gray-400">Amount Paid:</span>
                 <span className="text-green-500 font-medium">
-                  {formatCurrency(payment.firstPayment)}
+                  {formatCurrency(project.depositAmount)}
                 </span>
               </div>
               <div className="flex justify-between text-sm">
                 <span className="text-gray-400">Remaining Balance:</span>
                 <span className="text-yellow-500 font-medium">
-                  {formatCurrency(payment.secondPayment)}
+                  {formatCurrency(project.finalAmount)}
                 </span>
               </div>
               <div className="flex justify-between text-sm">

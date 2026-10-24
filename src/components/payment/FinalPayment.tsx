@@ -10,7 +10,7 @@ import { formatCurrency } from "@/lib/utils";
 type ProjectInfo = {
   planName: string;
   projectCode: string;
-  secondPayment: number;
+  finalAmount: number;
 };
 
 export default function FinalPayment() {
@@ -30,7 +30,7 @@ export default function FinalPayment() {
       const result = await verifyProjectAccessAction(email, projectCode);
 
       if (result.success && result.data) {
-        setProjectInfo(result.data.payment);
+        setProjectInfo(result.data.project);
         setVerified(true);
         toast.success("Project verified successfully!");
       } else if (!result.success) {
@@ -130,7 +130,7 @@ export default function FinalPayment() {
                 <p className="text-gray-300">
                   <span className="text-gray-400">Final Payment:</span>{" "}
                   <span className="text-gold text-xl font-bold">
-                    {formatCurrency(projectInfo?.secondPayment ?? 0)}
+                    {formatCurrency(projectInfo?.finalAmount ?? 0)}
                   </span>
                 </p>
               </div>

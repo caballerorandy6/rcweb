@@ -12,7 +12,7 @@ export interface AdminInitialPaymentNotificationParams {
   planName: string;
   firstPaymentAmount: number;
   secondPaymentAmount: number;
-  paymentId: string;
+  projectId: string;
 }
 
 export async function sendAdminInitialPaymentNotification(
@@ -26,7 +26,7 @@ export async function sendAdminInitialPaymentNotification(
     planName,
     firstPaymentAmount,
     secondPaymentAmount,
-    paymentId,
+    projectId,
   } = params;
 
   try {
@@ -38,7 +38,7 @@ export async function sendAdminInitialPaymentNotification(
         planName={planName}
         amount={firstPaymentAmount}
         projectCode={projectCode}
-        paymentId={paymentId}
+        projectId={projectId}
         pendingAmount={secondPaymentAmount}
       />
     );

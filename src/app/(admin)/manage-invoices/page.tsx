@@ -23,9 +23,6 @@ export const metadata = {
 
 async function getInvoices() {
   const invoices = await prisma.invoice.findMany({
-    include: {
-      payment: true,
-    },
     orderBy: {
       createdAt: "desc",
     },

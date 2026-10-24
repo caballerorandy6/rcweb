@@ -28,14 +28,14 @@ export async function createFinalPaymentSessionAction(
       };
     }
 
-    const payment = verification.data.payment;
+    const project = verification.data.project;
 
     // IMPORTANTE: Incluir TODOS los campos necesarios en metadata
     const metadata = {
-      paymentId: payment.id,
-      projectCode: payment.projectCode,
+      projectId: project.id,
+      projectCode: project.projectCode,
       paymentType: "final", // ← CRÍTICO: Este campo debe ser EXACTAMENTE "final"
-      planName: payment.planName || "Plan",
+      planName: project.planName || "Plan",
       customerEmail: email, // Incluir el email también
     };
 
@@ -50,10 +50,10 @@ export async function createFinalPaymentSessionAction(
           price_data: {
             currency: "usd",
             product_data: {
-              name: `${payment.planName} - Final Payment (50%)`,
+              name: `${project.planName} - Final Payment (50%)`,
               description: `Final payment upon project completion`,
             },
-            unit_amount: payment.secondPayment,
+            unit_amount: project.finalAmount,
           },
           quantity: 1,
         },

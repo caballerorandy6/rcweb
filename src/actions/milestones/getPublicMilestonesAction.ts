@@ -9,7 +9,7 @@ type ProjectInfo = {
   projectCode: string;
   name: string;
   planName: string;
-  projectStatus: ProjectStatus;
+  status: ProjectStatus;
 };
 
 export async function getPublicMilestonesAction(
@@ -20,7 +20,7 @@ export async function getPublicMilestonesAction(
   }
 
   try {
-    const payment = await prisma.payment.findUnique({
+    const project = await prisma.project.findUnique({
       where: { accessToken },
       include: {
         milestones: {
@@ -29,13 +29,13 @@ export async function getPublicMilestonesAction(
       },
     });
 
-    if (!payment) {
+    if (!project) {
       return { success: false, error: "Project not found" };
     }
 
-    const milestones: Milestone[] = payment.milestones.map((m) => ({
+    const milestones: Milestone[] = project.milestones.map((m) => ({
       id: m.id,
-      paymentId: m.paymentId,
+      projectId: m.projectId,
       title: m.title,
       description: m.description,
       order: m.order,
@@ -50,10 +50,10 @@ export async function getPublicMilestonesAction(
       success: true,
       data: {
         project: {
-          projectCode: payment.projectCode,
-          name: payment.name,
-          planName: payment.planName,
-          projectStatus: payment.projectStatus,
+          projectCode: project.projectCode,
+          name: project.name,
+          planName: project.planName,
+          status: project.status,
         },
         milestones,
       },
