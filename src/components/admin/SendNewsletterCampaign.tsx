@@ -273,7 +273,7 @@ export default function SendNewsletterCampaign({
       <div class="footer">
         <div class="footer-text">RC Web Solutions LLC<br />Houston, Texas, USA</div>
         <div class="social-links">
-          <a href="https://www.linkedin.com/company/rcwebsolutions">LinkedIn</a> |
+          <a href="https://www.linkedin.com/company/109039912/">LinkedIn</a> |
           <a href="https://www.facebook.com/rcwebsolutionsllc">Facebook</a> |
           <a href="https://www.instagram.com/rcwebsolutionsllc">Instagram</a> |
           <a href="https://x.com/RCWeb2025">X (Twitter)</a>

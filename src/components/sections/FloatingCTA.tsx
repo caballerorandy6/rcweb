@@ -85,7 +85,7 @@ const socialActions = [
   {
     id: "linkedin",
     name: "LinkedIn",
-    url: "https://www.linkedin.com/company/rcwebsolutions",
+    url: "https://www.linkedin.com/company/109039912/",
     Icon: LinkedInIcon,
     bgClass: "bg-[#0A66C2] hover:bg-[#004182]",
   },
