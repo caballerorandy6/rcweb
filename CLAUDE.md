@@ -18,14 +18,16 @@ npm test                 # Vitest unit tests (src/**/*.test.ts)
 npm run test:e2e         # Playwright (chromium, port 3100, reads .env.test)
 npx next typegen         # Regenerate next-env.d.ts (run before tsc in CI)
 npx prisma generate      # Regenerate Prisma Client (also runs on postinstall)
-npx prisma db push       # Sync schema to DB without migration
-npm run migrate          # Prisma migrate dev
+npm run migrate          # Prisma migrate dev (creates a migration from schema changes)
+npm run migrate:deploy   # Apply pending migrations (CI, Vercel build and prod)
 npm run seed             # Seed database (tsx prisma/seed.ts)
 npm run seed:dev         # Test admin account + sample project from .env.test (localhost DB only)
 npm run email            # React Email preview (port 3001)
 ```
 
-**Note:** Build uses `next build --webpack` (not Turbopack). React Compiler is enabled.
+**Note:** Build runs `prisma migrate deploy` first, then `next build --webpack` (not Turbopack). React Compiler is enabled.
+
+**Schema changes:** never `prisma db push` against a shared database. Edit `prisma/schema.prisma`, run `npm run migrate -- --name <change>`, commit the folder under `prisma/migrations/`. `prisma/migrations/0_baseline` is the baseline of the schema as of 2026-10-24; production and preview were marked as applied with `prisma migrate resolve --applied 0_baseline`.
 
 ## Skills — use them, don't work from memory
 

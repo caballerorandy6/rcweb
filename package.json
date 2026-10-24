@@ -5,11 +5,12 @@
   "type": "module",
   "scripts": {
     "dev": "next dev",
-    "build": "next build --webpack",
+    "build": "prisma migrate deploy && next build --webpack",
     "start": "next start",
     "postinstall": "prisma generate",
     "generate": "prisma generate",
     "migrate": "prisma migrate dev",
+    "migrate:deploy": "prisma migrate deploy",
     "lint": "eslint .",
     "test": "vitest run",
     "test:watch": "vitest",
