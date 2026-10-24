@@ -2,13 +2,14 @@
 
 import { prisma } from "@/lib/prisma";
 import type { Milestone } from "@/types/milestone";
+import type { ProjectStatus } from "@/generated/prisma/enums";
 import type { ActionResult } from "@/types/common";
 
 type ProjectInfo = {
   projectCode: string;
   name: string;
   planName: string;
-  projectStatus: string;
+  projectStatus: ProjectStatus;
 };
 
 export async function getPublicMilestonesAction(

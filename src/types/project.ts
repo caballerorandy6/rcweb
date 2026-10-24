@@ -3,6 +3,10 @@
  * Used in both admin and client contexts
  */
 
+import { ProjectStatus } from "@/generated/prisma/enums";
+
+export { ProjectStatus };
+
 /**
  * Admin project type - simplified version for admin dashboard
  */
@@ -15,26 +19,14 @@ export type AdminProject = {
   totalAmount: number;
   firstPaid: boolean;
   secondPaid: boolean;
-  projectStatus: string;
+  projectStatus: ProjectStatus;
   createdAt: string | Date;
 };
 
 /**
- * Project status type
- */
-export type ProjectStatus =
-  | "pending"
-  | "in_progress"
-  | "ready_for_payment"
-  | "completed";
-
-/**
  * Project status for update operations (excludes pending)
  */
-export type UpdateableProjectStatus =
-  | "in_progress"
-  | "ready_for_payment"
-  | "completed";
+export type UpdateableProjectStatus = Exclude<ProjectStatus, "pending">;
 
 /**
  * Verified project access information
