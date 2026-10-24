@@ -13,7 +13,12 @@ type ProjectInfo = {
   finalAmount: number;
 };
 
-export default function FinalPayment() {
+interface FinalPaymentProps {
+  /** Message explaining why a payment link redirected here */
+  notice?: string;
+}
+
+export default function FinalPayment({ notice }: FinalPaymentProps) {
   const [email, setEmail] = useState("");
   const [projectCode, setProjectCode] = useState("");
   const [isPending, startTransition] = useTransition();
@@ -68,6 +73,15 @@ export default function FinalPayment() {
         <p className="text-gray-400 mb-6 font-inter">
           Enter your project details to proceed with the final payment
         </p>
+
+        {notice && (
+          <p
+            role="status"
+            className="mb-6 rounded-lg border border-yellow-500/50 bg-yellow-900/20 p-4 text-sm text-yellow-200 font-inter"
+          >
+            {notice}
+          </p>
+        )}
 
         {!verified ? (
           <>

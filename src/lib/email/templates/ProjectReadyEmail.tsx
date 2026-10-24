@@ -19,6 +19,8 @@ export interface ProjectReadyEmailProps {
   projectCode: string;
   finalAmount: number;
   customerEmail: string;
+  /** Magic link to /pay/[accessToken] */
+  paymentUrl: string;
 }
 
 // Alias for backward compatibility in this file
@@ -30,6 +32,7 @@ export const ProjectReadyEmail = ({
   projectCode,
   finalAmount,
   customerEmail,
+  paymentUrl,
 }: ProjectReadyEmailProps) => {
   const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "https://rcweb.dev";
 
@@ -87,10 +90,7 @@ export const ProjectReadyEmail = ({
                 You can complete your payment directly:
               </Text>
               <Section style={{ textAlign: "center", margin: "20px 0" }}>
-                <Button
-                  href={`${baseUrl}/final-payment`}
-                  style={styles.paymentButton}
-                >
+                <Button href={paymentUrl} style={styles.paymentButton}>
                   Complete Final Payment Now
                 </Button>
               </Section>

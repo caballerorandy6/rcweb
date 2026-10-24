@@ -93,7 +93,13 @@ export default function ProjectManagement({
           `Project ${projectCode} updated to ${formatStatus(newStatus)}`
         );
         if (newStatus === "ready_for_payment") {
-          toast.info("Email notification will be sent to client");
+          if (result.data.emailError) {
+            toast.warning("Status updated, but the client email failed", {
+              description: result.data.emailError,
+            });
+          } else {
+            toast.info("Email with the payment link sent to the client");
+          }
         }
         loadData();
       } else if (!result.success) {

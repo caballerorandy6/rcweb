@@ -4,12 +4,15 @@ import { prisma } from "@/lib/prisma";
 import type { Milestone } from "@/types/milestone";
 import type { ProjectStatus } from "@/generated/prisma/enums";
 import type { ActionResult } from "@/types/common";
+import { getProjectCharges } from "@/lib/project/charges";
 
 type ProjectInfo = {
   projectCode: string;
   name: string;
   planName: string;
   status: ProjectStatus;
+  /** Final charge in cents, shown when the project is ready for payment */
+  finalAmount: number;
 };
 
 export async function getPublicMilestonesAction(
@@ -23,6 +26,7 @@ export async function getPublicMilestonesAction(
     const project = await prisma.project.findUnique({
       where: { accessToken },
       include: {
+        payments: true,
         milestones: {
           orderBy: { order: "asc" },
         },
@@ -54,6 +58,7 @@ export async function getPublicMilestonesAction(
           name: project.name,
           planName: project.planName,
           status: project.status,
+          finalAmount: getProjectCharges(project.payments).final.amount,
         },
         milestones,
       },

@@ -1,7 +1,10 @@
 "use server";
 
+import { Resend } from "resend";
 import { prisma } from "@/lib/prisma";
-import { sendFinalPaymentEmail } from "@/actions/campaigns/sendFinalPaymentEmailAction";
+import { sendProjectReadyEmail } from "@/lib/email/senders";
+import { getProjectCharges } from "@/lib/project/charges";
+import { getPayUrl } from "@/lib/projectUrl";
 import type { UpdateableProjectStatus } from "@/types/project";
 import type { ProjectStatus } from "@/generated/prisma/enums";
 import type { ActionResult } from "@/types/common";
@@ -14,10 +17,16 @@ type ProjectInfo = {
   status: ProjectStatus;
 };
 
+export type UpdateProjectStatusData = {
+  project: ProjectInfo;
+  /** Set when the status changed but the customer email could not be sent */
+  emailError?: string;
+};
+
 export async function updateProjectStatusAction(
   projectCode: string,
   status: UpdateableProjectStatus
-): Promise<ActionResult<{ project: ProjectInfo }>> {
+): Promise<ActionResult<UpdateProjectStatusData>> {
   try {
     const authCheck = await requireAdmin();
     if (!authCheck.authorized) {
@@ -27,11 +36,26 @@ export async function updateProjectStatusAction(
     const project = await prisma.project.update({
       where: { projectCode },
       data: { status },
+      include: { payments: true },
     });
 
-    // Si el proyecto está listo, enviar email automáticamente
+    let emailError: string | undefined;
+
+    // Ready for payment: tell the customer and give them the magic link
     if (status === "ready_for_payment") {
-      await sendFinalPaymentEmail(projectCode);
+      const { final } = getProjectCharges(project.payments);
+      const sent = await sendProjectReadyEmail(
+        new Resend(process.env.RESEND_API_KEY!),
+        {
+          customerEmail: project.email,
+          customerName: project.name,
+          planName: project.planName,
+          projectCode: project.projectCode,
+          finalAmount: final.amount,
+          paymentUrl: getPayUrl(project.accessToken),
+        }
+      );
+      if (!sent.success) emailError = sent.error ?? "Email could not be sent";
     }
 
     return {
@@ -43,6 +67,7 @@ export async function updateProjectStatusAction(
           planName: project.planName,
           status: project.status,
         },
+        emailError,
       },
     };
   } catch (error) {
