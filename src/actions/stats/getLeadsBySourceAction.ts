@@ -2,6 +2,7 @@
 
 import { prisma } from "@/lib/prisma";
 import { requireAdmin } from "@/lib/authGuard";
+import type { LeadStatus } from "@/generated/prisma/enums";
 
 export interface LeadSourceStat {
   source: string;
@@ -12,14 +13,7 @@ export interface LeadSourceStat {
 export interface LeadsBySourceResult {
   sources: LeadSourceStat[];
   total: number;
-  byStatus: {
-    NEW: number;
-    CONTACTED: number;
-    INTERESTED: number;
-    PROPOSAL_SENT: number;
-    WON: number;
-    LOST: number;
-  };
+  byStatus: Record<LeadStatus, number>;
 }
 
 export async function getLeadsBySourceAction(): Promise<LeadsBySourceResult> {
@@ -71,9 +65,7 @@ export async function getLeadsBySourceAction(): Promise<LeadsBySourceResult> {
     };
 
     for (const group of statusGroups) {
-      if (group.leadStatus in byStatus) {
-        byStatus[group.leadStatus as keyof typeof byStatus] = group._count.id;
-      }
+      byStatus[group.leadStatus] = group._count.id;
     }
 
     return {
@@ -165,9 +157,7 @@ export async function getLeadsBySourceForPeriodAction(
     };
 
     for (const group of statusGroups) {
-      if (group.leadStatus in byStatus) {
-        byStatus[group.leadStatus as keyof typeof byStatus] = group._count.id;
-      }
+      byStatus[group.leadStatus] = group._count.id;
     }
 
     return {

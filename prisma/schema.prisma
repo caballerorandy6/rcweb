@@ -17,7 +17,7 @@ model Contact {
   createdAt        DateTime @default(now())
   updatedAt        DateTime @updatedAt
 
-  leadStatus String @default("NEW") // NEW, CONTACTED, INTERESTED, PROPOSAL_SENT, WON, LOST
+  leadStatus LeadStatus @default(NEW)
 
   // UTM Tracking fields
   utmSource   String? // google, facebook, linkedin, newsletter
@@ -146,7 +146,7 @@ model Payment {
   secondSessionId String? // Stripe session ID del segundo pago
 
   // Datos del proyecto
-  projectStatus String  @default("pending") // pending, in_progress, ready_for_payment, completed
+  projectStatus ProjectStatus @default(pending)
   projectNotes  String? // Notas internas
 
   // Fechas importantes
@@ -166,8 +166,7 @@ model Payment {
   contact   Contact? @relation(fields: [contactId], references: [id])
 
   @@index([email])
-  @@index([projectCode])
-  @@index([accessToken])
+  @@index([projectStatus])
   @@index([contactId])
 }
 
@@ -197,7 +196,7 @@ model Subscription {
   currency             String @default("USD")
 
   // Status
-  status String @default("active") // active, cancelled, past_due, unpaid
+  status SubscriptionStatus @default(active)
 
   // Billing cycle
   currentPeriodStart DateTime?
@@ -222,7 +221,6 @@ model Subscription {
   termsAcceptance TermsAcceptance?
 
   @@index([email])
-  @@index([stripeSubscriptionId])
   @@index([stripeCustomerId])
   @@index([status])
 }
@@ -242,7 +240,41 @@ model SmsLog {
   @@index([createdAt])
 }
 
-// Milestone status enum
+enum LeadStatus {
+  NEW
+  CONTACTED
+  INTERESTED
+  PROPOSAL_SENT
+  WON
+  LOST
+}
+
+enum ProjectStatus {
+  pending
+  in_progress
+  ready_for_payment
+  completed
+}
+
+enum SubscriptionStatus {
+  active
+  cancelled
+  past_due
+  unpaid
+}
+
+enum InvoiceType {
+  initial
+  final
+  summary
+}
+
+enum InvoiceStatus {
+  paid
+  pending
+  cancelled
+}
+
 enum MilestoneStatus {
   pending
   in_progress
@@ -276,8 +308,7 @@ model Invoice {
   paymentId     String
   payment       Payment @relation(fields: [paymentId], references: [id], onDelete: Cascade)
 
-  // Tipo de invoice
-  type String // "initial", "final", "summary"
+  type InvoiceType
 
   // Datos del cliente (snapshot histórico)
   customerName  String
@@ -301,15 +332,14 @@ model Invoice {
   stripeSessionId String?
 
   // Status y fechas
-  status    String    @default("paid") // paid, pending, cancelled
-  issueDate DateTime  @default(now())
+  status    InvoiceStatus @default(paid)
+  issueDate DateTime      @default(now())
   dueDate   DateTime?
   paidDate  DateTime?
-  createdAt DateTime  @default(now())
-  updatedAt DateTime  @updatedAt
+  createdAt DateTime      @default(now())
+  updatedAt DateTime      @updatedAt
 
   @@index([paymentId])
-  @@index([invoiceNumber])
   @@index([type])
   @@index([customerEmail])
   @@index([projectCode])

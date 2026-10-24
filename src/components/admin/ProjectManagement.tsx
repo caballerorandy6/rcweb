@@ -10,7 +10,11 @@ import { updateProjectStatusAction } from "@/actions/projects/updateProjectStatu
 import { getMilestonesAction } from "@/actions/milestones/getMilestonesAction";
 import MilestoneManager from "./MilestoneManager";
 import { Milestone } from "@/types/milestone";
-import { AdminProject, ProjectStatus } from "@/types/project";
+import {
+  AdminProject,
+  ProjectStatus,
+  UpdateableProjectStatus,
+} from "@/types/project";
 import { ProjectStats } from "@/types/stats";
 import { FlagIcon } from "@heroicons/react/24/outline";
 
@@ -77,12 +81,12 @@ export default function ProjectManagement({
     }
   };
 
-  const handleStatusUpdate = (projectCode: string, newStatus: string) => {
+  const handleStatusUpdate = (
+    projectCode: string,
+    newStatus: UpdateableProjectStatus
+  ) => {
     startTransition(async () => {
-      const result = await updateProjectStatusAction(
-        projectCode,
-        newStatus as ProjectStatus
-      );
+      const result = await updateProjectStatusAction(projectCode, newStatus);
 
       if (result.success) {
         toast.success(
@@ -98,11 +102,11 @@ export default function ProjectManagement({
     });
   };
 
-  const formatStatus = (status: string): string => {
+  const formatStatus = (status: ProjectStatus): string => {
     return status.replace("_", " ");
   };
 
-  const getStatusColor = (status: string) => {
+  const getStatusColor = (status: ProjectStatus) => {
     switch (status) {
       case "pending":
         return "bg-yellow-500/10 text-yellow-400 border-yellow-500/40";
@@ -117,7 +121,10 @@ export default function ProjectManagement({
     }
   };
 
-  const getNextStatus = (currentStatus: string, secondPaid: boolean) => {
+  const getNextStatus = (
+    currentStatus: ProjectStatus,
+    secondPaid: boolean
+  ): UpdateableProjectStatus | null => {
     if (secondPaid) {
       return null;
     }

@@ -8,6 +8,7 @@ import { Resend } from "resend";
 import { createInvoiceAndSendEmail } from "@/lib/invoice/createInvoiceAndSendEmail";
 import { ADMIN_EMAIL } from "@/lib/email/adminEmail";
 import { LEGAL_LAST_UPDATED } from "@/lib/company";
+import { toSubscriptionStatus } from "@/lib/subscriptionStatus";
 import {
   sendSubscriptionConfirmation,
   sendAdminSubscriptionNotification,
@@ -562,7 +563,7 @@ export async function POST(req: Request) {
               name: customerName || "Client",
               planName: planName || "Monthly Website Maintenance",
               amount: amount,
-              status: stripeSubscription.status,
+              status: toSubscriptionStatus(stripeSubscription.status),
               currentPeriodStart: currentPeriodStart
                 ? new Date(currentPeriodStart * 1000)
                 : new Date(),
@@ -610,7 +611,7 @@ export async function POST(req: Request) {
           customerEmail,
           planName: planName || "Monthly Website Maintenance",
           amount,
-          status: stripeSubscription.status,
+          status: toSubscriptionStatus(stripeSubscription.status),
           stripeSubscriptionId: subscriptionId,
           nextBillingDate,
         });
@@ -669,7 +670,7 @@ export async function POST(req: Request) {
         await prisma.subscription.update({
           where: { stripeSubscriptionId: subscriptionId },
           data: {
-            status: stripeSubscription.status,
+            status: toSubscriptionStatus(stripeSubscription.status),
             currentPeriodStart: currentPeriodStart
               ? new Date(currentPeriodStart * 1000)
               : undefined,
@@ -858,7 +859,7 @@ export async function POST(req: Request) {
       await prisma.subscription.update({
         where: { stripeSubscriptionId: subscriptionId },
         data: {
-          status: stripeSubscription.status,
+          status: toSubscriptionStatus(stripeSubscription.status),
           currentPeriodStart: currentPeriodStart
             ? new Date(currentPeriodStart * 1000)
             : undefined,
