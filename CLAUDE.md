@@ -79,7 +79,9 @@ Also read the Next.js docs shipped with the installed version (`node_modules/nex
 
 ### Payment Flow (50/50)
 
-Admin creates Payment → Client gets email → Accepts terms → Stripe Checkout (50%) → Webhook processes → Invoice PDF generated → Project starts → Admin marks ready → Final 50% payment → Complete.
+Client accepts terms → Stripe Checkout (50%) → Webhook creates `Project` with two `Payment` rows (`deposit` paid, `final` pending) → Invoice PDF generated → Project starts → Admin marks ready → Final 50% payment via `/pay/[token]` → `final` paid, project `completed`.
+
+`Project` holds the customer, plan, status and tokens; `Payment` is one row per charge (`kind`, `amount`, `status`, `stripeSessionId`, `paidAt`). Invoice, Milestone and TermsAcceptance belong to `Project`. Use `getProjectCharges()` from `src/lib/project/charges.ts` to read the deposit/final rows.
 
 ## Testing
 

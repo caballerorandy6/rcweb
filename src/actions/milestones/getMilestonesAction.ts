@@ -6,7 +6,7 @@ import type { Milestone } from "@/types/milestone";
 import type { ActionResult } from "@/types/common";
 
 export async function getMilestonesAction(
-  paymentId: string
+  projectId: string
 ): Promise<ActionResult<{ milestones: Milestone[] }>> {
   const auth = await requireAdmin();
 
@@ -16,13 +16,13 @@ export async function getMilestonesAction(
 
   try {
     const data = await prisma.milestone.findMany({
-      where: { paymentId },
+      where: { projectId },
       orderBy: { order: "asc" },
     });
 
     const milestones: Milestone[] = data.map((m) => ({
       id: m.id,
-      paymentId: m.paymentId,
+      projectId: m.projectId,
       title: m.title,
       description: m.description,
       order: m.order,

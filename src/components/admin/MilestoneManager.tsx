@@ -17,14 +17,14 @@ import { updateMilestoneAction } from "@/actions/milestones/updateMilestoneActio
 import { deleteMilestoneAction } from "@/actions/milestones/deleteMilestoneAction";
 
 type MilestoneManagerProps = {
-  paymentId: string;
+  projectId: string;
   projectCode: string;
   initialMilestones: Milestone[];
   onClose: () => void;
 };
 
 export default function MilestoneManager({
-  paymentId,
+  projectId,
   projectCode,
   initialMilestones,
   onClose,
@@ -52,7 +52,7 @@ export default function MilestoneManager({
     setIsLoading(true);
 
     const result = await createMilestoneAction(
-      paymentId,
+      projectId,
       newTitle,
       newDescription || null,
       milestones.length

@@ -11,7 +11,7 @@ export interface AdminInitialPaymentFallbackParams {
   customerEmail: string;
   planName: string;
   firstPaymentAmount: number;
-  paymentId: string;
+  projectId: string;
 }
 
 export async function sendAdminInitialPaymentFallback(
@@ -24,7 +24,7 @@ export async function sendAdminInitialPaymentFallback(
     customerEmail,
     planName,
     firstPaymentAmount,
-    paymentId,
+    projectId,
   } = params;
 
   try {
@@ -36,7 +36,7 @@ export async function sendAdminInitialPaymentFallback(
         planName={planName}
         amount={firstPaymentAmount}
         projectCode={projectCode}
-        paymentId={paymentId}
+        projectId={projectId}
         isFallback={true}
       />
     );

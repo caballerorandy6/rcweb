@@ -3,6 +3,7 @@
 import { prisma } from "@/lib/prisma";
 import { Resend } from "resend";
 import type { ActionResultSimple } from "@/types/common";
+import { getProjectCharges } from "@/lib/project/charges";
 
 const resend = new Resend(process.env.RESEND_API_KEY!);
 
@@ -10,21 +11,24 @@ export async function sendFinalPaymentEmail(
   projectCode: string
 ): Promise<ActionResultSimple> {
   try {
-    const payment = await prisma.payment.findUnique({
+    const project = await prisma.project.findUnique({
       where: { projectCode },
+      include: { payments: true },
     });
 
-    if (!payment) {
+    if (!project) {
       return { success: false, error: "Project not found" };
     }
 
+    const finalAmount = getProjectCharges(project.payments).final.amount;
+
     // Generar URL con token seguro
-    const paymentUrl = `${process.env.NEXT_PUBLIC_BASE_URL}/pay/${payment.accessToken}`;
+    const paymentUrl = `${process.env.NEXT_PUBLIC_BASE_URL}/pay/${project.accessToken}`;
 
     await resend.emails.send({
       from: "RC Web Solutions <no-reply@rcweb.dev>",
-      to: payment.email,
-      subject: `🎉 Project Complete - ${payment.planName} Website Ready!`,
+      to: project.email,
+      subject: `🎉 Project Complete - ${project.planName} Website Ready!`,
       html: `
       <!DOCTYPE html>
       <html>
@@ -52,7 +56,7 @@ export async function sendFinalPaymentEmail(
                         </svg>
                       </div>
                       <h1 style="color: #ffffff; margin: 0; font-size: 32px; font-weight: 700;">Project Complete!</h1>
-                      <p style="color: rgba(255, 255, 255, 0.9); margin: 8px 0 0 0; font-size: 16px;">Your ${payment.planName} website is ready</p>
+                      <p style="color: rgba(255, 255, 255, 0.9); margin: 8px 0 0 0; font-size: 16px;">Your ${project.planName} website is ready</p>
                     </td>
                   </tr>
                   
@@ -60,12 +64,12 @@ export async function sendFinalPaymentEmail(
                   <tr>
                     <td style="padding: 40px 32px;">
                       <p style="color: #374151; font-size: 16px; line-height: 1.6; margin: 0 0 24px 0;">
-                        Hi <strong>${payment.name}</strong>,
+                        Hi <strong>${project.name}</strong>,
                       </p>
                       
                       <p style="color: #374151; font-size: 16px; line-height: 1.6; margin: 0 0 32px 0;">
                         Congratulations! Your project has been successfully completed and your final payment of 
-                        <strong style="color: #059669; font-size: 18px;">$${(payment.secondPayment / 100).toFixed(2)}</strong> is now due to receive all deliverables.
+                        <strong style="color: #059669; font-size: 18px;">$${(finalAmount / 100).toFixed(2)}</strong> is now due to receive all deliverables.
                       </p>
                       
                       <!-- Project Summary -->
@@ -76,15 +80,15 @@ export async function sendFinalPaymentEmail(
                         <table style="width: 100%; font-size: 14px;">
                           <tr>
                             <td style="padding: 6px 0; color: #6b7280;">Project Code:</td>
-                            <td style="text-align: right; font-weight: 600; color: #374151; font-family: 'Courier New', monospace;">${payment.projectCode}</td>
+                            <td style="text-align: right; font-weight: 600; color: #374151; font-family: 'Courier New', monospace;">${project.projectCode}</td>
                           </tr>
                           <tr>
                             <td style="padding: 6px 0; color: #6b7280;">Plan:</td>
-                            <td style="text-align: right; font-weight: 600; color: #374151;">${payment.planName}</td>
+                            <td style="text-align: right; font-weight: 600; color: #374151;">${project.planName}</td>
                           </tr>
                           <tr>
                             <td style="padding: 6px 0; color: #6b7280;">Final Payment Due:</td>
-                            <td style="text-align: right; font-weight: 600; color: #059669; font-size: 16px;">$${(payment.secondPayment / 100).toFixed(2)}</td>
+                            <td style="text-align: right; font-weight: 600; color: #059669; font-size: 16px;">$${(finalAmount / 100).toFixed(2)}</td>
                           </tr>
                         </table>
                       </div>
@@ -101,7 +105,7 @@ export async function sendFinalPaymentEmail(
                           <a href="${paymentUrl}" style="color: #7c3aed; font-weight: 600; text-decoration: none;">Click here to pay now</a>
                         </p>
                         <p style="margin: 0; color: #4b5563; font-size: 14px;">
-                          Or visit <a href="https://rcweb.dev/final-payment" style="color: #7c3aed; text-decoration: none;">https://rcweb.dev/final-payment</a> and use your email <strong>${payment.email}</strong> and project code <strong>${payment.projectCode}</strong>.
+                          Or visit <a href="https://rcweb.dev/final-payment" style="color: #7c3aed; text-decoration: none;">https://rcweb.dev/final-payment</a> and use your email <strong>${project.email}</strong> and project code <strong>${project.projectCode}</strong>.
                         </p>
                       </div>
                       
@@ -124,7 +128,7 @@ export async function sendFinalPaymentEmail(
                       <hr style="border: none; border-top: 1px solid #e5e7eb; margin: 32px 0;">
                       <p style="text-align: center; color: #6b7280; font-size: 12px;">
                         You can unsubscribe from marketing emails at any time by clicking
-                      <a href="${process.env.NEXT_PUBLIC_BASE_URL}/unsubscribe?email=${encodeURIComponent(payment.email)}" style="color: #7c3aed; text-decoration: none;">
+                      <a href="${process.env.NEXT_PUBLIC_BASE_URL}/unsubscribe?email=${encodeURIComponent(project.email)}" style="color: #7c3aed; text-decoration: none;">
                         here
                       </a>.
                       </p>

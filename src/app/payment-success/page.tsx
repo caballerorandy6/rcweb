@@ -69,11 +69,14 @@ async function Content({ searchParams }: PageProps) {
   // Payment flow
   const result = await handlePaymentSuccessAction(sessionId, code);
 
+  if (!result.success) {
+    return <PaymentSuccess error={result.error} projectCode={code} />;
+  }
+
   return (
     <PaymentSuccess
-      payment={result.payment}
-      error={result.error}
-      projectCode={code || result.payment?.projectCode}
+      project={result.project}
+      projectCode={code || result.project.projectCode}
       fallbackUsed={result.fallbackUsed}
     />
   );

@@ -27,7 +27,7 @@ export interface AdminNotificationEmailProps {
   planName: string;
   amount: number; // in cents
   projectCode?: string;
-  paymentId?: string;
+  projectId?: string;
   pendingAmount?: number; // in cents
   totalAmount?: number; // in cents
   stripeSubscriptionId?: string;
@@ -43,7 +43,7 @@ export const AdminNotificationEmail: React.FC<AdminNotificationEmailProps> = ({
   planName,
   amount,
   projectCode,
-  paymentId,
+  projectId,
   pendingAmount,
   totalAmount,
   stripeSubscriptionId,
@@ -239,10 +239,10 @@ export const AdminNotificationEmail: React.FC<AdminNotificationEmailProps> = ({
                       <td style={styles.infoValue}>${formattedAmount}</td>
                     </tr>
                   )}
-                  {paymentId && (
+                  {projectId && (
                     <tr>
-                      <td style={styles.infoLabel}>Payment ID:</td>
-                      <td style={styles.infoValueSmall}>{paymentId}</td>
+                      <td style={styles.infoLabel}>Project ID:</td>
+                      <td style={styles.infoValueSmall}>{projectId}</td>
                     </tr>
                   )}
                 </tbody>

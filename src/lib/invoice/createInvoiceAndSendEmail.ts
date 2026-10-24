@@ -2,14 +2,14 @@
 // Función helper para crear invoices y enviar emails con PDFs adjuntos
 
 import { Resend } from "resend";
-import { Payment } from "@/generated/prisma/client";
 import { createInvoice, createInvoiceSummary } from "./actions";
 import { InvoiceType, DEFAULT_TAX_RATE } from "./types";
 import { sendInvoiceEmail } from "@/lib/email/senders";
 import { getProjectUrl } from "@/lib/projectUrl";
+import { getProjectCharges, type ProjectWithPayments } from "@/lib/project/charges";
 
 interface CreateInvoiceAndSendEmailParams {
-  payment: Payment;
+  project: ProjectWithPayments;
   type: InvoiceType;
   resend: Resend;
   stripeSessionId?: string;
@@ -26,31 +26,32 @@ interface InvoiceResult {
  * Esta función se llama desde el webhook de Stripe
  */
 export async function createInvoiceAndSendEmail({
-  payment,
+  project,
   type,
   resend,
   stripeSessionId,
 }: CreateInvoiceAndSendEmailParams): Promise<InvoiceResult> {
   try {
+    const { deposit, final } = getProjectCharges(project.payments);
     let invoiceResult: InvoiceResult;
 
     // Crear invoice según el tipo
     if (type === "summary") {
-      invoiceResult = await createInvoiceSummary(payment.id);
+      invoiceResult = await createInvoiceSummary(project.id);
     } else {
-      const amount = type === "initial" ? payment.firstPayment : payment.secondPayment;
+      const amount = type === "initial" ? deposit.amount : final.amount;
       const description =
         type === "initial"
-          ? `Initial Payment - 50% Deposit for ${payment.planName}`
-          : `Final Payment - 50% Balance for ${payment.planName}`;
+          ? `Initial Payment - 50% Deposit for ${project.planName}`
+          : `Final Payment - 50% Balance for ${project.planName}`;
 
       invoiceResult = await createInvoice({
-        paymentId: payment.id,
+        projectId: project.id,
         type,
-        customerName: payment.name,
-        customerEmail: payment.email,
-        projectCode: payment.projectCode,
-        planName: payment.planName,
+        customerName: project.name,
+        customerEmail: project.email,
+        projectCode: project.projectCode,
+        planName: project.planName,
         description,
         subtotal: amount,
         taxRate: DEFAULT_TAX_RATE,
@@ -65,16 +66,16 @@ export async function createInvoiceAndSendEmail({
 
     // Enviar email usando el sender con react-email template
     await sendInvoiceEmail(resend, {
-      customerEmail: payment.email,
-      customerName: payment.name,
-      planName: payment.planName,
+      customerEmail: project.email,
+      customerName: project.name,
+      planName: project.planName,
       invoiceNumber: invoiceResult.invoiceNumber,
-      firstPayment: payment.firstPayment,
-      secondPayment: payment.secondPayment,
-      totalAmount: payment.totalAmount,
+      firstPayment: deposit.amount,
+      secondPayment: final.amount,
+      totalAmount: project.totalAmount,
       type,
       pdfBuffer,
-      projectUrl: getProjectUrl(payment.accessToken),
+      projectUrl: getProjectUrl(project.accessToken),
     });
 
     return invoiceResult;

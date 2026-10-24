@@ -37,7 +37,7 @@ const sourceColors: Record<string, string> = {
 export default async function RevenueAttribution() {
   const data = await getRevenueAttributionAction();
 
-  const hasData = data.totalPaidPayments > 0;
+  const hasData = data.totalPaidProjects > 0;
 
   return (
     <div className="bg-gray-800/80 rounded-xl p-4 sm:p-6 border border-gray-700/50">

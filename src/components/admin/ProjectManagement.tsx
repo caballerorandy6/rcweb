@@ -123,9 +123,9 @@ export default function ProjectManagement({
 
   const getNextStatus = (
     currentStatus: ProjectStatus,
-    secondPaid: boolean
+    finalPaid: boolean
   ): UpdateableProjectStatus | null => {
-    if (secondPaid) {
+    if (finalPaid) {
       return null;
     }
     switch (currentStatus) {
@@ -249,9 +249,9 @@ export default function ProjectManagement({
                       </div>
                       <div className="sm:hidden mt-2">
                         <span
-                          className={`inline-block px-2.5 py-1 rounded-full text-xs font-semibold border ${getStatusColor(project.projectStatus)}`}
+                          className={`inline-block px-2.5 py-1 rounded-full text-xs font-semibold border ${getStatusColor(project.status)}`}
                         >
-                          {formatStatus(project.projectStatus)}
+                          {formatStatus(project.status)}
                         </span>
                       </div>
                     </div>
@@ -266,29 +266,29 @@ export default function ProjectManagement({
                     <div className="flex flex-wrap gap-2">
                       <span
                         className={`px-2 py-1 rounded-lg text-xs font-medium border ${
-                          project.firstPaid
+                          project.depositPaid
                             ? "bg-green-500/10 text-green-400 border-green-500/30"
                             : "bg-red-500/10 text-red-400 border-red-500/30"
                         }`}
                       >
-                        1st: {project.firstPaid ? "✓" : "✗"}
+                        1st: {project.depositPaid ? "✓" : "✗"}
                       </span>
                       <span
                         className={`px-2 py-1 rounded-lg text-xs font-medium border ${
-                          project.secondPaid
+                          project.finalPaid
                             ? "bg-green-500/10 text-green-400 border-green-500/30"
                             : "bg-red-500/10 text-red-400 border-red-500/30"
                         }`}
                       >
-                        2nd: {project.secondPaid ? "✓" : "✗"}
+                        2nd: {project.finalPaid ? "✓" : "✗"}
                       </span>
                     </div>
                   </td>
                   <td className="hidden sm:table-cell px-6 lg:px-8 py-4 sm:py-5">
                     <span
-                      className={`inline-flex items-center px-3 sm:px-4 py-1.5 sm:py-2 rounded-full text-xs sm:text-sm font-semibold border ${getStatusColor(project.projectStatus)}`}
+                      className={`inline-flex items-center px-3 sm:px-4 py-1.5 sm:py-2 rounded-full text-xs sm:text-sm font-semibold border ${getStatusColor(project.status)}`}
                     >
-                      {formatStatus(project.projectStatus)}
+                      {formatStatus(project.status)}
                     </span>
                   </td>
                   <td className="px-4 sm:px-6 lg:px-8 py-4 sm:py-5">
@@ -308,11 +308,11 @@ export default function ProjectManagement({
                         </div>
                       </div>
                       {getNextStatus(
-                        project.projectStatus,
-                        project.secondPaid
+                        project.status,
+                        project.finalPaid
                       ) &&
-                        project.firstPaid &&
-                        !project.secondPaid && (
+                        project.depositPaid &&
+                        !project.finalPaid && (
                           <div className="relative group">
                             <Button
                               size="sm"
@@ -321,8 +321,8 @@ export default function ProjectManagement({
                                 handleStatusUpdate(
                                   project.projectCode,
                                   getNextStatus(
-                                    project.projectStatus,
-                                    project.secondPaid
+                                    project.status,
+                                    project.finalPaid
                                   )!
                                 )
                               }
@@ -331,19 +331,19 @@ export default function ProjectManagement({
                               {isPending
                                 ? "..."
                                 : getNextStatus(
-                                      project.projectStatus,
-                                      project.secondPaid
+                                      project.status,
+                                      project.finalPaid
                                     ) === "ready_for_payment"
                                   ? "📧 Mark Ready"
-                                  : `→ ${getNextStatus(project.projectStatus, project.secondPaid)?.replace("_", " ")}`}
+                                  : `→ ${getNextStatus(project.status, project.finalPaid)?.replace("_", " ")}`}
                             </Button>
                             <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-2 py-1 bg-gray-900 text-white text-xs rounded-sm opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none whitespace-nowrap z-10 border border-gray-700">
                               {getNextStatus(
-                                project.projectStatus,
-                                project.secondPaid
+                                project.status,
+                                project.finalPaid
                               ) === "ready_for_payment"
                                 ? "Mark project as ready for final payment"
-                                : `Update status to ${getNextStatus(project.projectStatus, project.secondPaid)?.replace("_", " ")}`}
+                                : `Update status to ${getNextStatus(project.status, project.finalPaid)?.replace("_", " ")}`}
                               <div className="absolute top-full left-1/2 -translate-x-1/2 -mt-px">
                                 <div className="border-4 border-transparent border-t-gray-900"></div>
                               </div>
@@ -361,7 +361,7 @@ export default function ProjectManagement({
 
       {selectedProject && (
         <MilestoneManager
-          paymentId={selectedProject.id}
+          projectId={selectedProject.id}
           projectCode={selectedProject.projectCode}
           initialMilestones={selectedProject.milestones}
           onClose={() => setSelectedProject(null)}

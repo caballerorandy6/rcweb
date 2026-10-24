@@ -3,6 +3,7 @@ import { redirect } from "next/navigation";
 import type { Route } from "next";
 import { createFinalPaymentSessionAction } from "@/actions/payments/createFinalPaymentSessionAction";
 import { Metadata } from "next";
+import { getProjectCharges, isPaid } from "@/lib/project/charges";
 
 export const metadata: Metadata = {
   title: "Processing Payment…",
@@ -23,25 +24,26 @@ export default async function MagicLinkPaymentPage(props: { params: Params }) {
     redirect("/final-payment?error=invalid-link");
   }
 
-  const payment = await prisma.payment.findUnique({
+  const project = await prisma.project.findUnique({
     where: { accessToken: token },
+    include: { payments: true },
   });
 
-  if (!payment) {
+  if (!project) {
     redirect("/final-payment?error=invalid-link");
   }
 
-  if (payment.secondPaid) {
+  if (isPaid(getProjectCharges(project.payments).final)) {
     redirect("/payment-complete");
   }
 
-  if (payment.projectStatus !== "ready_for_payment") {
+  if (project.status !== "ready_for_payment") {
     redirect("/final-payment?error=project-not-ready");
   }
 
   const result = await createFinalPaymentSessionAction(
-    payment.email,
-    payment.projectCode
+    project.email,
+    project.projectCode
   );
 
   if (result.success && result.sessionUrl) {

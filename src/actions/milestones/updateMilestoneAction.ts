@@ -30,7 +30,7 @@ export async function updateMilestoneAction(
 
     const milestone: Milestone = {
       id: data.id,
-      paymentId: data.paymentId,
+      projectId: data.projectId,
       title: data.title,
       description: data.description,
       order: data.order,

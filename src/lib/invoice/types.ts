@@ -7,7 +7,7 @@ export { InvoiceStatus, InvoiceType };
  * Datos para crear un invoice
  */
 export interface CreateInvoiceData {
-  paymentId: string;
+  projectId: string;
   type: InvoiceType;
   customerName: string;
   customerEmail: string;

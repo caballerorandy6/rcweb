@@ -6,7 +6,7 @@ import type { Milestone } from "@/types/milestone";
 import type { ActionResult } from "@/types/common";
 
 export async function createMilestoneAction(
-  paymentId: string,
+  projectId: string,
   title: string,
   description: string | null,
   order: number
@@ -19,12 +19,12 @@ export async function createMilestoneAction(
 
   try {
     const data = await prisma.milestone.create({
-      data: { paymentId, title, description, order },
+      data: { projectId, title, description, order },
     });
 
     const milestone: Milestone = {
       id: data.id,
-      paymentId: data.paymentId,
+      projectId: data.projectId,
       title: data.title,
       description: data.description,
       order: data.order,

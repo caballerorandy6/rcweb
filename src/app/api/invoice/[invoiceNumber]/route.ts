@@ -16,7 +16,7 @@ export const revalidate = 0;
  *
  * Security: Requires one of:
  * - Admin session
- * - token query param matching the payment's accessToken (customer links)
+ * - token query param matching the project's accessToken (customer links)
  */
 export async function GET(
   request: NextRequest,
@@ -52,12 +52,12 @@ export async function GET(
       authorized = true;
     }
 
-    // Option 2: accessToken del payment (UUID no adivinable, para links de cliente).
+    // Option 2: accessToken del project (UUID no adivinable, para links de cliente).
     // El email plano no sirve como credencial: los números de invoice son
     // secuenciales y el email de un cliente no es secreto.
     if (!authorized) {
       const token = request.nextUrl.searchParams.get("token");
-      if (token && invoice.payment?.accessToken === token) {
+      if (token && invoice.project?.accessToken === token) {
         authorized = true;
       }
     }

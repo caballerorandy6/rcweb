@@ -32,7 +32,7 @@ export default async function ProjectPage(props: { params: Params }) {
 
   const { project, milestones } = result.data;
 
-  const status = getProjectStatusLabel(project.projectStatus);
+  const status = getProjectStatusLabel(project.status);
 
   return (
     <div className="min-h-screen bg-gray-900 pt-28 pb-12 px-4">
