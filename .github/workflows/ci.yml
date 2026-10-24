@@ -77,7 +77,7 @@ jobs:
 
       - name: Create the schema and the test accounts
         run: |
-          npx prisma db push
+          npx prisma migrate deploy
           npm run seed:dev
 
       - run: npx playwright install --with-deps chromium

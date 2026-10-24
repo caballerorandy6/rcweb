@@ -174,8 +174,8 @@ cp .env.example .env.local
 # Generate Prisma client
 npx prisma generate
 
-# Push schema to database
-npx prisma db push
+# Apply migrations
+npx prisma migrate deploy
 
 # (Optional) Open Prisma Studio to view database
 npx prisma studio
@@ -221,14 +221,17 @@ The application uses Prisma ORM with PostgreSQL. The schema includes:
 # Generate Prisma Client
 npx prisma generate
 
-# Push schema changes
-npx prisma db push
+# Create a migration from schema changes (dev)
+npx prisma migrate dev --name <change>
+
+# Apply pending migrations (CI / production)
+npx prisma migrate deploy
 
 # Open Prisma Studio (database GUI)
 npx prisma studio
 
 # Reset database (⚠️ deletes all data)
-npx prisma db push --force-reset
+npx prisma migrate reset
 ```
 
 ## Development
@@ -366,7 +369,7 @@ npm run start            # Start production server
 
 # Database
 npx prisma generate      # Generate Prisma Client
-npx prisma db push       # Push schema to database
+npx prisma migrate deploy  # Apply pending migrations
 npx prisma studio        # Open Prisma Studio GUI
 
 # Email Development
