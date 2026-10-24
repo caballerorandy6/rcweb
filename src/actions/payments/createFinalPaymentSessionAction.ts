@@ -2,6 +2,7 @@
 
 import { verifyProjectAccessAction } from "@/actions/projects/verifyProjectAccessAction";
 import stripe from "@/lib/stripe";
+import type { FinalCheckoutMetadataInput } from "@/lib/checkoutMetadata";
 
 interface SplitPaymentResponse {
   success: boolean;
@@ -30,21 +31,18 @@ export async function createFinalPaymentSessionAction(
 
     const project = verification.data.project;
 
-    // IMPORTANTE: Incluir TODOS los campos necesarios en metadata
+    // The webhook finds the project by id; the code is only there for the dashboard
     const metadata = {
+      paymentType: "final",
       projectId: project.id,
       projectCode: project.projectCode,
-      paymentType: "final", // ← CRÍTICO: Este campo debe ser EXACTAMENTE "final"
-      planName: project.planName || "Plan",
-      customerEmail: email, // Incluir el email también
-    };
+    } satisfies FinalCheckoutMetadataInput;
 
-    // Crear sesión de Stripe para pago final
     const session = await stripe.checkout.sessions.create({
       allowed_payment_method_types: ["card"],
       mode: "payment",
       customer_email: email,
-      metadata: metadata, // ← AQUÍ SE ENVÍA EL METADATA
+      metadata,
       line_items: [
         {
           price_data: {

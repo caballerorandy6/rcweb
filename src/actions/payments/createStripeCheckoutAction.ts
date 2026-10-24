@@ -4,6 +4,10 @@ import stripe from "@/lib/stripe";
 import { generateProjectCode } from "@/lib/utils";
 import { pricingPlans } from "@/lib/data";
 import { CheckoutRequestSchema, type CheckoutRequest } from "@/lib/zod";
+import type {
+  InitialCheckoutMetadataInput,
+  SubscriptionCheckoutMetadataInput,
+} from "@/lib/checkoutMetadata";
 
 // Stripe Price ID for Monthly Maintenance Subscription
 // Set via environment variable for security and flexibility
@@ -57,12 +61,12 @@ export async function createStripeCheckoutAction(
         customer_email: customer.email,
         billing_address_collection: "required",
         metadata: {
+          paymentType: "subscription",
           planName: plan.name,
           customerName: customer.name,
           customerEmail: customer.email,
           termsAcceptedAt,
-          paymentType: "subscription",
-        },
+        } satisfies SubscriptionCheckoutMetadataInput,
         line_items: [
           {
             price: MAINTENANCE_PRICE_ID,
@@ -88,26 +92,24 @@ export async function createStripeCheckoutAction(
     const firstPaymentAmount = Math.round(plan.price * 0.5);
     const secondPaymentAmount = plan.price - firstPaymentAmount;
 
-    // Crear sesión de Stripe CON TODA LA METADATA
-    // El Payment se creará en el webhook DESPUÉS del pago exitoso
+    // The webhook creates the Project from this metadata once Stripe confirms
+    // the payment; nothing is written to the database before that.
     const session = await stripe.checkout.sessions.create({
       allowed_payment_method_types: ["card"],
       mode: "payment",
       customer_email: customer.email,
       billing_address_collection: "required",
       metadata: {
-        // Toda la info necesaria para crear Payment después
-        projectCode,
         paymentType: "initial",
+        projectCode,
         planName: plan.name,
-        planPrice: plan.price.toString(),
         customerName: customer.name,
         customerEmail: customer.email,
         firstPaymentAmount: firstPaymentAmount.toString(),
         secondPaymentAmount: secondPaymentAmount.toString(),
         totalAmount: plan.price.toString(),
         termsAcceptedAt,
-      },
+      } satisfies InitialCheckoutMetadataInput,
       line_items: [
         {
           price_data: {

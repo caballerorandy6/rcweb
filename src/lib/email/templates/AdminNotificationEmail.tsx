@@ -33,7 +33,6 @@ export interface AdminNotificationEmailProps {
   stripeSubscriptionId?: string;
   nextBillingDate?: Date;
   subscriptionStatus?: string;
-  isFallback?: boolean;
 }
 
 export const AdminNotificationEmail: React.FC<AdminNotificationEmailProps> = ({
@@ -49,7 +48,6 @@ export const AdminNotificationEmail: React.FC<AdminNotificationEmailProps> = ({
   stripeSubscriptionId,
   nextBillingDate,
   subscriptionStatus,
-  isFallback = false,
 }) => {
   const formattedAmount = (amount / 100).toFixed(2);
   const formattedPending = pendingAmount ? (pendingAmount / 100).toFixed(2) : "";
@@ -66,12 +64,10 @@ export const AdminNotificationEmail: React.FC<AdminNotificationEmailProps> = ({
     switch (type) {
       case "initial_payment":
         return {
-          title: isFallback
-            ? "New Initial Payment (FALLBACK)"
-            : "New Initial Payment Received",
-          bgColor: isFallback ? EMAIL_COLORS.orangeLight : EMAIL_COLORS.greenLight,
-          borderColor: isFallback ? EMAIL_COLORS.orange : EMAIL_COLORS.green,
-          textColor: isFallback ? EMAIL_COLORS.orange : EMAIL_COLORS.green,
+          title: "New Initial Payment Received",
+          bgColor: EMAIL_COLORS.greenLight,
+          borderColor: EMAIL_COLORS.green,
+          textColor: EMAIL_COLORS.green,
         };
       case "final_payment":
         return {
@@ -123,18 +119,6 @@ export const AdminNotificationEmail: React.FC<AdminNotificationEmailProps> = ({
               {headerInfo.title}
             </Heading>
           </Section>
-
-          {/* Fallback Warning */}
-          {isFallback && (
-            <Section style={styles.warningBox}>
-              <Text style={styles.warningText}>
-                <strong>WEBHOOK DID NOT PROCESS IN 30 SECONDS</strong>
-              </Text>
-              <Text style={styles.warningSubtext}>
-                Payment was created from fallback. Please verify webhook configuration.
-              </Text>
-            </Section>
-          )}
 
           {/* Content */}
           <Section style={styles.content}>
@@ -252,7 +236,7 @@ export const AdminNotificationEmail: React.FC<AdminNotificationEmailProps> = ({
             <Hr style={styles.divider} />
 
             {/* Action Reminder */}
-            {type === "initial_payment" && !isFallback && (
+            {type === "initial_payment" && (
               <Text style={styles.reminderText}>
                 Remember to contact the client within 24 hours to discuss project
                 details.
@@ -264,17 +248,6 @@ export const AdminNotificationEmail: React.FC<AdminNotificationEmailProps> = ({
                 The client has been sent a confirmation email with subscription
                 details.
               </Text>
-            )}
-
-            {isFallback && (
-              <Section style={styles.checklistBox}>
-                <Text style={styles.checklistTitle}>Verify the following:</Text>
-                <ul style={styles.checklistList}>
-                  <li>Webhook URL in Stripe Dashboard points to correct endpoint</li>
-                  <li>Webhook endpoint secret matches STRIPE_WEBHOOK_SECRET</li>
-                  <li>Review webhook logs in Stripe Dashboard for errors</li>
-                </ul>
-              </Section>
             )}
           </Section>
 
@@ -309,21 +282,6 @@ const styles: Record<string, React.CSSProperties> = {
     margin: 0,
     fontSize: "20px",
     fontWeight: 700,
-  },
-  warningBox: {
-    backgroundColor: EMAIL_COLORS.orangeLight,
-    padding: "16px 24px",
-    borderLeft: `4px solid ${EMAIL_COLORS.orange}`,
-  },
-  warningText: {
-    color: EMAIL_COLORS.orange,
-    fontSize: "14px",
-    margin: "0 0 4px 0",
-  },
-  warningSubtext: {
-    color: EMAIL_COLORS.gray,
-    fontSize: "13px",
-    margin: 0,
   },
   content: {
     backgroundColor: EMAIL_COLORS.white,
@@ -385,25 +343,6 @@ const styles: Record<string, React.CSSProperties> = {
     fontStyle: "italic" as const,
     textAlign: "center" as const,
     margin: 0,
-  },
-  checklistBox: {
-    backgroundColor: EMAIL_COLORS.orangeLight,
-    padding: "16px",
-    borderRadius: "8px",
-    border: `1px solid ${EMAIL_COLORS.orange}`,
-  },
-  checklistTitle: {
-    color: EMAIL_COLORS.orange,
-    fontSize: "14px",
-    fontWeight: 600,
-    margin: "0 0 8px 0",
-  },
-  checklistList: {
-    color: EMAIL_COLORS.gray,
-    fontSize: "13px",
-    margin: 0,
-    paddingLeft: "20px",
-    lineHeight: "1.6",
   },
   footer: {
     backgroundColor: EMAIL_COLORS.dark,

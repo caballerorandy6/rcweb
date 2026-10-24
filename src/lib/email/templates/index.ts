@@ -7,11 +7,6 @@ export {
 } from "./SubscriptionConfirmationEmail";
 
 export {
-  InitialPaymentConfirmationEmail,
-  type InitialPaymentConfirmationEmailProps,
-} from "./InitialPaymentConfirmationEmail";
-
-export {
   InvoiceEmail,
   type InvoiceEmailProps,
   type InvoiceEmailType,

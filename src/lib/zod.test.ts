@@ -30,10 +30,10 @@ describe("FormSchema (contact form)", () => {
 });
 
 describe("CheckoutRequestSchema", () => {
-  it("trims the customer name and email", () => {
+  it("trims the customer name and email and lowercases the email", () => {
     const result = CheckoutRequestSchema.parse({
       planId: "starter",
-      customer: { name: "  Ana  ", email: "  ana@example.com " },
+      customer: { name: "  Ana  ", email: "  Ana@Example.com " },
     });
     expect(result.customer).toEqual({ name: "Ana", email: "ana@example.com" });
   });
