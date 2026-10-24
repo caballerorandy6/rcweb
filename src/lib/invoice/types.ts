@@ -1,14 +1,7 @@
 import { COMPANY } from "@/lib/company";
+import { InvoiceStatus, InvoiceType } from "@/generated/prisma/enums";
 
-/**
- * Tipos de invoice
- */
-export type InvoiceType = "initial" | "final" | "summary";
-
-/**
- * Estado del invoice
- */
-export type InvoiceStatus = "paid" | "pending" | "cancelled";
+export { InvoiceStatus, InvoiceType };
 
 /**
  * Datos para crear un invoice

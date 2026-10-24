@@ -2,7 +2,8 @@
 
 import { prisma } from "@/lib/prisma";
 import { sendFinalPaymentEmail } from "@/actions/campaigns/sendFinalPaymentEmailAction";
-import type { ProjectStatus } from "@/types/project";
+import type { UpdateableProjectStatus } from "@/types/project";
+import type { ProjectStatus } from "@/generated/prisma/enums";
 import type { ActionResult } from "@/types/common";
 import { requireAdmin } from "@/lib/authGuard";
 
@@ -10,12 +11,12 @@ type PaymentInfo = {
   id: string;
   projectCode: string;
   planName: string;
-  projectStatus: string;
+  projectStatus: ProjectStatus;
 };
 
 export async function updateProjectStatusAction(
   projectCode: string,
-  status: ProjectStatus
+  status: UpdateableProjectStatus
 ): Promise<ActionResult<{ payment: PaymentInfo }>> {
   try {
     const authCheck = await requireAdmin();

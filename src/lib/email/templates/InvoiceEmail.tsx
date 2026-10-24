@@ -11,8 +11,9 @@ import {
 } from "@react-email/components";
 import * as React from "react";
 import { EMAIL_COLORS } from "../colors";
+import type { InvoiceType } from "@/generated/prisma/enums";
 
-export type InvoiceEmailType = "initial" | "final" | "summary";
+export type InvoiceEmailType = InvoiceType;
 
 export interface InvoiceEmailProps {
   type: InvoiceEmailType;
