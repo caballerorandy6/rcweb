@@ -3,15 +3,18 @@ import { prisma } from "@/lib/prisma";
 const QUOTE_NUMBER_PATTERN = /^Q-(\d{4})-(\d{3,})$/;
 
 /**
- * "Q-2026-001" → "Q-2026-002"; a different year or no previous number
- * starts the sequence again at 001. Pure, so it can be unit tested.
+ * Next number after the highest sequence used in `year` among `existing`
+ * ("Q-2026-007" → "Q-2026-008"); other years and malformed values are
+ * ignored, and an empty year starts at 001. Pure, so it can be unit tested.
  */
-export function nextQuoteNumber(last: string | null, year: number): string {
-  const prefix = `Q-${year}-`;
-  const match = last?.match(QUOTE_NUMBER_PATTERN);
-  const sequence =
-    match && Number(match[1]) === year ? Number.parseInt(match[2], 10) + 1 : 1;
-  return `${prefix}${String(sequence).padStart(3, "0")}`;
+export function nextQuoteNumber(existing: readonly string[], year: number): string {
+  let highest = 0;
+  for (const number of existing) {
+    const match = number.match(QUOTE_NUMBER_PATTERN);
+    if (!match || Number(match[1]) !== year) continue;
+    highest = Math.max(highest, Number.parseInt(match[2], 10));
+  }
+  return `Q-${year}-${String(highest + 1).padStart(3, "0")}`;
 }
 
 /**
@@ -21,10 +24,12 @@ export function nextQuoteNumber(last: string | null, year: number): string {
  */
 export async function generateQuoteNumber(now: Date = new Date()): Promise<string> {
   const year = now.getFullYear();
-  const last = await prisma.quote.findFirst({
+  const existing = await prisma.quote.findMany({
     where: { quoteNumber: { startsWith: `Q-${year}-` } },
-    orderBy: { createdAt: "desc" },
     select: { quoteNumber: true },
   });
-  return nextQuoteNumber(last?.quoteNumber ?? null, year);
+  return nextQuoteNumber(
+    existing.map((quote) => quote.quoteNumber),
+    year
+  );
 }

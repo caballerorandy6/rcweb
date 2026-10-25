@@ -1,6 +1,8 @@
 "use client";
 
 import { useState, useTransition } from "react";
+import Link from "next/link";
+import type { Route } from "next";
 import { formatDate } from "@/lib/utils";
 import { toast } from "sonner";
 import { getContactsAction } from "@/actions/contacts/getContactsAction";
@@ -411,6 +413,12 @@ export default function ContactManagement({
                         </>
                       ) : (
                         <>
+                          <Link
+                            href={`/quotes/new?contactId=${contact.id}` as Route}
+                            className="text-gold hover:text-gold/80"
+                          >
+                            Quote
+                          </Link>
                           <button
                             onClick={() => setEditingContact(contact)}
                             className="text-blue-500 hover:text-blue-400"

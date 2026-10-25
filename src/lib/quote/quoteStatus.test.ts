@@ -66,18 +66,18 @@ describe("parseScopeLines", () => {
 });
 
 describe("nextQuoteNumber", () => {
-  it("continues the sequence within the year", () => {
-    expect(nextQuoteNumber("Q-2026-007", 2026)).toBe("Q-2026-008");
-    expect(nextQuoteNumber("Q-2026-999", 2026)).toBe("Q-2026-1000");
+  it("continues after the highest number of the year, whatever the order", () => {
+    expect(nextQuoteNumber(["Q-2026-003", "Q-2026-001", "Q-2026-002"], 2026)).toBe("Q-2026-004");
+    expect(nextQuoteNumber(["Q-2026-999"], 2026)).toBe("Q-2026-1000");
   });
 
   it("starts at 001 for the first quote of a year", () => {
-    expect(nextQuoteNumber(null, 2026)).toBe("Q-2026-001");
-    expect(nextQuoteNumber("Q-2025-042", 2026)).toBe("Q-2026-001");
+    expect(nextQuoteNumber([], 2026)).toBe("Q-2026-001");
+    expect(nextQuoteNumber(["Q-2025-042"], 2026)).toBe("Q-2026-001");
   });
 
-  it("ignores a malformed previous number", () => {
-    expect(nextQuoteNumber("garbage", 2026)).toBe("Q-2026-001");
+  it("ignores malformed numbers", () => {
+    expect(nextQuoteNumber(["garbage", "Q-2026-002"], 2026)).toBe("Q-2026-003");
   });
 });
 

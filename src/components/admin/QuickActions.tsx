@@ -10,9 +10,9 @@ import {
 
 const quickActions = [
   {
-    href: "/projects?action=new",
-    title: "New Project",
-    description: "Create a project",
+    href: "/quotes/new",
+    title: "New Quote",
+    description: "Quote a project",
     icon: <PlusCircleIcon className="w-5 h-5" />,
     color: "text-blue-400",
   },
