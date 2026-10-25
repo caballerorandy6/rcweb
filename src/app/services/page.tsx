@@ -4,7 +4,7 @@ import type { Route } from "next";
 import { genPageMetadata } from "@/utils/genPageMetadata";
 import { JsonLdForBreadcrumb } from "@/components/seo/JsonLdForBreadcrumb";
 import { siteConfig } from "@/config/site";
-import { offers, servicePages } from "@/lib/data";
+import { offers, offerPriceLabel, servicePages } from "@/lib/data";
 import BackLink from "@/components/ui/BackLink";
 import { ArrowRightIcon } from "@heroicons/react/24/outline";
 
@@ -66,7 +66,7 @@ export default function ServicesPage() {
                   </p>
                   <div className="mt-4 flex items-center justify-between">
                     <span className="text-sm font-inter font-semibold text-gold">
-                      {offer.priceLabel}
+                      {offerPriceLabel(offer)}
                     </span>
                     <span className="inline-flex items-center gap-1 text-sm font-inter text-gold group-hover:underline">
                       Learn more

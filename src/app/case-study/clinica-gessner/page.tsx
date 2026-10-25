@@ -118,7 +118,7 @@ export default function ClinicaGessnerCaseStudyPage() {
             "I build bilingual websites for Houston healthcare providers. Let's discuss how a modern website can bring more patients to your practice.",
           ctaLinks: [
             { label: "Schedule Free Consultation", href: "/schedule", primary: true },
-            { label: "Bilingual Website Services", href: "/services/bilingual-websites-houston" },
+            { label: "Business Websites (English & Spanish)", href: "/services/web-design-houston" },
           ],
         }}
       />

@@ -1,5 +1,6 @@
 import { ProjectProps } from "@/components/sections/Project";
 import type { OfferId } from "@/lib/offerIds";
+import { formatCurrency } from "@/lib/utils";
 import React from "react";
 import JavaScriptIcon from "@/components/icons/Javascript";
 import ReactIcon from "@/components/icons/React";
@@ -441,9 +442,11 @@ export type Offer = {
   summary: string;
   tags: string[];
   highlight: string;
-  /** Display price: "From $1,000", "$200/month" */
-  priceLabel: string;
   priceFromCents: number;
+  /** "from": quoted on scope, shown as "From $X"; "fixed": the price is the price */
+  pricing: "from" | "fixed";
+  /** Included post-launch support; null for the ongoing plan */
+  supportDays: number | null;
   /** Pricing card detail */
   range: string;
   duration: string;
@@ -467,8 +470,9 @@ export const offers: Offer[] = [
       "From a one-page landing to a full 5-10 page site: custom design, mobile-first, built to turn visitors into calls and form submissions.",
     tags: ["Custom Design", "Local SEO", "Contact Forms", "Loads in under 2 seconds"],
     highlight: "Like Clínica Gessner & Leo's Home Experts",
-    priceLabel: "From $1,000",
     priceFromCents: 100000,
+    pricing: "from",
+    supportDays: 30,
     range: "$1,000 - $6,000",
     duration: "1-4 weeks",
     description:
@@ -502,8 +506,9 @@ export const offers: Offer[] = [
       "Your current site rebuilt on modern technology: faster, mobile-friendly, and easier for customers to use, with your content migrated.",
     tags: ["Modern Design", "Performance Boost", "Mobile Optimization", "Content Migration"],
     highlight: "Like GSM A/C",
-    priceLabel: "From $3,500",
     priceFromCents: 350000,
+    pricing: "from",
+    supportDays: 45,
     range: "$3,500 - $8,000",
     duration: "4-6 weeks",
     description: "Your outdated website rebuilt without losing what works",
@@ -529,8 +534,9 @@ export const offers: Offer[] = [
       "A private panel to manage leads, customers, payments and campaigns from one place, with the repetitive work automated.",
     tags: ["Lead & Customer Management", "Email & SMS Campaigns", "Stripe Payments", "Reports"],
     highlight: "GSM saves 15 hours/week",
-    priceLabel: "From $7,500",
     priceFromCents: 750000,
+    pricing: "from",
+    supportDays: 60,
     range: "$7,500 - $15,000",
     duration: "5-6 weeks",
     description: "A tailored admin panel for your day-to-day operations",
@@ -557,8 +563,9 @@ export const offers: Offer[] = [
       "Full-featured online stores with Stripe and custom platforms: booking systems, member areas, internal tools. No monthly platform fees.",
     tags: ["Stripe Checkout", "Booking Systems", "User Accounts", "API Integrations"],
     highlight: "Like RC Beauty Salon",
-    priceLabel: "From $8,000",
     priceFromCents: 800000,
+    pricing: "from",
+    supportDays: 90,
     range: "$8,000 - $20,000+",
     duration: "6-12+ weeks",
     description:
@@ -586,8 +593,9 @@ export const offers: Offer[] = [
       "Ongoing maintenance, security updates, backups, and technical support so your website keeps working while you run your business.",
     tags: ["Security Updates", "Uptime Monitoring", "Content Updates", "Priority Support"],
     highlight: "Peace of mind guaranteed",
-    priceLabel: "$200/month",
     priceFromCents: 20000,
+    pricing: "fixed",
+    supportDays: null,
     range: "Cancel anytime",
     duration: "Ongoing",
     description: "Monthly maintenance and support for any website I built",
@@ -616,6 +624,32 @@ export const checkoutPlans: CheckoutPlan[] = offers.flatMap((offer) =>
   offer.checkout ? [offer.checkout] : []
 );
 
+/** What the contact forms need from the catalogue (id + title; nothing heavier crosses to the client) */
+export const serviceOptions = offers.map(({ id, title }) => ({ id, title }));
+
+const offerById = Object.fromEntries(offers.map((o) => [o.id, o])) as Record<
+  OfferId,
+  Offer
+>;
+
+/** "From" + "$3,500", or just "$200/month": the two halves every price display uses */
+export function offerPriceParts(offer: Offer): {
+  prefix: "From" | null;
+  amount: string;
+} {
+  const base = formatCurrency(offer.priceFromCents, true);
+  const amount = offer.checkout?.mode === "subscription" ? `${base}/month` : base;
+  return { prefix: offer.pricing === "from" ? "From" : null, amount };
+}
+
+/** "From $3,500" / "$200/month" */
+export function offerPriceLabel(offer: Offer): string {
+  const { prefix, amount } = offerPriceParts(offer);
+  return prefix ? `${prefix} ${amount}` : amount;
+}
+
+const quotedOffers = offers.filter((o) => o.pricing === "from");
+
 
 export const faqs = [
   {
@@ -626,12 +660,16 @@ export const faqs = [
   {
     question: "How long does a typical project take?",
     answer:
-      "It depends on the scope: Landing pages: 1-2 weeks, Professional websites: 3-4 weeks, Admin dashboards: 5-6 weeks, E-commerce: 6-10 weeks, Web applications: 8-12+ weeks. I always provide realistic timelines and meet them.",
+      `It depends on the scope: ${quotedOffers
+        .map((o) => `${o.title}: ${o.duration}`)
+        .join(", ")}. I always provide realistic timelines and meet them.`,
   },
   {
     question: "Do you offer post-launch support?",
     answer:
-      "Yes! Every project includes complimentary post-launch support. The duration depends on your plan: Landing Pages (30 days), Business Websites (30 days), Website Redesign (45 days), Admin Dashboards (60 days), E-Commerce Websites (90 days), and Custom Web Applications (6 months with priority support). Support covers bug fixes, minor adjustments, and technical assistance. After the included support period, maintenance plans start at $200/month including security updates, performance monitoring, content updates, and priority support.",
+      `Yes! Every project includes complimentary post-launch support. The duration depends on the service: ${quotedOffers
+        .map((o) => `${o.title} (${o.supportDays} days)`)
+        .join(", ")}. Support covers bug fixes, minor adjustments, and technical assistance. After that, the ${offerById.maintenance.title} plan is ${offerPriceLabel(offerById.maintenance)} and covers security updates, performance monitoring, content updates and priority support.`,
   },
   {
     question: "Do you work with technologies besides Next.js?",
@@ -650,70 +688,6 @@ export const faqs = [
   },
 ];
 
-
-export const deliverables = {
-  "Landing Pages": [
-    "Complete source code repository",
-    "Deployment on your hosting",
-    "Basic documentation",
-    "30 days of post-launch support",
-    "Training session (1 hour)",
-  ],
-  "Business Websites": [
-    "Complete source code repository",
-    "Deployment and configuration",
-    "Comprehensive documentation",
-    "30 days of post-launch support",
-    "Training sessions (2 hours)",
-    "Basic SEO setup",
-    "Analytics integration",
-  ],
-  "Website Redesign": [
-    "Complete source code repository",
-    "Migration from old platform",
-    "Technical documentation",
-    "45 days of post-launch support",
-    "Training sessions (2 hours)",
-    "SEO preservation & enhancement",
-    "Performance optimization",
-    "Content migration assistance",
-  ],
-  "Admin Dashboards": [
-    "Complete source code repository",
-    "Multi-environment deployment",
-    "Technical documentation",
-    "60 days of priority support",
-    "Training sessions (3 hours)",
-    "User management setup",
-    "Analytics and monitoring setup",
-    "Performance optimization",
-  ],
-  "E-Commerce Websites": [
-    "Complete source code repository",
-    "Multi-environment deployment",
-    "Full technical documentation",
-    "90 days of priority support",
-    "Training sessions (4 hours)",
-    "Advanced SEO optimization",
-    "Analytics and monitoring setup",
-    "Performance optimization",
-    "Security hardening",
-    "Payment gateway integration",
-  ],
-  "Web Applications": [
-    "Complete source code repository",
-    "Multi-environment deployment",
-    "Comprehensive technical documentation",
-    "6 months of priority support",
-    "Training sessions (5 hours)",
-    "Advanced SEO optimization",
-    "Analytics and monitoring setup",
-    "Performance optimization",
-    "Security hardening",
-    "API documentation",
-    "Ongoing consulting (first 30 days)",
-  ],
-};
 
 export const testimonials = [
   {

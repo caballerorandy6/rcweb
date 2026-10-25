@@ -3,7 +3,7 @@ import { JsonLdForBreadcrumb } from "@/components/seo/JsonLdForBreadcrumb";
 import { siteConfig } from "@/config/site";
 import BackLink from "@/components/ui/BackLink";
 import ScheduleContent from "@/components/sections/ScheduleContent";
-import { offers } from "@/lib/data";
+import { serviceOptions } from "@/lib/data";
 
 export const metadata = genPageMetadata({
   title: "Let's Talk About Your Project",
@@ -12,8 +12,6 @@ export const metadata = genPageMetadata({
   pageRoute: "/schedule",
 });
 
-// Only id + title cross to the client
-const serviceOptions = offers.map(({ id, title }) => ({ id, title }));
 
 export default function SchedulePage() {
   return (

@@ -16,7 +16,7 @@ import { getStoredUTMParams } from "@/hooks/useUTMParams";
 import { getRecaptchaToken, loadRecaptcha } from "@/lib/recaptcha";
 import { useRouter } from "next/navigation";
 import { ChevronDownIcon, PaperAirplaneIcon } from "@heroicons/react/24/outline";
-import type { OfferId } from "@/lib/offerIds";
+import { isOfferId, type OfferId } from "@/lib/offerIds";
 import { CONTACT_CHANNELS, CONTACT_CHANNEL_LABELS } from "@/lib/contactChannel";
 
 export type ServiceOption = { id: OfferId; title: string };
@@ -24,8 +24,12 @@ export type ServiceOption = { id: OfferId; title: string };
 interface DialogFormProps {
   /** Offers for the "What do you need?" select (id + title only) */
   serviceOptions: ServiceOption[];
-  /** Preselected offer, e.g. from a "Get a Quote" button (see ScheduleForm) */
-  defaultService?: OfferId;
+  /**
+   * Preselect the offer from ?service=<id> ("Get a Quote" buttons). Read
+   * after mount so the form is still in the prerendered HTML; anything that
+   * is not a catalogue id is ignored.
+   */
+  serviceFromUrl?: boolean;
   /** Where the form lives: stored as Contact.source and sent to analytics */
   source?: "contact_form" | "schedule_page";
   /** Optional: by default closes the "Let's contact" dialog in the store */
@@ -37,7 +41,7 @@ const fieldClasses =
 
 const DialogForm = ({
   serviceOptions,
-  defaultService,
+  serviceFromUrl = false,
   source = "contact_form",
   closeModal: closeModalProp,
 }: DialogFormProps) => {
@@ -55,6 +59,7 @@ const DialogForm = ({
     formMountTime.current = Date.now();
   }, []);
 
+
   // Precarga reCAPTCHA en la primera interacción para que el envío sea rápido
   const handleFormInteraction = () => {
     loadRecaptcha().catch(() => {
@@ -67,6 +72,7 @@ const DialogForm = ({
     handleSubmit,
     formState: { errors },
     reset,
+    setValue,
   } = useForm<FormData>({
     resolver: zodResolver(FormSchema),
     defaultValues: {
@@ -75,10 +81,18 @@ const DialogForm = ({
       phone: "",
       message: "",
       marketingConsent: false,
-      service: defaultService ?? "",
+      service: "",
       preferredChannel: "call",
     },
   });
+
+  // "Get a Quote" buttons arrive with ?service=<id>; the form itself stays in
+  // the prerendered HTML and the select is set once mounted
+  useEffect(() => {
+    if (!serviceFromUrl) return;
+    const requested = new URLSearchParams(window.location.search).get("service");
+    if (isOfferId(requested)) setValue("service", requested);
+  }, [serviceFromUrl, setValue]);
 
   const onSubmit: SubmitHandler<FormData> = async (data) => {
     // Anti-Bot Protection Layer 1: Honeypot check

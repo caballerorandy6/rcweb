@@ -1,7 +1,7 @@
 import type { Route } from "next";
 import Link from "next/link";
 import { Cog6ToothIcon } from "@heroicons/react/24/outline";
-import { offers } from "@/lib/data";
+import { offers, offerPriceLabel } from "@/lib/data";
 import Heading from "@/components/ui/Heading";
 import Button from "@/components/ui/Button";
 
@@ -65,7 +65,7 @@ const Services = () => {
                     {offer.highlight}
                   </p>
                   <p className="text-sm font-inter font-semibold text-gold">
-                    {offer.priceLabel}
+                    {offerPriceLabel(offer)}
                   </p>
                 </div>
               </div>

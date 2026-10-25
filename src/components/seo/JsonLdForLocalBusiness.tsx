@@ -1,5 +1,6 @@
 import { siteConfig } from "@/config/site";
 import { offers } from "@/lib/data";
+import { offerToSchemaOffer } from "@/lib/seo/offerJsonLd";
 
 export function JsonLdForLocalBusiness() {
   const jsonLd = {
@@ -58,9 +59,7 @@ export function JsonLdForLocalBusiness() {
       name: "Web Development Services",
       // Same five offers as the pricing section and /services
       itemListElement: offers.map((offer) => ({
-        "@type": "Offer",
-        price: (offer.priceFromCents / 100).toString(),
-        priceCurrency: "USD",
+        ...offerToSchemaOffer(offer),
         itemOffered: {
           "@type": "Service",
           name: offer.title,

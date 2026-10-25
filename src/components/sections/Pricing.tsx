@@ -1,6 +1,6 @@
 import { CheckIcon } from "@heroicons/react/24/outline";
 import type { Route } from "next";
-import { offers, checkoutPlans } from "@/lib/data";
+import { offers, checkoutPlans, offerPriceParts } from "@/lib/data";
 import Heading from "../ui/Heading";
 import { formatCurrency } from "@/lib/utils";
 import Button from "@/components/ui/Button";
@@ -20,13 +20,6 @@ const modalPlans = checkoutPlans.map(({ id, name, priceInCents, mode }) => ({
   mode,
 }));
 
-/** "From $3,500" → ["From", "$3,500"]; "$200/month" → [null, "$200/month"] */
-function splitPrice(label: string): [string | null, string] {
-  return label.startsWith("From ")
-    ? ["From", label.slice("From ".length)]
-    : [null, label];
-}
-
 const Pricing = () => {
   return (
     <section
@@ -43,7 +36,7 @@ const Pricing = () => {
 
         <div className="mx-auto mt-16 flex flex-wrap justify-center gap-8">
           {offers.map((offer) => {
-            const [prefix, amount] = splitPrice(offer.priceLabel);
+            const { prefix, amount } = offerPriceParts(offer);
             return (
               <div
                 key={offer.id}

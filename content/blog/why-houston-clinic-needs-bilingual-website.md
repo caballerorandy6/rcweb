@@ -141,4 +141,4 @@ Or call me: [+1 (346) 375-7534](tel:+13463757534). Si, hablo espanol.
 
 ---
 
-*Randy Caballero is a bilingual web developer in Houston, TX. [View bilingual website services](/services/bilingual-websites-houston).*
+*Randy Caballero is a bilingual web developer in Houston, TX. [View business website services, English and Spanish included](/services/web-design-houston).*

@@ -120,9 +120,14 @@ export const createContactAction = async (
         data: {
           name,
           marketingConsent,
-          // A returning lead may ask for something new; keep the last answer
-          ...(serviceInterest && { serviceInterest }),
-          ...(preferredChannel && { preferredChannel }),
+          // A returning lead's latest answer wins (also "Not sure yet"); the
+          // admin's manual form only touches these when it sets them
+          ...(!isAdmin
+            ? { serviceInterest, preferredChannel: preferredChannel ?? null }
+            : {
+                ...(serviceInterest && { serviceInterest }),
+                ...(preferredChannel && { preferredChannel }),
+              }),
           emails: email
             ? {
                 connectOrCreate: {

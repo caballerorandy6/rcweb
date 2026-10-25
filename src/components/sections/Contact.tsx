@@ -7,10 +7,8 @@ import {
   PhoneIcon,
 } from "@heroicons/react/24/outline";
 import DialogForm from "@/components/forms/DialogForm";
-import { offers } from "@/lib/data";
+import { serviceOptions } from "@/lib/data";
 
-// Only id + title cross to the client; the catalogue stays on the server
-const serviceOptions = offers.map(({ id, title }) => ({ id, title }));
 
 // Server Component; the form inside is the client island
 const Contact = () => {

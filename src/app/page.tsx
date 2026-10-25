@@ -41,13 +41,7 @@ export default function Home() {
       <JsonLdForWebSite />
       <JsonLdForFaq faqs={faqs} />
       {offers.map((offer) => (
-        <JsonLdForService
-          key={offer.id}
-          name={offer.title}
-          description={`${offer.description}. ${offer.ideal}`}
-          price={offer.priceFromCents / 100}
-          duration={offer.duration}
-        />
+        <JsonLdForService key={offer.id} offer={offer} />
       ))}
       <ScrollSpy />
       <Hero />

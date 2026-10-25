@@ -7,8 +7,9 @@ import dynamic from "next/dynamic";
 import Image from "next/image";
 import clsx from "clsx";
 import { XMarkIcon, ChatBubbleLeftRightIcon } from "@heroicons/react/24/solid";
-import { trackFBContact, trackFBPhoneCall } from "@/components/tracking/FacebookPixel";
+import { trackFBContact } from "@/components/tracking/FacebookPixel";
 import { trackLinkedInConversion } from "@/lib/linkedin";
+import { trackPhoneConversion } from "@/lib/phoneConversion";
 import { event as trackEvent } from "@/lib/analytics";
 
 const Chat = dynamic(() => import("@/components/ui/Chat"), {
@@ -145,12 +146,12 @@ const FloatingCTA = () => {
 
   // Links navigate on their own; the handlers only track and close the menu
   const handlePrimaryClick = (action: (typeof primaryActions)[0]) => {
-    if (action.id === "whatsapp") {
-      trackFBContact();
-    } else if (action.id === "phone") {
-      trackFBPhoneCall();
+    if (action.id === "phone") {
+      trackPhoneConversion();
+    } else {
+      if (action.id === "whatsapp") trackFBContact();
+      trackLinkedInConversion();
     }
-    trackLinkedInConversion();
     trackEvent({
       action: "floating_cta_click",
       category: "engagement",

@@ -7,7 +7,8 @@ import { notFound } from "next/navigation";
 
 import { JsonLdForBreadcrumb } from "@/components/seo/JsonLdForBreadcrumb";
 import { siteConfig } from "@/config/site";
-import { getServicePage, offers, projects } from "@/lib/data";
+import { getServicePage, offerPriceParts, offers, projects } from "@/lib/data";
+import { offerToSchemaOffer } from "@/lib/seo/offerJsonLd";
 import {
   CalendarDaysIcon,
   PhoneIcon,
@@ -64,10 +65,8 @@ export default async function ServicePage({
   if (!entry) notFound();
 
   const { offer, page: service } = entry;
-  // "From $3,500" → "Starting at" + "$3,500"; "$200/month" stands alone
-  const priceParts = offer.priceLabel.startsWith("From ")
-    ? { prefix: "Starting at", amount: offer.priceLabel.slice("From ".length) }
-    : { prefix: null, amount: offer.priceLabel };
+  const { prefix, amount } = offerPriceParts(offer);
+  const priceParts = { prefix: prefix && "Starting at", amount };
   // Offers that need a scope first go to /schedule; the fixed-price plan is on the pricing section
   const primaryHref = (
     offer.quoteCta ? `/schedule?service=${offer.id}` : "/#pricing"
@@ -82,11 +81,7 @@ export default async function ServicePage({
     "@type": "Service",
     name: offer.title,
     description: service.subheadline,
-    offers: {
-      "@type": "Offer",
-      price: (offer.priceFromCents / 100).toString(),
-      priceCurrency: "USD",
-    },
+    offers: offerToSchemaOffer(offer),
     provider: {
       "@type": "ProfessionalService",
       name: siteConfig.siteName,
