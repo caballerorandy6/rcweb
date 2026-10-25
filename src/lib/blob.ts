@@ -4,6 +4,15 @@
 import { put, del, list } from '@vercel/blob';
 
 /**
+ * Carpeta de las facturas dentro del store. Producción escribe en `invoices/`;
+ * preview y local escriben en `<entorno>/invoices/` para que una prueba nunca
+ * sobrescriba el PDF de una factura real (el store de Blob es uno solo).
+ */
+export function invoiceBlobPrefix(vercelEnv = process.env.VERCEL_ENV): string {
+  return vercelEnv === 'production' ? 'invoices/' : `${vercelEnv || 'dev'}/invoices/`;
+}
+
+/**
  * Sube un PDF a Vercel Blob Storage
  * @param fileName - Nombre del archivo (ej: "INV-2025-001.pdf")
  * @param pdfBuffer - Buffer del PDF
@@ -14,7 +23,7 @@ export async function uploadInvoicePDF(
   pdfBuffer: Buffer
 ): Promise<{ url: string; pathname: string }> {
   try {
-    const blob = await put(`invoices/${fileName}`, pdfBuffer, {
+    const blob = await put(`${invoiceBlobPrefix()}${fileName}`, pdfBuffer, {
       access: 'public',
       contentType: 'application/pdf',
       addRandomSuffix: false, // Mantener nombre exacto para fácil identificación
@@ -51,7 +60,7 @@ export async function deleteInvoicePDF(url: string): Promise<void> {
 export async function listInvoices() {
   try {
     const { blobs } = await list({
-      prefix: 'invoices/',
+      prefix: invoiceBlobPrefix(),
     });
     return blobs;
   } catch (error) {
