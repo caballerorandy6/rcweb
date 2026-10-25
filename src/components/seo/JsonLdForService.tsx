@@ -1,23 +1,14 @@
 import { siteConfig } from "@/config/site";
+import type { Offer } from "@/lib/data";
+import { offerToSchemaOffer } from "@/lib/seo/offerJsonLd";
 
-type JsonLdForServiceProps = {
-  name: string;
-  description: string;
-  price: number;
-  duration: string;
-};
-
-export function JsonLdForService({
-  name,
-  description,
-  price,
-  duration,
-}: JsonLdForServiceProps) {
+/** One Service entity per catalogue offer, on the home page */
+export function JsonLdForService({ offer }: { offer: Offer }) {
   const jsonLd = {
     "@context": "https://schema.org",
     "@type": "Service",
-    name: `${name} - Web Development`,
-    description,
+    name: `${offer.title} - Web Development`,
+    description: `${offer.description}. ${offer.ideal}`,
     provider: {
       "@type": "Organization",
       name: siteConfig.siteName,
@@ -27,14 +18,8 @@ export function JsonLdForService({
       "@type": "Country",
       name: "United States",
     },
-    offers: {
-      "@type": "Offer",
-      price: price.toString(),
-      priceCurrency: "USD",
-      availability: "https://schema.org/InStock",
-      validFrom: new Date().toISOString().split("T")[0],
-    },
-    estimatedDuration: duration,
+    offers: offerToSchemaOffer(offer),
+    estimatedDuration: offer.duration,
     serviceType: "Web Development",
   };
 

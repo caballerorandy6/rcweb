@@ -4,31 +4,22 @@ import type { Route } from "next";
 import { genPageMetadata } from "@/utils/genPageMetadata";
 import { JsonLdForBreadcrumb } from "@/components/seo/JsonLdForBreadcrumb";
 import { siteConfig } from "@/config/site";
-import { servicePages } from "@/lib/data";
+import { offers, offerPriceLabel, servicePages } from "@/lib/data";
 import BackLink from "@/components/ui/BackLink";
-import {
-  ArrowRightIcon,
-  GlobeAltIcon,
-  CodeBracketIcon,
-  ChatBubbleLeftRightIcon,
-  ShoppingCartIcon,
-  MagnifyingGlassIcon,
-} from "@heroicons/react/24/outline";
+import { ArrowRightIcon } from "@heroicons/react/24/outline";
 
 export const metadata = genPageMetadata({
   title: "Web Development Services for Small Businesses",
   description:
-    "Web design, Next.js development, bilingual websites, e-commerce and local SEO for small businesses. Based in Houston, TX, working with clients anywhere. Free consultation.",
+    "Business websites, redesigns, admin dashboards, online stores and monthly maintenance for small businesses. Based in Houston, TX, working with clients anywhere. Free consultation.",
   pageRoute: "/services",
 });
 
-const serviceIcons: Record<string, React.ComponentType<React.SVGProps<SVGSVGElement>>> = {
-  "web-design-houston": GlobeAltIcon,
-  "nextjs-development-houston": CodeBracketIcon,
-  "bilingual-websites-houston": ChatBubbleLeftRightIcon,
-  "ecommerce-houston": ShoppingCartIcon,
-  "seo-local-houston": MagnifyingGlassIcon,
-};
+// One card per offer, in catalogue order; the page copy adds the subheadline
+const cards = offers.map((offer) => ({
+  offer,
+  page: servicePages.find((p) => p.offerId === offer.id),
+}));
 
 export default function ServicesPage() {
   return (
@@ -60,37 +51,30 @@ export default function ServicesPage() {
             </div>
 
             <div className="mx-auto mt-16 grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3">
-              {servicePages.map((service) => {
-                const Icon = serviceIcons[service.slug];
-                return (
-                  <Link
-                    key={service.slug}
-                    href={`/services/${service.slug}` as Route}
-                    className="group rounded-2xl border border-gold/20 bg-gray-900/50 p-6 lg:p-8 shadow-lg shadow-black/20 transition duration-200 hover:border-gold/50 hover:bg-gold/5"
-                  >
-                    {Icon && (
-                      <Icon className="h-8 w-8 text-gold mb-4" />
-                    )}
-                    <h2 className="text-2xl font-iceland text-white group-hover:text-gold transition-colors">
-                      {service.title}
-                    </h2>
-                    <p className="mt-3 text-gray-400 font-inter leading-7 line-clamp-3">
-                      {service.subheadline}
-                    </p>
-                    <div className="mt-4 flex items-center justify-between">
-                      <span className="text-sm font-inter font-semibold text-gold">
-                        {service.priceFrom.startsWith("$")
-                          ? `From ${service.priceFrom}`
-                          : service.priceFrom}
-                      </span>
-                      <span className="inline-flex items-center gap-1 text-sm font-inter text-gold group-hover:underline">
-                        Learn more
-                        <ArrowRightIcon className="h-4 w-4 transition-transform group-hover:translate-x-1" />
-                      </span>
-                    </div>
-                  </Link>
-                );
-              })}
+              {cards.map(({ offer, page }) => (
+                <Link
+                  key={offer.id}
+                  href={`/services/${offer.slug}` as Route}
+                  className="group rounded-2xl border border-gold/20 bg-gray-900/50 p-6 lg:p-8 shadow-lg shadow-black/20 transition duration-200 hover:border-gold/50 hover:bg-gold/5"
+                >
+                  <offer.icon className="h-8 w-8 text-gold mb-4" />
+                  <h2 className="text-2xl font-iceland text-white group-hover:text-gold transition-colors">
+                    {offer.title}
+                  </h2>
+                  <p className="mt-3 text-gray-400 font-inter leading-7 line-clamp-3">
+                    {page?.subheadline ?? offer.summary}
+                  </p>
+                  <div className="mt-4 flex items-center justify-between">
+                    <span className="text-sm font-inter font-semibold text-gold">
+                      {offerPriceLabel(offer)}
+                    </span>
+                    <span className="inline-flex items-center gap-1 text-sm font-inter text-gold group-hover:underline">
+                      Learn more
+                      <ArrowRightIcon className="h-4 w-4 transition-transform group-hover:translate-x-1" />
+                    </span>
+                  </div>
+                </Link>
+              ))}
             </div>
           </div>
         </section>

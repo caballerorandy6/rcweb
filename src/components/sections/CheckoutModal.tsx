@@ -15,6 +15,7 @@ export interface CheckoutPlan {
   id: string;
   name: string;
   priceInCents: number;
+  mode: "payment" | "subscription";
 }
 
 /** Name + email before the terms page; opened by PlanCTA through the store */
@@ -32,7 +33,7 @@ export default function CheckoutModal({ plans }: { plans: CheckoutPlan[] }) {
   const plan = plans.find((p) => p.id === planId);
   const isOpen = Boolean(plan);
 
-  const isMonthly = plan?.id === "website-maintenance";
+  const isMonthly = plan?.mode === "subscription";
   const amount = plan ? (plan.priceInCents * (isMonthly ? 1 : 0.5)) / 100 : 0;
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {

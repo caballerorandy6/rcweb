@@ -1,21 +1,7 @@
 "use client";
 
 import type { ReactNode } from "react";
-import { trackFBPhoneCall } from "@/components/tracking/FacebookPixel";
-import { trackLinkedInConversion } from "@/lib/linkedin";
-
-// Phone Conversion Tracking (Google Ads + Facebook + LinkedIn)
-const trackPhoneConversion = () => {
-  if (typeof window !== "undefined" && window.gtag) {
-    window.gtag("event", "conversion", {
-      send_to: "AW-17661176254/wW9-CKCVjLAbEL7TwOVB",
-      value: 1.0,
-      currency: "USD",
-    });
-  }
-  trackFBPhoneCall();
-  trackLinkedInConversion();
-};
+import { trackPhoneConversion } from "@/lib/phoneConversion";
 
 interface PhoneLinkProps {
   href: string;

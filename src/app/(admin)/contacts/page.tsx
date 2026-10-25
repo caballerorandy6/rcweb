@@ -5,6 +5,8 @@ import ContactManagement from "@/components/admin/ContactManagement";
 import ContactManagementSkeleton from "@/components/skeletons/ContactManagementSkeleton";
 import { getContactsAction } from "@/actions/contacts/getContactsAction";
 import { genPageMetadata } from "@/utils/genPageMetadata";
+import { serviceOptions } from "@/lib/data";
+
 
 export const metadata = genPageMetadata({
   title: "Contact Management",
@@ -21,7 +23,12 @@ async function ContactManagementWrapper() {
   const contacts =
     result.success && result.data ? result.data.contacts : [];
 
-  return <ContactManagement initialContacts={contacts} />;
+  return (
+    <ContactManagement
+      initialContacts={contacts}
+      serviceOptions={serviceOptions}
+    />
+  );
 }
 
 export default async function ContactsPage() {

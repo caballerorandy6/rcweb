@@ -7,7 +7,8 @@ import { notFound } from "next/navigation";
 
 import { JsonLdForBreadcrumb } from "@/components/seo/JsonLdForBreadcrumb";
 import { siteConfig } from "@/config/site";
-import { servicePages, projects } from "@/lib/data";
+import { getServicePage, offerPriceParts, offers, projects } from "@/lib/data";
+import { offerToSchemaOffer } from "@/lib/seo/offerJsonLd";
 import {
   CalendarDaysIcon,
   PhoneIcon,
@@ -15,9 +16,7 @@ import {
 } from "@heroicons/react/24/outline";
 
 export function generateStaticParams() {
-  return servicePages.map((service) => ({
-    slug: service.slug,
-  }));
+  return offers.map((offer) => ({ slug: offer.slug }));
 }
 
 export async function generateMetadata({
@@ -26,10 +25,11 @@ export async function generateMetadata({
   params: Promise<{ slug: string }>;
 }): Promise<Metadata> {
   const { slug } = await params;
-  const service = servicePages.find((s) => s.slug === slug);
+  const entry = getServicePage(slug);
 
-  if (!service) return {};
+  if (!entry) return {};
 
+  const service = entry.page;
   const url = `${siteConfig.baseUrl}/services/${slug}`;
 
   return {
@@ -60,9 +60,17 @@ export default async function ServicePage({
   params: Promise<{ slug: string }>;
 }) {
   const { slug } = await params;
-  const service = servicePages.find((s) => s.slug === slug);
+  const entry = getServicePage(slug);
 
-  if (!service) notFound();
+  if (!entry) notFound();
+
+  const { offer, page: service } = entry;
+  const { prefix, amount } = offerPriceParts(offer);
+  const priceParts = { prefix: prefix && "Starting at", amount };
+  // Offers that need a scope first go to /schedule; the fixed-price plan is on the pricing section
+  const primaryHref = (
+    offer.quoteCta ? `/schedule?service=${offer.id}` : "/#pricing"
+  ) as Route;
 
   const relatedProjects = projects.filter((p) =>
     service.relatedProjects.includes(p.name)
@@ -71,8 +79,9 @@ export default async function ServicePage({
   const serviceJsonLd = {
     "@context": "https://schema.org",
     "@type": "Service",
-    name: service.title,
+    name: offer.title,
     description: service.subheadline,
+    offers: offerToSchemaOffer(offer),
     provider: {
       "@type": "ProfessionalService",
       name: siteConfig.siteName,
@@ -102,7 +111,7 @@ export default async function ServicePage({
           { name: "Home", item: siteConfig.baseUrl },
           { name: "Services", item: `${siteConfig.baseUrl}/services` },
           {
-            name: service.title,
+            name: offer.title,
             item: `${siteConfig.baseUrl}/services/${slug}`,
           },
         ]}
@@ -134,20 +143,23 @@ export default async function ServicePage({
                 {service.subheadline}
               </p>
 
-              {/* Plans show a price; bilingual and local SEO come with every site */}
               <div className="mt-8 flex items-center gap-4">
-                {service.priceFrom.startsWith("$") && (
+                {priceParts.prefix && (
                   <span className="text-sm font-inter text-gold/70">
-                    Starting at
+                    {priceParts.prefix}
                   </span>
                 )}
                 <span className="text-2xl font-iceland text-gold">
-                  {service.priceFrom}
+                  {priceParts.amount}
+                </span>
+                <span className="text-sm font-inter text-gold/70">
+                  {offer.quoteCta ? `Typically ${offer.range}` : offer.range} •{" "}
+                  {offer.duration}
                 </span>
               </div>
 
               <div className="mt-8 flex flex-col sm:flex-row gap-4">
-                <Button href="/schedule" size="lg">
+                <Button href={primaryHref} size="lg">
                   <CalendarDaysIcon className="h-5 w-5" />
                   {service.cta}
                 </Button>
@@ -249,9 +261,9 @@ export default async function ServicePage({
                 business.
               </p>
               <div className="mt-10">
-                <Button href="/schedule" size="lg">
+                <Button href={primaryHref} size="lg">
                   <CalendarDaysIcon className="h-5 w-5" />
-                  Schedule Free Consultation
+                  {service.cta}
                 </Button>
               </div>
               <p className="mt-6 text-sm text-gray-400 font-inter">

@@ -1,4 +1,6 @@
 import { siteConfig } from "@/config/site";
+import { offers } from "@/lib/data";
+import { offerToSchemaOffer } from "@/lib/seo/offerJsonLd";
 
 export function JsonLdForLocalBusiness() {
   const jsonLd = {
@@ -55,32 +57,15 @@ export function JsonLdForLocalBusiness() {
     hasOfferCatalog: {
       "@type": "OfferCatalog",
       name: "Web Development Services",
-      itemListElement: [
-        {
-          "@type": "Offer",
-          itemOffered: {
-            "@type": "Service",
-            name: "Starter Website",
-            description: "Professional landing page for small businesses",
-          },
+      // Same five offers as the pricing section and /services
+      itemListElement: offers.map((offer) => ({
+        ...offerToSchemaOffer(offer),
+        itemOffered: {
+          "@type": "Service",
+          name: offer.title,
+          description: offer.description,
         },
-        {
-          "@type": "Offer",
-          itemOffered: {
-            "@type": "Service",
-            name: "Business Website",
-            description: "Full-featured business website with CMS",
-          },
-        },
-        {
-          "@type": "Offer",
-          itemOffered: {
-            "@type": "Service",
-            name: "Enterprise Solution",
-            description: "Custom web applications and e-commerce platforms",
-          },
-        },
-      ],
+      })),
     },
     founder: {
       "@type": "Person",

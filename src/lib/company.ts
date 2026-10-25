@@ -15,6 +15,10 @@ export const COMPANY = {
   phone: "+1 (346) 375-7534",
   phoneDisplay: "(346) 375-7534",
   phoneHref: "tel:+13463757534",
+  /** Personal WhatsApp line (not the Twilio number) */
+  whatsappNumber: "+1 (832) 546-5983",
+  whatsappHref:
+    "https://wa.me/18325465983?text=Hi%20Randy%2C%20I%27m%20interested%20in%20discussing%20a%20web%20project",
   website: "www.rcweb.dev",
   url: "https://rcweb.dev",
 } as const;

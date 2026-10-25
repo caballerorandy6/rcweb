@@ -19,6 +19,10 @@ model Contact {
 
   leadStatus LeadStatus @default(NEW)
 
+  // What the lead asked for on the contact form and how they want to be reached
+  serviceInterest  String? // Offer id from the catalogue (src/lib/offerIds.ts)
+  preferredChannel ContactChannel?
+
   // UTM Tracking fields
   utmSource   String? // google, facebook, linkedin, newsletter
   utmMedium   String? // cpc, email, social, organic
@@ -249,6 +253,12 @@ model SmsLog {
   @@index([phoneNumber])
   @@index([direction])
   @@index([createdAt])
+}
+
+enum ContactChannel {
+  call
+  whatsapp
+  email
 }
 
 enum LeadStatus {

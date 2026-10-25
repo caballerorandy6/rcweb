@@ -15,14 +15,36 @@ import { trackLinkedInConversion } from "@/lib/linkedin";
 import { getStoredUTMParams } from "@/hooks/useUTMParams";
 import { getRecaptchaToken, loadRecaptcha } from "@/lib/recaptcha";
 import { useRouter } from "next/navigation";
-import { PaperAirplaneIcon } from "@heroicons/react/24/outline";
+import { ChevronDownIcon, PaperAirplaneIcon } from "@heroicons/react/24/outline";
+import { isOfferId, type OfferId } from "@/lib/offerIds";
+import { CONTACT_CHANNELS, CONTACT_CHANNEL_LABELS } from "@/lib/contactChannel";
+
+export type ServiceOption = { id: OfferId; title: string };
 
 interface DialogFormProps {
+  /** Offers for the "What do you need?" select (id + title only) */
+  serviceOptions: ServiceOption[];
+  /**
+   * Preselect the offer from ?service=<id> ("Get a Quote" buttons). Read
+   * after mount so the form is still in the prerendered HTML; anything that
+   * is not a catalogue id is ignored.
+   */
+  serviceFromUrl?: boolean;
+  /** Where the form lives: stored as Contact.source and sent to analytics */
+  source?: "contact_form" | "schedule_page";
   /** Optional: by default closes the "Let's contact" dialog in the store */
   closeModal?: () => void;
 }
 
-const DialogForm = ({ closeModal: closeModalProp }: DialogFormProps) => {
+const fieldClasses =
+  "w-full p-4 bg-gray-800/80 text-white rounded-xl border border-gray-700/60 focus:outline-hidden focus:border-gold focus:ring-2 focus:ring-gold/20 transition duration-300 font-inter hover:bg-gray-800";
+
+const DialogForm = ({
+  serviceOptions,
+  serviceFromUrl = false,
+  source = "contact_form",
+  closeModal: closeModalProp,
+}: DialogFormProps) => {
   const setOpenLetsContactDialog = useRCWebStore(
     (state) => state.setOpenLetsContactDialog
   );
@@ -37,6 +59,7 @@ const DialogForm = ({ closeModal: closeModalProp }: DialogFormProps) => {
     formMountTime.current = Date.now();
   }, []);
 
+
   // Precarga reCAPTCHA en la primera interacción para que el envío sea rápido
   const handleFormInteraction = () => {
     loadRecaptcha().catch(() => {
@@ -49,6 +72,7 @@ const DialogForm = ({ closeModal: closeModalProp }: DialogFormProps) => {
     handleSubmit,
     formState: { errors },
     reset,
+    setValue,
   } = useForm<FormData>({
     resolver: zodResolver(FormSchema),
     defaultValues: {
@@ -57,8 +81,18 @@ const DialogForm = ({ closeModal: closeModalProp }: DialogFormProps) => {
       phone: "",
       message: "",
       marketingConsent: false,
+      service: "",
+      preferredChannel: "call",
     },
   });
+
+  // "Get a Quote" buttons arrive with ?service=<id>; the form itself stays in
+  // the prerendered HTML and the select is set once mounted
+  useEffect(() => {
+    if (!serviceFromUrl) return;
+    const requested = new URLSearchParams(window.location.search).get("service");
+    if (isOfferId(requested)) setValue("service", requested);
+  }, [serviceFromUrl, setValue]);
 
   const onSubmit: SubmitHandler<FormData> = async (data) => {
     // Anti-Bot Protection Layer 1: Honeypot check
@@ -99,13 +133,15 @@ const DialogForm = ({ closeModal: closeModalProp }: DialogFormProps) => {
           data,
           recaptchaToken,
           timeSpent,
-          "contact_form",
+          source,
           utmData || undefined
         );
 
         if (contact.success) {
           // Track successful contact form submission
-          trackContactFormSubmit("homepage_dialog");
+          trackContactFormSubmit(
+            source === "schedule_page" ? "schedule_page" : "homepage_dialog"
+          );
 
           // Track Google Ads conversion with Enhanced Conversions
           trackSubmitLeadForm(data.email, data.phone);
@@ -264,6 +300,57 @@ const DialogForm = ({ closeModal: closeModalProp }: DialogFormProps) => {
               )}
             />
           </div>
+
+          {/** Service Field */}
+          <div className="group">
+            <label
+              htmlFor="service"
+              className="block text-sm text-gray-300 font-inter mb-2"
+            >
+              What do you need?
+            </label>
+            <div className="relative">
+              <select
+                {...register("service")}
+                id="service"
+                className={`${fieldClasses} appearance-none pr-12`}
+              >
+                <option value="">Not sure yet</option>
+                {serviceOptions.map((option) => (
+                  <option key={option.id} value={option.id}>
+                    {option.title}
+                  </option>
+                ))}
+              </select>
+              <ChevronDownIcon
+                className="pointer-events-none absolute right-4 top-1/2 h-5 w-5 -translate-y-1/2 text-gray-400"
+                aria-hidden="true"
+              />
+            </div>
+          </div>
+
+          {/** Preferred Channel Field */}
+          <fieldset className="group">
+            <legend className="block text-sm text-gray-300 font-inter mb-2">
+              How should I reach you?
+            </legend>
+            <div className="grid grid-cols-3 gap-2">
+              {CONTACT_CHANNELS.map((channel) => (
+                <label
+                  key={channel}
+                  className="flex items-center justify-center gap-2 p-3 rounded-xl border border-gray-700/60 bg-gray-800/80 text-sm text-gray-300 font-inter cursor-pointer transition duration-200 hover:bg-gray-800 has-checked:border-gold has-checked:text-gold has-checked:bg-gold/10 has-focus-visible:ring-2 has-focus-visible:ring-gold/40"
+                >
+                  <input
+                    {...register("preferredChannel")}
+                    type="radio"
+                    value={channel}
+                    className="sr-only"
+                  />
+                  {CONTACT_CHANNEL_LABELS[channel]}
+                </label>
+              ))}
+            </div>
+          </fieldset>
 
           {/** Message Field */}
           <div className="group">

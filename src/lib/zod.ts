@@ -1,4 +1,6 @@
 import { z } from "zod";
+import { ContactChannel } from "@/generated/prisma/enums";
+import { OFFER_IDS } from "@/lib/offerIds";
 
 // Schema de validación para formularios de contacto
 export const FormSchema = z.object({
@@ -19,10 +21,14 @@ export const FormSchema = z.object({
   marketingConsent: z
     .boolean()
     .describe("Consent to receive marketing emails and messages"),
+  // Which offer the lead is asking about; "" is the "not sure yet" option
+  service: z.union([z.enum(OFFER_IDS), z.literal("")]).optional(),
+  // How they want to be reached; the admin's manual form leaves it empty
+  preferredChannel: z.enum(ContactChannel).optional(),
 });
 
 // Checkout: el cliente solo envía el ID del plan. Precio, nombre y descripción
-// se leen en el servidor desde pricingPlans para que no se puedan manipular.
+// se leen en el servidor desde checkoutPlans para que no se puedan manipular.
 export const CheckoutRequestSchema = z.object({
   planId: z.string().min(1, { message: "Plan is required" }),
   customer: z.object({

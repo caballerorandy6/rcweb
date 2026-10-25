@@ -95,7 +95,7 @@ The Stripe webhook is the **only** place that creates a `Project`; `/payment-suc
 
 - **TypeScript only**, strict mode
 - **Imports:** `@/*` maps to `./src/*`
-- **Files:** kebab-case. **Components:** PascalCase. **Actions:** camelCase + `Action` suffix.
+- **Files:** camelCase for modules in `src/lib` and `src/actions` (`checkoutMetadata.ts`, `rateLimit.ts`); kebab-case for routes and MDX. **Components:** PascalCase. **Actions:** camelCase + `Action` suffix.
 - **Styling:** Tailwind CSS v4, mobile-first; theme tokens (`--color-*`, `--animate-*`) in `src/app/globals.css`. No styled-jsx. Headless UI for interactive components. Heroicons for icons. Framer Motion for animations.
 - **Validation:** Always validate with Zod before DB operations.
 - **Data fetching:** Use `Promise.all()` for independent parallel fetches — never waterfall.
