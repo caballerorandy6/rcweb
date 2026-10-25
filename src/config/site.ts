@@ -14,6 +14,7 @@ export type SiteConfig = {
     github: string;
     facebook: string;
     instagram: string;
+    nextdoor: string;
   };
 };
 
@@ -34,5 +35,6 @@ export const siteConfig: SiteConfig = {
     github: "https://github.com/caballerorandy6",
     facebook: "https://www.facebook.com/rcwebsolutionsllc",
     instagram: "https://www.instagram.com/rcwebsolutionsllc/",
+    nextdoor: "https://nextdoor.com/page/rc-web-solutions-llc/",
   },
 };

@@ -20,6 +20,7 @@ export function JsonLdForOrganization() {
       siteConfig.social.facebook,
       siteConfig.social.instagram,
       siteConfig.social.github,
+      siteConfig.social.nextdoor,
     ],
     address: {
       "@type": "PostalAddress",
