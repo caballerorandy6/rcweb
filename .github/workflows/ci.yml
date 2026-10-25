@@ -61,6 +61,9 @@ jobs:
       AUTH_SECRET: ci-only-secret-not-used-anywhere-else
       AUTH_TRUST_HOST: "true"
       STRIPE_SECRET_KEY: sk_test_placeholder
+      # The Resend client throws at import time without a key, which breaks
+      # every server action that can send email (even when it does not)
+      RESEND_API_KEY: re_placeholder_ci_only
       NEXT_PUBLIC_BASE_URL: http://localhost:3100
       # Test accounts for e2e/admin-login.spec.ts (seeded below)
       TEST_ADMIN_EMAIL: admin@rcweb.test

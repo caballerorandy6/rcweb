@@ -14,7 +14,8 @@ test.describe("admin login", () => {
     await page.getByPlaceholder("Password").fill("definitely-wrong");
     await page.getByRole("button", { name: "Sign In" }).click();
 
-    await expect(page.getByText("Invalid email or password")).toBeVisible();
+    // The first sign-in request compiles the auth route on the CI dev server
+    await expect(page.getByText("Invalid email or password")).toBeVisible({ timeout: 15_000 });
     await expect(page).toHaveURL(/\/admin\/login$/);
   });
 
