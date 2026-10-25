@@ -26,6 +26,8 @@ interface DialogFormProps {
   serviceOptions: ServiceOption[];
   /** Preselected offer, e.g. from a "Get a Quote" button */
   defaultService?: OfferId;
+  /** Where the form lives: stored as Contact.source and sent to analytics */
+  source?: "contact_form" | "schedule_page";
   /** Optional: by default closes the "Let's contact" dialog in the store */
   closeModal?: () => void;
 }
@@ -36,6 +38,7 @@ const fieldClasses =
 const DialogForm = ({
   serviceOptions,
   defaultService,
+  source = "contact_form",
   closeModal: closeModalProp,
 }: DialogFormProps) => {
   const setOpenLetsContactDialog = useRCWebStore(
@@ -116,13 +119,15 @@ const DialogForm = ({
           data,
           recaptchaToken,
           timeSpent,
-          "contact_form",
+          source,
           utmData || undefined
         );
 
         if (contact.success) {
           // Track successful contact form submission
-          trackContactFormSubmit("homepage_dialog");
+          trackContactFormSubmit(
+            source === "schedule_page" ? "schedule_page" : "homepage_dialog"
+          );
 
           // Track Google Ads conversion with Enhanced Conversions
           trackSubmitLeadForm(data.email, data.phone);

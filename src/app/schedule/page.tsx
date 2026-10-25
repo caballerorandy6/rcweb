@@ -3,27 +3,43 @@ import { JsonLdForBreadcrumb } from "@/components/seo/JsonLdForBreadcrumb";
 import { siteConfig } from "@/config/site";
 import BackLink from "@/components/ui/BackLink";
 import ScheduleContent from "@/components/sections/ScheduleContent";
+import { offers } from "@/lib/data";
+import { isOfferId } from "@/lib/offerIds";
 
 export const metadata = genPageMetadata({
-  title: "Schedule Free Consultation",
+  title: "Let's Talk About Your Project",
   description:
-    "Book a free 30-minute consultation with RC Web Solutions LLC to discuss your web development project. No obligation, no commitment – just expert advice and project planning.",
+    "Tell RC Web Solutions what you need and how you'd like to be contacted: form, phone, WhatsApp, email or a free 30-minute call. You get a clear quote within 24 hours.",
   pageRoute: "/schedule",
 });
 
-export default function SchedulePage() {
+// Only id + title cross to the client
+const serviceOptions = offers.map(({ id, title }) => ({ id, title }));
+
+type SearchParams = Promise<{ service?: string | string[] }>;
+
+export default async function SchedulePage(props: {
+  searchParams: SearchParams;
+}) {
+  // "Get a Quote" buttons arrive with ?service=<offer id>; anything else is ignored
+  const { service } = await props.searchParams;
+  const defaultService = isOfferId(service) ? service : undefined;
+
   return (
     <>
       <JsonLdForBreadcrumb
         itemList={[
           { name: "Home", item: siteConfig.baseUrl },
-          { name: "Schedule Consultation", item: `${siteConfig.baseUrl}/schedule` },
+          { name: "Let's Talk", item: `${siteConfig.baseUrl}/schedule` },
         ]}
       />
       <div className="bg-gray-950">
         <BackLink href="/#contact" label="Back to Contact" />
       </div>
-      <ScheduleContent />
+      <ScheduleContent
+        serviceOptions={serviceOptions}
+        defaultService={defaultService}
+      />
     </>
   );
 }
