@@ -1,7 +1,7 @@
 import type { Route } from "next";
 import Link from "next/link";
 import { Cog6ToothIcon } from "@heroicons/react/24/outline";
-import { services } from "@/lib/data";
+import { offers } from "@/lib/data";
 import Heading from "@/components/ui/Heading";
 import Button from "@/components/ui/Button";
 
@@ -21,9 +21,9 @@ const Services = () => {
         </Heading>
 
         <ul className="mx-auto mt-16 flex flex-wrap justify-center gap-6 lg:gap-8">
-          {services.map((service) => (
+          {offers.map((offer) => (
             <li
-              key={service.title}
+              key={offer.id}
               className="reveal group relative flex flex-col gap-6 rounded-2xl border border-gold/20 bg-gray-900/50 p-6 lg:p-8 transition duration-200 hover:scale-105 hover:border-gold/50 hover:bg-gold/5 shadow-lg shadow-black/20 w-full sm:w-[calc(50%-0.75rem)] lg:w-[calc(33.333%-1.5rem)]"
             >
               {/* Stretched link: the whole card goes where "See Pricing" goes.
@@ -37,24 +37,24 @@ const Services = () => {
 
               <div className="flex items-center gap-4">
                 <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-gold/10 ring-1 ring-gold/30">
-                  <service.icon className="h-6 w-6 text-gold" />
+                  <offer.icon className="h-6 w-6 text-gold" />
                 </div>
                 <h3 className="text-2xl font-iceland text-white">
-                  {service.title}
+                  {offer.title}
                 </h3>
               </div>
 
               <p className="text-sm sm:text-base font-inter text-white/80 leading-relaxed">
-                {service.description}
+                {offer.summary}
               </p>
 
               <div className="flex flex-wrap gap-2">
-                {service.features.map((feature) => (
+                {offer.tags.map((tag) => (
                   <span
-                    key={feature}
+                    key={tag}
                     className="inline-flex items-center rounded-full bg-gold/10 px-3 py-1 text-xs font-inter text-gold ring-1 ring-inset ring-gold/20"
                   >
-                    {feature}
+                    {tag}
                   </span>
                 ))}
               </div>
@@ -62,10 +62,10 @@ const Services = () => {
               <div className="mt-auto pt-4 border-t border-gold/10">
                 <div className="flex items-center justify-between">
                   <p className="text-sm font-inter text-gold/80 italic">
-                    {service.highlight}
+                    {offer.highlight}
                   </p>
                   <p className="text-sm font-inter font-semibold text-gold">
-                    {service.price}
+                    {offer.priceLabel}
                   </p>
                 </div>
               </div>

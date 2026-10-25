@@ -3,7 +3,7 @@
 import stripe from "@/lib/stripe";
 import { prisma } from "@/lib/prisma";
 import { generateProjectCode } from "@/lib/utils";
-import { pricingPlans } from "@/lib/data";
+import { checkoutPlans } from "@/lib/data";
 import { CheckoutRequestSchema, type CheckoutRequest } from "@/lib/zod";
 import type {
   InitialCheckoutMetadataInput,
@@ -50,23 +50,21 @@ export async function createStripeCheckoutAction(
 
   // El precio nunca viene del navegador: se busca el plan en el servidor.
   // Solo los planes de alcance fijo se cobran aquí; el resto va por presupuesto.
-  const pricingPlan = pricingPlans.find((p) => p.id === planId);
-  if (!pricingPlan || !pricingPlan.purchasable) {
+  const checkoutPlan = checkoutPlans.find((p) => p.id === planId);
+  if (!checkoutPlan) {
     return { success: false, error: "Selected plan is not available" };
   }
 
   const plan = {
-    name: pricingPlan.name,
-    price: pricingPlan.priceInCents,
-    description: pricingPlan.description,
+    name: checkoutPlan.name,
+    price: checkoutPlan.priceInCents,
   };
 
   // Se registra en el servidor para que la fecha de aceptación sea confiable.
   const termsAcceptedAt = new Date().toISOString();
 
   try {
-    // Check if this is the maintenance subscription plan
-    const isSubscription = planId === "website-maintenance";
+    const isSubscription = checkoutPlan.mode === "subscription";
 
     if (isSubscription) {
       // Create SUBSCRIPTION session for maintenance plan
@@ -130,7 +128,7 @@ export async function createStripeCheckoutAction(
             currency: "usd",
             product_data: {
               name: `${plan.name} - Initial Payment (50%)`,
-              description: `Initial payment for ${plan.description}`,
+              description: `50% deposit for ${plan.name}; the balance is due on delivery`,
             },
             unit_amount: firstPaymentAmount,
           },

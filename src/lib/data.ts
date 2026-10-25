@@ -421,54 +421,213 @@ export const processSteps = [
   },
 ];
 
-// Home "How I Can Help You": one card per offer; the detail per plan lives in pricingPlans
-export const services = [
+// Service catalogue: the single source for the home "How I Can Help You"
+// cards, the pricing cards, the /services pages and the Stripe checkout.
+// Five offers, decided on 2026-10-18 (PR #35). Prices do not change here
+// without Randy's say-so: they are deliberately below the US market.
+export type OfferId =
+  | "business-website"
+  | "website-redesign"
+  | "admin-dashboard"
+  | "store-and-apps"
+  | "maintenance";
+
+/** A fixed-scope entry point that can be paid on the site through Stripe. */
+export type CheckoutPlan = {
+  /** Sent in the checkout request; stays stable (Stripe metadata, invoices) */
+  id: string;
+  /** Product name on the Stripe session, the invoice and the Project row */
+  name: string;
+  priceInCents: number;
+  mode: "payment" | "subscription";
+  cta: string;
+};
+
+export type Offer = {
+  id: OfferId;
+  /** /services/[slug] */
+  slug: string;
+  title: string;
+  icon: React.ComponentType<React.SVGProps<SVGSVGElement>>;
+  /** Home card copy */
+  summary: string;
+  tags: string[];
+  highlight: string;
+  /** Display price: "From $1,000", "$200/month" */
+  priceLabel: string;
+  priceFromCents: number;
+  /** Pricing card detail */
+  range: string;
+  duration: string;
+  description: string;
+  features: string[];
+  ideal: string;
+  featured: boolean;
+  /** Present when part of the offer has a fixed price and can be paid now */
+  checkout?: CheckoutPlan;
+  /** Button text for the "agree the scope first" path (/schedule); absent when there is nothing to quote */
+  quoteCta?: string;
+};
+
+export const offers: Offer[] = [
   {
-    icon: RocketLaunchIcon,
+    id: "business-website",
+    slug: "web-design-houston",
     title: "Business Website",
-    description:
+    icon: RocketLaunchIcon,
+    summary:
       "From a one-page landing to a full 5-10 page site: custom design, mobile-first, built to turn visitors into calls and form submissions.",
-    features: ["Custom Design", "Local SEO", "Contact Forms", "Loads in under 2 seconds"],
+    tags: ["Custom Design", "Local SEO", "Contact Forms", "Loads in under 2 seconds"],
     highlight: "Like Clínica Gessner & Leo's Home Experts",
-    price: "From $1,000",
+    priceLabel: "From $1,000",
+    priceFromCents: 100000,
+    range: "$1,000 - $6,000",
+    duration: "1-4 weeks",
+    description:
+      "A landing page at a fixed price, or a 5-10 page site quoted on scope",
+    features: [
+      "Custom, mobile-first design",
+      "Contact form and click-to-call",
+      "Local SEO setup",
+      "Analytics integration",
+      "Loads in under 2 seconds",
+      "30-day support",
+    ],
+    ideal:
+      "Perfect for: new businesses, professional services, product launches",
+    featured: true,
+    checkout: {
+      id: "landing-page",
+      name: "Professional Landing Page Development",
+      priceInCents: 100000, // $1,000.00
+      mode: "payment",
+      cta: "Start a Landing Page",
+    },
+    quoteCta: "Quote a Full Website",
   },
   {
-    icon: CubeTransparentIcon,
+    id: "website-redesign",
+    slug: "website-redesign-houston",
     title: "Website Redesign & Modernization",
-    description:
+    icon: CubeTransparentIcon,
+    summary:
       "Your current site rebuilt on modern technology: faster, mobile-friendly, and easier for customers to use, with your content migrated.",
-    features: ["Modern Design", "Performance Boost", "Mobile Optimization", "Content Migration"],
+    tags: ["Modern Design", "Performance Boost", "Mobile Optimization", "Content Migration"],
     highlight: "Like GSM A/C",
-    price: "From $3,500",
+    priceLabel: "From $3,500",
+    priceFromCents: 350000,
+    range: "$3,500 - $8,000",
+    duration: "4-6 weeks",
+    description: "Your outdated website rebuilt without losing what works",
+    features: [
+      "Modern design and aesthetics",
+      "Performance optimization",
+      "Mobile responsive upgrade",
+      "Content migration",
+      "Rankings preserved and improved",
+      "45-day support",
+    ],
+    ideal:
+      "Perfect for: businesses with old websites, legacy code or poor performance",
+    featured: false,
+    quoteCta: "Get a Quote",
   },
   {
-    icon: ChartBarIcon,
+    id: "admin-dashboard",
+    slug: "admin-dashboard-houston",
     title: "Admin Dashboard & Automation",
-    description:
+    icon: ChartBarIcon,
+    summary:
       "A private panel to manage leads, customers, payments and campaigns from one place, with the repetitive work automated.",
-    features: ["Lead & Customer Management", "Email & SMS Campaigns", "Stripe Payments", "Reports"],
+    tags: ["Lead & Customer Management", "Email & SMS Campaigns", "Stripe Payments", "Reports"],
     highlight: "GSM saves 15 hours/week",
-    price: "From $7,500",
+    priceLabel: "From $7,500",
+    priceFromCents: 750000,
+    range: "$7,500 - $15,000",
+    duration: "5-6 weeks",
+    description: "A tailored admin panel for your day-to-day operations",
+    features: [
+      "Custom forms and workflows",
+      "Lead and customer management",
+      "Email and SMS campaigns",
+      "Stripe payments",
+      "Reports and data visualization",
+      "API integrations",
+      "60-day support",
+    ],
+    ideal:
+      "Perfect for: service businesses, operations management, automation",
+    featured: false,
+    quoteCta: "Get a Quote",
   },
   {
-    icon: CodeBracketIcon,
+    id: "store-and-apps",
+    slug: "ecommerce-houston",
     title: "Online Store & Custom Web Apps",
-    description:
+    icon: CodeBracketIcon,
+    summary:
       "Full-featured online stores with Stripe and custom platforms: booking systems, member areas, internal tools. No monthly platform fees.",
-    features: ["Stripe Checkout", "Booking Systems", "User Accounts", "API Integrations"],
+    tags: ["Stripe Checkout", "Booking Systems", "User Accounts", "API Integrations"],
     highlight: "Like RC Beauty Salon",
-    price: "From $8,000",
+    priceLabel: "From $8,000",
+    priceFromCents: 800000,
+    range: "$8,000 - $20,000+",
+    duration: "6-12+ weeks",
+    description:
+      "An online store with payment processing, or a custom platform built around your business",
+    features: [
+      "Stripe checkout and subscriptions",
+      "Inventory and order processing",
+      "Customer accounts",
+      "Booking systems and member areas",
+      "Database and API development",
+      "Third-party integrations",
+      "90-day support",
+    ],
+    ideal:
+      "Perfect for: retail, online stores, booking-based and product-based businesses",
+    featured: false,
+    quoteCta: "Get a Quote",
   },
   {
-    icon: ShieldCheckIcon,
+    id: "maintenance",
+    slug: "website-maintenance-houston",
     title: "Monthly Maintenance & Support",
-    description:
+    icon: ShieldCheckIcon,
+    summary:
       "Ongoing maintenance, security updates, backups, and technical support so your website keeps working while you run your business.",
-    features: ["Security Updates", "Uptime Monitoring", "Content Updates", "Priority Support"],
+    tags: ["Security Updates", "Uptime Monitoring", "Content Updates", "Priority Support"],
     highlight: "Peace of mind guaranteed",
-    price: "$200/month",
+    priceLabel: "$200/month",
+    priceFromCents: 20000,
+    range: "Cancel anytime",
+    duration: "Ongoing",
+    description: "Monthly maintenance and support for any website I built",
+    features: [
+      "Security patches and updates",
+      "Performance and uptime monitoring",
+      "Content updates",
+      "Backup management",
+      "Technical support",
+      "Same-day response for urgent issues",
+    ],
+    ideal: "Perfect for: every business that wants peace of mind",
+    featured: false,
+    checkout: {
+      id: "website-maintenance",
+      name: "Monthly Website Maintenance and Support",
+      priceInCents: 20000, // $200.00/month
+      mode: "subscription",
+      cta: "Start Maintenance Plan",
+    },
   },
 ];
+
+/** Everything that can be paid on the site; the checkout action only accepts these */
+export const checkoutPlans: CheckoutPlan[] = offers.flatMap((offer) =>
+  offer.checkout ? [offer.checkout] : []
+);
+
 
 export const faqs = [
   {
@@ -503,170 +662,6 @@ export const faqs = [
   },
 ];
 
-// `purchasable`: fixed scope, can be paid on the site. The rest get a quote first.
-export const pricingPlans = [
-  {
-    id: "landing-page",
-    name: "Professional Landing Page Development",
-    price: "$1,000",
-    priceInCents: 100000, // $1,000.00
-    range: "$1,000 - $2,000",
-    duration: "1-2 weeks",
-    description: "Single page focused on conversions",
-    features: [
-      "Lead generation",
-      "Service showcase",
-      "Event promotion",
-      "Quick online presence",
-      "Mobile-optimized design",
-      "Contact form integration",
-      "Basic SEO setup",
-    ],
-    ideal: "Perfect for: New businesses, product launches, event promotion",
-    purchasable: true,
-    featured: false,
-    cta: "Start Your Project",
-  },
-  {
-    id: "professional-website",
-    name: "Professional Business Website",
-    price: "$3,000",
-    priceInCents: 300000, // $3,000.00
-    range: "$3,000 - $6,000",
-    duration: "3-4 weeks",
-    description: "5-10 pages with custom design",
-    features: [
-      "Small businesses",
-      "Professional services",
-      "Portfolios",
-      "Company websites",
-      "Responsive design",
-      "SEO optimization",
-      "Analytics integration",
-      "30-day support",
-    ],
-    ideal:
-      "Perfect for: Established businesses, professional services, portfolios",
-    purchasable: false,
-    featured: true,
-    cta: "Get a Quote",
-  },
-  {
-    id: "business-dashboard",
-    name: "Custom Business Management Dashboard",
-    price: "$7,500",
-    priceInCents: 750000, // $7,500.00
-    range: "$7,500 - $15,000",
-    duration: "5-6 weeks",
-    description: "Tailored admin dashboards for business operations",
-    features: [
-      "Custom forms & workflows",
-      "Data visualization",
-      "User management",
-      "Email automation",
-      "Database integration",
-      "API integrations",
-      "60-day support",
-    ],
-    ideal:
-      "Perfect for: Service businesses, operations management, automation",
-    purchasable: false,
-    featured: false,
-    cta: "Get a Quote",
-  },
-  {
-    id: "ecommerce",
-    name: "E-Commerce Website Development",
-    price: "$8,000",
-    priceInCents: 800000, // $8,000.00
-    range: "$8,000 - $20,000",
-    duration: "6-10 weeks",
-    description: "Full online store with payment processing",
-    features: [
-      "Product sales",
-      "Inventory management",
-      "Order processing",
-      "Customer accounts",
-      "Payment gateway integration",
-      "Shopping cart",
-      "Admin dashboard",
-      "90-day support",
-    ],
-    ideal:
-      "Perfect for: Retail businesses, online stores, product-based companies",
-    purchasable: false,
-    featured: false,
-    cta: "Get a Quote",
-  },
-  {
-    id: "website-redesign",
-    name: "Website Redesign and Modernization",
-    price: "$3,500",
-    priceInCents: 350000, // $3,500.00
-    range: "$3,500 - $8,000",
-    duration: "4-6 weeks",
-    description: "Transform your outdated website",
-    features: [
-      "Modern design & aesthetics",
-      "Performance optimization",
-      "Mobile responsive upgrade",
-      "Content migration",
-      "SEO enhancement",
-      "Technology modernization",
-      "45-day support",
-    ],
-    ideal:
-      "Perfect for: Businesses with old websites, legacy code, poor performance",
-    purchasable: false,
-    featured: false,
-    cta: "Get a Quote",
-  },
-  {
-    id: "web-application",
-    name: "Custom Web Application Development",
-    price: "$12,000",
-    priceInCents: 1200000, // $12,000.00
-    range: "$12,000+",
-    duration: "8-12+ weeks",
-    description: "Custom platforms and systems",
-    features: [
-      "SaaS products",
-      "Custom tools",
-      "Member portals",
-      "Complex systems",
-      "Database architecture",
-      "API development",
-      "Third-party integrations",
-      "6-month priority support",
-    ],
-    ideal: "Perfect for: Startups, enterprise solutions, custom applications",
-    purchasable: false,
-    featured: false,
-    cta: "Get a Quote",
-  },
-  {
-    id: "website-maintenance",
-    name: "Monthly Website Maintenance and Support",
-    price: "$200/mo",
-    priceInCents: 20000, // $200.00/month
-    range: "$200 - $500/month",
-    duration: "Ongoing",
-    description: "Monthly maintenance and support",
-    features: [
-      "Security patches & updates",
-      "Performance monitoring",
-      "Content updates",
-      "Backup management",
-      "Technical support",
-      "Uptime monitoring",
-      "Same-day response for urgent issues",
-    ],
-    ideal: "Perfect for: All businesses wanting peace of mind",
-    purchasable: true,
-    featured: false,
-    cta: "Start Maintenance Plan",
-  },
-];
 
 export const deliverables = {
   "Landing Pages": [

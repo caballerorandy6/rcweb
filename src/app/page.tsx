@@ -22,7 +22,7 @@ import { JsonLdForService } from "@/components/seo/JsonLdForService";
 import { JsonLdForOrganization } from "@/components/seo/JsonLdForOrganization";
 import { JsonLdForLocalBusiness } from "@/components/seo/JsonLdForLocalBusiness";
 import { JsonLdForWebSite } from "@/components/seo/JsonLdForWebSite";
-import { faqs, pricingPlans } from "@/lib/data";
+import { faqs, offers } from "@/lib/data";
 
 export const metadata: Metadata = {
   title: "Custom Websites & Web Apps for Small Businesses | RC Web Solutions",
@@ -40,13 +40,13 @@ export default function Home() {
       <JsonLdForLocalBusiness />
       <JsonLdForWebSite />
       <JsonLdForFaq faqs={faqs} />
-      {pricingPlans.map((plan) => (
+      {offers.map((offer) => (
         <JsonLdForService
-          key={plan.id}
-          name={plan.name}
-          description={`${plan.description}. ${plan.ideal}`}
-          price={plan.priceInCents / 100}
-          duration={plan.duration}
+          key={offer.id}
+          name={offer.title}
+          description={`${offer.description}. ${offer.ideal}`}
+          price={offer.priceFromCents / 100}
+          duration={offer.duration}
         />
       ))}
       <ScrollSpy />

@@ -18,7 +18,6 @@ export default function PlanCTA({ planId, featured, children }: PlanCTAProps) {
       variant={featured ? "primary" : "secondary"}
       size="lg"
       fullWidth
-      className="mt-8"
       onClick={() => open(planId)}
     >
       {children}

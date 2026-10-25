@@ -22,7 +22,7 @@ export const FormSchema = z.object({
 });
 
 // Checkout: el cliente solo envía el ID del plan. Precio, nombre y descripción
-// se leen en el servidor desde pricingPlans para que no se puedan manipular.
+// se leen en el servidor desde checkoutPlans para que no se puedan manipular.
 export const CheckoutRequestSchema = z.object({
   planId: z.string().min(1, { message: "Plan is required" }),
   customer: z.object({
