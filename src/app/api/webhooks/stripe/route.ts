@@ -2,6 +2,7 @@
 
 import { NextResponse } from "next/server";
 import Stripe from "stripe";
+import * as Sentry from "@sentry/nextjs";
 import { prisma } from "@/lib/prisma";
 import stripe from "@/lib/stripe";
 import { Resend } from "resend";
@@ -10,6 +11,11 @@ import { ADMIN_EMAIL } from "@/lib/email/adminEmail";
 import { LEGAL_LAST_UPDATED } from "@/lib/company";
 import { toSubscriptionStatus } from "@/lib/subscriptionStatus";
 import { getProjectCharges, isPaid } from "@/lib/project/charges";
+import { linkProjectToContact } from "@/lib/project/linkToContact";
+import {
+  isOwnCheckoutSession,
+  parseCheckoutMetadata,
+} from "@/lib/checkoutMetadata";
 import type { Prisma } from "@/generated/prisma/client";
 import {
   sendSubscriptionConfirmation,
@@ -58,110 +64,105 @@ export async function POST(req: Request) {
 
   if (event.type === "checkout.session.completed") {
     const session = event.data.object as Stripe.Checkout.Session;
-    const metadata = session.metadata || {};
 
-    const paymentType = metadata.paymentType;
-    const projectCode = metadata.projectCode;
-    const customerName = metadata.customerName;
-    const planName = metadata.planName;
-    const customerEmail = session.customer_email || metadata.customerEmail;
+    // Sessions we did not create (Payment Links, Dashboard) carry none of our
+    // metadata: acknowledge them so Stripe does not retry for days
+    if (!isOwnCheckoutSession(session.metadata)) {
+      return NextResponse.json({
+        received: true,
+        warning: "Checkout Session without a known paymentType",
+      });
+    }
+
+    // Our own actions wrote this metadata and Stripe signed the event, so a
+    // parse failure is a bug on our side: answer 400 so the delivery shows as
+    // failed in the Stripe dashboard instead of being silently acknowledged.
+    const parsed = parseCheckoutMetadata(session.metadata);
+    if (!parsed.success) {
+      console.error("❌ Invalid Checkout Session metadata:", {
+        sessionId: session.id,
+        issues: parsed.error.issues,
+      });
+      return NextResponse.json(
+        { error: "Invalid checkout metadata" },
+        { status: 400 }
+      );
+    }
+    const metadata = parsed.data;
 
     const resend = new Resend(process.env.RESEND_API_KEY!);
 
     // ============= INITIAL PAYMENT =============
-    if (paymentType === "initial" && projectCode && customerEmail) {
+    // The only place where a Project is created. Stripe retries the event
+    // until it gets a 2xx, so the same session can arrive more than once and
+    // the unique projectCode tells whether it was already processed.
+    if (metadata.paymentType === "initial") {
+      const {
+        projectCode,
+        customerEmail,
+        customerName,
+        planName,
+        firstPaymentAmount,
+        secondPaymentAmount,
+        totalAmount,
+        termsAcceptedAt,
+      } = metadata;
+
       try {
-        // Extract and validate amounts from metadata
-        const totalAmount = parseInt(metadata.totalAmount || "0");
-        const firstPaymentAmount = parseInt(metadata.firstPaymentAmount || "0");
-        const secondPaymentAmount = parseInt(
-          metadata.secondPaymentAmount || "0"
-        );
-
-        // Validate that amounts are valid
-        if (
-          isNaN(totalAmount) ||
-          isNaN(firstPaymentAmount) ||
-          isNaN(secondPaymentAmount) ||
-          totalAmount <= 0 ||
-          firstPaymentAmount <= 0 ||
-          secondPaymentAmount <= 0
-        ) {
-          console.error("❌ Invalid amounts in metadata:", {
-            totalAmount: metadata.totalAmount,
-            firstPaymentAmount: metadata.firstPaymentAmount,
-            secondPaymentAmount: metadata.secondPaymentAmount,
-          });
-          return NextResponse.json(
-            { error: "Invalid payment amounts in metadata" },
-            { status: 400 }
-          );
-        }
-
-        // CHECK if the Project already exists (created by the /payment-success fallback)
-        let project = await prisma.project.findFirst({
-          where: {
-            OR: [
-              { projectCode },
-              { payments: { some: { stripeSessionId: session.id } } },
-            ],
-          },
+        let project = await prisma.project.findUnique({
+          where: { projectCode },
           include: { payments: true, invoices: true },
         });
 
         if (project) {
-          // Make sure the deposit row records this Checkout Session
+          // Same code but another session: generateProjectCode() collided and
+          // this is a different customer's deposit. Fail loudly instead of
+          // treating it as a retry (which would swallow the payment).
           const { deposit } = getProjectCharges(project.payments);
-          if (!deposit.stripeSessionId) {
-            project = await prisma.project.update({
-              where: { id: project.id },
-              data: {
-                payments: {
-                  update: {
-                    where: { id: deposit.id },
-                    data: {
-                      stripeSessionId: session.id,
-                      status: "paid",
-                      paidAt: deposit.paidAt ?? new Date(),
-                    },
-                  },
-                },
+          if (deposit.stripeSessionId !== session.id) {
+            const error = new Error(
+              `Project code ${projectCode} already belongs to another Checkout Session`
+            );
+            Sentry.captureException(error, {
+              tags: { feature: "stripe-webhook" },
+              extra: {
+                projectId: project.id,
+                existingSessionId: deposit.stripeSessionId,
+                sessionId: session.id,
               },
-              include: { payments: true, invoices: true },
             });
+            throw error;
           }
         } else {
-          // CREATE Project with its two charges (and TermsAcceptance) atomically
+          // Project, its two charges and the terms acceptance in one write
           const data = {
-              projectCode,
-              email: customerEmail,
-              name: customerName || "Client",
-              planName: planName || "Unknown Plan",
-              totalAmount,
-              status: "in_progress",
-              payments: {
-                create: [
-                  {
-                    kind: "deposit",
-                    amount: firstPaymentAmount,
-                    status: "paid",
-                    paidAt: new Date(),
-                    stripeSessionId: session.id,
-                  },
-                  { kind: "final", amount: secondPaymentAmount },
-                ],
-              },
-              ...(metadata.termsAcceptedAt && {
-                termsAcceptance: {
-                  create: {
-                    acceptedAt: new Date(metadata.termsAcceptedAt),
-                    termsVersion: TERMS_VERSION,
-                    plan: planName,
-                    ipAddress: "stripe-checkout",
-                    userAgent: "stripe-checkout",
-                  },
+            projectCode,
+            email: customerEmail,
+            name: customerName,
+            planName,
+            totalAmount,
+            status: "in_progress",
+            payments: {
+              create: [
+                {
+                  kind: "deposit",
+                  amount: firstPaymentAmount,
+                  status: "paid",
+                  paidAt: new Date(),
+                  stripeSessionId: session.id,
                 },
-              }),
+                { kind: "final", amount: secondPaymentAmount },
+              ],
+            },
+            termsAcceptance: {
+              create: {
+                acceptedAt: termsAcceptedAt,
+                termsVersion: TERMS_VERSION,
+                plan: planName,
+                ipAddress: "stripe-checkout",
+                userAgent: "stripe-checkout",
+              },
+            },
           } satisfies Prisma.ProjectCreateInput;
 
           try {
@@ -170,20 +171,17 @@ export async function POST(req: Request) {
               include: { payments: true, invoices: true },
             });
           } catch (createError) {
-            // The /payment-success fallback won the race (unique projectCode or
-            // stripeSessionId): reload its row and continue with the invoice
+            // Two deliveries of the same event raced: keep the row that won
             if (!isUniqueConstraintError(createError)) throw createError;
-            project = await prisma.project.findFirstOrThrow({
-              where: {
-                OR: [
-                  { projectCode },
-                  { payments: { some: { stripeSessionId: session.id } } },
-                ],
-              },
+            project = await prisma.project.findUniqueOrThrow({
+              where: { projectCode },
               include: { payments: true, invoices: true },
             });
           }
         }
+
+        // Revenue attribution: tie the project to the lead with the same email
+        await linkProjectToContact(project);
 
         // ============= CREATE INVOICE AND SEND EMAIL =============
         const emailErrors: string[] = [];
@@ -211,9 +209,9 @@ export async function POST(req: Request) {
         // ============= ADMIN EMAIL =============
         const adminResult = await sendAdminInitialPaymentNotification(resend, {
           projectCode,
-          customerName: customerName || "Unknown",
+          customerName,
           customerEmail,
-          planName: planName || "Unknown Plan",
+          planName,
           firstPaymentAmount,
           secondPaymentAmount,
           projectId: project.id,
@@ -236,17 +234,10 @@ export async function POST(req: Request) {
     }
 
     // ============= FINAL PAYMENT =============
-    else if (
-      paymentType === "final" &&
-      (metadata.projectId || metadata.paymentId) &&
-      customerEmail
-    ) {
-      // Sessions created before the Project/Payment split carry `paymentId`;
-      // Project kept those ids, so both name the same row
-      const projectId = metadata.projectId || metadata.paymentId;
+    else if (metadata.paymentType === "final") {
+      const { projectId } = metadata;
 
       try {
-        // Check if the project exists and get current state
         let project = await prisma.project.findUnique({
           where: { id: projectId },
           include: { payments: true, invoices: true },
@@ -256,6 +247,9 @@ export async function POST(req: Request) {
           throw new Error("PROJECT_NOT_FOUND");
         }
 
+        // The session could only be created while the project was
+        // ready_for_payment (createFinalPaymentSessionAction). The customer
+        // has paid by now, so the charge is recorded whatever the status is.
         const { final } = getProjectCharges(project.payments);
 
         if (!isPaid(final)) {
@@ -339,7 +333,7 @@ export async function POST(req: Request) {
         const adminResult = await sendAdminFinalPaymentNotification(resend, {
           projectCode: project.projectCode,
           customerName: project.name,
-          customerEmail,
+          customerEmail: project.email,
           planName: project.planName,
           finalPaymentAmount: final.amount,
           totalAmount: project.totalAmount,
@@ -373,10 +367,11 @@ export async function POST(req: Request) {
       }
     }
     // ============= SUBSCRIPTION PAYMENT =============
-    else if (paymentType === "subscription" && customerEmail) {
-      try {
-        const resend = new Resend(process.env.RESEND_API_KEY!);
+    else {
+      const { customerEmail, customerName, planName, termsAcceptedAt } =
+        metadata;
 
+      try {
         // Get subscription ID from the session
         const subscriptionId = session.subscription as string;
 
@@ -421,8 +416,8 @@ export async function POST(req: Request) {
               stripeSubscriptionId: subscriptionId,
               stripeCustomerId: customerId,
               email: customerEmail,
-              name: customerName || "Client",
-              planName: planName || "Monthly Website Maintenance",
+              name: customerName,
+              planName,
               amount: amount,
               status: toSubscriptionStatus(stripeSubscription.status),
               currentPeriodStart: currentPeriodStart
@@ -433,19 +428,16 @@ export async function POST(req: Request) {
             },
           });
 
-          // Create TermsAcceptance if termsAcceptedAt is provided
-          if (metadata.termsAcceptedAt) {
-            await tx.termsAcceptance.create({
-              data: {
-                subscriptionId: newSubscription.id,
-                acceptedAt: new Date(metadata.termsAcceptedAt),
-                termsVersion: TERMS_VERSION,
-                plan: planName,
-                ipAddress: "stripe-checkout",
-                userAgent: "stripe-checkout",
-              },
-            });
-          }
+          await tx.termsAcceptance.create({
+            data: {
+              subscriptionId: newSubscription.id,
+              acceptedAt: termsAcceptedAt,
+              termsVersion: TERMS_VERSION,
+              plan: planName,
+              ipAddress: "stripe-checkout",
+              userAgent: "stripe-checkout",
+            },
+          });
 
           return newSubscription;
         });
@@ -456,8 +448,8 @@ export async function POST(req: Request) {
         // Send customer confirmation email
         const customerResult = await sendSubscriptionConfirmation(resend, {
           customerEmail,
-          customerName: customerName || "Client",
-          planName: planName || "Monthly Website Maintenance",
+          customerName,
+          planName,
           amount,
           nextBillingDate,
         });
@@ -468,9 +460,9 @@ export async function POST(req: Request) {
 
         // Send admin notification email
         const adminResult = await sendAdminSubscriptionNotification(resend, {
-          customerName: customerName || "Unknown",
+          customerName,
           customerEmail,
-          planName: planName || "Monthly Website Maintenance",
+          planName,
           amount,
           status: toSubscriptionStatus(stripeSubscription.status),
           stripeSubscriptionId: subscriptionId,
@@ -495,11 +487,6 @@ export async function POST(req: Request) {
         console.error("❌ Error processing subscription:", err);
         throw err;
       }
-    } else {
-      return NextResponse.json({
-        received: true,
-        warning: "Conditions not met",
-      });
     }
   }
 

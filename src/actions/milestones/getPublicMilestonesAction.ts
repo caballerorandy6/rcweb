@@ -10,6 +10,8 @@ type ProjectInfo = {
   name: string;
   planName: string;
   status: ProjectStatus;
+  /** Final charge in cents, shown when the project is ready for payment */
+  finalAmount: number | null;
 };
 
 export async function getPublicMilestonesAction(
@@ -23,6 +25,7 @@ export async function getPublicMilestonesAction(
     const project = await prisma.project.findUnique({
       where: { accessToken },
       include: {
+        payments: true,
         milestones: {
           orderBy: { order: "asc" },
         },
@@ -54,6 +57,8 @@ export async function getPublicMilestonesAction(
           name: project.name,
           planName: project.planName,
           status: project.status,
+          finalAmount:
+            project.payments.find((p) => p.kind === "final")?.amount ?? null,
         },
         milestones,
       },

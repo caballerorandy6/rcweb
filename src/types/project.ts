@@ -36,6 +36,8 @@ export type VerifiedProjectAccess = {
   id: string;
   projectCode: string;
   planName: string;
+  /** As stored in the database (lowercased) */
+  email: string;
   finalAmount: number;
   accessToken: string;
 };

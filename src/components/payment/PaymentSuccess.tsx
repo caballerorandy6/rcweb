@@ -1,8 +1,10 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 import Button from "@/components/ui/Button";
 import {
+  ArrowPathIcon,
   CheckCircleIcon,
   DocumentDuplicateIcon,
   ExclamationTriangleIcon,
@@ -19,16 +21,18 @@ interface PaymentSuccessClientProps {
   project?: PaymentSuccessData | null;
   error?: string;
   projectCode?: string;
-  fallbackUsed?: boolean;
+  /** Stripe confirmed the payment but the webhook has not written the project yet */
+  processing?: boolean;
 }
 
 export default function PaymentSuccess({
   project,
   error,
   projectCode,
-  fallbackUsed,
+  processing,
 }: PaymentSuccessClientProps) {
   const [copied, setCopied] = useState(false);
+  const router = useRouter();
 
   useEffect(() => {
     if (project && !error) {
@@ -55,15 +59,8 @@ export default function PaymentSuccess({
 
       // Track lead conversion (payment completed = lead converted to customer)
       trackLeadConversion();
-
-      if (fallbackUsed) {
-        toast.warning("Payment processed with fallback method", {
-          description:
-            "Your payment was successful but processed through a backup system.",
-        });
-      }
     }
-  }, [project, error, fallbackUsed]);
+  }, [project, error]);
 
   const copyToClipboard = () => {
     if (projectCode) {
@@ -73,6 +70,49 @@ export default function PaymentSuccess({
       setTimeout(() => setCopied(false), 2000);
     }
   };
+
+  if (processing) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-gray-900 px-4 py-24 sm:py-32">
+        <div className="max-w-md w-full bg-gray-800/50 border border-gold/30 rounded-2xl p-8 text-center animate-enter">
+          <div className="text-gold mb-4">
+            <ArrowPathIcon className="w-16 h-16 mx-auto animate-spin [animation-duration:3s]" />
+          </div>
+          <h2 className="text-2xl font-bold text-white mb-2">
+            Payment Received, Finishing Up
+          </h2>
+          <p className="text-gray-300 mb-6 font-inter">
+            Stripe confirmed your payment, but your project is still being
+            registered. This usually takes a few seconds.
+          </p>
+          {projectCode && (
+            <p className="text-sm text-gray-400 mb-6 font-inter">
+              Your project code is{" "}
+              <span className="font-mono font-bold text-gold tracking-wider">
+                {projectCode}
+              </span>
+              . Keep it: you&apos;ll need it for the final payment.
+            </p>
+          )}
+          <div className="flex flex-col sm:flex-row gap-4 font-inter">
+            <Button onClick={() => router.refresh()} className="flex-1">
+              Check Again
+            </Button>
+            <Button
+              href="mailto:contactus@rcweb.dev"
+              variant="secondary"
+              className="flex-1"
+            >
+              Contact Support
+            </Button>
+          </div>
+          <p className="text-xs text-gray-500 mt-6 font-inter">
+            You&apos;ll also receive your invoice by email once it is ready.
+          </p>
+        </div>
+      </div>
+    );
+  }
 
   if (error) {
     return (
@@ -117,24 +157,6 @@ export default function PaymentSuccess({
             Thank you for your payment. Your project has been initiated and
             I&#39;ll be in touch within 24 hours.
           </p>
-
-          {/* Fallback Warning if used */}
-          {fallbackUsed && (
-            <div className="bg-yellow-900/20 border border-yellow-500/50 rounded-lg p-4 mb-6">
-              <div className="flex items-start gap-3">
-                <ExclamationTriangleIcon className="w-5 h-5 text-yellow-500 mt-0.5" />
-                <div className="flex-1">
-                  <p className="text-yellow-500 font-semibold text-sm">
-                    Backup Processing Used
-                  </p>
-                  <p className="text-gold-light/80 text-xs mt-1">
-                    Your payment was processed successfully through a backup
-                    system. Everything is fine!
-                  </p>
-                </div>
-              </div>
-            </div>
-          )}
 
           {/* Project Code Display */}
           {projectCode && (

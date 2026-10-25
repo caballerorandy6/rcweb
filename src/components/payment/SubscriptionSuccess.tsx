@@ -8,7 +8,6 @@ import {
   CreditCardIcon,
   ExclamationTriangleIcon,
 } from "@heroicons/react/24/outline";
-import { toast } from "sonner";
 import confetti from "canvas-confetti";
 import type { Subscription } from "@/generated/prisma/client";
 import { trackLeadConversion, trackPurchase } from "@/lib/analytics";
@@ -19,13 +18,11 @@ import { trackLinkedInConversion } from "@/lib/linkedin";
 interface SubscriptionSuccessProps {
   subscription?: Subscription | null;
   error?: string;
-  fallbackUsed?: boolean;
 }
 
 export default function SubscriptionSuccess({
   subscription,
   error,
-  fallbackUsed,
 }: SubscriptionSuccessProps) {
   useEffect(() => {
     if (subscription && !error) {
@@ -48,15 +45,8 @@ export default function SubscriptionSuccess({
       trackLinkedInConversion();
 
       trackLeadConversion();
-
-      if (fallbackUsed) {
-        toast.warning("Subscription processed with fallback method", {
-          description:
-            "Your subscription was successful but processed through a backup system.",
-        });
-      }
     }
-  }, [subscription, error, fallbackUsed]);
+  }, [subscription, error]);
 
   const formatDate = (date: Date | null) => {
     if (!date) return "In approximately 30 days";
@@ -106,24 +96,6 @@ export default function SubscriptionSuccess({
             Thank you for subscribing to the maintenance plan. Your website is
             now protected and supported.
           </p>
-
-          {/* Fallback Warning */}
-          {fallbackUsed && (
-            <div className="bg-yellow-900/20 border border-yellow-500/50 rounded-lg p-4 mb-6">
-              <div className="flex items-start gap-3">
-                <ExclamationTriangleIcon className="w-5 h-5 text-yellow-500 mt-0.5" />
-                <div className="flex-1">
-                  <p className="text-yellow-500 font-semibold text-sm">
-                    Processing in Progress
-                  </p>
-                  <p className="text-gold-light/80 text-xs mt-1">
-                    Your subscription is being set up. You&apos;ll receive a
-                    confirmation email shortly.
-                  </p>
-                </div>
-              </div>
-            </div>
-          )}
 
           {/* Subscription Details */}
           {subscription && (

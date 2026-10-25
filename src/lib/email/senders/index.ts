@@ -7,11 +7,6 @@ export {
 } from "./sendSubscriptionConfirmation";
 
 export {
-  sendInitialPaymentConfirmation,
-  type SendInitialPaymentConfirmationParams,
-} from "./sendInitialPaymentConfirmation";
-
-export {
   sendInvoiceEmail,
   type SendInvoiceEmailParams,
 } from "./sendInvoiceEmail";
@@ -57,8 +52,3 @@ export {
   sendAdminFinalPaymentNotification,
   type AdminFinalPaymentNotificationParams,
 } from "./sendAdminFinalPaymentNotification";
-
-export {
-  sendAdminInitialPaymentFallback,
-  type AdminInitialPaymentFallbackParams,
-} from "./sendAdminInitialPaymentFallback";

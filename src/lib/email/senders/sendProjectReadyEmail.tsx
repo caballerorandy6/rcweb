@@ -10,14 +10,21 @@ export interface SendProjectReadyEmailParams {
   planName: string;
   projectCode: string;
   finalAmount: number;
+  paymentUrl: string;
 }
 
 export async function sendProjectReadyEmail(
   resend: Resend,
   params: SendProjectReadyEmailParams
 ): Promise<{ success: boolean; error?: string }> {
-  const { customerEmail, customerName, planName, projectCode, finalAmount } =
-    params;
+  const {
+    customerEmail,
+    customerName,
+    planName,
+    projectCode,
+    finalAmount,
+    paymentUrl,
+  } = params;
 
   try {
     const html = await render(
@@ -27,6 +34,7 @@ export async function sendProjectReadyEmail(
         projectCode={projectCode}
         finalAmount={finalAmount}
         customerEmail={customerEmail}
+        paymentUrl={paymentUrl}
       />
     );
 

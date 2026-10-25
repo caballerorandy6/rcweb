@@ -1,6 +1,8 @@
 import { Suspense } from "react";
+import * as Sentry from "@sentry/nextjs";
 import { prisma } from "@/lib/prisma";
-import { handlePaymentSuccessAction } from "@/actions/payments/handlePaymentSuccessAction";
+import { getProjectCharges } from "@/lib/project/charges";
+import type { PaymentSuccessData } from "@/types/project";
 import PaymentSuccess from "@/components/payment/PaymentSuccess";
 import SubscriptionSuccess from "@/components/payment/SubscriptionSuccess";
 import PaymentSuccessSkeleton from "@/components/skeletons/PaymentSuccessSkeleton";
@@ -19,30 +21,60 @@ interface PageProps {
   searchParams: SearchParams;
 }
 
-async function findSubscriptionWithRetry(sessionId: string) {
-  const maxAttempts = 15;
-  const delayMs = 1000;
+// Stripe sends the customer here before, or at the same time as, the webhook
+// that writes the row. This page only reads: it waits a little for the webhook
+// and, if the row is still missing, tells the customer it is being processed.
+const WEBHOOK_WAIT_ATTEMPTS = 15;
+const WEBHOOK_WAIT_DELAY_MS = 1000;
 
-  for (let attempt = 0; attempt < maxAttempts; attempt++) {
-    const subscription = await prisma.subscription.findFirst({
-      where: { stripeSessionId: sessionId },
-    });
-
-    if (subscription) return { subscription, fallbackUsed: false };
-
-    if (attempt < maxAttempts - 1) {
-      await new Promise((resolve) => setTimeout(resolve, delayMs));
+async function waitForWebhook<T>(
+  find: () => Promise<T | null>,
+  context: { flow: "project" | "subscription"; sessionId: string }
+): Promise<T | null> {
+  for (let attempt = 0; attempt < WEBHOOK_WAIT_ATTEMPTS; attempt++) {
+    const found = await find();
+    if (found) return found;
+    if (attempt < WEBHOOK_WAIT_ATTEMPTS - 1) {
+      await new Promise((resolve) => setTimeout(resolve, WEBHOOK_WAIT_DELAY_MS));
     }
   }
+  // The customer has paid and nothing is in the database: the webhook is
+  // late or broken (secret rotated, endpoint URL wrong). Make it visible.
+  Sentry.captureMessage("Stripe webhook not received after payment", {
+    level: "warning",
+    tags: { feature: "stripe-webhook", flow: context.flow },
+    extra: { sessionId: context.sessionId },
+  });
+  return null;
+}
 
-  return { subscription: null, fallbackUsed: true };
+// The Checkout Session id is the credential: it is unguessable and only the
+// customer who just paid has it. The project code alone (printed in every
+// email) would not be enough to show amounts.
+async function findPaidDeposit(sessionId: string): Promise<PaymentSuccessData | null> {
+  const deposit = await prisma.payment.findUnique({
+    where: { stripeSessionId: sessionId, kind: "deposit" },
+    include: { project: { include: { payments: true } } },
+  });
+  if (!deposit) return null;
+
+  const { project } = deposit;
+  const { final } = getProjectCharges(project.payments);
+  return {
+    projectCode: project.projectCode,
+    planName: project.planName,
+    totalAmount: project.totalAmount,
+    depositAmount: deposit.amount,
+    finalAmount: final.amount,
+    stripeSessionId: sessionId,
+  };
 }
 
 async function Content({ searchParams }: PageProps) {
   const params = await searchParams;
-  const sessionId = params.session_id as string;
+  const sessionId = typeof params.session_id === "string" ? params.session_id : "";
   const isSubscription = params.subscription === "true";
-  const code = params.code as string;
+  const code = typeof params.code === "string" ? params.code : undefined;
 
   if (!sessionId) {
     return (
@@ -52,34 +84,31 @@ async function Content({ searchParams }: PageProps) {
 
   // Subscription flow
   if (isSubscription) {
-    const { subscription, fallbackUsed } = await findSubscriptionWithRetry(sessionId);
+    const subscription = await waitForWebhook(
+      () => prisma.subscription.findFirst({ where: { stripeSessionId: sessionId } }),
+      { flow: "subscription", sessionId }
+    );
 
     if (!subscription) {
       return (
-        <SubscriptionSuccess
-          error="Subscription is being processed. Please check your email for confirmation."
-          fallbackUsed={fallbackUsed}
-        />
+        <SubscriptionSuccess error="Subscription is being processed. Please check your email for confirmation." />
       );
     }
 
-    return <SubscriptionSuccess subscription={subscription} fallbackUsed={fallbackUsed} />;
+    return <SubscriptionSuccess subscription={subscription} />;
   }
 
-  // Payment flow
-  const result = await handlePaymentSuccessAction(sessionId, code);
+  // 50/50 project flow
+  const project = await waitForWebhook(() => findPaidDeposit(sessionId), {
+    flow: "project",
+    sessionId,
+  });
 
-  if (!result.success) {
-    return <PaymentSuccess error={result.error} projectCode={code} />;
+  if (!project) {
+    return <PaymentSuccess processing projectCode={code} />;
   }
 
-  return (
-    <PaymentSuccess
-      project={result.project}
-      projectCode={code || result.project.projectCode}
-      fallbackUsed={result.fallbackUsed}
-    />
-  );
+  return <PaymentSuccess project={project} projectCode={project.projectCode} />;
 }
 
 export default function PaymentSuccessPage({ searchParams }: PageProps) {

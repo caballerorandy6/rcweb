@@ -12,6 +12,7 @@ import {
 } from "@react-email/components";
 import * as React from "react";
 import { EMAIL_COLORS } from "../colors";
+import { SITE_BASE_URL } from "@/lib/projectUrl";
 
 export interface ProjectReadyEmailProps {
   customerName: string;
@@ -19,6 +20,8 @@ export interface ProjectReadyEmailProps {
   projectCode: string;
   finalAmount: number;
   customerEmail: string;
+  /** Magic link to /pay/[accessToken] */
+  paymentUrl: string;
 }
 
 // Alias for backward compatibility in this file
@@ -30,8 +33,9 @@ export const ProjectReadyEmail = ({
   projectCode,
   finalAmount,
   customerEmail,
+  paymentUrl,
 }: ProjectReadyEmailProps) => {
-  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "https://rcweb.dev";
+  const baseUrl = SITE_BASE_URL;
 
   return (
     <Html>
@@ -87,10 +91,7 @@ export const ProjectReadyEmail = ({
                 You can complete your payment directly:
               </Text>
               <Section style={{ textAlign: "center", margin: "20px 0" }}>
-                <Button
-                  href={`${baseUrl}/final-payment`}
-                  style={styles.paymentButton}
-                >
+                <Button href={paymentUrl} style={styles.paymentButton}>
                   Complete Final Payment Now
                 </Button>
               </Section>

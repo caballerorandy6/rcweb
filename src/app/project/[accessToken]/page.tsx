@@ -7,7 +7,8 @@ import {
   UserIcon,
   DocumentTextIcon,
 } from "@heroicons/react/24/outline";
-import { getProjectStatusLabel } from "@/lib/utils";
+import { formatCurrency, getProjectStatusLabel } from "@/lib/utils";
+import Button from "@/components/ui/Button";
 
 export const metadata: Metadata = {
   title: "Project Progress - RC Web Solutions",
@@ -95,6 +96,24 @@ export default async function ProjectPage(props: { params: Params }) {
             </div>
           </div>
         </div>
+
+        {/* Final payment call to action */}
+        {project.status === "ready_for_payment" && (
+          <div className="bg-gold/10 border border-gold/40 rounded-xl p-6 mb-8 flex flex-col sm:flex-row sm:items-center gap-4">
+            <div className="flex-1">
+              <p className="text-white font-semibold font-inter">
+                Your project is ready
+              </p>
+              <p className="text-gray-400 text-sm font-inter">
+                Complete the final payment
+                {project.finalAmount !== null &&
+                  ` of ${formatCurrency(project.finalAmount)}`}{" "}
+                to receive your deliverables.
+              </p>
+            </div>
+            <Button href={`/pay/${accessToken}`}>Pay Final Balance</Button>
+          </div>
+        )}
 
         {/* Milestones */}
         <div className="bg-gray-800 rounded-xl p-6 border border-gray-700">

@@ -17,10 +17,11 @@ export async function verifyProjectAccessAction(
       return { success: false, error: rateCheck.error! };
     }
 
+    // Project.email is stored lowercased (CheckoutRequestSchema)
     const project = await prisma.project.findFirst({
       where: {
-        email: email.toLowerCase(),
-        projectCode: projectCode.toUpperCase(),
+        email: email.trim().toLowerCase(),
+        projectCode: projectCode.trim().toUpperCase(),
       },
       include: { payments: true },
     });
@@ -49,6 +50,7 @@ export async function verifyProjectAccessAction(
           id: project.id,
           projectCode: project.projectCode,
           planName: project.planName,
+          email: project.email,
           finalAmount: final.amount,
           accessToken: project.accessToken,
         },

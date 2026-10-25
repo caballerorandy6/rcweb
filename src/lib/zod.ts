@@ -31,7 +31,12 @@ export const CheckoutRequestSchema = z.object({
       .trim()
       .min(2, { message: "Name is too short" })
       .max(100, { message: "Name is too long" }),
-    email: z.string().trim().pipe(z.email({ message: "Invalid email address" })),
+    // Lowercased: it becomes Project.email and the final-payment form compares it
+    email: z
+      .string()
+      .trim()
+      .toLowerCase()
+      .pipe(z.email({ message: "Invalid email address" })),
   }),
 });
 
