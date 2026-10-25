@@ -30,6 +30,21 @@ describe("parseCheckoutMetadata", () => {
     );
   });
 
+  it("accepts an initial payment with or without the quote it pays", () => {
+    expect(parseCheckoutMetadata(initial).success).toBe(true);
+    const withQuote = parseCheckoutMetadata({
+      ...initial,
+      quoteId: "7b1f2e6a-3c4d-4e5f-8a9b-0c1d2e3f4a5b",
+    });
+    expect(withQuote.success).toBe(true);
+    if (!withQuote.success || withQuote.data.paymentType !== "initial") return;
+    expect(withQuote.data.quoteId).toBe("7b1f2e6a-3c4d-4e5f-8a9b-0c1d2e3f4a5b");
+  });
+
+  it("rejects a quote id that is not a uuid", () => {
+    expect(parseCheckoutMetadata({ ...initial, quoteId: "Q-2026-001" }).success).toBe(false);
+  });
+
   it("rejects an initial payment with a non-numeric or zero amount", () => {
     expect(
       parseCheckoutMetadata({ ...initial, firstPaymentAmount: "12.5" }).success

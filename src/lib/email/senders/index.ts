@@ -36,6 +36,8 @@ export {
   type SendContactConfirmationEmailParams,
 } from "./sendContactConfirmationEmail";
 
+export { sendQuoteEmail, type SendQuoteEmailParams } from "./sendQuoteEmail";
+
 
 // Admin email senders
 export {

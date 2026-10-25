@@ -12,6 +12,7 @@ import { LEGAL_LAST_UPDATED } from "@/lib/company";
 import { toSubscriptionStatus } from "@/lib/subscriptionStatus";
 import { getProjectCharges, isPaid } from "@/lib/project/charges";
 import { linkProjectToContact } from "@/lib/project/linkToContact";
+import { markQuoteAccepted } from "@/lib/quote/markQuoteAccepted";
 import {
   isOwnCheckoutSession,
   parseCheckoutMetadata,
@@ -182,6 +183,11 @@ export async function POST(req: Request) {
 
         // Revenue attribution: tie the project to the lead with the same email
         await linkProjectToContact(project);
+
+        // Sold through a written quote: mark it accepted and link it (never throws)
+        if (metadata.quoteId) {
+          await markQuoteAccepted(metadata.quoteId, project.id);
+        }
 
         // ============= CREATE INVOICE AND SEND EMAIL =============
         const emailErrors: string[] = [];

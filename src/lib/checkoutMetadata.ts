@@ -27,6 +27,9 @@ export const InitialCheckoutMetadataSchema = z.object({
   secondPaymentAmount: integerCents,
   totalAmount: integerCents,
   termsAcceptedAt: isoDate,
+  // Present when the deposit pays a written quote (/quote/[token]); the
+  // webhook marks that quote accepted and links it to the new Project
+  quoteId: z.uuid().optional(),
 });
 
 export const FinalCheckoutMetadataSchema = z.object({
