@@ -93,8 +93,7 @@ describe("QuoteInputSchema (admin quote form)", () => {
 
   it("accepts a custom quote without a catalogue offer", () => {
     expect(QuoteInputSchema.safeParse({ ...valid, offerId: "" }).success).toBe(true);
-    const { offerId: _offerId, ...noOffer } = valid;
-    expect(QuoteInputSchema.safeParse(noOffer).success).toBe(true);
+    expect(QuoteInputSchema.safeParse({ ...valid, offerId: undefined }).success).toBe(true);
   });
 
   it("rejects an empty scope, an unknown offer and a total under $100", () => {
