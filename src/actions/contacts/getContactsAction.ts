@@ -3,11 +3,14 @@
 import { prisma } from "@/lib/prisma";
 import type { ActionResult } from "@/types/common";
 import { requireAdmin } from "@/lib/authGuard";
+import type { ContactChannel } from "@/generated/prisma/enums";
 
-type ContactWithRelations = {
+export type ContactWithRelations = {
   id: string;
   name: string;
   marketingConsent: boolean;
+  serviceInterest: string | null;
+  preferredChannel: ContactChannel | null;
   createdAt: Date;
   updatedAt: Date;
   emails: { id: string; email: string }[];

@@ -27,6 +27,18 @@ describe("FormSchema (contact form)", () => {
     const { name, email, phone } = valid;
     expect(FormSchema.safeParse({ name, email, phone }).success).toBe(false);
   });
+
+  it("accepts a catalogue offer, 'not sure yet' and a preferred channel", () => {
+    expect(
+      FormSchema.safeParse({ ...valid, service: "admin-dashboard", preferredChannel: "whatsapp" }).success
+    ).toBe(true);
+    expect(FormSchema.safeParse({ ...valid, service: "" }).success).toBe(true);
+  });
+
+  it("rejects an offer or a channel outside the catalogue", () => {
+    expect(FormSchema.safeParse({ ...valid, service: "free-stuff" }).success).toBe(false);
+    expect(FormSchema.safeParse({ ...valid, preferredChannel: "fax" }).success).toBe(false);
+  });
 });
 
 describe("CheckoutRequestSchema", () => {

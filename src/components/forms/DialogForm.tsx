@@ -15,14 +15,29 @@ import { trackLinkedInConversion } from "@/lib/linkedin";
 import { getStoredUTMParams } from "@/hooks/useUTMParams";
 import { getRecaptchaToken, loadRecaptcha } from "@/lib/recaptcha";
 import { useRouter } from "next/navigation";
-import { PaperAirplaneIcon } from "@heroicons/react/24/outline";
+import { ChevronDownIcon, PaperAirplaneIcon } from "@heroicons/react/24/outline";
+import type { OfferId } from "@/lib/offerIds";
+import { CONTACT_CHANNELS, CONTACT_CHANNEL_LABELS } from "@/lib/contactChannel";
+
+export type ServiceOption = { id: OfferId; title: string };
 
 interface DialogFormProps {
+  /** Offers for the "What do you need?" select (id + title only) */
+  serviceOptions: ServiceOption[];
+  /** Preselected offer, e.g. from a "Get a Quote" button */
+  defaultService?: OfferId;
   /** Optional: by default closes the "Let's contact" dialog in the store */
   closeModal?: () => void;
 }
 
-const DialogForm = ({ closeModal: closeModalProp }: DialogFormProps) => {
+const fieldClasses =
+  "w-full p-4 bg-gray-800/80 text-white rounded-xl border border-gray-700/60 focus:outline-hidden focus:border-gold focus:ring-2 focus:ring-gold/20 transition duration-300 font-inter hover:bg-gray-800";
+
+const DialogForm = ({
+  serviceOptions,
+  defaultService,
+  closeModal: closeModalProp,
+}: DialogFormProps) => {
   const setOpenLetsContactDialog = useRCWebStore(
     (state) => state.setOpenLetsContactDialog
   );
@@ -57,6 +72,8 @@ const DialogForm = ({ closeModal: closeModalProp }: DialogFormProps) => {
       phone: "",
       message: "",
       marketingConsent: false,
+      service: defaultService ?? "",
+      preferredChannel: "call",
     },
   });
 
@@ -264,6 +281,57 @@ const DialogForm = ({ closeModal: closeModalProp }: DialogFormProps) => {
               )}
             />
           </div>
+
+          {/** Service Field */}
+          <div className="group">
+            <label
+              htmlFor="service"
+              className="block text-sm text-gray-300 font-inter mb-2"
+            >
+              What do you need?
+            </label>
+            <div className="relative">
+              <select
+                {...register("service")}
+                id="service"
+                className={`${fieldClasses} appearance-none pr-12`}
+              >
+                <option value="">Not sure yet</option>
+                {serviceOptions.map((option) => (
+                  <option key={option.id} value={option.id}>
+                    {option.title}
+                  </option>
+                ))}
+              </select>
+              <ChevronDownIcon
+                className="pointer-events-none absolute right-4 top-1/2 h-5 w-5 -translate-y-1/2 text-gray-400"
+                aria-hidden="true"
+              />
+            </div>
+          </div>
+
+          {/** Preferred Channel Field */}
+          <fieldset className="group">
+            <legend className="block text-sm text-gray-300 font-inter mb-2">
+              How should I reach you?
+            </legend>
+            <div className="grid grid-cols-3 gap-2">
+              {CONTACT_CHANNELS.map((channel) => (
+                <label
+                  key={channel}
+                  className="flex items-center justify-center gap-2 p-3 rounded-xl border border-gray-700/60 bg-gray-800/80 text-sm text-gray-300 font-inter cursor-pointer transition duration-200 hover:bg-gray-800 has-checked:border-gold has-checked:text-gold has-checked:bg-gold/10 has-focus-visible:ring-2 has-focus-visible:ring-gold/40"
+                >
+                  <input
+                    {...register("preferredChannel")}
+                    type="radio"
+                    value={channel}
+                    className="sr-only"
+                  />
+                  {CONTACT_CHANNEL_LABELS[channel]}
+                </label>
+              ))}
+            </div>
+          </fieldset>
 
           {/** Message Field */}
           <div className="group">

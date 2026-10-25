@@ -1,4 +1,5 @@
 import { ProjectProps } from "@/components/sections/Project";
+import type { OfferId } from "@/lib/offerIds";
 import React from "react";
 import JavaScriptIcon from "@/components/icons/Javascript";
 import ReactIcon from "@/components/icons/React";
@@ -417,12 +418,7 @@ export const processSteps = [
 // cards, the pricing cards, the /services pages and the Stripe checkout.
 // Five offers, decided on 2026-10-18 (PR #35). Prices do not change here
 // without Randy's say-so: they are deliberately below the US market.
-export type OfferId =
-  | "business-website"
-  | "website-redesign"
-  | "admin-dashboard"
-  | "store-and-apps"
-  | "maintenance";
+export type { OfferId } from "@/lib/offerIds";
 
 /** A fixed-scope entry point that can be paid on the site through Stripe. */
 export type CheckoutPlan = {

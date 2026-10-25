@@ -10,6 +10,8 @@ import { escapeHtml, sanitizeEmail, sanitizePhone } from "@/lib/sanitize";
 import { ADMIN_EMAIL } from "@/lib/email/adminEmail";
 import { sendContactConfirmationEmail } from "@/lib/email/senders/sendContactConfirmationEmail";
 import { verifyRecaptcha } from "@/lib/recaptchaServer";
+import { offers } from "@/lib/data";
+import { CONTACT_CHANNEL_LABELS } from "@/lib/contactChannel";
 
 export interface CreateContactAction {
   success: boolean;
@@ -76,7 +78,18 @@ export const createContactAction = async (
   }
 
   try {
-    const { name, email, phone, marketingConsent, message } = parsed.data;
+    const {
+      name,
+      email,
+      phone,
+      marketingConsent,
+      message,
+      service,
+      preferredChannel,
+    } = parsed.data;
+    // "" means the visitor did not pick an offer
+    const serviceInterest = service || null;
+    const serviceTitle = offers.find((o) => o.id === serviceInterest)?.title;
 
     // Sanitize user inputs for HTML email rendering (prevents XSS)
     const safeName = escapeHtml(name);
@@ -107,6 +120,9 @@ export const createContactAction = async (
         data: {
           name,
           marketingConsent,
+          // A returning lead may ask for something new; keep the last answer
+          ...(serviceInterest && { serviceInterest }),
+          ...(preferredChannel && { preferredChannel }),
           emails: email
             ? {
                 connectOrCreate: {
@@ -132,6 +148,8 @@ export const createContactAction = async (
           name,
           marketingConsent,
           source,
+          serviceInterest,
+          preferredChannel: preferredChannel ?? null,
           emails: email ? { create: { email } } : undefined,
           phones: phone ? { create: { phone } } : undefined,
           // UTM tracking data
@@ -211,6 +229,14 @@ export const createContactAction = async (
                                 <tr>
                                   <td style="color:#6b7280;padding:6px 0;">Phone:</td>
                                   <td style="text-align:right;font-weight:600;color:#374151;">${safePhone || "Not provided"}</td>
+                                </tr>
+                                <tr>
+                                  <td style="color:#6b7280;padding:6px 0;">Interested in:</td>
+                                  <td style="text-align:right;font-weight:600;color:#374151;">${escapeHtml(serviceTitle) || "Not sure yet"}</td>
+                                </tr>
+                                <tr>
+                                  <td style="color:#6b7280;padding:6px 0;">Prefers:</td>
+                                  <td style="text-align:right;font-weight:600;color:#374151;">${preferredChannel ? CONTACT_CHANNEL_LABELS[preferredChannel] : "No preference"}</td>
                                 </tr>
                               </table>
                             </div>

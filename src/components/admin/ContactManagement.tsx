@@ -7,36 +7,51 @@ import { getContactsAction } from "@/actions/contacts/getContactsAction";
 import { createContactAction } from "@/actions/contacts/createContactAction";
 import { deleteContactAction } from "@/actions/contacts/deleteContactAction";
 import { updateContactAction } from "@/actions/contacts/updateContactAction";
-
-type Contact = {
-  id: string;
-  name: string;
-  marketingConsent: boolean;
-  createdAt: Date;
-  updatedAt: Date;
-  emails: { id: string; email: string }[];
-  phones: { id: string; phone: string }[];
-};
+import type { ContactWithRelations as Contact } from "@/actions/contacts/getContactsAction";
+import type { ContactChannel } from "@/generated/prisma/enums";
+import type { ServiceOption } from "@/components/forms/DialogForm";
+import { CONTACT_CHANNELS, CONTACT_CHANNEL_LABELS } from "@/lib/contactChannel";
 
 type ContactManagementProps = {
   initialContacts: Contact[];
+  /** Offers for the "Interested in" select (id + title only) */
+  serviceOptions: ServiceOption[];
 };
+
+type NewContactForm = {
+  name: string;
+  email: string;
+  phone: string;
+  marketingConsent: boolean;
+  service: ServiceOption["id"] | "";
+  preferredChannel: ContactChannel | "";
+};
+
+const emptyContact: NewContactForm = {
+  name: "",
+  email: "",
+  phone: "",
+  marketingConsent: false,
+  service: "",
+  preferredChannel: "",
+};
+
+const selectClasses =
+  "w-full p-2 bg-gray-700 text-white rounded-sm border border-gray-600 focus:border-gold focus:outline-hidden";
 
 export default function ContactManagement({
   initialContacts,
+  serviceOptions,
 }: ContactManagementProps) {
+  const serviceTitle = (id: string | null) =>
+    serviceOptions.find((option) => option.id === id)?.title ?? null;
   const [contacts, setContacts] = useState<Contact[]>(initialContacts);
   const [showAddModal, setShowAddModal] = useState(false);
   const [editingContact, setEditingContact] = useState<Contact | null>(null);
   const [searchTerm, setSearchTerm] = useState("");
   const [isPending, startTransition] = useTransition();
 
-  const [formData, setFormData] = useState({
-    name: "",
-    email: "",
-    phone: "",
-    marketingConsent: false,
-  });
+  const [formData, setFormData] = useState<NewContactForm>(emptyContact);
 
   const loadContacts = async () => {
     const result = await getContactsAction();
@@ -54,16 +69,14 @@ export default function ContactManagement({
     }
 
     startTransition(async () => {
-      const result = await createContactAction(formData);
+      const result = await createContactAction({
+        ...formData,
+        preferredChannel: formData.preferredChannel || undefined,
+      });
       if (result.success) {
         toast.success("Contact created successfully");
         setShowAddModal(false);
-        setFormData({
-          name: "",
-          email: "",
-          phone: "",
-          marketingConsent: false,
-        });
+        setFormData(emptyContact);
         loadContacts();
       } else {
         toast.error(
@@ -242,6 +255,9 @@ export default function ContactManagement({
                   Phones
                 </th>
                 <th className="px-6 py-3 text-sm font-medium text-gray-300">
+                  Interested in
+                </th>
+                <th className="px-6 py-3 text-sm font-medium text-gray-300">
                   Marketing
                 </th>
                 <th className="px-6 py-3 text-sm font-medium text-gray-300">
@@ -322,6 +338,20 @@ export default function ContactManagement({
                         </div>
                       ))}
                     </div>
+                  </td>
+
+                  {/* Interest + preferred channel */}
+                  <td className="px-6 py-4 text-sm">
+                    <div className="text-gray-300">
+                      {serviceTitle(contact.serviceInterest) ?? (
+                        <span className="text-gray-500">—</span>
+                      )}
+                    </div>
+                    {contact.preferredChannel && (
+                      <div className="text-xs text-gray-500 mt-1">
+                        Prefers {CONTACT_CHANNEL_LABELS[contact.preferredChannel]}
+                      </div>
+                    )}
                   </td>
 
                   {/* Marketing */}
@@ -455,6 +485,61 @@ export default function ContactManagement({
                 />
               </div>
 
+              <div>
+                <label
+                  htmlFor="new-contact-service"
+                  className="block text-sm text-gray-300 mb-1"
+                >
+                  Interested in
+                </label>
+                <select
+                  id="new-contact-service"
+                  value={formData.service}
+                  onChange={(e) =>
+                    setFormData({
+                      ...formData,
+                      service: e.target.value as NewContactForm["service"],
+                    })
+                  }
+                  className={selectClasses}
+                >
+                  <option value="">Not sure yet</option>
+                  {serviceOptions.map((option) => (
+                    <option key={option.id} value={option.id}>
+                      {option.title}
+                    </option>
+                  ))}
+                </select>
+              </div>
+
+              <div>
+                <label
+                  htmlFor="new-contact-channel"
+                  className="block text-sm text-gray-300 mb-1"
+                >
+                  Preferred channel
+                </label>
+                <select
+                  id="new-contact-channel"
+                  value={formData.preferredChannel}
+                  onChange={(e) =>
+                    setFormData({
+                      ...formData,
+                      preferredChannel: e.target
+                        .value as NewContactForm["preferredChannel"],
+                    })
+                  }
+                  className={selectClasses}
+                >
+                  <option value="">No preference</option>
+                  {CONTACT_CHANNELS.map((channel) => (
+                    <option key={channel} value={channel}>
+                      {CONTACT_CHANNEL_LABELS[channel]}
+                    </option>
+                  ))}
+                </select>
+              </div>
+
               <div className="flex items-center">
                 <input
                   type="checkbox"
@@ -484,12 +569,7 @@ export default function ContactManagement({
               <button
                 onClick={() => {
                   setShowAddModal(false);
-                  setFormData({
-                    name: "",
-                    email: "",
-                    phone: "",
-                    marketingConsent: false,
-                  });
+                  setFormData(emptyContact);
                 }}
                 className="flex-1 bg-gray-700 text-white py-2 rounded-sm hover:bg-gray-600 font-inter"
               >
