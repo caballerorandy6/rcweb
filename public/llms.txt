@@ -22,24 +22,22 @@ Randy Caballero is a full-stack developer with 6+ years of experience building R
 
 ## Services and Pricing
 
-"From" prices are quoted after a free call; the final price depends on the scope. Every project includes source code ownership, domain and hosting setup, training, local SEO and bilingual (English/Spanish) support.
+"From" prices are quoted after a short conversation about the scope; the final price depends on it. The landing page and the maintenance plan have a fixed price and can be paid directly on the site through Stripe. Every project includes source code ownership, domain and hosting setup, training, local SEO and bilingual (English/Spanish) support. Payment is 50% to start and 50% on delivery.
 
-- [Professional Landing Page Development](https://www.rcweb.dev/services/web-design-houston) — from $1,000. Single page focused on conversions. Delivery: 1-2 weeks. 30 days of support.
-- [Professional Business Website](https://www.rcweb.dev/services/web-design-houston) — from $3,000. 5-10 pages with custom design. Delivery: 3-4 weeks. 30 days of support.
-- [Website Redesign and Modernization](https://www.rcweb.dev/services/web-design-houston) — from $3,500. Transform an outdated website with content migration and SEO preservation. Delivery: 4-6 weeks. 45 days of support.
-- [Custom Business Management Dashboard](https://www.rcweb.dev/services/nextjs-development-houston) — from $7,500. Tailored admin dashboards for business operations. Delivery: 5-6 weeks. 60 days of support.
-- [E-Commerce Website Development](https://www.rcweb.dev/services/ecommerce-houston) — from $8,000. Full online store with Stripe payment processing and no monthly platform fees. Delivery: 6-10 weeks. 90 days of support.
-- [Custom Web Application Development](https://www.rcweb.dev/services/nextjs-development-houston) — from $12,000. Custom platforms with authentication, databases, APIs and integrations. Delivery: 8-12+ weeks. 6 months of priority support.
-- [Monthly Website Maintenance and Support](https://www.rcweb.dev/services/seo-local-houston) — from $200/month. Security updates, performance monitoring, content updates, local SEO and technical support.
+- [Business Website](https://www.rcweb.dev/services/web-design-houston) — from $1,000 (a landing page is $1,000 fixed; 5-10 page sites are quoted, typically $1,000-$6,000). Custom, mobile-first design, contact forms, local SEO, analytics. Delivery: 1-4 weeks. 30 days of support.
+- [Website Redesign & Modernization](https://www.rcweb.dev/services/website-redesign-houston) — from $3,500 (typically $3,500-$8,000). An existing site rebuilt on Next.js with content migration and rankings preserved. Delivery: 4-6 weeks. 45 days of support.
+- [Admin Dashboard & Automation](https://www.rcweb.dev/services/admin-dashboard-houston) — from $7,500 (typically $7,500-$15,000). A private panel for leads, customers, payments, email/SMS campaigns and reports. Delivery: 5-6 weeks. 60 days of support.
+- [Online Store & Custom Web Apps](https://www.rcweb.dev/services/ecommerce-houston) — from $8,000 (typically $8,000-$20,000+). Online stores with Stripe and custom platforms: booking systems, member areas, internal tools. No monthly platform fees. Delivery: 6-12+ weeks. 90 days of support.
+- [Monthly Maintenance & Support](https://www.rcweb.dev/services/website-maintenance-houston) — $200/month, cancel anytime. Security updates, uptime monitoring, backups, content updates and technical support for sites built by RC Web Solutions.
 
 Service pages:
 
 - [All services](https://www.rcweb.dev/services)
-- [Web Design Houston TX](https://www.rcweb.dev/services/web-design-houston)
-- [Next.js Development Houston TX](https://www.rcweb.dev/services/nextjs-development-houston)
-- [Bilingual Websites Houston TX](https://www.rcweb.dev/services/bilingual-websites-houston)
-- [E-Commerce Houston TX](https://www.rcweb.dev/services/ecommerce-houston)
-- [Local SEO Houston TX](https://www.rcweb.dev/services/seo-local-houston)
+- [Business Website](https://www.rcweb.dev/services/web-design-houston)
+- [Website Redesign & Modernization](https://www.rcweb.dev/services/website-redesign-houston)
+- [Admin Dashboard & Automation](https://www.rcweb.dev/services/admin-dashboard-houston)
+- [Online Store & Custom Web Apps](https://www.rcweb.dev/services/ecommerce-houston)
+- [Monthly Maintenance & Support](https://www.rcweb.dev/services/website-maintenance-houston)
 - [Web Developer in Houston TX](https://www.rcweb.dev/web-developer-houston-tx)
 
 ## Technology Stack

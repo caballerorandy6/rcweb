@@ -131,6 +131,23 @@ const nextConfig: NextConfig = {
       { source: "/guide", destination: "/#contact", permanent: true },
       // No more promotions: old campaign links to the offer land on pricing
       { source: "/offer", destination: "/#pricing", permanent: true },
+      // /services now has one page per offer; the old technology/feature
+      // pages fold into them
+      {
+        source: "/services/nextjs-development-houston",
+        destination: "/services/admin-dashboard-houston",
+        permanent: true,
+      },
+      {
+        source: "/services/bilingual-websites-houston",
+        destination: "/services/web-design-houston",
+        permanent: true,
+      },
+      {
+        source: "/services/seo-local-houston",
+        destination: "/services/web-design-houston",
+        permanent: true,
+      },
       // Posts about features that no longer exist (n8n, Upstash, client
       // portal, 2025 pricing, promotions) were removed; keep indexed links alive
       ...[

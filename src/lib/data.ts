@@ -26,15 +26,7 @@ import {
   CodeBracketIcon,
   ChartBarIcon,
   CubeTransparentIcon,
-  CurrencyDollarIcon,
   ShieldCheckIcon,
-  ScaleIcon,
-  MapPinIcon,
-  ClockIcon,
-  DocumentCheckIcon,
-  XCircleIcon,
-  DocumentTextIcon,
-  DevicePhoneMobileIcon,
 } from "@heroicons/react/24/outline";
 
 // Fuente: resume de Randy Caballero (actualizado septiembre 2026)
@@ -757,9 +749,9 @@ export const testimonials = [
 // Google Reviews - Link to leave a review
 export const GOOGLE_REVIEW_URL = "https://g.page/r/CaUssahd8MITEAE/review";
 
+/** Long-form content of /services/[slug]; slug, title, icon and price come from the offer */
 export type ServicePage = {
-  slug: string;
-  title: string;
+  offerId: OfferId;
   metaTitle: string;
   metaDescription: string;
   headline: string;
@@ -770,365 +762,240 @@ export type ServicePage = {
     description: string;
   }[];
   relatedProjects: string[];
-  priceFrom: string;
   cta: string;
 };
 
 export const servicePages: ServicePage[] = [
   {
-    slug: "web-design-houston",
-    title: "Web Design",
-    metaTitle: "Web Design Houston TX | Custom Websites for Small Businesses",
+    offerId: "business-website",
+    metaTitle: "Business Website Design Houston TX | Custom Sites from $1,000",
     metaDescription:
-      "Professional web design in Houston, TX. Custom, mobile-first websites built with Next.js for small businesses. Bilingual English & Spanish. From $1,000.",
-    headline: "Web Design in Houston, TX",
+      "Custom business websites built with Next.js: mobile-first, fast, with local SEO and bilingual English/Spanish support. Based in Houston, TX, working anywhere. From $1,000.",
+    headline: "Business Websites Built to Bring in Calls",
     subheadline:
-      "Custom, mobile-first websites designed to convert visitors into customers. Built with modern technology that loads fast and ranks well on Google.",
+      "From a one-page landing to a full 5-10 page site: custom design, mobile-first, built to turn visitors into calls, appointments and form submissions.",
     content:
-      "Your website is your most important salesperson — it works 24/7, never takes a day off, and is often the first impression customers have of your business. As a Houston-based web designer, I build websites that aren't just beautiful — they're built to perform. Every site is designed mobile-first because over 60% of your Houston customers are searching from their phones. I use Next.js and React, the same technology behind Nike, Netflix, and Twitch, which means your site loads in under 2 seconds and ranks better on Google. Whether you need a simple landing page or a full business website, I work directly with you to create something that represents your brand and drives real results. Bilingual service available in English and Spanish to reach Houston's diverse community.",
+      "Your website is often the first contact a customer has with your business, and it works while you are busy with everything else. I build business websites that load in under two seconds, read well on a phone and make it obvious how to call you or book. Every site is designed mobile-first because most people looking for a local service are searching from their phones. I use Next.js and React, the same stack large companies rely on, so the site stays fast and keeps ranking as it grows. A landing page has a fixed price and can be started right here; a larger site is quoted after a short conversation about the pages you need. English and Spanish versions are included when your customers speak both, written by a native Spanish speaker rather than a translator plugin.",
     features: [
       {
         title: "Mobile-First Design",
         description:
-          "Every website is designed for mobile screens first, then scaled up. Your Houston customers are searching from their phones — your site needs to work perfectly there.",
+          "Designed for phone screens first, then scaled up. The buttons, forms and phone number work where your customers actually are.",
       },
       {
-        title: "Fast Loading Speed",
+        title: "Loads in Under 2 Seconds",
         description:
-          "Sites built with Next.js load in under 2 seconds. Google rewards fast sites with better rankings, and visitors stay longer when pages load quickly.",
+          "Built with Next.js, with images and scripts kept lean. Google rewards fast sites, and visitors stay instead of leaving.",
       },
       {
-        title: "SEO Built In",
+        title: "Local SEO Built In",
         description:
-          "Every page includes proper meta tags, schema markup, and optimized content structure so Google can find and rank your Houston business.",
+          "Meta tags, structured data and a clean page structure so Google understands what you do and where you serve. Search Console and analytics set up before launch.",
       },
       {
-        title: "Conversion Focused",
+        title: "Bilingual When You Need It",
         description:
-          "Strategic placement of calls-to-action, contact forms, and phone numbers designed to turn visitors into paying customers.",
+          "English and Spanish in one site, with the right language shown to each searcher. Localized by a native speaker, not machine-translated.",
+      },
+      {
+        title: "Contact Forms and Click-to-Call",
+        description:
+          "Calls to action placed where they convert, spam-protected forms, and leads delivered to your inbox or your admin panel.",
+      },
+      {
+        title: "30 Days of Support",
+        description:
+          "After launch I stay available for adjustments and questions. Source code, domain and hosting are yours.",
       },
     ],
     relatedProjects: ["Clínica Hispana Gessner", "Clínica Hispana Airline", "Leo's Home Experts"],
-    priceFrom: "$1,000",
     cta: "Get a Custom Website",
   },
   {
-    slug: "nextjs-development-houston",
-    title: "Next.js Development",
-    metaTitle: "Next.js Developer Houston TX | React & Full-Stack Web Apps",
+    offerId: "website-redesign",
+    metaTitle: "Website Redesign Houston TX | Modernize Your Site from $3,500",
     metaDescription:
-      "Expert Next.js developer in Houston, TX. Full-stack web applications with React, TypeScript, and PostgreSQL. Admin dashboards, APIs, and custom platforms.",
-    headline: "Next.js Developer in Houston, TX",
+      "Website redesign and modernization: your current site rebuilt on Next.js, faster and mobile-friendly, with your content and rankings migrated. Based in Houston, TX. From $3,500.",
+    headline: "Website Redesign & Modernization",
     subheadline:
-      "Full-stack web applications built with Next.js, React, and TypeScript. From admin dashboards to custom platforms — enterprise technology at small business pricing.",
+      "Your current site rebuilt on modern technology: faster, mobile-friendly and easier for customers to use, with your content and your Google rankings carried over.",
     content:
-      "Next.js is the leading React framework used by companies like Nike, Twitch, and Notion. As a Next.js specialist in Houston, I bring that same enterprise-grade technology to local businesses at affordable prices. Why does this matter for your business? Sites built with Next.js are faster, more secure, and rank better on Google than traditional WordPress or Wix sites. They also scale without breaking — so when your business grows, your website grows with it. I build everything from simple landing pages to complex web applications with admin dashboards, user authentication, database integration, and API connections. Every project includes TypeScript for reliability, Tailwind CSS for responsive design, and PostgreSQL for data that scales. If you need a developer who can build something custom that WordPress plugins can't handle, let's talk.",
+      "An old website costs you customers quietly: it loads slowly on phones, looks dated next to competitors and is hard to update. A redesign is not just a new coat of paint. I rebuild the site on Next.js, keep every page and URL that already ranks, set up redirects for anything that moves and migrate your content, photos and reviews. The result is a site that loads in under two seconds, works on every screen and that you can keep updating without breaking it. That is what I did for GSM A/C, whose rebuilt site went from a slow template to a fast, conversion-focused site that now books jobs on its own. The price depends on how many pages you have and what needs to be rewritten, so we agree on the scope first.",
     features: [
       {
-        title: "Server-Side Rendering",
+        title: "Modern Design",
         description:
-          "Pages render on the server for instant loading and better SEO. Google sees fully rendered content instead of empty JavaScript shells.",
+          "A clean, current look built around your brand, with clear calls to action instead of cluttered templates.",
       },
       {
-        title: "Full-Stack Capabilities",
+        title: "Performance Boost",
         description:
-          "Frontend, backend, APIs, and database — all in one project. No need to hire separate developers for different parts of your application.",
+          "Rebuilt from scratch on Next.js: faster load times, better Core Web Vitals and no plugins slowing things down.",
       },
       {
-        title: "Admin Dashboards",
+        title: "Mobile Optimization",
         description:
-          "Custom dashboards to manage your business operations. Client portals, email campaigns, data visualization, and workflow automation.",
+          "Every page redesigned for phones first, so the people searching from their car can still call you with one tap.",
       },
       {
-        title: "TypeScript & PostgreSQL",
+        title: "Content Migration",
         description:
-          "Type-safe code that catches bugs before they reach production. PostgreSQL databases that handle millions of records without slowing down.",
+          "Pages, blog posts, images and reviews moved over. Nothing you have built up gets lost in the move.",
+      },
+      {
+        title: "Rankings Preserved",
+        description:
+          "Existing URLs kept or redirected, structured data added and Search Console checked after launch so Google keeps sending traffic.",
+      },
+      {
+        title: "45 Days of Support",
+        description:
+          "Time to catch the details that only show up once real customers use the new site.",
+      },
+    ],
+    relatedProjects: ["GSM AC & General Contractor", "Clínica Hispana Airline"],
+    cta: "Quote My Redesign",
+  },
+  {
+    offerId: "admin-dashboard",
+    metaTitle: "Custom Admin Dashboard Houston TX | Business Automation from $7,500",
+    metaDescription:
+      "Custom admin dashboards for small businesses: leads, customers, payments, email and SMS campaigns and reports in one private panel, with the repetitive work automated. From $7,500.",
+    headline: "Admin Dashboard & Automation",
+    subheadline:
+      "A private panel to manage leads, customers, payments and campaigns from one place, with the repetitive work automated.",
+    content:
+      "Most small businesses run on a mix of spreadsheets, text messages and three different apps that do not talk to each other. A custom admin dashboard puts that in one place: your leads come in from the website, you see who called, who paid and who needs a follow-up, and campaigns go out by email or SMS from the same screen. I build these panels with Next.js, TypeScript and PostgreSQL, the stack this very site runs on, and connect them to the tools you already use, such as Stripe, Google or Twilio. The scope is tailored to how you work: for GSM A/C the dashboard replaced about fifteen hours a week of manual follow-up. We start with a conversation about your daily routine, agree on what the first version needs to do, and build from there.",
+    features: [
+      {
+        title: "Lead and Customer Management",
+        description:
+          "Every inquiry from your website, phone or campaigns lands in one list with its status, notes and history.",
+      },
+      {
+        title: "Custom Forms and Workflows",
+        description:
+          "The forms, statuses and steps that match your business, not a generic CRM you have to bend to fit.",
+      },
+      {
+        title: "Email and SMS Campaigns",
+        description:
+          "Send newsletters and text campaigns to the customers who opted in, with consent, quotas and unsubscribe handled for you.",
+      },
+      {
+        title: "Stripe Payments",
+        description:
+          "Deposits, final payments, subscriptions and invoices tracked in the panel, with secure payment links for your customers.",
+      },
+      {
+        title: "Reports and Data Visualization",
+        description:
+          "Leads by source, revenue by month, campaign results: the numbers you need to decide, without exporting anything.",
+      },
+      {
+        title: "API Integrations and 60 Days of Support",
+        description:
+          "Connections to the services you already pay for, and two months of support to tune the panel once your team uses it daily.",
       },
     ],
     relatedProjects: ["GSM AC & General Contractor", "RC Beauty Salon"],
-    priceFrom: "$3,000",
-    cta: "Build Your Web App",
+    cta: "Quote My Dashboard",
   },
   {
-    slug: "bilingual-websites-houston",
-    title: "Bilingual Websites",
-    metaTitle: "Bilingual Website Houston TX | English & Spanish Web Design",
+    offerId: "store-and-apps",
+    metaTitle: "E-Commerce & Custom Web Apps Houston TX | Online Stores from $8,000",
     metaDescription:
-      "Bilingual website development in Houston, TX. English and Spanish websites for businesses with Spanish-speaking customers, written by a native speaker. Included with every website.",
-    headline: "Bilingual Websites in Houston, TX",
+      "Custom online stores with Stripe payments and custom web applications: booking systems, member areas and internal tools built with Next.js. No monthly platform fees. From $8,000.",
+    headline: "Online Store & Custom Web Apps",
     subheadline:
-      "English and Spanish websites for businesses with Spanish-speaking customers, written and localized by a native Spanish speaker.",
+      "Full-featured online stores with Stripe and custom platforms built around your business: booking systems, member areas, internal tools. No monthly platform fees.",
     content:
-      "Houston is one of the most diverse cities in the country. If your business serves Spanish-speaking customers but your website is English-only, you're leaving money on the table. As a bilingual developer (native Spanish speaker from Cuba), I don't just translate your website — I localize it. That means the Spanish version reads naturally, uses the right tone for your audience, and includes cultural context that automated translators miss. This is especially important for healthcare clinics, legal services, restaurants, and home services where trust is built through language. I've built bilingual websites for Houston clinics like Clínica Hispana Gessner and Clínica Hispana Airline, helping them reach patients who prefer to browse in Spanish. Every bilingual site includes proper hreflang tags so Google shows the right language version to the right searcher.",
+      "Template platforms are a quick start and a long-term ceiling: monthly fees, limited customization, slow pages and plugins that break on every update. When your business outgrows them, I build the store or the platform you actually need. An online store includes Stripe payment processing, real-time inventory, order tracking, customer accounts and an admin panel where you run everything. A custom web application can be a booking system like the one RC Beauty Salon uses, a member area, a portal for your clients or an internal tool for your team. You own the code, pay only for hosting and Stripe's standard fees, and every feature is built for your workflow. Projects this size start with a scoping conversation and a written quote, then a 50% deposit to begin.",
     features: [
       {
-        title: "Native Spanish Localization",
+        title: "Stripe Checkout and Subscriptions",
         description:
-          "Not machine translation — real Spanish written by a native speaker. Your content reads naturally and builds trust with Spanish-speaking customers.",
+          "Cards, Apple Pay and Google Pay, one-time purchases or recurring plans, with receipts and refunds handled through Stripe.",
       },
       {
-        title: "SEO in Both Languages",
+        title: "Inventory and Order Processing",
         description:
-          "Proper hreflang tags, Spanish meta descriptions, and bilingual schema markup so Google shows the right version to each searcher.",
+          "Stock levels, product variants, low-stock alerts and an order flow from paid to shipped, all visible in your admin panel.",
       },
       {
-        title: "Cultural Context",
+        title: "Customer Accounts",
         description:
-          "Messaging that reads naturally to Spanish-speaking customers. Tone, examples, and calls to action adapted to your audience instead of translated word for word.",
+          "Order history, saved details and member-only content when your business needs it, with secure sign-in.",
       },
       {
-        title: "Single Codebase",
+        title: "Booking Systems and Member Areas",
         description:
-          "Both languages managed in one website — no duplicate sites to maintain. Update once, both versions stay in sync.",
+          "Appointments, reservations and private areas built into the site, so customers book and pay without calling.",
+      },
+      {
+        title: "Database and API Development",
+        description:
+          "PostgreSQL databases and APIs designed to grow with you, plus integrations with the third-party services you already use.",
+      },
+      {
+        title: "No Platform Fees and 90 Days of Support",
+        description:
+          "No monthly subscription to a store builder, and three months of support after launch while the first orders come in.",
       },
     ],
-    relatedProjects: ["Clínica Hispana Gessner", "Clínica Hispana Airline", "Dulce Antojo Snack Carts"],
-    priceFrom: "Included with every website",
-    cta: "Get a Bilingual Website",
+    relatedProjects: ["RC Beauty Salon", "GSM AC & General Contractor"],
+    cta: "Quote My Project",
   },
   {
-    slug: "ecommerce-houston",
-    title: "E-Commerce",
-    metaTitle: "E-Commerce Website Houston TX | Online Stores with Stripe Payments",
+    offerId: "maintenance",
+    metaTitle: "Website Maintenance & Support | $200/month, Cancel Anytime",
     metaDescription:
-      "E-commerce website development in Houston, TX. Custom online stores with Stripe payments, inventory management, and admin dashboard. From $8,000.",
-    headline: "E-Commerce Websites in Houston, TX",
+      "Monthly website maintenance and support: security updates, backups, uptime monitoring, content updates and technical support for sites I built. $200/month, cancel anytime.",
+    headline: "Monthly Maintenance & Support",
     subheadline:
-      "Custom online stores with secure Stripe payments, inventory management, and an admin dashboard to run your business. No monthly platform fees eating your margins.",
+      "Ongoing maintenance, security updates, backups and technical support so your website keeps working while you run your business.",
     content:
-      "Most Houston businesses start selling online with Shopify or WooCommerce — and then hit the wall. Monthly fees, limited customization, slow loading, and plugins that break on every update. A custom e-commerce site built with Next.js eliminates all of that. You own the code, there are no monthly platform fees beyond hosting, and every feature is built exactly for your business. Your online store includes Stripe payment processing (the same system used by Amazon and Google), real-time inventory management, order tracking, customer accounts, and a full admin dashboard where you manage everything. The site loads in under 2 seconds — which matters because every extra second of load time reduces conversions by 7%. For Houston businesses ready to sell online without the limitations of template platforms, this is the solution.",
+      "A website is not finished when it launches. Dependencies get security updates, hosting and domains renew, content goes stale and one day a form stops sending. The maintenance plan covers that for any site I built: I keep the stack updated, monitor uptime and performance, keep backups, make the small content changes you send me and answer technical questions the same day when something is urgent. It is a monthly subscription paid through Stripe that you can cancel at any time from the link in your invoice email. If you need bigger changes, such as a new page or a new feature, I quote them separately so the monthly price stays predictable.",
     features: [
       {
-        title: "Stripe Payment Processing",
+        title: "Security Patches and Updates",
         description:
-          "Secure payment processing trusted by millions of businesses. Credit cards, debit cards, Apple Pay, and Google Pay — all built in.",
+          "Framework, dependencies and hosting kept current so known vulnerabilities do not sit on your site.",
       },
       {
-        title: "Inventory Management",
+        title: "Performance and Uptime Monitoring",
         description:
-          "Track stock levels, set low-stock alerts, and manage product variants. Your admin dashboard shows everything at a glance.",
+          "I get alerted if the site goes down or slows down, usually before you or your customers notice.",
       },
       {
-        title: "No Monthly Platform Fees",
+        title: "Content Updates",
         description:
-          "Unlike Shopify ($39/mo+), you own the code. Only pay for hosting (~$20/mo) and Stripe's standard 2.9% + 30¢ per transaction.",
+          "Send me the new photo, price or opening hours and it is live without you touching anything.",
       },
       {
-        title: "Admin Dashboard",
+        title: "Backup Management",
         description:
-          "Manage orders, customers, products, and analytics from one place. Built custom for your workflow, not a generic template.",
-      },
-    ],
-    relatedProjects: ["GSM AC & General Contractor", "RC Beauty Salon"],
-    priceFrom: "$8,000",
-    cta: "Launch Your Online Store",
-  },
-  {
-    slug: "seo-local-houston",
-    title: "Local SEO",
-    metaTitle: "Local SEO Houston TX | Get Found on Google by Houston Customers",
-    metaDescription:
-      "Local SEO services in Houston, TX. Google Business Profile optimization, schema markup, and SEO-optimized websites that rank for Houston searches. Included with every website.",
-    headline: "Local SEO in Houston, TX",
-    subheadline:
-      "Get your Houston business found on Google. Technical SEO, schema markup, and content strategy that puts you in front of customers searching for your services.",
-    content:
-      "97% of consumers search online before visiting a local business. If your Houston business doesn't show up on the first page of Google, you're invisible to those customers. Local SEO isn't just about keywords — it's about technical signals that tell Google you're a real business serving real customers in Houston. That means proper schema markup (LocalBusiness, Service, FAQ), optimized Google Business Profile, consistent NAP (Name, Address, Phone) across the web, and content that targets the specific services and areas you cover. I've helped Houston businesses like GSM A/C and Leo's Home Experts rank for their target keywords by building websites with SEO baked into the architecture — not added as an afterthought. Every website I build includes technical SEO fundamentals: fast loading speeds, mobile optimization, proper heading structure, meta tags, and JSON-LD structured data. For businesses wanting ongoing SEO improvement, I offer monthly maintenance plans that include content updates, performance monitoring, and search ranking tracking.",
-    features: [
-      {
-        title: "Schema Markup",
-        description:
-          "LocalBusiness, Service, FAQ, and Review schema tells Google exactly what your business does and where you're located. This powers rich results in search.",
+          "Regular backups of your site and database, tested, so a mistake or an outage is a restore and not a rebuild.",
       },
       {
-        title: "Google Business Profile",
+        title: "Technical Support",
         description:
-          "Optimized GBP setup with proper categories, service areas, photos, and review strategy. The foundation of local search visibility.",
+          "Domain, email, analytics or a form that stopped working: one person to write to who already knows your site.",
       },
       {
-        title: "Technical SEO",
+        title: "Same-Day Response for Urgent Issues",
         description:
-          "Fast loading speeds, mobile optimization, proper heading structure, XML sitemaps, and robots.txt configuration. The fundamentals that most sites get wrong.",
-      },
-      {
-        title: "Content Strategy",
-        description:
-          "Location pages, service pages, and blog content targeting the keywords your Houston customers actually search for.",
+          "When the site is down or a payment fails, I respond the same day. Cancel anytime; no long-term contract.",
       },
     ],
     relatedProjects: ["Clínica Hispana Gessner", "Leo's Home Experts", "GSM AC & General Contractor"],
-    priceFrom: "Included with every website",
-    cta: "Improve Your Rankings",
+    cta: "Start Maintenance Plan",
   },
 ];
 
-export const sections = [
-  {
-    icon: React.createElement(BriefcaseIcon, { className: "w-6 h-6" }),
-    title: "Our Services",
-    content:
-      "RC Web Solutions LLC specializes in Full-Stack Web Applications (Next.js 14+, TypeScript, React, PostgreSQL), High-Converting Landing Pages, Custom Management Systems (dashboards, analytics, user management), API Development (RESTful, authentication, third-party integrations), and Digital Consulting (web audits, SEO optimization, performance enhancement). All services include responsive design, security best practices, and scalable architecture.",
-    color: "from-purple-500/20 to-purple-600/20",
-  },
-  {
-    icon: React.createElement(DevicePhoneMobileIcon, { className: "w-6 h-6" }),
-    title: "SMS/Text Message Marketing",
-    content:
-      "RC Web Solutions LLC may send promotional SMS messages to phone numbers provided by users who have explicitly opted in to receive such communications. By providing your phone number and checking the marketing consent box, you consent to receive text messages about our services, promotions, and updates. SMS consent is completely optional and not required to use our services or make a purchase. Message and data rates may apply. You can opt-out at any time by replying STOP to any message. We use Twilio as our SMS service provider. Phone numbers are stored securely and are never shared with third parties for marketing purposes. We retain phone numbers as long as you maintain consent; upon opt-out, your number is immediately removed from marketing lists.",
-    color: "from-blue-500/20 to-blue-600/20",
-  },
-  {
-    icon: React.createElement(CurrencyDollarIcon, { className: "w-6 h-6" }),
-    title: "Payment Terms",
-    content:
-      "A 50% non-refundable deposit is required to initiate any project. This deposit secures your project timeline and covers initial development costs. The remaining 50% balance is due upon project completion and before final delivery of all assets. We accept payments via Stripe (credit/debit cards) and Zelle. Refunds are only provided in cases of non-delivery or documented breach of contract by RC Web Solutions LLC. Late payments may result in project delays and additional fees.",
-    color: "from-green-500/20 to-green-600/20",
-  },
-  {
-    icon: React.createElement(ShieldCheckIcon, { className: "w-6 h-6" }),
-    title: "Intellectual Property Rights",
-    content:
-      "Upon receipt of full payment, all deliverables including source code, designs, graphics, and digital assets become the exclusive property of the client, unless otherwise specified in a separate written agreement. RC Web Solutions LLC retains the right to showcase completed projects in our portfolio and marketing materials unless confidentiality is explicitly requested. Pre-existing tools, libraries, and frameworks remain property of their respective owners and are licensed accordingly.",
-    color: "from-blue-500/20 to-blue-600/20",
-  },
-  {
-    icon: React.createElement(ScaleIcon, { className: "w-6 h-6" }),
-    title: "Warranties & Liability",
-    content:
-      'All services are provided "as is" without warranties of any kind, express or implied. RC Web Solutions LLC is not liable for indirect, incidental, consequential, or punitive damages arising from the use or inability to use our services. Our maximum liability shall not exceed the total amount paid for the specific service. We provide a 30-day bug-fix warranty for all custom development work. Third-party integrations and hosting services are subject to their respective terms.',
-    color: "from-orange-500/20 to-orange-600/20",
-  },
-  {
-    icon: React.createElement(ClockIcon, { className: "w-6 h-6" }),
-    title: "Project Timeline & Changes",
-    content:
-      "Project timelines are estimates and may vary based on complexity, client responsiveness, and scope changes. Delays caused by client-side factors (content delays, feedback, approvals) will extend the timeline accordingly. Scope changes or additional features not included in the original agreement will be quoted separately and may affect the project timeline and cost. We require 48-hour notice for meetings and provide weekly progress updates.",
-    color: "from-cyan-500/20 to-cyan-600/20",
-  },
-  {
-    icon: React.createElement(DocumentCheckIcon, { className: "w-6 h-6" }),
-    title: "Client Responsibilities",
-    content:
-      "Clients are responsible for providing accurate project requirements, timely feedback, necessary content (text, images, branding), and access to required accounts (hosting, domain, APIs). Clients must review and approve deliverables within 5 business days. Failure to provide timely feedback may result in project delays. Clients are responsible for maintaining backups and ensuring compliance with applicable laws and regulations for their website content.",
-    color: "from-indigo-500/20 to-indigo-600/20",
-  },
-  {
-    icon: React.createElement(XCircleIcon, { className: "w-6 h-6" }),
-    title: "Termination & Cancellation",
-    content:
-      "Either party may terminate the agreement with 14 days written notice. Upon termination by client before completion, the deposit is non-refundable, and client will be invoiced for work completed to date at our hourly rate. RC Web Solutions LLC reserves the right to terminate services immediately for non-payment, violation of terms, or abusive behavior. Upon termination, all work completed will be delivered, but source code access requires full payment.",
-    color: "from-red-500/20 to-red-600/20",
-  },
-  {
-    icon: React.createElement(MapPinIcon, { className: "w-6 h-6" }),
-    title: "Governing Law & Jurisdiction",
-    content:
-      "These Terms of Service are governed by and construed in accordance with the laws of the State of Texas, United States of America, without regard to its conflict of law provisions. Any legal action or proceeding arising under these terms shall be brought exclusively in the state or federal courts located in Harris County, Houston, Texas. Both parties consent to the jurisdiction and venue of such courts. If any provision is found unenforceable, the remaining provisions remain in full effect.",
-    color: "from-amber-500/20 to-amber-600/20",
-  },
-];
-
-export const thirdPartyLinks = [
-  { name: "Google Analytics", url: "https://policies.google.com/privacy" },
-  { name: "Resend", url: "https://resend.com/legal/privacy-policy" },
-  { name: "Stripe", url: "https://stripe.com/us/privacy" },
-  { name: "Zelle", url: "https://www.zelle.com/legal/legal-and-privacy" },
-  { name: "Twilio", url: "https://www.twilio.com/legal/privacy" },
-];
-
-export const socialLinks = [
-  {
-    name: "LinkedIn",
-    url: "https://www.linkedin.com/company/109039912/",
-    ariaLabel: "Connect on LinkedIn",
-    bgColor: "bg-[#0A66C2]",
-    hoverColor: "hover:bg-[#004182]",
-    delay: 0.1,
-    iconSize: "w-6 h-6 lg:w-8 lg:h-8",
-  },
-  {
-    name: "Phone",
-    url: "tel:+13463757534",
-    ariaLabel: "Call directly",
-    bgColor: "bg-emerald-600",
-    hoverColor: "hover:bg-emerald-700",
-    delay: 0.15,
-    isButton: true,
-    iconSize: "w-6 h-6 lg:w-8 lg:h-8",
-  },
-  {
-    name: "WhatsApp",
-    url: "https://wa.me/18325465983?text=Hi%20Randy%2C%20I%20saw%20your%20portfolio%20and%20I%27m%20interested%20in%20discussing%20a%20project",
-    ariaLabel: "Contact via WhatsApp",
-    bgColor: "bg-[#25D366]",
-    hoverColor: "hover:bg-[#128C7E]",
-    delay: 0.2,
-    isButton: true,
-    iconSize: "w-6 h-6 lg:w-8 lg:h-8",
-  },
-  {
-    name: "Tik Tok",
-    url: "https://www.tiktok.com/@rcwebsolutionsllc",
-    ariaLabel: "Connect on Tik Tok",
-    bgColor: "bg-gray-900",
-    hoverColor: "hover:bg-gray-800",
-    delay: 0.4,
-    iconSize: "w-6 h-6 lg:w-8 lg:h-8",
-  },
-  {
-    name: "Facebook",
-    url: "https://www.facebook.com/rcwebsolutionsllc",
-    ariaLabel: "Connect on Facebook",
-    bgColor: "bg-[#1877F2]",
-    hoverColor: "hover:bg-[#155DBB]",
-    delay: 0.25,
-    iconSize: "w-6 h-6 lg:w-8 lg:h-8",
-  },
-  {
-    name: "Instagram",
-    url: "https://www.instagram.com/rcwebsolutionsllc",
-    ariaLabel: "Connect on Instagram",
-    bgColor: "bg-[#E1306C]",
-    hoverColor: "hover:bg-[#C13584]",
-    delay: 0.3,
-    iconSize: "w-6 h-6 lg:w-8 lg:h-8",
-  },
-];
-
-export const refundSections = [
-  {
-    title: "Two-Payment Project Structure",
-    content:
-      "All projects require two payments: First payment (50%) to start the project, and second payment (50%) upon completion. Once the first payment is made, the project begins immediately and work commences.",
-    icon: React.createElement(CurrencyDollarIcon, { className: "w-6 h-6" }),
-    color: "from-blue-500/10 to-blue-600/10",
-  },
-  {
-    title: "NO Refunds After First Payment",
-    content:
-      "Once the first payment is processed, the project starts immediately and this payment becomes NON-REFUNDABLE. If you decide not to continue with the project after the first payment, no refund will be issued as we have already invested time and resources.",
-    icon: React.createElement(DocumentTextIcon, { className: "w-6 h-6" }),
-    color: "from-red-500/10 to-red-600/10",
-  },
-  {
-    title: "Cancellation Before Payment",
-    content:
-      "You may cancel your order at any time BEFORE making the first payment with no penalty. Once payment is processed, the no-refund policy takes effect immediately.",
-    icon: React.createElement(ClockIcon, { className: "w-6 h-6" }),
-    color: "from-green-500/10 to-green-600/10",
-  },
-  {
-    title: "Contact for Questions",
-    content:
-      "If you have any questions or concerns about starting a project, please contact us at support@rcwebsolutionsllc.com BEFORE making your first payment. We're happy to discuss your project and address any concerns.",
-    icon: React.createElement(DocumentTextIcon, { className: "w-6 h-6" }),
-    color: "from-purple-500/10 to-purple-600/10",
-  },
-  {
-    title: "Non-Refundable Items",
-    content:
-      "First payment (project initiation), second payment (project completion), custom development work, third-party services purchased on your behalf, domain registrations, and hosting services are all non-refundable.",
-    icon: React.createElement(XCircleIcon, { className: "w-6 h-6" }),
-    color: "from-amber-500/10 to-amber-600/10",
-  },
-];
+/** Offer + its long-form page, looked up by /services/[slug] */
+export function getServicePage(slug: string) {
+  const offer = offers.find((o) => o.slug === slug);
+  const page = offer && servicePages.find((p) => p.offerId === offer.id);
+  return offer && page ? { offer, page } : null;
+}

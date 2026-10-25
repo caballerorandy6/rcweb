@@ -15,6 +15,7 @@
 import { MetadataRoute } from "next";
 import { siteConfig } from "@/config/site";
 import { getAllPosts } from "@/lib/blog";
+import { offers } from "@/lib/data";
 
 type SitemapRoute = {
   route: string;
@@ -110,36 +111,12 @@ const sitemapConfig: SitemapConfig = {
       changeFrequency: "monthly",
       priority: 0.9,
     },
-    {
-      route: "/services/web-design-houston",
+    ...offers.map((offer) => ({
+      route: `/services/${offer.slug}`,
       lastModified: new Date().toISOString().split("T")[0],
-      changeFrequency: "monthly",
+      changeFrequency: "monthly" as const,
       priority: 0.8,
-    },
-    {
-      route: "/services/nextjs-development-houston",
-      lastModified: new Date().toISOString().split("T")[0],
-      changeFrequency: "monthly",
-      priority: 0.8,
-    },
-    {
-      route: "/services/bilingual-websites-houston",
-      lastModified: new Date().toISOString().split("T")[0],
-      changeFrequency: "monthly",
-      priority: 0.8,
-    },
-    {
-      route: "/services/ecommerce-houston",
-      lastModified: new Date().toISOString().split("T")[0],
-      changeFrequency: "monthly",
-      priority: 0.8,
-    },
-    {
-      route: "/services/seo-local-houston",
-      lastModified: new Date().toISOString().split("T")[0],
-      changeFrequency: "monthly",
-      priority: 0.8,
-    },
+    })),
     {
       route: "/privacy-policy",
       lastModified: "2025-10-18",
