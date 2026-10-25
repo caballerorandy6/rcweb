@@ -4,7 +4,6 @@ import { siteConfig } from "@/config/site";
 import BackLink from "@/components/ui/BackLink";
 import ScheduleContent from "@/components/sections/ScheduleContent";
 import { offers } from "@/lib/data";
-import { isOfferId } from "@/lib/offerIds";
 
 export const metadata = genPageMetadata({
   title: "Let's Talk About Your Project",
@@ -16,15 +15,7 @@ export const metadata = genPageMetadata({
 // Only id + title cross to the client
 const serviceOptions = offers.map(({ id, title }) => ({ id, title }));
 
-type SearchParams = Promise<{ service?: string | string[] }>;
-
-export default async function SchedulePage(props: {
-  searchParams: SearchParams;
-}) {
-  // "Get a Quote" buttons arrive with ?service=<offer id>; anything else is ignored
-  const { service } = await props.searchParams;
-  const defaultService = isOfferId(service) ? service : undefined;
-
+export default function SchedulePage() {
   return (
     <>
       <JsonLdForBreadcrumb
@@ -36,10 +27,7 @@ export default async function SchedulePage(props: {
       <div className="bg-gray-950">
         <BackLink href="/#contact" label="Back to Contact" />
       </div>
-      <ScheduleContent
-        serviceOptions={serviceOptions}
-        defaultService={defaultService}
-      />
+      <ScheduleContent serviceOptions={serviceOptions} />
     </>
   );
 }

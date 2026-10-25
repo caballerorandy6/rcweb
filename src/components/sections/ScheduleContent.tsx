@@ -1,9 +1,10 @@
+import { Suspense } from "react";
 import { ChatBubbleLeftRightIcon } from "@heroicons/react/24/outline";
 import Heading from "@/components/ui/Heading";
-import DialogForm, { type ServiceOption } from "@/components/forms/DialogForm";
+import type { ServiceOption } from "@/components/forms/DialogForm";
+import ScheduleForm from "@/components/forms/ScheduleForm";
 import ScheduleChannels from "@/components/sections/ScheduleChannels";
 import CalendlyEmbed from "@/components/sections/CalendlyEmbed";
-import type { OfferId } from "@/lib/offerIds";
 
 const steps = [
   {
@@ -25,7 +26,6 @@ const steps = [
 
 interface ScheduleContentProps {
   serviceOptions: ServiceOption[];
-  defaultService?: OfferId;
 }
 
 /**
@@ -34,7 +34,6 @@ interface ScheduleContentProps {
  */
 export default function ScheduleContent({
   serviceOptions,
-  defaultService,
 }: ScheduleContentProps) {
   return (
     <section className="relative isolate overflow-hidden pt-8 pb-20 sm:pt-12 sm:pb-28 bg-linear-to-b from-gray-900 via-gray-900/95 to-gray-900">
@@ -56,11 +55,10 @@ export default function ScheduleContent({
         <div className="mt-16 grid grid-cols-1 lg:grid-cols-5 gap-8 lg:gap-12 items-start">
           {/* Form: the same one as the home, with the offer preselected */}
           <div className="lg:col-span-3">
-            <DialogForm
-              serviceOptions={serviceOptions}
-              defaultService={defaultService}
-              source="schedule_page"
-            />
+            {/* useSearchParams inside: the boundary keeps the page static */}
+            <Suspense fallback={null}>
+              <ScheduleForm serviceOptions={serviceOptions} />
+            </Suspense>
           </div>
 
           {/* Direct channels */}

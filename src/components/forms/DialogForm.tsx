@@ -24,7 +24,7 @@ export type ServiceOption = { id: OfferId; title: string };
 interface DialogFormProps {
   /** Offers for the "What do you need?" select (id + title only) */
   serviceOptions: ServiceOption[];
-  /** Preselected offer, e.g. from a "Get a Quote" button */
+  /** Preselected offer, e.g. from a "Get a Quote" button (see ScheduleForm) */
   defaultService?: OfferId;
   /** Where the form lives: stored as Contact.source and sent to analytics */
   source?: "contact_form" | "schedule_page";
