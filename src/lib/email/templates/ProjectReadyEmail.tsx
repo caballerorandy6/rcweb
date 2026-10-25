@@ -12,6 +12,7 @@ import {
 } from "@react-email/components";
 import * as React from "react";
 import { EMAIL_COLORS } from "../colors";
+import { SITE_BASE_URL } from "@/lib/projectUrl";
 
 export interface ProjectReadyEmailProps {
   customerName: string;
@@ -34,7 +35,7 @@ export const ProjectReadyEmail = ({
   customerEmail,
   paymentUrl,
 }: ProjectReadyEmailProps) => {
-  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "https://rcweb.dev";
+  const baseUrl = SITE_BASE_URL;
 
   return (
     <Html>

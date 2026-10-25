@@ -1,4 +1,5 @@
 import { Suspense } from "react";
+import * as Sentry from "@sentry/nextjs";
 import { prisma } from "@/lib/prisma";
 import { getProjectCharges } from "@/lib/project/charges";
 import type { PaymentSuccessData } from "@/types/project";
@@ -26,7 +27,10 @@ interface PageProps {
 const WEBHOOK_WAIT_ATTEMPTS = 15;
 const WEBHOOK_WAIT_DELAY_MS = 1000;
 
-async function waitForWebhook<T>(find: () => Promise<T | null>): Promise<T | null> {
+async function waitForWebhook<T>(
+  find: () => Promise<T | null>,
+  context: { flow: "project" | "subscription"; sessionId: string }
+): Promise<T | null> {
   for (let attempt = 0; attempt < WEBHOOK_WAIT_ATTEMPTS; attempt++) {
     const found = await find();
     if (found) return found;
@@ -34,6 +38,13 @@ async function waitForWebhook<T>(find: () => Promise<T | null>): Promise<T | nul
       await new Promise((resolve) => setTimeout(resolve, WEBHOOK_WAIT_DELAY_MS));
     }
   }
+  // The customer has paid and nothing is in the database: the webhook is
+  // late or broken (secret rotated, endpoint URL wrong). Make it visible.
+  Sentry.captureMessage("Stripe webhook not received after payment", {
+    level: "warning",
+    tags: { feature: "stripe-webhook", flow: context.flow },
+    extra: { sessionId: context.sessionId },
+  });
   return null;
 }
 
@@ -73,8 +84,9 @@ async function Content({ searchParams }: PageProps) {
 
   // Subscription flow
   if (isSubscription) {
-    const subscription = await waitForWebhook(() =>
-      prisma.subscription.findFirst({ where: { stripeSessionId: sessionId } })
+    const subscription = await waitForWebhook(
+      () => prisma.subscription.findFirst({ where: { stripeSessionId: sessionId } }),
+      { flow: "subscription", sessionId }
     );
 
     if (!subscription) {
@@ -87,7 +99,10 @@ async function Content({ searchParams }: PageProps) {
   }
 
   // 50/50 project flow
-  const project = await waitForWebhook(() => findPaidDeposit(sessionId));
+  const project = await waitForWebhook(() => findPaidDeposit(sessionId), {
+    flow: "project",
+    sessionId,
+  });
 
   if (!project) {
     return <PaymentSuccess processing projectCode={code} />;

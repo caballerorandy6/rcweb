@@ -33,17 +33,25 @@ export async function updateProjectStatusAction(
       return { success: false, error: authCheck.error };
     }
 
-    const project = await prisma.project.update({
+    // Read the charges first so a project missing a row fails before any write
+    const current = await prisma.project.findUnique({
       where: { projectCode },
-      data: { status },
       include: { payments: true },
+    });
+    if (!current) {
+      return { success: false, error: "Project not found" };
+    }
+    const { final } = getProjectCharges(current.payments);
+
+    const project = await prisma.project.update({
+      where: { id: current.id },
+      data: { status },
     });
 
     let emailError: string | undefined;
 
     // Ready for payment: tell the customer and give them the magic link
     if (status === "ready_for_payment") {
-      const { final } = getProjectCharges(project.payments);
       const sent = await sendProjectReadyEmail(
         new Resend(process.env.RESEND_API_KEY!),
         {

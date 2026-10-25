@@ -2,6 +2,7 @@
 
 import { NextResponse } from "next/server";
 import Stripe from "stripe";
+import * as Sentry from "@sentry/nextjs";
 import { prisma } from "@/lib/prisma";
 import stripe from "@/lib/stripe";
 import { Resend } from "resend";
@@ -11,7 +12,10 @@ import { LEGAL_LAST_UPDATED } from "@/lib/company";
 import { toSubscriptionStatus } from "@/lib/subscriptionStatus";
 import { getProjectCharges, isPaid } from "@/lib/project/charges";
 import { linkProjectToContact } from "@/lib/project/linkToContact";
-import { parseCheckoutMetadata } from "@/lib/checkoutMetadata";
+import {
+  isOwnCheckoutSession,
+  parseCheckoutMetadata,
+} from "@/lib/checkoutMetadata";
 import type { Prisma } from "@/generated/prisma/client";
 import {
   sendSubscriptionConfirmation,
@@ -61,6 +65,15 @@ export async function POST(req: Request) {
   if (event.type === "checkout.session.completed") {
     const session = event.data.object as Stripe.Checkout.Session;
 
+    // Sessions we did not create (Payment Links, Dashboard) carry none of our
+    // metadata: acknowledge them so Stripe does not retry for days
+    if (!isOwnCheckoutSession(session.metadata)) {
+      return NextResponse.json({
+        received: true,
+        warning: "Checkout Session without a known paymentType",
+      });
+    }
+
     // Our own actions wrote this metadata and Stripe signed the event, so a
     // parse failure is a bug on our side: answer 400 so the delivery shows as
     // failed in the Stripe dashboard instead of being silently acknowledged.
@@ -101,7 +114,26 @@ export async function POST(req: Request) {
           include: { payments: true, invoices: true },
         });
 
-        if (!project) {
+        if (project) {
+          // Same code but another session: generateProjectCode() collided and
+          // this is a different customer's deposit. Fail loudly instead of
+          // treating it as a retry (which would swallow the payment).
+          const { deposit } = getProjectCharges(project.payments);
+          if (deposit.stripeSessionId !== session.id) {
+            const error = new Error(
+              `Project code ${projectCode} already belongs to another Checkout Session`
+            );
+            Sentry.captureException(error, {
+              tags: { feature: "stripe-webhook" },
+              extra: {
+                projectId: project.id,
+                existingSessionId: deposit.stripeSessionId,
+                sessionId: session.id,
+              },
+            });
+            throw error;
+          }
+        } else {
           // Project, its two charges and the terms acceptance in one write
           const data = {
             projectCode,
@@ -149,7 +181,7 @@ export async function POST(req: Request) {
         }
 
         // Revenue attribution: tie the project to the lead with the same email
-        await linkProjectToContact(project.id);
+        await linkProjectToContact(project);
 
         // ============= CREATE INVOICE AND SEND EMAIL =============
         const emailErrors: string[] = [];

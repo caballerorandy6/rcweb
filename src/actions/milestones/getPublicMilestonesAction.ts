@@ -4,7 +4,6 @@ import { prisma } from "@/lib/prisma";
 import type { Milestone } from "@/types/milestone";
 import type { ProjectStatus } from "@/generated/prisma/enums";
 import type { ActionResult } from "@/types/common";
-import { getProjectCharges } from "@/lib/project/charges";
 
 type ProjectInfo = {
   projectCode: string;
@@ -12,7 +11,7 @@ type ProjectInfo = {
   planName: string;
   status: ProjectStatus;
   /** Final charge in cents, shown when the project is ready for payment */
-  finalAmount: number;
+  finalAmount: number | null;
 };
 
 export async function getPublicMilestonesAction(
@@ -58,7 +57,8 @@ export async function getPublicMilestonesAction(
           name: project.name,
           planName: project.planName,
           status: project.status,
-          finalAmount: getProjectCharges(project.payments).final.amount,
+          finalAmount:
+            project.payments.find((p) => p.kind === "final")?.amount ?? null,
         },
         milestones,
       },

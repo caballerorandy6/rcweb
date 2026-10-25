@@ -105,9 +105,10 @@ export default async function ProjectPage(props: { params: Params }) {
                 Your project is ready
               </p>
               <p className="text-gray-400 text-sm font-inter">
-                Complete the final payment of{" "}
-                {formatCurrency(project.finalAmount)} to receive your
-                deliverables.
+                Complete the final payment
+                {project.finalAmount !== null &&
+                  ` of ${formatCurrency(project.finalAmount)}`}{" "}
+                to receive your deliverables.
               </p>
             </div>
             <Button href={`/pay/${accessToken}`}>Pay Final Balance</Button>

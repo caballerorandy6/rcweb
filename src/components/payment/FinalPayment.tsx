@@ -55,9 +55,9 @@ export default function FinalPayment({ notice }: FinalPaymentProps) {
     startTransition(async () => {
       const result = await createFinalPaymentSessionAction(email, projectCode);
 
-      if (result.success && result.sessionUrl) {
-        stripeTab.location.href = result.sessionUrl;
-      } else if (!result.success) {
+      if (result.success) {
+        stripeTab.location.href = result.data.sessionUrl;
+      } else {
         toast.error(result.error || "Failed to create payment session");
         stripeTab.close();
       }

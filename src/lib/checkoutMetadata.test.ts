@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { parseCheckoutMetadata } from "./checkoutMetadata";
+import { isOwnCheckoutSession, parseCheckoutMetadata } from "./checkoutMetadata";
 
 const initial = {
   paymentType: "initial",
@@ -55,6 +55,13 @@ describe("parseCheckoutMetadata", () => {
       projectCode: "AB3K9Z",
     });
     expect(result.success).toBe(false);
+  });
+
+  it("tells our sessions apart from Payment Links or Dashboard ones", () => {
+    expect(isOwnCheckoutSession(initial)).toBe(true);
+    expect(isOwnCheckoutSession({ paymentType: "final" })).toBe(true);
+    expect(isOwnCheckoutSession({ order: "42" })).toBe(false);
+    expect(isOwnCheckoutSession(null)).toBe(false);
   });
 
   it("rejects an unknown payment type and an empty session", () => {

@@ -1,6 +1,7 @@
 "use server";
 
 import stripe from "@/lib/stripe";
+import { prisma } from "@/lib/prisma";
 import { generateProjectCode } from "@/lib/utils";
 import { pricingPlans } from "@/lib/data";
 import { CheckoutRequestSchema, type CheckoutRequest } from "@/lib/zod";
@@ -18,6 +19,20 @@ export interface StripeCheckoutResponse {
   sessionUrl?: string;
   projectCode?: string;
   error?: string;
+}
+
+// Random 6-char code; the webhook uses it as the idempotency key, so make
+// sure it is not already taken before putting it in the session
+async function uniqueProjectCode(): Promise<string> {
+  for (let attempt = 0; attempt < 5; attempt++) {
+    const code = generateProjectCode();
+    const taken = await prisma.project.findUnique({
+      where: { projectCode: code },
+      select: { id: true },
+    });
+    if (!taken) return code;
+  }
+  throw new Error("Could not generate a unique project code");
 }
 
 export async function createStripeCheckoutAction(
@@ -85,8 +100,7 @@ export async function createStripeCheckoutAction(
     }
 
     // ONE-TIME PAYMENT for all other plans
-    // Generar projectCode único
-    const projectCode = generateProjectCode();
+    const projectCode = await uniqueProjectCode();
 
     // Calcular montos
     const firstPaymentAmount = Math.round(plan.price * 0.5);

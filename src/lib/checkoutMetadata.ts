@@ -64,6 +64,16 @@ export type SubscriptionCheckoutMetadataInput = z.input<
 /** What the webhook works with (amounts as numbers, dates as Date) */
 export type CheckoutMetadata = z.output<typeof CheckoutMetadataSchema>;
 
+const OWN_PAYMENT_TYPES: ReadonlySet<string> = new Set(
+  CheckoutMetadataSchema.options.map((option) => option.shape.paymentType.value)
+);
+
+/** True when the session was created by one of our actions (it names a paymentType we know). */
+export function isOwnCheckoutSession(metadata: Stripe.Metadata | null): boolean {
+  const paymentType = metadata?.paymentType;
+  return typeof paymentType === "string" && OWN_PAYMENT_TYPES.has(paymentType);
+}
+
 export function parseCheckoutMetadata(metadata: Stripe.Metadata | null) {
   return CheckoutMetadataSchema.safeParse(metadata ?? {});
 }
