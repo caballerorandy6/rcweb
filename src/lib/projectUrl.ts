@@ -11,3 +11,8 @@ export function getProjectUrl(accessToken: string): string {
 export function getPayUrl(accessToken: string): string {
   return `${SITE_BASE_URL}/pay/${accessToken}`;
 }
+
+/** Public quote page; the token is the only credential. */
+export function getQuoteUrl(token: string): string {
+  return `${SITE_BASE_URL}/quote/${token}`;
+}

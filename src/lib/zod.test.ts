@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { CheckoutRequestSchema, FormSchema, LoginSchema } from "./zod";
+import { CheckoutRequestSchema, FormSchema, LoginSchema, QuoteInputSchema } from "./zod";
 
 describe("FormSchema (contact form)", () => {
   const valid = {
@@ -69,5 +69,43 @@ describe("LoginSchema", () => {
     expect(
       LoginSchema.safeParse({ email: "a@b.com", password: "long enough" }).success
     ).toBe(true);
+  });
+});
+
+describe("QuoteInputSchema (admin quote form)", () => {
+  const valid = {
+    name: "Ana Pérez",
+    email: " Ana@Example.com ",
+    offerId: "website-redesign",
+    planName: "Website Redesign for Ana's Bakery",
+    scope: "- Migrate 8 pages\n\nNew design\n",
+    totalDollars: "4500",
+  };
+
+  it("lowercases the email, splits the scope and coerces the total", () => {
+    const result = QuoteInputSchema.safeParse(valid);
+    expect(result.success).toBe(true);
+    if (!result.success) return;
+    expect(result.data.email).toBe("ana@example.com");
+    expect(result.data.scope).toEqual(["Migrate 8 pages", "New design"]);
+    expect(result.data.totalDollars).toBe(4500);
+  });
+
+  it("treats an empty contact id (hidden field) as no contact", () => {
+    const result = QuoteInputSchema.safeParse({ ...valid, contactId: "" });
+    expect(result.success).toBe(true);
+    expect(QuoteInputSchema.safeParse({ ...valid, contactId: "not-a-uuid" }).success).toBe(false);
+  });
+
+  it("accepts a custom quote without a catalogue offer", () => {
+    expect(QuoteInputSchema.safeParse({ ...valid, offerId: "" }).success).toBe(true);
+    expect(QuoteInputSchema.safeParse({ ...valid, offerId: undefined }).success).toBe(true);
+  });
+
+  it("rejects an empty scope, an unknown offer and a total under $100", () => {
+    expect(QuoteInputSchema.safeParse({ ...valid, scope: "\n  \n" }).success).toBe(false);
+    expect(QuoteInputSchema.safeParse({ ...valid, offerId: "free-stuff" }).success).toBe(false);
+    expect(QuoteInputSchema.safeParse({ ...valid, totalDollars: "99" }).success).toBe(false);
+    expect(QuoteInputSchema.safeParse({ ...valid, totalDollars: "" }).success).toBe(false);
   });
 });

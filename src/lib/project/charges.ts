@@ -25,3 +25,14 @@ export function isPaid(payment: Pick<Payment, "status">): boolean {
 export type ProjectWithPayments = Prisma.ProjectGetPayload<{
   include: { payments: true };
 }>;
+
+/** Every project is sold 50/50: the deposit is half, the final payment the rest */
+export const DEPOSIT_PERCENT = 50;
+
+export function splitDepositAmount(totalAmount: number): {
+  deposit: number;
+  balance: number;
+} {
+  const deposit = Math.round((totalAmount * DEPOSIT_PERCENT) / 100);
+  return { deposit, balance: totalAmount - deposit };
+}

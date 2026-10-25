@@ -37,6 +37,8 @@ export {
   type ContactConfirmationEmailProps,
 } from "./ContactConfirmationEmail";
 
+export { QuoteEmail, type QuoteEmailProps } from "./QuoteEmail";
+
 
 // Admin email templates (React components)
 export {

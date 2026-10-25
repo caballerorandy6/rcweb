@@ -36,6 +36,7 @@ model Contact {
   emails   ContactEmail[]
   phones   ContactPhone[]
   projects Project[]
+  quotes   Quote[]
 
   @@index([leadStatus])
   @@index([source])
@@ -159,9 +160,62 @@ model Project {
   contactId String?
   contact   Contact? @relation(fields: [contactId], references: [id])
 
+  // Set when the project was sold through a written quote (/quote/{token})
+  quote Quote?
+
   @@index([email])
   @@index([status])
   @@index([contactId])
+}
+
+// A written quote for a scoped project ("Get a Quote" offers or anything
+// custom). The admin creates it after the scoping call and sends the customer
+// a link to /quote/{token}, where they read the scope, accept the terms and
+// pay the 50 % deposit. The Stripe webhook turns an accepted quote into the
+// Project (it stays the only creator of Project rows). "Expired" is not a
+// status: a sent quote is expired once expiresAt has passed.
+model Quote {
+  id          String @id @default(uuid())
+  quoteNumber String @unique // "Q-2026-001" (generateQuoteNumber)
+  token       String @unique @default(uuid()) // Secret token for /quote/{token}
+
+  // Customer snapshot; email is lowercased and becomes Project.email
+  email String
+  name  String
+
+  // Which catalogue offer it is based on (src/lib/offerIds.ts); null for a custom quote
+  offerId  String?
+  // Product name on the Stripe session, the invoices and Project.planName
+  planName String
+  // What is included, one item per entry; shown on the quote page and the email
+  scope    String[]
+  // Free text for the customer (timeline, assumptions, exclusions)
+  notes    String?  @db.Text
+
+  totalAmount Int // Total in cents; the deposit is 50 % of it
+
+  status QuoteStatus @default(draft)
+
+  sentAt     DateTime?
+  expiresAt  DateTime? // sentAt + QUOTE_VALIDITY_DAYS; null until sent
+  viewedAt   DateTime? // First visit to /quote/{token}
+  acceptedAt DateTime? // Set by the webhook when the deposit is paid
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Lead the quote was written for (optional: the customer may not be in Contacts yet)
+  contactId String?
+  contact   Contact? @relation(fields: [contactId], references: [id])
+
+  // The project created from this quote once the deposit is paid
+  projectId String?  @unique
+  project   Project? @relation(fields: [projectId], references: [id])
+
+  @@index([email])
+  @@index([status])
+  @@index([contactId])
+  @@index([createdAt])
 }
 
 // One row per charge of a project: the deposit and the final payment.
@@ -275,6 +329,13 @@ enum ProjectStatus {
   in_progress
   ready_for_payment
   completed
+}
+
+enum QuoteStatus {
+  draft
+  sent
+  accepted
+  cancelled
 }
 
 enum PaymentKind {

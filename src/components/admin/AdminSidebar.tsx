@@ -20,6 +20,7 @@ import {
   PhoneIcon,
   NewspaperIcon,
   Squares2X2Icon,
+  ClipboardDocumentListIcon,
 } from "@heroicons/react/24/outline";
 import {
   HomeIcon as HomeIconSolid,
@@ -34,6 +35,7 @@ import {
   PhoneIcon as PhoneIconSolid,
   NewspaperIcon as NewspaperIconSolid,
   Squares2X2Icon as Squares2X2IconSolid,
+  ClipboardDocumentListIcon as ClipboardDocumentListIconSolid,
 } from "@heroicons/react/24/solid";
 
 interface NavItem {
@@ -105,6 +107,12 @@ const adminNavigation: NavItem[] = [
     iconSolid: FolderIconSolid,
   },
   {
+    name: "Quotes",
+    href: "/quotes",
+    icon: ClipboardDocumentListIcon,
+    iconSolid: ClipboardDocumentListIconSolid,
+  },
+  {
     name: "Invoices",
     href: "/manage-invoices",
     icon: DocumentTextIcon,
@@ -140,7 +148,8 @@ export default function AdminSidebar() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const pathname = usePathname();
 
-  const isActive = (href: Route) => pathname === href;
+  const isActive = (href: Route) =>
+    pathname === href || (href !== "/" && pathname.startsWith(`${href}/`));
 
   return (
     <>
