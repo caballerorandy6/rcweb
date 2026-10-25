@@ -83,6 +83,8 @@ Client accepts terms → Stripe Checkout (50%) → Webhook creates `Project` wit
 
 `Project` holds the customer, plan, status and tokens; `Payment` is one row per charge (`kind`, `amount`, `status`, `stripeSessionId`, `paidAt`). Invoice, Milestone and TermsAcceptance belong to `Project`. Use `getProjectCharges()` from `src/lib/project/charges.ts` to read the deposit/final rows.
 
+The Stripe webhook is the **only** place that creates a `Project`; `/payment-success` just reads (waits briefly for the webhook, then shows a "finishing up" state). Checkout Session metadata is defined once in `src/lib/checkoutMetadata.ts` (Zod): actions build it from the `*Input` types, the webhook parses it before touching the database. One lookup key per flow: webhook by `projectCode` (initial) / `projectId` (final), success page by the deposit's `stripeSessionId`, public pages by `accessToken`, manual form by email + code. The final-payment session is built by `createFinalPaymentCheckout()` in `src/lib/project/finalPaymentCheckout.ts`, shared by the form action and `/pay/[token]`.
+
 ## Testing
 
 - **Vitest** for pure logic (`src/lib/*.test.ts`); mock Prisma/Sentry with `vi.hoisted` + `vi.mock`.
