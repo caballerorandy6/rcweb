@@ -11,7 +11,7 @@ import { formatCurrency, getProjectStatusLabel } from "@/lib/utils";
 import Button from "@/components/ui/Button";
 
 export const metadata: Metadata = {
-  title: "Project Progress - RC Web Solutions",
+  title: "Project Progress",
   description: "Track your project progress and milestones",
   robots: {
     index: false,
