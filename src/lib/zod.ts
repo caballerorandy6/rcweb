@@ -84,7 +84,8 @@ export const QuoteInputSchema = z.object({
     .number({ message: "Enter the total amount" })
     .min(100, { message: "The minimum quote is $100" })
     .max(500000, { message: "Amount is too large" }),
-  contactId: z.uuid().optional(),
+  // Lead the quote is for; the form's hidden field sends "" when there is none
+  contactId: z.union([z.uuid(), z.literal("")]).optional(),
 });
 
 /** What the form sends (scope as text, total as typed) */

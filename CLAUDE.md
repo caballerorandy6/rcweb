@@ -73,7 +73,8 @@ Also read the Next.js docs shipped with the installed version (`node_modules/nex
 
 ### Route Groups
 
-- `(admin)/` — protected admin dashboard, CRM, campaign management
+- `(admin)/` — protected admin dashboard, CRM, quotes, campaign management
+- `quote/[token]` — public quote page (accept terms → deposit Checkout)
 - `pay/[token]` — Stripe payment pages
 - `project/[accessToken]` — public project view links
 
@@ -83,7 +84,9 @@ Client accepts terms → Stripe Checkout (50%) → Webhook creates `Project` wit
 
 `Project` holds the customer, plan, status and tokens; `Payment` is one row per charge (`kind`, `amount`, `status`, `stripeSessionId`, `paidAt`). Invoice, Milestone and TermsAcceptance belong to `Project`. Use `getProjectCharges()` from `src/lib/project/charges.ts` to read the deposit/final rows.
 
-The Stripe webhook is the **only** place that creates a `Project`; `/payment-success` just reads (waits briefly for the webhook, then shows a "finishing up" state). Checkout Session metadata is defined once in `src/lib/checkoutMetadata.ts` (Zod): actions build it from the `*Input` types, the webhook parses it before touching the database. One lookup key per flow: webhook by `projectCode` (initial) / `projectId` (final), success page by the deposit's `stripeSessionId`, public pages by `accessToken`, manual form by email + code. The final-payment session is built by `createFinalPaymentCheckout()` in `src/lib/project/finalPaymentCheckout.ts`, shared by the form action and `/pay/[token]`.
+**Quotes:** the three "Get a Quote" offers (and anything custom) are sold through a `Quote` row the admin writes at `/quotes/new` (draft → sent, 30-day validity, "expired" derived from `expiresAt`, see `src/lib/quote/`). The customer reads it at `/quote/[token]`, accepts the terms and pays the deposit through `acceptQuoteAction()` → `createInitialPaymentCheckout()` with `quoteId` in the metadata; the webhook creates the `Project` as usual and `markQuoteAccepted()` links the quote and marks the lead WON. Sending a quote moves the lead to PROPOSAL_SENT.
+
+The Stripe webhook is the **only** place that creates a `Project`; `/payment-success` just reads (waits briefly for the webhook, then shows a "finishing up" state). Checkout Session metadata is defined once in `src/lib/checkoutMetadata.ts` (Zod): actions build it from the `*Input` types, the webhook parses it before touching the database. One lookup key per flow: webhook by `projectCode` (initial) / `projectId` (final), success page by the deposit's `stripeSessionId`, public pages by `accessToken`, manual form by email + code. The deposit session is built by `createInitialPaymentCheckout()` in `src/lib/project/initialPaymentCheckout.ts` (catalogue checkout and quotes); the final-payment session by `createFinalPaymentCheckout()` in `src/lib/project/finalPaymentCheckout.ts`, shared by the form action and `/pay/[token]`.
 
 ## Testing
 

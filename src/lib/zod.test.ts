@@ -91,6 +91,12 @@ describe("QuoteInputSchema (admin quote form)", () => {
     expect(result.data.totalDollars).toBe(4500);
   });
 
+  it("treats an empty contact id (hidden field) as no contact", () => {
+    const result = QuoteInputSchema.safeParse({ ...valid, contactId: "" });
+    expect(result.success).toBe(true);
+    expect(QuoteInputSchema.safeParse({ ...valid, contactId: "not-a-uuid" }).success).toBe(false);
+  });
+
   it("accepts a custom quote without a catalogue offer", () => {
     expect(QuoteInputSchema.safeParse({ ...valid, offerId: "" }).success).toBe(true);
     expect(QuoteInputSchema.safeParse({ ...valid, offerId: undefined }).success).toBe(true);

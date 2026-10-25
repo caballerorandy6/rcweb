@@ -58,7 +58,7 @@ export async function createQuoteAction(
         scope: data.scope,
         notes: data.notes || null,
         totalAmount: Math.round(data.totalDollars * 100),
-        contactId: data.contactId ?? null,
+        contactId: data.contactId || null,
       },
     });
 

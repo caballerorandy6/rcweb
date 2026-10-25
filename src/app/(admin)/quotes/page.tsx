@@ -10,6 +10,10 @@ export const metadata = genPageMetadata({
   noIndex: true,
 });
 
+// Always rendered per request (the action reads the session from headers);
+// without this the build's prerender attempt logs a noisy bailout.
+export const dynamic = "force-dynamic";
+
 // The admin layout already checks the session; the action checks it again.
 export default async function QuotesPage() {
   const result = await getAllQuotesAction();
