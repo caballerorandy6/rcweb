@@ -73,7 +73,7 @@ Also read the Next.js docs shipped with the installed version (`node_modules/nex
 
 ### Route Groups
 
-- `(admin)/` — protected admin dashboard, CRM, quotes, campaign management
+- `(admin)/` — protected admin dashboard, CRM, quotes, campaign management. `/projects/[id]` is the project detail (customer, charges, invoices, token links, milestones edited in place); list and detail are Server Components with small client islands that call `router.refresh()` after a Server Action.
 - `quote/[token]` — public quote page (accept terms → deposit Checkout)
 - `pay/[token]` — Stripe payment pages
 - `project/[accessToken]` — public project view links

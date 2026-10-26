@@ -3,7 +3,15 @@
  * Used in both admin and client contexts
  */
 
+import type {
+  InvoiceStatus,
+  InvoiceType,
+  LeadStatus,
+  PaymentKind,
+  PaymentStatus,
+} from "@/generated/prisma/enums";
 import { ProjectStatus } from "@/generated/prisma/enums";
+import type { Milestone } from "@/types/milestone";
 
 export { ProjectStatus };
 
@@ -20,7 +28,57 @@ export type AdminProject = {
   depositPaid: boolean;
   finalPaid: boolean;
   status: ProjectStatus;
-  createdAt: string | Date;
+  /** ISO string: it crosses the server → client boundary */
+  createdAt: string;
+};
+
+/** One charge of a 50/50 project as the admin detail page shows it */
+export type AdminProjectPayment = {
+  id: string;
+  kind: PaymentKind;
+  /** Cents */
+  amount: number;
+  status: PaymentStatus;
+  paidAt: string | null;
+  stripeSessionId: string | null;
+};
+
+export type AdminProjectInvoice = {
+  id: string;
+  invoiceNumber: string;
+  type: InvoiceType;
+  /** Cents */
+  total: number;
+  status: InvoiceStatus;
+  issueDate: string;
+  pdfUrl: string | null;
+};
+
+/**
+ * Everything the admin sees on /projects/[id]. Serializable (dates as ISO
+ * strings): it crosses the server → client boundary.
+ */
+export type AdminProjectDetail = {
+  id: string;
+  projectCode: string;
+  accessToken: string;
+  email: string;
+  name: string;
+  planName: string;
+  /** Cents */
+  totalAmount: number;
+  status: ProjectStatus;
+  createdAt: string;
+  updatedAt: string;
+  payments: AdminProjectPayment[];
+  invoices: AdminProjectInvoice[];
+  milestones: Milestone[];
+  /** Lead the project is attributed to, when it was linked */
+  contact: { id: string; name: string; leadStatus: LeadStatus } | null;
+  /** Written quote the project was sold through, if any */
+  quote: { id: string; quoteNumber: string } | null;
+  termsAcceptedAt: string | null;
+  termsVersion: string | null;
 };
 
 /**

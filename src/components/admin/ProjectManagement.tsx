@@ -1,378 +1,180 @@
-"use client";
-
-import Button from "@/components/ui/Button";
-import { formatCurrency } from "@/lib/utils";
-import { useState, useTransition } from "react";
-import { toast } from "sonner";
-import { getAllProjectsAction } from "@/actions/projects/getAllProjectsAction";
-import { getProjectStatsAction } from "@/actions/projects/getProjectStatsAction";
-import { updateProjectStatusAction } from "@/actions/projects/updateProjectStatusAction";
-import { getMilestonesAction } from "@/actions/milestones/getMilestonesAction";
-import MilestoneManager from "./MilestoneManager";
-import { Milestone } from "@/types/milestone";
-import {
-  AdminProject,
-  ProjectStatus,
-  UpdateableProjectStatus,
-} from "@/types/project";
-import { ProjectStats } from "@/types/stats";
-import { FlagIcon } from "@heroicons/react/24/outline";
+import Link from "next/link";
+import type { Route } from "next";
+import { formatCurrency, formatDate } from "@/lib/utils";
+import { PROJECT_STATUS_CLASSES, PROJECT_STATUS_LABELS } from "@/lib/project/status";
+import ProjectStatusActions from "@/components/admin/ProjectStatusActions";
+import type { AdminProject } from "@/types/project";
+import type { ProjectStats } from "@/types/stats";
 
 type ProjectManagementProps = {
-  initialProjects: AdminProject[];
-  initialStats: ProjectStats | null;
+  projects: AdminProject[];
+  stats: ProjectStats | null;
 };
 
-export default function ProjectManagement({
-  initialProjects,
-  initialStats,
-}: ProjectManagementProps) {
-  const [projects, setProjects] = useState<AdminProject[]>(initialProjects);
-  const [stats, setStats] = useState<ProjectStats | null>(initialStats);
-  const [isPending, startTransition] = useTransition();
+const ACCENTS = {
+  gold: "border-gold/20 hover:border-gold/40 text-white",
+  blue: "border-blue-500/20 hover:border-blue-500/40 text-blue-400",
+  orange: "border-orange-500/20 hover:border-orange-500/40 text-orange-400",
+  green: "border-green-500/20 hover:border-green-500/40 text-green-400",
+} as const;
 
-  const [selectedProject, setSelectedProject] = useState<{
-    id: string;
-    projectCode: string;
-    milestones: Milestone[];
-  } | null>(null);
-
-  const handleOpenMilestones = async (project: AdminProject) => {
-    const result = await getMilestonesAction(project.id);
-
-    if (result.success && result.data) {
-      setSelectedProject({
-        id: project.id,
-        projectCode: project.projectCode,
-        milestones: result.data.milestones,
-      });
-    } else if (!result.success) {
-      toast.error(result.error || "Failed to load milestones");
-    }
-  };
-
-  const loadData = async () => {
-    try {
-      const [projectsResult, statsResult] = await Promise.all([
-        getAllProjectsAction(),
-        getProjectStatsAction(),
-      ]);
-
-      if (projectsResult.success && projectsResult.data) {
-        setProjects(
-          projectsResult.data.projects.map((project) => ({
-            ...project,
-            createdAt:
-              typeof project.createdAt === "string"
-                ? project.createdAt
-                : project.createdAt.toISOString(),
-          }))
-        );
-      } else if (!projectsResult.success) {
-        toast.error(projectsResult.error || "Failed to load projects");
-      }
-
-      if (statsResult.success && statsResult.data) {
-        setStats(statsResult.data.stats);
-      }
-    } catch (error) {
-      toast.error("Failed to load data");
-      console.error(error);
-    }
-  };
-
-  const handleStatusUpdate = (
-    projectCode: string,
-    newStatus: UpdateableProjectStatus
-  ) => {
-    startTransition(async () => {
-      const result = await updateProjectStatusAction(projectCode, newStatus);
-
-      if (result.success) {
-        toast.success(
-          `Project ${projectCode} updated to ${formatStatus(newStatus)}`
-        );
-        if (newStatus === "ready_for_payment") {
-          if (result.data.emailError) {
-            toast.warning("Status updated, but the client email failed", {
-              description: result.data.emailError,
-            });
-          } else {
-            toast.info("Email with the payment link sent to the client");
-          }
-        }
-        loadData();
-      } else if (!result.success) {
-        toast.error(result.error || "Failed to update project");
-      }
-    });
-  };
-
-  const formatStatus = (status: ProjectStatus): string => {
-    return status.replace("_", " ");
-  };
-
-  const getStatusColor = (status: ProjectStatus) => {
-    switch (status) {
-      case "pending":
-        return "bg-yellow-500/10 text-yellow-400 border-yellow-500/40";
-      case "in_progress":
-        return "bg-blue-500/10 text-blue-400 border-blue-500/40";
-      case "ready_for_payment":
-        return "bg-orange-500/10 text-orange-400 border-orange-500/40";
-      case "completed":
-        return "bg-green-500/10 text-green-400 border-green-500/40";
-      default:
-        return "bg-gray-500/10 text-gray-400 border-gray-500/40";
-    }
-  };
-
-  const getNextStatus = (
-    currentStatus: ProjectStatus,
-    finalPaid: boolean
-  ): UpdateableProjectStatus | null => {
-    if (finalPaid) {
-      return null;
-    }
-    switch (currentStatus) {
-      case "pending":
-        return "in_progress";
-      case "in_progress":
-        return "ready_for_payment";
-      case "ready_for_payment":
-        return "completed";
-      default:
-        return null;
-    }
-  };
-
+function StatCard({ label, value, accent }: { label: string; value: number; accent: keyof typeof ACCENTS }) {
   return (
-    <div className="space-y-6 sm:space-y-8 px-4 sm:px-6 lg:px-8 py-4 sm:py-6">
-      <div className="mb-6">
-        <h1 className="text-3xl sm:text-4xl md:text-5xl text-gold font-iceland mb-2">
-          Project Management
-        </h1>
-        <p className="text-base sm:text-lg text-gray-400 font-inter">
-          Manage all your projects and track progress
+    <div
+      className={`bg-linear-to-br from-gray-800/80 to-gray-900/80 border rounded-xl p-4 sm:p-6 shadow-lg shadow-black/20 transition-colors duration-300 ${ACCENTS[accent]}`}
+    >
+      <h3 className="text-gray-400 text-xs sm:text-sm mb-2 font-medium">{label}</h3>
+      <p className="text-2xl sm:text-3xl font-iceland">{value}</p>
+    </div>
+  );
+}
+
+function Th({ children, className = "" }: { children: React.ReactNode; className?: string }) {
+  return (
+    <th
+      className={`px-4 sm:px-6 py-3 sm:py-4 text-xs sm:text-sm font-semibold text-gold uppercase tracking-wider ${className}`}
+    >
+      {children}
+    </th>
+  );
+}
+
+function ChargeBadge({ label, paid }: { label: string; paid: boolean }) {
+  return (
+    <span
+      className={`px-2 py-1 rounded-lg text-xs font-medium border whitespace-nowrap ${
+        paid
+          ? "bg-green-500/10 text-green-400 border-green-500/30"
+          : "bg-gray-500/10 text-gray-300 border-gray-500/30"
+      }`}
+    >
+      {label}: {paid ? "paid" : "pending"}
+    </span>
+  );
+}
+
+/**
+ * All projects, newest first. A Server Component: the only interactive part
+ * is the status button, which refreshes the route after a change.
+ */
+export default function ProjectManagement({ projects, stats }: ProjectManagementProps) {
+  return (
+    <div className="space-y-6 sm:space-y-8 px-4 sm:px-6 lg:px-8 py-4 sm:py-6 font-inter">
+      <div>
+        <h1 className="text-3xl sm:text-4xl md:text-5xl text-gold font-iceland mb-2">Projects</h1>
+        <p className="text-base sm:text-lg text-gray-400">
+          Every project paid through Stripe. Open one to see payments, invoices, links and milestones.
         </p>
       </div>
 
-      {stats && (
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 font-inter">
-          <div className="bg-linear-to-br from-gray-800/80 to-gray-900/80 backdrop-blur-xs border border-gold/20 rounded-xl p-4 sm:p-6 shadow-lg shadow-black/20 hover:border-gold/40 transition-all duration-300">
-            <h3 className="text-gray-400 text-xs sm:text-sm mb-2 font-medium">
-              Total Projects
-            </h3>
-            <p className="text-2xl sm:text-3xl text-white font-iceland">
-              {stats.total}
-            </p>
-          </div>
-          <div className="bg-linear-to-br from-gray-800/80 to-gray-900/80 backdrop-blur-xs border border-blue-500/20 rounded-xl p-4 sm:p-6 shadow-lg shadow-black/20 hover:border-blue-500/40 transition-all duration-300">
-            <h3 className="text-gray-400 text-xs sm:text-sm mb-2 font-medium">
-              In Progress
-            </h3>
-            <p className="text-2xl sm:text-3xl text-blue-400 font-iceland">
-              {stats.inProgress}
-            </p>
-          </div>
-          <div className="bg-linear-to-br from-gray-800/80 to-gray-900/80 backdrop-blur-xs border border-orange-500/20 rounded-xl p-4 sm:p-6 shadow-lg shadow-black/20 hover:border-orange-500/40 transition-all duration-300">
-            <h3 className="text-gray-400 text-xs sm:text-sm mb-2 font-medium">
-              Awaiting Payment
-            </h3>
-            <p className="text-2xl sm:text-3xl text-orange-400 font-iceland">
-              {stats.awaitingPayment}
-            </p>
-          </div>
-          <div className="bg-linear-to-br from-gray-800/80 to-gray-900/80 backdrop-blur-xs border border-green-500/20 rounded-xl p-4 sm:p-6 shadow-lg shadow-black/20 hover:border-green-500/40 transition-all duration-300">
-            <h3 className="text-gray-400 text-xs sm:text-sm mb-2 font-medium">
-              Completed
-            </h3>
-            <p className="text-2xl sm:text-3xl text-green-400 font-iceland">
-              {stats.completed}
-            </p>
-          </div>
+      {stats ? (
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
+          <StatCard label="Total projects" value={stats.total} accent="gold" />
+          <StatCard label="In progress" value={stats.inProgress} accent="blue" />
+          <StatCard label="Awaiting payment" value={stats.awaitingPayment} accent="orange" />
+          <StatCard label="Completed" value={stats.completed} accent="green" />
         </div>
-      )}
+      ) : null}
 
-      <div className="bg-linear-to-br from-gray-800/80 to-gray-900/80 backdrop-blur-xs border border-gray-700/50 rounded-xl overflow-hidden shadow-xl shadow-black/20 font-inter">
-        <div className="overflow-x-auto">
-          <table className="w-full">
-            <thead>
-              <tr className="bg-linear-to-r from-gray-700/80 to-gray-800/80 text-left border-b border-gray-700/50">
-                <th className="px-4 sm:px-6 lg:px-8 py-3 sm:py-4 text-xs sm:text-sm font-semibold text-gold uppercase tracking-wider">
-                  Code
-                </th>
-                <th className="px-4 sm:px-6 lg:px-8 py-3 sm:py-4 text-xs sm:text-sm font-semibold text-gold uppercase tracking-wider">
-                  Client
-                </th>
-                <th className="hidden md:table-cell px-6 lg:px-8 py-3 sm:py-4 text-xs sm:text-sm font-semibold text-gold uppercase tracking-wider">
-                  Plan
-                </th>
-                <th className="hidden lg:table-cell px-8 py-3 sm:py-4 text-xs sm:text-sm font-semibold text-gold uppercase tracking-wider">
-                  Amount
-                </th>
-                <th className="px-4 sm:px-6 lg:px-8 py-3 sm:py-4 text-xs sm:text-sm font-semibold text-gold uppercase tracking-wider">
-                  Payments
-                </th>
-                <th className="hidden sm:table-cell px-6 lg:px-8 py-3 sm:py-4 text-xs sm:text-sm font-semibold text-gold uppercase tracking-wider">
-                  Status
-                </th>
-                <th className="px-4 sm:px-6 lg:px-8 py-3 sm:py-4 text-xs sm:text-sm font-semibold text-gold uppercase tracking-wider">
-                  Actions
-                </th>
-              </tr>
-            </thead>
-            <tbody className="divide-y divide-gray-700/30">
-              {projects.map((project) => (
-                <tr
-                  key={project.id}
-                  className="hover:bg-gray-700/20 transition-all duration-200"
-                >
-                  <td className="px-4 sm:px-6 lg:px-8 py-4 sm:py-5">
-                    <span className="font-mono text-sm sm:text-base font-semibold text-gold">
-                      {project.projectCode}
-                    </span>
-                  </td>
-                  <td className="px-4 sm:px-6 lg:px-8 py-4 sm:py-5">
-                    <div>
-                      <div className="text-sm sm:text-base text-white font-semibold mb-1">
-                        {project.name}
-                      </div>
-                      <div className="text-xs sm:text-sm text-gray-400 truncate max-w-[150px] sm:max-w-none">
-                        {project.email}
-                      </div>
-                      <div className="md:hidden mt-2 space-y-1">
-                        <div>
-                          <span className="text-xs text-gray-500">
-                            {project.planName}
-                          </span>
-                        </div>
-                        <div>
-                          <span className="text-xs sm:text-sm font-semibold text-gold">
-                            {formatCurrency(project.totalAmount)}
-                          </span>
-                        </div>
-                      </div>
-                      <div className="sm:hidden mt-2">
-                        <span
-                          className={`inline-block px-2.5 py-1 rounded-full text-xs font-semibold border ${getStatusColor(project.status)}`}
-                        >
-                          {formatStatus(project.status)}
-                        </span>
-                      </div>
-                    </div>
-                  </td>
-                  <td className="hidden md:table-cell px-6 lg:px-8 py-4 sm:py-5 text-sm sm:text-base text-white font-medium">
-                    {project.planName}
-                  </td>
-                  <td className="hidden lg:table-cell px-8 py-4 sm:py-5 text-sm sm:text-base text-white font-semibold">
-                    {formatCurrency(project.totalAmount)}
-                  </td>
-                  <td className="px-4 sm:px-6 lg:px-8 py-4 sm:py-5">
-                    <div className="flex flex-wrap gap-2">
-                      <span
-                        className={`px-2 py-1 rounded-lg text-xs font-medium border ${
-                          project.depositPaid
-                            ? "bg-green-500/10 text-green-400 border-green-500/30"
-                            : "bg-red-500/10 text-red-400 border-red-500/30"
-                        }`}
-                      >
-                        1st: {project.depositPaid ? "✓" : "✗"}
-                      </span>
-                      <span
-                        className={`px-2 py-1 rounded-lg text-xs font-medium border ${
-                          project.finalPaid
-                            ? "bg-green-500/10 text-green-400 border-green-500/30"
-                            : "bg-red-500/10 text-red-400 border-red-500/30"
-                        }`}
-                      >
-                        2nd: {project.finalPaid ? "✓" : "✗"}
-                      </span>
-                    </div>
-                  </td>
-                  <td className="hidden sm:table-cell px-6 lg:px-8 py-4 sm:py-5">
-                    <span
-                      className={`inline-flex items-center px-3 sm:px-4 py-1.5 sm:py-2 rounded-full text-xs sm:text-sm font-semibold border ${getStatusColor(project.status)}`}
-                    >
-                      {formatStatus(project.status)}
-                    </span>
-                  </td>
-                  <td className="px-4 sm:px-6 lg:px-8 py-4 sm:py-5">
-                    <div className="flex items-center flex-wrap gap-2">
-                      <div className="relative group">
-                        <button
-                          onClick={() => handleOpenMilestones(project)}
-                          className="p-2 bg-purple-500/20 text-purple-400 rounded-lg hover:bg-purple-500/30 border border-purple-500/30 hover:border-purple-500/50 transition-all duration-200"
-                        >
-                          <FlagIcon className="w-4 h-4" />
-                        </button>
-                        <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-2 py-1 bg-gray-900 text-white text-xs rounded-sm opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none whitespace-nowrap z-10 border border-gray-700">
-                          Manage Milestones
-                          <div className="absolute top-full left-1/2 -translate-x-1/2 -mt-px">
-                            <div className="border-4 border-transparent border-t-gray-900"></div>
-                          </div>
-                        </div>
-                      </div>
-                      {getNextStatus(
-                        project.status,
-                        project.finalPaid
-                      ) &&
-                        project.depositPaid &&
-                        !project.finalPaid && (
-                          <div className="relative group">
-                            <Button
-                              size="sm"
-                              className="whitespace-nowrap"
-                              onClick={() =>
-                                handleStatusUpdate(
-                                  project.projectCode,
-                                  getNextStatus(
-                                    project.status,
-                                    project.finalPaid
-                                  )!
-                                )
-                              }
-                              disabled={isPending}
-                            >
-                              {isPending
-                                ? "..."
-                                : getNextStatus(
-                                      project.status,
-                                      project.finalPaid
-                                    ) === "ready_for_payment"
-                                  ? "📧 Mark Ready"
-                                  : `→ ${getNextStatus(project.status, project.finalPaid)?.replace("_", " ")}`}
-                            </Button>
-                            <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-2 py-1 bg-gray-900 text-white text-xs rounded-sm opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none whitespace-nowrap z-10 border border-gray-700">
-                              {getNextStatus(
-                                project.status,
-                                project.finalPaid
-                              ) === "ready_for_payment"
-                                ? "Mark project as ready for final payment"
-                                : `Update status to ${getNextStatus(project.status, project.finalPaid)?.replace("_", " ")}`}
-                              <div className="absolute top-full left-1/2 -translate-x-1/2 -mt-px">
-                                <div className="border-4 border-transparent border-t-gray-900"></div>
-                              </div>
-                            </div>
-                          </div>
-                        )}
-                    </div>
-                  </td>
+      <div className="bg-linear-to-br from-gray-800/80 to-gray-900/80 border border-gray-700/50 rounded-xl overflow-hidden shadow-xl shadow-black/20">
+        {projects.length === 0 ? (
+          <div className="p-10 text-center text-gray-400">
+            <p className="mb-2">No projects yet.</p>
+            <p className="text-sm text-gray-500">
+              A project appears here when a customer pays a deposit, from the catalogue or from a{" "}
+              <Link href="/quotes" className="text-gold hover:underline">
+                quote
+              </Link>
+              .
+            </p>
+          </div>
+        ) : (
+          <div className="overflow-x-auto">
+            <table className="w-full">
+              <thead>
+                <tr className="bg-linear-to-r from-gray-700/80 to-gray-800/80 text-left border-b border-gray-700/50">
+                  <Th>Code</Th>
+                  <Th>Client</Th>
+                  <Th className="hidden md:table-cell">Plan</Th>
+                  <Th className="hidden lg:table-cell">Total</Th>
+                  <Th>Payments</Th>
+                  <Th className="hidden sm:table-cell">Status</Th>
+                  <Th>Actions</Th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
+              </thead>
+              <tbody className="divide-y divide-gray-700/30">
+                {projects.map((project) => {
+                  const href = `/projects/${project.id}` as Route;
+                  return (
+                    <tr key={project.id} className="hover:bg-gray-700/20 transition-colors">
+                      <td className="px-4 sm:px-6 py-4 align-top">
+                        <Link href={href} className="font-mono text-sm font-semibold text-gold hover:underline whitespace-nowrap">
+                          {project.projectCode}
+                        </Link>
+                        <div className="text-xs text-gray-500 mt-1 whitespace-nowrap">
+                          {formatDate(project.createdAt)}
+                        </div>
+                      </td>
+                      <td className="px-4 sm:px-6 py-4 align-top">
+                        <div className="text-sm text-white font-semibold">{project.name}</div>
+                        <div className="text-xs text-gray-400 truncate max-w-[160px] sm:max-w-none">{project.email}</div>
+                        <div className="md:hidden text-xs text-gray-500 mt-1">{project.planName}</div>
+                        <div className="lg:hidden text-xs font-semibold text-gold mt-1">
+                          {formatCurrency(project.totalAmount)}
+                        </div>
+                        <div className="sm:hidden mt-2">
+                          <span
+                            className={`inline-flex items-center px-2.5 py-1 rounded-full text-xs font-semibold border ${PROJECT_STATUS_CLASSES[project.status]}`}
+                          >
+                            {PROJECT_STATUS_LABELS[project.status]}
+                          </span>
+                        </div>
+                      </td>
+                      <td className="hidden md:table-cell px-6 py-4 align-top text-sm text-white">{project.planName}</td>
+                      <td className="hidden lg:table-cell px-6 py-4 align-top text-sm text-white font-semibold">
+                        {formatCurrency(project.totalAmount)}
+                      </td>
+                      <td className="px-4 sm:px-6 py-4 align-top">
+                        <div className="flex flex-wrap gap-2">
+                          <ChargeBadge label="Deposit" paid={project.depositPaid} />
+                          <ChargeBadge label="Final" paid={project.finalPaid} />
+                        </div>
+                      </td>
+                      <td className="hidden sm:table-cell px-6 py-4 align-top">
+                        <span
+                          className={`inline-flex items-center px-2.5 py-1 rounded-full text-xs font-semibold border whitespace-nowrap ${PROJECT_STATUS_CLASSES[project.status]}`}
+                        >
+                          {PROJECT_STATUS_LABELS[project.status]}
+                        </span>
+                      </td>
+                      <td className="px-4 sm:px-6 py-4 align-top">
+                        <div className="flex flex-wrap gap-2">
+                          <Link
+                            href={href}
+                            className="inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg text-xs font-medium border transition-colors bg-gray-700/40 text-gray-200 border-gray-600 hover:bg-gray-700/70"
+                          >
+                            View
+                          </Link>
+                          <ProjectStatusActions
+                            compact
+                            project={{
+                              id: project.id,
+                              projectCode: project.projectCode,
+                              status: project.status,
+                              depositPaid: project.depositPaid,
+                              finalPaid: project.finalPaid,
+                            }}
+                          />
+                        </div>
+                      </td>
+                    </tr>
+                  );
+                })}
+              </tbody>
+            </table>
+          </div>
+        )}
       </div>
-
-      {selectedProject && (
-        <MilestoneManager
-          projectId={selectedProject.id}
-          projectCode={selectedProject.projectCode}
-          initialMilestones={selectedProject.milestones}
-          onClose={() => setSelectedProject(null)}
-        />
-      )}
     </div>
   );
 }
