@@ -1,364 +1,296 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useTransition } from "react";
+import { useRouter } from "next/navigation";
+import { toast } from "sonner";
 import { formatDate } from "@/lib/utils";
 import {
-  PlusIcon,
-  PencilIcon,
-  TrashIcon,
   CheckCircleIcon,
   ClockIcon,
+  PencilIcon,
   PlayCircleIcon,
-  XMarkIcon,
+  PlusIcon,
+  TrashIcon,
 } from "@heroicons/react/24/outline";
-import { Milestone } from "@/types/milestone";
+import type { Milestone, MilestoneStatus } from "@/types/milestone";
 import { createMilestoneAction } from "@/actions/milestones/createMilestoneAction";
 import { updateMilestoneAction } from "@/actions/milestones/updateMilestoneAction";
 import { deleteMilestoneAction } from "@/actions/milestones/deleteMilestoneAction";
 
 type MilestoneManagerProps = {
   projectId: string;
-  projectCode: string;
-  initialMilestones: Milestone[];
-  onClose: () => void;
+  milestones: Milestone[];
 };
 
-export default function MilestoneManager({
-  projectId,
-  projectCode,
-  initialMilestones,
-  onClose,
-}: MilestoneManagerProps) {
-  const [milestones, setMilestones] = useState<Milestone[]>(initialMilestones);
+const STATUS_CLASSES: Record<MilestoneStatus, string> = {
+  pending: "border-gray-600/60",
+  in_progress: "border-blue-500/40 bg-blue-500/5",
+  completed: "border-green-500/40 bg-green-500/5",
+};
+
+const NEXT_STATUS: Record<MilestoneStatus, { status: MilestoneStatus; label: string } | null> = {
+  pending: { status: "in_progress", label: "Start" },
+  in_progress: { status: "completed", label: "Complete" },
+  completed: null,
+};
+
+const iconButton =
+  "inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg text-xs font-medium border transition-colors disabled:opacity-50 disabled:cursor-not-allowed";
+const input =
+  "w-full bg-gray-900/60 text-white px-3 py-2 rounded-lg border border-gray-600 focus:outline-hidden focus:border-gold font-inter text-sm";
+
+function StatusIcon({ status }: { status: MilestoneStatus }) {
+  if (status === "completed") return <CheckCircleIcon className="w-5 h-5 text-green-400" aria-hidden="true" />;
+  if (status === "in_progress") return <PlayCircleIcon className="w-5 h-5 text-blue-400" aria-hidden="true" />;
+  return <ClockIcon className="w-5 h-5 text-gray-500" aria-hidden="true" />;
+}
+
+/**
+ * Milestones of one project, edited in place on the project page. The list
+ * comes from the Server Component; every change refreshes the route so the
+ * admin and the public /project/{token} page read the same rows.
+ */
+export default function MilestoneManager({ projectId, milestones }: MilestoneManagerProps) {
+  const router = useRouter();
+  const [isPending, startTransition] = useTransition();
   const [isAdding, setIsAdding] = useState(false);
   const [editingId, setEditingId] = useState<string | null>(null);
-  const [newTitle, setNewTitle] = useState("");
-  const [newDescription, setNewDescription] = useState("");
-  const [isLoading, setIsLoading] = useState(false);
+  const [confirmDeleteId, setConfirmDeleteId] = useState<string | null>(null);
 
-  // Calculate progress
-  const completedCount = milestones.filter(
-    (m) => m.status === "completed"
-  ).length;
+  const completedCount = milestones.filter((m) => m.status === "completed").length;
   const progressPercent =
-    milestones.length > 0
-      ? Math.round((completedCount / milestones.length) * 100)
-      : 0;
+    milestones.length > 0 ? Math.round((completedCount / milestones.length) * 100) : 0;
 
- 
-
-  const handleAddMilestone = async () => {
-    if (!newTitle.trim()) return;
-    setIsLoading(true);
-
-    const result = await createMilestoneAction(
-      projectId,
-      newTitle,
-      newDescription || null,
-      milestones.length
-    );
-    if (result.success && result.data) {
-      setMilestones([...milestones, result.data.milestone]);
-      setNewTitle("");
-      setNewDescription("");
-      setIsAdding(false);
-    }
-
-    setIsLoading(false);
-  };
-
-  const handleUpdateStatus = async (
-    id: string,
-    newStatus: Milestone["status"]
-  ) => {
-    setIsLoading(true);
-
-    const result = await updateMilestoneAction(id, {
-      status: newStatus,
-      completedAt: newStatus === "completed" ? new Date() : null,
+  const run = (work: () => Promise<{ success: true } | { success: false; error: string }>, done?: () => void) => {
+    startTransition(async () => {
+      const result = await work();
+      if (result.success) {
+        done?.();
+        router.refresh();
+      } else {
+        toast.error(result.error);
+      }
     });
-
-    if (result.success && result.data) {
-      setMilestones(
-        milestones.map((m) => (m.id === id ? result.data.milestone : m))
-      );
-    }
-
-    setIsLoading(false);
   };
 
-  const handleDelete = async (id: string) => {
-    if (!confirm("¿Eliminar este milestone?")) return;
-    setIsLoading(true);
-
-    const result = await deleteMilestoneAction(id);
-
-    if (result.success) {
-      setMilestones(milestones.filter((m) => m.id !== id));
-    }
-
-    setIsLoading(false);
+  const addMilestone = (formData: FormData) => {
+    const title = String(formData.get("title") ?? "").trim();
+    const description = String(formData.get("description") ?? "").trim();
+    if (!title) return;
+    run(
+      () => createMilestoneAction(projectId, title, description || null, milestones.length),
+      () => setIsAdding(false)
+    );
   };
 
-  const handleUpdateTitle = async (id: string, title: string) => {
-    if (!title.trim()) return;
-    setIsLoading(true);
+  const setStatus = (milestone: Milestone, status: MilestoneStatus) =>
+    run(() =>
+      updateMilestoneAction(milestone.id, {
+        status,
+        completedAt: status === "completed" ? new Date() : null,
+      })
+    );
 
-    const result = await updateMilestoneAction(id, { title });
-
-    if (result.success && result.data) {
-      setMilestones(
-        milestones.map((m) => (m.id === id ? result.data.milestone : m))
-      );
+  const rename = (milestone: Milestone, title: string) => {
+    const next = title.trim();
+    if (!next || next === milestone.title) {
+      setEditingId(null);
+      return;
     }
-
-    setEditingId(null);
-    setIsLoading(false);
+    run(
+      () => updateMilestoneAction(milestone.id, { title: next }),
+      () => setEditingId(null)
+    );
   };
 
-  // ============================================
-  // UI Helpers
-  // ============================================
-
-  const getStatusIcon = (status: Milestone["status"]) => {
-    switch (status) {
-      case "completed":
-        return <CheckCircleIcon className="w-5 h-5 text-green-500" />;
-      case "in_progress":
-        return <PlayCircleIcon className="w-5 h-5 text-blue-500" />;
-      default:
-        return <ClockIcon className="w-5 h-5 text-gray-400" />;
-    }
-  };
-
-  const getStatusColor = (status: Milestone["status"]) => {
-    switch (status) {
-      case "completed":
-        return "bg-green-500/20 text-green-500 border-green-500/30";
-      case "in_progress":
-        return "bg-blue-500/20 text-blue-500 border-blue-500/30";
-      default:
-        return "bg-gray-500/20 text-gray-400 border-gray-500/30";
-    }
-  };
-
-  const getNextStatus = (
-    current: Milestone["status"]
-  ): Milestone["status"] | null => {
-    switch (current) {
-      case "pending":
-        return "in_progress";
-      case "in_progress":
-        return "completed";
-      default:
-        return null;
-    }
-  };
+  const remove = (milestone: Milestone) =>
+    run(
+      () => deleteMilestoneAction(milestone.id),
+      () => setConfirmDeleteId(null)
+    );
 
   return (
-    <div className="fixed inset-0 bg-black/70 flex items-center justify-center z-50 p-4">
-      <div className="bg-gray-800 rounded-xl w-full max-w-2xl max-h-[90vh] overflow-hidden flex flex-col">
-        {/* Header */}
-        <div className="p-6 border-b border-gray-700 flex justify-between items-center">
-          <div>
-            <h2 className="text-2xl text-gold font-iceland">
-              Project Milestones
-            </h2>
-            <p className="text-gray-400 text-sm font-inter mt-1">
-              Project:{" "}
-              <span className="text-gold font-mono">{projectCode}</span>
-            </p>
-          </div>
-          <button
-            onClick={onClose}
-            className="p-2 hover:bg-gray-700 rounded-lg transition-colors"
-          >
-            <XMarkIcon className="w-6 h-6 text-gray-400" />
-          </button>
+    <section
+      aria-labelledby="milestones-heading"
+      className="bg-linear-to-br from-gray-800/80 to-gray-900/80 border border-gray-700/50 rounded-xl shadow-xl shadow-black/20 font-inter"
+    >
+      <div className="p-5 sm:p-6 border-b border-gray-700/50 flex flex-wrap items-center justify-between gap-3">
+        <div>
+          <h2 id="milestones-heading" className="text-2xl text-gold font-iceland">
+            Milestones
+          </h2>
+          <p className="text-xs text-gray-400 mt-0.5">
+            {milestones.length === 0
+              ? "The customer sees these on the progress page"
+              : `${completedCount}/${milestones.length} completed (${progressPercent}%)`}
+          </p>
         </div>
+        {!isAdding ? (
+          <button
+            type="button"
+            onClick={() => setIsAdding(true)}
+            className={`${iconButton} bg-gold/10 text-gold border-gold/30 hover:bg-gold/20`}
+          >
+            <PlusIcon className="w-4 h-4" aria-hidden="true" />
+            Add milestone
+          </button>
+        ) : null}
+      </div>
 
-        {/* Progress Bar */}
-        <div className="px-6 py-4 border-b border-gray-700">
-          <div className="flex justify-between items-center mb-2">
-            <span className="text-sm text-gray-400 font-inter">Progress</span>
-            <span className="text-sm text-gold font-semibold font-inter">
-              {completedCount}/{milestones.length} completed ({progressPercent}
-              %)
-            </span>
-          </div>
-          <div className="h-3 bg-gray-700 rounded-full overflow-hidden">
+      {milestones.length > 0 ? (
+        <div className="px-5 sm:px-6 pt-4">
+          <div
+            role="progressbar"
+            aria-label="Milestones completed"
+            aria-valuemin={0}
+            aria-valuemax={100}
+            aria-valuenow={progressPercent}
+            className="h-2 bg-gray-700 rounded-full overflow-hidden"
+          >
             <div
-              className="h-full bg-linear-to-r from-gold to-yellow-500 transition-all duration-500"
+              className="h-full bg-linear-to-r from-gold to-yellow-500 transition-[width] duration-500"
               style={{ width: `${progressPercent}%` }}
             />
           </div>
         </div>
+      ) : null}
 
-        {/* Milestones List */}
-        <div className="flex-1 overflow-y-auto p-6 space-y-3">
-          {milestones.length === 0 ? (
-            <div className="text-center py-12">
-              <ClockIcon className="w-16 h-16 text-gray-600 mx-auto mb-4" />
-              <p className="text-gray-400 font-inter">No milestones yet</p>
-              <p className="text-gray-500 text-sm font-inter mt-1">
-                Add milestones to track project progress
-              </p>
-            </div>
-          ) : (
-            milestones.map((milestone, index) => (
-              <div
-                key={milestone.id}
-                className={`p-4 rounded-lg border ${getStatusColor(milestone.status)} transition-all`}
-              >
-                <div className="flex items-start gap-3">
-                  {/* Order Number */}
-                  <div className="w-8 h-8 rounded-full bg-gray-700 flex items-center justify-center text-sm font-bold text-white shrink-0">
-                    {index + 1}
-                  </div>
+      <ol className="p-5 sm:p-6 space-y-3">
+        {milestones.length === 0 && !isAdding ? (
+          <li className="text-center py-8 text-gray-400 text-sm">No milestones yet.</li>
+        ) : null}
 
-                  {/* Content */}
-                  <div className="flex-1 min-w-0">
-                    {editingId === milestone.id ? (
-                      <input
-                        type="text"
-                        defaultValue={milestone.title}
-                        onBlur={(e) =>
-                          handleUpdateTitle(milestone.id, e.target.value)
-                        }
-                        onKeyDown={(e) => {
-                          if (e.key === "Enter") {
-                            handleUpdateTitle(
-                              milestone.id,
-                              e.currentTarget.value
-                            );
-                          }
-                          if (e.key === "Escape") {
-                            setEditingId(null);
-                          }
-                        }}
-                        autoFocus
-                        className="w-full bg-gray-700 text-white px-3 py-1 rounded-sm border border-gold/50 focus:outline-hidden focus:border-gold font-inter"
-                      />
-                    ) : (
-                      <h3 className="font-semibold text-white font-inter truncate">
-                        {milestone.title}
-                      </h3>
-                    )}
-                    {milestone.description && (
-                      <p className="text-sm text-gray-400 mt-1 font-inter">
-                        {milestone.description}
-                      </p>
-                    )}
-                    {milestone.completedAt && (
-                      <p className="text-xs text-green-400 mt-1 font-inter">
-                        Completed:{" "}
-                        {formatDate(milestone.completedAt)}
-                      </p>
-                    )}
-                  </div>
-
-                  {/* Status Icon */}
-                  <div className="shrink-0">
-                    {getStatusIcon(milestone.status)}
-                  </div>
+        {milestones.map((milestone, index) => {
+          const next = NEXT_STATUS[milestone.status];
+          return (
+            <li
+              key={milestone.id}
+              className={`p-4 rounded-lg border ${STATUS_CLASSES[milestone.status]} transition-colors`}
+            >
+              <div className="flex items-start gap-3">
+                <div className="w-7 h-7 rounded-full bg-gray-700 flex items-center justify-center text-xs font-bold text-white shrink-0">
+                  {index + 1}
                 </div>
-
-                {/* Actions */}
-                <div className="flex items-center gap-2 mt-3 pt-3 border-t border-gray-700/50">
-                  {getNextStatus(milestone.status) && (
-                    <button
-                      onClick={() =>
-                        handleUpdateStatus(
-                          milestone.id,
-                          getNextStatus(milestone.status)!
-                        )
-                      }
-                      disabled={isLoading}
-                      className="px-3 py-1 bg-gold/20 text-gold text-sm rounded-sm hover:bg-gold/30 transition-colors font-inter disabled:opacity-50"
-                    >
-                      → {getNextStatus(milestone.status)?.replace("_", " ")}
-                    </button>
+                <div className="flex-1 min-w-0">
+                  {editingId === milestone.id ? (
+                    <input
+                      type="text"
+                      aria-label="Milestone title"
+                      defaultValue={milestone.title}
+                      onBlur={(e) => rename(milestone, e.target.value)}
+                      onKeyDown={(e) => {
+                        if (e.key === "Enter") rename(milestone, e.currentTarget.value);
+                        if (e.key === "Escape") setEditingId(null);
+                      }}
+                      autoFocus
+                      className={input}
+                    />
+                  ) : (
+                    <h3 className="font-semibold text-white text-sm sm:text-base">{milestone.title}</h3>
                   )}
-                  <button
-                    onClick={() => setEditingId(milestone.id)}
-                    className="p-1 hover:bg-gray-700 rounded-sm transition-colors"
-                    title="Edit"
-                  >
-                    <PencilIcon className="w-4 h-4 text-gray-400" />
-                  </button>
-                  <button
-                    onClick={() => handleDelete(milestone.id)}
-                    disabled={isLoading}
-                    className="p-1 hover:bg-red-500/20 rounded-sm transition-colors disabled:opacity-50"
-                    title="Delete"
-                  >
-                    <TrashIcon className="w-4 h-4 text-red-400" />
-                  </button>
+                  {milestone.description ? (
+                    <p className="text-sm text-gray-400 mt-1">{milestone.description}</p>
+                  ) : null}
+                  {milestone.completedAt ? (
+                    <p className="text-xs text-green-400 mt-1">Completed {formatDate(milestone.completedAt)}</p>
+                  ) : null}
                 </div>
+                <StatusIcon status={milestone.status} />
               </div>
-            ))
-          )}
 
-          {/* Add New Milestone Form */}
-          {isAdding && (
-            <div className="p-4 rounded-lg border border-gold/30 bg-gold/5">
-              <input
-                type="text"
-                value={newTitle}
-                onChange={(e) => setNewTitle(e.target.value)}
-                placeholder="Milestone title…"
-                className="w-full bg-gray-700 text-white px-3 py-2 rounded-sm border border-gray-600 focus:outline-hidden focus:border-gold font-inter mb-2"
-                autoFocus
-              />
-              <textarea
-                value={newDescription}
-                onChange={(e) => setNewDescription(e.target.value)}
-                placeholder="Description (optional)..."
-                rows={2}
-                className="w-full bg-gray-700 text-white px-3 py-2 rounded-sm border border-gray-600 focus:outline-hidden focus:border-gold font-inter mb-3 resize-none"
-              />
-              <div className="flex gap-2">
+              <div className="flex flex-wrap items-center gap-2 mt-3 pt-3 border-t border-gray-700/50">
+                {next ? (
+                  <button
+                    type="button"
+                    onClick={() => setStatus(milestone, next.status)}
+                    disabled={isPending}
+                    className={`${iconButton} bg-gold/10 text-gold border-gold/30 hover:bg-gold/20`}
+                  >
+                    {next.label}
+                  </button>
+                ) : null}
                 <button
-                  onClick={handleAddMilestone}
-                  disabled={isLoading || !newTitle.trim()}
-                  className="px-4 py-2 bg-gold text-gray-900 rounded-sm font-semibold hover:bg-gold/90 transition-colors font-inter disabled:opacity-50"
+                  type="button"
+                  onClick={() => setEditingId(milestone.id)}
+                  disabled={isPending}
+                  className={`${iconButton} bg-gray-700/40 text-gray-200 border-gray-600 hover:bg-gray-700/70`}
                 >
-                  {isLoading ? "Adding…" : "Add Milestone"}
+                  <PencilIcon className="w-4 h-4" aria-hidden="true" />
+                  Rename
+                </button>
+                {confirmDeleteId === milestone.id ? (
+                  <span className="flex flex-wrap items-center gap-2 text-xs text-gray-300 basis-full sm:basis-auto">
+                    Delete this milestone?
+                    <button
+                      type="button"
+                      onClick={() => remove(milestone)}
+                      disabled={isPending}
+                      className={`${iconButton} bg-red-500/20 text-red-300 border-red-500/40 hover:bg-red-500/30`}
+                    >
+                      {isPending ? "Deleting…" : "Yes, delete"}
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => setConfirmDeleteId(null)}
+                      disabled={isPending}
+                      className={`${iconButton} bg-gray-700/40 text-gray-300 border-gray-600`}
+                    >
+                      Keep
+                    </button>
+                  </span>
+                ) : (
+                  <button
+                    type="button"
+                    onClick={() => setConfirmDeleteId(milestone.id)}
+                    disabled={isPending}
+                    className={`${iconButton} bg-red-500/10 text-red-400 border-red-500/30 hover:bg-red-500/20`}
+                  >
+                    <TrashIcon className="w-4 h-4" aria-hidden="true" />
+                    Delete
+                  </button>
+                )}
+              </div>
+            </li>
+          );
+        })}
+
+        {isAdding ? (
+          <li className="p-4 rounded-lg border border-gold/30 bg-gold/5">
+            <form action={addMilestone} className="space-y-2">
+              <label className="block">
+                <span className="sr-only">Milestone title</span>
+                <input name="title" type="text" required placeholder="Milestone title…" autoFocus className={input} />
+              </label>
+              <label className="block">
+                <span className="sr-only">Description</span>
+                <textarea
+                  name="description"
+                  rows={2}
+                  placeholder="Description (optional)…"
+                  className={`${input} resize-none`}
+                />
+              </label>
+              <div className="flex gap-2 pt-1">
+                <button
+                  type="submit"
+                  disabled={isPending}
+                  className={`${iconButton} bg-gold text-gray-900 border-gold hover:bg-gold/90`}
+                >
+                  {isPending ? "Adding…" : "Add milestone"}
                 </button>
                 <button
-                  onClick={() => {
-                    setIsAdding(false);
-                    setNewTitle("");
-                    setNewDescription("");
-                  }}
-                  className="px-4 py-2 bg-gray-700 text-white rounded-sm hover:bg-gray-600 transition-colors font-inter"
+                  type="button"
+                  onClick={() => setIsAdding(false)}
+                  disabled={isPending}
+                  className={`${iconButton} bg-gray-700/40 text-gray-300 border-gray-600`}
                 >
                   Cancel
                 </button>
               </div>
-            </div>
-          )}
-        </div>
-
-        {/* Footer */}
-        <div className="p-4 border-t border-gray-700 flex justify-between">
-          {!isAdding && (
-            <button
-              onClick={() => setIsAdding(true)}
-              className="inline-flex items-center gap-2 px-4 py-2 bg-gold text-gray-900 rounded-lg font-semibold hover:bg-gold/90 transition-colors font-inter"
-            >
-              <PlusIcon className="w-5 h-5" />
-              Add Milestone
-            </button>
-          )}
-          <button
-            onClick={onClose}
-            className="px-4 py-2 bg-gray-700 text-white rounded-lg hover:bg-gray-600 transition-colors font-inter ml-auto"
-          >
-            Close
-          </button>
-        </div>
-      </div>
-    </div>
+            </form>
+          </li>
+        ) : null}
+      </ol>
+    </section>
   );
 }

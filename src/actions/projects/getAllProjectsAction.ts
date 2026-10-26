@@ -38,7 +38,7 @@ export async function getAllProjectsAction(): Promise<
             (p) => p.kind === PaymentKind.final && isPaid(p)
           ),
           status: project.status,
-          createdAt: project.createdAt,
+          createdAt: project.createdAt.toISOString(),
         })),
       },
     };

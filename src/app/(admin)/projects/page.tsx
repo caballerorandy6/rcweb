@@ -1,53 +1,51 @@
+import { Suspense } from "react";
+import Link from "next/link";
 import ProjectManagement from "@/components/admin/ProjectManagement";
 import ProjectManagementSkeleton from "@/components/skeletons/ProjectManagementSkeleton";
-import { auth } from "@/lib/auth";
-import { redirect } from "next/navigation";
-import { Suspense } from "react";
 import { getAllProjectsAction } from "@/actions/projects/getAllProjectsAction";
 import { getProjectStatsAction } from "@/actions/projects/getProjectStatsAction";
 import { genPageMetadata } from "@/utils/genPageMetadata";
 
 export const metadata = genPageMetadata({
-  title: "Project Management",
+  title: "Projects",
   description: "Manage projects and track progress for RC Web Solutions LLC.",
   pageRoute: "/projects",
   noIndex: true,
 });
 
-async function ProjectManagementWrapper() {
+// Always rendered per request (the actions read the session from headers)
+export const dynamic = "force-dynamic";
+
+// The admin layout already checks the session; the actions check it again.
+async function ProjectList() {
   const [projectsResult, statsResult] = await Promise.all([
     getAllProjectsAction(),
     getProjectStatsAction(),
   ]);
 
-  const projects =
-    projectsResult.success && projectsResult.data
-      ? projectsResult.data.projects.map((project) => ({
-          ...project,
-          createdAt:
-            typeof project.createdAt === "string"
-              ? project.createdAt
-              : project.createdAt.toISOString(),
-        }))
-      : [];
-
-  const stats =
-    statsResult.success && statsResult.data ? statsResult.data.stats : null;
-
-  return <ProjectManagement initialProjects={projects} initialStats={stats} />;
-}
-
-export default async function ProjectManagementPage() {
-  const session = await auth();
-
-  // Doble verificación (el middleware ya lo hace, pero por seguridad)
-  if (!session || session.user.role !== "ADMIN") {
-    redirect("/admin/login");
+  if (!projectsResult.success) {
+    return (
+      <div className="px-4 sm:px-6 lg:px-8 py-6 font-inter">
+        <p className="text-red-400">{projectsResult.error}</p>
+        <Link href="/admin-dashboard" className="text-gold hover:underline">
+          Back to dashboard
+        </Link>
+      </div>
+    );
   }
 
   return (
+    <ProjectManagement
+      projects={projectsResult.data.projects}
+      stats={statsResult.success ? statsResult.data.stats : null}
+    />
+  );
+}
+
+export default function ProjectsPage() {
+  return (
     <Suspense fallback={<ProjectManagementSkeleton />}>
-      <ProjectManagementWrapper />
+      <ProjectList />
     </Suspense>
   );
 }
