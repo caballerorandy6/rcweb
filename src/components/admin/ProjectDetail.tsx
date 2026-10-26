@@ -5,6 +5,7 @@ import { formatCurrency, formatDate, formatDateTime } from "@/lib/utils";
 import { getPayUrl, getProjectUrl } from "@/lib/projectUrl";
 import { PROJECT_STATUS_CLASSES, PROJECT_STATUS_LABELS } from "@/lib/project/status";
 import { INVOICE_TYPE_LABELS } from "@/lib/invoice/labels";
+import { LEAD_STATUS_LABELS } from "@/lib/leadStatus";
 import CopyLinkButton from "@/components/admin/CopyLinkButton";
 import MilestoneManager from "@/components/admin/MilestoneManager";
 import ProjectStatusActions from "@/components/admin/ProjectStatusActions";
@@ -92,7 +93,7 @@ export default function ProjectDetail({ project }: { project: AdminProjectDetail
             <Row label="Lead">
               {project.contact ? (
                 <Link href="/contacts" className="hover:text-gold">
-                  {project.contact.name} · {project.contact.leadStatus.toLowerCase().replace("_", " ")}
+                  {project.contact.name} · {LEAD_STATUS_LABELS[project.contact.leadStatus]}
                 </Link>
               ) : (
                 <span className="text-gray-500">Not linked to a contact</span>

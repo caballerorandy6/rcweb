@@ -3,21 +3,22 @@
 import { prisma } from "@/lib/prisma";
 import type { ActionResult } from "@/types/common";
 import { requireAdmin } from "@/lib/authGuard";
-import type { ContactChannel } from "@/generated/prisma/enums";
+import type { ContactChannel, LeadStatus } from "@/generated/prisma/enums";
 
 export type ContactWithRelations = {
   id: string;
   name: string;
   marketingConsent: boolean;
+  leadStatus: LeadStatus;
+  source: string | null;
   serviceInterest: string | null;
   preferredChannel: ContactChannel | null;
   createdAt: Date;
-  updatedAt: Date;
   emails: { id: string; email: string }[];
   phones: { id: string; phone: string }[];
 };
 
-// Obtener todos los contactos con relaciones
+/** Every contact, newest first, with the columns the admin list shows */
 export async function getContactsAction(): Promise<
   ActionResult<{ contacts: ContactWithRelations[] }>
 > {
@@ -28,9 +29,17 @@ export async function getContactsAction(): Promise<
     }
 
     const contacts = await prisma.contact.findMany({
-      include: {
-        emails: true,
-        phones: true,
+      select: {
+        id: true,
+        name: true,
+        marketingConsent: true,
+        leadStatus: true,
+        source: true,
+        serviceInterest: true,
+        preferredChannel: true,
+        createdAt: true,
+        emails: { select: { id: true, email: true } },
+        phones: { select: { id: true, phone: true } },
       },
       orderBy: { createdAt: "desc" },
     });

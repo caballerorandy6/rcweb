@@ -169,6 +169,12 @@ export const createContactAction = async (
       });
     }
 
+    // The admin adding a lead by hand needs no "new message" email nor a
+    // confirmation to the customer: the contact is saved, nothing else.
+    if (isAdmin) {
+      return { success: true, message: "Contact saved", errors: {} };
+    }
+
     // 5. Verificar y reservar cuota para el email al admin
     const quotaCheck = await checkAndReserveEmailQuota(1);
 
@@ -277,7 +283,7 @@ export const createContactAction = async (
 
     // 7. Confirmación al visitante. El contacto ya está guardado, así que un
     // fallo aquí no debe convertir el envío del formulario en un error.
-    if (email && !isAdmin) {
+    if (email) {
       const confirmation = await sendContactConfirmationEmail({
         customerEmail: email,
         customerName: name,

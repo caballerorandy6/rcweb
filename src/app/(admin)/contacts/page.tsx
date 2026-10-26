@@ -1,46 +1,56 @@
-import { auth } from "@/lib/auth";
-import { redirect } from "next/navigation";
 import { Suspense } from "react";
+import Link from "next/link";
 import ContactManagement from "@/components/admin/ContactManagement";
 import ContactManagementSkeleton from "@/components/skeletons/ContactManagementSkeleton";
 import { getContactsAction } from "@/actions/contacts/getContactsAction";
 import { genPageMetadata } from "@/utils/genPageMetadata";
 import { serviceOptions } from "@/lib/data";
 
-
 export const metadata = genPageMetadata({
-  title: "Contact Management",
-  description: "Manage contacts for RC Web Solutions LLC admin panel.",
+  title: "Contacts",
+  description: "Manage contacts and leads for RC Web Solutions LLC.",
   pageRoute: "/contacts",
   noIndex: true,
 });
 
+// Always rendered per request (the actions read the session from headers)
 export const dynamic = "force-dynamic";
-export const revalidate = 0;
 
-async function ContactManagementWrapper() {
+type ContactsPageProps = {
+  // `?action=new` (the dashboard's "Add Contact" shortcut) opens the form
+  searchParams: Promise<{ action?: string }>;
+};
+
+// The admin layout already checks the session; the actions check it again.
+async function ContactList({ openNew }: { openNew: boolean }) {
   const result = await getContactsAction();
-  const contacts =
-    result.success && result.data ? result.data.contacts : [];
+
+  if (!result.success) {
+    return (
+      <div className="px-4 sm:px-6 lg:px-8 py-6 font-inter">
+        <p className="text-red-400">{result.error}</p>
+        <Link href="/admin-dashboard" className="text-gold hover:underline">
+          Back to dashboard
+        </Link>
+      </div>
+    );
+  }
 
   return (
     <ContactManagement
-      initialContacts={contacts}
+      contacts={result.data.contacts}
       serviceOptions={serviceOptions}
+      openNew={openNew}
     />
   );
 }
 
-export default async function ContactsPage() {
-  const session = await auth();
-
-  if (!session || session.user.role !== "ADMIN") {
-    redirect("/admin/login");
-  }
+export default async function ContactsPage({ searchParams }: ContactsPageProps) {
+  const { action } = await searchParams;
 
   return (
     <Suspense fallback={<ContactManagementSkeleton />}>
-      <ContactManagementWrapper />
+      <ContactList openNew={action === "new"} />
     </Suspense>
   );
 }
