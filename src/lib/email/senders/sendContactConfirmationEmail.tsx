@@ -17,7 +17,7 @@ export async function sendContactConfirmationEmail(
   params: SendContactConfirmationEmailParams
 ): Promise<{ success: boolean; error?: string }> {
   const { customerEmail, customerName } = params;
-  const siteUrl = process.env.NEXT_PUBLIC_BASE_URL || "https://rcweb.dev";
+  const siteUrl = process.env.NEXT_PUBLIC_BASE_URL || "https://www.rcweb.dev";
 
   try {
     const html = await render(

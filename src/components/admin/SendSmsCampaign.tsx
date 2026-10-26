@@ -62,7 +62,7 @@ export default function SendSmsCampaign({ initialStats }: SendSmsCampaignProps) 
   const templates = [
     {
       name: "Small Business Pro",
-      text: "RC Web Solutions: Get more customers online! Professional websites for small businesses. FREE consult: https://rcweb.dev +1 (346)375-7534 Reply STOP",
+      text: "RC Web Solutions: Get more customers online! Professional websites for small businesses. FREE consult: https://www.rcweb.dev +1 (346)375-7534 Reply STOP",
     },
     {
       name: "Appointment",

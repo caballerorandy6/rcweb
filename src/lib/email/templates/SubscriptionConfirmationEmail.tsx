@@ -104,7 +104,7 @@ export const SubscriptionConfirmationEmail: React.FC<
             </Text>
             <Text style={styles.smallText}>
               You can manage or cancel your subscription at any time by visiting{" "}
-              <Link href="https://rcweb.dev/manage-subscription" style={styles.link}>
+              <Link href="https://www.rcweb.dev/manage-subscription" style={styles.link}>
                 rcweb.dev/manage-subscription
               </Link>
             </Text>

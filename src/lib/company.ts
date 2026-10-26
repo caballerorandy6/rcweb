@@ -20,7 +20,7 @@ export const COMPANY = {
   whatsappHref:
     "https://wa.me/18325465983?text=Hi%20Randy%2C%20I%27m%20interested%20in%20discussing%20a%20web%20project",
   website: "www.rcweb.dev",
-  url: "https://rcweb.dev",
+  url: "https://www.rcweb.dev",
 } as const;
 
 /** "6403 Bazel Brook Dr, Missouri City, TX 77489" */
