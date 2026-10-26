@@ -6,6 +6,7 @@ export const metadata = genPageMetadata({
   title: "Admin Login",
   description: "Admin login page for RC Web Solutions LLC dashboard access.",
   pageRoute: "/admin/login",
+  noIndex: true,
 });
 
 const LoginPage = () => {

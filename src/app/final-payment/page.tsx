@@ -6,6 +6,7 @@ export const metadata = genPageMetadata({
   description:
     "Complete your final payment to receive your completed project. Secure payment processing through Stripe for RC Web Solutions LLC projects.",
   pageRoute: "/final-payment",
+  noIndex: true,
 });
 
 // Reasons /pay/[token] sends the customer here instead of to Stripe

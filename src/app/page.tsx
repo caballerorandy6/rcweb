@@ -19,7 +19,6 @@ const CTA = dynamic(() => import("@/components/sections/FloatingCTA"));
 import ScrollSpy from "@/components/ui/ScrollSpy";
 import { JsonLdForFaq } from "@/components/seo/JsonLdForFaq";
 import { JsonLdForService } from "@/components/seo/JsonLdForService";
-import { JsonLdForOrganization } from "@/components/seo/JsonLdForOrganization";
 import { JsonLdForLocalBusiness } from "@/components/seo/JsonLdForLocalBusiness";
 import { JsonLdForWebSite } from "@/components/seo/JsonLdForWebSite";
 import { faqs, offers } from "@/lib/data";
@@ -36,7 +35,6 @@ export const metadata: Metadata = {
 export default function Home() {
   return (
     <div>
-      <JsonLdForOrganization />
       <JsonLdForLocalBusiness />
       <JsonLdForWebSite />
       <JsonLdForFaq faqs={faqs} />

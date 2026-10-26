@@ -1,6 +1,6 @@
-import { siteConfig } from "@/config/site";
 import type { Offer } from "@/lib/data";
 import { offerToSchemaOffer } from "@/lib/seo/offerJsonLd";
+import { ORGANIZATION_ID } from "@/components/seo/JsonLdForLocalBusiness";
 
 /** One Service entity per catalogue offer, on the home page */
 export function JsonLdForService({ offer }: { offer: Offer }) {
@@ -9,11 +9,7 @@ export function JsonLdForService({ offer }: { offer: Offer }) {
     "@type": "Service",
     name: `${offer.title} - Web Development`,
     description: `${offer.description}. ${offer.ideal}`,
-    provider: {
-      "@type": "Organization",
-      name: siteConfig.siteName,
-      url: siteConfig.baseUrl,
-    },
+    provider: { "@id": ORGANIZATION_ID },
     areaServed: {
       "@type": "Country",
       name: "United States",

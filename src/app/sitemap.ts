@@ -1,163 +1,58 @@
-/**
- * Generate the sitemap.xml file for a Next.js site
- *
- * Requirements:
- * - Next.js 13.3.0 or higher
- * - Next.js App Router
- *
- * Usage:
- * 1. Update the manualRoutes array below with your site's routes
- * 2. Set the lastModified date for each route (format: YYYY-MM-DD)
- * 3. Optionally set changeFrequency and priority for each route
- * 4. The sitemap will be available at /sitemap.xml
- */
-
-import { MetadataRoute } from "next";
+import type { MetadataRoute } from "next";
 import { siteConfig } from "@/config/site";
 import { getAllPosts } from "@/lib/blog";
 import { offers } from "@/lib/data";
+import { LEGAL_LAST_UPDATED } from "@/lib/company";
 
-type SitemapRoute = {
+type StaticRoute = {
   route: string;
-  lastModified?: string;
-  changeFrequency?:
-    | "always"
-    | "hourly"
-    | "daily"
-    | "weekly"
-    | "monthly"
-    | "yearly"
-    | "never";
-  priority?: number;
+  /** Date of the last content change (YYYY-MM-DD). Bump it when the page changes. */
+  lastModified: string;
+  changeFrequency: "weekly" | "monthly";
+  priority: number;
 };
 
-type SitemapConfig = {
-  baseUrl: string;
-  manualRoutes: SitemapRoute[];
-};
-
-const sitemapConfig: SitemapConfig = {
-  baseUrl: siteConfig.baseUrl,
-  manualRoutes: [
-    {
-      route: "/",
-      lastModified: new Date().toISOString().split("T")[0],
-      changeFrequency: "weekly",
-      priority: 1.0,
-    },
-    {
-      route: "/about",
-      lastModified: new Date().toISOString().split("T")[0],
-      changeFrequency: "monthly",
-      priority: 0.8,
-    },
-    {
-      route: "/blog",
-      lastModified: new Date().toISOString().split("T")[0],
-      changeFrequency: "weekly",
-      priority: 0.8,
-    },
-    {
-      route: "/schedule",
-      lastModified: new Date().toISOString().split("T")[0],
-      changeFrequency: "monthly",
-      priority: 0.9,
-    },
-    {
-      route: "/projects-portfolio",
-      lastModified: new Date().toISOString().split("T")[0],
-      changeFrequency: "monthly",
-      priority: 0.8,
-    },
-    {
-      route: "/case-study/clinica-gessner",
-      lastModified: new Date().toISOString().split("T")[0],
-      changeFrequency: "monthly",
-      priority: 0.7,
-    },
-    {
-      route: "/case-study/clinica-airline",
-      lastModified: new Date().toISOString().split("T")[0],
-      changeFrequency: "monthly",
-      priority: 0.7,
-    },
-    {
-      route: "/case-study/leos-home-experts",
-      lastModified: new Date().toISOString().split("T")[0],
-      changeFrequency: "monthly",
-      priority: 0.7,
-    },
-    {
-      route: "/case-study/dulce-antojo",
-      lastModified: new Date().toISOString().split("T")[0],
-      changeFrequency: "monthly",
-      priority: 0.7,
-    },
-    {
-      route: "/case-study/gsmactx",
-      lastModified: new Date().toISOString().split("T")[0],
-      changeFrequency: "monthly",
-      priority: 0.7,
-    },
-    {
-      route: "/web-developer-houston-tx",
-      lastModified: new Date().toISOString().split("T")[0],
-      changeFrequency: "monthly",
-      priority: 0.9,
-    },
-    {
-      route: "/services",
-      lastModified: new Date().toISOString().split("T")[0],
-      changeFrequency: "monthly",
-      priority: 0.9,
-    },
-    ...offers.map((offer) => ({
-      route: `/services/${offer.slug}`,
-      lastModified: new Date().toISOString().split("T")[0],
-      changeFrequency: "monthly" as const,
-      priority: 0.8,
-    })),
-    {
-      route: "/privacy-policy",
-      lastModified: "2025-10-18",
-      changeFrequency: "monthly",
-      priority: 0.5,
-    },
-    {
-      route: "/terms-of-service",
-      lastModified: "2025-10-07",
-      changeFrequency: "monthly",
-      priority: 0.5,
-    },
-    {
-      route: "/refund-policy",
-      lastModified: "2025-10-07",
-      changeFrequency: "monthly",
-      priority: 0.5,
-    },
-  ],
-};
+/**
+ * Public pages. `lastModified` is a real date (from the last change to the
+ * page or its sections), never "today": a sitemap that claims every page
+ * changed every day teaches Google to ignore the field.
+ */
+const STATIC_ROUTES: StaticRoute[] = [
+  { route: "/", lastModified: "2026-10-25", changeFrequency: "weekly", priority: 1.0 },
+  { route: "/about", lastModified: "2026-10-25", changeFrequency: "monthly", priority: 0.8 },
+  { route: "/blog", lastModified: "2026-10-22", changeFrequency: "weekly", priority: 0.8 },
+  { route: "/schedule", lastModified: "2026-10-25", changeFrequency: "monthly", priority: 0.9 },
+  { route: "/projects-portfolio", lastModified: "2026-10-25", changeFrequency: "monthly", priority: 0.8 },
+  { route: "/case-study/clinica-gessner", lastModified: "2026-10-25", changeFrequency: "monthly", priority: 0.7 },
+  { route: "/case-study/clinica-airline", lastModified: "2026-10-25", changeFrequency: "monthly", priority: 0.7 },
+  { route: "/case-study/leos-home-experts", lastModified: "2026-10-22", changeFrequency: "monthly", priority: 0.7 },
+  { route: "/case-study/dulce-antojo", lastModified: "2026-10-22", changeFrequency: "monthly", priority: 0.7 },
+  { route: "/case-study/gsmactx", lastModified: "2026-10-22", changeFrequency: "monthly", priority: 0.7 },
+  { route: "/web-developer-houston-tx", lastModified: "2026-10-22", changeFrequency: "monthly", priority: 0.9 },
+  { route: "/services", lastModified: "2026-10-25", changeFrequency: "monthly", priority: 0.9 },
+  ...offers.map((offer) => ({
+    route: `/services/${offer.slug}`,
+    lastModified: "2026-10-25",
+    changeFrequency: "monthly" as const,
+    priority: 0.8,
+  })),
+  { route: "/privacy-policy", lastModified: LEGAL_LAST_UPDATED.version, changeFrequency: "monthly", priority: 0.5 },
+  { route: "/terms-of-service", lastModified: LEGAL_LAST_UPDATED.version, changeFrequency: "monthly", priority: 0.5 },
+  { route: "/refund-policy", lastModified: LEGAL_LAST_UPDATED.version, changeFrequency: "monthly", priority: 0.5 },
+];
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  // Get all blog posts
-  const posts = getAllPosts();
+  const staticEntries = STATIC_ROUTES.map(({ route, ...rest }) => ({
+    url: `${siteConfig.baseUrl}${route}`,
+    ...rest,
+  }));
 
-  // Generate blog post entries
-  const blogPostEntries = posts.map((post) => ({
-    url: `${sitemapConfig.baseUrl}/blog/${post.slug}`,
-    lastModified: post.date || new Date().toISOString().split("T")[0],
+  const postEntries = getAllPosts().map((post) => ({
+    url: `${siteConfig.baseUrl}/blog/${post.slug}`,
+    lastModified: post.date || undefined,
     changeFrequency: "monthly" as const,
     priority: 0.7,
   }));
 
-  // Generate manual route entries
-  const manualRouteEntries = sitemapConfig.manualRoutes.map((route) => ({
-    url: `${sitemapConfig.baseUrl}${route.route}`,
-    lastModified: route.lastModified || new Date().toISOString().split("T")[0],
-    changeFrequency: route.changeFrequency || "monthly",
-    priority: route.priority || 0.8,
-  }));
-
-  // Combine all entries
-  return [...manualRouteEntries, ...blogPostEntries];
+  return [...staticEntries, ...postEntries];
 }

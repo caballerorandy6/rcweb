@@ -7,6 +7,7 @@ export const metadata = genPageMetadata({
   description:
     "Thank you for contacting RC Web Solutions LLC. Your message has been received and I will get back to you shortly.",
   pageRoute: "/thank-you",
+  noIndex: true,
 });
 
 export default function ThankYouPage() {

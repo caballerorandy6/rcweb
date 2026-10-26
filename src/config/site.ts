@@ -3,6 +3,8 @@ export type SiteConfig = {
   siteName: string;
   siteNameShort: string;
   defaultOgImg: string;
+  /** Square brand mark for JSON-LD `logo` (Google needs ≥112×112) */
+  logoImg: string;
   description: string;
   author: {
     name: string;
@@ -25,6 +27,7 @@ export const siteConfig: SiteConfig = {
   siteName: "RC Web Solutions LLC",
   siteNameShort: "RC Web Solutions",
   defaultOgImg: "/og-image.jpg",
+  logoImg: "/icon-512x512.png",
   description:
     "Randy Caballero builds and maintains fast websites and web apps for small service businesses: booking, Stripe payments and local SEO built in. Based in Houston, TX, working with small businesses anywhere. Next.js, React, English & Spanish.",
   author: {

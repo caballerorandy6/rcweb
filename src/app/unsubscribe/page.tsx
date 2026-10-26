@@ -7,6 +7,7 @@ export const metadata = genPageMetadata({
   title: "Unsubscribe",
   description: "Unsubscribe from RC Web Solutions LLC email communications.",
   pageRoute: "/unsubscribe",
+  noIndex: true,
 });
 
 export default function UnsubscribePage() {

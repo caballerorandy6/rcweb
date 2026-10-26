@@ -8,6 +8,7 @@ export const metadata = genPageMetadata({
   description:
     "Manage your RC Web Solutions subscription. Update payment methods, view billing history, or cancel your subscription.",
   pageRoute: "/manage-subscription",
+  noIndex: true,
 });
 
 type SearchParams = Promise<{ error?: string }>;
