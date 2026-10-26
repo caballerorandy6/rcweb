@@ -385,6 +385,8 @@ model Milestone {
   status      MilestoneStatus @default(pending)
   dueDate     DateTime?
   completedAt DateTime?
+  // When the customer was emailed about this milestone being completed
+  notifiedAt  DateTime?
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt

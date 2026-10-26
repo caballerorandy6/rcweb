@@ -66,7 +66,7 @@ Also read the Next.js docs shipped with the installed version (`node_modules/nex
 - **Prisma Client** is generated to `src/generated/prisma/` — import types from `@/generated/prisma/client`, not `@prisma/client`. Config in `prisma.config.ts`; DB over TLS with pinned CA (`src/lib/dbSsl.ts`).
 - **Forms:** React Hook Form + Zod resolver. Schemas in `src/lib/zod.ts`. Toast notifications via Sonner.
 - **State:** Zustand store at `src/store/rcweb-store.ts`.
-- **Email:** Resend with daily quota control (`src/lib/sendEmailWithQuota.ts`). Templates in `src/emails/` using React Email.
+- **Email:** Resend with daily quota control (`src/lib/sendEmailWithQuota.ts`). React Email templates in `src/lib/email/templates/`, one sender per email in `src/lib/email/senders/` (customer emails go out from `contactus@` with reply-to the admin inbox).
 - **Blog:** MDX files in `/content/blog/`, parsed with gray-matter via `src/lib/blog.ts`.
 - **Errors:** Sentry (`@sentry/nextjs`, tunnel `/monitoring`, `src/instrumentation*.ts`, `src/app/error.tsx`, `global-error.tsx`).
 - **Runtime:** Node.js everywhere. Do not add `export const runtime = "edge"`.

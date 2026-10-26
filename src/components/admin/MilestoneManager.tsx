@@ -7,6 +7,7 @@ import { formatDate } from "@/lib/utils";
 import {
   CheckCircleIcon,
   ClockIcon,
+  EnvelopeIcon,
   PencilIcon,
   PlayCircleIcon,
   PlusIcon,
@@ -15,10 +16,14 @@ import {
 import type { Milestone, MilestoneStatus } from "@/types/milestone";
 import { createMilestoneAction } from "@/actions/milestones/createMilestoneAction";
 import { updateMilestoneAction } from "@/actions/milestones/updateMilestoneAction";
+import { completeMilestoneAction } from "@/actions/milestones/completeMilestoneAction";
+import { notifyMilestoneAction } from "@/actions/milestones/notifyMilestoneAction";
 import { deleteMilestoneAction } from "@/actions/milestones/deleteMilestoneAction";
 
 type MilestoneManagerProps = {
   projectId: string;
+  /** Who gets the "milestone completed" email */
+  customerEmail: string;
   milestones: Milestone[];
 };
 
@@ -48,24 +53,29 @@ function StatusIcon({ status }: { status: MilestoneStatus }) {
 /**
  * Milestones of one project, edited in place on the project page. The list
  * comes from the Server Component; every change refreshes the route so the
- * admin and the public /project/{token} page read the same rows.
+ * admin and the public /project/{token} page read the same rows. Completing
+ * a milestone emails the customer unless the checkbox is cleared.
  */
-export default function MilestoneManager({ projectId, milestones }: MilestoneManagerProps) {
+export default function MilestoneManager({ projectId, customerEmail, milestones }: MilestoneManagerProps) {
   const router = useRouter();
   const [isPending, startTransition] = useTransition();
   const [isAdding, setIsAdding] = useState(false);
   const [editingId, setEditingId] = useState<string | null>(null);
   const [confirmDeleteId, setConfirmDeleteId] = useState<string | null>(null);
+  const [notifyCustomer, setNotifyCustomer] = useState(true);
 
   const completedCount = milestones.filter((m) => m.status === "completed").length;
   const progressPercent =
     milestones.length > 0 ? Math.round((completedCount / milestones.length) * 100) : 0;
 
-  const run = (work: () => Promise<{ success: true } | { success: false; error: string }>, done?: () => void) => {
+  const run = <T,>(
+    work: () => Promise<{ success: true; data?: T } | { success: false; error: string }>,
+    done?: (data: T | undefined) => void
+  ) => {
     startTransition(async () => {
       const result = await work();
       if (result.success) {
-        done?.();
+        done?.(result.data);
         router.refresh();
       } else {
         toast.error(result.error);
@@ -83,12 +93,29 @@ export default function MilestoneManager({ projectId, milestones }: MilestoneMan
     );
   };
 
-  const setStatus = (milestone: Milestone, status: MilestoneStatus) =>
-    run(() =>
-      updateMilestoneAction(milestone.id, {
-        status,
-        completedAt: status === "completed" ? new Date() : null,
-      })
+  const setStatus = (milestone: Milestone, status: MilestoneStatus) => {
+    if (status !== "completed") {
+      run(() => updateMilestoneAction(milestone.id, { status }));
+      return;
+    }
+    run(
+      () => completeMilestoneAction(milestone.id, { notifyCustomer }),
+      (data) => {
+        const notification = data?.notification;
+        if (!notification) return;
+        if (notification.sent) {
+          toast.success(`Customer notified at ${customerEmail}`);
+        } else {
+          toast.warning(`Milestone completed, but the email failed: ${notification.error}`);
+        }
+      }
+    );
+  };
+
+  const notify = (milestone: Milestone) =>
+    run(
+      () => notifyMilestoneAction(milestone.id),
+      () => toast.success(`Customer notified at ${customerEmail}`)
     );
 
   const rename = (milestone: Milestone, title: string) => {
@@ -125,16 +152,27 @@ export default function MilestoneManager({ projectId, milestones }: MilestoneMan
               : `${completedCount}/${milestones.length} completed (${progressPercent}%)`}
           </p>
         </div>
-        {!isAdding ? (
-          <button
-            type="button"
-            onClick={() => setIsAdding(true)}
-            className={`${iconButton} bg-gold/10 text-gold border-gold/30 hover:bg-gold/20`}
-          >
-            <PlusIcon className="w-4 h-4" aria-hidden="true" />
-            Add milestone
-          </button>
-        ) : null}
+        <div className="flex flex-wrap items-center gap-3">
+          <label className="flex items-center gap-2 text-xs text-gray-300 cursor-pointer select-none">
+            <input
+              type="checkbox"
+              checked={notifyCustomer}
+              onChange={(e) => setNotifyCustomer(e.target.checked)}
+              className="w-4 h-4 rounded border-gray-600 bg-gray-900/60 text-gold accent-gold focus:ring-gold"
+            />
+            Email {customerEmail} when a milestone is completed
+          </label>
+          {!isAdding ? (
+            <button
+              type="button"
+              onClick={() => setIsAdding(true)}
+              className={`${iconButton} bg-gold/10 text-gold border-gold/30 hover:bg-gold/20`}
+            >
+              <PlusIcon className="w-4 h-4" aria-hidden="true" />
+              Add milestone
+            </button>
+          ) : null}
+        </div>
       </div>
 
       {milestones.length > 0 ? (
@@ -192,7 +230,12 @@ export default function MilestoneManager({ projectId, milestones }: MilestoneMan
                     <p className="text-sm text-gray-400 mt-1">{milestone.description}</p>
                   ) : null}
                   {milestone.completedAt ? (
-                    <p className="text-xs text-green-400 mt-1">Completed {formatDate(milestone.completedAt)}</p>
+                    <p className="text-xs text-green-400 mt-1">
+                      Completed {formatDate(milestone.completedAt)}
+                      {milestone.notifiedAt ? (
+                        <span className="text-gray-400"> · Customer notified {formatDate(milestone.notifiedAt)}</span>
+                      ) : null}
+                    </p>
                   ) : null}
                 </div>
                 <StatusIcon status={milestone.status} />
@@ -207,6 +250,17 @@ export default function MilestoneManager({ projectId, milestones }: MilestoneMan
                     className={`${iconButton} bg-gold/10 text-gold border-gold/30 hover:bg-gold/20`}
                   >
                     {next.label}
+                  </button>
+                ) : null}
+                {milestone.status === "completed" && !milestone.notifiedAt ? (
+                  <button
+                    type="button"
+                    onClick={() => notify(milestone)}
+                    disabled={isPending}
+                    className={`${iconButton} bg-green-500/10 text-green-300 border-green-500/30 hover:bg-green-500/20`}
+                  >
+                    <EnvelopeIcon className="w-4 h-4" aria-hidden="true" />
+                    Notify customer
                   </button>
                 ) : null}
                 <button

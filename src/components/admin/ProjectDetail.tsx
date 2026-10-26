@@ -233,7 +233,7 @@ export default function ProjectDetail({ project }: { project: AdminProjectDetail
         </Card>
       </div>
 
-      <MilestoneManager projectId={project.id} milestones={project.milestones} />
+      <MilestoneManager projectId={project.id} customerEmail={project.email} milestones={project.milestones} />
     </div>
   );
 }

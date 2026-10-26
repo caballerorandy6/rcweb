@@ -2,14 +2,15 @@
 
 import { prisma } from "@/lib/prisma";
 import { requireAdmin } from "@/lib/authGuard";
+import { toMilestone } from "@/lib/milestone/toMilestone";
 import type { Milestone, MilestoneStatus } from "@/types/milestone";
 import type { ActionResult } from "@/types/common";
 
+/** Rename, describe or move a milestone back/forward. Completing goes through completeMilestoneAction. */
 type UpdateMilestoneData = {
   title?: string;
   description?: string | null;
-  status?: MilestoneStatus;
-  completedAt?: Date | null;
+  status?: Exclude<MilestoneStatus, "completed">;
 };
 
 export async function updateMilestoneAction(
@@ -25,23 +26,11 @@ export async function updateMilestoneAction(
   try {
     const data = await prisma.milestone.update({
       where: { id },
-      data: updateData,
+      // Leaving the completed state clears its timestamps
+      data: updateData.status ? { ...updateData, completedAt: null, notifiedAt: null } : updateData,
     });
 
-    const milestone: Milestone = {
-      id: data.id,
-      projectId: data.projectId,
-      title: data.title,
-      description: data.description,
-      order: data.order,
-      status: data.status,
-      dueDate: data.dueDate?.toISOString() ?? null,
-      completedAt: data.completedAt?.toISOString() ?? null,
-      createdAt: data.createdAt.toISOString(),
-      updatedAt: data.updatedAt.toISOString(),
-    };
-
-    return { success: true, data: { milestone } };
+    return { success: true, data: { milestone: toMilestone(data) } };
   } catch (error) {
     console.error("Error updating milestone:", error);
     return { success: false, error: "Failed to update milestone" };

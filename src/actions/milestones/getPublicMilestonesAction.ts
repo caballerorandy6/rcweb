@@ -1,6 +1,7 @@
 "use server";
 
 import { prisma } from "@/lib/prisma";
+import { toMilestone } from "@/lib/milestone/toMilestone";
 import type { Milestone } from "@/types/milestone";
 import type { ProjectStatus } from "@/generated/prisma/enums";
 import type { ActionResult } from "@/types/common";
@@ -36,18 +37,7 @@ export async function getPublicMilestonesAction(
       return { success: false, error: "Project not found" };
     }
 
-    const milestones: Milestone[] = project.milestones.map((m) => ({
-      id: m.id,
-      projectId: m.projectId,
-      title: m.title,
-      description: m.description,
-      order: m.order,
-      status: m.status,
-      dueDate: m.dueDate?.toISOString() ?? null,
-      completedAt: m.completedAt?.toISOString() ?? null,
-      createdAt: m.createdAt.toISOString(),
-      updatedAt: m.updatedAt.toISOString(),
-    }));
+    const milestones = project.milestones.map(toMilestone);
 
     return {
       success: true,
