@@ -61,8 +61,8 @@ export function genPageMetadata({
       images: [
         {
           url: ogImage,
-          width: 1200,
-          height: 630,
+          width: 1536,
+          height: 1024,
           alt: title,
         },
       ],

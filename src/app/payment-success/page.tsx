@@ -13,6 +13,7 @@ export const metadata = genPageMetadata({
   description:
     "Your payment has been successfully processed. Thank you for choosing RC Web Solutions LLC for your project.",
   pageRoute: "/payment-success",
+  noIndex: true,
 });
 
 type SearchParams = Promise<{ [key: string]: string | string[] | undefined }>;

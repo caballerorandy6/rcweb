@@ -1,5 +1,7 @@
 import { siteConfig } from "@/config/site";
+import { ORGANIZATION_ID } from "@/components/seo/JsonLdForLocalBusiness";
 
+/** The site itself; the publisher is the company block rendered next to it. No SearchAction: the site has no search. */
 export function JsonLdForWebSite() {
   const jsonLd = {
     "@context": "https://schema.org",
@@ -9,20 +11,8 @@ export function JsonLdForWebSite() {
     alternateName: siteConfig.siteNameShort,
     url: siteConfig.baseUrl,
     description: siteConfig.description,
-    publisher: {
-      "@type": "Organization",
-      "@id": `${siteConfig.baseUrl}/#organization`,
-      name: siteConfig.siteName,
-    },
+    publisher: { "@id": ORGANIZATION_ID },
     inLanguage: "en-US",
-    potentialAction: {
-      "@type": "SearchAction",
-      target: {
-        "@type": "EntryPoint",
-        urlTemplate: `${siteConfig.baseUrl}/blog?search={search_term_string}`,
-      },
-      "query-input": "required name=search_term_string",
-    },
   };
 
   return (

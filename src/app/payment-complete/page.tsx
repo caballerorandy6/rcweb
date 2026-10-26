@@ -8,6 +8,7 @@ export const metadata = genPageMetadata({
   description:
     "Your payment has been successfully processed. Thank you for choosing RC Web Solutions LLC.",
   pageRoute: "/payment-complete",
+  noIndex: true,
 });
 
 export default function PaymentCompletePage() {
