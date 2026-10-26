@@ -2,6 +2,7 @@
 
 import { prisma } from "@/lib/prisma";
 import { requireAdmin } from "@/lib/authGuard";
+import { toMilestone } from "@/lib/milestone/toMilestone";
 import type { Milestone } from "@/types/milestone";
 import type { ActionResult } from "@/types/common";
 
@@ -22,20 +23,7 @@ export async function createMilestoneAction(
       data: { projectId, title, description, order },
     });
 
-    const milestone: Milestone = {
-      id: data.id,
-      projectId: data.projectId,
-      title: data.title,
-      description: data.description,
-      order: data.order,
-      status: data.status,
-      dueDate: data.dueDate?.toISOString() ?? null,
-      completedAt: data.completedAt?.toISOString() ?? null,
-      createdAt: data.createdAt.toISOString(),
-      updatedAt: data.updatedAt.toISOString(),
-    };
-
-    return { success: true, data: { milestone } };
+    return { success: true, data: { milestone: toMilestone(data) } };
   } catch (error) {
     console.error("Error creating milestone:", error);
     return { success: false, error: "Failed to create milestone" };

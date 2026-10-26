@@ -39,6 +39,11 @@ export {
 
 export { QuoteEmail, type QuoteEmailProps } from "./QuoteEmail";
 
+export {
+  MilestoneCompletedEmail,
+  type MilestoneCompletedEmailProps,
+} from "./MilestoneCompletedEmail";
+
 
 // Admin email templates (React components)
 export {

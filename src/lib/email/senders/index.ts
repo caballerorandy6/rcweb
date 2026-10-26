@@ -38,6 +38,11 @@ export {
 
 export { sendQuoteEmail, type SendQuoteEmailParams } from "./sendQuoteEmail";
 
+export {
+  sendMilestoneCompletedEmail,
+  type SendMilestoneCompletedEmailParams,
+} from "./sendMilestoneCompletedEmail";
+
 
 // Admin email senders
 export {

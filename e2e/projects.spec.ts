@@ -1,8 +1,9 @@
 import { expect, test, type Page } from "@playwright/test";
 
 // Admin projects: the list links to a detail page with the customer, both
-// charges, the customer links and milestones edited in place. The status
-// button is not pressed: "ready for payment" emails the customer.
+// charges, the customer links and milestones edited in place. Nothing that
+// emails the customer is pressed: the status button ("ready for payment") and
+// "Notify customer" on a completed milestone.
 // Uses the local test admin and the TEST-001 project from `npm run seed:dev`.
 const email = process.env.TEST_ADMIN_EMAIL;
 const password = process.env.TEST_ADMIN_PASSWORD;
@@ -68,11 +69,15 @@ test.describe("admin projects", () => {
 
     const item = milestones.getByRole("listitem").filter({ hasText: title });
 
-    await test.step("start it, then complete it", async () => {
+    await test.step("start it, then complete it without emailing the customer", async () => {
       await item.getByRole("button", { name: "Start" }).click();
       await expect(item.getByRole("button", { name: "Complete" })).toBeVisible({ timeout: 15_000 });
+      // The suite has no Resend key: skip the email and check the retry button instead
+      await milestones.getByRole("checkbox", { name: /when a milestone is completed/ }).uncheck();
       await item.getByRole("button", { name: "Complete" }).click();
       await expect(item).toContainText("Completed", { timeout: 15_000 });
+      await expect(item).not.toContainText("Customer notified");
+      await expect(item.getByRole("button", { name: "Notify customer" })).toBeVisible();
     });
 
     await test.step("the public progress page lists it", async () => {

@@ -1,6 +1,6 @@
 import type { Prisma } from "@/generated/prisma/client";
 import { PaymentKind } from "@/generated/prisma/enums";
-import type { Milestone } from "@/types/milestone";
+import { toMilestone } from "@/lib/milestone/toMilestone";
 import type { AdminProjectDetail } from "@/types/project";
 
 /** The relations /projects/[id] needs, fetched in a single query */
@@ -18,21 +18,6 @@ export type AdminProjectDetailPayload = Prisma.ProjectGetPayload<{
 }>;
 
 const PAYMENT_ORDER: Record<PaymentKind, number> = { deposit: 0, final: 1 };
-
-export function toMilestone(m: AdminProjectDetailPayload["milestones"][number]): Milestone {
-  return {
-    id: m.id,
-    projectId: m.projectId,
-    title: m.title,
-    description: m.description,
-    order: m.order,
-    status: m.status,
-    dueDate: m.dueDate?.toISOString() ?? null,
-    completedAt: m.completedAt?.toISOString() ?? null,
-    createdAt: m.createdAt.toISOString(),
-    updatedAt: m.updatedAt.toISOString(),
-  };
-}
 
 /** Prisma row → serializable shape for the admin detail page */
 export function toAdminProjectDetail(project: AdminProjectDetailPayload): AdminProjectDetail {

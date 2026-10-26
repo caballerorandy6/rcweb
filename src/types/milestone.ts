@@ -14,6 +14,8 @@ export type Milestone = {
   status: MilestoneStatus;
   dueDate: string | null;
   completedAt: string | null;
+  /** When the customer was emailed about the completion */
+  notifiedAt: string | null;
   createdAt: string;
   updatedAt: string;
 };
