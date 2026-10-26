@@ -3,7 +3,6 @@ title: "From Personal Portfolio to Professional Brand: The RC Web Solutions Evol
 description: "How we transformed a developer portfolio into a focused brand identity, and why positioning matters for business growth."
 date: "2025-01-13"
 author: "Randy Caballero"
-image: "/og-image.jpg"
 tags: ["Branding", "Business", "Entrepreneurship", "Web Development", "Strategy"]
 ---
 

@@ -2,8 +2,8 @@
 title: "Why Your Houston Clinic Needs a Bilingual Website"
 description: "Houston is 44% Hispanic. If your clinic's website is English-only, you're losing patients to competitors who speak their language. Here's why bilingual matters."
 date: "2026-03-26"
+updated: "2026-10-25"
 author: "Randy Caballero"
-image: "/og-image.jpg"
 tags: ["Bilingual", "Houston", "Healthcare", "Web Design", "Hispanic Market"]
 ---
 

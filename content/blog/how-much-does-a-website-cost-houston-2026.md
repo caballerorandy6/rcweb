@@ -2,8 +2,8 @@
 title: "How Much Does a Website Cost in Houston in 2026?"
 description: "Honest breakdown of website costs in Houston, TX for 2026. Landing pages, business websites, e-commerce, and custom web apps. What you're paying for and how to avoid overpaying."
 date: "2026-03-30"
+updated: "2026-10-18"
 author: "Randy Caballero"
-image: "/og-image.jpg"
 tags: ["Web Development", "Houston", "Pricing", "Small Business", "Website Cost"]
 ---
 

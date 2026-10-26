@@ -2,8 +2,8 @@
 title: "5 Signs Your Houston Business Website Needs a Redesign"
 description: "Is your Houston business website costing you customers? Here are 5 clear signs it's time for a redesign — and what to do about it."
 date: "2026-03-24"
+updated: "2026-10-18"
 author: "Randy Caballero"
-image: "/og-image.jpg"
 tags: ["Web Design", "Houston", "Website Redesign", "Small Business", "SEO"]
 ---
 

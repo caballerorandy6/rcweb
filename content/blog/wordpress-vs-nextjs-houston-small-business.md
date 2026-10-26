@@ -2,8 +2,8 @@
 title: "WordPress vs Next.js: Which Is Better for Your Houston Small Business?"
 description: "Honest comparison of WordPress and Next.js for Houston small businesses. Speed, cost, SEO, security, and maintenance compared. Which one is right for your business?"
 date: "2026-03-28"
+updated: "2026-09-13"
 author: "Randy Caballero"
-image: "/og-image.jpg"
 tags: ["WordPress", "Next.js", "Houston", "Small Business", "Web Development"]
 ---
 

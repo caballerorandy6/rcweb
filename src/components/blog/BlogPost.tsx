@@ -5,6 +5,7 @@ import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import {
   ArrowLeftIcon,
+  ArrowPathIcon,
   CalendarIcon,
   ClockIcon,
   UserIcon,
@@ -102,6 +103,17 @@ export default function BlogPost({ post }: BlogPostProps) {
                   {formatDate(post.date, { month: "long", timeZone: "UTC" })}
                 </time>
               </div>
+              {post.updated && (
+                <div className="flex items-center gap-2">
+                  <ArrowPathIcon className="w-5 h-5" />
+                  <span>
+                    Updated{" "}
+                    <time dateTime={post.updated}>
+                      {formatDate(post.updated, { month: "long", timeZone: "UTC" })}
+                    </time>
+                  </span>
+                </div>
+              )}
               <div className="flex items-center gap-2">
                 <ClockIcon className="w-5 h-5" />
                 <span>{calculateReadTime(post.content)} min read</span>
