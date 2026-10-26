@@ -39,7 +39,7 @@ const iconButton =
 export default function QuoteManagement({ quotes }: QuoteManagementProps) {
   const router = useRouter();
   const [isPending, startTransition] = useTransition();
-  const [busyId, setBusyId] = useState<string | null>(null);
+  const [busy, setBusy] = useState<{ id: string; action: "send" | "cancel" } | null>(null);
   const [confirmCancelId, setConfirmCancelId] = useState<string | null>(null);
 
   const open = quotes.filter((q) => q.displayStatus === "sent");
@@ -51,19 +51,19 @@ export default function QuoteManagement({ quotes }: QuoteManagementProps) {
     expired: quotes.filter((q) => q.displayStatus === "expired").length,
   };
 
-  const run = (quoteId: string, work: () => Promise<void>) => {
-    setBusyId(quoteId);
+  const run = (quoteId: string, action: "send" | "cancel", work: () => Promise<void>) => {
+    setBusy({ id: quoteId, action });
     startTransition(async () => {
       try {
         await work();
       } finally {
-        setBusyId(null);
+        setBusy(null);
       }
     });
   };
 
   const handleSend = (quote: AdminQuote) =>
-    run(quote.id, async () => {
+    run(quote.id, "send", async () => {
       const result = await sendQuoteAction(quote.id);
       if (result.success) {
         toast.success(`Quote ${quote.quoteNumber} sent to ${quote.email}`);
@@ -74,7 +74,7 @@ export default function QuoteManagement({ quotes }: QuoteManagementProps) {
     });
 
   const handleCancel = (quote: AdminQuote) =>
-    run(quote.id, async () => {
+    run(quote.id, "cancel", async () => {
       setConfirmCancelId(null);
       const result = await cancelQuoteAction(quote.id);
       if (result.success) {
@@ -140,7 +140,9 @@ export default function QuoteManagement({ quotes }: QuoteManagementProps) {
               <tbody className="divide-y divide-gray-700/30">
                 {quotes.map((quote) => {
                   const isOpen = quote.status === "draft" || quote.status === "sent";
-                  const busy = isPending && busyId === quote.id;
+                  const rowBusy = isPending && busy?.id === quote.id;
+                  const sending = rowBusy && busy?.action === "send";
+                  const cancelling = rowBusy && busy?.action === "cancel";
                   return (
                     <tr key={quote.id} className="hover:bg-gray-700/20 transition-colors">
                       <td className="px-4 sm:px-6 py-4 align-top">
@@ -186,17 +188,17 @@ export default function QuoteManagement({ quotes }: QuoteManagementProps) {
                         ) : null}
                         {quote.acceptedAt ? <div>Accepted {formatDate(quote.acceptedAt)}</div> : null}
                       </td>
-                      <td className="px-4 sm:px-6 py-4 align-top">
+                      <td className="px-4 sm:px-6 py-4 align-top min-w-[14rem]">
                         <div className="flex flex-wrap gap-2">
                           {isOpen ? (
                             <button
                               type="button"
                               onClick={() => handleSend(quote)}
-                              disabled={busy}
+                              disabled={rowBusy}
                               className={`${iconButton} bg-gold/10 text-gold border-gold/30 hover:bg-gold/20`}
                             >
                               <PaperAirplaneIcon className="w-4 h-4" aria-hidden="true" />
-                              {busy ? "Sending…" : quote.status === "sent" ? "Resend" : "Send"}
+                              {sending ? "Sending…" : quote.status === "sent" ? "Resend" : "Send"}
                             </button>
                           ) : null}
                           {quote.status !== "draft" ? (
@@ -222,7 +224,7 @@ export default function QuoteManagement({ quotes }: QuoteManagementProps) {
                             <button
                               type="button"
                               onClick={() => setConfirmCancelId(quote.id)}
-                              disabled={busy}
+                              disabled={rowBusy}
                               className={`${iconButton} bg-red-500/10 text-red-400 border-red-500/30 hover:bg-red-500/20`}
                             >
                               <XMarkIcon className="w-4 h-4" aria-hidden="true" />
@@ -230,19 +232,20 @@ export default function QuoteManagement({ quotes }: QuoteManagementProps) {
                             </button>
                           ) : null}
                           {isOpen && confirmCancelId === quote.id ? (
-                            <span className="inline-flex items-center gap-2 text-xs text-gray-300">
+                            <span className="flex flex-wrap items-center gap-2 text-xs text-gray-300 basis-full">
                               Withdraw this quote?
                               <button
                                 type="button"
                                 onClick={() => handleCancel(quote)}
-                                disabled={busy}
+                                disabled={rowBusy}
                                 className={`${iconButton} bg-red-500/20 text-red-300 border-red-500/40 hover:bg-red-500/30`}
                               >
-                                Yes, cancel
+                                {cancelling ? "Cancelling…" : "Yes, cancel"}
                               </button>
                               <button
                                 type="button"
                                 onClick={() => setConfirmCancelId(null)}
+                                disabled={rowBusy}
                                 className={`${iconButton} bg-gray-700/40 text-gray-300 border-gray-600`}
                               >
                                 Keep
