@@ -4,6 +4,7 @@ import { ArrowTopRightOnSquareIcon, DocumentArrowDownIcon } from "@heroicons/rea
 import { formatCurrency, formatDate, formatDateTime } from "@/lib/utils";
 import { getPayUrl, getProjectUrl } from "@/lib/projectUrl";
 import { PROJECT_STATUS_CLASSES, PROJECT_STATUS_LABELS } from "@/lib/project/status";
+import { INVOICE_TYPE_LABELS } from "@/lib/invoice/labels";
 import CopyLinkButton from "@/components/admin/CopyLinkButton";
 import MilestoneManager from "@/components/admin/MilestoneManager";
 import ProjectStatusActions from "@/components/admin/ProjectStatusActions";
@@ -12,12 +13,6 @@ import type { AdminProjectDetail, AdminProjectPayment } from "@/types/project";
 const PAYMENT_LABELS: Record<AdminProjectPayment["kind"], string> = {
   deposit: "Deposit (50%)",
   final: "Final payment (50%)",
-};
-
-const INVOICE_LABELS: Record<AdminProjectDetail["invoices"][number]["type"], string> = {
-  initial: "Deposit invoice",
-  final: "Final invoice",
-  summary: "Project summary",
 };
 
 const card =
@@ -207,7 +202,7 @@ export default function ProjectDetail({ project }: { project: AdminProjectDetail
                 <li key={invoice.id} className="flex flex-wrap items-center justify-between gap-2 text-sm">
                   <div>
                     <p className="text-gray-200">
-                      <span className="font-mono text-gold">{invoice.invoiceNumber}</span> · {INVOICE_LABELS[invoice.type]}
+                      <span className="font-mono text-gold">{invoice.invoiceNumber}</span> · {INVOICE_TYPE_LABELS[invoice.type]}
                     </p>
                     <p className="text-xs text-gray-500">
                       {formatDate(invoice.issueDate)} · {formatCurrency(invoice.total)} · {invoice.status}

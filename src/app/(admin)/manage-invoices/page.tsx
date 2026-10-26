@@ -1,204 +1,50 @@
-import { prisma } from "@/lib/prisma";
+import { Suspense } from "react";
 import Link from "next/link";
-import { formatInvoiceDate } from "@/lib/invoice/types";
-import { formatCurrency } from "@/lib/utils";
+import InvoiceManagement from "@/components/admin/InvoiceManagement";
+import InvoiceManagementSkeleton from "@/components/skeletons/InvoiceManagementSkeleton";
+import { getInvoicesAction } from "@/actions/invoices/getInvoicesAction";
+import { getRevenueStatsAction } from "@/actions/stats/getRevenueStatsAction";
+import { genPageMetadata } from "@/utils/genPageMetadata";
 
-// Página de admin: datos siempre frescos, nunca prerenderizar en build
+export const metadata = genPageMetadata({
+  title: "Invoices",
+  description: "Invoices generated for RC Web Solutions LLC projects.",
+  pageRoute: "/manage-invoices",
+  noIndex: true,
+});
+
+// Always rendered per request (the actions read the session from headers)
 export const dynamic = "force-dynamic";
 
-export const metadata = {
-  title: "Manage Invoices - Admin",
-  description: "Manage all invoices",
-  robots: {
-    index: false,
-    follow: false,
-    nocache: true,
-    googleBot: {
-      index: false,
-      follow: false,
-      noimageindex: true,
-    },
-  },
-};
+// The admin layout already checks the session; the actions check it again.
+async function InvoiceList() {
+  const [invoicesResult, revenue] = await Promise.all([
+    getInvoicesAction(),
+    // Revenue is a nice-to-have on this page: a failure must not hide the list
+    getRevenueStatsAction().catch((error: unknown) => {
+      console.error("Error fetching revenue stats:", error);
+      return null;
+    }),
+  ]);
 
-async function getInvoices() {
-  const invoices = await prisma.invoice.findMany({
-    orderBy: {
-      createdAt: "desc",
-    },
-  });
+  if (!invoicesResult.success) {
+    return (
+      <div className="px-4 sm:px-6 lg:px-8 py-6 font-inter">
+        <p className="text-red-400">{invoicesResult.error}</p>
+        <Link href="/admin-dashboard" className="text-gold hover:underline">
+          Back to dashboard
+        </Link>
+      </div>
+    );
+  }
 
-  return invoices;
+  return <InvoiceManagement invoices={invoicesResult.data.invoices} revenue={revenue} />;
 }
 
-export default async function ManageInvoicesPage() {
-  const invoices = await getInvoices();
-
+export default function ManageInvoicesPage() {
   return (
-    <div className="min-h-screen bg-gray-900 text-white p-8 font-inter">
-      <div className="max-w-7xl mx-auto">
-        <div className="mb-8">
-          <h1 className="text-3xl text-gold mb-2 font-iceland">
-            Manage Invoices
-          </h1>
-          <p className="text-gray-400">
-            View and manage all generated invoices
-          </p>
-        </div>
-
-        {invoices.length === 0 ? (
-          <div className="bg-gray-800 rounded-lg p-8 text-center">
-            <p className="text-gray-400">No invoices found</p>
-          </div>
-        ) : (
-          <div className="bg-gray-800 rounded-lg overflow-hidden">
-            <div className="overflow-x-auto">
-              <table className="w-full">
-                <thead className="bg-gray-700">
-                  <tr>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">
-                      Invoice #
-                    </th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">
-                      Type
-                    </th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">
-                      Customer
-                    </th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">
-                      Project
-                    </th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">
-                      Amount
-                    </th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">
-                      Date
-                    </th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">
-                      Actions
-                    </th>
-                  </tr>
-                </thead>
-                <tbody className="divide-y divide-gray-700">
-                  {invoices.map((invoice) => (
-                    <tr key={invoice.id} className="hover:bg-gray-750">
-                      <td className="px-6 py-4 whitespace-nowrap">
-                        <div className="font-mono text-sm text-gold">
-                          {invoice.invoiceNumber}
-                        </div>
-                      </td>
-                      <td className="px-6 py-4 whitespace-nowrap">
-                        <span
-                          className={`inline-flex px-2 py-1 text-xs font-semibold rounded-full ${
-                            invoice.type === "initial"
-                              ? "bg-blue-900 text-blue-200"
-                              : invoice.type === "final"
-                                ? "bg-green-900 text-green-200"
-                                : "bg-purple-900 text-purple-200"
-                          }`}
-                        >
-                          {invoice.type.toUpperCase()}
-                        </span>
-                      </td>
-                      <td className="px-6 py-4">
-                        <div className="text-sm font-medium">
-                          {invoice.customerName}
-                        </div>
-                        <div className="text-xs text-gray-400">
-                          {invoice.customerEmail}
-                        </div>
-                      </td>
-                      <td className="px-6 py-4">
-                        <div className="text-sm">{invoice.projectCode}</div>
-                        <div className="text-xs text-gray-400">
-                          {invoice.planName}
-                        </div>
-                      </td>
-                      <td className="px-6 py-4 whitespace-nowrap">
-                        <div className="text-sm font-semibold text-green-400">
-                          {formatCurrency(invoice.total)}
-                        </div>
-                        {invoice.taxAmount > 0 && (
-                          <div className="text-xs text-gray-400">
-                            Tax: {formatCurrency(invoice.taxAmount)}
-                          </div>
-                        )}
-                      </td>
-                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-400">
-                        {formatInvoiceDate(invoice.issueDate)}
-                      </td>
-                      <td className="px-6 py-4 whitespace-nowrap text-sm">
-                        <div className="flex gap-2">
-                          {invoice.pdfUrl && (
-                            <>
-                              <a
-                                href={invoice.pdfUrl}
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                className="text-gold hover:text-gold/80 transition-colors"
-                              >
-                                View PDF
-                              </a>
-                              <span className="text-gray-600">|</span>
-                              <a
-                                href={`/api/invoice/${invoice.invoiceNumber}`}
-                                className="text-blue-400 hover:text-blue-300 transition-colors"
-                              >
-                                Download
-                              </a>
-                            </>
-                          )}
-                        </div>
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-          </div>
-        )}
-
-        {/* Stats */}
-        <div className="mt-8 grid grid-cols-1 md:grid-cols-4 gap-4">
-          <div className="bg-gray-800 rounded-lg p-6">
-            <div className="text-gray-400 text-sm mb-1">Total Invoices</div>
-            <div className="text-2xl font-bold text-white">
-              {invoices.length}
-            </div>
-          </div>
-          <div className="bg-gray-800 rounded-lg p-6">
-            <div className="text-gray-400 text-sm mb-1">Initial Payments</div>
-            <div className="text-2xl font-bold text-blue-400">
-              {invoices.filter((i) => i.type === "initial").length}
-            </div>
-          </div>
-          <div className="bg-gray-800 rounded-lg p-6">
-            <div className="text-gray-400 text-sm mb-1">Final Payments</div>
-            <div className="text-2xl font-bold text-green-400">
-              {invoices.filter((i) => i.type === "final").length}
-            </div>
-          </div>
-          <div className="bg-gray-800 rounded-lg p-6">
-            <div className="text-gray-400 text-sm mb-1">Total Revenue</div>
-            <div className="text-2xl font-bold text-gold">
-              {formatCurrency(
-                invoices
-                  .filter((i) => i.type === "summary")
-                  .reduce((sum, inv) => sum + inv.total, 0)
-              )}
-            </div>
-          </div>
-        </div>
-
-        <div className="mt-8">
-          <Link
-            href="/admin-dashboard"
-            className="text-gold hover:text-gold/80 transition-colors"
-          >
-            ← Back to Dashboard
-          </Link>
-        </div>
-      </div>
-    </div>
+    <Suspense fallback={<InvoiceManagementSkeleton />}>
+      <InvoiceList />
+    </Suspense>
   );
 }

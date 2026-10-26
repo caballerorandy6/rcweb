@@ -1,22 +1,18 @@
 import { getProjectStatsAction } from "@/actions/projects/getProjectStatsAction";
-import { formatNumber } from "@/lib/utils";
+import { formatCurrency, formatNumber } from "@/lib/utils";
 import { getRevenueStatsAction } from "@/actions/stats/getRevenueStatsAction";
 import { getNewLeadsAction } from "@/actions/stats/getNewLeadsAction";
 import { getTotalContactsAction } from "@/actions/contacts/getTotalContactsAction";
 import {
   CurrencyDollarIcon,
   BriefcaseIcon,
-  DocumentTextIcon,
+  BanknotesIcon,
   SparklesIcon,
   UserGroupIcon,
 } from "@heroicons/react/24/outline";
 
-function formatCurrency(amount: number): string {
-  if (amount >= 1000) {
-    return `$${(amount / 1000).toFixed(1)}k`;
-  }
-  return `$${amount}`;
-}
+// Whole dollars: the cards are narrow and cents add nothing here
+const money = (cents: number) => formatCurrency(cents, true);
 
 export default async function StatsGrid() {
   // Fetch all stats in parallel
@@ -36,10 +32,10 @@ export default async function StatsGrid() {
   const statsCards = [
     {
       label: "Revenue (Month)",
-      value: formatCurrency(revenueStats.thisMonthRevenue),
+      value: money(revenueStats.thisMonthRevenue),
       subtext:
         revenueStats.totalRevenue > 0
-          ? `Total: ${formatCurrency(revenueStats.totalRevenue)}`
+          ? `Total: ${money(revenueStats.totalRevenue)}`
           : null,
       icon: <CurrencyDollarIcon className="w-7 h-7 sm:w-8 sm:h-8 text-green-400" />,
     },
@@ -52,13 +48,14 @@ export default async function StatsGrid() {
       icon: <BriefcaseIcon className="w-7 h-7 sm:w-8 sm:h-8 text-blue-400" />,
     },
     {
-      label: "Pending Invoices",
+      // Charges still due (final payments of projects marked ready), not invoices
+      label: "Payments Due",
       value: revenueStats.pendingPayments,
       subtext:
         revenueStats.pendingAmount > 0
-          ? formatCurrency(revenueStats.pendingAmount)
+          ? money(revenueStats.pendingAmount)
           : null,
-      icon: <DocumentTextIcon className="w-7 h-7 sm:w-8 sm:h-8 text-yellow-400" />,
+      icon: <BanknotesIcon className="w-7 h-7 sm:w-8 sm:h-8 text-yellow-400" />,
     },
     {
       label: "New Leads",
@@ -78,9 +75,9 @@ export default async function StatsGrid() {
 
   return (
     <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3 sm:gap-4 lg:gap-5 font-inter">
-      {statsCards.map((card, i) => (
+      {statsCards.map((card) => (
         <div
-          key={i}
+          key={card.label}
           className="bg-gray-800/80 rounded-xl p-4 sm:p-5 border border-gray-700/50 hover:border-gray-600 transition-colors"
         >
           <div className="flex items-start justify-between gap-2">
@@ -91,11 +88,11 @@ export default async function StatsGrid() {
               <p className="text-2xl sm:text-3xl font-bold text-white mt-1">
                 {card.value}
               </p>
-              {card.subtext && (
+              {card.subtext ? (
                 <p className="text-[10px] sm:text-xs text-gray-500 mt-1 truncate">
                   {card.subtext}
                 </p>
-              )}
+              ) : null}
             </div>
             <div className="shrink-0">{card.icon}</div>
           </div>
