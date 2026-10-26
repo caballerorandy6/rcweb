@@ -3,13 +3,21 @@
 import { prisma } from "@/lib/prisma";
 import { requireAdmin } from "@/lib/authGuard";
 
+/** All amounts in cents, like `Payment.amount`; format with `formatCurrency()` */
 export interface RevenueStats {
-  totalRevenue: number; // In dollars
+  /** Every paid charge (deposits and final payments) */
+  totalRevenue: number;
+  /** Paid charges whose `paidAt` falls in the current calendar month */
   thisMonthRevenue: number;
-  pendingPayments: number; // Count of charges still due
-  pendingAmount: number; // Total pending in dollars
+  /** Charges still due: unpaid deposits plus final payments of projects marked ready */
+  pendingPayments: number;
+  pendingAmount: number;
 }
 
+/**
+ * The one revenue figure for the admin: the sum of paid `Payment` rows.
+ * The dashboard and the invoices page both read it, so they always agree.
+ */
 export async function getRevenueStatsAction(): Promise<RevenueStats> {
   const authCheck = await requireAdmin();
   if (!authCheck.authorized) {
@@ -21,23 +29,19 @@ export async function getRevenueStatsAction(): Promise<RevenueStats> {
 
   const [paid, paidThisMonth, pendingDeposits, pendingFinals] =
     await Promise.all([
-      // Total revenue from all paid charges
       prisma.payment.aggregate({
         where: { status: "paid" },
         _sum: { amount: true },
       }),
-      // This month's paid charges
       prisma.payment.aggregate({
         where: { status: "paid", paidAt: { gte: startOfMonth } },
         _sum: { amount: true },
       }),
-      // Deposits not paid yet
       prisma.payment.aggregate({
         where: { kind: "deposit", status: "pending" },
         _sum: { amount: true },
         _count: true,
       }),
-      // Final payments due (project ready, final not paid)
       prisma.payment.aggregate({
         where: {
           kind: "final",
@@ -49,16 +53,11 @@ export async function getRevenueStatsAction(): Promise<RevenueStats> {
       }),
     ]);
 
-  const totalRevenueCents = paid._sum.amount ?? 0;
-  const thisMonthRevenueCents = paidThisMonth._sum.amount ?? 0;
-  const pendingPayments = pendingDeposits._count + pendingFinals._count;
-  const pendingAmountCents =
-    (pendingDeposits._sum.amount ?? 0) + (pendingFinals._sum.amount ?? 0);
-
   return {
-    totalRevenue: Math.round(totalRevenueCents / 100),
-    thisMonthRevenue: Math.round(thisMonthRevenueCents / 100),
-    pendingPayments,
-    pendingAmount: Math.round(pendingAmountCents / 100),
+    totalRevenue: paid._sum.amount ?? 0,
+    thisMonthRevenue: paidThisMonth._sum.amount ?? 0,
+    pendingPayments: pendingDeposits._count + pendingFinals._count,
+    pendingAmount:
+      (pendingDeposits._sum.amount ?? 0) + (pendingFinals._sum.amount ?? 0),
   };
 }

@@ -367,8 +367,8 @@ export default function SmsDeliveryStats() {
                     ).map((msg) => (
                       <tr
                         key={msg.sid}
-                        className={`hover:bg-gray-750 ${
-                          selectedPhones.has(msg.to) ? "bg-gray-750" : ""
+                        className={`hover:bg-gray-700/30 ${
+                          selectedPhones.has(msg.to) ? "bg-gray-700/30" : ""
                         }`}
                       >
                         <td className="px-4 py-3">
