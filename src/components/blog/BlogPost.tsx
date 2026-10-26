@@ -12,6 +12,7 @@ import {
 } from "@heroicons/react/24/outline";
 import type { BlogPost as BlogPostType } from "@/lib/blog";
 import { formatDate } from "@/lib/utils";
+import { siteConfig } from "@/config/site";
 import BlogSubscriptionForm from "@/components/blog/BlogSubscriptionForm";
 
 interface BlogPostProps {
@@ -51,20 +52,18 @@ export default function BlogPost({ post }: BlogPostProps) {
         <article
           className="bg-linear-to-br from-gray-800/50 to-gray-900/50 rounded-2xl border border-gray-700/50 overflow-hidden animate-enter [animation-delay:100ms]"
         >
-          {/* Featured Image */}
-          {post.image && (
-            <div className="relative h-64 md:h-96 overflow-hidden bg-gray-800">
-              <Image
-                src={post.image}
-                alt={post.title}
-                fill
-                sizes="(max-width: 768px) 100vw, 896px"
-                className="object-cover"
-                priority
-              />
-              <div className="absolute inset-0 bg-linear-to-t from-gray-900 via-gray-900/50 to-transparent"></div>
-            </div>
-          )}
+          {/* Featured image: the post's own, or the brand card. Shown at its
+              native 1200×630 ratio so nothing is cropped. */}
+          <div className="relative aspect-[1200/630] overflow-hidden bg-[#080808] border-b border-gray-700/50">
+            <Image
+              src={post.image || siteConfig.defaultOgImg}
+              alt={post.image ? post.title : siteConfig.siteName}
+              fill
+              sizes="(max-width: 768px) 100vw, 896px"
+              className="object-cover"
+              priority
+            />
+          </div>
 
           <div className="p-8 md:p-12">
             {/* Tags */}
