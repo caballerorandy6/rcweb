@@ -98,7 +98,7 @@ export default function NewLeadNotificationEmail({
 
             <Hr style={hr} />
 
-            <Link href="https://rcweb.dev/contacts" style={button}>
+            <Link href="https://www.rcweb.dev/contacts" style={button}>
               View in Admin Panel
             </Link>
 

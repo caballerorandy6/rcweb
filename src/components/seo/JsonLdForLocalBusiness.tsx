@@ -78,6 +78,7 @@ export function JsonLdForLocalBusiness() {
       siteConfig.social.instagram,
       siteConfig.social.github,
       siteConfig.social.nextdoor,
+      siteConfig.social.tiktok,
     ],
   };
 

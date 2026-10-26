@@ -557,7 +557,7 @@ export async function POST(req: Request) {
         if (subscription && subscription.status === "active") {
           const resend = new Resend(process.env.RESEND_API_KEY!);
           const baseUrl =
-            process.env.NEXT_PUBLIC_BASE_URL || "https://rcweb.dev";
+            process.env.NEXT_PUBLIC_BASE_URL || "https://www.rcweb.dev";
 
           // Calculate renewal date (from invoice or current period end)
           const renewalDate = invoice.next_payment_attempt
@@ -607,7 +607,7 @@ export async function POST(req: Request) {
 
           const resend = new Resend(process.env.RESEND_API_KEY!);
           const baseUrl =
-            process.env.NEXT_PUBLIC_BASE_URL || "https://rcweb.dev";
+            process.env.NEXT_PUBLIC_BASE_URL || "https://www.rcweb.dev";
 
           // Email to customer with update payment link
           await sendSubscriptionPaymentFailed(resend, {

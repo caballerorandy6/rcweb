@@ -1215,7 +1215,7 @@ export default function PrivacyPolicy() {
                 <p>{COMPANY_ADDRESS}</p>
                 <p className="mt-2">
                   <a
-                    href="https://rcweb.dev"
+                    href="https://www.rcweb.dev"
                     className="text-gold hover:text-gold/80 transition-colors"
                   >
                     rcweb.dev

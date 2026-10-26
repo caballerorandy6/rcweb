@@ -232,7 +232,7 @@ export default function SendNewsletterCampaign({
               <li>Basic SEO setup</li>
             </ul>
             <div class="ideal-for">✨ Perfect for: New businesses, product launches, event promotion</div>
-            <center><a href="https://rcweb.dev/#pricing" class="cta-button">View Details 🚀</a></center>
+            <center><a href="https://www.rcweb.dev/#pricing" class="cta-button">View Details 🚀</a></center>
           </div>
           <div class="pricing-card" style="border-color: #ffa500; border-width: 3px">
             <div style="background: #ffa500; color: #000; display: inline-block; padding: 5px 15px; border-radius: 20px; font-size: 12px; font-weight: bold; margin-bottom: 10px;">⭐ MOST POPULAR</div>
@@ -252,7 +252,7 @@ export default function SendNewsletterCampaign({
               <li>30-day support</li>
             </ul>
             <div class="ideal-for">✨ Perfect for: Established businesses, professional services, portfolios</div>
-            <center><a href="https://rcweb.dev/#pricing" class="cta-button">Get Started! 🔥</a></center>
+            <center><a href="https://www.rcweb.dev/#pricing" class="cta-button">Get Started! 🔥</a></center>
           </div>
         </div>
         <div class="benefits-section">
@@ -266,7 +266,7 @@ export default function SendNewsletterCampaign({
         </div>
         <center style="margin: 40px 0">
           <p style="color: #d4d4d4; margin-bottom: 20px; font-size: 16px">Ready to transform your digital presence?</p>
-          <a href="https://rcweb.dev/#contact" class="cta-button">Schedule a Free Consultation 📅</a>
+          <a href="https://www.rcweb.dev/#contact" class="cta-button">Schedule a Free Consultation 📅</a>
           <p style="color: #b0b0b0; margin-top: 15px; font-size: 13px">Or call us directly: <a href="tel:+13463757534" style="color: #ffa500">+1 (346) 375-7534</a></p>
         </center>
       </div>
@@ -275,17 +275,16 @@ export default function SendNewsletterCampaign({
         <div class="social-links">
           <a href="https://www.linkedin.com/company/109039912/">LinkedIn</a> |
           <a href="https://www.facebook.com/rcwebsolutionsllc">Facebook</a> |
-          <a href="https://www.instagram.com/rcwebsolutionsllc">Instagram</a> |
-          <a href="https://x.com/RCWeb2025">X (Twitter)</a>
+          <a href="https://www.instagram.com/rcwebsolutionsllc">Instagram</a>
         </div>
         <div class="contact-info">
           Email: <a href="mailto:contactus@rcweb.dev">contactus@rcweb.dev</a><br />
-          Web: <a href="https://rcweb.dev">rcweb.dev</a>
+          Web: <a href="https://www.rcweb.dev">rcweb.dev</a>
         </div>
         <div class="footer-text" style="margin-top: 20px">
           © 2025 RC Web Solutions LLC. All rights reserved.<br />
-          <a href="https://rcweb.dev/privacy-policy" style="color: #888; font-size: 12px">Privacy Policy</a> |
-          <a href="https://rcweb.dev/terms-of-service" style="color: #888; font-size: 12px">Terms of Service</a>
+          <a href="https://www.rcweb.dev/privacy-policy" style="color: #888; font-size: 12px">Privacy Policy</a> |
+          <a href="https://www.rcweb.dev/terms-of-service" style="color: #888; font-size: 12px">Terms of Service</a>
         </div>
         <div style="margin-top: 20px; font-size: 12px; color: #666">Don't want to receive these emails? <a href="#" style="color: #888">Unsubscribe</a></div>
       </div>
@@ -481,7 +480,7 @@ export default function SendNewsletterCampaign({
                     Agenda una consulta GRATUITA de 30 minutos y descubre cómo un sitio web
                     puede transformar tu negocio.
                 </p>
-                <a href="https://rcweb.dev/#contact" class="cta-button">
+                <a href="https://www.rcweb.dev/#contact" class="cta-button">
                     📞 AGENDA TU CONSULTA GRATIS
                 </a>
                 <p style="color: #6B7280; margin-top: 20px; font-size: 13px;">
@@ -520,7 +519,7 @@ export default function SendNewsletterCampaign({
             <div class="footer-links">
                 <a href="tel:3463757534">📞 (346) 375-7534</a><br>
                 <a href="mailto:contactus@rcweb.dev">✉️ contactus@rcweb.dev</a><br>
-                <a href="https://rcweb.dev">🌐 rcweb.dev</a>
+                <a href="https://www.rcweb.dev">🌐 rcweb.dev</a>
             </div>
 
             <div style="margin-top: 25px; padding-top: 20px; border-top: 1px solid #4a5568;">
@@ -724,7 +723,7 @@ export default function SendNewsletterCampaign({
                     Schedule a FREE 30-minute consultation and discover how a website
                     can transform your business.
                 </p>
-                <a href="https://rcweb.dev/#contact" class="cta-button">
+                <a href="https://www.rcweb.dev/#contact" class="cta-button">
                     📞 SCHEDULE YOUR FREE CONSULTATION
                 </a>
                 <p style="color: #6B7280; margin-top: 20px; font-size: 13px;">
@@ -763,7 +762,7 @@ export default function SendNewsletterCampaign({
             <div class="footer-links">
                 <a href="tel:3463757534">📞 (346) 375-7534</a><br>
                 <a href="mailto:contactus@rcweb.dev">✉️ contactus@rcweb.dev</a><br>
-                <a href="https://rcweb.dev">🌐 rcweb.dev</a>
+                <a href="https://www.rcweb.dev">🌐 rcweb.dev</a>
             </div>
 
             <div style="margin-top: 25px; padding-top: 20px; border-top: 1px solid #4a5568;">

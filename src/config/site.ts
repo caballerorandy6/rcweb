@@ -15,6 +15,7 @@ export type SiteConfig = {
     facebook: string;
     instagram: string;
     nextdoor: string;
+    tiktok: string;
   };
 };
 
@@ -36,5 +37,6 @@ export const siteConfig: SiteConfig = {
     facebook: "https://www.facebook.com/rcwebsolutionsllc",
     instagram: "https://www.instagram.com/rcwebsolutionsllc/",
     nextdoor: "https://nextdoor.com/page/rc-web-solutions-llc/",
+    tiktok: "https://www.tiktok.com/@rcwebsolutionsllc",
   },
 };

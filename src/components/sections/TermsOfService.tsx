@@ -721,7 +721,7 @@ const TermsOfService = () => {
                   <p>
                     Website:{" "}
                     <a
-                      href="https://rcweb.dev"
+                      href="https://www.rcweb.dev"
                       className="text-gold hover:text-gold/80"
                     >
                       rcweb.dev

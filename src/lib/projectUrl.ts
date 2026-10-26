@@ -1,6 +1,6 @@
-import { COMPANY } from "@/lib/company";
+import { siteConfig } from "@/config/site";
 
-export const SITE_BASE_URL = process.env.NEXT_PUBLIC_BASE_URL || COMPANY.url;
+export const SITE_BASE_URL = process.env.NEXT_PUBLIC_BASE_URL || siteConfig.baseUrl;
 
 /** Public progress page for a project; the token is the only credential. */
 export function getProjectUrl(accessToken: string): string {
