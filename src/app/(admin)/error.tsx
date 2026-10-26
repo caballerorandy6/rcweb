@@ -16,7 +16,7 @@ export default function AdminError({
   }, [error]);
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-900 px-6">
+    <div className="min-h-[60vh] flex items-center justify-center px-6">
       <div className="text-center max-w-md">
         <div className="mb-8">
           <div className="w-20 h-20 mx-auto bg-red-500/10 rounded-full flex items-center justify-center mb-6">

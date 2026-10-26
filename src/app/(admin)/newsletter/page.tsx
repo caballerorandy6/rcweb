@@ -1,8 +1,6 @@
 import { Suspense } from "react";
 import Newsletter from "@/components/admin/SendNewsletterCampaign";
 import CampaignSkeleton from "@/components/skeletons/CampaignSkeleton";
-import { auth } from "@/lib/auth";
-import { redirect } from "next/navigation";
 import { genPageMetadata } from "@/utils/genPageMetadata";
 import {
   getNumberOfEligibleContactsAction,
@@ -16,6 +14,9 @@ export const metadata = genPageMetadata({
   pageRoute: "/newsletter",
   noIndex: true,
 });
+
+// Always rendered per request (the actions read the session from headers)
+export const dynamic = "force-dynamic";
 
 async function NewsletterContent() {
   const [contactsData, emailsData, campaignsData] = await Promise.all([
@@ -44,14 +45,7 @@ async function NewsletterContent() {
   );
 }
 
-export default async function NewsletterPage() {
-  const session = await auth();
-
-  // Doble verificación (el middleware ya lo hace, pero por seguridad)
-  if (!session || session.user.role !== "ADMIN") {
-    redirect("/admin/login");
-  }
-
+export default function NewsletterPage() {
   return (
     <Suspense fallback={<CampaignSkeleton />}>
       <NewsletterContent />

@@ -2,8 +2,6 @@ import { Suspense } from "react";
 import SendSmsCampaign from "@/components/admin/SendSmsCampaign";
 import SmsDeliveryStats from "@/components/admin/SmsDeliveryStats";
 import CampaignSkeleton from "@/components/skeletons/CampaignSkeleton";
-import { auth } from "@/lib/auth";
-import { redirect } from "next/navigation";
 import { genPageMetadata } from "@/utils/genPageMetadata";
 import { getSmsStatsAction } from "@/actions/stats/getSmsStatsAction";
 import SmsTabs from "@/components/admin/SmsTabs";
@@ -18,6 +16,9 @@ export const metadata = genPageMetadata({
   noIndex: true,
 });
 
+// Always rendered per request (the actions read the session from headers)
+export const dynamic = "force-dynamic";
+
 async function SMSContent() {
   const stats = await getSmsStatsAction();
   return (
@@ -28,14 +29,7 @@ async function SMSContent() {
   );
 }
 
-export default async function SMSPage() {
-  const session = await auth();
-
-  // Doble verificación (el middleware ya lo hace, pero por seguridad)
-  if (!session || session.user.role !== "ADMIN") {
-    redirect("/admin/login");
-  }
-
+export default function SMSPage() {
   return (
     <Suspense fallback={<CampaignSkeleton />}>
       <SMSContent />

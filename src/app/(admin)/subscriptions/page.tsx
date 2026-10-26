@@ -1,7 +1,5 @@
 import SubscriptionManagementWrapper from "@/components/wrappers/SubscriptionManagementWrapper";
 import SubscriptionManagementSkeleton from "@/components/skeletons/SubscriptionManagementSkeleton";
-import { auth } from "@/lib/auth";
-import { redirect } from "next/navigation";
 import { Suspense } from "react";
 import { genPageMetadata } from "@/utils/genPageMetadata";
 
@@ -12,13 +10,10 @@ export const metadata = genPageMetadata({
   noIndex: true,
 });
 
-export default async function SubscriptionsPage() {
-  const session = await auth();
+// Always rendered per request (the actions read the session from headers)
+export const dynamic = "force-dynamic";
 
-  if (!session || session.user.role !== "ADMIN") {
-    redirect("/admin/login");
-  }
-
+export default function SubscriptionsPage() {
   return (
     <div className="p-6 lg:p-8">
       <div className="mb-8">

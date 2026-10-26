@@ -1,85 +1,25 @@
 export default function CampaignSkeleton() {
   return (
-    <div className="min-h-screen bg-gray-900 pb-8 px-8 pt-24 sm:pt-32">
-      <div className="max-w-4xl mx-auto animate-pulse">
-        {/* Header skeleton */}
-        <div className="mb-8">
-          <div className="h-10 bg-gray-800/50 rounded-lg w-64 mb-4"></div>
+    <div className="max-w-4xl space-y-6 sm:space-y-8 px-4 sm:px-6 lg:px-8 py-4 sm:py-6 animate-pulse">
+      <div>
+        <div className="h-10 w-64 bg-gray-800 rounded-sm mb-3" />
+        <div className="h-5 w-80 max-w-full bg-gray-800 rounded-sm" />
+      </div>
 
-          {/* Stats card skeleton */}
-          <div className="bg-gray-800/50 p-4 rounded-lg mb-4">
-            <div className="h-5 bg-gray-700/50 rounded-sm w-3/4 mb-3"></div>
-            <div className="h-4 bg-gray-700/30 rounded-sm w-full"></div>
+      <div className="grid grid-cols-2 gap-4 sm:gap-6">
+        {[1, 2].map((i) => (
+          <div key={i} className="bg-gray-800/80 border border-gray-700/50 rounded-xl p-4 sm:p-6">
+            <div className="h-4 w-24 bg-gray-700 rounded-sm mb-3" />
+            <div className="h-8 w-16 bg-gray-700 rounded-sm" />
           </div>
-        </div>
+        ))}
+      </div>
 
-        {/* Form skeleton */}
-        <div className="space-y-6">
-          {/* Subject/First input */}
-          <div>
-            <div className="h-4 bg-gray-700/50 rounded-sm w-28 mb-2"></div>
-            <div className="h-12 bg-gray-800 rounded-lg border border-gray-700"></div>
-          </div>
-
-          {/* Second input (Image upload or templates) */}
-          <div>
-            <div className="h-4 bg-gray-700/50 rounded-sm w-32 mb-2"></div>
-            <div className="h-12 bg-gray-800 rounded-lg border border-gray-700"></div>
-          </div>
-
-          {/* Content/Message textarea */}
-          <div>
-            <div className="h-4 bg-gray-700/50 rounded-sm w-36 mb-2"></div>
-            <div className="h-48 bg-gray-800 rounded-lg border border-gray-700"></div>
-          </div>
-
-          {/* Test mode toggle */}
-          <div className="flex items-center space-x-3">
-            <div className="h-5 w-5 bg-gray-800 rounded-sm border border-gray-700"></div>
-            <div className="h-4 bg-gray-700/50 rounded-sm w-40"></div>
-          </div>
-
-          {/* Buttons */}
-          <div className="flex gap-4 flex-wrap">
-            <div className="flex-1 min-w-[200px] h-12 bg-gray-700/50 rounded-lg"></div>
-            <div className="h-12 w-40 bg-gray-700/30 rounded-lg"></div>
-            <div className="h-12 w-40 bg-gray-700/30 rounded-lg"></div>
-          </div>
-        </div>
-
-        {/* Campaign History / Info cards skeleton */}
-        <div className="mt-8">
-          <div className="h-12 bg-gray-800/50 rounded-lg mb-4"></div>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div className="p-4 bg-gray-800/30 rounded-lg">
-              <div className="h-5 bg-gray-700/50 rounded-sm w-32 mb-3"></div>
-              <div className="space-y-2">
-                <div className="h-3 bg-gray-700/30 rounded-sm w-full"></div>
-                <div className="h-3 bg-gray-700/30 rounded-sm w-5/6"></div>
-                <div className="h-3 bg-gray-700/30 rounded-sm w-4/6"></div>
-              </div>
-            </div>
-            <div className="p-4 bg-gray-800/30 rounded-lg">
-              <div className="h-5 bg-gray-700/50 rounded-sm w-32 mb-3"></div>
-              <div className="space-y-2">
-                <div className="h-3 bg-gray-700/30 rounded-sm w-full"></div>
-                <div className="h-3 bg-gray-700/30 rounded-sm w-5/6"></div>
-                <div className="h-3 bg-gray-700/30 rounded-sm w-4/6"></div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        {/* Tips section skeleton */}
-        <div className="mt-8 p-4 bg-gray-800/30 rounded-lg">
-          <div className="h-5 bg-gray-700/50 rounded-sm w-24 mb-3"></div>
-          <div className="space-y-2">
-            <div className="h-3 bg-gray-700/30 rounded-sm w-full"></div>
-            <div className="h-3 bg-gray-700/30 rounded-sm w-5/6"></div>
-            <div className="h-3 bg-gray-700/30 rounded-sm w-4/6"></div>
-            <div className="h-3 bg-gray-700/30 rounded-sm w-3/6"></div>
-          </div>
-        </div>
+      <div className="bg-gray-800/80 border border-gray-700/50 rounded-xl p-5 sm:p-6 space-y-4">
+        <div className="h-6 w-40 bg-gray-700 rounded-sm" />
+        <div className="h-10 w-full bg-gray-700 rounded-lg" />
+        <div className="h-32 w-full bg-gray-700 rounded-lg" />
+        <div className="h-10 w-32 bg-gray-700 rounded-lg" />
       </div>
     </div>
   );
