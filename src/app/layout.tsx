@@ -21,7 +21,10 @@ const iceland = localFont({
 });
 
 const inter = localFont({
-  src: "./fonts/InterVF-latin.woff2", // latin + latin-ext subset (85 KB vs 230 KB)
+  // Basic Latin + typographic punctuation, weights 400-700 only (the site
+  // uses normal/medium/semibold/bold): ~32 KB instead of the 85 KB
+  // latin-ext build. Regenerate with fontTools (see fonts/README.md).
+  src: "./fonts/InterVF-latin.woff2",
   variable: "--next-font-inter",
   display: "swap",
   preload: true,
