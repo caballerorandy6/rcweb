@@ -12,21 +12,17 @@ import FacebookPixel from "@/components/tracking/FacebookPixel";
 import UTMTracker from "@/components/tracking/UTMTracker";
 import { siteConfig } from "@/config/site";
 
-// No <link rel="preload"> for either font: headless Chrome (Lighthouse,
-// PageSpeed) delays the first paint while preloaded fonts are in flight and
-// only releases it ~2 s later, which showed up as the LCP of every page.
-// With the stylesheet inlined (next.config.ts) the @font-face rules are in
-// the HTML, so the fonts are still requested as soon as the document parses.
-// `optional` instead of `swap`: without the preload a late font would swap in
-// after first paint and re-wrap long paragraphs (CLS 0.1 on /about and
-// /services). With `optional` a font that misses the first render is kept for
-// the next page view instead of shifting this one.
+// Both fonts are preloaded on purpose: Chrome holds the first paint (bounded)
+// until a preloaded font arrives, so text renders in the real font straight
+// away, with no swap and no layout shift. Without the preload the font lands
+// after first paint: `swap` re-wraps long paragraphs (CLS 0.1 on /about and
+// /services) and `optional` keeps Arial for the whole visit.
 const iceland = localFont({
   src: "./fonts/Iceland.woff2",
   variable: "--next-font-iceland",
-  display: "optional",
+  display: "swap",
   weight: "400",
-  preload: false,
+  preload: true,
 });
 
 const inter = localFont({
@@ -35,8 +31,8 @@ const inter = localFont({
   // latin-ext build. Regenerate with fontTools (see fonts/README.md).
   src: "./fonts/InterVF-latin.woff2",
   variable: "--next-font-inter",
-  display: "optional",
-  preload: false,
+  display: "swap",
+  preload: true,
 });
 
 export const metadata: Metadata = {
