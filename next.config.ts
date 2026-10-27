@@ -229,6 +229,9 @@ const nextConfig: NextConfig = {
     serverActions: {
       bodySizeLimit: '2mb',
     },
+    // Tailwind's CSS is small (~6 KB gzip); shipping it inside the HTML
+    // removes the render-blocking stylesheet round trip before first paint
+    inlineCss: true,
   },
 };
 
