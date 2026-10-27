@@ -40,10 +40,16 @@ export function isTikTokConfigured(): boolean {
 
 /**
  * Secret used to encrypt the token cookie. A dedicated variable is preferred;
- * the NextAuth secret is accepted so the preview works with one less setting.
+ * the Auth.js secret (AUTH_SECRET on Vercel, NEXTAUTH_SECRET locally) is
+ * accepted so the preview works with one less setting.
  */
 export function getTikTokCookieSecret(): string | null {
-  return process.env.TIKTOK_COOKIE_SECRET || process.env.NEXTAUTH_SECRET || null;
+  return (
+    process.env.TIKTOK_COOKIE_SECRET ||
+    process.env.AUTH_SECRET ||
+    process.env.NEXTAUTH_SECRET ||
+    null
+  );
 }
 
 /**

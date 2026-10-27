@@ -52,7 +52,7 @@ export function sessionFromTokens(tokens: TikTokTokens, now = Date.now()): TikTo
 function requireSecret(): string {
   const secret = getTikTokCookieSecret();
   if (!secret) {
-    throw new Error("TIKTOK_COOKIE_SECRET (or NEXTAUTH_SECRET) is not set");
+    throw new Error("TIKTOK_COOKIE_SECRET (or AUTH_SECRET) is not set");
   }
   return secret;
 }
