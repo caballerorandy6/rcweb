@@ -12,12 +12,17 @@ import FacebookPixel from "@/components/tracking/FacebookPixel";
 import UTMTracker from "@/components/tracking/UTMTracker";
 import { siteConfig } from "@/config/site";
 
+// No <link rel="preload"> for either font: headless Chrome (Lighthouse,
+// PageSpeed) delays the first paint while preloaded fonts are in flight and
+// only releases it ~2 s later, which showed up as the LCP of every page.
+// With the stylesheet inlined (next.config.ts) the @font-face rules are in
+// the HTML, so the fonts are still requested as soon as the document parses.
 const iceland = localFont({
   src: "./fonts/Iceland.woff2",
   variable: "--next-font-iceland",
   display: "swap",
   weight: "400",
-  preload: true,
+  preload: false,
 });
 
 const inter = localFont({
@@ -27,7 +32,7 @@ const inter = localFont({
   src: "./fonts/InterVF-latin.woff2",
   variable: "--next-font-inter",
   display: "swap",
-  preload: true,
+  preload: false,
 });
 
 export const metadata: Metadata = {
