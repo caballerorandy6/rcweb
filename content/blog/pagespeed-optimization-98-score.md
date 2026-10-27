@@ -3,7 +3,6 @@ title: "From 50 to 98: How I Optimized rcweb.dev for Near-Perfect PageSpeed Scor
 description: "A detailed walkthrough of the performance optimizations that took rcweb.dev from a 50 to a 98 PageSpeed score. Learn about LCP optimization, lazy loading, font strategies, and more."
 date: "2026-03-01"
 author: "Randy Caballero"
-image: "/og-image.jpg"
 tags: ["Performance", "Web Development", "PageSpeed", "Next.js", "Optimization"]
 ---
 

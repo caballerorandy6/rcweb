@@ -3,7 +3,6 @@ title: "Preventing XSS Attacks in Next.js: A Practical Guide to Input Sanitizati
 description: "Learn how we implemented input sanitization in our Next.js application to prevent Cross-Site Scripting (XSS) attacks. Practical examples and code you can use in your own projects."
 date: "2025-12-22"
 author: "Randy Caballero"
-image: "/og-image.jpg"
 tags: ["Security", "XSS", "Next.js", "Web Development", "Sanitization", "Best Practices"]
 ---
 

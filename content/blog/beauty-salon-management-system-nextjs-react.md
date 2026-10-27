@@ -3,7 +3,6 @@ title: "Building a Beauty Salon Management System with Next.js 15 & React 19"
 description: "A comprehensive case study on building a full-stack beauty salon management platform featuring online booking with Stripe payments, admin dashboard, staff portal, e-commerce shop, and automated notifications using Next.js 15, React 19, TypeScript, and PostgreSQL."
 date: "2025-12-09"
 author: "Randy Caballero"
-image: "/og-image.jpg"
 tags: ["Next.js", "React 19", "TypeScript", "Full Stack Development", "Case Study", "SaaS", "Stripe"]
 ---
 

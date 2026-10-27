@@ -3,7 +3,6 @@ title: "How Tailwind CSS Transformed rcweb.dev: A Case Study in Modern Web Devel
 description: "Discover how Tailwind CSS helped RC Web Solutions create a more polished, maintainable, and professional website. Learn about the real impact of utility-first CSS on development speed, consistency, and user experience."
 date: "2025-01-23"
 author: "Randy Caballero"
-image: "/og-image.jpg"
 tags:
   [
     "Tailwind CSS",

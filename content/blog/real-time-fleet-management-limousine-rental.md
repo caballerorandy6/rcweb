@@ -3,7 +3,6 @@ title: "Real-Time Fleet Management: Building a Full-Stack Vehicle Management Sys
 description: "A comprehensive case study on building a production-ready fleet management system for premium transportation, featuring real-time CRUD operations, authentication, soft deletes, and modern UI with Next.js 14, Node.js, Express, and PostgreSQL."
 date: "2025-01-28"
 author: "Randy Caballero"
-image: "/og-image.jpg"
 tags: ["Fleet Management", "Full Stack Development", "Next.js", "Node.js", "Case Study"]
 ---
 

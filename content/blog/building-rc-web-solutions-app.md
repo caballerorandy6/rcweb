@@ -2,8 +2,8 @@
 title: "Building RC Web Solutions: From Simple Portfolio to Full-Featured Business Application"
 description: "A deep dive into the technologies, architecture, and evolution of rcweb.dev - transforming a portfolio site into a comprehensive business web application with payment processing, email campaigns, and advanced features."
 date: "2025-01-22"
+updated: "2026-10-18"
 author: "Randy Caballero"
-image: "/og-image.jpg"
 tags: ["Tech Stack", "Web Development", "Case Study", "Next.js"]
 ---
 
