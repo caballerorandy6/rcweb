@@ -440,3 +440,37 @@ model Invoice {
   @@index([status])
   @@index([issueDate])
 }
+
+// Google Search Console (etapa 6d): copia diaria de Search Analytics de
+// sc-domain:rcweb.dev. La API solo guarda 16 meses; aquí queda para siempre.
+// Se rellena con el cron /api/cron/search-console (ver src/lib/searchConsole/).
+model SearchConsoleDaily {
+  date        DateTime @id @db.Date
+  clicks      Int
+  impressions Int
+  ctr         Float
+  position    Float
+  syncedAt    DateTime @updatedAt
+}
+
+// Top consultas y páginas de cada día (hasta SEARCH_CONSOLE_ROW_LIMIT por
+// dimensión). Sumando por key sobre un rango se obtiene el top del periodo.
+model SearchConsoleTopItem {
+  id          String                 @id @default(uuid())
+  date        DateTime               @db.Date
+  dimension   SearchConsoleDimension
+  key         String
+  clicks      Int
+  impressions Int
+  ctr         Float
+  position    Float
+  syncedAt    DateTime               @updatedAt
+
+  @@unique([date, dimension, key])
+  @@index([dimension, date])
+}
+
+enum SearchConsoleDimension {
+  QUERY
+  PAGE
+}
