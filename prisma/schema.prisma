@@ -474,3 +474,31 @@ enum SearchConsoleDimension {
   QUERY
   PAGE
 }
+
+// Google Business Profile (etapa 6e): copia de las reseñas reales del perfil
+// «RC WEB Solutions LLC», traída por el cron /api/cron/google-reviews (ver
+// src/lib/googleReviews/). La home y el JSON-LD leen de aquí, nunca de la API.
+model GoogleReview {
+  id               String    @id // reviewId de Google
+  reviewerName     String
+  reviewerPhotoUrl String?
+  isAnonymous      Boolean   @default(false)
+  rating           Int // 1-5
+  comment          String? // null = reseña solo con estrellas
+  replyComment     String?
+  replyTime        DateTime?
+  createTime       DateTime
+  updateTime       DateTime
+  hidden           Boolean   @default(false) // el admin la oculta del sitio
+  syncedAt         DateTime  @updatedAt
+
+  @@index([hidden, createTime])
+}
+
+// Fila única (id = 1) con la nota media y el total que devuelve la API.
+model GoogleReviewSummary {
+  id               Int      @id @default(1)
+  averageRating    Float
+  totalReviewCount Int
+  syncedAt         DateTime @updatedAt
+}
