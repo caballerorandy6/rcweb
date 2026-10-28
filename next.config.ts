@@ -35,6 +35,8 @@ const cspDirectives: Record<string, string[]> = {
   ],
   "font-src": ["'self'", "https://fonts.gstatic.com"],
   "img-src": ["'self'", "data:", "blob:", "https:", "http:"],
+  // /tools/tiktok previsualiza el vídeo elegido con una URL blob: (URL.createObjectURL)
+  "media-src": ["'self'", "blob:"],
   "connect-src": [
     "'self'",
     // Google Analytics 4: GA4 envía hits a subdominios regionales

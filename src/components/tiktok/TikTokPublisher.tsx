@@ -199,6 +199,7 @@ function PublishForm({ creator }: { creator: TikTokCreatorInfo }) {
   const [file, setFile] = useState<File | null>(null);
   const [previewUrl, setPreviewUrl] = useState<string | null>(null);
   const [duration, setDuration] = useState<number | null>(null);
+  const [videoError, setVideoError] = useState<string | null>(null);
   const [fileError, setFileError] = useState<string | null>(null);
   const [phase, setPhase] = useState<Phase>({ kind: "idle" });
   const fileInputRef = useRef<HTMLInputElement>(null);
@@ -216,6 +217,7 @@ function PublishForm({ creator }: { creator: TikTokCreatorInfo }) {
     const next = event.target.files?.[0] ?? null;
     setFile(next);
     setDuration(null);
+    setVideoError(null);
     setFileError(null);
     setPreviewUrl(next ? URL.createObjectURL(next) : null);
     if (next && next.type && !ACCEPTED_TYPES.includes(next.type)) {
@@ -225,13 +227,25 @@ function PublishForm({ creator }: { creator: TikTokCreatorInfo }) {
 
   const onMetadata = (event: React.SyntheticEvent<HTMLVideoElement>) => {
     const seconds = event.currentTarget.duration;
-    if (!Number.isFinite(seconds)) return;
+    if (!Number.isFinite(seconds)) {
+      setVideoError("We couldn't read how long this video is. Try re-exporting it as MP4 (H.264).");
+      return;
+    }
+    setVideoError(null);
     setDuration(seconds);
     if (maxDuration && seconds > maxDuration) {
       setFileError(
         `This video is ${formatSeconds(seconds)} long; this account can post up to ${formatSeconds(maxDuration)}.`
       );
     }
+  };
+
+  const onVideoError = (event: React.SyntheticEvent<HTMLVideoElement>) => {
+    const error = event.currentTarget.error;
+    const detail = error?.message ? ` (${error.message})` : "";
+    setVideoError(
+      `The browser couldn't load this video, so its length can't be checked${detail}. Try another file or an MP4 (H.264) export.`
+    );
   };
 
   const onBrandedContentChange = (checked: boolean) => {
@@ -256,7 +270,11 @@ function PublishForm({ creator }: { creator: TikTokCreatorInfo }) {
         ? fileError
         : !privacy
           ? "Choose who can view this video."
-          : null;
+          : videoError
+            ? videoError
+            : duration === null
+              ? "Reading the video length…"
+              : null;
 
   const onSubmit = async (event: FormEvent) => {
     event.preventDefault();
@@ -366,6 +384,7 @@ function PublishForm({ creator }: { creator: TikTokCreatorInfo }) {
               controls
               playsInline
               onLoadedMetadata={onMetadata}
+              onError={onVideoError}
               className="max-h-96 w-full rounded-xl border border-gold/10 bg-black"
             />
             {file && (
@@ -379,6 +398,11 @@ function PublishForm({ creator }: { creator: TikTokCreatorInfo }) {
         {fileError && (
           <p role="alert" className="mt-2 text-sm text-red-300">
             {fileError}
+          </p>
+        )}
+        {!fileError && videoError && (
+          <p role="alert" className="mt-2 text-sm text-red-300">
+            {videoError}
           </p>
         )}
       </div>
