@@ -38,13 +38,32 @@ export class SearchConsoleApiError extends Error {
   }
 }
 
+/** Máximo de filas por petición que admite la API. */
+export const SEARCH_ANALYTICS_MAX_ROWS = 25_000;
+
 /**
- * Llama a searchAnalytics.query de la propiedad configurada.
+ * Llama a searchAnalytics.query de la propiedad configurada y pagina con
+ * `startRow` hasta traer todas las filas del rango.
  * https://developers.google.com/webmaster-tools/v1/searchanalytics/query
  */
 export async function querySearchAnalytics(
   config: SearchConsoleConfig,
   request: SearchAnalyticsRequest
+): Promise<SearchAnalyticsRow[]> {
+  const rowLimit = Math.min(request.rowLimit ?? SEARCH_ANALYTICS_MAX_ROWS, SEARCH_ANALYTICS_MAX_ROWS);
+  const rows: SearchAnalyticsRow[] = [];
+  let startRow = request.startRow ?? 0;
+  for (;;) {
+    const page = await querySearchAnalyticsPage(config, { ...request, rowLimit, startRow });
+    rows.push(...page);
+    if (page.length < rowLimit) return rows;
+    startRow += rowLimit;
+  }
+}
+
+async function querySearchAnalyticsPage(
+  config: SearchConsoleConfig,
+  request: Required<Pick<SearchAnalyticsRequest, "rowLimit" | "startRow">> & SearchAnalyticsRequest
 ): Promise<SearchAnalyticsRow[]> {
   const token = await getSearchConsoleAccessToken(config);
   const site = encodeURIComponent(config.SEARCH_CONSOLE_SITE_URL);
@@ -57,8 +76,8 @@ export async function querySearchAnalytics(
         startDate: request.startDate,
         endDate: request.endDate,
         dimensions: request.dimensions,
-        rowLimit: request.rowLimit ?? 1000,
-        startRow: request.startRow ?? 0,
+        rowLimit: request.rowLimit,
+        startRow: request.startRow,
         dataState: "final",
       }),
       cache: "no-store",

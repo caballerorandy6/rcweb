@@ -67,9 +67,10 @@ export function pickTopItems(
 }
 
 /**
- * Descarga los últimos SEARCH_CONSOLE_RESYNC_DAYS días de Search Console y los
- * guarda (upsert) en SearchConsoleDaily y SearchConsoleTopItem. Idempotente:
- * ejecutarla dos veces deja la base igual.
+ * Descarga los últimos `days` días de Search Console (7 en el cron, 56 desde
+ * el botón, 480 en el relleno inicial) y los guarda (upsert) en
+ * SearchConsoleDaily y SearchConsoleTopItem. Idempotente: ejecutarla dos
+ * veces deja la base igual.
  */
 export async function syncSearchConsole(
   days = SEARCH_CONSOLE_RESYNC_DAYS,
@@ -91,8 +92,8 @@ export async function syncSearchConsole(
     // Tres peticiones independientes: totales por día, consultas y páginas.
     const [daily, byQuery, byPage] = await Promise.all([
       querySearchAnalytics(config, { ...range, dimensions: ["date"], rowLimit: days }),
-      querySearchAnalytics(config, { ...range, dimensions: ["date", "query"], rowLimit: 5000 }),
-      querySearchAnalytics(config, { ...range, dimensions: ["date", "page"], rowLimit: 5000 }),
+      querySearchAnalytics(config, { ...range, dimensions: ["date", "query"] }),
+      querySearchAnalytics(config, { ...range, dimensions: ["date", "page"] }),
     ]);
 
     const queries = pickTopItems(byQuery, "QUERY", SEARCH_CONSOLE_ROW_LIMIT);

@@ -36,5 +36,17 @@ export function getSearchConsoleConfig(): SearchConsoleConfig | null {
 /** Filas máximas por dimensión y día que guardamos (la API admite hasta 25 000). */
 export const SEARCH_CONSOLE_ROW_LIMIT = 100;
 
-/** Días que cada sincronización vuelve a pedir: Google publica con 2-3 días de retraso y corrige. */
+/** Días que el cron diario vuelve a pedir: Google publica con 2-3 días de retraso y corrige. */
 export const SEARCH_CONSOLE_RESYNC_DAYS = 7;
+
+/** Días que trae el botón «Sync now»: la ventana del dashboard y la anterior. */
+export const SEARCH_CONSOLE_MANUAL_SYNC_DAYS = 56;
+
+/** Relleno inicial: todo lo que Search Console conserva (16 meses). */
+export const SEARCH_CONSOLE_BACKFILL_DAYS = 480;
+
+/** Máximo de días admitido en una sincronización (validación de la acción). */
+export const SEARCH_CONSOLE_MAX_SYNC_DAYS = SEARCH_CONSOLE_BACKFILL_DAYS;
+
+/** Ventana de comparación del dashboard (días). */
+export const SEARCH_PERFORMANCE_WINDOW = 28;

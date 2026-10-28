@@ -12,6 +12,8 @@ import LeadsByUTM from "@/components/admin/LeadsByUTM";
 import LeadsByUTMSkeleton from "@/components/skeletons/LeadsByUTMSkeleton";
 import RevenueAttribution from "@/components/admin/RevenueAttribution";
 import RevenueAttributionSkeleton from "@/components/skeletons/RevenueAttributionSkeleton";
+import SearchPerformance from "@/components/admin/SearchPerformance";
+import SearchPerformanceSkeleton from "@/components/skeletons/SearchPerformanceSkeleton";
 
 export default async function AdminDashboard() {
   const session = await auth();
@@ -49,6 +51,11 @@ export default async function AdminDashboard() {
       {/* Lead Trends Chart */}
       <Suspense fallback={<LeadsTrendChartSkeleton />}>
         <LeadsTrendChartWrapper />
+      </Suspense>
+
+      {/* Google Search Console */}
+      <Suspense fallback={<SearchPerformanceSkeleton />}>
+        <SearchPerformance />
       </Suspense>
 
       {/* Leads by Source */}
