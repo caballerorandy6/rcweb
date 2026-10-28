@@ -4,6 +4,10 @@
     {
       "path": "/api/cron/search-console",
       "schedule": "0 10 * * *"
+    },
+    {
+      "path": "/api/cron/google-reviews",
+      "schedule": "0 10 * * 1"
     }
   ]
 }

@@ -1,21 +1,12 @@
-import { timingSafeEqual } from "node:crypto";
 import { NextResponse } from "next/server";
+import { isCronRequestAuthorized } from "@/lib/cronAuth";
 import { syncSearchConsole } from "@/lib/searchConsole/sync";
 
-// Cron diario de Vercel (vercel.json). Vercel llama con
-// `Authorization: Bearer ${CRON_SECRET}`; cualquier otra llamada recibe 401.
+// Cron diario de Vercel (vercel.json).
 export const dynamic = "force-dynamic";
 
-function isAuthorized(request: Request): boolean {
-  const secret = process.env.CRON_SECRET;
-  if (!secret) return false;
-  const received = Buffer.from(request.headers.get("authorization") ?? "");
-  const expected = Buffer.from(`Bearer ${secret}`);
-  return received.length === expected.length && timingSafeEqual(received, expected);
-}
-
 export async function GET(request: Request) {
-  if (!isAuthorized(request)) {
+  if (!isCronRequestAuthorized(request)) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
 
