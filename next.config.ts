@@ -65,8 +65,10 @@ const cspDirectives: Record<string, string[]> = {
     "https://*.vercel-analytics.com",
     "https://calendly.com",
     // TikTok Content Posting API: /tools/tiktok sube el video por trozos
-    // directamente al upload_url (open-upload.tiktokapis.com)
+    // directamente al upload_url (open-upload.tiktokapis.com, o .us para
+    // cuentas de EE. UU.)
     "https://*.tiktokapis.com",
+    "https://*.tiktokapis.us",
   ],
   "frame-src": [
     "'self'",
