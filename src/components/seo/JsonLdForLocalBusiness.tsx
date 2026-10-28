@@ -1,15 +1,21 @@
 import { siteConfig } from "@/config/site";
 import { offers } from "@/lib/data";
 import { offerToSchemaOffer } from "@/lib/seo/offerJsonLd";
+import { getPublicGoogleReviews } from "@/lib/googleReviews/queries";
 
 /** Stable identifier other blocks (WebSite, Service) point at instead of repeating the company */
 export const ORGANIZATION_ID = `${siteConfig.baseUrl}/#organization`;
 
 /**
  * The company as a single entity. ProfessionalService is a LocalBusiness,
- * which is an Organization, so one block covers all three.
+ * which is an Organization, so one block covers all three. The rating and
+ * the reviews come from the Business Profile copy in the database (weekly
+ * sync); Google treats them as self-serving (no stars in the SERP), but AI
+ * engines and other consumers still read them.
  */
-export function JsonLdForLocalBusiness() {
+export async function JsonLdForLocalBusiness() {
+  const google = await getPublicGoogleReviews();
+
   const jsonLd = {
     "@context": "https://schema.org",
     "@type": "ProfessionalService",
@@ -94,6 +100,27 @@ export function JsonLdForLocalBusiness() {
       siteConfig.social.nextdoor,
       siteConfig.social.tiktok,
     ],
+    ...(google && {
+      aggregateRating: {
+        "@type": "AggregateRating",
+        ratingValue: google.averageRating,
+        reviewCount: google.totalReviewCount,
+        bestRating: 5,
+        worstRating: 1,
+      },
+      review: google.reviews.map((review) => ({
+        "@type": "Review",
+        author: { "@type": "Person", name: review.author },
+        datePublished: review.createTime.toISOString().slice(0, 10),
+        reviewBody: review.text,
+        reviewRating: {
+          "@type": "Rating",
+          ratingValue: review.rating,
+          bestRating: 5,
+          worstRating: 1,
+        },
+      })),
+    }),
   };
 
   return (

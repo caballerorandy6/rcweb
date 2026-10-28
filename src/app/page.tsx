@@ -32,6 +32,11 @@ export const metadata: Metadata = {
   },
 };
 
+// La home lee las reseñas de Google de la base de datos: el sync semanal la
+// regenera con revalidatePath("/") y, como red, Next la vuelve a generar cada
+// 7 días (GOOGLE_REVIEWS_REFRESH_DAYS; aquí debe ser un literal).
+export const revalidate = 604800;
+
 export default function Home() {
   return (
     <div>
