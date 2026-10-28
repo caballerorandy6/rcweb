@@ -4,6 +4,7 @@ import {
   getRequestOrigin,
   getTikTokCredentials,
   getTikTokRedirectUri,
+  isTikTokConfigured,
   TIKTOK_AUTHORIZE_URL,
   TIKTOK_SCOPES,
   TIKTOK_TOOL_PATH,
@@ -17,7 +18,7 @@ import { setStateCookie } from "@/lib/tiktok/session";
 export async function GET(request: Request) {
   const origin = getRequestOrigin(request);
   const credentials = getTikTokCredentials();
-  if (!credentials) {
+  if (!credentials || !isTikTokConfigured()) {
     return NextResponse.redirect(`${origin}${TIKTOK_TOOL_PATH}?error=not_configured`);
   }
 

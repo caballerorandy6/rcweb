@@ -34,8 +34,9 @@ export function getTikTokCredentials(): TikTokCredentials | null {
   return { clientKey, clientSecret };
 }
 
+/** Credentials plus the cookie key: without either the flow cannot run. */
 export function isTikTokConfigured(): boolean {
-  return getTikTokCredentials() !== null;
+  return getTikTokCredentials() !== null && getTikTokCookieSecret() !== null;
 }
 
 /**
