@@ -14,6 +14,8 @@ import RevenueAttribution from "@/components/admin/RevenueAttribution";
 import RevenueAttributionSkeleton from "@/components/skeletons/RevenueAttributionSkeleton";
 import SearchPerformance from "@/components/admin/SearchPerformance";
 import SearchPerformanceSkeleton from "@/components/skeletons/SearchPerformanceSkeleton";
+import GoogleReviews from "@/components/admin/GoogleReviews";
+import GoogleReviewsSkeleton from "@/components/skeletons/GoogleReviewsSkeleton";
 
 export default async function AdminDashboard() {
   const session = await auth();
@@ -56,6 +58,11 @@ export default async function AdminDashboard() {
       {/* Google Search Console */}
       <Suspense fallback={<SearchPerformanceSkeleton />}>
         <SearchPerformance />
+      </Suspense>
+
+      {/* Google Business Profile reviews */}
+      <Suspense fallback={<GoogleReviewsSkeleton />}>
+        <GoogleReviews />
       </Suspense>
 
       {/* Leads by Source */}
