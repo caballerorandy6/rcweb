@@ -43,6 +43,7 @@ export default function robots(): MetadataRoute.Robots {
           "/sms",
           "/manage-invoices",
           "/api/invoice/*",
+          "/api/cron/*",
           "/final-payment",
           "/payment-complete",
           "/payment-success",
