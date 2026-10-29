@@ -33,9 +33,9 @@ export default async function LeadsByUTM() {
       <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-3 mb-5">
         <div className="flex items-center gap-3">
           <LinkIcon className="w-5 h-5 sm:w-6 sm:h-6 text-gold shrink-0" />
-          <h2 className="text-xl sm:text-2xl text-white font-iceland">
+          <h3 className="text-xl sm:text-2xl text-white font-iceland">
             UTM Tracking
-          </h2>
+          </h3>
         </div>
         <div className="sm:ml-auto flex gap-3 text-sm font-inter">
           <span className="text-gray-400">
@@ -53,7 +53,7 @@ export default async function LeadsByUTM() {
           <div>
             <div className="flex items-center gap-2 mb-3">
               <GlobeAltIcon className="w-4 h-4 text-gray-400" />
-              <h3 className="text-sm font-semibold text-gray-300 font-inter">By Source</h3>
+              <h4 className="text-sm font-semibold text-gray-300 font-inter">By Source</h4>
             </div>
             <div className="space-y-2.5">
               {data.bySources.map((source) => {
@@ -95,7 +95,7 @@ export default async function LeadsByUTM() {
           <div>
             <div className="flex items-center gap-2 mb-3">
               <MegaphoneIcon className="w-4 h-4 text-gray-400" />
-              <h3 className="text-sm font-semibold text-gray-300 font-inter">Top Campaigns</h3>
+              <h4 className="text-sm font-semibold text-gray-300 font-inter">Top Campaigns</h4>
             </div>
             <div className="space-y-2">
               {data.byCampaigns.map((campaign, idx) => (

@@ -153,15 +153,15 @@ export default function AdminSidebar() {
           <button
             type="button"
             onClick={() => setSidebarOpen((open) => !open)}
-            className="inline-flex items-center justify-center p-2 -m-2 rounded-md text-white/80 hover:text-gold transition-colors"
+            className="inline-flex items-center justify-center p-2.5 -m-2.5 rounded-md text-white/80 hover:text-gold transition-colors"
             aria-label={sidebarOpen ? "Close menu" : "Open menu"}
             aria-expanded={sidebarOpen}
             aria-controls={SIDEBAR_ID}
           >
             {sidebarOpen ? (
-              <XMarkIcon className="w-6 h-6" />
+              <XMarkIcon className="w-6 h-6" aria-hidden="true" />
             ) : (
-              <Bars3Icon className="w-6 h-6" />
+              <Bars3Icon className="w-6 h-6" aria-hidden="true" />
             )}
           </button>
         </div>
@@ -180,7 +180,7 @@ export default function AdminSidebar() {
       <aside
         id={SIDEBAR_ID}
         aria-label="Admin"
-        className={`fixed w-64 bg-gray-900 z-50 transform transition-transform duration-300 ease-in-out
+        className={`fixed w-64 bg-gray-900 z-50 transform transition-transform motion-reduce:transition-none duration-300 ease-in-out
           top-12 h-[calc(100vh-3rem)] right-0 border-l border-gray-800
           lg:top-0 lg:h-screen lg:left-0 lg:right-auto lg:border-l-0 lg:border-r lg:translate-x-0 ${
             sidebarOpen ? "translate-x-0" : "translate-x-full lg:translate-x-0"
@@ -219,7 +219,7 @@ export default function AdminSidebar() {
                               : "text-gray-300 hover:bg-gray-800 hover:text-white border border-transparent"
                           }`}
                         >
-                          <Icon className="h-4 w-4 shrink-0" />
+                          <Icon className="h-4 w-4 shrink-0" aria-hidden="true" />
                           <span>{item.name}</span>
                         </Link>
                       </li>
@@ -235,7 +235,7 @@ export default function AdminSidebar() {
             <details className="group">
               <summary className="flex items-center justify-between px-3 py-2 cursor-pointer list-none text-[10px] font-semibold text-gray-500 uppercase tracking-wider font-inter hover:text-gray-400 transition-colors">
                 <span>Public site</span>
-                <ChevronDownIcon className="w-3 h-3 transition-transform group-open:rotate-180" />
+                <ChevronDownIcon className="w-3 h-3 transition-transform motion-reduce:transition-none group-open:rotate-180" aria-hidden="true" />
               </summary>
               <ul className="space-y-1 mt-2">
                 {publicLinks.map((item) => {
@@ -247,9 +247,9 @@ export default function AdminSidebar() {
                         onClick={closeSidebar}
                         className="flex items-center gap-3 px-3 py-2 rounded-lg font-inter text-sm text-gray-400 hover:bg-gray-800 hover:text-gold transition-colors duration-200"
                       >
-                        <Icon className="h-4 w-4 shrink-0" />
+                        <Icon className="h-4 w-4 shrink-0" aria-hidden="true" />
                         <span className="flex-1">{item.name}</span>
-                        <ArrowTopRightOnSquareIcon className="h-3 w-3 text-gray-600" />
+                        <ArrowTopRightOnSquareIcon className="h-3 w-3 text-gray-600" aria-hidden="true" />
                       </Link>
                     </li>
                   );

@@ -45,9 +45,9 @@ export default async function RevenueAttribution() {
       <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-3 mb-5">
         <div className="flex items-center gap-3">
           <CurrencyDollarIcon className="w-5 h-5 sm:w-6 sm:h-6 text-gold shrink-0" />
-          <h2 className="text-xl sm:text-2xl text-white font-iceland">
+          <h3 className="text-xl sm:text-2xl text-white font-iceland">
             Revenue Attribution
-          </h2>
+          </h3>
         </div>
         <div className="sm:ml-auto text-sm font-inter">
           <span className="text-gray-400">Total: </span>
@@ -63,7 +63,7 @@ export default async function RevenueAttribution() {
           <div>
             <div className="flex items-center gap-2 mb-3">
               <ChartPieIcon className="w-4 h-4 text-gray-400" />
-              <h3 className="text-sm font-semibold text-gray-300 font-inter">By Lead Source</h3>
+              <h4 className="text-sm font-semibold text-gray-300 font-inter">By Lead Source</h4>
             </div>
             <div className="space-y-2.5">
               {data.byLeadSource.map((source) => {
@@ -104,7 +104,7 @@ export default async function RevenueAttribution() {
           <div>
             <div className="flex items-center gap-2 mb-3">
               <CurrencyDollarIcon className="w-4 h-4 text-gray-400" />
-              <h3 className="text-sm font-semibold text-gray-300 font-inter">By Campaign Source</h3>
+              <h4 className="text-sm font-semibold text-gray-300 font-inter">By Campaign Source</h4>
             </div>
             {data.byUTMSource.length > 0 ? (
               <div className="space-y-2">

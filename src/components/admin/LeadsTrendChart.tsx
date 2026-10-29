@@ -48,9 +48,9 @@ export default function LeadsTrendChart({
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
         <div className="flex items-center gap-3">
           <ChartBarIcon className="w-5 h-5 sm:w-6 sm:h-6 text-gold shrink-0" />
-          <h2 className="text-xl sm:text-2xl text-white font-iceland">
+          <h3 className="text-xl sm:text-2xl text-white font-iceland">
             Lead Trends
-          </h2>
+          </h3>
         </div>
 
         {/* Period Selector */}
