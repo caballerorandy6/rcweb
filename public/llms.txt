@@ -67,7 +67,7 @@ Next.js, React, TypeScript, Tailwind CSS, Node.js, PostgreSQL, Prisma, Docker, A
 
 ### Food & Events
 
-- [Dulce Antojo Snack Carts](https://dulce-antojo.vercel.app/) — Conversion-optimized landing page for a Houston snack cart rental business with 13+ service options. [Case study](https://www.rcweb.dev/case-study/dulce-antojo)
+- [Dulce Antojo Snack Carts](https://dulce-antojo-snack-carts.vercel.app/) — Conversion-optimized landing page for a Houston snack cart rental business with 13+ service options. [Case study](https://www.rcweb.dev/case-study/dulce-antojo)
 
 ### Beauty & Wellness
 

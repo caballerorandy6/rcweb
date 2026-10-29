@@ -31,7 +31,7 @@ A single-page website focused on one goal — usually getting phone calls or for
 
 **Best for:** New businesses, service promotions, event pages
 
-**Real example:** I built a landing page for [Dulce Antojo Snack Carts](https://dulce-antojo.vercel.app/), a Houston-based event catering business. The page focuses on booking conversions with clear service showcases and an interactive contact form.
+**Real example:** I built a landing page for [Dulce Antojo Snack Carts](https://dulce-antojo-snack-carts.vercel.app/), a Houston-based event catering business. The page focuses on booking conversions with clear service showcases and an interactive contact form.
 
 ---
 
