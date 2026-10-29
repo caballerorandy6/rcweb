@@ -92,14 +92,8 @@ export async function JsonLdForLocalBusiness() {
       name: siteConfig.author.name,
       jobTitle: "Full-Stack Developer",
     },
-    sameAs: [
-      siteConfig.social.linkedin,
-      siteConfig.social.facebook,
-      siteConfig.social.instagram,
-      siteConfig.social.github,
-      siteConfig.social.nextdoor,
-      siteConfig.social.tiktok,
-    ],
+    // Every public profile in siteConfig.social; add new ones there, not here
+    sameAs: Object.values(siteConfig.social),
     ...(google && {
       aggregateRating: {
         "@type": "AggregateRating",

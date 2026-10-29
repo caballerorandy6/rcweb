@@ -487,6 +487,89 @@ export default function PrivacyPolicy() {
                 </p>
               </section>
 
+              {/* YouTube API Services (required by the YouTube API Services audit) */}
+              <section id="youtube" className="scroll-mt-28">
+                <h2>
+                  YouTube API Services
+                </h2>
+                <p>
+                  RC Web Solutions LLC publishes its own videos on its YouTube
+                  channel through YouTube API Services. By using Our website
+                  You acknowledge that We use YouTube API Services, which are
+                  subject to the{" "}
+                  <a
+                    href="https://www.youtube.com/t/terms"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-gold hover:text-gold/80 underline"
+                  >
+                    YouTube Terms of Service
+                  </a>
+                  . Google&apos;s handling of data is described in the{" "}
+                  <a
+                    href="https://policies.google.com/privacy"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-gold hover:text-gold/80 underline"
+                  >
+                    Google Privacy Policy
+                  </a>
+                  .
+                </p>
+
+                <h3>
+                  What YouTube data We use and store
+                </h3>
+                <ul>
+                  <li>
+                    <strong>Our own channel only:</strong>{" "}
+                    the YouTube Data API is used to upload videos to Our channel
+                    with Our own Google account. We do not request, collect or
+                    store video, channel or account data of any other YouTube
+                    user, and no visitor of this website signs in with YouTube.
+                  </li>
+                  <li>
+                    <strong>OAuth tokens:</strong>{" "}
+                    the access and refresh tokens Google issues for Our channel
+                    are kept as protected environment variables with Our hosting
+                    provider and are used only to upload videos.
+                  </li>
+                  <li>
+                    <strong>Upload records:</strong>{" "}
+                    We keep the YouTube video ID of each video We upload so the
+                    same video is not published twice. We do not store viewer
+                    data, comments or analytics.
+                  </li>
+                </ul>
+
+                <h3>
+                  Revoking access and deleting stored data
+                </h3>
+                <p>
+                  The authorization granted to Our application can be revoked at
+                  any time from the Google security settings page:{" "}
+                  <a
+                    href="https://security.google.com/settings/security/permissions"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-gold hover:text-gold/80 underline"
+                  >
+                    https://security.google.com/settings/security/permissions
+                  </a>
+                  . Revoking it stops any further use of the YouTube API by Our
+                  application.
+                </p>
+                <p>
+                  To ask Us to delete the stored tokens or upload records, email{" "}
+                  <a href="mailto:contactus@rcweb.dev" className="text-gold hover:text-gold/80 underline">
+                    contactus@rcweb.dev
+                  </a>{" "}
+                  with the subject &ldquo;YouTube data deletion&rdquo;. We delete
+                  the data within <strong>30 days</strong> of the request and
+                  confirm by email.
+                </p>
+              </section>
+
               {/* Subscription Data */}
               <section>
                 <h2>
