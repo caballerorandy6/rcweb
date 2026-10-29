@@ -9,6 +9,8 @@ import {
 } from "@heroicons/react/24/outline";
 import Button from "@/components/ui/Button";
 import { ADMIN_LOGIN_ROUTE, ADMIN_ROUTES } from "@/config/adminRoutes";
+import NeedsAttention from "@/components/admin/NeedsAttention";
+import NeedsAttentionSkeleton from "@/components/skeletons/NeedsAttentionSkeleton";
 import StatsGrid from "@/components/admin/StatsGrid";
 import StatsGridSkeleton from "@/components/skeletons/StatsGridSkeleton";
 import LeadsBySource from "@/components/admin/LeadsBySource";
@@ -98,6 +100,9 @@ export default async function AdminDashboard() {
         title="Business at a glance"
         description="Where things stand right now"
       >
+        <Suspense fallback={<NeedsAttentionSkeleton />}>
+          <NeedsAttention />
+        </Suspense>
         <Suspense fallback={<StatsGridSkeleton />}>
           <StatsGrid />
         </Suspense>

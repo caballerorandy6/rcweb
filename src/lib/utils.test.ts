@@ -1,7 +1,10 @@
 import { describe, expect, it } from "vitest";
 import {
+  daysUntil,
   formatCurrency,
   formatDate,
+  formatDaysAgo,
+  formatDeadline,
   formatFileSize,
   generateProjectCode,
   validateUSPhoneNumber,
@@ -59,5 +62,30 @@ describe("formatFileSize", () => {
     expect(formatFileSize(512)).toBe("512 B");
     expect(formatFileSize(2048)).toBe("2.00 KB");
     expect(formatFileSize(3 * 1024 * 1024)).toBe("3.00 MB");
+  });
+});
+
+describe("relative days", () => {
+  const now = new Date("2026-10-28T12:00:00Z");
+  const at = (days: number) => new Date(now.getTime() + days * 24 * 60 * 60 * 1000);
+
+  it("counts whole days until a date", () => {
+    expect(daysUntil(at(3), now)).toBe(3);
+    expect(daysUntil(at(-2), now)).toBe(-2);
+    expect(daysUntil(at(0.2), now)).toBe(0);
+  });
+
+  it("describes how long ago something happened", () => {
+    expect(formatDaysAgo(at(0), now)).toBe("today");
+    expect(formatDaysAgo(at(-1), now)).toBe("yesterday");
+    expect(formatDaysAgo(at(-5), now)).toBe("5 days ago");
+  });
+
+  it("describes a deadline on both sides of today", () => {
+    expect(formatDeadline(at(0), now)).toBe("due today");
+    expect(formatDeadline(at(1), now)).toBe("due tomorrow");
+    expect(formatDeadline(at(7), now)).toBe("due in 7 days");
+    expect(formatDeadline(at(-1), now)).toBe("1 day overdue");
+    expect(formatDeadline(at(-4), now)).toBe("4 days overdue");
   });
 });
