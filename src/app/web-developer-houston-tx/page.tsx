@@ -115,7 +115,7 @@ const caseStudies = [
     name: "Dulce Antojo Snack Carts",
     result: "Conversion-optimized landing page for event catering bookings",
     industry: "Food & Events",
-    url: "https://www.dulcesantojosnackcarts.com/",
+    url: "https://dulce-antojo.vercel.app/",
   },
 ];
 

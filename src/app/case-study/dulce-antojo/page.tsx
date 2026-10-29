@@ -26,7 +26,7 @@ export default function DulceAntojoCaseStudyPage() {
           nameHighlight: "Snack Carts",
           subtitle:
             "How I took a Houston snack cart rental business from Instagram-only to an official website with Stripe card payments, so they could book companies and organizations, not just individuals.",
-          siteUrl: "https://www.dulcesantojosnackcarts.com/",
+          siteUrl: "https://dulce-antojo.vercel.app/",
           image: "/dulce-antojo.avif",
           imageAlt: "Dulce Antojo Snack Carts website screenshot",
           stats: [
