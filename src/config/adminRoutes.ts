@@ -12,6 +12,7 @@ export const ADMIN_ROUTES = {
   subscriptions: "/subscriptions",
   newsletter: "/newsletter",
   sms: "/sms",
+  reviews: "/reviews",
 } as const satisfies Record<string, Route>;
 
 export const ADMIN_LOGIN_ROUTE = "/admin/login" as const satisfies Route;

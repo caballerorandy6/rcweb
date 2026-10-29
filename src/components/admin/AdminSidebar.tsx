@@ -24,6 +24,7 @@ import {
   ClipboardDocumentListIcon,
   ChevronDownIcon,
   ArrowTopRightOnSquareIcon,
+  StarIcon,
 } from "@heroicons/react/24/outline";
 import {
   UsersIcon as UsersIconSolid,
@@ -34,6 +35,7 @@ import {
   CreditCardIcon as CreditCardIconSolid,
   Squares2X2Icon as Squares2X2IconSolid,
   ClipboardDocumentListIcon as ClipboardDocumentListIconSolid,
+  StarIcon as StarIconSolid,
 } from "@heroicons/react/24/solid";
 
 type IconComponent = React.ComponentType<React.SVGProps<SVGSVGElement>>;
@@ -114,6 +116,12 @@ const adminGroups: NavGroup[] = [
         href: ADMIN_ROUTES.sms,
         icon: ChatBubbleLeftRightIcon,
         iconSolid: ChatBubbleLeftRightIconSolid,
+      },
+      {
+        name: "Reviews",
+        href: ADMIN_ROUTES.reviews,
+        icon: StarIcon,
+        iconSolid: StarIconSolid,
       },
     ],
   },
