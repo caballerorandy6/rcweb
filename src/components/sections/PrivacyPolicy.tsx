@@ -10,7 +10,7 @@ import {
   InformationCircleIcon,
 } from "@heroicons/react/24/outline";
 import AnalyticsOptOut from "@/components/forms/AnalyticsOptOut";
-import { COMPANY, COMPANY_ADDRESS, LEGAL_LAST_UPDATED } from "@/lib/company";
+import { COMPANY, LEGAL_LAST_UPDATED } from "@/lib/company";
 
 export default function PrivacyPolicy() {
   return (
@@ -119,8 +119,9 @@ export default function PrivacyPolicy() {
                     <strong>Company</strong> (referred to
                     as either &ldquo;the Company&rdquo;, &ldquo;We&rdquo;,
                     &ldquo;Us&rdquo; or &ldquo;Our&rdquo; in this Agreement)
-                    refers to {COMPANY.name}, {COMPANY_ADDRESS}. For the
-                    purposes of the GDPR, the Company is the Data Controller.
+                    refers to {COMPANY.name}, a Texas limited liability
+                    company based in Houston, Texas. For the purposes of the
+                    GDPR, the Company is the Data Controller.
                   </li>
                   <li>
                     <strong>Consumer</strong>, for the
@@ -1296,7 +1297,6 @@ export default function PrivacyPolicy() {
                 <p>
                   <strong>RC Web Solutions LLC</strong>
                 </p>
-                <p>{COMPANY_ADDRESS}</p>
                 <p className="mt-2">
                   <a
                     href="https://www.rcweb.dev"

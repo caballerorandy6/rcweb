@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { formatDateTime } from "@/lib/utils";
 import Image from "next/image";
-import { COMPANY_LOCATION } from "@/lib/company";
+import { COMPANY_POSTAL_ADDRESS } from "@/lib/company";
 import { siteConfig } from "@/config/site";
 import {
   createAndSendBatchCampaign,
@@ -519,7 +519,7 @@ export default function SendNewsletterCampaign({
         <!-- Footer -->
         <div class="footer">
             <div class="footer-logo">RC WEB SOLUTIONS LLC</div>
-            <p style="margin-bottom: 15px; font-size: 14px;">${COMPANY_LOCATION}</p>
+            <p style="margin-bottom: 15px; font-size: 14px;">${COMPANY_POSTAL_ADDRESS}</p>
 
             <div class="footer-links">
                 <a href="tel:3463757534">📞 (346) 375-7534</a><br>
@@ -762,7 +762,7 @@ export default function SendNewsletterCampaign({
         <!-- Footer -->
         <div class="footer">
             <div class="footer-logo">RC WEB SOLUTIONS LLC</div>
-            <p style="margin-bottom: 15px; font-size: 14px;">${COMPANY_LOCATION}</p>
+            <p style="margin-bottom: 15px; font-size: 14px;">${COMPANY_POSTAL_ADDRESS}</p>
 
             <div class="footer-links">
                 <a href="tel:3463757534">📞 (346) 375-7534</a><br>

@@ -62,11 +62,6 @@ export interface InvoiceSummaryData
  */
 export interface CompanyInfo {
   name: string;
-  address: string;
-  city: string;
-  state: string;
-  zip: string;
-  country: string;
   email: string;
   phone?: string;
   website: string;
@@ -74,11 +69,6 @@ export interface CompanyInfo {
 
 export const RC_WEB_COMPANY_INFO: CompanyInfo = {
   name: COMPANY.name,
-  address: COMPANY.address,
-  city: COMPANY.city,
-  state: COMPANY.state,
-  zip: COMPANY.zip,
-  country: COMPANY.country,
   email: COMPANY.email,
   phone: COMPANY.phone,
   website: COMPANY.website,
