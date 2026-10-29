@@ -81,7 +81,7 @@ function TopTable({
 }) {
   return (
     <div className="min-w-0">
-      <h3 className="text-sm font-semibold text-gray-300 font-inter mb-2">{title}</h3>
+      <h4 className="text-sm font-semibold text-gray-300 font-inter mb-2">{title}</h4>
       {items.length === 0 ? (
         <p className="text-xs text-gray-500 font-inter">Nothing recorded in this period.</p>
       ) : (
@@ -144,7 +144,7 @@ export default async function SearchPerformance() {
       <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-3 mb-5">
         <div className="flex items-center gap-3">
           <MagnifyingGlassIcon className="w-5 h-5 sm:w-6 sm:h-6 text-gold shrink-0" />
-          <h2 className="text-xl sm:text-2xl text-white font-iceland">Search performance</h2>
+          <h3 className="text-xl sm:text-2xl text-white font-iceland">Search performance</h3>
         </div>
         <div className="sm:ml-auto flex items-center gap-3">
           <span className="text-xs text-gray-500 font-inter">

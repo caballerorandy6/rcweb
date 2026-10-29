@@ -5,6 +5,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import type { Route } from "next";
 import SignOutButton from "@/components/ui/SignOutButton";
+import { ADMIN_ROUTES } from "@/config/adminRoutes";
 import {
   HomeIcon,
   UsersIcon,
@@ -21,263 +22,247 @@ import {
   NewspaperIcon,
   Squares2X2Icon,
   ClipboardDocumentListIcon,
+  ChevronDownIcon,
+  ArrowTopRightOnSquareIcon,
 } from "@heroicons/react/24/outline";
 import {
-  HomeIcon as HomeIconSolid,
   UsersIcon as UsersIconSolid,
   FolderIcon as FolderIconSolid,
   EnvelopeIcon as EnvelopeIconSolid,
   ChatBubbleLeftRightIcon as ChatBubbleLeftRightIconSolid,
   DocumentTextIcon as DocumentTextIconSolid,
   CreditCardIcon as CreditCardIconSolid,
-  WrenchScrewdriverIcon as WrenchScrewdriverIconSolid,
-  CurrencyDollarIcon as CurrencyDollarIconSolid,
-  PhoneIcon as PhoneIconSolid,
-  NewspaperIcon as NewspaperIconSolid,
   Squares2X2Icon as Squares2X2IconSolid,
   ClipboardDocumentListIcon as ClipboardDocumentListIconSolid,
 } from "@heroicons/react/24/solid";
 
+type IconComponent = React.ComponentType<React.SVGProps<SVGSVGElement>>;
+
 interface NavItem {
   name: string;
   href: Route;
-  icon: React.ComponentType<React.SVGProps<SVGSVGElement>>;
-  iconSolid: React.ComponentType<React.SVGProps<SVGSVGElement>>;
-  external?: boolean;
+  icon: IconComponent;
+  iconSolid: IconComponent;
 }
 
-// Public site navigation (links to main website sections)
-const publicNavigation: NavItem[] = [
+interface NavGroup {
+  title: string;
+  items: NavItem[];
+}
+
+// Grouped by how the work flows: a contact becomes a quote, the quote a
+// project, the project its invoices. Marketing reaches the people already
+// in the database.
+const adminGroups: NavGroup[] = [
   {
-    name: "Home",
-    href: "/" as Route,
-    icon: HomeIcon,
-    iconSolid: HomeIconSolid,
-    external: true,
+    title: "Overview",
+    items: [
+      {
+        name: "Dashboard",
+        href: ADMIN_ROUTES.dashboard,
+        icon: Squares2X2Icon,
+        iconSolid: Squares2X2IconSolid,
+      },
+    ],
   },
   {
-    name: "Services",
-    href: "/#services" as Route,
-    icon: WrenchScrewdriverIcon,
-    iconSolid: WrenchScrewdriverIconSolid,
-    external: true,
+    title: "Sales",
+    items: [
+      {
+        name: "Contacts",
+        href: ADMIN_ROUTES.contacts,
+        icon: UsersIcon,
+        iconSolid: UsersIconSolid,
+      },
+      {
+        name: "Quotes",
+        href: ADMIN_ROUTES.quotes,
+        icon: ClipboardDocumentListIcon,
+        iconSolid: ClipboardDocumentListIconSolid,
+      },
+      {
+        name: "Projects",
+        href: ADMIN_ROUTES.projects,
+        icon: FolderIcon,
+        iconSolid: FolderIconSolid,
+      },
+      {
+        name: "Invoices",
+        href: ADMIN_ROUTES.invoices,
+        icon: DocumentTextIcon,
+        iconSolid: DocumentTextIconSolid,
+      },
+      {
+        name: "Subscriptions",
+        href: ADMIN_ROUTES.subscriptions,
+        icon: CreditCardIcon,
+        iconSolid: CreditCardIconSolid,
+      },
+    ],
   },
   {
-    name: "Projects",
-    href: "/#projects" as Route,
-    icon: FolderIcon,
-    iconSolid: FolderIconSolid,
-    external: true,
-  },
-  {
-    name: "Pricing",
-    href: "/#pricing" as Route,
-    icon: CurrencyDollarIcon,
-    iconSolid: CurrencyDollarIconSolid,
-    external: true,
-  },
-  {
-    name: "Blog",
-    href: "/blog" as Route,
-    icon: NewspaperIcon,
-    iconSolid: NewspaperIconSolid,
-    external: true,
-  },
-  {
-    name: "Contact",
-    href: "/#contact" as Route,
-    icon: PhoneIcon,
-    iconSolid: PhoneIconSolid,
-    external: true,
+    title: "Marketing",
+    items: [
+      {
+        name: "Newsletter",
+        href: ADMIN_ROUTES.newsletter,
+        icon: EnvelopeIcon,
+        iconSolid: EnvelopeIconSolid,
+      },
+      {
+        name: "SMS",
+        href: ADMIN_ROUTES.sms,
+        icon: ChatBubbleLeftRightIcon,
+        iconSolid: ChatBubbleLeftRightIconSolid,
+      },
+    ],
   },
 ];
 
-// Admin navigation
-const adminNavigation: NavItem[] = [
-  {
-    name: "Dashboard",
-    href: "/admin-dashboard",
-    icon: Squares2X2Icon,
-    iconSolid: Squares2X2IconSolid,
-  },
-  {
-    name: "Projects",
-    href: "/projects",
-    icon: FolderIcon,
-    iconSolid: FolderIconSolid,
-  },
-  {
-    name: "Quotes",
-    href: "/quotes",
-    icon: ClipboardDocumentListIcon,
-    iconSolid: ClipboardDocumentListIconSolid,
-  },
-  {
-    name: "Invoices",
-    href: "/manage-invoices",
-    icon: DocumentTextIcon,
-    iconSolid: DocumentTextIconSolid,
-  },
-  {
-    name: "Subscriptions",
-    href: "/subscriptions" as Route,
-    icon: CreditCardIcon,
-    iconSolid: CreditCardIconSolid,
-  },
-  {
-    name: "Contacts",
-    href: "/contacts",
-    icon: UsersIcon,
-    iconSolid: UsersIconSolid,
-  },
-  {
-    name: "Newsletter",
-    href: "/newsletter",
-    icon: EnvelopeIcon,
-    iconSolid: EnvelopeIconSolid,
-  },
-  {
-    name: "SMS Campaign",
-    href: "/sms",
-    icon: ChatBubbleLeftRightIcon,
-    iconSolid: ChatBubbleLeftRightIconSolid,
-  },
+// Shortcuts to the public site, collapsed by default
+const publicLinks: { name: string; href: Route; icon: IconComponent }[] = [
+  { name: "Home", href: "/", icon: HomeIcon },
+  { name: "Services", href: "/#services", icon: WrenchScrewdriverIcon },
+  { name: "Projects", href: "/#projects", icon: FolderIcon },
+  { name: "Pricing", href: "/#pricing", icon: CurrencyDollarIcon },
+  { name: "Blog", href: "/blog", icon: NewspaperIcon },
+  { name: "Contact", href: "/#contact", icon: PhoneIcon },
 ];
+
+const SIDEBAR_ID = "admin-sidebar";
 
 export default function AdminSidebar() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const pathname = usePathname();
+  const closeSidebar = () => setSidebarOpen(false);
 
   const isActive = (href: Route) =>
-    pathname === href || (href !== "/" && pathname.startsWith(`${href}/`));
+    pathname === href || pathname.startsWith(`${href}/`);
 
   return (
     <>
-      {/* Mobile Header - fixed at very top */}
-      <div className="lg:hidden fixed top-0 left-0 right-0 z-50 bg-gray-900/95 backdrop-blur-xs border-b border-gray-800">
-        <div className="flex items-center justify-between px-4 py-3">
+      {/* Mobile top bar (3rem, matched by the layout's padding) */}
+      <div className="lg:hidden fixed top-0 left-0 right-0 z-50 h-12 bg-gray-900/95 backdrop-blur-xs border-b border-gray-800">
+        <div className="flex h-full items-center justify-between px-4">
           <Link
-            href="/admin-dashboard"
+            href={ADMIN_ROUTES.dashboard}
             className="text-xl text-gold font-iceland"
           >
             RC Web Admin
           </Link>
           <button
             type="button"
-            onClick={() => setSidebarOpen(!sidebarOpen)}
-            className="inline-flex items-center justify-center rounded-md text-white/80 hover:text-gold transition-colors"
-            aria-label="Open menu"
+            onClick={() => setSidebarOpen((open) => !open)}
+            className="inline-flex items-center justify-center p-2.5 -m-2.5 rounded-md text-white/80 hover:text-gold transition-colors"
+            aria-label={sidebarOpen ? "Close menu" : "Open menu"}
+            aria-expanded={sidebarOpen}
+            aria-controls={SIDEBAR_ID}
           >
-            <Bars3Icon className="w-6 h-6" />
+            {sidebarOpen ? (
+              <XMarkIcon className="w-6 h-6" aria-hidden="true" />
+            ) : (
+              <Bars3Icon className="w-6 h-6" aria-hidden="true" />
+            )}
           </button>
         </div>
       </div>
 
-      {/* Backdrop overlay for mobile */}
-      {sidebarOpen && (
+      {/* Backdrop (mobile) */}
+      {sidebarOpen ? (
         <div
           className="fixed inset-0 bg-black/50 z-40 lg:hidden"
-          onClick={() => setSidebarOpen(false)}
+          onClick={closeSidebar}
+          aria-hidden="true"
         />
-      )}
+      ) : null}
 
-      {/* Sidebar - Desktop: fixed left, Mobile: drawer from right */}
+      {/* Desktop: fixed full-height column on the left. Mobile: drawer from the right. */}
       <aside
-        className={`fixed w-64 bg-gray-900 z-50 transform transition-transform duration-300 ease-in-out
-          top-[48px] h-[calc(100vh-48px)] right-0 border-l border-gray-800
-          lg:top-[72px] lg:h-[calc(100vh-72px)] lg:left-0 lg:right-auto lg:border-l-0 lg:border-r lg:translate-x-0 ${
-          sidebarOpen ? "translate-x-0" : "translate-x-full lg:translate-x-0"
-        }`}
+        id={SIDEBAR_ID}
+        aria-label="Admin"
+        className={`fixed w-64 bg-gray-900 z-50 transform transition-transform motion-reduce:transition-none duration-300 ease-in-out
+          top-12 h-[calc(100vh-3rem)] right-0 border-l border-gray-800
+          lg:top-0 lg:h-screen lg:left-0 lg:right-auto lg:border-l-0 lg:border-r lg:translate-x-0 ${
+            sidebarOpen ? "translate-x-0" : "translate-x-full lg:translate-x-0"
+          }`}
       >
         <div className="flex flex-col h-full overflow-hidden">
-          {/* Header with close button */}
-          <div className="flex items-center justify-between px-5 py-4 border-b border-gray-800 bg-gray-900">
+          {/* Brand (desktop only; the mobile top bar already shows it) */}
+          <div className="hidden lg:flex items-center px-5 h-16 border-b border-gray-800">
             <Link
-              href="/admin-dashboard"
+              href={ADMIN_ROUTES.dashboard}
               className="text-xl text-gold font-iceland hover:text-gold/80 transition-colors"
-              onClick={() => setSidebarOpen(false)}
             >
               RC Web Admin
             </Link>
-            <button
-              onClick={() => setSidebarOpen(false)}
-              className="lg:hidden p-1.5 rounded-lg text-gray-400 hover:text-white hover:bg-gray-800 transition-colors"
-              aria-label="Close menu"
-            >
-              <XMarkIcon className="h-5 w-5" />
-            </button>
           </div>
 
-          {/* Navigation */}
-          <nav className="flex-1 px-3 py-4 overflow-y-auto">
-            {/* Admin Section - Primary */}
-            <div className="mb-4">
-              <h3 className="px-3 mb-2 text-[10px] font-semibold text-gray-500 uppercase tracking-wider font-inter">
-                Admin Panel
-              </h3>
-              <div className="space-y-1">
-                {adminNavigation.map((item) => {
-                  const Icon = isActive(item.href) ? item.iconSolid : item.icon;
-                  return (
-                    <Link
-                      key={item.name}
-                      href={item.href}
-                      onClick={() => setSidebarOpen(false)}
-                      className={`flex items-center gap-3 px-3 py-2.5 rounded-lg font-inter text-sm transition-all duration-200 ${
-                        isActive(item.href)
-                          ? "bg-gold/10 text-gold border border-gold/20"
-                          : "text-gray-300 hover:bg-gray-800 hover:text-white"
-                      }`}
-                    >
-                      <Icon className="h-4 w-4 shrink-0" />
-                      <span>{item.name}</span>
-                    </Link>
-                  );
-                })}
+          <nav className="flex-1 px-3 py-4 overflow-y-auto" aria-label="Admin">
+            {adminGroups.map((group) => (
+              <div key={group.title} className="mb-5">
+                <h3 className="px-3 mb-2 text-[10px] font-semibold text-gray-500 uppercase tracking-wider font-inter">
+                  {group.title}
+                </h3>
+                <ul className="space-y-1">
+                  {group.items.map((item) => {
+                    const active = isActive(item.href);
+                    const Icon = active ? item.iconSolid : item.icon;
+                    return (
+                      <li key={item.href}>
+                        <Link
+                          href={item.href}
+                          onClick={closeSidebar}
+                          aria-current={active ? "page" : undefined}
+                          className={`flex items-center gap-3 px-3 py-2.5 rounded-lg font-inter text-sm transition-colors duration-200 ${
+                            active
+                              ? "bg-gold/10 text-gold border border-gold/20"
+                              : "text-gray-300 hover:bg-gray-800 hover:text-white border border-transparent"
+                          }`}
+                        >
+                          <Icon className="h-4 w-4 shrink-0" aria-hidden="true" />
+                          <span>{item.name}</span>
+                        </Link>
+                      </li>
+                    );
+                  })}
+                </ul>
               </div>
-            </div>
+            ))}
 
-            {/* Divider */}
             <div className="border-t border-gray-800 my-4" />
 
-            {/* Public Site Section - Collapsible */}
+            {/* Public site shortcuts */}
             <details className="group">
               <summary className="flex items-center justify-between px-3 py-2 cursor-pointer list-none text-[10px] font-semibold text-gray-500 uppercase tracking-wider font-inter hover:text-gray-400 transition-colors">
-                <span>Public Site</span>
-                <svg
-                  className="w-3 h-3 transition-transform group-open:rotate-180"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                >
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-                </svg>
+                <span>Public site</span>
+                <ChevronDownIcon className="w-3 h-3 transition-transform motion-reduce:transition-none group-open:rotate-180" aria-hidden="true" />
               </summary>
-              <div className="space-y-1 mt-2">
-                {publicNavigation.map((item) => {
+              <ul className="space-y-1 mt-2">
+                {publicLinks.map((item) => {
                   const Icon = item.icon;
                   return (
-                    <Link
-                      key={item.name}
-                      href={item.href}
-                      onClick={() => setSidebarOpen(false)}
-                      className="flex items-center gap-3 px-3 py-2 rounded-lg font-inter text-sm text-gray-400 hover:bg-gray-800 hover:text-gold transition-all duration-200"
-                    >
-                      <Icon className="h-4 w-4 shrink-0" />
-                      <span>{item.name}</span>
-                    </Link>
+                    <li key={item.href}>
+                      <Link
+                        href={item.href}
+                        onClick={closeSidebar}
+                        className="flex items-center gap-3 px-3 py-2 rounded-lg font-inter text-sm text-gray-400 hover:bg-gray-800 hover:text-gold transition-colors duration-200"
+                      >
+                        <Icon className="h-4 w-4 shrink-0" aria-hidden="true" />
+                        <span className="flex-1">{item.name}</span>
+                        <ArrowTopRightOnSquareIcon className="h-3 w-3 text-gray-600" aria-hidden="true" />
+                      </Link>
+                    </li>
                   );
                 })}
-              </div>
+              </ul>
             </details>
           </nav>
 
-          {/* Footer */}
-          <div className="px-3 py-4 border-t border-gray-800 space-y-3 bg-gray-900">
+          <div className="px-3 py-4 border-t border-gray-800 space-y-3">
             <SignOutButton />
-            <div className="text-[10px] text-gray-600 text-center font-inter">
-              © 2025 RC Web Solutions LLC
-            </div>
+            <p className="text-[10px] text-gray-600 text-center font-inter">
+              © {new Date().getFullYear()} RC Web Solutions LLC
+            </p>
           </div>
         </div>
       </aside>

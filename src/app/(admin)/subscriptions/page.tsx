@@ -15,7 +15,7 @@ export const dynamic = "force-dynamic";
 
 export default function SubscriptionsPage() {
   return (
-    <div className="p-6 lg:p-8">
+    <div>
       <div className="mb-8">
         <h1 className="text-3xl font-iceland text-gold">Subscription Management</h1>
         <p className="text-gray-400 mt-2 font-inter">View and manage recurring subscriptions</p>

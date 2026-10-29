@@ -90,9 +90,9 @@ export default async function LeadsBySource() {
       <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-3 mb-5">
         <div className="flex items-center gap-3">
           <ChartBarIcon className="w-5 h-5 sm:w-6 sm:h-6 text-gold shrink-0" />
-          <h2 className="text-xl sm:text-2xl text-white font-iceland">
+          <h3 className="text-xl sm:text-2xl text-white font-iceland">
             Leads by Source
-          </h2>
+          </h3>
         </div>
         <span className="sm:ml-auto text-sm text-gray-400 font-inter">
           Total: <span className="text-gold font-semibold">{formatNumber(data.total)}</span> leads

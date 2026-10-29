@@ -70,7 +70,7 @@ export default async function GoogleReviews() {
       <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-3 mb-5">
         <div className="flex items-center gap-3">
           <StarIcon className="w-5 h-5 sm:w-6 sm:h-6 text-gold shrink-0" />
-          <h2 className="text-xl sm:text-2xl text-white font-iceland">Google reviews</h2>
+          <h3 className="text-xl sm:text-2xl text-white font-iceland">Google reviews</h3>
         </div>
         <div className="sm:ml-auto flex items-center gap-3">
           <span className="text-xs text-gray-500 font-inter">
