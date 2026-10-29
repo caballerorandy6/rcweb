@@ -35,7 +35,7 @@ export const COMPANY_LOCATION = `${COMPANY.city}, ${COMPANY.state} ${COMPANY.zip
  */
 export const LEGAL_LAST_UPDATED = {
   /** Se guarda en TermsAcceptance.termsVersion */
-  version: "2026-10-23",
+  version: "2026-10-29",
   /** Texto visible en las páginas legales */
-  label: "October 23, 2026",
+  label: "October 29, 2026",
 } as const;
