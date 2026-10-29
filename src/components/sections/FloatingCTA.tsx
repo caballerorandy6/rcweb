@@ -59,6 +59,13 @@ const YouTubeIcon = ({ className = "h-5 w-5" }: { className?: string }) => (
   </svg>
 );
 
+// House mark from nextdoor.com/favicon.svg (brand green #1B8751)
+const NextdoorIcon = ({ className = "h-6 w-6" }: { className?: string }) => (
+  <svg viewBox="0 0 180 180" fill="currentColor" className={className}>
+    <path d="M71.2012 60.1136V48.2368H55.7597V69.8109L37.4592 81.3082L45.6741 94.385L55.8038 88.0231V131.784H124.4V88.0231L134.529 94.385L142.744 81.3082L90.1017 48.2368L71.2012 60.1136Z" />
+  </svg>
+);
+
 const XIcon = ({ className = "h-4 w-4" }: { className?: string }) => (
   <svg viewBox="0 0 24 24" fill="currentColor" className={className}>
     <path d="M18.901 1.153h3.68l-8.04 9.19L24 22.846h-7.406l-5.8-7.584-6.638 7.584H.474l8.6-9.83L0 1.154h7.594l5.243 6.932ZM17.61 20.644h2.039L6.486 3.24H4.298Z" />
@@ -107,6 +114,13 @@ const socialActions = [
     url: siteConfig.social.instagram,
     Icon: InstagramIcon,
     bgClass: "bg-linear-to-br from-[#f9ce34] via-[#ee2a7b] to-[#6228d7] hover:opacity-90",
+  },
+  {
+    id: "nextdoor",
+    name: "Nextdoor",
+    url: siteConfig.social.nextdoor,
+    Icon: NextdoorIcon,
+    bgClass: "bg-[#1B8751] hover:bg-[#146A3F]",
   },
   {
     id: "tiktok",
