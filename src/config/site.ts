@@ -18,6 +18,7 @@ export type SiteConfig = {
     instagram: string;
     nextdoor: string;
     tiktok: string;
+    youtube: string;
   };
 };
 
@@ -41,5 +42,7 @@ export const siteConfig: SiteConfig = {
     instagram: "https://www.instagram.com/rcwebsolutionsllc/",
     nextdoor: "https://nextdoor.com/page/rc-web-solutions-llc/",
     tiktok: "https://www.tiktok.com/@rcwebsolutionsllc",
+    // Channel UCe6CnpzOQDUKz1i2sZPy1-g, created 2026-10-29
+    youtube: "https://www.youtube.com/@rcwebsolutions",
   },
 };

@@ -4,6 +4,7 @@ import { useState } from "react";
 import { formatDateTime } from "@/lib/utils";
 import Image from "next/image";
 import { COMPANY_LOCATION } from "@/lib/company";
+import { siteConfig } from "@/config/site";
 import {
   createAndSendBatchCampaign,
   continueBatchCampaign,
@@ -273,9 +274,12 @@ export default function SendNewsletterCampaign({
       <div class="footer">
         <div class="footer-text">RC Web Solutions LLC<br />Houston, Texas, USA</div>
         <div class="social-links">
-          <a href="https://www.linkedin.com/company/109039912/">LinkedIn</a> |
-          <a href="https://www.facebook.com/rcwebsolutionsllc">Facebook</a> |
-          <a href="https://www.instagram.com/rcwebsolutionsllc">Instagram</a>
+          <a href="${siteConfig.social.linkedin}">LinkedIn</a> |
+          <a href="${siteConfig.social.facebook}">Facebook</a> |
+          <a href="${siteConfig.social.instagram}">Instagram</a> |
+          <a href="${siteConfig.social.nextdoor}">Nextdoor</a> |
+          <a href="${siteConfig.social.tiktok}">TikTok</a> |
+          <a href="${siteConfig.social.youtube}">YouTube</a>
         </div>
         <div class="contact-info">
           Email: <a href="mailto:contactus@rcweb.dev">contactus@rcweb.dev</a><br />
