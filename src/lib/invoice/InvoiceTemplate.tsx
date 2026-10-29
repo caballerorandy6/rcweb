@@ -201,11 +201,6 @@ export const InvoiceTemplate: React.FC<InvoiceTemplateProps> = ({ data }) => {
         <View style={styles.header}>
           <View style={styles.companyInfo}>
             <Text style={styles.companyName}>{RC_WEB_COMPANY_INFO.name}</Text>
-            <Text>{RC_WEB_COMPANY_INFO.address}</Text>
-            <Text>
-              {RC_WEB_COMPANY_INFO.city}, {RC_WEB_COMPANY_INFO.state}{" "}
-              {RC_WEB_COMPANY_INFO.zip}
-            </Text>
             <Text>{RC_WEB_COMPANY_INFO.email}</Text>
             {RC_WEB_COMPANY_INFO.phone && (
               <Text>{RC_WEB_COMPANY_INFO.phone}</Text>
@@ -344,11 +339,6 @@ export const InvoiceSummaryTemplate: React.FC<InvoiceSummaryTemplateProps> = ({
         <View style={styles.header}>
           <View style={styles.companyInfo}>
             <Text style={styles.companyName}>{RC_WEB_COMPANY_INFO.name}</Text>
-            <Text>{RC_WEB_COMPANY_INFO.address}</Text>
-            <Text>
-              {RC_WEB_COMPANY_INFO.city}, {RC_WEB_COMPANY_INFO.state}{" "}
-              {RC_WEB_COMPANY_INFO.zip}
-            </Text>
             <Text>{RC_WEB_COMPANY_INFO.email}</Text>
             {RC_WEB_COMPANY_INFO.phone && (
               <Text>{RC_WEB_COMPANY_INFO.phone}</Text>

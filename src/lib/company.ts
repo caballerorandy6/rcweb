@@ -1,10 +1,15 @@
 /**
  * Datos legales y de contacto de la empresa.
- * Única fuente de verdad para dirección, teléfono y correos:
- * políticas legales, facturas PDF, pies de email y contenido.
+ * Única fuente de verdad para teléfono, correos y dirección postal.
+ *
+ * La dirección postal es la casa de Randy: NO se muestra en la web, las
+ * políticas legales ni las facturas. Solo va donde la ley la exige
+ * (CAN-SPAM: pie de cada correo comercial). Usa COMPANY_POSTAL_ADDRESS
+ * únicamente en plantillas de marketing.
  */
 export const COMPANY = {
   name: "RC Web Solutions LLC",
+  /** Solo para el pie de correos comerciales (CAN-SPAM). */
   address: "6403 Bazel Brook Dr",
   city: "Missouri City",
   state: "TX",
@@ -23,11 +28,11 @@ export const COMPANY = {
   url: "https://www.rcweb.dev",
 } as const;
 
-/** "6403 Bazel Brook Dr, Missouri City, TX 77489" */
-export const COMPANY_ADDRESS = `${COMPANY.address}, ${COMPANY.city}, ${COMPANY.state} ${COMPANY.zip}`;
-
-/** "Missouri City, TX 77489" */
-export const COMPANY_LOCATION = `${COMPANY.city}, ${COMPANY.state} ${COMPANY.zip}`;
+/**
+ * Dirección postal completa, exigida por CAN-SPAM en correos comerciales.
+ * No usarla en páginas públicas, políticas ni facturas.
+ */
+export const COMPANY_POSTAL_ADDRESS = `${COMPANY.address}, ${COMPANY.city}, ${COMPANY.state} ${COMPANY.zip}`;
 
 /**
  * Fecha de la última revisión de Privacy, Terms y Refund. Cambiarla aquí

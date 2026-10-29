@@ -7,7 +7,7 @@ import {
   CalendarIcon,
   EnvelopeIcon,
 } from "@heroicons/react/24/outline";
-import { COMPANY, COMPANY_LOCATION, LEGAL_LAST_UPDATED } from "@/lib/company";
+import { COMPANY, LEGAL_LAST_UPDATED } from "@/lib/company";
 
 const RefundPolicy = () => {
   return (
@@ -511,7 +511,7 @@ const RefundPolicy = () => {
         {/* Footer Note */}
         <div className="mt-4 text-center flex justify-center items-center reveal">
           <p className="text-white/50 text-sm font-inter">
-            {COMPANY.name} - {COMPANY_LOCATION}
+            {COMPANY.name} - Houston, TX
           </p>
         </div>
       </div>

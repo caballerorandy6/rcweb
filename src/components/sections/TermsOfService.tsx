@@ -3,7 +3,7 @@ import Link from "next/link";
 import type { Route } from "next";
 import Heading from "@/components/ui/Heading";
 import { DocumentTextIcon, CalendarIcon } from "@heroicons/react/24/outline";
-import { COMPANY, COMPANY_ADDRESS, COMPANY_LOCATION, LEGAL_LAST_UPDATED } from "@/lib/company";
+import { COMPANY, LEGAL_LAST_UPDATED } from "@/lib/company";
 import { TermsReviewNotice, TermsAcceptActions } from "@/components/sections/TermsAcceptance";
 
 /** Legal text is static server output; only the checkout bits are client. */
@@ -699,7 +699,6 @@ const TermsOfService = () => {
                   <p>
                     <strong>RC Web Solutions LLC</strong>
                   </p>
-                  <p>{COMPANY_ADDRESS}</p>
                   <p>
                     Email:{" "}
                     <a
@@ -750,7 +749,7 @@ const TermsOfService = () => {
         {/* Footer Note */}
         <div className="mt-8 text-center flex justify-center items-center reveal">
           <p className="text-white/50 text-sm font-inter">
-            {COMPANY.name} - {COMPANY_LOCATION}
+            {COMPANY.name} - Houston, TX
           </p>
         </div>
       </div>
