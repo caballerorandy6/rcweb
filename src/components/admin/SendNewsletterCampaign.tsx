@@ -279,7 +279,8 @@ export default function SendNewsletterCampaign({
           <a href="${siteConfig.social.instagram}">Instagram</a> |
           <a href="${siteConfig.social.nextdoor}">Nextdoor</a> |
           <a href="${siteConfig.social.tiktok}">TikTok</a> |
-          <a href="${siteConfig.social.youtube}">YouTube</a>
+          <a href="${siteConfig.social.youtube}">YouTube</a> |
+          <a href="${siteConfig.social.x}">X</a>
         </div>
         <div class="contact-info">
           Email: <a href="mailto:contactus@rcweb.dev">contactus@rcweb.dev</a><br />

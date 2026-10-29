@@ -19,6 +19,7 @@ export type SiteConfig = {
     nextdoor: string;
     tiktok: string;
     youtube: string;
+    x: string;
   };
 };
 
@@ -44,5 +45,7 @@ export const siteConfig: SiteConfig = {
     tiktok: "https://www.tiktok.com/@rcwebsolutionsllc",
     // Channel UCe6CnpzOQDUKz1i2sZPy1-g, created 2026-10-29
     youtube: "https://www.youtube.com/@rcwebsolutions",
+    // Back since 2026-10-27: posts daily through the API
+    x: "https://x.com/RCWeb2025",
   },
 };
