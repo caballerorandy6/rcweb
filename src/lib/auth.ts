@@ -104,7 +104,7 @@ export const authConfig: NextAuthConfig = {
   },
   session: {
     strategy: "jwt",
-    maxAge: 30 * 24 * 60 * 60, // 30 días
+    maxAge: 7 * 24 * 60 * 60, // 7 días sin actividad (NextAuth renueva el JWT al usarlo, updateAge 24 h)
   },
   secret: process.env.NEXTAUTH_SECRET,
 };
