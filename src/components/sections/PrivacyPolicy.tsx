@@ -531,8 +531,9 @@ export default function PrivacyPolicy() {
                   <li>
                     <strong>OAuth tokens:</strong>{" "}
                     the access and refresh tokens Google issues for Our channel
-                    are kept as protected environment variables with Our hosting
-                    provider and are used only to upload videos.
+                    are stored in access-restricted files on Our own private
+                    server and workstation, and are used only to upload videos
+                    to Our channel.
                   </li>
                   <li>
                     <strong>Upload records:</strong>{" "}
