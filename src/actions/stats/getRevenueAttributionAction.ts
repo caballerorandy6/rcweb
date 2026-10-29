@@ -2,6 +2,7 @@
 
 import { prisma } from "@/lib/prisma";
 import { requireAdmin } from "@/lib/authGuard";
+import { normalizeLeadSource } from "@/lib/leadSources";
 
 export interface RevenueBySource {
   source: string;
@@ -70,7 +71,7 @@ export async function getRevenueAttributionAction(): Promise<RevenueAttributionR
   for (const project of projectsWithRevenue) {
     if (project.contact) {
       // By lead source
-      const source = project.contact.source || "unknown";
+      const source = normalizeLeadSource(project.contact.source);
       const existing = bySourceMap.get(source) || { revenue: 0, count: 0 };
       bySourceMap.set(source, {
         revenue: existing.revenue + project.paidAmount,

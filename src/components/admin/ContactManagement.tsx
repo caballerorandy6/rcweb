@@ -14,6 +14,7 @@ import type { ContactChannel, LeadStatus } from "@/generated/prisma/enums";
 import type { ServiceOption } from "@/components/forms/DialogForm";
 import { CONTACT_CHANNELS, CONTACT_CHANNEL_LABELS } from "@/lib/contactChannel";
 import { LEAD_STATUSES, LEAD_STATUS_CLASSES, LEAD_STATUS_LABELS } from "@/lib/leadStatus";
+import { leadSourceLabel } from "@/lib/leadSources";
 
 type ContactManagementProps = {
   contacts: Contact[];
@@ -413,7 +414,7 @@ export default function ContactManagement({ contacts, serviceOptions, openNew }:
                         )}
                         <div className="text-xs text-gray-500 mt-1 whitespace-nowrap">
                           {formatDate(contact.createdAt)}
-                          {contact.source ? ` · ${contact.source.replaceAll("_", " ")}` : ""}
+                          {contact.source ? ` · ${leadSourceLabel(contact.source)}` : ""}
                         </div>
                       </td>
                       <td className="px-4 sm:px-6 py-4 align-top text-sm">
