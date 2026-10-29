@@ -48,7 +48,7 @@ test.describe("admin contacts", () => {
 
     await test.step("the new lead is listed as manual and new", async () => {
       await expect(row).toBeVisible({ timeout: 15_000 });
-      await expect(row).toContainText("manual");
+      await expect(row).toContainText("Manual entry");
       await expect(row).toContainText("Website Redesign");
       await expect(row.getByLabel(`Lead status for ${name}`)).toHaveValue("NEW");
     });
