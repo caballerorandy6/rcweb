@@ -132,7 +132,7 @@ export const projects: ProjectProps[] = [
       "Official website and private admin dashboard with Stripe payment links for a Houston snack cart rental business. Booking form, local SEO, and card payments that let them book companies and schools.",
     image: "/dulce-antojo.avif",
     github: "https://github.com/caballerorandy6/dulce-antojo",
-    url: "https://www.dulcesantojosnackcarts.com/",
+    url: "https://dulce-antojo.vercel.app/",
     caseStudy: "/case-study/dulce-antojo",
   },
   {
