@@ -28,7 +28,7 @@ test.describe("admin contacts", () => {
     await signIn(page);
 
     await test.step("the dashboard shortcut opens the form", async () => {
-      await page.getByRole("link", { name: /Add Contact/ }).click();
+      await page.getByRole("link", { name: /Add contact/i }).click();
       await expect(page).toHaveURL(/\/contacts\?action=new$/);
       await expect(page.getByRole("heading", { level: 1, name: "Contacts" })).toBeVisible();
       await expect(page.getByRole("heading", { level: 2, name: "New contact" })).toBeVisible();
