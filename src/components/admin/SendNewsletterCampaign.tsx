@@ -282,7 +282,7 @@ export default function SendNewsletterCampaign({
           Web: <a href="https://www.rcweb.dev">rcweb.dev</a>
         </div>
         <div class="footer-text" style="margin-top: 20px">
-          © 2025 RC Web Solutions LLC. All rights reserved.<br />
+          © ${new Date().getFullYear()} RC Web Solutions LLC. All rights reserved.<br />
           <a href="https://www.rcweb.dev/privacy-policy" style="color: #888; font-size: 12px">Privacy Policy</a> |
           <a href="https://www.rcweb.dev/terms-of-service" style="color: #888; font-size: 12px">Terms of Service</a>
         </div>
@@ -527,7 +527,7 @@ export default function SendNewsletterCampaign({
                     Transformamos pequeños y medianos negocios con soluciones web profesionales
                 </p>
                 <p style="font-size: 11px; color: #6B7280;">
-                    © 2025 RC Web Solutions LLC. Todos los derechos reservados.
+                    © ${new Date().getFullYear()} RC Web Solutions LLC. Todos los derechos reservados.
                 </p>
             </div>
         </div>
@@ -770,7 +770,7 @@ export default function SendNewsletterCampaign({
                     Transforming small and medium businesses with professional web solutions
                 </p>
                 <p style="font-size: 11px; color: #6B7280;">
-                    © 2025 RC Web Solutions LLC. All rights reserved.
+                    © ${new Date().getFullYear()} RC Web Solutions LLC. All rights reserved.
                 </p>
             </div>
         </div>
