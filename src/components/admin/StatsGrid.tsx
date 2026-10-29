@@ -1,14 +1,14 @@
 import { getProjectStatsAction } from "@/actions/projects/getProjectStatsAction";
-import { formatCurrency, formatNumber } from "@/lib/utils";
+import { formatCurrency } from "@/lib/utils";
 import { getRevenueStatsAction } from "@/actions/stats/getRevenueStatsAction";
 import { getNewLeadsAction } from "@/actions/stats/getNewLeadsAction";
-import { getTotalContactsAction } from "@/actions/contacts/getTotalContactsAction";
+import { getOpenQuotesStatsAction } from "@/actions/stats/getOpenQuotesStatsAction";
 import {
   CurrencyDollarIcon,
   BriefcaseIcon,
   BanknotesIcon,
   SparklesIcon,
-  UserGroupIcon,
+  ClipboardDocumentListIcon,
 } from "@heroicons/react/24/outline";
 
 // Whole dollars: the cards are narrow and cents add nothing here
@@ -16,12 +16,12 @@ const money = (cents: number) => formatCurrency(cents, true);
 
 export default async function StatsGrid() {
   // Fetch all stats in parallel
-  const [projectStats, revenueStats, newLeadsStats, totalContacts] =
+  const [projectStats, revenueStats, newLeadsStats, quoteStats] =
     await Promise.all([
       getProjectStatsAction(),
       getRevenueStatsAction(),
       getNewLeadsAction(),
-      getTotalContactsAction(),
+      getOpenQuotesStatsAction(),
     ]);
 
   const activeProjects =
@@ -67,9 +67,16 @@ export default async function StatsGrid() {
       icon: <SparklesIcon className="w-7 h-7 sm:w-8 sm:h-8 text-purple-400" />,
     },
     {
-      label: "Total Contacts",
-      value: formatNumber(totalContacts),
-      icon: <UserGroupIcon className="w-7 h-7 sm:w-8 sm:h-8 text-gold" />,
+      // Pipeline: sent quotes still open, and what they add up to
+      label: "Open Quotes",
+      value: quoteStats.open,
+      subtext:
+        quoteStats.open > 0
+          ? `${money(quoteStats.openValue)} on the table`
+          : quoteStats.drafts > 0
+            ? `${quoteStats.drafts} ${quoteStats.drafts === 1 ? "draft" : "drafts"} to send`
+            : null,
+      icon: <ClipboardDocumentListIcon className="w-7 h-7 sm:w-8 sm:h-8 text-gold" />,
     },
   ];
 

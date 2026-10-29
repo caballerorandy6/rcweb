@@ -9,16 +9,13 @@ import {
 } from "@heroicons/react/24/outline";
 import Button from "@/components/ui/Button";
 import { ADMIN_LOGIN_ROUTE, ADMIN_ROUTES } from "@/config/adminRoutes";
+import NeedsAttention from "@/components/admin/NeedsAttention";
+import NeedsAttentionSkeleton from "@/components/skeletons/NeedsAttentionSkeleton";
 import StatsGrid from "@/components/admin/StatsGrid";
 import StatsGridSkeleton from "@/components/skeletons/StatsGridSkeleton";
-import LeadsBySource from "@/components/admin/LeadsBySource";
-import LeadsBySourceSkeleton from "@/components/skeletons/LeadsBySourceSkeleton";
 import LeadsTrendChartWrapper from "@/components/admin/LeadsTrendChartWrapper";
 import LeadsTrendChartSkeleton from "@/components/skeletons/LeadsTrendChartSkeleton";
-import LeadsByUTM from "@/components/admin/LeadsByUTM";
-import LeadsByUTMSkeleton from "@/components/skeletons/LeadsByUTMSkeleton";
-import RevenueAttribution from "@/components/admin/RevenueAttribution";
-import RevenueAttributionSkeleton from "@/components/skeletons/RevenueAttributionSkeleton";
+import LeadSources from "@/components/admin/LeadSources";
 import SearchPerformance from "@/components/admin/SearchPerformance";
 import SearchPerformanceSkeleton from "@/components/skeletons/SearchPerformanceSkeleton";
 import GoogleReviews from "@/components/admin/GoogleReviews";
@@ -98,6 +95,9 @@ export default async function AdminDashboard() {
         title="Business at a glance"
         description="Where things stand right now"
       >
+        <Suspense fallback={<NeedsAttentionSkeleton />}>
+          <NeedsAttention />
+        </Suspense>
         <Suspense fallback={<StatsGridSkeleton />}>
           <StatsGrid />
         </Suspense>
@@ -111,15 +111,8 @@ export default async function AdminDashboard() {
         <Suspense fallback={<LeadsTrendChartSkeleton />}>
           <LeadsTrendChartWrapper />
         </Suspense>
-        <Suspense fallback={<LeadsBySourceSkeleton />}>
-          <LeadsBySource />
-        </Suspense>
-        <Suspense fallback={<LeadsByUTMSkeleton />}>
-          <LeadsByUTM />
-        </Suspense>
-        <Suspense fallback={<RevenueAttributionSkeleton />}>
-          <RevenueAttribution />
-        </Suspense>
+        {/* The card streams each tab on its own, so it needs no Suspense here */}
+        <LeadSources />
       </DashboardSection>
 
       <DashboardSection

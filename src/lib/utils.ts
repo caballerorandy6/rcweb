@@ -175,3 +175,28 @@ export function formatFileSize(bytes: number | null): string {
   if (bytes < 1024 * 1024) return `${(bytes / 1024).toFixed(2)} KB`;
   return `${(bytes / (1024 * 1024)).toFixed(2)} MB`;
 }
+
+const DAY_MS = 24 * 60 * 60 * 1000;
+
+/** Whole days from `now` to `date`: negative when the date has passed */
+export function daysUntil(date: Date, now: Date = new Date()): number {
+  return Math.round((date.getTime() - now.getTime()) / DAY_MS);
+}
+
+/** "today", "yesterday", "3 days ago" for things that already happened */
+export function formatDaysAgo(date: Date, now: Date = new Date()): string {
+  const days = -daysUntil(date, now);
+  if (days <= 0) return "today";
+  if (days === 1) return "yesterday";
+  return `${days} days ago`;
+}
+
+/** "expires today", "expires in 3 days", "expired 2 days ago" for deadlines */
+export function formatDeadline(date: Date, now: Date = new Date()): string {
+  const days = daysUntil(date, now);
+  if (days === 0) return "due today";
+  if (days === 1) return "due tomorrow";
+  if (days > 1) return `due in ${days} days`;
+  if (days === -1) return "1 day overdue";
+  return `${-days} days overdue`;
+}

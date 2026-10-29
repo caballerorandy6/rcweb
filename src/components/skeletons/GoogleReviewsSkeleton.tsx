@@ -10,20 +10,14 @@ export default function GoogleReviewsSkeleton() {
         </div>
         <div className="sm:ml-auto h-7 w-24 bg-gray-700 rounded-lg" />
       </div>
-      <div className="h-3 w-72 max-w-full bg-gray-700/60 rounded-sm mb-3" />
-      <div className="grid grid-cols-3 gap-3 mb-6">
+      <div className="grid grid-cols-3 gap-3">
         {[1, 2, 3].map((i) => (
           <div key={i} className="h-20 bg-gray-700/30 rounded-lg" />
         ))}
       </div>
-      <div className="divide-y divide-gray-700/50 border-t border-gray-700/50">
-        {[1, 2, 3].map((i) => (
-          <div key={i} className="py-3 space-y-2">
-            <div className="h-4 w-48 bg-gray-700 rounded-sm" />
-            <div className="h-3 w-full bg-gray-700/40 rounded-sm" />
-            <div className="h-3 w-2/3 bg-gray-700/40 rounded-sm" />
-          </div>
-        ))}
+      <div className="flex items-center gap-4 mt-4 pt-4 border-t border-gray-700/50">
+        <div className="h-4 flex-1 bg-gray-700/40 rounded-sm" />
+        <div className="h-4 w-28 bg-gray-700 rounded-sm" />
       </div>
     </div>
   );
