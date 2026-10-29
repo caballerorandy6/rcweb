@@ -49,6 +49,7 @@ export default function robots(): MetadataRoute.Robots {
           "/payment-success",
           "/pay/*",
           "/unsubscribe",
+          "/tools/*",
         ],
       },
     ],
