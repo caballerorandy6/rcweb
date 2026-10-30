@@ -9,6 +9,7 @@ function payment(overrides: Partial<Payment>): Payment {
     kind: "deposit",
     amount: 50000,
     status: "pending",
+    method: "stripe",
     stripeSessionId: null,
     paidAt: null,
     createdAt: new Date("2026-01-01"),

@@ -39,6 +39,7 @@ export function toAdminProjectDetail(project: AdminProjectDetailPayload): AdminP
         kind: p.kind,
         amount: p.amount,
         status: p.status,
+        method: p.method,
         paidAt: p.paidAt?.toISOString() ?? null,
         stripeSessionId: p.stripeSessionId,
       })),

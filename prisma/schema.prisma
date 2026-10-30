@@ -227,8 +227,9 @@ model Payment {
   kind   PaymentKind
   amount Int // In cents
   status PaymentStatus @default(pending)
+  method PaymentMethod @default(stripe)
 
-  stripeSessionId String?   @unique // Checkout Session that paid this charge
+  stripeSessionId String?   @unique // Checkout Session that paid this charge (method stripe)
   paidAt          DateTime?
 
   createdAt DateTime @default(now())
@@ -348,6 +349,15 @@ enum PaymentStatus {
   paid
 }
 
+// How a charge was collected. Stripe is the normal path (webhook); the admin
+// records Zelle, cash or other payments by hand from the project detail.
+enum PaymentMethod {
+  stripe
+  zelle
+  cash
+  other
+}
+
 enum SubscriptionStatus {
   active
   cancelled
@@ -422,6 +432,8 @@ model Invoice {
   pdfUrl     String? // URL en Vercel Blob
   pdfBlobKey String? // Key para eliminar de Vercel Blob si es necesario
 
+  // Cómo se cobró (snapshot para el PDF): Stripe o un pago manual
+  paymentMethod   PaymentMethod @default(stripe)
   // Metadata de Stripe
   stripeSessionId String?
 

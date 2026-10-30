@@ -9,6 +9,8 @@ import { LEAD_STATUS_LABELS } from "@/lib/leadStatus";
 import CopyLinkButton from "@/components/admin/CopyLinkButton";
 import MilestoneManager from "@/components/admin/MilestoneManager";
 import ProjectStatusActions from "@/components/admin/ProjectStatusActions";
+import RecordPaymentButton from "@/components/admin/RecordPaymentButton";
+import { PAYMENT_METHOD_LABELS } from "@/lib/project/paymentMethod";
 import type { AdminProjectDetail, AdminProjectPayment } from "@/types/project";
 
 const PAYMENT_LABELS: Record<AdminProjectPayment["kind"], string> = {
@@ -146,7 +148,8 @@ export default function ProjectDetail({ project }: { project: AdminProjectDetail
                   </dd>
                 </div>
                 <p className="text-xs text-gray-500">
-                  {payment.paidAt ? `Paid ${formatDateTime(payment.paidAt)}` : "Not paid yet"}
+                  {payment.paidAt ? `Paid ${formatDate(payment.paidAt)}` : "Not paid yet"}
+                  {payment.status === "paid" ? ` · ${PAYMENT_METHOD_LABELS[payment.method]}` : null}
                   {payment.stripeSessionId ? (
                     <>
                       {" · "}
@@ -154,6 +157,15 @@ export default function ProjectDetail({ project }: { project: AdminProjectDetail
                     </>
                   ) : null}
                 </p>
+                {payment.status === "pending" ? (
+                  <div className="pt-1">
+                    <RecordPaymentButton
+                      projectId={project.id}
+                      payment={payment}
+                      label={PAYMENT_LABELS[payment.kind]}
+                    />
+                  </div>
+                ) : null}
               </div>
             ))}
           </dl>

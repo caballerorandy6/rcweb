@@ -18,8 +18,9 @@ export const PROJECT_STATUS_CLASSES: Record<ProjectStatus, string> = {
 
 /**
  * The status the admin can move a project to next. The deposit must be paid
- * before work starts, and once the balance is paid the webhook owns the
- * status (it marks the project completed), so there is nothing left to do.
+ * before work starts. A project is never completed by hand: the balance
+ * completes it, either through the Stripe webhook or when the admin records
+ * a payment received outside Stripe (recordManualPaymentAction).
  */
 export function getNextProjectStatus(
   status: ProjectStatus,
@@ -31,8 +32,6 @@ export function getNextProjectStatus(
       return "in_progress";
     case "in_progress":
       return "ready_for_payment";
-    case "ready_for_payment":
-      return "completed";
     default:
       return null;
   }

@@ -33,6 +33,11 @@ export async function updateProjectStatusAction(
       return { success: false, error: authCheck.error };
     }
 
+    // Completion belongs to the payment (webhook or recordManualPaymentAction)
+    if (status === "completed") {
+      return { success: false, error: "Record the final payment to complete the project" };
+    }
+
     // Read the charges first so a project missing a row fails before any write
     const current = await prisma.project.findUnique({
       where: { projectCode },

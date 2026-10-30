@@ -190,7 +190,7 @@ export const createContactAction = async (
 
     // 6. Enviar email al admin
     try {
-      await resend.emails.send({
+      const { error: sendError } = await resend.emails.send({
           from: "RC Web Solutions <no-reply@rcweb.dev>",
           to: [ADMIN_EMAIL],
           subject: `📩 New message from ${safeName}`,
@@ -274,6 +274,7 @@ export const createContactAction = async (
             </html>
           `,
       });
+      if (sendError) throw new Error(sendError.message);
     } catch (emailError) {
       console.error("❌ Failed to send email:", emailError);
       // Release quota on email send failure
