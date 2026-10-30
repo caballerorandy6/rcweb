@@ -1,7 +1,6 @@
 import stripe from "@/lib/stripe";
-import { prisma } from "@/lib/prisma";
-import { generateProjectCode } from "@/lib/utils";
 import { splitDepositAmount } from "@/lib/project/charges";
+import { uniqueProjectCode } from "@/lib/project/uniqueProjectCode";
 import { SITE_BASE_URL } from "@/lib/projectUrl";
 import type { InitialCheckoutMetadataInput } from "@/lib/checkoutMetadata";
 
@@ -19,20 +18,6 @@ export interface InitialPaymentInput {
   description?: string;
   /** Where the customer lands if they leave Checkout */
   cancelUrl: string;
-}
-
-// Random 6-char code; the webhook uses it as the idempotency key, so make
-// sure it is not already taken before putting it in the session
-async function uniqueProjectCode(): Promise<string> {
-  for (let attempt = 0; attempt < 5; attempt++) {
-    const code = generateProjectCode();
-    const taken = await prisma.project.findUnique({
-      where: { projectCode: code },
-      select: { id: true },
-    });
-    if (!taken) return code;
-  }
-  throw new Error("Could not generate a unique project code");
 }
 
 /**

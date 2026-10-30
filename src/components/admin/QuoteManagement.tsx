@@ -6,6 +6,7 @@ import { useRouter } from "next/navigation";
 import type { Route } from "next";
 import { toast } from "sonner";
 import {
+  BanknotesIcon,
   ClipboardDocumentIcon,
   EyeIcon,
   PaperAirplaneIcon,
@@ -175,6 +176,12 @@ export default function QuoteManagement({ quotes }: QuoteManagementProps) {
                           <div className="flex items-center gap-1 text-xs text-gray-400 mt-1.5">
                             <EyeIcon className="w-3.5 h-3.5" aria-hidden="true" />
                             {quote.viewedAt ? `Opened ${formatDate(quote.viewedAt)}` : "Not opened yet"}
+                          </div>
+                        ) : null}
+                        {quote.status === "sent" && quote.zelleRequestedAt ? (
+                          <div className="flex items-center gap-1 text-xs text-gold mt-1.5">
+                            <BanknotesIcon className="w-3.5 h-3.5" aria-hidden="true" />
+                            Zelle requested {formatDate(quote.zelleRequestedAt)}
                           </div>
                         ) : null}
                       </td>

@@ -24,6 +24,10 @@ export type AdminQuote = {
   expiresAt: string | null;
   viewedAt: string | null;
   acceptedAt: string | null;
+  /** Customer chose Zelle for the deposit on the quote page */
+  zelleRequestedAt: string | null;
+  /** Terms accepted on the quote page without a Checkout Session (Zelle) */
+  termsAcceptedAt: string | null;
   createdAt: string;
   contactId: string | null;
   projectId: string | null;

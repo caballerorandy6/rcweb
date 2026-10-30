@@ -44,3 +44,15 @@ export const LEGAL_LAST_UPDATED = {
   /** Texto visible en las páginas legales */
   label: "October 29, 2026",
 } as const;
+
+/**
+ * Where customers send a Zelle deposit (quote page and emails). While
+ * `contact` is null the Zelle option is hidden everywhere: fill it with the
+ * phone number or email enrolled in Zelle.
+ */
+export const ZELLE_PAYMENT: { recipient: string; contact: string | null } = {
+  recipient: COMPANY.name,
+  contact: null,
+};
+
+export const isZelleAvailable = () => ZELLE_PAYMENT.contact !== null;

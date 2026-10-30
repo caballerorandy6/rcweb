@@ -50,3 +50,8 @@ export {
   AdminNotificationEmail,
   type AdminNotificationEmailProps,
 } from "./AdminNotificationEmail";
+
+export {
+  ZelleRequestAdminEmail,
+  type ZelleRequestAdminEmailProps,
+} from "./ZelleRequestAdminEmail";
