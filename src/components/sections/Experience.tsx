@@ -1,5 +1,6 @@
 import { BriefcaseIcon } from "@heroicons/react/24/outline";
-import { experience } from "@/lib/data";
+import { getTranslations } from "next-intl/server";
+import { getLocalizedResume } from "@/lib/catalog";
 import Heading from "../ui/Heading";
 
 export interface ExperienceProps {
@@ -11,7 +12,11 @@ export interface ExperienceProps {
   date: string;
 }
 
-const Experience = () => {
+const Experience = async () => {
+  const [t, { experience }] = await Promise.all([
+    getTranslations("About.experience"),
+    getLocalizedResume(),
+  ]);
 
   return (
     <section
@@ -21,9 +26,9 @@ const Experience = () => {
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
         <Heading
           icon={<BriefcaseIcon className="w-8 text-gold" />}
-          text="My professional journey in software development."
+          text={t("subheading")}
         >
-          Experience
+          {t("heading")}
         </Heading>
 
         {/* Experience Cards - Zigzag Layout */}
@@ -33,7 +38,7 @@ const Experience = () => {
 
           {experience.map((item, index) => (
             <div
-              key={`${item.title}-${item.company}`}
+              key={item.key}
               className={`reveal relative flex items-center mb-12 lg:mb-16 ${
                 index % 2 === 0 ? "lg:flex-row" : "lg:flex-row-reverse"
               }`}

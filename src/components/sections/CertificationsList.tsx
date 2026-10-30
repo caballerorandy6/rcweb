@@ -3,13 +3,14 @@
 import { useCallback } from "react";
 import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/24/outline";
 import useEmblaCarousel from "embla-carousel-react";
-import Certification from './Certification';
-import { CertificationProps } from './Certification';
+import Certification, { type CertificationLabels, type CertificationProps } from "./Certification";
 
 const CertificationsList = ({
   certifications,
+  labels,
 }: {
-  certifications: CertificationProps[];
+  certifications: Omit<CertificationProps, "labels">[];
+  labels: CertificationLabels;
 }) => {
   const [emblaRef, emblaApi] = useEmblaCarousel({
     loop: true,
@@ -44,6 +45,7 @@ const CertificationsList = ({
                   tutor={certification.tutor}
                   url={certification.url}
                   pdfThumbnail={certification.pdfThumbnail}
+                  labels={labels}
                 />
               </div>
             </div>
@@ -56,7 +58,7 @@ const CertificationsList = ({
         <button
           onClick={scrollPrev}
           className="bg-gold/90 hover:bg-gold text-gray-900 p-3 rounded-full shadow-xl transition-all duration-200 hover:scale-110"
-          aria-label="Previous certification"
+          aria-label={labels.previous}
         >
           <ChevronLeftIcon className="w-6 h-6" />
         </button>
@@ -64,7 +66,7 @@ const CertificationsList = ({
         <button
           onClick={scrollNext}
           className="bg-gold/90 hover:bg-gold text-gray-900 p-3 rounded-full shadow-xl transition-all duration-200 hover:scale-110"
-          aria-label="Next certification"
+          aria-label={labels.next}
         >
           <ChevronRightIcon className="w-6 h-6" />
         </button>

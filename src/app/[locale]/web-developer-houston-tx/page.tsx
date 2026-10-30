@@ -5,7 +5,9 @@ import type { Metadata } from "next";
 import { genPageMetadata } from "@/utils/genPageMetadata";
 import { JsonLdForBreadcrumb } from "@/components/seo/JsonLdForBreadcrumb";
 import { JsonLdForLocalBusiness } from "@/components/seo/JsonLdForLocalBusiness";
-import { siteConfig } from "@/config/site";
+import { getTranslations } from "next-intl/server";
+import type { Locale } from "@/i18n/routing";
+import { localizedBreadcrumbs } from "@/lib/seo/breadcrumbs";
 import BackLink from "@/components/ui/BackLink";
 import {
   MapPinIcon,
@@ -20,12 +22,18 @@ import {
   ChatBubbleLeftRightIcon,
 } from "@heroicons/react/24/outline";
 
-export const metadata: Metadata = genPageMetadata({
-  title: "Web Developer in Houston, TX | Custom Websites for Local Businesses",
-  description:
-    "Looking for a web developer in Houston, TX? Randy Caballero builds fast, custom websites for small businesses in Katy, Sugar Land, The Heights, East Houston & beyond. Bilingual English & Spanish. Free consultation.",
-  pageRoute: "/web-developer-houston-tx",
-});
+type Props = PageProps<"/[locale]/web-developer-houston-tx">;
+
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const locale = (await params).locale as Locale;
+  const t = await getTranslations({ locale, namespace: "Houston" });
+  return genPageMetadata({
+    title: t("metadata.title"),
+    description: t("metadata.description"),
+    locale,
+    pathname: "/web-developer-houston-tx",
+  });
+}
 
 const houstonAreas = [
   "Downtown Houston",
@@ -45,94 +53,50 @@ const houstonAreas = [
   "League City",
 ];
 
-const services = [
-  {
-    icon: GlobeAltIcon,
-    title: "Custom Business Websites",
-    description:
-      "Professional websites built with Next.js and React that load fast, rank well on Google, and convert visitors into customers.",
-  },
-  {
-    icon: DevicePhoneMobileIcon,
-    title: "Mobile-First Design",
-    description:
-      "Every site is designed mobile-first, because most people looking for a local business are searching from their phones.",
-  },
-  {
-    icon: RocketLaunchIcon,
-    title: "E-Commerce Solutions",
-    description:
-      "Online stores with Stripe payments, inventory management, and everything your Houston business needs to sell online.",
-  },
-  {
-    icon: ShieldCheckIcon,
-    title: "SEO & Local Visibility",
-    description:
-      "Built-in local SEO so your business shows up when Houston customers search for your services on Google.",
-  },
-  {
-    icon: ChatBubbleLeftRightIcon,
-    title: "Bilingual Websites",
-    description:
-      "English and Spanish versions of your site, written by a native Spanish speaker, so customers can read it in the language they prefer.",
-  },
-  {
-    icon: CurrencyDollarIcon,
-    title: "Affordable Plans",
-    description:
-      "Transparent pricing starting at $1,000. No hidden fees, 50/50 payment split, and a private link to follow your project's progress.",
-  },
+// Icons per "why hire" card; the copy is Houston.services in the dictionaries
+const serviceIcons = [
+  GlobeAltIcon,
+  DevicePhoneMobileIcon,
+  RocketLaunchIcon,
+  ShieldCheckIcon,
+  ChatBubbleLeftRightIcon,
+  CurrencyDollarIcon,
 ];
 
-const caseStudies = [
-  {
-    name: "Clínica Hispana Gessner",
-    result: "Bilingual clinic website with online appointment booking",
-    industry: "Healthcare",
-    url: "https://www.clinicagessner.com/",
-  },
-  {
-    name: "Clínica Hispana Airline",
-    result: "Bilingual clinic website with local SEO for Spanish-speaking patients in Houston",
-    industry: "Healthcare",
-    url: "https://www.clinicahispanaairline.com/",
-  },
-  {
-    name: "GSM A/C & General Contractor",
-    result: "Saved 15 hours/week with automated admin dashboard and email campaigns",
-    industry: "HVAC Services",
-    url: "/case-study/gsmactx",
-  },
-  {
-    name: "Leo's Home Experts",
-    result: "Local SEO optimized landing page with video gallery and lead capture",
-    industry: "Home Services",
-    url: "https://www.ac-remodelingservice.com/",
-  },
-  {
-    name: "Dulce Antojo Snack Carts",
-    result: "Conversion-optimized landing page for event catering bookings",
-    industry: "Food & Events",
-    url: "https://dulce-antojo-snack-carts.vercel.app/",
-  },
+// Names and links of the featured Houston clients; result and industry come from the dictionaries
+const caseStudyLinks = [
+  { name: "Clínica Hispana Gessner", url: "https://www.clinicagessner.com/" },
+  { name: "Clínica Hispana Airline", url: "https://www.clinicahispanaairline.com/" },
+  { name: "GSM A/C & General Contractor", url: "/case-study/gsmactx" },
+  { name: "Leo's Home Experts", url: "https://www.ac-remodelingservice.com/" },
+  { name: "Dulce Antojo Snack Carts", url: "https://dulce-antojo-snack-carts.vercel.app/" },
 ];
 
-export default function WebDeveloperHoustonPage() {
+export default async function WebDeveloperHoustonPage({ params }: Props) {
+  const locale = (await params).locale as Locale;
+  const [t, common, crumbs] = await Promise.all([
+    getTranslations("Houston"),
+    getTranslations("Common"),
+    localizedBreadcrumbs(locale, [
+      { key: "home", pathname: "/" },
+      { key: "houston", pathname: "/web-developer-houston-tx" },
+    ]),
+  ]);
+  const services = (t.raw("services") as { title: string; description: string }[]).map(
+    (service, i) => ({ ...service, icon: serviceIcons[i] })
+  );
+  const caseStudies = (t.raw("caseStudies") as { result: string; industry: string }[]).map(
+    (study, i) => ({ ...study, ...caseStudyLinks[i] })
+  );
+  const whatYouGet = t.raw("whatYouGet") as string[];
+
   return (
     <>
-      <JsonLdForBreadcrumb
-        itemList={[
-          { name: "Home", item: siteConfig.baseUrl },
-          {
-            name: "Web Developer Houston TX",
-            item: `${siteConfig.baseUrl}/web-developer-houston-tx`,
-          },
-        ]}
-      />
+      <JsonLdForBreadcrumb itemList={crumbs} />
       <JsonLdForLocalBusiness />
 
       <div className="bg-gray-950">
-        <BackLink href="/" label="Back to Home" />
+        <BackLink href="/" label={common("backToHome")} />
         {/* Hero Section */}
         <section className="relative pt-8 pb-20 sm:pt-12 sm:pb-28">
           <div className="absolute inset-0 bg-linear-to-b from-gold/5 via-transparent to-transparent" />
@@ -140,25 +104,19 @@ export default function WebDeveloperHoustonPage() {
             <div className="mx-auto max-w-3xl text-center">
               <div className="inline-flex items-center gap-2 rounded-full bg-gold/10 px-4 py-1.5 text-sm font-medium text-gold mb-8">
                 <MapPinIcon className="h-4 w-4" />
-                Houston, Texas
+                {t("badge")}
               </div>
 
               <h1 className="text-4xl tracking-tight text-white sm:text-6xl font-iceland">
-                Web Developer in{" "}
-                <span className="text-gold">Houston, TX</span>
+                {t("title")} <span className="text-gold">{t("titleHighlight")}</span>
               </h1>
 
-              <p className="mt-6 text-lg leading-8 text-gray-300 font-inter">
-                I&apos;m Randy Caballero, a full-stack web developer based in
-                Houston, Texas. I build fast, modern websites and web
-                applications that help local businesses grow online. Bilingual
-                service in English and Spanish.
-              </p>
+              <p className="mt-6 text-lg leading-8 text-gray-300 font-inter">{t("intro")}</p>
 
               <div className="mt-10 flex flex-col sm:flex-row gap-4 justify-center">
                 <Button href="/schedule" size="lg">
                   <CalendarDaysIcon className="h-5 w-5" />
-                  Free Consultation
+                  {t("freeConsultation")}
                 </Button>
                 <Button href={COMPANY.phoneHref} variant="secondary">
                   <PhoneIcon className="h-5 w-5" />
@@ -174,12 +132,9 @@ export default function WebDeveloperHoustonPage() {
           <div className="mx-auto max-w-7xl px-6 lg:px-8">
             <div className="mx-auto max-w-2xl text-center mb-16">
               <h2 className="text-3xl tracking-tight text-white sm:text-4xl font-iceland">
-                Why Hire a Local Houston Web Developer?
+                {t("whyTitle")}
               </h2>
-              <p className="mt-4 text-lg text-gray-400 font-inter">
-                Working with a developer who knows Houston means your website is
-                built to reach the right customers in your area.
-              </p>
+              <p className="mt-4 text-lg text-gray-400 font-inter">{t("whyText")}</p>
             </div>
 
             <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3">
@@ -206,12 +161,9 @@ export default function WebDeveloperHoustonPage() {
           <div className="mx-auto max-w-7xl px-6 lg:px-8">
             <div className="mx-auto max-w-2xl text-center mb-16">
               <h2 className="text-3xl tracking-tight text-white sm:text-4xl font-iceland">
-                Houston Businesses I&apos;ve Helped
+                {t("helpedTitle")}
               </h2>
-              <p className="mt-4 text-lg text-gray-400 font-inter">
-                Real results for real Houston businesses — from HVAC contractors
-                to home service companies.
-              </p>
+              <p className="mt-4 text-lg text-gray-400 font-inter">{t("helpedText")}</p>
             </div>
 
             <div className="grid grid-cols-1 gap-8 lg:grid-cols-3">
@@ -233,7 +185,7 @@ export default function WebDeveloperHoustonPage() {
                     {study.result}
                   </p>
                   <span className="mt-4 inline-flex text-sm font-medium text-gold group-hover:underline font-inter">
-                    View project &rarr;
+                    {t("viewProject")} &rarr;
                   </span>
                 </a>
               ))}
@@ -246,13 +198,9 @@ export default function WebDeveloperHoustonPage() {
           <div className="mx-auto max-w-7xl px-6 lg:px-8">
             <div className="mx-auto max-w-2xl text-center mb-16">
               <h2 className="text-3xl tracking-tight text-white sm:text-4xl font-iceland">
-                Serving the Greater Houston Area
+                {t("areasTitle")}
               </h2>
-              <p className="mt-4 text-lg text-gray-400 font-inter">
-                Based in Houston, I work with businesses across the entire
-                metropolitan area. 100% remote-friendly with in-person meetings
-                available.
-              </p>
+              <p className="mt-4 text-lg text-gray-400 font-inter">{t("areasText")}</p>
             </div>
 
             <div className="flex flex-wrap justify-center gap-3">
@@ -274,21 +222,12 @@ export default function WebDeveloperHoustonPage() {
           <div className="mx-auto max-w-7xl px-6 lg:px-8">
             <div className="mx-auto max-w-2xl text-center mb-16">
               <h2 className="text-3xl tracking-tight text-white sm:text-4xl font-iceland">
-                What You Get Working With Me
+                {t("whatYouGetTitle")}
               </h2>
             </div>
 
             <div className="mx-auto max-w-3xl">
-              {[
-                "Custom website built with Next.js — the same technology used by Nike, Netflix, and Twitch",
-                "Mobile-responsive design that works on every device",
-                "Built-in SEO so Google can find your Houston business",
-                "Fast loading speeds (under 2 seconds) that keep visitors engaged",
-                "Bilingual support — I speak English and Spanish fluently",
-                "Private link to follow your project's progress — no account needed",
-                "50/50 payment plan — pay half upfront, half on delivery",
-                "Free 30-minute consultation — no obligation, no pressure",
-              ].map((item) => (
+              {whatYouGet.map((item) => (
                 <div
                   key={item}
                   className="flex gap-4 py-4 border-b border-white/5 last:border-b-0"
@@ -306,21 +245,17 @@ export default function WebDeveloperHoustonPage() {
           <div className="mx-auto max-w-7xl px-6 lg:px-8">
             <div className="mx-auto max-w-2xl text-center">
               <h2 className="text-3xl tracking-tight text-white sm:text-4xl font-iceland">
-                Ready to Grow Your Houston Business Online?
+                {t("ctaTitle")}
               </h2>
-              <p className="mt-6 text-lg text-gray-400 font-inter">
-                Let&apos;s talk about your project. Book a free 30-minute
-                consultation and I&apos;ll show you exactly how a custom website
-                can bring more customers to your business.
-              </p>
+              <p className="mt-6 text-lg text-gray-400 font-inter">{t("ctaText")}</p>
               <div className="mt-10 flex flex-col sm:flex-row gap-4 justify-center">
                 <Button href="/schedule" size="lg">
                   <CalendarDaysIcon className="h-5 w-5" />
-                  Schedule Free Consultation
+                  {t("scheduleCta")}
                 </Button>
               </div>
               <p className="mt-6 text-sm text-gray-500 font-inter">
-                Or call directly:{" "}
+                {common("orCall")}{" "}
                 <a href={COMPANY.phoneHref} className="text-gold hover:underline">
                   {COMPANY.phoneDisplay}
                 </a>

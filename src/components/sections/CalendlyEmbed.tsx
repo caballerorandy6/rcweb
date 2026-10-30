@@ -10,14 +10,14 @@ const CALENDLY_URL =
   "https://calendly.com/rcwebsolutions/30min";
 
 /** Calendly stays folded: the widget script only loads when someone asks for it */
-export default function CalendlyEmbed() {
+export default function CalendlyEmbed({ label }: { label: string }) {
   const [open, setOpen] = useState(false);
 
   if (!open) {
     return (
       <Button variant="secondary" size="lg" fullWidth onClick={() => setOpen(true)}>
         <CalendarDaysIcon className="h-5 w-5" aria-hidden="true" />
-        Pick a time on the calendar
+        {label}
       </Button>
     );
   }

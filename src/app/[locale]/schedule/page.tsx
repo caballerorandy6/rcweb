@@ -1,29 +1,37 @@
+import type { Metadata } from "next";
+import { getTranslations } from "next-intl/server";
+
+import type { Locale } from "@/i18n/routing";
 import { genPageMetadata } from "@/utils/genPageMetadata";
 import { JsonLdForBreadcrumb } from "@/components/seo/JsonLdForBreadcrumb";
-import { siteConfig } from "@/config/site";
+import { localizedBreadcrumbs } from "@/lib/seo/breadcrumbs";
+import { getLocalizedCatalog } from "@/lib/catalog";
 import BackLink from "@/components/ui/BackLink";
 import ScheduleContent from "@/components/sections/ScheduleContent";
-import { serviceOptions } from "@/lib/data";
 
-export const metadata = genPageMetadata({
-  title: "Let's Talk About Your Project",
-  description:
-    "Tell RC Web Solutions what you need and how you'd like to be contacted: form, phone, WhatsApp, email or a free 30-minute call. You get a clear quote within 24 hours.",
-  pageRoute: "/schedule",
-});
+export async function generateMetadata({ params }: PageProps<"/[locale]/schedule">): Promise<Metadata> {
+  const locale = (await params).locale as Locale;
+  const t = await getTranslations({ locale, namespace: "Schedule" });
+  return genPageMetadata({ title: t("metadata.title"), description: t("metadata.description"), locale, pathname: "/schedule" });
+}
 
+export default async function SchedulePage({ params }: PageProps<"/[locale]/schedule">) {
+  const locale = (await params).locale as Locale;
+  const [t, crumbs, { offers }] = await Promise.all([
+    getTranslations("Schedule"),
+    localizedBreadcrumbs(locale, [
+      { key: "home", pathname: "/" },
+      { key: "letsTalk", pathname: "/schedule" },
+    ]),
+    getLocalizedCatalog(locale),
+  ]);
+  const serviceOptions = offers.map(({ id, title }) => ({ id, title }));
 
-export default function SchedulePage() {
   return (
     <>
-      <JsonLdForBreadcrumb
-        itemList={[
-          { name: "Home", item: siteConfig.baseUrl },
-          { name: "Let's Talk", item: `${siteConfig.baseUrl}/schedule` },
-        ]}
-      />
+      <JsonLdForBreadcrumb itemList={crumbs} />
       <div className="bg-gray-950">
-        <BackLink href={{ pathname: "/", hash: "contact" }} label="Back to Contact" />
+        <BackLink href={{ pathname: "/", hash: "contact" }} label={t("back")} />
       </div>
       <ScheduleContent serviceOptions={serviceOptions} />
     </>

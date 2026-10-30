@@ -10,11 +10,13 @@ import {
   MapIcon,
 } from "@heroicons/react/24/outline";
 import { useEffect, useRef } from "react";
+import { useTranslations } from "next-intl";
 
 // Staggered entrance: each block waits a bit longer than the previous one
 const enter = (step: number) => ({ animationDelay: `${300 + step * 200}ms` });
 
 export default function NotFound() {
+  const t = useTranslations("NotFound");
   const videoRef = useRef<HTMLVideoElement>(null);
 
   useEffect(() => {
@@ -65,13 +67,9 @@ export default function NotFound() {
         {/* Error Message */}
         <div className="animate-enter" style={enter(2)}>
           <h2 className="text-3xl sm:text-4xl font-iceland text-white mb-4">
-            Page Not Found
+            {t("title")}
           </h2>
-          <p className="text-lg text-gray-300 mb-8 max-w-2xl mx-auto font-inter leading-relaxed">
-            Oops! Looks like you&apos;ve ventured into uncharted territory. The
-            page you&apos;re looking for doesn&apos;t exist or has been moved to
-            another dimension.
-          </p>
+          <p className="text-lg text-gray-300 mb-8 max-w-2xl mx-auto font-inter leading-relaxed">{t("text")}</p>
         </div>
 
         {/* Fun Stats */}
@@ -81,15 +79,15 @@ export default function NotFound() {
         >
           <div className="bg-gray-900/50 backdrop-blur-xs border border-gold/20 rounded-lg p-3">
             <p className="text-2xl font-bold text-gold">404</p>
-            <p className="text-xs text-gray-400 font-inter">Error Code</p>
+            <p className="text-xs text-gray-400 font-inter">{t("errorCode")}</p>
           </div>
           <div className="bg-gray-900/50 backdrop-blur-xs border border-gold/20 rounded-lg p-3">
             <p className="text-2xl font-bold text-gold">0</p>
-            <p className="text-xs text-gray-400 font-inter">Pages Found</p>
+            <p className="text-xs text-gray-400 font-inter">{t("pagesFound")}</p>
           </div>
           <div className="bg-gray-900/50 backdrop-blur-xs border border-gold/20 rounded-lg p-3">
             <p className="text-2xl font-bold text-gold">∞</p>
-            <p className="text-xs text-gray-400 font-inter">Possibilities</p>
+            <p className="text-xs text-gray-400 font-inter">{t("possibilities")}</p>
           </div>
         </div>
 
@@ -100,7 +98,7 @@ export default function NotFound() {
         >
           <Button href="/" size="lg">
             <HomeIcon className="w-5 h-5 group-hover:-translate-x-1 transition-transform" />
-            Go Back Home
+            {t("goHome")}
           </Button>
 
           <Button
@@ -109,7 +107,7 @@ export default function NotFound() {
             onClick={() => window.history.back()}
           >
             <ArrowLeftIcon className="w-5 h-5 group-hover:-translate-x-1 transition-transform" />
-            Previous Page
+            {t("previous")}
           </Button>
         </div>
 
@@ -117,19 +115,19 @@ export default function NotFound() {
         <div className="mt-12 animate-enter" style={enter(5)}>
           <div className="inline-flex items-center gap-2 text-gray-400 font-inter text-sm">
             <MapIcon className="w-4 h-4" />
-            <span>Lost? Try the </span>
+            <span>{t("lost")} </span>
             <a
               href="/sitemap.xml"
               className="text-gold hover:text-gold/80 transition-colors underline"
             >
-              sitemap
+              {t("sitemap")}
             </a>
-            <span> or </span>
+            <span> {t("or")} </span>
             <Link
               href={{ pathname: "/", hash: "contact" }}
               className="text-gold hover:text-gold/80 transition-colors underline"
             >
-              contact me
+              {t("contact")}
             </Link>
           </div>
         </div>

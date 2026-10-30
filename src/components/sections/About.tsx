@@ -5,8 +5,19 @@ import Heading from "@/components/ui/Heading";
 import Button from "@/components/ui/Button";
 import { UserPlusIcon, MapPinIcon } from "@heroicons/react/24/outline";
 import Script from "next/script";
+import { getLocale, getTranslations } from "next-intl/server";
+import { localizePathname } from "@/i18n/paths";
+import type { Locale } from "@/i18n/routing";
 
-const About = () => {
+const About = async () => {
+  const [t, locale] = await Promise.all([getTranslations("About"), getLocale()]);
+  const gold = (chunks: React.ReactNode) => (
+    <strong className="text-gold font-semibold">{chunks}</strong>
+  );
+  const goldText = (chunks: React.ReactNode) => (
+    <span className="text-gold font-medium">{chunks}</span>
+  );
+
   return (
     <>
       {/* Schema Markup para SEO */}
@@ -18,11 +29,10 @@ const About = () => {
             "@context": "https://schema.org",
             "@type": "Person",
             name: "Randy Caballero",
-            jobTitle: "Full-Stack Web Developer",
-            description:
-              "Full-stack developer with 6+ years building React and Next.js applications. Founder of RC Web Solutions LLC, based in Houston, TX, with 20+ production sites shipped for small businesses across the US.",
+            jobTitle: t("person.jobTitle"),
+            description: t("person.description"),
             image: `${siteConfig.baseUrl}/randy-caballero-web-developer.avif`,
-            url: `${siteConfig.baseUrl}/about`,
+            url: `${siteConfig.baseUrl}${localizePathname("/about", locale as Locale)}`,
             sameAs: [
               "https://www.linkedin.com/in/caballerorandy",
               "https://github.com/caballerorandy6",
@@ -62,46 +72,19 @@ const About = () => {
           <Heading
           as="h1"
             icon={<UserPlusIcon className="w-8 text-gold" />}
-            text="The Developer Behind RC Web Solutions"
+            text={t("subheading")}
           >
-            Meet the Founder
+            {t("heading")}
           </Heading>
 
           <div className="mt-16 grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center">
             <div className="text-base font-inter max-w-xl mx-auto lg:mx-0 lg:max-w-none w-full">
               <p className="text-sm sm:text-base text-gray-100 leading-relaxed pb-10 text-justify lg:text-left reveal">
-                Full-stack developer with{" "}
-                <strong className="text-gold font-semibold">
-                  6+ years of experience
-                </strong>{" "}
-                building React and Next.js applications. Through RC Web
-                Solutions I have built and shipped{" "}
-                <strong className="text-gold font-semibold">
-                  20+ production sites
-                </strong>{" "}
-                for small businesses, most of them in the Houston area, from
-                the frontend and APIs to the database and deployment. I work
-                remotely with clients anywhere: video calls, a staging
-                site you can check at any time, and Stripe payments. I started at
-                Revature in 2022 and, alongside RC Web Solutions, spent 2024–2025
-                as a software developer at Atser Systems Inc., contributing to{" "}
-                <strong className="text-gold font-semibold">
-                  full-stack application development
-                </strong>{" "}
-                in Agile teams.
+                {t.rich("bio1", { strong: gold })}
               </p>
 
               <p className="text-sm sm:text-base text-gray-100 leading-relaxed text-justify lg:text-left reveal">
-                I work across the full stack with{" "}
-                <span className="text-gold font-medium">
-                  Next.js, TypeScript, Node.js, PostgreSQL, and Prisma
-                </span>
-                , and I also own the layer that brings customers in:{" "}
-                <span className="text-gold font-medium">
-                  Google Ads, Meta Ads, conversion tracking, and local SEO
-                </span>
-                . On one client site I cut load time from 7–8 seconds to under 1
-                second, which restored the performance of their paid campaigns.
+                {t.rich("bio2", { gold: goldText })}
               </p>
             </div>
 
@@ -109,7 +92,7 @@ const About = () => {
               <figure className="relative">
                 <Image
                   src="/randy-caballero-web-developer.avif"
-                  alt="Randy Caballero - Full-Stack Web Developer in Houston, TX"
+                  alt={t("imageAlt")}
                   width={510}
                   height={340}
                   sizes="(max-width: 768px) 100vw, 510px"
@@ -122,7 +105,7 @@ const About = () => {
                   <div className="flex items-center gap-2">
                     <MapPinIcon className="w-4 h-4 text-gold" />
                     <span className="text-white text-sm font-inter font-medium">
-                      Houston, TX
+                      {t("location")}
                     </span>
                   </div>
                 </div>
@@ -130,12 +113,8 @@ const About = () => {
 
               {/* Texto de ubicación debajo de la foto */}
               <div className="text-center lg:text-right mt-6 space-y-1">
-                <p className="text-gold font-inter text-sm font-semibold">
-                  Based in Houston, TX
-                </p>
-                <p className="text-gray-400 font-inter text-xs">
-                  Working with clients anywhere
-                </p>
+                <p className="text-gold font-inter text-sm font-semibold">{t("basedIn")}</p>
+                <p className="text-gray-400 font-inter text-xs">{t("anywhere")}</p>
               </div>
 
               {/* Download CV Button */}
@@ -146,7 +125,7 @@ const About = () => {
                 variant="secondary"
                 className="mt-6"
               >
-                Download CV
+                {t("downloadCv")}
               </Button>
             </div>
           </div>

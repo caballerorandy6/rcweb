@@ -14,6 +14,8 @@ export const CLIENT_NAMESPACES = [
   "Marquee",
   "FloatingCta",
   "Chat",
+  "NotFound",
+  "ErrorPage",
 ] as const satisfies readonly (keyof Messages)[];
 
 export type ClientNamespace = (typeof CLIENT_NAMESPACES)[number];

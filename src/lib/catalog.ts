@@ -1,15 +1,21 @@
 import { getLocale, getTranslations } from "next-intl/server";
 import {
   buildOffer,
+  certificationShapes,
+  experienceShapes,
   faqValues,
   FAQ_KEYS,
+  findOfferBySlug,
   offers,
   processSteps,
   projects,
+  servicePageShapes,
   testimonials,
   type Offer,
   type OfferCopy,
   type PriceLabels,
+  type ServicePage,
+  type ServicePageCopy,
 } from "@/lib/data";
 import type { Locale } from "@/i18n/routing";
 
@@ -86,3 +92,46 @@ export async function getLocalizedCatalog(locale?: Locale) {
 }
 
 export type LocalizedCatalog = Awaited<ReturnType<typeof getLocalizedCatalog>>;
+
+/** Service pages (long-form copy) in the request language */
+export async function getLocalizedServicePages(locale?: Locale): Promise<ServicePage[]> {
+  const resolved = locale ?? ((await getLocale()) as Locale);
+  const t = await getTranslations({ locale: resolved, namespace: "Services" });
+  const raw = t.raw as (path: string) => unknown;
+  return servicePageShapes.map((shape) => ({
+    ...shape,
+    ...(raw(`pages.${shape.offerId}`) as ServicePageCopy),
+  }));
+}
+
+/** Localized offer + page for a /services/[slug] URL in either language; null when unknown */
+export async function getLocalizedServicePage(slug: string, locale?: Locale) {
+  const base = findOfferBySlug(slug);
+  if (!base) return null;
+  const [{ offers: localizedOffers, priceLabels }, pages] = await Promise.all([
+    getLocalizedCatalog(locale),
+    getLocalizedServicePages(locale),
+  ]);
+  const offer = localizedOffers.find((o) => o.id === base.id)!;
+  const page = pages.find((p) => p.offerId === base.id)!;
+  return { offer, page, priceLabels };
+}
+
+/** Résumé entries and certifications with the copy in the request language */
+export async function getLocalizedResume(locale?: Locale) {
+  const resolved = locale ?? ((await getLocale()) as Locale);
+  const t = await getTranslations({ locale: resolved, namespace: "About" });
+  return {
+    experience: experienceShapes.map((shape) => ({
+      ...shape,
+      title: t(`experience.items.${shape.key}.title`),
+      description: t(`experience.items.${shape.key}.description`),
+      date: t(`experience.items.${shape.key}.date`),
+    })),
+    certifications: certificationShapes.map((shape) => ({
+      ...shape,
+      name: t(`certifications.items.${shape.key}.name`),
+      description: t(`certifications.items.${shape.key}.description`),
+    })),
+  };
+}

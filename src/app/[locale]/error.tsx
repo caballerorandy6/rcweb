@@ -2,6 +2,7 @@
 
 import * as Sentry from "@sentry/nextjs";
 import { useEffect } from "react";
+import { useTranslations } from "next-intl";
 import Button from "@/components/ui/Button";
 
 export default function Error({
@@ -11,6 +12,7 @@ export default function Error({
   error: Error & { digest?: string };
   reset: () => void;
 }) {
+  const t = useTranslations("ErrorPage");
   useEffect(() => {
     Sentry.captureException(error);
   }, [error]);
@@ -36,23 +38,21 @@ export default function Error({
             </svg>
           </div>
           <h1 className="text-2xl font-iceland text-white mb-4">
-            Something went wrong
+            {t("title")}
           </h1>
-          <p className="text-white/60 font-inter mb-8">
-            Sorry, an unexpected error has occurred.
-          </p>
+          <p className="text-white/60 font-inter mb-8">{t("text")}</p>
         </div>
 
         <div className="flex flex-col sm:flex-row gap-4 justify-center">
-          <Button onClick={reset}>Try again</Button>
+          <Button onClick={reset}>{t("tryAgain")}</Button>
           <Button href="/" variant="secondary">
-            Go home
+            {t("goHome")}
           </Button>
         </div>
 
         {error.digest && (
           <p className="mt-8 text-xs text-white/50 font-inter">
-            Error ID: {error.digest}
+            {t("errorId", { id: error.digest })}
           </p>
         )}
       </div>

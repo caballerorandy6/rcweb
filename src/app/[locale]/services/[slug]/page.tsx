@@ -4,68 +4,78 @@ import type { Metadata } from "next";
 import { Link, type Href } from "@/i18n/navigation";
 import { notFound } from "next/navigation";
 
+import { getTranslations } from "next-intl/server";
 import { JsonLdForBreadcrumb } from "@/components/seo/JsonLdForBreadcrumb";
 import { siteConfig } from "@/config/site";
-import { getServicePage, offerPriceParts, offers, projects } from "@/lib/data";
+import { localizePathname } from "@/i18n/paths";
+import type { Locale } from "@/i18n/routing";
+import { getLocalizedCatalog, getLocalizedServicePage } from "@/lib/catalog";
+import { offerPriceParts, offerSlug, offers } from "@/lib/data";
+import { localizedBreadcrumbs } from "@/lib/seo/breadcrumbs";
 import { offerToSchemaOffer } from "@/lib/seo/offerJsonLd";
+import { genPageMetadata } from "@/utils/genPageMetadata";
 import {
   CalendarDaysIcon,
   PhoneIcon,
   ArrowLeftIcon,
 } from "@heroicons/react/24/outline";
 
+type Props = PageProps<"/[locale]/services/[slug]">;
+
 export function generateStaticParams() {
-  return offers.map((offer) => ({ slug: offer.slug }));
+  return offers.flatMap((offer) => [{ slug: offer.slug }, { slug: offer.slugEs }]);
 }
 
-export async function generateMetadata({
-  params,
-}: {
-  params: Promise<{ slug: string }>;
-}): Promise<Metadata> {
-  const { slug } = await params;
-  const entry = getServicePage(slug);
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const { slug, locale: rawLocale } = await params;
+  const locale = rawLocale as Locale;
+  const entry = await getLocalizedServicePage(slug, locale);
 
   if (!entry) return {};
 
-  const service = entry.page;
-  const url = `${siteConfig.baseUrl}/services/${slug}`;
-
+  // hreflang pairs point at each language's own slug
+  const localizedParams = (target: Locale) => ({ slug: offerSlug(entry.offer, target) });
+  const meta = genPageMetadata({
+    title: entry.page.metaTitle,
+    description: entry.page.metaDescription,
+    locale,
+    pathname: "/services/[slug]",
+    params: localizedParams(locale),
+  });
   return {
-    title: service.metaTitle,
-    description: service.metaDescription,
-    alternates: { canonical: url },
-    openGraph: {
-      title: `${service.metaTitle} | ${siteConfig.siteName}`,
-      description: service.metaDescription,
-      url,
-      siteName: siteConfig.siteName,
-      images: [{ url: siteConfig.defaultOgImg, width: 1200, height: 630, alt: service.metaTitle }],
-      locale: "en_US",
-      type: "website",
-    },
-    twitter: {
-      card: "summary_large_image",
-      title: `${service.metaTitle} | ${siteConfig.siteName}`,
-      description: service.metaDescription,
-      images: [siteConfig.defaultOgImg],
+    ...meta,
+    alternates: {
+      canonical: meta.alternates?.canonical,
+      languages: {
+        en: `${siteConfig.baseUrl}${localizePathname("/services/[slug]", "en", localizedParams("en"))}`,
+        es: `${siteConfig.baseUrl}${localizePathname("/services/[slug]", "es", localizedParams("es"))}`,
+        "x-default": `${siteConfig.baseUrl}${localizePathname("/services/[slug]", "en", localizedParams("en"))}`,
+      },
     },
   };
 }
 
-export default async function ServicePage({
-  params,
-}: {
-  params: Promise<{ slug: string }>;
-}) {
-  const { slug } = await params;
-  const entry = getServicePage(slug);
+export default async function ServicePage({ params }: Props) {
+  const { slug, locale: rawLocale } = await params;
+  const locale = rawLocale as Locale;
+  const entry = await getLocalizedServicePage(slug, locale);
 
   if (!entry) notFound();
 
-  const { offer, page: service } = entry;
-  const { prefix, amount } = offerPriceParts(offer);
-  const priceParts = { prefix: prefix && "Starting at", amount };
+  const [t, common, { projects }, crumbs] = await Promise.all([
+    getTranslations("Services.detail"),
+    getTranslations("Common"),
+    getLocalizedCatalog(locale),
+    localizedBreadcrumbs(locale, [
+      { key: "home", pathname: "/" },
+      { key: "services", pathname: "/services" },
+      { name: entry.offer.title, pathname: "/services/[slug]", params: { slug: offerSlug(entry.offer, locale) } },
+    ]),
+  ]);
+
+  const { offer, page: service, priceLabels } = entry;
+  const { prefix, amount } = offerPriceParts(offer, priceLabels);
+  const priceParts = { prefix: prefix && t("startingAt"), amount };
   // Offers that need a scope first go to /schedule; the fixed-price plan is on the pricing section
   const primaryHref: Href = offer.quoteCta
     ? { pathname: "/schedule", query: { service: offer.id } }
@@ -98,23 +108,14 @@ export default async function ServicePage({
     },
     availableChannel: {
       "@type": "ServiceChannel",
-      serviceUrl: `${siteConfig.baseUrl}/schedule`,
+      serviceUrl: `${siteConfig.baseUrl}${localizePathname("/schedule", locale)}`,
       servicePhone: "+1-346-375-7534",
     },
   };
 
   return (
     <>
-      <JsonLdForBreadcrumb
-        itemList={[
-          { name: "Home", item: siteConfig.baseUrl },
-          { name: "Services", item: `${siteConfig.baseUrl}/services` },
-          {
-            name: offer.title,
-            item: `${siteConfig.baseUrl}/services/${slug}`,
-          },
-        ]}
-      />
+      <JsonLdForBreadcrumb itemList={crumbs} />
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(serviceJsonLd) }}
@@ -131,7 +132,7 @@ export default async function ServicePage({
                 className="inline-flex items-center gap-2 text-sm font-inter text-gold/70 hover:text-gold transition-colors mb-8"
               >
                 <ArrowLeftIcon className="h-4 w-4" />
-                All Services
+                {t("allServices")}
               </Link>
 
               <h1 className="text-4xl tracking-tight text-white sm:text-6xl font-iceland">
@@ -152,7 +153,7 @@ export default async function ServicePage({
                   {priceParts.amount}
                 </span>
                 <span className="text-sm font-inter text-gold/70">
-                  {offer.quoteCta ? `Typically ${offer.range}` : offer.range} •{" "}
+                  {offer.quoteCta ? t("typically", { range: offer.range }) : offer.range} •{" "}
                   {offer.duration}
                 </span>
               </div>
@@ -187,7 +188,7 @@ export default async function ServicePage({
           <div className="mx-auto max-w-7xl px-6 lg:px-8">
             <div className="mx-auto max-w-2xl text-center mb-16">
               <h2 className="text-3xl tracking-tight text-white sm:text-4xl font-iceland">
-                What&apos;s Included
+                {t("included")}
               </h2>
             </div>
 
@@ -215,11 +216,9 @@ export default async function ServicePage({
             <div className="mx-auto max-w-7xl px-6 lg:px-8">
               <div className="mx-auto max-w-2xl text-center mb-16">
                 <h2 className="text-3xl tracking-tight text-white sm:text-4xl font-iceland">
-                  Related Projects
+                  {t("related")}
                 </h2>
-                <p className="mt-4 text-lg text-gray-400 font-inter">
-                  Houston businesses I&apos;ve built this type of solution for.
-                </p>
+                <p className="mt-4 text-lg text-gray-400 font-inter">{t("relatedIntro")}</p>
               </div>
 
               <div className="mx-auto max-w-4xl grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3">
@@ -238,7 +237,7 @@ export default async function ServicePage({
                       {project.description}
                     </p>
                     <span className="mt-4 inline-flex text-sm font-medium text-gold group-hover:underline font-inter">
-                      Visit site &rarr;
+                      {t("visitSite")} &rarr;
                     </span>
                   </a>
                 ))}
@@ -252,13 +251,9 @@ export default async function ServicePage({
           <div className="mx-auto max-w-7xl px-6 lg:px-8">
             <div className="mx-auto max-w-2xl text-center">
               <h2 className="text-3xl tracking-tight text-white sm:text-4xl font-iceland">
-                Ready to Get Started?
+                {t("readyTitle")}
               </h2>
-              <p className="mt-6 text-lg text-gray-400 font-inter">
-                Book a free 30-minute consultation. I&apos;ll review your
-                current situation and show you exactly what I can build for your
-                business.
-              </p>
+              <p className="mt-6 text-lg text-gray-400 font-inter">{t("readyText")}</p>
               <div className="mt-10">
                 <Button href={primaryHref} size="lg">
                   <CalendarDaysIcon className="h-5 w-5" />
@@ -266,12 +261,9 @@ export default async function ServicePage({
                 </Button>
               </div>
               <p className="mt-6 text-sm text-gray-400 font-inter">
-                Or call directly:{" "}
-                <a
-                  href="tel:+13463757534"
-                  className="text-gold hover:underline"
-                >
-                  (346) 375-7534
+                {common("orCall")}{" "}
+                <a href={COMPANY.phoneHref} className="text-gold hover:underline">
+                  {COMPANY.phoneDisplay}
                 </a>
               </p>
             </div>
