@@ -106,6 +106,12 @@ export const metadata: Metadata = {
   },
 };
 
+// Every page renders per request: the Content-Security-Policy carries a
+// fresh nonce (src/proxy.ts) that Next.js stamps on its scripts while
+// rendering, and a page built ahead of time would have none. The CDN keeps
+// serving the bundles, fonts and images; only the HTML is generated live.
+export const dynamic = "force-dynamic";
+
 /** Ad pixels ship only while a paid campaign is configured (see MarketingPixels). */
 const hasMarketingPixels = Boolean(
   process.env.NEXT_PUBLIC_FACEBOOK_PIXEL_ID ||
