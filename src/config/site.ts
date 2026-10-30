@@ -49,7 +49,5 @@ export const siteConfig: SiteConfig = {
     x: "https://x.com/RCWeb2025",
     // Approved 2026-10-25
     yelp: "https://www.yelp.com/biz/rc-web-solutions-missouri-city",
-    // Approved 2026-10-25
-    yelp: "https://www.yelp.com/biz/rc-web-solutions-missouri-city",
   },
 };
