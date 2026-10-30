@@ -2,7 +2,6 @@
 
 import { NextResponse } from "next/server";
 import Stripe from "stripe";
-import * as Sentry from "@sentry/nextjs";
 import { prisma } from "@/lib/prisma";
 import stripe from "@/lib/stripe";
 import { Resend } from "resend";
@@ -11,13 +10,12 @@ import { ADMIN_EMAIL } from "@/lib/email/adminEmail";
 import { LEGAL_LAST_UPDATED } from "@/lib/company";
 import { toSubscriptionStatus } from "@/lib/subscriptionStatus";
 import { getProjectCharges, isPaid } from "@/lib/project/charges";
-import { linkProjectToContact } from "@/lib/project/linkToContact";
-import { markQuoteAccepted } from "@/lib/quote/markQuoteAccepted";
+import { createProjectFromDeposit } from "@/lib/project/createProjectFromDeposit";
+import { isUniqueConstraintError } from "@/lib/prismaErrors";
 import {
   isOwnCheckoutSession,
   parseCheckoutMetadata,
 } from "@/lib/checkoutMetadata";
-import type { Prisma } from "@/generated/prisma/client";
 import {
   sendSubscriptionConfirmation,
   sendAdminSubscriptionNotification,
@@ -37,15 +35,6 @@ if (!process.env.RESEND_API_KEY) {
 
 const endpointSecret = process.env.STRIPE_WEBHOOK_SECRET;
 const TERMS_VERSION = LEGAL_LAST_UPDATED.version;
-
-function isUniqueConstraintError(err: unknown): boolean {
-  return (
-    typeof err === "object" &&
-    err !== null &&
-    "code" in err &&
-    (err as { code?: string }).code === "P2002"
-  );
-}
 
 export async function POST(req: Request) {
   const body = await req.text();
@@ -94,9 +83,9 @@ export async function POST(req: Request) {
     const resend = new Resend(process.env.RESEND_API_KEY!);
 
     // ============= INITIAL PAYMENT =============
-    // The only place where a Project is created. Stripe retries the event
-    // until it gets a 2xx, so the same session can arrive more than once and
-    // the unique projectCode tells whether it was already processed.
+    // createProjectFromDeposit() is the only place a Project is created. Stripe
+    // retries the event until it gets a 2xx, so the same session can arrive
+    // more than once and the unique projectCode tells whether it was processed.
     if (metadata.paymentType === "initial") {
       const {
         projectCode,
@@ -110,107 +99,26 @@ export async function POST(req: Request) {
       } = metadata;
 
       try {
-        let project = await prisma.project.findUnique({
-          where: { projectCode },
-          include: { payments: true, invoices: true },
-        });
-
-        if (project) {
-          // Same code but another session: generateProjectCode() collided and
-          // this is a different customer's deposit. Fail loudly instead of
-          // treating it as a retry (which would swallow the payment).
-          const { deposit } = getProjectCharges(project.payments);
-          if (deposit.stripeSessionId !== session.id) {
-            const error = new Error(
-              `Project code ${projectCode} already belongs to another Checkout Session`
-            );
-            Sentry.captureException(error, {
-              tags: { feature: "stripe-webhook" },
-              extra: {
-                projectId: project.id,
-                existingSessionId: deposit.stripeSessionId,
-                sessionId: session.id,
-              },
-            });
-            throw error;
-          }
-        } else {
-          // Project, its two charges and the terms acceptance in one write
-          const data = {
+        const { project, emailErrors } = await createProjectFromDeposit(
+          {
             projectCode,
-            email: customerEmail,
-            name: customerName,
+            customerEmail,
+            customerName,
             planName,
             totalAmount,
-            status: "in_progress",
-            payments: {
-              create: [
-                {
-                  kind: "deposit",
-                  amount: firstPaymentAmount,
-                  status: "paid",
-                  paidAt: new Date(),
-                  stripeSessionId: session.id,
-                },
-                { kind: "final", amount: secondPaymentAmount },
-              ],
+            firstPaymentAmount,
+            secondPaymentAmount,
+            deposit: { method: "stripe", paidAt: new Date(), stripeSessionId: session.id },
+            terms: {
+              acceptedAt: termsAcceptedAt,
+              termsVersion: TERMS_VERSION,
+              ipAddress: "stripe-checkout",
+              userAgent: "stripe-checkout",
             },
-            termsAcceptance: {
-              create: {
-                acceptedAt: termsAcceptedAt,
-                termsVersion: TERMS_VERSION,
-                plan: planName,
-                ipAddress: "stripe-checkout",
-                userAgent: "stripe-checkout",
-              },
-            },
-          } satisfies Prisma.ProjectCreateInput;
-
-          try {
-            project = await prisma.project.create({
-              data,
-              include: { payments: true, invoices: true },
-            });
-          } catch (createError) {
-            // Two deliveries of the same event raced: keep the row that won
-            if (!isUniqueConstraintError(createError)) throw createError;
-            project = await prisma.project.findUniqueOrThrow({
-              where: { projectCode },
-              include: { payments: true, invoices: true },
-            });
-          }
-        }
-
-        // Revenue attribution: tie the project to the lead with the same email
-        await linkProjectToContact(project);
-
-        // Sold through a written quote: mark it accepted and link it (never throws)
-        if (metadata.quoteId) {
-          await markQuoteAccepted(metadata.quoteId, project.id);
-        }
-
-        // ============= CREATE INVOICE AND SEND EMAIL =============
-        const emailErrors: string[] = [];
-
-        // Check if initial invoice already exists
-        const hasInitialInvoice = project.invoices.some(
-          (inv) => inv.type === "initial"
+            quoteId: metadata.quoteId,
+          },
+          resend
         );
-
-        if (!hasInitialInvoice) {
-          try {
-            await createInvoiceAndSendEmail({
-              project,
-              type: "initial",
-              resend,
-              stripeSessionId: session.id,
-            });
-          } catch (invoiceError) {
-            const errorMsg = `Error creating invoice: ${invoiceError instanceof Error ? invoiceError.message : String(invoiceError)}`;
-            console.error("❌ Invoice error:", errorMsg);
-            emailErrors.push(errorMsg);
-          }
-        }
 
         // ============= ADMIN EMAIL =============
         const adminResult = await sendAdminInitialPaymentNotification(resend, {

@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import { after } from "next/server";
 import Link from "next/link";
 import {
+  BanknotesIcon,
   CheckCircleIcon,
   ClockIcon,
   DocumentTextIcon,
@@ -10,7 +11,7 @@ import {
   XCircleIcon,
 } from "@heroicons/react/24/outline";
 import { prisma } from "@/lib/prisma";
-import { COMPANY } from "@/lib/company";
+import { COMPANY, ZELLE_PAYMENT, isZelleAvailable } from "@/lib/company";
 import { formatCurrency, formatDate } from "@/lib/utils";
 import { DEPOSIT_PERCENT, splitDepositAmount } from "@/lib/project/charges";
 import { getQuoteDisplayStatus } from "@/lib/quote/quoteStatus";
@@ -209,9 +210,52 @@ export default async function QuotePage(props: { params: Params }) {
           </p>
         </div>
 
+        {/* Zelle instructions, once the customer chose it */}
+        {status === "sent" && quote.zelleRequestedAt && ZELLE_PAYMENT.contact ? (
+          <div className="bg-gray-800 rounded-xl p-6 mb-8 border border-gold/40">
+            <div className="flex gap-4">
+              <BanknotesIcon className="w-8 h-8 text-gold shrink-0" aria-hidden="true" />
+              <div className="flex-1 font-inter">
+                <h2 className="text-xl text-white font-iceland mb-2">Pay the deposit by Zelle</h2>
+                <p className="text-gray-300 text-sm">
+                  Thank you for accepting the quote
+                  {quote.termsAcceptedAt ? ` on ${formatDate(quote.termsAcceptedAt)}` : ""}. Send the
+                  deposit from your bank&apos;s Zelle:
+                </p>
+                <dl className="mt-4 divide-y divide-gray-700 text-sm">
+                  <div className="flex justify-between gap-4 py-2">
+                    <dt className="text-gray-400">Amount</dt>
+                    <dd className="text-gold font-semibold">{formatCurrency(deposit)}</dd>
+                  </div>
+                  <div className="flex justify-between gap-4 py-2">
+                    <dt className="text-gray-400">Send to</dt>
+                    <dd className="text-white text-right">
+                      <span className="font-mono">{ZELLE_PAYMENT.contact}</span>
+                      <span className="block text-xs text-gray-400">{ZELLE_PAYMENT.recipient}</span>
+                    </dd>
+                  </div>
+                  <div className="flex justify-between gap-4 py-2">
+                    <dt className="text-gray-400">Memo</dt>
+                    <dd className="text-white font-mono">{quote.quoteNumber}</dd>
+                  </div>
+                </dl>
+                <p className="text-gray-500 text-xs mt-4">
+                  Work starts as soon as the transfer is confirmed. You&apos;ll receive your
+                  invoice and a link to follow the project by email.
+                </p>
+              </div>
+            </div>
+          </div>
+        ) : null}
+
         {/* Accept */}
         {status === "sent" && (
-          <QuoteAcceptForm token={quote.token} depositAmount={deposit} />
+          <QuoteAcceptForm
+            token={quote.token}
+            depositAmount={deposit}
+            zelleAvailable={isZelleAvailable()}
+            zelleRequested={quote.zelleRequestedAt !== null}
+          />
         )}
 
         <div className="text-center mt-8">

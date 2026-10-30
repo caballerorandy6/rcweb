@@ -59,3 +59,5 @@ export {
   sendAdminFinalPaymentNotification,
   type AdminFinalPaymentNotificationParams,
 } from "./sendAdminFinalPaymentNotification";
+
+export { sendAdminZelleRequestNotification } from "./sendAdminZelleRequestNotification";

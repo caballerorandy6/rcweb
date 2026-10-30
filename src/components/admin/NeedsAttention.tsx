@@ -77,8 +77,12 @@ export default async function NeedsAttention() {
           href: `${ADMIN_ROUTES.quotes}/${q.id}` as Route,
           primary: q.name,
           secondary: `${q.quoteNumber} · ${money(q.totalAmount)}`,
-          note: days < 0 ? "expired" : formatDeadline(q.expiresAt, now).replace("due", "expires"),
-          urgent: days <= 7,
+          note: q.zelleRequestedAt
+            ? "Zelle deposit to confirm"
+            : days < 0
+              ? "expired"
+              : formatDeadline(q.expiresAt, now).replace("due", "expires"),
+          urgent: q.zelleRequestedAt !== null || days <= 7,
         };
       }),
     },

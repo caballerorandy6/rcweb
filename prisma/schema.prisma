@@ -199,7 +199,15 @@ model Quote {
   sentAt     DateTime?
   expiresAt  DateTime? // sentAt + QUOTE_VALIDITY_DAYS; null until sent
   viewedAt   DateTime? // First visit to /quote/{token}
-  acceptedAt DateTime? // Set by the webhook when the deposit is paid
+  acceptedAt DateTime? // Set when the deposit is paid (webhook or admin)
+
+  // Customer chose to pay the deposit by Zelle on /quote/{token}: the terms
+  // acceptance is recorded here (there is no Checkout Session to carry it)
+  // and copied to TermsAcceptance when the admin creates the project.
+  zelleRequestedAt DateTime?
+  termsAcceptedAt  DateTime?
+  termsIp          String?
+  termsUserAgent   String?
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt

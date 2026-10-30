@@ -24,6 +24,8 @@ export function toAdminQuote(quote: QuoteWithProject, now: Date = new Date()): A
     expiresAt: quote.expiresAt?.toISOString() ?? null,
     viewedAt: quote.viewedAt?.toISOString() ?? null,
     acceptedAt: quote.acceptedAt?.toISOString() ?? null,
+    zelleRequestedAt: quote.zelleRequestedAt?.toISOString() ?? null,
+    termsAcceptedAt: quote.termsAcceptedAt?.toISOString() ?? null,
     createdAt: quote.createdAt.toISOString(),
     contactId: quote.contactId,
     projectId: quote.projectId,

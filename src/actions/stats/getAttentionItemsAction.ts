@@ -22,6 +22,8 @@ export interface AttentionItems {
       name: string;
       totalAmount: number;
       expiresAt: Date;
+      /** The customer chose Zelle: the admin has to confirm the deposit */
+      zelleRequestedAt: Date | null;
     }[];
   };
   /** Projects marked ready whose final 50 % is still unpaid */
@@ -95,6 +97,7 @@ export async function getAttentionItemsAction(): Promise<AttentionItems> {
         name: true,
         totalAmount: true,
         expiresAt: true,
+        zelleRequestedAt: true,
       },
     }),
     prisma.quote.count({ where: openQuotesWhere }),

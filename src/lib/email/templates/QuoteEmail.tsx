@@ -12,7 +12,7 @@ import {
 } from "@react-email/components";
 import * as React from "react";
 import { EMAIL_COLORS } from "../colors";
-import { COMPANY } from "@/lib/company";
+import { COMPANY, isZelleAvailable } from "@/lib/company";
 import { formatCurrency, formatDate } from "@/lib/utils";
 import { DEPOSIT_PERCENT } from "@/lib/project/charges";
 
@@ -123,8 +123,9 @@ export const QuoteEmail = ({
 
             <Text style={styles.paragraph}>
               Accepting the quote takes you to a secure Stripe checkout for the
-              deposit. Work starts as soon as it clears, and the balance is only
-              due when the project is delivered.
+              deposit{isZelleAvailable() ? ", or you can choose to pay it by Zelle" : ""}.
+              Work starts as soon as it clears, and the balance is only due when
+              the project is delivered.
             </Text>
 
             <Text style={styles.paragraph}>
