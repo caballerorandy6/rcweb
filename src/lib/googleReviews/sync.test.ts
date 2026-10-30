@@ -1,19 +1,17 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
-const { tx, listGoogleReviews, revalidatePath } = vi.hoisted(() => ({
+const { tx, listGoogleReviews } = vi.hoisted(() => ({
   tx: {
     googleReview: { upsert: vi.fn(), deleteMany: vi.fn(async () => ({ count: 1 })) },
     googleReviewSummary: { upsert: vi.fn() },
   },
   listGoogleReviews: vi.fn(),
-  revalidatePath: vi.fn(),
 }));
 
 vi.mock("@/lib/prisma", () => ({
   prisma: { $transaction: vi.fn(async (fn: (t: typeof tx) => unknown) => fn(tx)) },
 }));
 vi.mock("@sentry/nextjs", () => ({ captureException: vi.fn() }));
-vi.mock("next/cache", () => ({ revalidatePath }));
 vi.mock("@/lib/googleReviews/api", () => ({ listGoogleReviews }));
 
 import { syncGoogleReviews } from "./sync";
@@ -75,7 +73,6 @@ describe("syncGoogleReviews", () => {
       update: { averageRating: 4.5, totalReviewCount: 2 },
     });
     expect(tx.googleReview.deleteMany).toHaveBeenCalledWith({ where: { id: { notIn: ["a", "b"] } } });
-    expect(revalidatePath).toHaveBeenCalledWith("/");
   });
 
   it("reports not_configured when a variable is missing and api_error when Google fails", async () => {
@@ -86,6 +83,5 @@ describe("syncGoogleReviews", () => {
     vi.stubEnv("GBP_LOCATION_ID", "2");
     listGoogleReviews.mockRejectedValueOnce(new Error("boom"));
     await expect(syncGoogleReviews()).resolves.toEqual({ ok: false, error: "api_error", message: "boom" });
-    expect(revalidatePath).not.toHaveBeenCalled();
   });
 });

@@ -1,5 +1,4 @@
 import * as Sentry from "@sentry/nextjs";
-import { revalidatePath } from "next/cache";
 import { prisma } from "@/lib/prisma";
 import { listGoogleReviews } from "@/lib/googleReviews/api";
 import { getGoogleReviewsConfig } from "@/lib/googleReviews/config";
@@ -51,9 +50,8 @@ export async function syncGoogleReviews(): Promise<GoogleReviewsSyncOutcome> {
       return tx.googleReview.deleteMany({ where: { id: { notIn: ids } } });
     });
 
-    // La home es estática: se regenera aquí, no cada 7 días por reloj.
-    revalidatePath("/");
-
+    // La home se renderiza en cada petición (CSP con nonce), así que la
+    // próxima visita ya lee las reseñas nuevas.
     return {
       ok: true,
       result: {

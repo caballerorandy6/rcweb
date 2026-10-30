@@ -2,7 +2,6 @@
 
 import { z } from "zod";
 import * as Sentry from "@sentry/nextjs";
-import { revalidatePath } from "next/cache";
 import { prisma } from "@/lib/prisma";
 import { requireAdmin } from "@/lib/authGuard";
 import type { ActionResultSimple } from "@/types/common";
@@ -44,6 +43,5 @@ export async function setGoogleReviewHiddenAction(
     return { success: false, error: "Could not update the review." };
   }
 
-  revalidatePath("/");
   return { success: true };
 }

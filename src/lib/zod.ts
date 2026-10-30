@@ -3,6 +3,12 @@ import { ContactChannel } from "@/generated/prisma/enums";
 import { OFFER_IDS } from "@/lib/offerIds";
 import { parseScopeLines } from "@/lib/quote/quoteStatus";
 
+// Zod 4 probes `Function("")` once to decide whether it may JIT-compile
+// object parsers. The probe is caught, but the browser still reports it as
+// a CSP violation (script-src has no 'unsafe-eval'). Skipping it costs
+// nothing noticeable on forms this size and keeps the console clean.
+z.config({ jitless: true });
+
 // Schema de validación para formularios de contacto
 export const FormSchema = z.object({
   name: z.string().min(2, { message: "Name is too short" }),
