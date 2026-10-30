@@ -17,6 +17,11 @@ export const ADMIN_ROUTES = {
 
 export const ADMIN_LOGIN_ROUTE = "/admin/login" as const satisfies Route;
 
+type AdminBase = (typeof ADMIN_ROUTES)[keyof typeof ADMIN_ROUTES] | typeof ADMIN_LOGIN_ROUTE;
+
+/** Admin destinations: never localized, rendered with next/link (see ui/Button) */
+export type AdminHref = AdminBase | `${AdminBase}/${string}` | `${AdminBase}?${string}`;
+
 // Path prefixes rendered without the public header and footer. They are
 // matched by whole segment: "/projects" covers "/projects/123" but not the
 // public "/projects-portfolio".

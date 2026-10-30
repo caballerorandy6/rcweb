@@ -1,5 +1,4 @@
 import { CheckIcon } from "@heroicons/react/24/outline";
-import type { Route } from "next";
 import { offers, checkoutPlans, offerPriceParts } from "@/lib/data";
 import Heading from "../ui/Heading";
 import { formatCurrency } from "@/lib/utils";
@@ -105,7 +104,7 @@ const Pricing = () => {
                   )}
                   {offer.quoteCta && (
                     <Button
-                      href={`/schedule?service=${offer.id}` as Route}
+                      href={{ pathname: "/schedule", query: { service: offer.id } }}
                       variant={
                         offer.featured && !offer.checkout ? "primary" : "secondary"
                       }

@@ -1,5 +1,4 @@
-import Link from "next/link";
-import type { Route } from "next";
+import { Link } from "@/i18n/navigation";
 import Heading from "@/components/ui/Heading";
 import BackButton from "@/components/ui/BackButton";
 import PhoneLink from "@/components/tracking/PhoneLink";
@@ -609,7 +608,7 @@ export default function PrivacyPolicy() {
                 <p>
                   You can access the Customer Portal at any time by visiting{" "}
                   <Link
-                    href={"/manage-subscription" as Route}
+                    href="/manage-subscription"
                     className="text-gold hover:text-gold/80 underline"
                   >
                     rcweb.dev/manage-subscription

@@ -1,0 +1,53 @@
+{
+  "Common": {
+    "skipToContent": "Skip to main content",
+    "languageSwitch": {
+      "label": "Language",
+      "en": "English",
+      "es": "Español",
+      "switchTo": "Leer en español"
+    }
+  },
+  "Nav": {
+    "global": "Global",
+    "site": "Site",
+    "siteMenu": "Site menu",
+    "openMenu": "Open menu",
+    "closeMenu": "Close menu",
+    "home": "Home",
+    "services": "Services",
+    "projects": "Projects",
+    "pricing": "Pricing",
+    "blog": "Blog",
+    "about": "About",
+    "contact": "Contact",
+    "process": "Process",
+    "faq": "FAQ",
+    "testimonials": "Testimonials",
+    "schedule": "Schedule",
+    "houston": "Houston, TX",
+    "privacy": "Privacy Policy",
+    "terms": "Terms of Service",
+    "refund": "Refund Policy",
+    "manageSubscription": "Manage Subscription",
+    "privacyChoices": "Privacy Choices",
+    "experience": "Experience",
+    "certifications": "Certifications",
+    "cta": "Get Started",
+    "letsTalk": "Let's Talk",
+    "getInTouch": "Get In Touch",
+    "tagline": "Your Digital Partner"
+  },
+  "Footer": {
+    "description": "Websites and web apps for small businesses, built and maintained by me. Based in Houston, working with clients anywhere.",
+    "navigation": "Navigation",
+    "more": "More",
+    "connect": "Connect",
+    "ready": "Ready to start your project?",
+    "discuss": "Let's discuss your project",
+    "available": "Taking New Projects",
+    "footerNav": "Footer",
+    "legalNav": "Legal",
+    "rights": "All Rights Reserved"
+  }
+}

@@ -52,7 +52,7 @@ export default function BlogList({ posts }: BlogListProps) {
                 I&apos;m working on new content about web development, SEO, and
                 digital marketing. Check back soon!
               </p>
-              <Button href="/#contact">Contact Me</Button>
+              <Button href={{ pathname: "/", hash: "contact" }}>Contact Me</Button>
             </div>
           </div>
         )}

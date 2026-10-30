@@ -1,0 +1,53 @@
+{
+  "Common": {
+    "skipToContent": "Saltar al contenido principal",
+    "languageSwitch": {
+      "label": "Idioma",
+      "en": "English",
+      "es": "Español",
+      "switchTo": "Read in English"
+    }
+  },
+  "Nav": {
+    "global": "Principal",
+    "site": "Sitio",
+    "siteMenu": "Menú del sitio",
+    "openMenu": "Abrir menú",
+    "closeMenu": "Cerrar menú",
+    "home": "Inicio",
+    "services": "Servicios",
+    "projects": "Proyectos",
+    "pricing": "Precios",
+    "blog": "Blog",
+    "about": "Sobre mí",
+    "contact": "Contacto",
+    "process": "Proceso",
+    "faq": "Preguntas frecuentes",
+    "testimonials": "Testimonios",
+    "schedule": "Agendar",
+    "houston": "Houston, TX",
+    "privacy": "Política de privacidad",
+    "terms": "Términos de servicio",
+    "refund": "Política de reembolso",
+    "manageSubscription": "Gestionar suscripción",
+    "privacyChoices": "Opciones de privacidad",
+    "experience": "Experiencia",
+    "certifications": "Certificaciones",
+    "cta": "Empieza ahora",
+    "letsTalk": "Hablemos",
+    "getInTouch": "Contáctame",
+    "tagline": "Tu socio digital"
+  },
+  "Footer": {
+    "description": "Sitios web y aplicaciones web para pequeños negocios, creados y mantenidos por mí. Con sede en Houston, trabajo con clientes de cualquier lugar.",
+    "navigation": "Navegación",
+    "more": "Más",
+    "connect": "Conecta",
+    "ready": "¿Listo para empezar tu proyecto?",
+    "discuss": "Hablemos de tu proyecto",
+    "available": "Aceptando nuevos proyectos",
+    "footerNav": "Pie de página",
+    "legalNav": "Legal",
+    "rights": "Todos los derechos reservados"
+  }
+}

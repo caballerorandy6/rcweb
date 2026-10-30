@@ -2,7 +2,9 @@
 
 import { useTransition } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
-import Link from "next/link";
+import { useLocale } from "next-intl";
+import type { Route } from "next";
+import { getPathname, Link } from "@/i18n/navigation";
 import { toast } from "sonner";
 import { ShieldCheckIcon, ExclamationTriangleIcon } from "@heroicons/react/24/outline";
 import BackButton from "@/components/ui/BackButton";
@@ -46,6 +48,7 @@ export function TermsReviewNotice() {
 
 export function TermsAcceptActions() {
   const router = useRouter();
+  const locale = useLocale();
   const planId = useSearchParams().get("plan");
   const [isPending, startTransition] = useTransition();
 
@@ -56,7 +59,8 @@ export function TermsAcceptActions() {
 
     if (!customer) {
       toast.error("Missing information. Please start from pricing.");
-      router.push("/#pricing");
+      // Home + hash in the visitor's language; the typed router takes no hash
+      router.push(`${getPathname({ href: "/", locale })}#pricing` as Route);
       return;
     }
 
@@ -107,7 +111,7 @@ export function TermsAcceptActions() {
 
       <div className="mt-6 text-center font-inter">
         <Link
-          href="/#pricing"
+          href={{ pathname: "/", hash: "pricing" }}
           className="text-white/50 hover:text-gold underline text-sm transition-colors"
         >
           Return to Pricing Plans

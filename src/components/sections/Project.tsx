@@ -1,6 +1,5 @@
 import Image from "next/image";
-import Link from "next/link";
-import type { Route } from "next";
+import { Link, type Href } from "@/i18n/navigation";
 
 //Icons
 import GithubIcon from "@/components/icons/Github";
@@ -13,7 +12,7 @@ export interface ProjectProps {
   image: string;
   github?: string;
   url: string;
-  caseStudy?: string;
+  caseStudy?: Href;
   /** Above the fold on the page that renders it (first row of the portfolio) */
   priority?: boolean;
 }
@@ -74,7 +73,7 @@ const Project = ({
         )}
         {caseStudy && (
           <Link
-            href={caseStudy as Route}
+            href={caseStudy}
             className={`flex-1 py-3 text-base font-inter text-gold hover:bg-gray-800 transition border-r border-gold/50 ${!github ? "rounded-bl-2xl" : ""}`}
           >
             Case Study

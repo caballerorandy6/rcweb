@@ -14,7 +14,7 @@ import { trackFBLead } from "@/components/tracking/FacebookPixel";
 import { trackLinkedInConversion } from "@/lib/linkedin";
 import { getStoredUTMParams } from "@/hooks/useUTMParams";
 import { getRecaptchaToken, loadRecaptcha } from "@/lib/recaptcha";
-import { useRouter } from "next/navigation";
+import { useRouter } from "@/i18n/navigation";
 import { ChevronDownIcon, PaperAirplaneIcon } from "@heroicons/react/24/outline";
 import { isOfferId, type OfferId } from "@/lib/offerIds";
 import { CONTACT_CHANNELS, CONTACT_CHANNEL_LABELS } from "@/lib/contactChannel";

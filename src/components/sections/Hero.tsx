@@ -1,5 +1,4 @@
 import Image from "next/image";
-import type { Route } from "next";
 import Button from "@/components/ui/Button";
 import CustomBadge from "@/components/ui/CustomBadge";
 import PhoneLink from "@/components/tracking/PhoneLink";
@@ -65,11 +64,11 @@ const Hero = () => {
           {/* One primary action (free call), one secondary (services); the
               phone line below is the only other way in, not a third CTA */}
           <div className="mt-10 flex flex-col sm:flex-row gap-4 items-center justify-center animate-enter [animation-delay:250ms]">
-            <Button href={"/schedule" as Route} size="lg">
+            <Button href="/schedule" size="lg">
               <CalendarDaysIcon className="w-5 h-5" />
               Schedule a Free Call
             </Button>
-            <Button href={"#services" as Route} variant="secondary" size="lg">
+            <Button href={{ pathname: "/", hash: "services" }} variant="secondary" size="lg">
               View Services
             </Button>
           </div>

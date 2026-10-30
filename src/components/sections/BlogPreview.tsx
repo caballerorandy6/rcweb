@@ -1,4 +1,3 @@
-import type { Route } from "next";
 import Button from "@/components/ui/Button";
 import { BookOpenIcon } from "@heroicons/react/24/outline";
 import Heading from "@/components/ui/Heading";
@@ -31,7 +30,7 @@ export default function BlogPreview() {
 
         {/* View All Posts */}
         <div className="mt-12 text-center">
-          <Button href={"/blog" as Route} variant="secondary" size="lg">
+          <Button href="/blog" variant="secondary" size="lg">
             View All Posts
             <span aria-hidden="true">&rarr;</span>
           </Button>

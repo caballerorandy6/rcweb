@@ -1,5 +1,4 @@
-import Link from "next/link";
-import type { Route } from "next";
+import { Link } from "@/i18n/navigation";
 import type { ComponentType, SVGProps } from "react";
 import {
   BriefcaseIcon,
@@ -84,7 +83,7 @@ export default function BlogCard({ post, as: Heading = "h2" }: BlogCardProps) {
 
         {/* Stretched link: the whole card is clickable */}
         <Link
-          href={`/blog/${post.slug}` as Route}
+          href={{ pathname: "/blog/[slug]", params: { slug: post.slug } }}
           className="absolute inset-0 rounded-2xl focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gold"
         >
           <span className="sr-only">Read: {post.title}</span>

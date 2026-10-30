@@ -1,6 +1,5 @@
 import { Suspense } from "react";
-import Link from "next/link";
-import type { Route } from "next";
+import { Link } from "@/i18n/navigation";
 import Heading from "@/components/ui/Heading";
 import { DocumentTextIcon, CalendarIcon } from "@heroicons/react/24/outline";
 import { COMPANY, LEGAL_LAST_UPDATED } from "@/lib/company";
@@ -143,7 +142,7 @@ const TermsOfService = () => {
                   <li>
                     <strong>How to Manage:</strong>{" "}
                     You can manage your subscription, update payment methods, or cancel at any time by visiting{" "}
-                    <Link href={"/manage-subscription" as Route} className="text-gold hover:text-gold/80 underline">
+                    <Link href="/manage-subscription" className="text-gold hover:text-gold/80 underline">
                       rcweb.dev/manage-subscription
                     </Link>{" "}
                     or contacting us directly

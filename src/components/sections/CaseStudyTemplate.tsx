@@ -1,6 +1,6 @@
 import Image from "next/image";
-import Link from "next/link";
-import type { Route } from "next";
+import { Link } from "@/i18n/navigation";
+import type { Href } from "@/i18n/navigation";
 import Button from "@/components/ui/Button";
 import {
   ArrowLeftIcon,
@@ -63,7 +63,7 @@ export type CaseStudyData = {
   name: string;
   nameHighlight: string;
   subtitle: string;
-  siteUrl: string;
+  siteUrl: `https://${string}`;
   image: string;
   imageAlt: string;
   stats: Stat[];
@@ -77,7 +77,7 @@ export type CaseStudyData = {
   ctaTitle: string;
   ctaTitleHighlight: string;
   ctaDescription: string;
-  ctaLinks: { label: string; href: string; primary?: boolean }[];
+  ctaLinks: { label: string; href: Href; primary?: boolean }[];
 };
 
 export default function CaseStudyTemplate({ data }: { data: CaseStudyData }) {
@@ -93,7 +93,7 @@ export default function CaseStudyTemplate({ data }: { data: CaseStudyData }) {
         <div className="mx-auto max-w-7xl px-6 lg:px-8">
           <div className="mb-8 animate-enter">
             <Link
-              href={"/#projects" as Route}
+              href={{ pathname: "/", hash: "projects" }}
               className="inline-flex items-center gap-2 text-gold hover:text-gold/80 transition-colors font-inter text-sm"
             >
               <ArrowLeftIcon className="w-4 h-4" />
@@ -123,7 +123,7 @@ export default function CaseStudyTemplate({ data }: { data: CaseStudyData }) {
                   Visit Live Site
                   <ArrowTopRightOnSquareIcon className="w-5 h-5" />
                 </Button>
-                <Button href={"/schedule" as Route} variant="secondary">
+                <Button href="/schedule" variant="secondary">
                   Start Your Project
                 </Button>
               </div>
@@ -292,7 +292,7 @@ export default function CaseStudyTemplate({ data }: { data: CaseStudyData }) {
               {data.ctaLinks.map((link) => (
                 <Button
                   key={link.label}
-                  href={link.href as Route}
+                  href={link.href}
                   variant={link.primary ? "primary" : "secondary"}
                   size="lg"
                 >

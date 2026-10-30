@@ -1,5 +1,4 @@
-import type { Route } from "next";
-import Link from "next/link";
+import { Link } from "@/i18n/navigation";
 import { Cog6ToothIcon } from "@heroicons/react/24/outline";
 import { offers, offerPriceLabel } from "@/lib/data";
 import Heading from "@/components/ui/Heading";
@@ -29,7 +28,7 @@ const Services = () => {
               {/* Stretched link: the whole card goes where "See Pricing" goes.
                   Hidden from keyboard/AT so the button remains the only tab stop. */}
               <Link
-                href={"#pricing" as Route}
+                href={{ pathname: "/", hash: "pricing" }}
                 className="absolute inset-0 rounded-2xl"
                 aria-hidden="true"
                 tabIndex={-1}
@@ -71,7 +70,7 @@ const Services = () => {
               </div>
 
               <Button
-                href={"#pricing" as Route}
+                href={{ pathname: "/", hash: "pricing" }}
                 variant="secondary"
                 className="relative mt-4 w-full sm:w-auto"
               >
@@ -84,7 +83,7 @@ const Services = () => {
 
         {/* View All Services */}
         <div className="mt-12 text-center">
-          <Button href={"/services" as Route} variant="secondary" size="lg">
+          <Button href="/services" variant="secondary" size="lg">
             View All Services
             <span aria-hidden="true">→</span>
           </Button>

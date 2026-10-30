@@ -1,5 +1,4 @@
-import Link from "next/link";
-import type { Route } from "next";
+import { Link } from "@/i18n/navigation";
 import Heading from "@/components/ui/Heading";
 import BackButton from "@/components/ui/BackButton";
 import {
@@ -197,7 +196,7 @@ const RefundPolicy = () => {
                     <strong>Cancellation:</strong>{" "}
                     You may cancel your subscription at any time. Cancellation takes
                     effect at the end of your current billing period. To cancel, visit{" "}
-                    <Link href={"/manage-subscription" as Route} className="text-gold hover:text-gold/80 underline">
+                    <Link href="/manage-subscription" className="text-gold hover:text-gold/80 underline">
                       rcweb.dev/manage-subscription
                     </Link>{" "}
                     or contact us directly
@@ -452,14 +451,14 @@ const RefundPolicy = () => {
                 </p>
                 <ul>
                   <li>
-                    <Link href={"/terms-of-service" as Route} className="text-gold hover:text-gold/80 underline">
+                    <Link href="/terms-of-service" className="text-gold hover:text-gold/80 underline">
                       Terms of Service
                     </Link>{" "}
                     - Complete terms governing our services, intellectual property,
                     warranties, and limitations
                   </li>
                   <li>
-                    <Link href={"/privacy-policy" as Route} className="text-gold hover:text-gold/80 underline">
+                    <Link href="/privacy-policy" className="text-gold hover:text-gold/80 underline">
                       Privacy Policy
                     </Link>{" "}
                     - How we collect, use, and protect your personal information
@@ -501,7 +500,7 @@ const RefundPolicy = () => {
         {/* Return to Pricing */}
         <div className="mt-8 text-center reveal">
           <Link
-            href="/#pricing"
+            href={{ pathname: "/", hash: "pricing" }}
             className="text-white/50 hover:text-gold underline text-sm transition-colors font-inter"
           >
             Return to Pricing Plans

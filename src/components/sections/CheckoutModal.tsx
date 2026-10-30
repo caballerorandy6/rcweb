@@ -1,7 +1,7 @@
 "use client";
 
 import { useRef, useState, useTransition } from "react";
-import { useRouter } from "next/navigation";
+import { useRouter } from "@/i18n/navigation";
 import Modal from "@/components/ui/Modal";
 import Button from "@/components/ui/Button";
 import { saveCheckoutCustomer } from "@/lib/checkoutCustomer";
@@ -54,7 +54,7 @@ export default function CheckoutModal({ plans }: { plans: CheckoutPlan[] }) {
     // Nombre y email se guardan en sessionStorage; la URL solo lleva el ID del plan.
     startTransition(() => {
       saveCheckoutCustomer({ name, email });
-      router.push(`/terms-of-service?plan=${encodeURIComponent(plan.id)}`);
+      router.push({ pathname: "/terms-of-service", query: { plan: plan.id } });
     });
   };
 

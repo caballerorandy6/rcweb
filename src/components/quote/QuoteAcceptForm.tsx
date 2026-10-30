@@ -1,8 +1,8 @@
 "use client";
 
 import { useId, useState, useTransition } from "react";
-import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { Link } from "@/i18n/navigation";
+import { useRouter } from "@/i18n/navigation";
 import { toast } from "sonner";
 import { ShieldCheckIcon } from "@heroicons/react/24/outline";
 import Button from "@/components/ui/Button";

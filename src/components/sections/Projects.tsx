@@ -1,4 +1,3 @@
-import type { Route } from "next";
 import { CodeBracketIcon } from "@heroicons/react/24/outline";
 import Heading from "@/components/ui/Heading";
 import Button from "@/components/ui/Button";
@@ -36,7 +35,7 @@ const Projects = () => {
         {/* View All Projects */}
         <div className="flex justify-center mt-12">
           <Button
-            href={"/projects-portfolio" as Route}
+            href="/projects-portfolio"
             variant="secondary"
             size="lg"
           >

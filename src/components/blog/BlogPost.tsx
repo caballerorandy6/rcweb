@@ -1,4 +1,4 @@
-import Link from "next/link";
+import { Link } from "@/i18n/navigation";
 import Button from "@/components/ui/Button";
 import Image from "next/image";
 import ReactMarkdown from "react-markdown";
@@ -274,7 +274,7 @@ export default function BlogPost({ post }: BlogPostProps) {
                 Let&apos;s bring your vision to life. Contact me today for a
                 free consultation.
               </p>
-              <Button href="/#contact">Get Started</Button>
+              <Button href={{ pathname: "/", hash: "contact" }}>Get Started</Button>
             </div>
 
             {/* Blog Subscription */}
