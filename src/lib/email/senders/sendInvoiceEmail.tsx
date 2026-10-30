@@ -71,7 +71,8 @@ export async function sendInvoiceEmail(
       ];
     }
 
-    await resend.emails.send(emailOptions);
+    const { error: sendError } = await resend.emails.send(emailOptions);
+    if (sendError) throw new Error(sendError.message);
 
     return { success: true };
   } catch (error) {

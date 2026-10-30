@@ -8,6 +8,7 @@ import type {
   InvoiceType,
   LeadStatus,
   PaymentKind,
+  PaymentMethod,
   PaymentStatus,
 } from "@/generated/prisma/enums";
 import { ProjectStatus } from "@/generated/prisma/enums";
@@ -39,6 +40,7 @@ export type AdminProjectPayment = {
   /** Cents */
   amount: number;
   status: PaymentStatus;
+  method: PaymentMethod;
   paidAt: string | null;
   stripeSessionId: string | null;
 };

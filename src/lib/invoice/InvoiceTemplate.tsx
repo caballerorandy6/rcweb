@@ -2,6 +2,7 @@
 // Professional PDF Invoice Template using @react-pdf/renderer
 
 import React from "react";
+import { PAYMENT_METHOD_LABELS } from "@/lib/project/paymentMethod";
 import {
   Document,
   Page,
@@ -301,7 +302,7 @@ export const InvoiceTemplate: React.FC<InvoiceTemplateProps> = ({ data }) => {
               Payment Date: {formatInvoiceDate(data.paidDate)}
             </Text>
             <Text style={styles.paymentInfoText}>
-              Payment Method: Credit Card (Stripe)
+              Payment Method: {PAYMENT_METHOD_LABELS[data.paymentMethod]}
             </Text>
             {data.stripeSessionId && (
               <Text style={styles.paymentInfoText}>
@@ -395,7 +396,9 @@ export const InvoiceSummaryTemplate: React.FC<InvoiceSummaryTemplateProps> = ({
           </View>
           {data.items.map((item) => (
             <View key={`${item.description}-${item.paidDate}`} style={styles.tableRow}>
-              <Text style={styles.tableColDescription}>{item.description}</Text>
+              <Text style={styles.tableColDescription}>
+                {item.description} ({PAYMENT_METHOD_LABELS[item.paymentMethod]})
+              </Text>
               <Text style={styles.tableCol}>
                 {formatInvoiceDate(item.paidDate)}
               </Text>

@@ -1,5 +1,5 @@
 import { COMPANY } from "@/lib/company";
-import { InvoiceStatus, InvoiceType } from "@/generated/prisma/enums";
+import { InvoiceStatus, InvoiceType, PaymentMethod } from "@/generated/prisma/enums";
 
 export { InvoiceStatus, InvoiceType };
 
@@ -16,7 +16,12 @@ export interface CreateInvoiceData {
   description: string;
   subtotal: number; // En centavos
   taxRate: number; // Porcentaje (ej: 8.5 para 8.5%)
+  /** How the charge was collected; Stripe unless the admin recorded it by hand */
+  paymentMethod: PaymentMethod;
+  /** Only for Stripe payments */
   stripeSessionId?: string;
+  /** When the money arrived (Stripe: now; manual: the date the admin entered) */
+  paidDate: Date;
 }
 
 /**
@@ -39,6 +44,7 @@ export interface InvoiceData {
   issueDate: Date;
   dueDate?: Date;
   paidDate?: Date;
+  paymentMethod: PaymentMethod;
   stripeSessionId?: string;
 }
 
@@ -49,6 +55,7 @@ export interface InvoiceSummaryItem {
   description: string;
   amount: number; // En centavos
   paidDate: Date;
+  paymentMethod: PaymentMethod;
 }
 
 export interface InvoiceSummaryData

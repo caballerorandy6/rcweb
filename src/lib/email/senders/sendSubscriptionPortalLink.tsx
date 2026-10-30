@@ -27,12 +27,13 @@ export async function sendSubscriptionPortalLink(
       />
     );
 
-    await resend.emails.send({
+    const { error: sendError } = await resend.emails.send({
       from: "RC Web Solutions <no-reply@rcweb.dev>",
       to: customerEmail,
       subject: "Manage Your Subscription - RC Web Solutions",
       html,
     });
+    if (sendError) throw new Error(sendError.message);
 
     return { success: true };
   } catch (error) {

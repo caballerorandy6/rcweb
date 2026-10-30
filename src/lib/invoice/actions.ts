@@ -46,7 +46,8 @@ export async function createInvoice(
       status: "paid",
       issueDate: new Date(),
       dueDate: new Date(), // Same as issue date for paid invoices
-      paidDate: new Date(),
+      paidDate: data.paidDate,
+      paymentMethod: data.paymentMethod,
       stripeSessionId: data.stripeSessionId,
     };
 
@@ -78,11 +79,12 @@ export async function createInvoice(
         currency: "USD",
         pdfUrl,
         pdfBlobKey,
+        paymentMethod: data.paymentMethod,
         stripeSessionId: data.stripeSessionId,
         status: "paid",
         issueDate: new Date(),
         dueDate: new Date(),
-        paidDate: new Date(),
+        paidDate: data.paidDate,
       },
     });
 
@@ -149,11 +151,13 @@ export async function createInvoiceSummary(
           description: `Initial Payment - 50% Deposit for ${project.planName}`,
           amount: deposit.amount,
           paidDate: depositPaidAt,
+          paymentMethod: deposit.method,
         },
         {
           description: `Final Payment - 50% Balance for ${project.planName}`,
           amount: final.amount,
           paidDate: finalPaidAt,
+          paymentMethod: final.method,
         },
       ],
       subtotal: subtotalBeforeTax,
@@ -164,6 +168,7 @@ export async function createInvoiceSummary(
       status: "paid",
       issueDate: new Date(),
       paidDate: finalPaidAt,
+      paymentMethod: final.method,
     };
 
     // 5. Generar PDF
@@ -194,6 +199,7 @@ export async function createInvoiceSummary(
         currency: "USD",
         pdfUrl,
         pdfBlobKey,
+        paymentMethod: final.method,
         status: "paid",
         issueDate: new Date(),
         paidDate: finalPaidAt,

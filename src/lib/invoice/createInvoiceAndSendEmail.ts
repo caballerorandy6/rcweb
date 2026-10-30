@@ -22,8 +22,9 @@ interface InvoiceResult {
 }
 
 /**
- * Crea un invoice, genera el PDF y lo envía por email
- * Esta función se llama desde el webhook de Stripe
+ * Crea un invoice, genera el PDF y lo envía por email.
+ * La llaman el webhook de Stripe y recordManualPaymentAction; el método y la
+ * fecha de pago salen del cobro (Payment) correspondiente.
  */
 export async function createInvoiceAndSendEmail({
   project,
@@ -39,7 +40,8 @@ export async function createInvoiceAndSendEmail({
     if (type === "summary") {
       invoiceResult = await createInvoiceSummary(project.id);
     } else {
-      const amount = type === "initial" ? deposit.amount : final.amount;
+      const charge = type === "initial" ? deposit : final;
+      const amount = charge.amount;
       const description =
         type === "initial"
           ? `Initial Payment - 50% Deposit for ${project.planName}`
@@ -55,7 +57,9 @@ export async function createInvoiceAndSendEmail({
         description,
         subtotal: amount,
         taxRate: DEFAULT_TAX_RATE,
-        stripeSessionId,
+        paymentMethod: charge.method,
+        stripeSessionId: charge.method === "stripe" ? stripeSessionId : undefined,
+        paidDate: charge.paidAt ?? new Date(),
       });
     }
 
@@ -64,8 +68,10 @@ export async function createInvoiceAndSendEmail({
     const pdfArrayBuffer = await pdfResponse.arrayBuffer();
     const pdfBuffer = Buffer.from(pdfArrayBuffer);
 
-    // Enviar email usando el sender con react-email template
-    await sendInvoiceEmail(resend, {
+    // Enviar email usando el sender con react-email template. El sender no
+    // lanza: si falla, el invoice ya existe (fila + PDF) y el que llama debe
+    // enterarse para reenviarlo a mano.
+    const sent = await sendInvoiceEmail(resend, {
       customerEmail: project.email,
       customerName: project.name,
       planName: project.planName,
@@ -77,6 +83,11 @@ export async function createInvoiceAndSendEmail({
       pdfBuffer,
       projectUrl: getProjectUrl(project.accessToken),
     });
+    if (!sent.success) {
+      throw new Error(
+        `${invoiceResult.invoiceNumber} was created but the email failed: ${sent.error ?? "unknown error"}`
+      );
+    }
 
     return invoiceResult;
   } catch (error) {

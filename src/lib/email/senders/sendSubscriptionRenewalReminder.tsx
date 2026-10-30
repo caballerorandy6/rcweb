@@ -36,12 +36,13 @@ export async function sendSubscriptionRenewalReminder(
       />
     );
 
-    await resend.emails.send({
+    const { error: sendError } = await resend.emails.send({
       from: "RC Web Solutions <no-reply@rcweb.dev>",
       to: customerEmail,
       subject: `Upcoming Renewal - ${planName}`,
       html,
     });
+    if (sendError) throw new Error(sendError.message);
 
     return { success: true };
   } catch (error) {
