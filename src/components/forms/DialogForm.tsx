@@ -2,11 +2,12 @@
 
 import { useRCWebStore } from "@/store/rcweb-store";
 import Button from "@/components/ui/Button";
-import { useEffect, useTransition, useRef, useState } from "react";
+import { useEffect, useMemo, useTransition, useRef, useState } from "react";
+import { useLocale, useTranslations } from "next-intl";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { ErrorMessage } from "@hookform/error-message";
-import { FormSchema, FormData } from "@/lib/zod";
+import { buildFormSchema, type FormData } from "@/lib/zod";
 import { toast } from "sonner";
 import { createContactAction } from "@/actions/contacts/createContactAction";
 import { trackContactFormSubmit, trackSubmitLeadForm } from "@/lib/analytics";
@@ -17,7 +18,7 @@ import { getRecaptchaToken, loadRecaptcha } from "@/lib/recaptcha";
 import { useRouter } from "@/i18n/navigation";
 import { ChevronDownIcon, PaperAirplaneIcon } from "@heroicons/react/24/outline";
 import { isOfferId, type OfferId } from "@/lib/offerIds";
-import { CONTACT_CHANNELS, CONTACT_CHANNEL_LABELS } from "@/lib/contactChannel";
+import { CONTACT_CHANNELS } from "@/lib/contactChannel";
 
 export type ServiceOption = { id: OfferId; title: string };
 
@@ -50,6 +51,22 @@ const DialogForm = ({
   );
   const closeModal = closeModalProp ?? (() => setOpenLetsContactDialog(false));
   const router = useRouter();
+  const t = useTranslations("Forms.contact");
+  const v = useTranslations("Forms.validation");
+  const locale = useLocale();
+  // Validation messages in the visitor's language
+  const schema = useMemo(
+    () =>
+      buildFormSchema({
+        nameShort: v("nameShort"),
+        emailInvalid: v("emailInvalid"),
+        phoneShort: v("phoneShort"),
+        phoneLong: v("phoneLong"),
+        messageLong: v("messageLong"),
+        messageShort: v("messageShort"),
+      }),
+    [v]
+  );
   const [isPending, startTransition] = useTransition();
   const formMountTime = useRef<number | null>(null);
   const [honeypot, setHoneypot] = useState("");
@@ -74,7 +91,7 @@ const DialogForm = ({
     reset,
     setValue,
   } = useForm<FormData>({
-    resolver: zodResolver(FormSchema),
+    resolver: zodResolver(schema),
     defaultValues: {
       name: "",
       email: "",
@@ -98,7 +115,7 @@ const DialogForm = ({
     // Anti-Bot Protection Layer 1: Honeypot check
     if (honeypot) {
       console.warn("🚫 Bot detected: Honeypot filled");
-      toast.error("Something went wrong. Please try again.");
+      toast.error(t("toasts.bot"));
       return;
     }
 
@@ -106,7 +123,7 @@ const DialogForm = ({
     const timeSpent = formMountTime.current ? Date.now() - formMountTime.current : 0;
     if (timeSpent < 3000) {
       console.warn("🚫 Bot detected: Form submitted too quickly");
-      toast.error("Please take a moment to review your message.");
+      toast.error(t("toasts.tooFast"));
       return;
     }
 
@@ -116,13 +133,11 @@ const DialogForm = ({
       recaptchaToken = await getRecaptchaToken("submit_contact_form");
     } catch (error) {
       console.error("reCAPTCHA error:", error);
-      toast.error(
-        "We couldn't verify your submission. Please disable ad blockers or refresh and try again."
-      );
+      toast.error(t("toasts.recaptcha"));
       return;
     }
 
-    const toastId = toast.loading("Sending message…");
+    const toastId = toast.loading(t("toasts.sending"));
 
     // Get UTM params from session storage
     const utmData = getStoredUTMParams();
@@ -152,7 +167,7 @@ const DialogForm = ({
           // Track LinkedIn Lead conversion
           trackLinkedInConversion();
 
-          toast.success(contact.message, { id: toastId });
+          toast.success(t("toasts.sent"), { id: toastId });
           reset();
           closeModal();
 
@@ -162,16 +177,15 @@ const DialogForm = ({
           const errorMessages = Object.values(contact.errors)
             .flat()
             .join(" • ");
-          toast.error(
-            errorMessages || contact.message || "Failed to send message",
-            { id: toastId }
-          );
+          toast.error(errorMessages || contact.message || t("toasts.failed"), {
+            id: toastId,
+          });
           console.error(contact.errors);
         }
       });
     } catch (error) {
       console.error(error);
-      toast.error("Something went wrong. Please try again.", { id: toastId });
+      toast.error(t("toasts.bot"), { id: toastId });
     }
   };
 
@@ -188,7 +202,7 @@ const DialogForm = ({
 
           <div className="relative">
             <h2 className="text-4xl md:text-5xl text-gold  text-center font-iceland tracking-wide">
-              Let&apos;s Connect
+              {t("title")}
             </h2>
             <div className="w-24 h-1 bg-linear-to-r from-transparent via-gold to-transparent mx-auto mt-4 rounded-full"></div>
           </div>
@@ -209,7 +223,7 @@ const DialogForm = ({
           <div className="group">
             <div className="relative">
               <label htmlFor="name" className="sr-only">
-                Full name
+                {t("name")}
               </label>
               <input
                 {...register("name")}
@@ -220,7 +234,7 @@ const DialogForm = ({
                 type="text"
                 id="name"
                 className="w-full p-4 bg-gray-800/80 text-white rounded-xl border border-gray-700/60 focus:outline-hidden focus:border-gold focus:ring-2 focus:ring-gold/20 transition duration-300 font-inter placeholder-gray-400 hover:bg-gray-800 peer"
-                placeholder="Your full name…"
+                placeholder={t("placeholders.name")}
               />
               <div className="absolute inset-0 rounded-xl bg-linear-to-r from-gold/0 via-gold/5 to-gold/0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"></div>
             </div>
@@ -240,7 +254,7 @@ const DialogForm = ({
           <div className="group">
             <div className="relative">
               <label htmlFor="email" className="sr-only">
-                Email address
+                {t("email")}
               </label>
               <input
                 {...register("email")}
@@ -253,7 +267,7 @@ const DialogForm = ({
                 type="email"
                 id="email"
                 className="w-full p-4 bg-gray-800/80 text-white rounded-xl border border-gray-700/60 focus:outline-hidden focus:border-gold focus:ring-2 focus:ring-gold/20 transition duration-300 font-inter placeholder-gray-400 hover:bg-gray-800 peer"
-                placeholder="you@yourbusiness.com…"
+                placeholder={t("placeholders.email")}
               />
               <div className="absolute inset-0 rounded-xl bg-linear-to-r from-gold/0 via-gold/5 to-gold/0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"></div>
             </div>
@@ -273,7 +287,7 @@ const DialogForm = ({
           <div className="group">
             <div className="relative">
               <label htmlFor="phone" className="sr-only">
-                Phone number
+                {t("phone")}
               </label>
               <input
                 {...register("phone")}
@@ -285,7 +299,7 @@ const DialogForm = ({
                 type="tel"
                 id="phone"
                 className="w-full p-4 bg-gray-800/80 text-white rounded-xl border border-gray-700/60 focus:outline-hidden focus:border-gold focus:ring-2 focus:ring-gold/20 transition duration-300 font-inter placeholder-gray-400 hover:bg-gray-800 peer"
-                placeholder="(346) 555-0123…"
+                placeholder={t("placeholders.phone")}
               />
               <div className="absolute inset-0 rounded-xl bg-linear-to-r from-gold/0 via-gold/5 to-gold/0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"></div>
             </div>
@@ -307,7 +321,7 @@ const DialogForm = ({
               htmlFor="service"
               className="block text-sm text-gray-300 font-inter mb-2"
             >
-              What do you need?
+              {t("service")}
             </label>
             <div className="relative">
               <select
@@ -315,7 +329,7 @@ const DialogForm = ({
                 id="service"
                 className={`${fieldClasses} appearance-none pr-12`}
               >
-                <option value="">Not sure yet</option>
+                <option value="">{t("notSure")}</option>
                 {serviceOptions.map((option) => (
                   <option key={option.id} value={option.id}>
                     {option.title}
@@ -332,7 +346,7 @@ const DialogForm = ({
           {/** Preferred Channel Field */}
           <fieldset className="group">
             <legend className="block text-sm text-gray-300 font-inter mb-2">
-              How should I reach you?
+              {t("channel")}
             </legend>
             <div className="grid grid-cols-3 gap-2">
               {CONTACT_CHANNELS.map((channel) => (
@@ -346,7 +360,7 @@ const DialogForm = ({
                     value={channel}
                     className="sr-only"
                   />
-                  {CONTACT_CHANNEL_LABELS[channel]}
+                  {t(`channels.${channel}`)}
                 </label>
               ))}
             </div>
@@ -356,7 +370,7 @@ const DialogForm = ({
           <div className="group">
             <div className="relative">
               <label htmlFor="message" className="sr-only">
-                Your message
+                {t("message")}
               </label>
               <textarea
                 {...register("message")}
@@ -364,7 +378,7 @@ const DialogForm = ({
                 aria-describedby={errors.message ? "message-error" : undefined}
                 id="message"
                 className="w-full p-4 bg-gray-800/80 text-white rounded-xl border border-gray-700/60 focus:outline-hidden focus:border-gold focus:ring-2 focus:ring-gold/20 transition duration-300 font-inter placeholder-gray-400 hover:bg-gray-800 peer resize-none"
-                placeholder="Tell me about your project…"
+                placeholder={t("placeholders.message")}
                 rows={5}
               />
               <div className="absolute inset-0 rounded-xl bg-linear-to-r from-gold/0 via-gold/5 to-gold/0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"></div>
@@ -393,13 +407,8 @@ const DialogForm = ({
               </div>
               <div className="flex-1">
                 <span className="text-sm text-gray-300 font-inter leading-relaxed">
-                  I would like to receive promotional and informational emails
-                  and SMS messages from RC Web Solutions LLC about its services.
-                  <span className="text-gray-400 block mt-1 text-xs">
-                    Message frequency may vary. Message & data rates may apply.
-                    Reply STOP to opt-out. Consent is not a condition of
-                    purchase or service. You can unsubscribe at any time.
-                  </span>
+                  {t("consent")}
+                  <span className="text-gray-400 block mt-1 text-xs">{t("consentNote")}</span>
                 </span>
               </div>
             </label>
@@ -408,7 +417,7 @@ const DialogForm = ({
           {/** Submit Button */}
           <div className="pt-2">
             <Button type="submit" size="lg" fullWidth disabled={isPending}>
-              {isPending ? "Sending…" : "Send Message"}
+              {isPending ? t("sending") : t("send")}
               <PaperAirplaneIcon
                 className="w-5 h-5 transition-transform duration-300 group-hover:translate-x-1"
                 aria-hidden="true"
@@ -418,25 +427,28 @@ const DialogForm = ({
             {/* reCAPTCHA disclosure (required when hiding badge) */}
             <div className="flex justify-center mt-3">
               <p className="text-white/50 font-inter text-xs text-center leading-relaxed max-w-md">
-                This site is protected by reCAPTCHA and the Google{" "}
-                <a
-                  href="https://policies.google.com/privacy"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-gold/80 hover:text-gold transition-colors underline"
-                >
-                  Privacy Policy
-                </a>{" "}
-                and{" "}
-                <a
-                  href="https://policies.google.com/terms"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-gold/80 hover:text-gold transition-colors underline"
-                >
-                  Terms of Service
-                </a>{" "}
-                apply.
+                {t.rich("recaptcha", {
+                  privacy: (chunks) => (
+                    <a
+                      href={`https://policies.google.com/privacy?hl=${locale}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-gold/80 hover:text-gold transition-colors underline"
+                    >
+                      {chunks}
+                    </a>
+                  ),
+                  terms: (chunks) => (
+                    <a
+                      href={`https://policies.google.com/terms?hl=${locale}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-gold/80 hover:text-gold transition-colors underline"
+                    >
+                      {chunks}
+                    </a>
+                  ),
+                })}
               </p>
             </div>
           </div>

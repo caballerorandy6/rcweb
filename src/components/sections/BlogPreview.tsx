@@ -2,9 +2,11 @@ import Button from "@/components/ui/Button";
 import { BookOpenIcon } from "@heroicons/react/24/outline";
 import Heading from "@/components/ui/Heading";
 import BlogCard from "@/components/blog/BlogCard";
+import { getTranslations } from "next-intl/server";
 import { getAllPosts } from "@/lib/blog";
 
-export default function BlogPreview() {
+export default async function BlogPreview() {
+  const t = await getTranslations("Home.blog");
   const posts = getAllPosts().slice(0, 3);
 
   if (posts.length === 0) return null;
@@ -17,9 +19,9 @@ export default function BlogPreview() {
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
         <Heading
           icon={<BookOpenIcon className="w-8 text-gold" />}
-          text="Tips and insights for small business owners"
+          text={t("subheading")}
         >
-          From the Blog
+          {t("heading")}
         </Heading>
 
         <div className="mt-16 grid gap-8 md:grid-cols-2 lg:grid-cols-3">
@@ -31,7 +33,7 @@ export default function BlogPreview() {
         {/* View All Posts */}
         <div className="mt-12 text-center">
           <Button href="/blog" variant="secondary" size="lg">
-            View All Posts
+            {t("viewAll")}
             <span aria-hidden="true">&rarr;</span>
           </Button>
         </div>

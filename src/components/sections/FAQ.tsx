@@ -2,11 +2,17 @@ import {
   ChevronDownIcon,
   QuestionMarkCircleIcon,
 } from "@heroicons/react/24/outline";
-import { faqs } from "@/lib/data";
+import { getTranslations } from "next-intl/server";
+import { getLocalizedCatalog } from "@/lib/catalog";
 import Heading from "../ui/Heading";
 
 /** Native exclusive accordion: <details name> needs no JS and stays crawlable */
-const FAQ = () => {
+const FAQ = async () => {
+  const [t, { faqs }] = await Promise.all([
+    getTranslations("Home.faq"),
+    getLocalizedCatalog(),
+  ]);
+
   return (
     <section
       id="faq"
@@ -15,15 +21,15 @@ const FAQ = () => {
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
         <Heading
           icon={<QuestionMarkCircleIcon />}
-          text="Everything you need to know before we start"
+          text={t("subheading")}
         >
-          Frequently Asked Questions
+          {t("heading")}
         </Heading>
 
         <div className="mx-auto mt-16 max-w-3xl space-y-4">
           {faqs.map((faq, index) => (
             <details
-              key={faq.question}
+              key={faq.key}
               name="faq"
               open={index === 0}
               className="accordion group reveal rounded-2xl border border-gold/20 bg-gray-900/50 transition-colors duration-200 hover:border-gold/50 shadow-lg shadow-black/20"

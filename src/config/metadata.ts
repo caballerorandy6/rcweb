@@ -1,5 +1,8 @@
 import type { Metadata } from "next";
 import { siteConfig } from "@/config/site";
+import type { Locale } from "@/i18n/routing";
+
+const OG_LOCALE: Record<Locale, string> = { en: "en_US", es: "es_US" };
 
 /** Site-wide defaults (title template, OG, icons) shared by both root layouts */
 export const rootMetadata: Metadata = {
@@ -72,3 +75,24 @@ export const rootMetadata: Metadata = {
     ],
   },
 };
+
+type RootCopy = (key: "siteTitle" | "siteDescription" | "ogAlt") => string;
+
+/** The same defaults with the title, description and OG texts in `locale` */
+export function localizedRootMetadata(locale: Locale, t: RootCopy): Metadata {
+  const title = t("siteTitle");
+  const description = t("siteDescription");
+  return {
+    ...rootMetadata,
+    title: { default: title, template: `%s | ${siteConfig.siteNameShort}` },
+    description,
+    openGraph: {
+      ...rootMetadata.openGraph,
+      locale: OG_LOCALE[locale],
+      title,
+      description,
+      images: [{ url: siteConfig.defaultOgImg, width: 1200, height: 630, alt: t("ogAlt") }],
+    },
+    twitter: { ...rootMetadata.twitter, title, description },
+  };
+}

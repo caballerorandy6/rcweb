@@ -5,7 +5,13 @@ import { Link, type Href } from "@/i18n/navigation";
 import GithubIcon from "@/components/icons/Github";
 import Website from "@/components/icons/Website";
 
+import type en from "@/messages/en.json";
+
+export type ProjectKey = keyof typeof en.Catalog.projects;
+
 export interface ProjectProps {
+  /** Stable id; also the key of its description in the dictionaries */
+  id: ProjectKey;
   name: string;
   tecnologies: string[];
   description: string;
@@ -17,6 +23,9 @@ export interface ProjectProps {
   priority?: boolean;
 }
 
+/** Button captions, translated by the list that renders the cards */
+export type ProjectLabels = { caseStudy: string; preview: string; github: string };
+
 const Project = ({
   name,
   tecnologies,
@@ -26,7 +35,8 @@ const Project = ({
   url,
   caseStudy,
   priority = false,
-}: ProjectProps) => {
+  labels,
+}: ProjectProps & { labels: ProjectLabels }) => {
   return (
     <>
       <div className="overflow-hidden rounded-t-2xl">
@@ -68,7 +78,7 @@ const Project = ({
             className="flex-1 py-3 text-base font-inter text-gold hover:bg-gray-800 transition rounded-bl-2xl border-r border-gold/50"
           >
             <GithubIcon className="inline-block w-5 h-5 mr-2" />
-            GitHub
+            {labels.github}
           </a>
         )}
         {caseStudy && (
@@ -76,7 +86,7 @@ const Project = ({
             href={caseStudy}
             className={`flex-1 py-3 text-base font-inter text-gold hover:bg-gray-800 transition border-r border-gold/50 ${!github ? "rounded-bl-2xl" : ""}`}
           >
-            Case Study
+            {labels.caseStudy}
           </Link>
         )}
         <a
@@ -86,7 +96,7 @@ const Project = ({
           className={`flex-1 py-3 text-base font-inter text-gold hover:bg-gray-800 transition ${github || caseStudy ? "rounded-br-2xl" : "rounded-b-2xl"}`}
         >
           <Website className="inline-block w-5 h-5 mr-2" />
-          Preview
+          {labels.preview}
         </a>
       </div>
     </>

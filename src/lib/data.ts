@@ -1,6 +1,7 @@
 import { ProjectProps } from "@/components/sections/Project";
 import type { OfferId } from "@/lib/offerIds";
 import { formatCurrency } from "@/lib/utils";
+import en from "@/messages/en.json";
 import React from "react";
 import JavaScriptIcon from "@/components/icons/Javascript";
 import ReactIcon from "@/components/icons/React";
@@ -30,6 +31,16 @@ import {
   CubeTransparentIcon,
   ShieldCheckIcon,
 } from "@heroicons/react/24/outline";
+
+/**
+ * English copy for the catalogue lives in `src/messages/en.json` (namespace
+ * `Catalog`), next to its Spanish twin, so the two dictionaries stay in step.
+ * The objects below add what a dictionary cannot hold: ids, slugs, prices,
+ * icons, images and links. Public pages render the localized copy through
+ * `getLocalizedCatalog()` (lib/catalog); admin, Stripe and invoices use these
+ * English objects directly.
+ */
+const copy = en.Catalog;
 
 // Fuente: resume de Randy Caballero (actualizado septiembre 2026)
 export const experience: ExperienceProps[] = [
@@ -111,8 +122,8 @@ export const projects: ProjectProps[] = [
       "PostgreSQL",
       "Docker",
     ],
-    description:
-      "Custom website and admin dashboard for a Houston HVAC company. Automated email campaigns, service request management, and real-time client-side rendering. Saved the business 15+ hours per week.",
+    id: "gsmactx",
+    description: copy.projects.gsmactx,
     image: "/gsmactx.avif",
     url: "https://www.gsmactx.com/",
     caseStudy: "/case-study/gsmactx",
@@ -128,8 +139,8 @@ export const projects: ProjectProps[] = [
       "Zod",
       "Stripe",
     ],
-    description:
-      "Official website and private admin dashboard with Stripe payment links for a Houston snack cart rental business. Booking form, local SEO, and card payments that let them book companies and schools.",
+    id: "dulceAntojo",
+    description: copy.projects.dulceAntojo,
     image: "/dulce-antojo.avif",
     github: "https://github.com/caballerorandy6/dulce-antojo",
     url: "https://dulce-antojo-snack-carts.vercel.app/",
@@ -145,8 +156,8 @@ export const projects: ProjectProps[] = [
       "Shadcn UI",
       "Zod",
     ],
-    description:
-      "Bilingual website for a Houston clinic featuring online appointment booking, service information, and local SEO to reach Spanish-speaking patients.",
+    id: "clinicaGessner",
+    description: copy.projects.clinicaGessner,
     image: "/clinica-gessner.avif",
     url: "https://www.clinicagessner.com/",
     caseStudy: "/case-study/clinica-gessner",
@@ -161,8 +172,8 @@ export const projects: ProjectProps[] = [
       "Shadcn UI",
       "Zod",
     ],
-    description:
-      "Professional bilingual website for a Houston clinic with Spanish-speaking patients. Features local SEO, service pages, and patient-friendly design optimized for mobile.",
+    id: "clinicaAirline",
+    description: copy.projects.clinicaAirline,
     image: "/clinica-hispana-airline.avif",
     url: "https://www.clinicahispanaairline.com/",
     caseStudy: "/case-study/clinica-airline",
@@ -178,8 +189,8 @@ export const projects: ProjectProps[] = [
       "Zod",
       "React Hook Form",
     ],
-    description:
-      "Landing page for a Houston-based home services company specializing in patio construction, motorized screens, and awning installations. Features local SEO optimization with JSON-LD schema and video gallery integration.",
+    id: "leosHomeExperts",
+    description: copy.projects.leosHomeExperts,
     image: "/leos-home-experts.webp",
     github: "https://github.com/caballerorandy6/leos-home-experts",
     url: "https://www.ac-remodelingservice.com/",
@@ -198,8 +209,8 @@ export const projects: ProjectProps[] = [
       "PostgreSQL",
       "Cloudinary",
     ],
-    description:
-      "A modern website for a beauty salon that showcases services, allows online bookings, and provides contact information, built with Next.js and Tailwind CSS.",
+    id: "rcBeautySalon",
+    description: copy.projects.rcBeautySalon,
     image: "/rcbeautysalon.avif",
     github: "https://github.com/caballerorandy6/rcbeautysalon",
     url: "https://www.rcbeautysalon.org/",
@@ -214,8 +225,8 @@ export const projects: ProjectProps[] = [
       "Zod",
       "Zustand",
     ],
-    description:
-      "This web-based platform streamlines the process of renting limousines for special occasions, offering users real-time access to vehicle availability, service customization, and secure booking—all within a modern, responsive interface.",
+    id: "limoRenting",
+    description: copy.projects.limoRenting,
     image: "/limo-renting.avif",
     github: "https://github.com/caballerorandy6/Limo-Renting-NextJS",
     url: "https://limo-renting-next-js-nu.vercel.app/",
@@ -361,59 +372,16 @@ export const certifications = [
   },
 ];
 
-export const processSteps = [
-  {
-    icon: ChatBubbleLeftRightIcon,
-    title: "Discovery",
-    week: "Week 1",
-    description:
-      "Free video call to understand your needs and objectives, wherever you are.",
-    details: [
-      "Requirements analysis",
-      "Competition research",
-      "Detailed proposal",
-      "Transparent quote",
-    ],
-  },
-  {
-    icon: PencilSquareIcon,
-    title: "Design & Planning",
-    week: "Weeks 1-2",
-    description: "Create wireframes and define your application architecture.",
-    details: [
-      "Interactive mockups",
-      "Tech stack selection",
-      "Project timeline",
-      "Review & feedback",
-    ],
-  },
-  {
-    icon: CodeBracketSquareIcon,
-    title: "Iterative Development",
-    week: "Weeks 2-5",
-    description:
-      "Build your application with weekly demos and continuous adjustments.",
-    details: [
-      "Weekly sprints",
-      "Friday demos",
-      "Continuous testing",
-      "Real-time adjustments",
-    ],
-  },
-  {
-    icon: RocketLaunchIcon,
-    title: "Launch & Support",
-    week: "Week 6",
-    description:
-      "Production deployment with training and post-launch support (30-180 days depending on plan).",
-    details: [
-      "Secure deployment",
-      "Complete training",
-      "Documentation",
-      "Post-launch support included",
-    ],
-  },
-];
+export type ProcessStepKey = keyof typeof copy.process;
+
+export const processSteps = (
+  [
+    ["discovery", ChatBubbleLeftRightIcon],
+    ["design", PencilSquareIcon],
+    ["development", CodeBracketSquareIcon],
+    ["launch", RocketLaunchIcon],
+  ] as const
+).map(([key, icon]) => ({ key, icon, ...copy.process[key] }));
 
 // Service catalogue: the single source for the home "How I Can Help You"
 // cards, the pricing cards, the /services pages and the Stripe checkout.
@@ -460,164 +428,93 @@ export type Offer = {
   quoteCta?: string;
 };
 
-export const offers: Offer[] = [
+/** Text fields of an offer; the part that differs per language */
+export type OfferCopy = Pick<
+  Offer,
+  "title" | "summary" | "tags" | "highlight" | "range" | "duration" | "description" | "features" | "ideal"
+> & { checkoutCta?: string; quoteCta?: string };
+
+type OfferShape = Omit<Offer, keyof OfferCopy | "quoteCta" | "checkout"> & {
+  checkout?: Omit<CheckoutPlan, "cta">;
+};
+
+const offerCopy = (id: OfferId): OfferCopy => copy.offers[id];
+
+/** Structure + English copy; `localizeOffer()` swaps the copy for another language */
+export function buildOffer(shape: OfferShape, text: OfferCopy): Offer {
+  const { checkoutCta, quoteCta, ...fields } = text;
+  const { checkout, ...rest } = shape;
+  return {
+    ...rest,
+    ...fields,
+    ...(checkout && { checkout: { ...checkout, cta: checkoutCta ?? "" } }),
+    ...(quoteCta && { quoteCta }),
+  };
+}
+
+const offerShapes: OfferShape[] = [
   {
     id: "business-website",
     slug: "web-design-houston",
-    title: "Business Website",
     icon: RocketLaunchIcon,
-    summary:
-      "From a one-page landing to a full 5-10 page site: custom design, mobile-first, built to turn visitors into calls and form submissions.",
-    tags: ["Custom Design", "Local SEO", "Contact Forms", "Loads in under 2 seconds"],
-    highlight: "Like Clínica Gessner & Leo's Home Experts",
     priceFromCents: 100000,
     pricing: "from",
     supportDays: 30,
-    range: "$1,000 - $6,000",
-    duration: "1-4 weeks",
-    description:
-      "A landing page at a fixed price, or a 5-10 page site quoted on scope",
-    features: [
-      "Custom, mobile-first design",
-      "Contact form and click-to-call",
-      "Local SEO setup",
-      "Analytics integration",
-      "Loads in under 2 seconds",
-      "30-day support",
-    ],
-    ideal:
-      "Perfect for: new businesses, professional services, product launches",
     featured: true,
     checkout: {
       id: "landing-page",
       name: "Professional Landing Page Development",
       priceInCents: 100000, // $1,000.00
       mode: "payment",
-      cta: "Start a Landing Page",
     },
-    quoteCta: "Quote a Full Website",
   },
   {
     id: "website-redesign",
     slug: "website-redesign-houston",
-    title: "Website Redesign & Modernization",
     icon: CubeTransparentIcon,
-    summary:
-      "Your current site rebuilt on modern technology: faster, mobile-friendly, and easier for customers to use, with your content migrated.",
-    tags: ["Modern Design", "Performance Boost", "Mobile Optimization", "Content Migration"],
-    highlight: "Like GSM A/C",
     priceFromCents: 350000,
     pricing: "from",
     supportDays: 45,
-    range: "$3,500 - $8,000",
-    duration: "4-6 weeks",
-    description: "Your outdated website rebuilt without losing what works",
-    features: [
-      "Modern design and aesthetics",
-      "Performance optimization",
-      "Mobile responsive upgrade",
-      "Content migration",
-      "Rankings preserved and improved",
-      "45-day support",
-    ],
-    ideal:
-      "Perfect for: businesses with old websites, legacy code or poor performance",
     featured: false,
-    quoteCta: "Get a Quote",
   },
   {
     id: "admin-dashboard",
     slug: "admin-dashboard-houston",
-    title: "Admin Dashboard & Automation",
     icon: ChartBarIcon,
-    summary:
-      "A private panel to manage leads, customers, payments and campaigns from one place, with the repetitive work automated.",
-    tags: ["Lead & Customer Management", "Email & SMS Campaigns", "Stripe Payments", "Reports"],
-    highlight: "GSM saves 15 hours/week",
     priceFromCents: 750000,
     pricing: "from",
     supportDays: 60,
-    range: "$7,500 - $15,000",
-    duration: "5-6 weeks",
-    description: "A tailored admin panel for your day-to-day operations",
-    features: [
-      "Custom forms and workflows",
-      "Lead and customer management",
-      "Email and SMS campaigns",
-      "Stripe payments",
-      "Reports and data visualization",
-      "API integrations",
-      "60-day support",
-    ],
-    ideal:
-      "Perfect for: service businesses, operations management, automation",
     featured: false,
-    quoteCta: "Get a Quote",
   },
   {
     id: "store-and-apps",
     slug: "ecommerce-houston",
-    title: "Online Store & Custom Web Apps",
     icon: CodeBracketIcon,
-    summary:
-      "Full-featured online stores with Stripe and custom platforms: booking systems, member areas, internal tools. No monthly platform fees.",
-    tags: ["Stripe Checkout", "Booking Systems", "User Accounts", "API Integrations"],
-    highlight: "Like RC Beauty Salon",
     priceFromCents: 800000,
     pricing: "from",
     supportDays: 90,
-    range: "$8,000 - $20,000+",
-    duration: "6-12+ weeks",
-    description:
-      "An online store with payment processing, or a custom platform built around your business",
-    features: [
-      "Stripe checkout and subscriptions",
-      "Inventory and order processing",
-      "Customer accounts",
-      "Booking systems and member areas",
-      "Database and API development",
-      "Third-party integrations",
-      "90-day support",
-    ],
-    ideal:
-      "Perfect for: retail, online stores, booking-based and product-based businesses",
     featured: false,
-    quoteCta: "Get a Quote",
   },
   {
     id: "maintenance",
     slug: "website-maintenance-houston",
-    title: "Monthly Maintenance & Support",
     icon: ShieldCheckIcon,
-    summary:
-      "Ongoing maintenance, security updates, backups, and technical support so your website keeps working while you run your business.",
-    tags: ["Security Updates", "Uptime Monitoring", "Content Updates", "Priority Support"],
-    highlight: "Peace of mind guaranteed",
     priceFromCents: 20000,
     pricing: "fixed",
     supportDays: null,
-    range: "Cancel anytime",
-    duration: "Ongoing",
-    description: "Monthly maintenance and support for any website I built",
-    features: [
-      "Security patches and updates",
-      "Performance and uptime monitoring",
-      "Content updates",
-      "Backup management",
-      "Technical support",
-      "Same-day response for urgent issues",
-    ],
-    ideal: "Perfect for: every business that wants peace of mind",
     featured: false,
     checkout: {
       id: "website-maintenance",
       name: "Monthly Website Maintenance and Support",
       priceInCents: 20000, // $200.00/month
       mode: "subscription",
-      cta: "Start Maintenance Plan",
     },
   },
 ];
+
+export const offers: Offer[] = offerShapes.map((shape) =>
+  buildOffer(shape, offerCopy(shape.id))
+);
 
 /** Everything that can be paid on the site; the checkout action only accepts these */
 export const checkoutPlans: CheckoutPlan[] = offers.flatMap((offer) =>
@@ -627,94 +524,83 @@ export const checkoutPlans: CheckoutPlan[] = offers.flatMap((offer) =>
 /** What the contact forms need from the catalogue (id + title; nothing heavier crosses to the client) */
 export const serviceOptions = offers.map(({ id, title }) => ({ id, title }));
 
-const offerById = Object.fromEntries(offers.map((o) => [o.id, o])) as Record<
-  OfferId,
-  Offer
->;
+export type PriceLabels = { from: string; perMonth: string };
+const EN_PRICE_LABELS: PriceLabels = { from: copy.priceFrom, perMonth: copy.perMonth };
 
 /** "From" + "$3,500", or just "$200/month": the two halves every price display uses */
-export function offerPriceParts(offer: Offer): {
-  prefix: "From" | null;
+export function offerPriceParts(
+  offer: Offer,
+  labels: PriceLabels = EN_PRICE_LABELS
+): {
+  prefix: string | null;
   amount: string;
 } {
   const base = formatCurrency(offer.priceFromCents, true);
-  const amount = offer.checkout?.mode === "subscription" ? `${base}/month` : base;
-  return { prefix: offer.pricing === "from" ? "From" : null, amount };
+  const amount = offer.checkout?.mode === "subscription" ? `${base}${labels.perMonth}` : base;
+  return { prefix: offer.pricing === "from" ? labels.from : null, amount };
 }
 
 /** "From $3,500" / "$200/month" */
-export function offerPriceLabel(offer: Offer): string {
-  const { prefix, amount } = offerPriceParts(offer);
+export function offerPriceLabel(offer: Offer, labels?: PriceLabels): string {
+  const { prefix, amount } = offerPriceParts(offer, labels);
   return prefix ? `${prefix} ${amount}` : amount;
 }
 
-const quotedOffers = offers.filter((o) => o.pricing === "from");
+export type FaqKey = Exclude<keyof typeof copy.faqs, "supportItem">;
+export const FAQ_KEYS = ["outsideUsa", "timeline", "support", "technologies", "payments", "progress"] as const satisfies readonly FaqKey[];
 
+/** Pieces the FAQ answers interpolate: timelines and support per quoted offer, maintenance price */
+export type FaqValues = {
+  durations: string;
+  supports: string;
+  maintenanceTitle: string;
+  maintenancePrice: string;
+};
 
-export const faqs = [
-  {
-    question: "Do you work with clients outside USA?",
-    answer:
-      "I work with clients worldwide. Projects are fully remote, and I use tools like Zoom and Slack to communicate and collaborate effectively. Payments are easy and secure through Stripe, so you can work with me from anywhere.",
-  },
-  {
-    question: "How long does a typical project take?",
-    answer:
-      `It depends on the scope: ${quotedOffers
-        .map((o) => `${o.title}: ${o.duration}`)
-        .join(", ")}. I always provide realistic timelines and meet them.`,
-  },
-  {
-    question: "Do you offer post-launch support?",
-    answer:
-      `Yes! Every project includes complimentary post-launch support. The duration depends on the service: ${quotedOffers
-        .map((o) => `${o.title} (${o.supportDays} days)`)
-        .join(", ")}. Support covers bug fixes, minor adjustments, and technical assistance. After that, the ${offerById.maintenance.title} plan is ${offerPriceLabel(offerById.maintenance)} and covers security updates, performance monitoring, content updates and priority support.`,
-  },
-  {
-    question: "Do you work with technologies besides Next.js?",
-    answer:
-      "My specialty is the React/Next.js ecosystem with TypeScript, Node.js, and PostgreSQL - enterprise technology at small business pricing. I also have experience with vanilla JavaScript, and can adapt to project needs. I always recommend the best technology for each case.",
-  },
-  {
-    question: "How does the payment process work?",
-    answer:
-      "Two payments: 50% to start and 50% when the project is delivered. The landing page and the maintenance plan can be paid directly on this site through Stripe. For everything else we agree on the scope and the final price first, and then you receive a secure Stripe payment link. Zelle is also accepted.",
-  },
-  {
-    question: "Can I see progress during development?",
-    answer:
-      "Absolutely! I provide weekly progress updates and you'll have access to a staging environment where you can see real-time progress. I respond within 24 hours (usually much faster) to any questions or concerns. Transparency is key to my process.",
-  },
-];
+export function faqValues(
+  localizedOffers: Offer[],
+  supportItem: (title: string, days: number) => string,
+  labels?: PriceLabels
+): FaqValues {
+  const quoted = localizedOffers.filter((o) => o.pricing === "from");
+  const maintenance = localizedOffers.find((o) => o.id === "maintenance")!;
+  return {
+    durations: quoted.map((o) => `${o.title}: ${o.duration}`).join(", "),
+    supports: quoted.map((o) => supportItem(o.title, o.supportDays ?? 0)).join(", "),
+    maintenanceTitle: maintenance.title,
+    maintenancePrice: offerPriceLabel(maintenance, labels),
+  };
+}
 
+function fill(template: string, values: Record<string, string>): string {
+  return template.replace(/\{(\w+)\}/g, (_, k: string) => values[k] ?? "");
+}
 
-export const testimonials = [
-  {
-    content:
-      "Randy transformed our business with a complete website rebuild. Our old site was slow and outdated – the new one is fast, modern, and professional. But the real value was the custom admin dashboard he created for managing our customer communications. We're now saving 15 hours per week on administrative tasks. What used to take hours now takes minutes. Randy's custom email campaign system is intuitive and exactly what we needed. Randy was professional, communicative, and delivered on time. He explained everything clearly and was always available. Highly recommend RC Web Solutions to any Houston business.",
-    author: "Michel Chapelli",
-    company: "GSM A/C & General Contractor Inc.",
-    rating: 5,
-    highlight: "Saving 15 hours per week",
-  },
-  {
-    content:
-      "Working with Randy from RC Web Solutions LLC was a great experience. He was professional, responsive, and really took the time to understand my business. The website turned out clean, modern, and easy for customers to use. I'm very happy with the results and would definitely recommend him to anyone needing a professional website.",
-    author: "Leonardo Lecour Acosta",
-    company: "Leo's Home Experts",
-    rating: 5,
-    highlight: "Clean, modern, and easy to use",
-  },
-  {
-    content:
-      "Excellent experience working on the development of our website. Professional, responsible, and technically skilled. Delivered on time, optimized speed and SEO structure, and was always willing to improve details.",
-    author: "Yoannis Aguilar Fonseca",
-    company: "",
-    rating: 5,
-    highlight: "Optimized speed and SEO",
-  },
-];
+/** English FAQs (JSON-LD on the English home, admin); public pages use getLocalizedCatalog() */
+export const faqs = (() => {
+  const values = faqValues(offers, (title, days) =>
+    fill(copy.faqs.supportItem, { title, days: String(days) })
+  );
+  return FAQ_KEYS.map((key) => ({
+    key,
+    question: copy.faqs[key].question,
+    answer: fill(copy.faqs[key].answer, values),
+  }));
+})();
+
+export type TestimonialKey = keyof typeof copy.testimonials;
+
+const testimonialAuthors: Record<TestimonialKey, { author: string; company: string; rating: number }> = {
+  chapelli: { author: "Michel Chapelli", company: "GSM A/C & General Contractor Inc.", rating: 5 },
+  lecour: { author: "Leonardo Lecour Acosta", company: "Leo's Home Experts", rating: 5 },
+  aguilar: { author: "Yoannis Aguilar Fonseca", company: "", rating: 5 },
+};
+
+export const testimonials = (Object.keys(testimonialAuthors) as TestimonialKey[]).map((key) => ({
+  key,
+  ...testimonialAuthors[key],
+  ...copy.testimonials[key],
+}));
 
 // Google Reviews - Link to leave a review
 export const GOOGLE_REVIEW_URL = "https://g.page/r/CaUssahd8MITEAE/review";

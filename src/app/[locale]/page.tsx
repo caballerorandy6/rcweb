@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import dynamic from "next/dynamic";
-import { siteConfig } from "@/config/site";
+import { getTranslations } from "next-intl/server";
+import { genPageMetadata } from "@/utils/genPageMetadata";
+import { getLocalizedCatalog } from "@/lib/catalog";
 
 // Sections are Server Components: they ship HTML, not JS, so there is
 // nothing to lazy-load. Only the floating CTA (client) is split off.
@@ -21,18 +23,22 @@ import { JsonLdForFaq } from "@/components/seo/JsonLdForFaq";
 import { JsonLdForService } from "@/components/seo/JsonLdForService";
 import { JsonLdForLocalBusiness } from "@/components/seo/JsonLdForLocalBusiness";
 import { JsonLdForWebSite } from "@/components/seo/JsonLdForWebSite";
-import { faqs, offers } from "@/lib/data";
+import type { Locale } from "@/i18n/routing";
 
-export const metadata: Metadata = {
-  title: "Custom Websites & Web Apps for Small Businesses | RC Web Solutions",
-  description:
-    "Randy Caballero builds fast websites and web apps for small service businesses: booking, Stripe payments and local SEO built in. Based in Houston, TX, working with clients anywhere. From $1,000. Free consultation.",
-  alternates: {
-    canonical: siteConfig.baseUrl,
-  },
-};
+export async function generateMetadata({ params }: PageProps<"/[locale]">): Promise<Metadata> {
+  const locale = (await params).locale as Locale;
+  const t = await getTranslations({ locale, namespace: "Metadata.home" });
+  return genPageMetadata({
+    title: t("title"),
+    description: t("description"),
+    locale,
+    pathname: "/",
+  });
+}
 
-export default function Home() {
+export default async function Home() {
+  const { faqs, offers } = await getLocalizedCatalog();
+
   return (
     <div>
       <JsonLdForLocalBusiness />

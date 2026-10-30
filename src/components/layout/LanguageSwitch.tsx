@@ -32,7 +32,18 @@ export default function LanguageSwitch({ className, onNavigate }: LanguageSwitch
       )}
     >
       {routing.locales.map((target: Locale) => {
-        const isCurrent = target === locale;
+        if (target === locale) {
+          return (
+            <span
+              key={target}
+              lang={target}
+              aria-current="true"
+              className="rounded-full bg-gold px-2.5 py-1 text-black"
+            >
+              {target.toUpperCase()}
+            </span>
+          );
+        }
         return (
           <Link
             key={target}
@@ -41,15 +52,10 @@ export default function LanguageSwitch({ className, onNavigate }: LanguageSwitch
             // @ts-expect-error -- TypeScript validates params per pathname
             href={{ pathname, params }}
             locale={target}
-            hrefLang={target}
             lang={target}
-            aria-current={isCurrent ? "true" : undefined}
-            aria-label={isCurrent ? undefined : t(target)}
+            aria-label={t(target)}
             onClick={onNavigate}
-            className={clsx(
-              "rounded-full px-2.5 py-1 transition-colors duration-200",
-              isCurrent ? "bg-gold text-black" : "text-white/70 hover:text-gold"
-            )}
+            className="rounded-full px-2.5 py-1 text-white/70 transition-colors duration-200 hover:text-gold"
           >
             {target.toUpperCase()}
           </Link>

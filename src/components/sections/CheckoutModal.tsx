@@ -1,6 +1,7 @@
 "use client";
 
 import { useRef, useState, useTransition } from "react";
+import { useTranslations } from "next-intl";
 import { useRouter } from "@/i18n/navigation";
 import Modal from "@/components/ui/Modal";
 import Button from "@/components/ui/Button";
@@ -29,6 +30,7 @@ export default function CheckoutModal({ plans }: { plans: CheckoutPlan[] }) {
   const nameRef = useRef<HTMLInputElement>(null);
   const emailRef = useRef<HTMLInputElement>(null);
   const router = useRouter();
+  const t = useTranslations("Forms.checkout");
 
   const plan = plans.find((p) => p.id === planId);
   const isOpen = Boolean(plan);
@@ -43,9 +45,9 @@ export default function CheckoutModal({ plans }: { plans: CheckoutPlan[] }) {
     const name = customerName.trim();
     const email = customerEmail.trim();
     const nextErrors: typeof errors = {};
-    if (name.length < 2) nextErrors.name = "Enter your name so I know who to contact.";
+    if (name.length < 2) nextErrors.name = t("errors.name");
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email))
-      nextErrors.email = "Enter a valid email so I can send your invoice.";
+      nextErrors.email = t("errors.email");
     setErrors(nextErrors);
 
     if (nextErrors.name) return nameRef.current?.focus();
@@ -73,22 +75,22 @@ export default function CheckoutModal({ plans }: { plans: CheckoutPlan[] }) {
           {plan ? (
             <form onSubmit={handleSubmit} noValidate>
               <h2 id="checkout-title" className="text-4xl text-gold mb-6 font-iceland">
-                Complete Your Order
+                {t("title")}
               </h2>
 
               <dl className="bg-gray-800/50 rounded-xl p-4 mb-6 border border-gold/10 font-inter">
                 <div className="flex justify-between items-center mb-2">
-                  <dt className="text-gray-400 text-sm">Selected plan</dt>
+                  <dt className="text-gray-400 text-sm">{t("selectedPlan")}</dt>
                   <dd className="text-gold font-semibold">{plan.name}</dd>
                 </div>
                 <div className="flex justify-between items-center">
                   <dt className="text-gray-400 text-sm">
-                    {isMonthly ? "Monthly payment" : "Initial payment (50%)"}
+                    {isMonthly ? t("monthly") : t("initial")}
                   </dt>
                   <dd className="text-2xl font-semibold text-gold tabular-nums">
                     {formatDollars(amount)}
                     {isMonthly ? (
-                      <span className="text-sm font-normal text-gold/70">/month</span>
+                      <span className="text-sm font-normal text-gold/70">{t("perMonth")}</span>
                     ) : null}
                   </dd>
                 </div>
@@ -100,7 +102,7 @@ export default function CheckoutModal({ plans }: { plans: CheckoutPlan[] }) {
                     htmlFor="checkout-name"
                     className="block text-sm text-gray-300 mb-2 font-medium"
                   >
-                    Your name
+                    {t("name")}
                   </label>
                   <input
                     ref={nameRef}
@@ -115,7 +117,7 @@ export default function CheckoutModal({ plans }: { plans: CheckoutPlan[] }) {
                     value={customerName}
                     onChange={(e) => setCustomerName(e.target.value)}
                     className={inputClasses}
-                    placeholder="Maria Lopez…"
+                    placeholder={t("namePlaceholder")}
                   />
                   {errors.name ? (
                     <p id="checkout-name-error" role="alert" className="mt-2 text-sm text-red-400">
@@ -128,7 +130,7 @@ export default function CheckoutModal({ plans }: { plans: CheckoutPlan[] }) {
                     htmlFor="checkout-email"
                     className="block text-sm text-gray-300 mb-2 font-medium"
                   >
-                    Email address
+                    {t("email")}
                   </label>
                   <input
                     ref={emailRef}
@@ -145,7 +147,7 @@ export default function CheckoutModal({ plans }: { plans: CheckoutPlan[] }) {
                     value={customerEmail}
                     onChange={(e) => setCustomerEmail(e.target.value)}
                     className={inputClasses}
-                    placeholder="maria@yourbusiness.com…"
+                    placeholder={t("emailPlaceholder")}
                   />
                   {errors.email ? (
                     <p id="checkout-email-error" role="alert" className="mt-2 text-sm text-red-400">
@@ -157,7 +159,7 @@ export default function CheckoutModal({ plans }: { plans: CheckoutPlan[] }) {
 
               <div className="flex gap-4 mt-6 font-inter">
                 <Button type="submit" size="lg" className="flex-auto" disabled={isPending}>
-                  {isPending ? "Loading…" : "Go to Terms & Pay"}
+                  {isPending ? t("loading") : t("submit")}
                 </Button>
                 <Button
                   variant="secondary"
@@ -166,7 +168,7 @@ export default function CheckoutModal({ plans }: { plans: CheckoutPlan[] }) {
                   onClick={close}
                   disabled={isPending}
                 >
-                  Cancel
+                  {t("cancel")}
                 </Button>
               </div>
             </form>

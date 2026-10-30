@@ -15,11 +15,16 @@ import UTMTracker from "@/components/tracking/UTMTracker";
 import { hasLocale, NextIntlClientProvider } from "next-intl";
 import { getMessages, getTranslations } from "next-intl/server";
 import { notFound } from "next/navigation";
-import { rootMetadata } from "@/config/metadata";
+import { localizedRootMetadata, rootMetadata } from "@/config/metadata";
 import { routing } from "@/i18n/routing";
 import { pickClientMessages } from "@/i18n/clientMessages";
 
-export const metadata: Metadata = rootMetadata;
+/** Site-wide defaults in the page language: title template, description, OG */
+export async function generateMetadata({ params }: LayoutProps<"/[locale]">): Promise<Metadata> {
+  const { locale } = await params;
+  if (!hasLocale(routing.locales, locale)) return rootMetadata;
+  return localizedRootMetadata(locale, await getTranslations({ locale, namespace: "Metadata" }));
+}
 
 // Every page renders per request: the Content-Security-Policy carries a
 // fresh nonce (src/proxy.ts) that Next.js stamps on its scripts while

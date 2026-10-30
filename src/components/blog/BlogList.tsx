@@ -3,13 +3,16 @@ import { BookOpenIcon } from "@heroicons/react/24/outline";
 import Heading from "@/components/ui/Heading";
 import BlogCard from "@/components/blog/BlogCard";
 import BlogSubscriptionForm from "@/components/blog/BlogSubscriptionForm";
+import { getTranslations } from "next-intl/server";
 import type { BlogPost } from "@/lib/blog";
 
 interface BlogListProps {
   posts: BlogPost[];
 }
 
-export default function BlogList({ posts }: BlogListProps) {
+export default async function BlogList({ posts }: BlogListProps) {
+  const t = await getTranslations("Blog.list");
+
   return (
     <section className="relative isolate overflow-hidden pt-8 pb-20 sm:pt-12 sm:pb-28 bg-linear-to-b from-gray-900 via-gray-900/95 to-gray-900">
       {/* Background decoration */}
@@ -23,9 +26,9 @@ export default function BlogList({ posts }: BlogListProps) {
         <Heading
           as="h1"
           icon={<BookOpenIcon className="w-8 text-gold" />}
-          text="Learn, Grow, Succeed"
+          text={t("subheading")}
         >
-          Web Development Blog
+          {t("heading")}
         </Heading>
 
         {/* Newsletter Subscription */}
@@ -46,13 +49,10 @@ export default function BlogList({ posts }: BlogListProps) {
             <div className="bg-gray-800/30 rounded-2xl border border-gold/20 p-12">
               <BookOpenIcon className="w-16 h-16 text-gold/40 mx-auto mb-4" />
               <h3 className="text-2xl text-gold font-iceland mb-3">
-                Coming Soon
+                {t("comingSoon")}
               </h3>
-              <p className="text-white/60 font-inter leading-relaxed mb-6">
-                I&apos;m working on new content about web development, SEO, and
-                digital marketing. Check back soon!
-              </p>
-              <Button href={{ pathname: "/", hash: "contact" }}>Contact Me</Button>
+              <p className="text-white/60 font-inter leading-relaxed mb-6">{t("comingSoonText")}</p>
+              <Button href={{ pathname: "/", hash: "contact" }}>{t("contact")}</Button>
             </div>
           </div>
         )}

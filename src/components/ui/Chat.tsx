@@ -2,6 +2,7 @@
 
 import { PaperAirplaneIcon, XMarkIcon } from "@heroicons/react/24/outline";
 import { useState, useEffect, useRef } from "react";
+import { useLocale, useTranslations } from "next-intl";
 import Image from "next/image";
 import { event as trackEvent } from "@/lib/analytics";
 
@@ -11,19 +12,16 @@ interface Message {
   content: string;
 }
 
-const WELCOME_MESSAGE: Message = {
-  id: "welcome",
-  role: "assistant",
-  content:
-    "Hi! I'm Maria, your virtual assistant for RC Web Solutions. I'm here to help you with information about our services, pricing, projects, and answer any questions you might have. How can I assist you today?",
-};
-
 interface ChatProps {
   onClose: () => void;
 }
 
 export default function Chat({ onClose }: ChatProps) {
-  const [messages, setMessages] = useState<Message[]>([WELCOME_MESSAGE]);
+  const t = useTranslations("Chat");
+  const locale = useLocale();
+  const [messages, setMessages] = useState<Message[]>([
+    { id: "welcome", role: "assistant", content: t("welcome") },
+  ]);
   const [input, setInput] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [hasTrackedEngagement, setHasTrackedEngagement] = useState(false);
@@ -83,10 +81,11 @@ export default function Chat({ onClose }: ChatProps) {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          messages: [...messages, userMessage].map((m) => ({
-            role: m.role,
-            content: m.content,
-          })),
+          locale,
+          // The welcome line is UI copy, not part of the conversation
+          messages: [...messages, userMessage]
+            .filter((m) => m.id !== "welcome")
+            .map((m) => ({ role: m.role, content: m.content })),
         }),
       });
 
@@ -132,8 +131,7 @@ export default function Chat({ onClose }: ChatProps) {
         {
           id: (Date.now() + 1).toString(),
           role: "assistant",
-          content:
-            "Sorry, something went wrong on my side. Try again in a moment, or call +1 (346) 375-7534.",
+          content: t("error"),
         },
       ]);
     } finally {
@@ -145,7 +143,7 @@ export default function Chat({ onClose }: ChatProps) {
     <div
       id="maria-chat"
       role="dialog"
-      aria-label="Chat with Maria"
+      aria-label={t("dialogLabel")}
       onKeyDown={(e) => {
         if (e.key === "Escape") onClose();
       }}
@@ -164,14 +162,14 @@ export default function Chat({ onClose }: ChatProps) {
             />
           </div>
           <div>
-            <h3 className="text-gold font-iceland text-2xl">Maria</h3>
-            <p className="text-xs text-white/50 font-inter">AI Assistant</p>
+            <h3 className="text-gold font-iceland text-2xl">{t("title")}</h3>
+            <p className="text-xs text-white/50 font-inter">{t("assistant")}</p>
           </div>
         </div>
         <button
           type="button"
           onClick={onClose}
-          aria-label="Close chat"
+          aria-label={t("close")}
           className="p-2 -m-2 rounded-lg text-white/80 hover:text-gold transition-colors"
         >
           <XMarkIcon className="w-6 h-6" />
@@ -229,7 +227,7 @@ export default function Chat({ onClose }: ChatProps) {
             <div className="bg-gray-800 p-3 rounded-lg border border-gold/10">
               {/* Typing indicator */}
               <div role="status" className="flex space-x-2">
-                <span className="sr-only">Maria is typing…</span>
+                <span className="sr-only">{t("typing")}</span>
                 <div aria-hidden="true" className="w-2 h-2 bg-gold rounded-full animate-bounce" />
                 <div aria-hidden="true" className="w-2 h-2 bg-gold rounded-full animate-bounce [animation-delay:150ms]" />
                 <div aria-hidden="true" className="w-2 h-2 bg-gold rounded-full animate-bounce [animation-delay:300ms]" />
@@ -245,7 +243,7 @@ export default function Chat({ onClose }: ChatProps) {
       <form onSubmit={handleSubmit} className="p-4 border-t border-gold/20">
         <div className="flex gap-2">
           <label htmlFor="maria-chat-input" className="sr-only">
-            Your message
+            {t("yourMessage")}
           </label>
           <input
             ref={inputRef}
@@ -255,21 +253,21 @@ export default function Chat({ onClose }: ChatProps) {
             autoComplete="off"
             value={input}
             onChange={(e) => setInput(e.target.value)}
-            placeholder="Type your message…"
+            placeholder={t("placeholder")}
             className="flex-1 min-w-0 bg-gray-800 text-white placeholder:text-white/40 px-4 py-2 rounded-lg border border-gold/20 focus:border-gold focus:outline-hidden focus:ring-2 focus:ring-gold/20 font-inter text-sm transition"
             disabled={isLoading}
           />
           <button
             type="submit"
             disabled={isLoading || !input.trim()}
-            aria-label="Send message"
+            aria-label={t("send")}
             className="bg-gold text-gray-900 p-2 rounded-lg hover:bg-gold/90 transition hover:scale-105 active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100"
           >
             <PaperAirplaneIcon className="w-5 h-5" />
           </button>
         </div>
         <p className="text-xs text-white/50 font-inter mt-2 text-center">
-          AI can make mistakes. Verify important information.
+          {t("disclaimer")}
         </p>
       </form>
     </div>

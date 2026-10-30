@@ -17,7 +17,8 @@ export async function POST(req: Request) {
       );
     }
 
-    const { messages } = await req.json();
+    const { messages, locale } = await req.json();
+    const language = locale === "es" ? "Spanish" : "English";
 
     // System prompt personalizado para tu negocio
     const systemMessage = {
@@ -34,7 +35,8 @@ Company Info:
 
 Be professional, friendly, and helpful. Answer questions about web development, the services offered, pricing, and general inquiries.
 If asked about specific pricing, mention our five services: Business Website (from $1,000; a landing page is $1,000 fixed), Website Redesign & Modernization (from $3,500), Admin Dashboard & Automation (from $7,500), Online Store & Custom Web Apps (from $8,000) and Monthly Maintenance & Support ($200/month). Only the landing page and the maintenance plan can be paid directly on the site; everything else is quoted after a short conversation. Encourage them to check the pricing section or contact directly for a quote.
-Keep responses concise but informative.`,
+Keep responses concise but informative.
+The visitor is browsing the site in ${language}: answer in ${language} unless they write to you in another language.`,
     };
 
     const response = await openai.chat.completions.create({

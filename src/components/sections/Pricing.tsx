@@ -1,5 +1,7 @@
 import { CheckIcon } from "@heroicons/react/24/outline";
-import { offers, checkoutPlans, offerPriceParts } from "@/lib/data";
+import { getTranslations } from "next-intl/server";
+import { offerPriceParts } from "@/lib/data";
+import { getLocalizedCatalog } from "@/lib/catalog";
 import Heading from "../ui/Heading";
 import { formatCurrency } from "@/lib/utils";
 import Button from "@/components/ui/Button";
@@ -11,15 +13,20 @@ import CheckoutModal from "@/components/sections/CheckoutModal";
  * An offer with a fixed-price entry (landing page, maintenance) opens the
  * checkout; the rest, and the larger scopes, go to /schedule for a quote.
  */
-// Only what the modal shows; the full catalogue stays on the server
-const modalPlans = checkoutPlans.map(({ id, name, priceInCents, mode }) => ({
-  id,
-  name,
-  priceInCents,
-  mode,
-}));
+const Pricing = async () => {
+  const [t, { offers, priceLabels }] = await Promise.all([
+    getTranslations("Home.pricing"),
+    getLocalizedCatalog(),
+  ]);
 
-const Pricing = () => {
+  // Only what the modal shows (the offer title in the visitor's language);
+  // the full catalogue stays on the server
+  const modalPlans = offers.flatMap((offer) =>
+    offer.checkout
+      ? [{ id: offer.checkout.id, name: offer.title, priceInCents: offer.checkout.priceInCents, mode: offer.checkout.mode }]
+      : []
+  );
+
   return (
     <section
       id="pricing"
@@ -28,14 +35,14 @@ const Pricing = () => {
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
         <Heading
           icon={<CheckIcon />}
-          text="Pricing in USD • Serving clients in the US and worldwide"
+          text={t("subheading")}
         >
-          Clear & Transparent Pricing
+          {t("heading")}
         </Heading>
 
         <div className="mx-auto mt-16 flex flex-wrap justify-center gap-8">
           {offers.map((offer) => {
-            const { prefix, amount } = offerPriceParts(offer);
+            const { prefix, amount } = offerPriceParts(offer, priceLabels);
             return (
               <div
                 key={offer.id}
@@ -48,7 +55,7 @@ const Pricing = () => {
                 {offer.featured && (
                   <div className="absolute -top-4 left-1/2 -translate-x-1/2">
                     <span className="inline-flex items-center rounded-full bg-gold px-4 py-1 text-xs font-inter text-gray-900">
-                      Most Popular
+                      {t("mostPopular")}
                     </span>
                   </div>
                 )}
@@ -66,7 +73,7 @@ const Pricing = () => {
                     <span className="text-4xl font-iceland text-gold">
                       {amount}
                     </span>
-                    <span className="text-sm font-inter text-white/60">USD</span>
+                    <span className="text-sm font-inter text-white/60">{t("usd")}</span>
                   </p>
                   <p className="mt-2 text-sm font-inter text-gold/80">
                     {offer.range} • {offer.duration}
@@ -123,13 +130,7 @@ const Pricing = () => {
         <CheckoutModal plans={modalPlans} />
 
         <div className="mx-auto mt-10 max-w-lg text-center">
-          <p className="text-sm font-inter text-white/50">
-            All projects include: Source code • Domain & hosting setup •
-            Training • 50% deposit, 50% on completion. The landing page and
-            the maintenance plan can be paid right here; &ldquo;From&rdquo;
-            prices are quoted after a short conversation, and the final price
-            depends on the scope.
-          </p>
+          <p className="text-sm font-inter text-white/50">{t("note")}</p>
         </div>
       </div>
     </section>

@@ -7,10 +7,16 @@ describe("genPageMetadata", () => {
     const meta = genPageMetadata({
       title: "Services",
       description: "What we build",
-      pageRoute: "/services",
+      pathname: "/services",
     });
 
     expect(meta.alternates?.canonical).toBe(`${siteConfig.baseUrl}/services`);
+    expect(meta.alternates?.languages).toEqual({
+      en: `${siteConfig.baseUrl}/services`,
+      es: `${siteConfig.baseUrl}/es/servicios`,
+      "x-default": `${siteConfig.baseUrl}/services`,
+    });
+    expect(meta.openGraph).toMatchObject({ locale: "en_US" });
     expect(meta.openGraph).toMatchObject({
       type: "website",
       url: `${siteConfig.baseUrl}/services`,
@@ -27,18 +33,48 @@ describe("genPageMetadata", () => {
     const meta = genPageMetadata({
       title: "Thank you",
       description: "Done",
-      pageRoute: "/thank-you",
+      pathname: "/thank-you",
       noIndex: true,
     });
 
     expect(meta.robots).toMatchObject({ index: false, follow: false });
   });
 
+  it("localizes the canonical, the og:locale and the dynamic segments in Spanish", () => {
+    const meta = genPageMetadata({
+      title: "Diseño web",
+      description: "Qué construyo",
+      locale: "es",
+      pathname: "/services/[slug]",
+      params: { slug: "web-design-houston" },
+    });
+
+    expect(meta.alternates?.canonical).toBe(`${siteConfig.baseUrl}/es/servicios/web-design-houston`);
+    expect(meta.alternates?.languages).toMatchObject({
+      en: `${siteConfig.baseUrl}/services/web-design-houston`,
+      "x-default": `${siteConfig.baseUrl}/services/web-design-houston`,
+    });
+    expect(meta.openGraph).toMatchObject({ locale: "es_US" });
+  });
+
+  it("emits no hreflang for single-language routes", () => {
+    const meta = genPageMetadata({
+      title: "Admin Login",
+      description: "Private",
+      pageRoute: "/admin/login",
+      noIndex: true,
+    });
+
+    expect(meta.alternates?.canonical).toBe(`${siteConfig.baseUrl}/admin/login`);
+    expect(meta.alternates?.languages).toBeUndefined();
+  });
+
   it("emits og:type article with dates and no image so the generated card applies", () => {
     const meta = genPageMetadata({
       title: "A post",
       description: "Post description",
-      pageRoute: "/blog/a-post",
+      pathname: "/blog/[slug]",
+      params: { slug: "a-post" },
       article: {
         publishedTime: "2026-03-30",
         modifiedTime: "2026-10-18",

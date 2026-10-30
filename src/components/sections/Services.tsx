@@ -1,11 +1,18 @@
 import { Link } from "@/i18n/navigation";
 import { Cog6ToothIcon } from "@heroicons/react/24/outline";
-import { offers, offerPriceLabel } from "@/lib/data";
+import { getTranslations } from "next-intl/server";
+import { offerPriceLabel } from "@/lib/data";
+import { getLocalizedCatalog } from "@/lib/catalog";
 import Heading from "@/components/ui/Heading";
 import Button from "@/components/ui/Button";
 
 // Server Component: cards are in the HTML; reveal-on-scroll is CSS only
-const Services = () => {
+const Services = async () => {
+  const [t, { offers, priceLabels }] = await Promise.all([
+    getTranslations("Home.services"),
+    getLocalizedCatalog(),
+  ]);
+
   return (
     <section
       id="services"
@@ -14,9 +21,9 @@ const Services = () => {
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
         <Heading
           icon={<Cog6ToothIcon className="w-8 text-gold" />}
-          text="I build websites, web apps and admin dashboards that turn visitors into calls and appointments"
+          text={t("subheading")}
         >
-          How I Can Help You
+          {t("heading")}
         </Heading>
 
         <ul className="mx-auto mt-16 flex flex-wrap justify-center gap-6 lg:gap-8">
@@ -64,7 +71,7 @@ const Services = () => {
                     {offer.highlight}
                   </p>
                   <p className="text-sm font-inter font-semibold text-gold">
-                    {offerPriceLabel(offer)}
+                    {offerPriceLabel(offer, priceLabels)}
                   </p>
                 </div>
               </div>
@@ -74,7 +81,7 @@ const Services = () => {
                 variant="secondary"
                 className="relative mt-4 w-full sm:w-auto"
               >
-                See Pricing
+                {t("seePricing")}
                 <span aria-hidden="true">→</span>
               </Button>
             </li>
@@ -84,7 +91,7 @@ const Services = () => {
         {/* View All Services */}
         <div className="mt-12 text-center">
           <Button href="/services" variant="secondary" size="lg">
-            View All Services
+            {t("viewAll")}
             <span aria-hidden="true">→</span>
           </Button>
         </div>

@@ -2,6 +2,7 @@ import { z } from "zod";
 import { ContactChannel } from "@/generated/prisma/enums";
 import { OFFER_IDS } from "@/lib/offerIds";
 import { parseScopeLines } from "@/lib/quote/quoteStatus";
+import en from "@/messages/en.json";
 
 // Zod 4 probes `Function("")` once to decide whether it may JIT-compile
 // object parsers. The probe is caught, but the browser still reports it as
@@ -9,30 +10,49 @@ import { parseScopeLines } from "@/lib/quote/quoteStatus";
 // nothing noticeable on forms this size and keeps the console clean.
 z.config({ jitless: true });
 
-// Schema de validación para formularios de contacto
-export const FormSchema = z.object({
-  name: z.string().min(2, { message: "Name is too short" }),
-  email: z.email({ message: "Invalid email address" }),
-  phone: z
-    .string()
-    .min(10, { message: "Phone number is too short" })
-    .max(15, { message: "Phone number is too long" }),
-  // Optional for quick lead capture: an empty field must not fail min()
-  message: z
-    .string()
-    .max(500, { message: "Message is too long" })
-    .refine((value) => value.length === 0 || value.trim().length >= 2, {
-      message: "Message is too short",
-    })
-    .optional(),
-  marketingConsent: z
-    .boolean()
-    .describe("Consent to receive marketing emails and messages"),
-  // Which offer the lead is asking about; "" is the "not sure yet" option
-  service: z.union([z.enum(OFFER_IDS), z.literal("")]).optional(),
-  // How they want to be reached; the admin's manual form leaves it empty
-  preferredChannel: z.enum(ContactChannel).optional(),
-});
+/** Messages of the contact form validation; `Forms.validation` in the dictionaries */
+export type ContactValidationMessages = {
+  nameShort: string;
+  emailInvalid: string;
+  phoneShort: string;
+  phoneLong: string;
+  messageLong: string;
+  messageShort: string;
+};
+
+/**
+ * Contact form schema with messages in the visitor's language. The client
+ * builds it from `useTranslations("Forms.validation")`; the server validates
+ * again with the English default below.
+ */
+export function buildFormSchema(m: ContactValidationMessages) {
+  return z.object({
+    name: z.string().min(2, { message: m.nameShort }),
+    email: z.email({ message: m.emailInvalid }),
+    phone: z
+      .string()
+      .min(10, { message: m.phoneShort })
+      .max(15, { message: m.phoneLong }),
+    // Optional for quick lead capture: an empty field must not fail min()
+    message: z
+      .string()
+      .max(500, { message: m.messageLong })
+      .refine((value) => value.length === 0 || value.trim().length >= 2, {
+        message: m.messageShort,
+      })
+      .optional(),
+    marketingConsent: z
+      .boolean()
+      .describe("Consent to receive marketing emails and messages"),
+    // Which offer the lead is asking about; "" is the "not sure yet" option
+    service: z.union([z.enum(OFFER_IDS), z.literal("")]).optional(),
+    // How they want to be reached; the admin's manual form leaves it empty
+    preferredChannel: z.enum(ContactChannel).optional(),
+  });
+}
+
+// Schema de validación para formularios de contacto (mensajes en inglés)
+export const FormSchema = buildFormSchema(en.Forms.validation);
 
 // Checkout: el cliente solo envía el ID del plan. Precio, nombre y descripción
 // se leen en el servidor desde checkoutPlans para que no se puedan manipular.

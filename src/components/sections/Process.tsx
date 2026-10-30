@@ -1,9 +1,15 @@
 import { ChevronRightIcon } from "@heroicons/react/24/outline";
-import { processSteps } from "@/lib/data";
+import { getTranslations } from "next-intl/server";
+import { getLocalizedCatalog } from "@/lib/catalog";
 import Heading from "@/components/ui/Heading";
 import ProcessStepper from "@/components/sections/ProcessStepper";
 
-const Process = () => {
+const Process = async () => {
+  const [t, { processSteps }] = await Promise.all([
+    getTranslations("Home.process"),
+    getLocalizedCatalog(),
+  ]);
+
   // Icons are rendered here so the client island receives plain nodes
   const steps = processSteps.map(({ icon: Icon, ...step }) => ({
     ...step,
@@ -15,9 +21,9 @@ const Process = () => {
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
         <Heading
           icon={<ChevronRightIcon className="w-8 text-gold" />}
-          text="Four steps from the first call to launch, with weekly demos along the way"
+          text={t("subheading")}
         >
-          My Work Process
+          {t("heading")}
         </Heading>
 
         {/* Desktop: Interactive Horizontal Steps */}
