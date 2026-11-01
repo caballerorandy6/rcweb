@@ -53,6 +53,7 @@ export async function createInitialPaymentCheckout(
   } satisfies InitialCheckoutMetadataInput;
 
   const session = await stripe.checkout.sessions.create({
+    locale: input.locale ?? routing.defaultLocale,
     allowed_payment_method_types: ["card"],
     mode: "payment",
     customer_email: input.customerEmail,
