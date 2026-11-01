@@ -70,6 +70,7 @@ async function findPaidDeposit(sessionId: string): Promise<PaymentSuccessData | 
     planName: project.planName,
     totalAmount: project.totalAmount,
     depositAmount: deposit.amount,
+    depositTax: deposit.taxAmount,
     finalAmount: final.amount,
     stripeSessionId: sessionId,
   };

@@ -30,6 +30,8 @@ export interface DepositProjectInput {
   deposit: {
     method: PaymentMethod;
     paidAt: Date;
+    /** Sales tax collected with it, in cents; 0 when none */
+    taxAmount?: number;
     /** Checkout Session that paid it (method stripe) */
     stripeSessionId?: string;
   };
@@ -106,6 +108,7 @@ export async function createProjectFromDeposit(
           {
             kind: "deposit",
             amount: input.firstPaymentAmount,
+            taxAmount: input.deposit.taxAmount ?? 0,
             status: "paid",
             method: input.deposit.method,
             paidAt: input.deposit.paidAt,

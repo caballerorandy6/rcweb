@@ -152,6 +152,7 @@ export default function ProjectDetail({ project }: { project: AdminProjectDetail
                 <p className="text-xs text-gray-500">
                   {payment.paidAt ? `Paid ${formatDate(payment.paidAt)}` : "Not paid yet"}
                   {payment.status === "paid" ? ` · ${PAYMENT_METHOD_LABELS[payment.method]}` : null}
+                  {payment.taxAmount > 0 ? ` · + ${formatCurrency(payment.taxAmount)} sales tax` : null}
                   {payment.stripeSessionId ? (
                     <>
                       {" · "}

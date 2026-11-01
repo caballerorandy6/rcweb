@@ -24,6 +24,8 @@ export interface InvoiceEmailProps {
   planName: string;
   invoiceNumber: string;
   firstPayment: number;
+  /** Sales tax paid with the deposit, in cents */
+  depositTax: number;
   secondPayment: number;
   totalAmount: number;
   /** Public progress page (/project/{accessToken}); replaces the old client portal */
@@ -58,6 +60,7 @@ export const InvoiceEmail = ({
   planName,
   invoiceNumber,
   firstPayment,
+  depositTax,
   secondPayment,
   totalAmount,
   projectUrl,
@@ -129,6 +132,14 @@ export const InvoiceEmail = ({
                         ${(firstPayment / 100).toFixed(2)} ✓
                       </td>
                     </tr>
+                    {depositTax > 0 && (
+                      <tr>
+                        <td style={styles.summaryLabel}>{t("invoice.salesTax")}</td>
+                        <td style={styles.summaryValuePaid}>
+                          ${(depositTax / 100).toFixed(2)} ✓
+                        </td>
+                      </tr>
+                    )}
                     <tr>
                       <td style={styles.summaryLabel}>{t("invoice.remaining")}</td>
                       <td style={styles.summaryValue}>

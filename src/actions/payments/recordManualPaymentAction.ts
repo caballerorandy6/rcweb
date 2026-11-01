@@ -16,6 +16,8 @@ const RecordManualPaymentSchema = z.object({
   method: z.enum(MANUAL_PAYMENT_METHODS),
   /** Calendar day the money arrived, YYYY-MM-DD */
   paidOn: z.iso.date(),
+  /** Sales tax included in what the customer sent, in cents */
+  taxCents: z.number().int().min(0).max(10_000_000),
 });
 
 export type RecordManualPaymentInput = z.infer<typeof RecordManualPaymentSchema>;
@@ -54,7 +56,7 @@ export async function recordManualPaymentAction(
     if (!parsed.success) {
       return { success: false, error: z.prettifyError(parsed.error) };
     }
-    const { kind, method, paidOn } = parsed.data;
+    const { kind, method, paidOn, taxCents } = parsed.data;
 
     const paidAt = toPaidAt(paidOn);
     if (paidAt.getTime() > Date.now() + 24 * 60 * 60 * 1000) {
@@ -93,7 +95,7 @@ export async function recordManualPaymentAction(
         payments: {
           update: {
             where: { id: charge.id },
-            data: { status: "paid", method, paidAt },
+            data: { status: "paid", method, paidAt, taxAmount: taxCents },
           },
         },
       },

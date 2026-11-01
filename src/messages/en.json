@@ -257,7 +257,7 @@
       },
       "payments": {
         "question": "How does the payment process work?",
-        "answer": "Two payments: 50% to start and 50% when the project is delivered. The landing page and the maintenance plan can be paid directly on this site through Stripe. For everything else we agree on the scope and the final price first, and then you receive a secure Stripe payment link. Zelle is also accepted."
+        "answer": "Two payments: 50% to start and 50% when the project is delivered. The landing page and the maintenance plan can be paid directly on this site through Stripe. For everything else we agree on the scope and the final price first, and then you receive a secure Stripe payment link. Zelle is also accepted. Sales tax is added at checkout where it applies."
       },
       "progress": {
         "question": "Can I see progress during development?",
@@ -336,7 +336,7 @@
       "subheading": "Pricing in USD • Serving clients in the US and worldwide",
       "mostPopular": "Most Popular",
       "usd": "USD",
-      "note": "All projects include: Source code • Domain & hosting setup • Training • 50% deposit, 50% on completion. The landing page and the maintenance plan can be paid right here; “From” prices are quoted after a short conversation, and the final price depends on the scope."
+      "note": "All projects include: Source code • Domain & hosting setup • Training • 50% deposit, 50% on completion. The landing page and the maintenance plan can be paid right here; “From” prices are quoted after a short conversation, and the final price depends on the scope. Prices do not include sales tax, which is added at checkout where it applies."
     },
     "blog": {
       "heading": "From the Blog",
@@ -1435,7 +1435,7 @@
     "projectTotal": "Project total",
     "deposit": "Deposit to start ({percent}%)",
     "balance": "Balance on delivery",
-    "investmentNote": "Work starts as soon as the deposit clears. The balance is only due when the project is delivered, through a secure link sent to your email.",
+    "investmentNote": "Work starts as soon as the deposit clears. The balance is only due when the project is delivered, through a secure link sent to your email. Prices do not include sales tax; where it applies, it is added at checkout.",
     "zelle": {
       "title": "Pay the deposit by Zelle",
       "thanks": "Thank you for accepting the quote{date}. Send the deposit from your bank's Zelle:",
@@ -1770,8 +1770,8 @@
       "balance": "Balance on delivery",
       "cta": "Review and Accept Quote",
       "validUntil": "This quote is valid until <b>{date}</b>.",
-      "accepting": "Accepting the quote takes you to a secure Stripe checkout for the deposit. Work starts as soon as it clears, and the balance is only due when the project is delivered.",
-      "acceptingZelle": "Accepting the quote takes you to a secure Stripe checkout for the deposit, or you can choose to pay it by Zelle. Work starts as soon as it clears, and the balance is only due when the project is delivered.",
+      "accepting": "Accepting the quote takes you to a secure Stripe checkout for the deposit. Work starts as soon as it clears, and the balance is only due when the project is delivered. Prices do not include sales tax; where it applies, it is added at checkout.",
+      "acceptingZelle": "Accepting the quote takes you to a secure Stripe checkout for the deposit, or you can choose to pay it by Zelle. Work starts as soon as it clears, and the balance is only due when the project is delivered. Prices do not include sales tax; where it applies, it is added at checkout.",
       "questions": "Questions or changes? Just reply to this email."
     },
     "invoice": {
@@ -1794,15 +1794,16 @@
       "attachedSummary": "Complete project invoice attached",
       "paymentSummary": "Payment Summary",
       "initialPayment": "Initial Payment (50%):",
-      "remaining": "Remaining Balance:",
-      "totalCost": "Total Project Cost:",
+      "remaining": "Remaining Balance (before tax):",
+      "totalCost": "Total Project Cost (before tax):",
       "totalPaid": "Total Paid",
       "allReceived": "✓ All payments received",
       "summaryNext": "✓ You will receive a complete project summary invoice in a separate email",
       "completed": "✓ PROJECT COMPLETED",
       "thanks": "Thank you for choosing RC Web Solutions!",
       "follow": "Follow the progress of your project at any time:",
-      "viewProject": "View your project"
+      "viewProject": "View your project",
+      "salesTax": "Sales tax:"
     },
     "milestone": {
       "subject": "Milestone completed: {title} · Project {code}",
@@ -1827,7 +1828,7 @@
       "intro": "Great news! Your <b>{planName}</b> project is complete and ready for final review.",
       "summary": "Project Summary",
       "code": "Project Code:",
-      "due": "Final Payment Due:",
+      "due": "Final Payment Due (before tax):",
       "payTitle": "Complete Your Final Payment",
       "payDirect": "You can complete your payment directly:",
       "cta": "Complete Final Payment Now",
@@ -1843,7 +1844,7 @@
       "confirmHeading": "Subscription Activated!",
       "confirmBody": "Thank you for subscribing to our <b>{planName}</b> service! Your subscription is now active.",
       "details": "Subscription Details",
-      "monthly": "Monthly Amount:",
+      "monthly": "Monthly Amount (before tax):",
       "nextBilling": "Next Billing Date:",
       "included": "What's Included",
       "items": [
@@ -1886,7 +1887,7 @@
       "renewalSubject": "Upcoming Renewal - {planName}",
       "renewalHeading": "Upcoming Renewal",
       "renewalBody": "This is a friendly reminder that your subscription will automatically renew soon.",
-      "amount": "Amount:",
+      "amount": "Amount (before tax):",
       "renewalDate": "Renewal Date:",
       "renewalNoAction": "No action is needed if you wish to continue your subscription. Your payment method on file will be charged automatically.",
       "renewalCta": "Manage Subscription",

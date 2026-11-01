@@ -38,8 +38,10 @@ export type AdminProject = {
 export type AdminProjectPayment = {
   id: string;
   kind: PaymentKind;
-  /** Cents */
+  /** Cents, before tax */
   amount: number;
+  /** Sales tax collected on top, in cents */
+  taxAmount: number;
   status: PaymentStatus;
   method: PaymentMethod;
   paidAt: string | null;
@@ -113,6 +115,8 @@ export type PaymentSuccessData = {
   planName: string;
   totalAmount: number;
   depositAmount: number;
+  /** Sales tax paid with the deposit, in cents */
+  depositTax: number;
   finalAmount: number;
   stripeSessionId: string | null;
 };

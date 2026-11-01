@@ -3,11 +3,11 @@
 
 import { Resend } from "resend";
 import { createInvoice, createInvoiceSummary } from "./actions";
-import { InvoiceType, DEFAULT_TAX_RATE } from "./types";
+import { InvoiceType } from "./types";
 import { sendInvoiceEmail } from "@/lib/email/senders";
 import { emailTranslator } from "@/lib/email/i18n";
 import { getProjectUrl } from "@/lib/projectUrl";
-import { getProjectCharges, type ProjectWithPayments } from "@/lib/project/charges";
+import { chargeTotal, getProjectCharges, type ProjectWithPayments } from "@/lib/project/charges";
 
 interface CreateInvoiceAndSendEmailParams {
   project: ProjectWithPayments;
@@ -58,7 +58,7 @@ export async function createInvoiceAndSendEmail({
         planName: project.planName,
         description,
         subtotal: amount,
-        taxRate: DEFAULT_TAX_RATE,
+        taxAmount: charge.taxAmount,
         paymentMethod: charge.method,
         stripeSessionId: charge.method === "stripe" ? stripeSessionId : undefined,
         paidDate: charge.paidAt ?? new Date(),
@@ -80,8 +80,11 @@ export async function createInvoiceAndSendEmail({
       planName: project.planName,
       invoiceNumber: invoiceResult.invoiceNumber,
       firstPayment: deposit.amount,
-      secondPayment: final.amount,
-      totalAmount: project.totalAmount,
+      depositTax: deposit.taxAmount,
+      // The final and summary emails state what was paid, tax included; the
+      // initial one still shows the balance and the project before tax
+      secondPayment: type === "initial" ? final.amount : chargeTotal(final),
+      totalAmount: type === "summary" ? chargeTotal(deposit) + chargeTotal(final) : project.totalAmount,
       type,
       pdfBuffer,
       projectUrl: getProjectUrl(project.accessToken, project.locale),

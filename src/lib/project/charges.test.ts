@@ -8,6 +8,7 @@ function payment(overrides: Partial<Payment>): Payment {
     projectId: "proj_1",
     kind: "deposit",
     amount: 50000,
+    taxAmount: 0,
     status: "pending",
     method: "stripe",
     stripeSessionId: null,

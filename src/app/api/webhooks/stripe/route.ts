@@ -80,6 +80,8 @@ export async function POST(req: Request) {
       );
     }
     const metadata = parsed.data;
+    // Stripe Tax added this on top of the charge; it is 0 outside Texas
+    const taxAmount = session.total_details?.amount_tax ?? 0;
 
     const resend = new Resend(process.env.RESEND_API_KEY!);
 
@@ -110,7 +112,12 @@ export async function POST(req: Request) {
             totalAmount,
             firstPaymentAmount,
             secondPaymentAmount,
-            deposit: { method: "stripe", paidAt: new Date(), stripeSessionId: session.id },
+            deposit: {
+              method: "stripe",
+              paidAt: new Date(),
+              stripeSessionId: session.id,
+              taxAmount,
+            },
             terms: {
               acceptedAt: termsAcceptedAt,
               termsVersion: TERMS_VERSION,
@@ -181,6 +188,7 @@ export async function POST(req: Request) {
                     status: "paid",
                     paidAt: new Date(),
                     stripeSessionId: session.id,
+                    taxAmount,
                   },
                 },
               },

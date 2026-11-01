@@ -63,7 +63,7 @@ describe("createProjectFromDeposit", () => {
     const data = prisma.project.create.mock.calls[0][0].data;
     expect(data.status).toBe("in_progress");
     expect(data.payments.create).toEqual([
-      { kind: "deposit", amount: 120000, status: "paid", method: "zelle", paidAt, stripeSessionId: undefined },
+      { kind: "deposit", amount: 120000, taxAmount: 0, status: "paid", method: "zelle", paidAt, stripeSessionId: undefined },
       { kind: "final", amount: 120000 },
     ]);
     expect(data.termsAcceptance.create).toMatchObject({ acceptedAt: paidAt, termsVersion: "2026-10-29", plan: "Website Redesign" });
@@ -140,5 +140,25 @@ describe("createProjectFromDeposit", () => {
 
     expect(result.created).toBe(true);
     expect(result.emailErrors).toEqual(["Error creating invoice: Resend down"]);
+  });
+
+  it("stores the sales tax collected with the deposit", async () => {
+    prisma.project.findUnique.mockResolvedValueOnce(null);
+    prisma.project.create.mockImplementationOnce(async ({ data }: { data: unknown }) => ({
+      id: "p1",
+      ...(data as object),
+      payments: [],
+      invoices: [{ type: "initial" }],
+    }));
+
+    await createProjectFromDeposit(
+      { ...input, deposit: { ...input.deposit, taxAmount: 3300 } },
+      resend
+    );
+
+    const { data } = prisma.project.create.mock.calls.at(-1)![0] as {
+      data: { payments: { create: { kind: string; taxAmount?: number }[] } };
+    };
+    expect(data.payments.create[0]).toMatchObject({ kind: "deposit", taxAmount: 3300 });
   });
 });

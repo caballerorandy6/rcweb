@@ -39,6 +39,7 @@ export function toAdminProjectDetail(project: AdminProjectDetailPayload): AdminP
         id: p.id,
         kind: p.kind,
         amount: p.amount,
+        taxAmount: p.taxAmount,
         status: p.status,
         method: p.method,
         paidAt: p.paidAt?.toISOString() ?? null,
