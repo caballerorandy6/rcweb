@@ -35,6 +35,7 @@ export async function createFinalPaymentCheckout(
   } satisfies FinalCheckoutMetadataInput;
 
   const session = await stripe.checkout.sessions.create({
+    locale,
     allowed_payment_method_types: ["card"],
     mode: "payment",
     customer_email: project.email,

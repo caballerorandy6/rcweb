@@ -46,6 +46,7 @@ export async function createStripeCheckoutAction(
       const termsAcceptedAt = new Date().toISOString();
 
       const session = await stripe.checkout.sessions.create({
+        locale,
         allowed_payment_method_types: ["card"],
         mode: "subscription",
         customer_email: customer.email,
