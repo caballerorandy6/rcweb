@@ -5,6 +5,7 @@ description: "Política de privacidad de RC Web Solutions LLC. Conoce cómo reco
 intro:
   - "Esta Política de privacidad describe nuestras políticas y procedimientos sobre la recopilación, el uso y la divulgación de tu información cuando usas el Servicio, y te informa sobre tus derechos de privacidad y cómo te protege la ley."
   - "Usamos tus Datos personales para prestar y mejorar el Servicio. Al usar el Servicio, aceptas la recopilación y el uso de información de acuerdo con esta Política de privacidad."
+  - "Esta es una traducción de cortesía. Si hay alguna diferencia con la versión en inglés, prevalece la versión en inglés."
 footnote: "A efectos del RGPD, RC Web Solutions LLC es el Responsable del tratamiento"
 ---
 

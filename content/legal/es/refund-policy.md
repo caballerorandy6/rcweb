@@ -4,6 +4,7 @@ subtitle: "Nuestro compromiso contigo"
 description: "Política de reembolso de RC Web Solutions LLC. Conoce la estructura de dos pagos, la política de no reembolso tras el primer pago y las condiciones de cancelación de los proyectos de desarrollo web."
 intro:
   - "En **RC Web Solutions LLC** respaldamos la calidad de nuestro trabajo. Nuestra política de reembolso está pensada para darte tranquilidad al invertir en nuestros servicios y, a la vez, proteger el trabajo que comprometemos con tu proyecto."
+  - "Esta es una traducción de cortesía. Si hay alguna diferencia con la versión en inglés, prevalece la versión en inglés."
 footnote: "RC Web Solutions LLC - Houston, TX"
 ---
 
@@ -122,7 +123,7 @@ En el improbable caso de una disputa sobre nuestros servicios o esta política d
 - Fomentamos la comunicación abierta para resolver cualquier problema directamente
 - Contáctanos de inmediato si tienes dudas sobre el rumbo del proyecto
 - Trabajaremos en conjunto para encontrar una solución que responda a tus necesidades
-- Todas las disputas se tratarán con profesionalidad y de buena fe
+- Todas las disputas se tratarán con profesionalismo y de buena fe
 
 ## Ley aplicable y jurisdicción
 

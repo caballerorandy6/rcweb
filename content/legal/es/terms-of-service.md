@@ -4,6 +4,7 @@ subtitle: "Acuerdo legal"
 description: "Términos de servicio de RC Web Solutions LLC. Revisa las condiciones del servicio, los pagos, la propiedad intelectual, las garantías, la responsabilidad y las obligaciones del cliente en los proyectos de desarrollo web."
 intro:
   - "Bienvenido a **RC Web Solutions LLC**. Al acceder a nuestros servicios o usarlos, aceptas quedar vinculado por estos Términos de servicio. Léelos con atención."
+  - "Esta es una traducción de cortesía. Si hay alguna diferencia con la versión en inglés, prevalece la versión en inglés."
 footnote: "RC Web Solutions LLC - Houston, TX"
 ---
 
@@ -138,7 +139,7 @@ Salvo que se indique expresamente:
 
 En la máxima medida permitida por la ley:
 
-- Nuestra responsabilidad total no superará el importe que hayas pagado por el servicio concreto en cuestión
+- Nuestra responsabilidad total no superará el monto que hayas pagado por el servicio concreto en cuestión
 - No somos responsables de daños indirectos, incidentales, especiales o consecuentes
 - No somos responsables de la pérdida de beneficios, datos u oportunidades de negocio
 - Las reclamaciones deben presentarse en el plazo de un año desde la fecha en que surgió la causa de la acción

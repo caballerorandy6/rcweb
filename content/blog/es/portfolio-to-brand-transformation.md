@@ -88,7 +88,7 @@ Cuando estés listo para contratar, la transición será natural. «Nosotros» y
 
 Las agencias cobran tarifas más altas que los freelancers. El posicionamiento de marca respalda los precios premium.
 
-### Para la profesionalidad
+### Para el profesionalismo
 
 Las primeras impresiones cuentan. Un sitio enfocado en la marca transmite que el negocio va en serio.
 

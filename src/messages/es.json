@@ -455,7 +455,7 @@
       "redirecting": "Redirigiendo al pago seguro…",
       "failed": "No se pudo procesar",
       "error": "Ocurrió un error",
-      "confirm": "Al pulsar «Acepto estos términos», confirmas que has leído, entendido y aceptas quedar vinculado por estos Términos de servicio.",
+      "confirm": "Al hacer clic en «Acepto estos términos», confirmas que has leído, entendido y aceptas quedar vinculado por estos Términos de servicio.",
       "accept": "Acepto estos términos",
       "back": "Volver a los planes de precios"
     }
@@ -533,7 +533,7 @@
         },
         "atser": {
           "title": "Desarrollador de software",
-          "description": "Desarrollé aplicaciones web adaptables con Next.js, TypeScript, Tailwind CSS y shadcn/ui, integrando APIs REST en C#/.NET dentro de un equipo ágil multidisciplinar.",
+          "description": "Desarrollé aplicaciones web adaptables con Next.js, TypeScript, Tailwind CSS y shadcn/ui, integrando APIs REST en C#/.NET dentro de un equipo ágil multidisciplinario.",
           "date": "Nov. 2024 - Abr. 2025"
         },
         "revature": {
@@ -668,7 +668,7 @@
           },
           {
             "title": "Optimización móvil",
-            "description": "Cada página rediseñada primero para el teléfono, para que quien busca desde el coche pueda llamarte con un solo toque."
+            "description": "Cada página rediseñada primero para el teléfono, para que quien busca desde el carro pueda llamarte con un solo toque."
           },
           {
             "title": "Migración de contenido",
@@ -796,7 +796,7 @@
     },
     "title": "Proyectos y",
     "titleHighlight": "casos de éxito",
-    "intro": "Sitios web reales construidos para pequeños negocios reales. Pulsa «Caso de éxito» en cualquier proyecto para ver la historia completa: retos, soluciones y resultados."
+    "intro": "Sitios web reales construidos para pequeños negocios reales. Haz clic en «Caso de éxito» en cualquier proyecto para ver la historia completa: retos, soluciones y resultados."
   },
   "CaseStudies": {
     "back": "Volver a proyectos",
@@ -1001,7 +1001,7 @@
         "challenges": [
           {
             "title": "Sitio anticuado en WordPress",
-            "description": "La clínica tenía un sitio antiguo en WordPress que era lento, difícil de actualizar y no representaba la calidad de atención que ofrecen. No estaba adaptado al móvil, un problema cuando la mayoría de los pacientes buscan desde el teléfono."
+            "description": "La clínica tenía un sitio antiguo en WordPress que era lento, difícil de actualizar y no representaba la calidad de atención que ofrece. No estaba adaptado al móvil, un problema cuando la mayoría de los pacientes buscan desde el teléfono."
           },
           {
             "title": "Sin presencia bilingüe",
@@ -1009,7 +1009,7 @@
           },
           {
             "title": "Invisible en Google",
-            "description": "Sin optimización SEO, sin datos estructurados y sin integración con el Perfil de Empresa de Google. Los pacientes que buscaban «clínica hispana Houston» no podían encontrarlos en línea."
+            "description": "Sin optimización SEO, sin datos estructurados y sin integración con el Perfil de Empresa de Google. Los pacientes que buscaban «clínica hispana Houston» no podían encontrarla en línea."
           }
         ],
         "solutionsIntro": "Construí desde cero una presencia digital completa que conecta a la clínica con la comunidad hispana de Houston.",
@@ -1061,7 +1061,7 @@
         ],
         "ctaTitle": "¿Necesitas un sitio web para",
         "ctaTitleHighlight": "tu clínica?",
-        "ctaDescription": "Construyo sitios web bilingües para proveedores de salud de Houston. Hablemos de cómo un sitio web moderno puede traer más pacientes a tu consulta.",
+        "ctaDescription": "Construyo sitios web bilingües para proveedores de salud de Houston. Hablemos de cómo un sitio web moderno puede traer más pacientes a tu clínica.",
         "ctaLinks": [
           "Agenda una consulta gratis",
           "Sitios web para negocios (inglés y español)"
@@ -1085,7 +1085,7 @@
         "challenges": [
           {
             "title": "Sitio anticuado en WordPress",
-            "description": "El sitio en WordPress de la clínica era lento, no estaba optimizado para el móvil y se veía anticuado. No reflejaba los servicios de salud profesionales que ofrecen cerca de Airline Drive."
+            "description": "El sitio en WordPress de la clínica era lento, no estaba optimizado para el móvil y se veía anticuado. No reflejaba los servicios de salud profesionales que ofrece cerca de Airline Drive."
           },
           {
             "title": "Sin contenido en español",
@@ -1093,7 +1093,7 @@
           },
           {
             "title": "Poca visibilidad en Google",
-            "description": "Sin estrategia SEO, sin datos estructurados y sin conexión con su Perfil de Empresa de Google. Los pacientes que buscaban atención médica cerca de Airline Drive no podían encontrarlos."
+            "description": "Sin estrategia SEO, sin datos estructurados y sin conexión con su Perfil de Empresa de Google. Los pacientes que buscaban atención médica cerca de Airline Drive no podían encontrarla."
           }
         ],
         "solutionsIntro": "Construí un sitio web bilingüe moderno que funciona como el principal canal de captación de pacientes de la clínica.",
@@ -1132,7 +1132,7 @@
         "results": [
           {
             "metric": "Visibilidad en Google",
-            "description": "La clínica ahora aparece en las búsquedas locales de servicios de salud hispanos cerca de Airline Drive"
+            "description": "La clínica ahora aparece en las búsquedas locales de servicios de salud en español cerca de Airline Drive"
           },
           {
             "metric": "Prospectos de pacientes en línea",
@@ -1140,12 +1140,12 @@
           },
           {
             "metric": "Reseña de 5 estrellas del cliente",
-            "description": "La clínica dio una reseña de 5 estrellas reconociendo la calidad y la profesionalidad del nuevo sitio"
+            "description": "La clínica dio una reseña de 5 estrellas reconociendo la calidad y el profesionalismo del nuevo sitio"
           }
         ],
         "ctaTitle": "¿Necesitas un sitio web para",
         "ctaTitleHighlight": "tu clínica?",
-        "ctaDescription": "Construyo sitios web bilingües para proveedores de salud de Houston. Hablemos de cómo un sitio web moderno puede traer más pacientes a tu consulta.",
+        "ctaDescription": "Construyo sitios web bilingües para proveedores de salud de Houston. Hablemos de cómo un sitio web moderno puede traer más pacientes a tu clínica.",
         "ctaLinks": [
           "Agenda una consulta gratis",
           "Sitios web para negocios (inglés y español)"
@@ -1384,7 +1384,7 @@
     "possibilities": "Posibilidades",
     "goHome": "Volver al inicio",
     "previous": "Página anterior",
-    "lost": "¿Perdido? Prueba el",
+    "lost": "¿Te perdiste? Prueba el",
     "sitemap": "mapa del sitio",
     "or": "o",
     "contact": "contáctame"
@@ -1434,7 +1434,7 @@
       "title": "Paga el anticipo por Zelle",
       "thanks": "Gracias por aceptar el presupuesto{date}. Envía el anticipo desde el Zelle de tu banco:",
       "on": " el {date}",
-      "amount": "Importe",
+      "amount": "Monto",
       "sendTo": "Enviar a",
       "memo": "Concepto",
       "note": "El trabajo empieza en cuanto se confirma la transferencia. Recibirás tu factura y un enlace para seguir el proyecto por correo."
@@ -1500,7 +1500,7 @@
     "notices": {
       "invalid-link": "Ese enlace de pago no es válido. Escribe tu correo y el código de tu proyecto aquí abajo para continuar.",
       "project-not-ready": "Tu proyecto todavía no está listo para el pago final. Recibirás un correo en cuanto lo esté.",
-      "payment-failed": "No pudimos iniciar el pago desde tu enlace. Inténtalo de nuevo aquí abajo o contacta con soporte.",
+      "payment-failed": "No pudimos iniciar el pago desde tu enlace. Inténtalo de nuevo aquí abajo o contacta a soporte.",
       "too-many-requests": "Demasiados intentos desde tu conexión. Espera un minuto e inténtalo de nuevo."
     },
     "title": "Completa tu pago",
@@ -1531,9 +1531,9 @@
       "title": "Pago realizado - ¡Gracias!",
       "description": "Tu pago se procesó correctamente. Gracias por elegir RC Web Solutions LLC para tu proyecto."
     },
-    "noSession": "No se recibió el identificador de la sesión. Contacta con soporte si completaste un pago.",
+    "noSession": "No se recibió el identificador de la sesión. Contacta a soporte si completaste un pago.",
     "processing": {
-      "title": "Pago recibido, terminando",
+      "title": "Pago recibido, ya casi terminamos",
       "text": "Stripe confirmó tu pago, pero tu proyecto todavía se está registrando. Normalmente tarda unos segundos.",
       "code": "El código de tu proyecto es <code></code>. Guárdalo: lo necesitarás para el pago final.",
       "checkAgain": "Comprobar de nuevo",
@@ -1544,13 +1544,13 @@
       "text": "¡No te preocupes! Si tu pago se completó en Stripe, lo procesaré en breve. Guarda tu correo de confirmación."
     },
     "title": "¡Pago realizado! 🎉",
-    "thanks": "Gracias por tu pago. Tu proyecto ha quedado iniciado y me pondré en contacto contigo en menos de 24 horas.",
+    "thanks": "Gracias por tu pago. Tu proyecto ya está en marcha y me pondré en contacto contigo en menos de 24 horas.",
     "codeLabel": "El código de tu proyecto",
     "copy": "Copiar al portapapeles",
     "copied": "¡Código copiado!",
     "saveCode": "Guarda este código: lo necesitarás para el pago final",
     "plan": "Plan:",
-    "paid": "Importe pagado:",
+    "paid": "Monto pagado:",
     "remaining": "Saldo pendiente:",
     "status": "Estado:",
     "inProgress": "En curso",
@@ -1564,7 +1564,7 @@
       ]
     },
     "home": "Volver al inicio",
-    "support": "Contactar con soporte",
+    "support": "Contactar a soporte",
     "footer": "Recibirás en breve un correo de confirmación con todos los detalles.",
     "subscription": {
       "processing": "La suscripción se está procesando. Revisa tu correo para ver la confirmación.",
@@ -1572,7 +1572,7 @@
       "errorText": "¡No te preocupes! Si tu pago se completó en Stripe, lo procesaré en breve. Revisa tu correo para ver la confirmación.",
       "title": "¡Suscripción activa!",
       "thanks": "Gracias por suscribirte al plan de mantenimiento. Tu sitio web ya está protegido y con soporte.",
-      "monthly": "Importe mensual:",
+      "monthly": "Monto mensual:",
       "perMonth": "/mes",
       "status": "Estado:",
       "nextBilling": "Próximo cobro:",
@@ -1606,7 +1606,7 @@
     "reference": "Referencia del proyecto:",
     "save": "Guárdala para tus registros",
     "home": "Volver al inicio",
-    "support": "Contactar con soporte",
+    "support": "Contactar a soporte",
     "receipt": "Se ha enviado un recibo detallado a tu correo electrónico.",
     "questions": "Para cualquier duda, escríbeme a {email}"
   },
@@ -1636,7 +1636,7 @@
       "Cancelar tu suscripción en cualquier momento"
     ],
     "needHelp": "¿Necesitas ayuda?",
-    "support": "Contactar con soporte",
+    "support": "Contactar a soporte",
     "toasts": {
       "sending": "Enviando el enlace de gestión…",
       "sent": "¡Revisa tu correo para encontrar el enlace de gestión!",

@@ -423,7 +423,7 @@ El trabajo pendiente incluye:
 
 ### Crítico
 - **Notificaciones por SMS** - Integración con Twilio para los recordatorios de cita
-- **Cobro del saldo restante** - Cobrar el resto del importe antes de la cita
+- **Cobro del saldo restante** - Cobrar el resto del monto antes de la cita
 - **Cron jobs** - Programación automática de los recordatorios
 
 ### Importante
