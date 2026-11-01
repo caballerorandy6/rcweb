@@ -266,7 +266,7 @@
     },
     "projects": {
       "gsmactx": "Custom website and admin dashboard for a Houston HVAC company. Automated email campaigns, service request management, and real-time client-side rendering. Saved the business 15+ hours per week.",
-      "dulceAntojo": "Demo of a website and private admin dashboard with Stripe payment links for a Houston snack cart rental business. Booking form, local SEO and card payments. It is not the business's current site.",
+      "dulceAntojo": "Website and private admin dashboard with Stripe payment links, built for a past client, a Houston snack cart rental business. The link opens a portfolio copy, not the business's current site.",
       "clinicaGessner": "Bilingual website for a Houston clinic featuring online appointment booking, service information, and local SEO to reach Spanish-speaking patients.",
       "clinicaAirline": "Professional bilingual website for a Houston clinic with Spanish-speaking patients. Features local SEO, service pages, and patient-friendly design optimized for mobile.",
       "leosHomeExperts": "Landing page for a Houston-based home services company specializing in patio construction, motorized screens, and awning installations. Features local SEO optimization with JSON-LD schema and video gallery integration.",
@@ -795,7 +795,7 @@
   "Portfolio": {
     "metadata": {
       "title": "Projects & Case Studies | Web Development Portfolio",
-      "description": "Websites I have built for small businesses: clinics, HVAC, home services and more, most in the Houston area. Also demos of an online store, an order system, a salon, a limo rental and a snack cart business."
+      "description": "Websites I have built for small businesses: clinics, HVAC, home services, event rentals and more, most in the Houston area. Also demos of an online store, an order system, a salon and a limo rental."
     },
     "title": "Projects &",
     "titleHighlight": "Case Studies",
@@ -934,7 +934,7 @@
             "description": "Inquiries came through Instagram DMs, easy to miss and hard to track, and payments were scattered across messages and bank apps with no record of who had paid."
           }
         ],
-        "solutionsIntro": "I built a website with a booking form, and a private admin dashboard with Stripe payments so the owner could charge any client by card. The link on this page opens a demo version of the project, not the business's current website.",
+        "solutionsIntro": "I built a website with a booking form, and a private admin dashboard with Stripe payments so the owner could charge any client by card. Dulce Antojo has since moved to another website, so the link on this page opens a portfolio copy of what I built.",
         "solutions": [
           {
             "title": "Website Built to Book Events",
@@ -1332,6 +1332,10 @@
       {
         "result": "Local SEO optimized landing page with video gallery and lead capture",
         "industry": "Home Services"
+      },
+      {
+        "result": "Conversion-optimized landing page for event catering bookings",
+        "industry": "Food & Events"
       }
     ],
     "viewProject": "View project",
