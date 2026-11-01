@@ -80,6 +80,7 @@ describe("QuoteInputSchema (admin quote form)", () => {
     planName: "Website Redesign for Ana's Bakery",
     scope: "- Migrate 8 pages\n\nNew design\n",
     totalDollars: "4500",
+    locale: "es",
   };
 
   it("lowercases the email, splits the scope and coerces the total", () => {

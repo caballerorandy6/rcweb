@@ -1,7 +1,8 @@
 "use server";
 
 import { z } from "zod";
-import { getTranslations } from "next-intl/server";
+import { getLocale, getTranslations } from "next-intl/server";
+import type { Locale } from "@/i18n/routing";
 import { headers } from "next/headers";
 import { Resend } from "resend";
 import { prisma } from "@/lib/prisma";
@@ -25,7 +26,7 @@ const TokenSchema = z.uuid();
 export async function requestZellePaymentAction(
   token: string
 ): Promise<ActionResult<{ depositAmount: number }>> {
-  const t = await getTranslations("Actions");
+  const [t, locale] = await Promise.all([getTranslations("Actions"), getLocale()]);
   try {
     if (!TokenSchema.safeParse(token).success) {
       return { success: false, error: t("quote.invalid") };
@@ -63,6 +64,8 @@ export async function requestZellePaymentAction(
     await prisma.quote.update({
       where: { id: quote.id },
       data: {
+        // The project takes its language from here when the admin creates it
+        locale: locale as Locale,
         zelleRequestedAt: quote.zelleRequestedAt ?? now,
         // Keep the first acceptance: pressing the button twice is not a new contract
         termsAcceptedAt: quote.termsAcceptedAt ?? now,

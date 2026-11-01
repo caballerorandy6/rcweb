@@ -22,6 +22,7 @@ export async function notifyMilestoneCompleted(
       project: {
         select: {
           name: true,
+          locale: true,
           email: true,
           projectCode: true,
           planName: true,

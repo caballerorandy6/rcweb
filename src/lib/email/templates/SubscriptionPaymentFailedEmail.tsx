@@ -14,9 +14,12 @@ import {
 } from "@react-email/components";
 import * as React from "react";
 import { EMAIL_COLORS } from "../colors";
+import { emailTranslator } from "../i18n";
+import type { Locale } from "@/i18n/routing";
 
 export interface SubscriptionPaymentFailedEmailProps {
   customerName: string;
+  locale: Locale;
   planName: string;
   amount: number; // in cents
   updatePaymentUrl: string;
@@ -24,7 +27,8 @@ export interface SubscriptionPaymentFailedEmailProps {
 
 export const SubscriptionPaymentFailedEmail: React.FC<
   SubscriptionPaymentFailedEmailProps
-> = ({ customerName, planName, amount, updatePaymentUrl }) => {
+> = ({ customerName, locale, planName, amount, updatePaymentUrl }) => {
+  const t = emailTranslator(locale);
   const formattedAmount = (amount / 100).toFixed(2);
 
   return (
@@ -34,63 +38,57 @@ export const SubscriptionPaymentFailedEmail: React.FC<
         <Container style={styles.container}>
           {/* Header */}
           <Section style={styles.header}>
-            <Heading style={styles.headerTitle}>Payment Failed</Heading>
-            <Text style={styles.headerSubtitle}>Action Required</Text>
+            <Heading style={styles.headerTitle}>{t("subscription.failedHeading")}</Heading>
+            <Text style={styles.headerSubtitle}>{t("subscription.failedSubheading")}</Text>
           </Section>
 
           {/* Content */}
           <Section style={styles.content}>
             <Text style={styles.greeting}>
-              Hi <strong>{customerName}</strong>,
+              {t.rich("common.greeting", { name: customerName, b: (chunks) => <strong>{chunks}</strong> })}
             </Text>
 
             {/* Alert Box */}
             <Section style={styles.alertBox}>
               <Text style={styles.alertText}>
-                We were unable to process your payment of{" "}
-                <strong>${formattedAmount}</strong> for your{" "}
-                <strong>{planName}</strong> subscription.
+                {t.rich("subscription.failedBody", { amount: `$${formattedAmount}`, planName, b: (chunks) => <strong>{chunks}</strong> })}
               </Text>
             </Section>
 
             <Text style={styles.paragraph}>
-              To avoid any interruption to your service, please update your
-              payment method as soon as possible.
+              {t("subscription.failedUpdate")}
             </Text>
 
             {/* CTA Button */}
             <Section style={styles.buttonContainer}>
               <Button href={updatePaymentUrl} style={styles.button}>
-                Update Payment Method
+                {t("subscription.failedCta")}
               </Button>
             </Section>
 
             <Text style={styles.paragraph}>
-              Common reasons for payment failure:
+              {t("subscription.failedReasons")}
             </Text>
             <ul style={styles.list}>
-              <li style={styles.listItem}>Insufficient funds</li>
-              <li style={styles.listItem}>Expired card</li>
-              <li style={styles.listItem}>Card declined by bank</li>
-              <li style={styles.listItem}>Incorrect billing information</li>
+              {(t.raw("subscription.reasons") as string[]).map((item) => (
+                <li style={styles.listItem} key={item}>{item}</li>
+              ))}
             </ul>
 
             <Text style={styles.warningText}>
-              If payment is not updated within 7 days, your subscription may be
-              suspended.
+              {t("subscription.failedDeadline")}
             </Text>
 
             <Hr style={styles.divider} />
 
             <Text style={styles.footerText}>
-              Need help? Contact us at{" "}
+              {t("common.helpContact")}{" "}
               <Link href="mailto:contactus@rcweb.dev" style={styles.link}>
                 contactus@rcweb.dev
               </Link>
             </Text>
             <Text style={styles.smallText}>
-              If you believe this is an error, please check with your bank or
-              contact us.
+              {t("subscription.failedBank")}
             </Text>
           </Section>
 
@@ -98,7 +96,7 @@ export const SubscriptionPaymentFailedEmail: React.FC<
           <Section style={styles.footer}>
             <Text style={styles.footerBrand}>RC Web Solutions</Text>
             <Text style={styles.footerInfo}>
-              Professional Web Development Services
+              {t("common.tagline")}
             </Text>
           </Section>
         </Container>

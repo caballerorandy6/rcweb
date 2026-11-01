@@ -14,16 +14,20 @@ import {
 } from "@react-email/components";
 import * as React from "react";
 import { EMAIL_COLORS } from "../colors";
+import { emailTranslator } from "../i18n";
+import type { Locale } from "@/i18n/routing";
 
 export interface SubscriptionPortalLinkEmailProps {
   customerName: string;
+  locale: Locale;
   portalUrl: string;
   planName: string;
 }
 
 export const SubscriptionPortalLinkEmail: React.FC<
   SubscriptionPortalLinkEmailProps
-> = ({ customerName, portalUrl, planName }) => {
+> = ({ customerName, locale, portalUrl, planName }) => {
+  const t = emailTranslator(locale);
   return (
     <Html>
       <Head />
@@ -31,48 +35,46 @@ export const SubscriptionPortalLinkEmail: React.FC<
         <Container style={styles.container}>
           {/* Header */}
           <Section style={styles.header}>
-            <Heading style={styles.headerTitle}>Manage Your Subscription</Heading>
+            <Heading style={styles.headerTitle}>{t("subscription.portalHeading")}</Heading>
             <Text style={styles.headerSubtitle}>{planName}</Text>
           </Section>
 
           {/* Content */}
           <Section style={styles.content}>
             <Text style={styles.greeting}>
-              Hi <strong>{customerName}</strong>,
+              {t.rich("common.greeting", { name: customerName, b: (chunks) => <strong>{chunks}</strong> })}
             </Text>
             <Text style={styles.paragraph}>
-              You requested access to manage your subscription. Click the button
-              below to access your subscription portal where you can:
+              {t("subscription.portalBody")}
             </Text>
 
             {/* Features list */}
             <Section style={styles.featuresBox}>
               <ul style={styles.featuresList}>
-                <li style={styles.listItem}>Update your payment method</li>
-                <li style={styles.listItem}>View your billing history</li>
-                <li style={styles.listItem}>Download invoices</li>
-                <li style={styles.listItem}>Cancel your subscription</li>
+                {(t.raw("subscription.portalItems") as string[]).map((item) => (
+                  <li style={styles.listItem} key={item}>{item}</li>
+                ))}
               </ul>
             </Section>
 
             {/* CTA Button */}
             <Section style={styles.buttonContainer}>
               <Button href={portalUrl} style={styles.button}>
-                Access Subscription Portal
+                {t("subscription.portalCta")}
               </Button>
             </Section>
 
             <Text style={styles.expiryNote}>
-              This link will expire in 24 hours for security reasons.
+              {t("subscription.portalExpiry")}
             </Text>
 
             <Hr style={styles.divider} />
 
             <Text style={styles.footerText}>
-              If you didn&apos;t request this link, you can safely ignore this email.
+              {t("subscription.portalIgnore")}
             </Text>
             <Text style={styles.smallText}>
-              Questions? Contact us at{" "}
+              {t("common.questionsContact")}{" "}
               <Link href="mailto:contactus@rcweb.dev" style={styles.link}>
                 contactus@rcweb.dev
               </Link>
@@ -83,7 +85,7 @@ export const SubscriptionPortalLinkEmail: React.FC<
           <Section style={styles.footer}>
             <Text style={styles.footerBrand}>RC Web Solutions</Text>
             <Text style={styles.footerInfo}>
-              Professional Web Development Services
+              {t("common.tagline")}
             </Text>
           </Section>
         </Container>

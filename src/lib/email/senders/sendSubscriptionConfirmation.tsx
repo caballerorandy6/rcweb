@@ -1,5 +1,6 @@
 // src/lib/email/senders/sendSubscriptionConfirmation.tsx
 
+import { emailTranslator } from "../i18n";
 import { Resend } from "resend";
 import { render } from "@react-email/components";
 import {
@@ -16,13 +17,14 @@ export async function sendSubscriptionConfirmation(
   resend: Resend,
   params: SendSubscriptionConfirmationParams
 ): Promise<{ success: boolean; error?: string }> {
-  const { customerEmail, customerName, planName, amount, nextBillingDate } =
+  const { customerEmail, customerName, locale, planName, amount, nextBillingDate } =
     params;
 
   try {
     const html = await render(
       <SubscriptionConfirmationEmail
         customerName={customerName}
+        locale={locale}
         planName={planName}
         amount={amount}
         nextBillingDate={nextBillingDate}
@@ -32,7 +34,7 @@ export async function sendSubscriptionConfirmation(
     const { error: sendError } = await resend.emails.send({
       from: "RC Web Solutions <no-reply@rcweb.dev>",
       to: customerEmail,
-      subject: `Subscription Confirmed - ${planName}`,
+      subject: emailTranslator(locale)("subscription.confirmSubject", { planName }),
       html,
     });
     if (sendError) throw new Error(sendError.message);

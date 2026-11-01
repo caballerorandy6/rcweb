@@ -24,6 +24,7 @@ export default async function NewQuotePage(props: { searchParams: SearchParams }
           select: {
             id: true,
             name: true,
+            locale: true,
             serviceInterest: true,
             emails: { select: { email: true }, take: 1 },
           },
@@ -39,6 +40,7 @@ export default async function NewQuotePage(props: { searchParams: SearchParams }
           ? {
               id: contact.id,
               name: contact.name,
+              locale: contact.locale,
               email: contact.emails[0]?.email ?? "",
               serviceInterest: contact.serviceInterest,
             }

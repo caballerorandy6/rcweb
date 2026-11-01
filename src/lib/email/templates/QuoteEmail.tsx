@@ -12,12 +12,15 @@ import {
 } from "@react-email/components";
 import * as React from "react";
 import { EMAIL_COLORS } from "../colors";
+import { emailTranslator, formatLongDate } from "../i18n";
+import type { Locale } from "@/i18n/routing";
 import { COMPANY, isZelleAvailable } from "@/lib/company";
-import { formatCurrency, formatDate } from "@/lib/utils";
+import { formatCurrency } from "@/lib/utils";
 import { DEPOSIT_PERCENT } from "@/lib/project/charges";
 
 export interface QuoteEmailProps {
   customerName: string;
+  locale: Locale;
   quoteNumber: string;
   planName: string;
   scope: string[];
@@ -35,6 +38,7 @@ const colors = EMAIL_COLORS;
 
 export const QuoteEmail = ({
   customerName,
+  locale,
   quoteNumber,
   planName,
   scope,
@@ -45,7 +49,8 @@ export const QuoteEmail = ({
   expiresAt,
   quoteUrl,
 }: QuoteEmailProps) => {
-  const validUntil = formatDate(expiresAt, { month: "long" });
+  const t = emailTranslator(locale);
+  const validUntil = formatLongDate(expiresAt, locale);
 
   return (
     <Html>
@@ -53,26 +58,23 @@ export const QuoteEmail = ({
       <Body style={styles.body}>
         <Container style={styles.container}>
           <Section style={styles.header}>
-            <Heading style={styles.headerTitle}>Your Quote is Ready</Heading>
+            <Heading style={styles.headerTitle}>{t("quote.heading")}</Heading>
             <Text style={styles.headerSubtitle}>
-              Quote {quoteNumber} · {planName}
+              {t("quote.subheading", { quoteNumber, planName })}
             </Text>
           </Section>
 
           <Section style={styles.content}>
             <Text style={styles.paragraph}>
-              Hi <strong>{customerName}</strong>,
+              {t.rich("common.greeting", { name: customerName, b: (chunks) => <strong>{chunks}</strong> })}
             </Text>
 
             <Text style={styles.paragraph}>
-              Thank you for taking the time to talk through your project. Below
-              is the written quote we discussed. Review it at your own pace; the
-              link at the bottom has the full scope and lets you get started
-              whenever you are ready.
+              {t("quote.intro")}
             </Text>
 
             <Section style={styles.box}>
-              <Text style={styles.boxTitle}>What&apos;s included</Text>
+              <Text style={styles.boxTitle}>{t("quote.included")}</Text>
               <ul style={styles.list}>
                 {scope.map((item, index) => (
                   <li key={index} style={styles.listItem}>
@@ -89,23 +91,23 @@ export const QuoteEmail = ({
             </Section>
 
             <Section style={styles.box}>
-              <Text style={styles.boxTitle}>Investment</Text>
+              <Text style={styles.boxTitle}>{t("quote.investment")}</Text>
               <table style={{ width: "100%", fontSize: "14px" }}>
                 <tbody>
                   <tr>
-                    <td style={styles.rowLabel}>Project total</td>
+                    <td style={styles.rowLabel}>{t("quote.total")}</td>
                     <td style={styles.rowValueStrong}>
                       {formatCurrency(totalAmount)}
                     </td>
                   </tr>
                   <tr>
                     <td style={styles.rowLabel}>
-                      Deposit to start ({DEPOSIT_PERCENT}%)
+                      {t("quote.deposit", { percent: DEPOSIT_PERCENT })}
                     </td>
                     <td style={styles.rowValue}>{formatCurrency(depositAmount)}</td>
                   </tr>
                   <tr>
-                    <td style={styles.rowLabel}>Balance on delivery</td>
+                    <td style={styles.rowLabel}>{t("quote.balance")}</td>
                     <td style={styles.rowValue}>{formatCurrency(balanceAmount)}</td>
                   </tr>
                 </tbody>
@@ -114,22 +116,19 @@ export const QuoteEmail = ({
 
             <Section style={{ textAlign: "center", margin: "32px 0" }}>
               <Button href={quoteUrl} style={styles.button}>
-                Review and Accept Quote
+                {t("quote.cta")}
               </Button>
               <Text style={styles.validity}>
-                This quote is valid until <strong>{validUntil}</strong>.
+                {t.rich("quote.validUntil", { date: validUntil, b: (chunks) => <strong>{chunks}</strong> })}
               </Text>
             </Section>
 
             <Text style={styles.paragraph}>
-              Accepting the quote takes you to a secure Stripe checkout for the
-              deposit{isZelleAvailable() ? ", or you can choose to pay it by Zelle" : ""}.
-              Work starts as soon as it clears, and the balance is only due when
-              the project is delivered.
+              {t(isZelleAvailable() ? "quote.acceptingZelle" : "quote.accepting")}
             </Text>
 
             <Text style={styles.paragraph}>
-              Questions or changes? Just reply to this email.
+              {t("quote.questions")}
             </Text>
 
             <Hr style={styles.hr} />
@@ -142,7 +141,7 @@ export const QuoteEmail = ({
               · {COMPANY.phoneDisplay}
             </Text>
             <Text style={styles.footerSmall}>
-              If the button does not work, copy this link into your browser:{" "}
+              {t("common.copyLink")}{" "}
               <Link href={quoteUrl} style={styles.link}>
                 {quoteUrl}
               </Link>

@@ -3,10 +3,13 @@
 import { Resend } from "resend";
 import { render } from "@react-email/components";
 import { InvoiceEmail, InvoiceEmailType } from "../templates";
+import { emailTranslator } from "../i18n";
+import type { Locale } from "@/i18n/routing";
 
 export interface SendInvoiceEmailParams {
   customerEmail: string;
   customerName: string;
+  locale: Locale;
   planName: string;
   invoiceNumber: string;
   firstPayment: number;
@@ -17,11 +20,11 @@ export interface SendInvoiceEmailParams {
   projectUrl?: string;
 }
 
-const subjects: Record<InvoiceEmailType, (invoiceNumber: string) => string> = {
-  initial: (num) => `Payment Confirmed - Invoice ${num}`,
-  final: (num) => `Final Payment Received - Invoice ${num}`,
-  summary: (num) => `Project Complete - Full Invoice ${num}`,
-};
+const subjectKeys = {
+  initial: "invoice.subjectInitial",
+  final: "invoice.subjectFinal",
+  summary: "invoice.subjectSummary",
+} as const;
 
 export async function sendInvoiceEmail(
   resend: Resend,
@@ -30,6 +33,7 @@ export async function sendInvoiceEmail(
   const {
     customerEmail,
     customerName,
+    locale,
     planName,
     invoiceNumber,
     firstPayment,
@@ -45,6 +49,7 @@ export async function sendInvoiceEmail(
       <InvoiceEmail
         type={type}
         customerName={customerName}
+        locale={locale}
         planName={planName}
         invoiceNumber={invoiceNumber}
         firstPayment={firstPayment}
@@ -57,7 +62,7 @@ export async function sendInvoiceEmail(
     const emailOptions: Parameters<typeof resend.emails.send>[0] = {
       from: "RC Web Solutions <no-reply@rcweb.dev>",
       to: customerEmail,
-      subject: subjects[type](invoiceNumber),
+      subject: emailTranslator(locale)(subjectKeys[type], { number: invoiceNumber }),
       html,
     };
 

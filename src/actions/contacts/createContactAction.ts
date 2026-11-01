@@ -1,5 +1,7 @@
 "use server";
 
+import { getLocale } from "next-intl/server";
+import type { Locale } from "@/i18n/routing";
 import { prisma } from "@/lib/prisma";
 import { auth } from "@/lib/auth";
 import { z } from "zod";
@@ -43,6 +45,7 @@ export const createContactAction = async (
   // El admin crea contactos manualmente desde el dashboard sin reCAPTCHA.
   const session = await auth();
   const isAdmin = session?.user?.role === "ADMIN";
+  const locale = (await getLocale()) as Locale;
   const skipBotChecks = isAdmin || process.env.NODE_ENV === "development";
 
   if (!skipBotChecks) {
@@ -120,6 +123,8 @@ export const createContactAction = async (
         data: {
           name,
           marketingConsent,
+          // A lead added by hand must not take the language of the admin panel
+          ...(!isAdmin && { locale }),
           // A returning lead's latest answer wins (also "Not sure yet"); the
           // admin's manual form only touches these when it sets them
           ...(!isAdmin
@@ -151,6 +156,7 @@ export const createContactAction = async (
       await prisma.contact.create({
         data: {
           name,
+          locale: isAdmin ? "en" : locale,
           marketingConsent,
           source,
           serviceInterest,
@@ -288,6 +294,7 @@ export const createContactAction = async (
       const confirmation = await sendContactConfirmationEmail({
         customerEmail: email,
         customerName: name,
+        locale,
       });
       if (!confirmation.success) {
         console.error("⚠️ Contact confirmation email failed:", confirmation.error);

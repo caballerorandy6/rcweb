@@ -3,6 +3,7 @@
 import { render } from "@react-email/components";
 import { QuoteEmail, type QuoteEmailProps } from "../templates";
 import { ADMIN_EMAIL } from "../adminEmail";
+import { emailTranslator } from "../i18n";
 import { sendEmailWithQuota } from "@/lib/sendEmailWithQuota";
 
 export interface SendQuoteEmailParams extends QuoteEmailProps {
@@ -24,7 +25,10 @@ export async function sendQuoteEmail(
         to: customerEmail,
         // "Just reply to this email" must reach the monitored inbox
         replyTo: ADMIN_EMAIL,
-        subject: `Your quote ${props.quoteNumber} for ${props.planName} - RC Web Solutions`,
+        subject: emailTranslator(props.locale)("quote.subject", {
+          quoteNumber: props.quoteNumber,
+          planName: props.planName,
+        }),
         html,
       },
       { failOnQuotaExceeded: true }

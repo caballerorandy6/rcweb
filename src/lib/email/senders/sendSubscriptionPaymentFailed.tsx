@@ -1,5 +1,6 @@
 // src/lib/email/senders/sendSubscriptionPaymentFailed.tsx
 
+import { emailTranslator } from "../i18n";
 import { Resend } from "resend";
 import { render } from "@react-email/components";
 import {
@@ -16,13 +17,14 @@ export async function sendSubscriptionPaymentFailed(
   resend: Resend,
   params: SendSubscriptionPaymentFailedParams
 ): Promise<{ success: boolean; error?: string }> {
-  const { customerEmail, customerName, planName, amount, updatePaymentUrl } =
+  const { customerEmail, customerName, locale, planName, amount, updatePaymentUrl } =
     params;
 
   try {
     const html = await render(
       <SubscriptionPaymentFailedEmail
         customerName={customerName}
+        locale={locale}
         planName={planName}
         amount={amount}
         updatePaymentUrl={updatePaymentUrl}
@@ -32,7 +34,7 @@ export async function sendSubscriptionPaymentFailed(
     const { error: sendError } = await resend.emails.send({
       from: "RC Web Solutions <no-reply@rcweb.dev>",
       to: customerEmail,
-      subject: "Payment Failed - Action Required",
+      subject: emailTranslator(locale)("subscription.failedSubject"),
       html,
     });
     if (sendError) throw new Error(sendError.message);

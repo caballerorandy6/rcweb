@@ -12,22 +12,23 @@ import {
 } from "@react-email/components";
 import * as React from "react";
 import { EMAIL_COLORS } from "../colors";
+import { emailTranslator, formatLongDate } from "../i18n";
 import { COMPANY } from "@/lib/company";
-import { formatDate } from "@/lib/utils";
 import type { MilestoneCompletedEmailData } from "@/lib/milestone/completedEmail";
 
 export type MilestoneCompletedEmailProps = MilestoneCompletedEmailData;
 
 const colors = EMAIL_COLORS;
 
-const STATUS_MARK: Record<MilestoneCompletedEmailProps["milestones"][number]["status"], { mark: string; label: string; color: string }> = {
-  completed: { mark: "✓", label: "Completed", color: colors.green },
-  in_progress: { mark: "▶", label: "In progress", color: colors.blue },
-  pending: { mark: "○", label: "Pending", color: colors.grayLight },
-};
+const STATUS_MARK = {
+  completed: { mark: "✓", labelKey: "milestone.statusCompleted", color: colors.green },
+  in_progress: { mark: "▶", labelKey: "milestone.statusInProgress", color: colors.blue },
+  pending: { mark: "○", labelKey: "milestone.statusPending", color: colors.grayLight },
+} as const satisfies Record<MilestoneCompletedEmailProps["milestones"][number]["status"], unknown>;
 
 export const MilestoneCompletedEmail = ({
   customerName,
+  locale,
   projectCode,
   planName,
   milestoneTitle,
@@ -38,6 +39,7 @@ export const MilestoneCompletedEmail = ({
   milestones,
   projectUrl,
 }: MilestoneCompletedEmailProps) => {
+  const t = emailTranslator(locale);
   const allDone = totalCount > 0 && completedCount === totalCount;
 
   return (
@@ -46,20 +48,19 @@ export const MilestoneCompletedEmail = ({
       <Body style={styles.body}>
         <Container style={styles.container}>
           <Section style={styles.header}>
-            <Heading style={styles.headerTitle}>Milestone Completed</Heading>
+            <Heading style={styles.headerTitle}>{t("milestone.heading")}</Heading>
             <Text style={styles.headerSubtitle}>
-              Project {projectCode} · {planName}
+              {t("milestone.subheading", { code: projectCode, planName })}
             </Text>
           </Section>
 
           <Section style={styles.content}>
             <Text style={styles.paragraph}>
-              Hi <strong>{customerName}</strong>,
+              {t.rich("common.greeting", { name: customerName, b: (chunks) => <strong>{chunks}</strong> })}
             </Text>
 
             <Text style={styles.paragraph}>
-              A quick update on your project: we just completed{" "}
-              <strong>{milestoneTitle}</strong>.
+              {t.rich("milestone.intro", { title: milestoneTitle, b: (chunks) => <strong>{chunks}</strong> })}
             </Text>
 
             <Section style={styles.highlight}>
@@ -69,17 +70,14 @@ export const MilestoneCompletedEmail = ({
                 <Text style={styles.highlightDescription}>{milestoneDescription}</Text>
               ) : null}
               <Text style={styles.highlightDate}>
-                Completed {formatDate(completedAt, { month: "long" })}
+                {t("milestone.completedOn", { date: formatLongDate(completedAt, locale) })}
               </Text>
             </Section>
 
             <Section style={styles.box}>
-              <Text style={styles.boxTitle}>Where things stand</Text>
+              <Text style={styles.boxTitle}>{t("milestone.standing")}</Text>
               <Text style={styles.progress}>
-                <strong>
-                  {completedCount} of {totalCount}
-                </strong>{" "}
-                {totalCount === 1 ? "milestone" : "milestones"} completed
+                {t.rich("milestone.count", { completed: completedCount, total: totalCount, b: (chunks) => <strong>{chunks}</strong> })}
               </Text>
               <table style={{ width: "100%", fontSize: "14px", borderCollapse: "collapse" as const }}>
                 <tbody>
@@ -89,7 +87,7 @@ export const MilestoneCompletedEmail = ({
                       <tr key={index}>
                         <td style={{ ...styles.rowMark, color: mark.color }}>{mark.mark}</td>
                         <td style={styles.rowTitle}>{m.title}</td>
-                        <td style={{ ...styles.rowStatus, color: mark.color }}>{mark.label}</td>
+                        <td style={{ ...styles.rowStatus, color: mark.color }}>{t(mark.labelKey)}</td>
                       </tr>
                     );
                   })}
@@ -99,18 +97,16 @@ export const MilestoneCompletedEmail = ({
 
             <Section style={{ textAlign: "center", margin: "32px 0" }}>
               <Button href={projectUrl} style={styles.button}>
-                View Project Progress
+                {t("milestone.cta")}
               </Button>
             </Section>
 
             <Text style={styles.paragraph}>
-              {allDone
-                ? "Every milestone is done. We will be in touch shortly with the next step."
-                : "We will send you another note as the next milestone is completed. In the meantime, the progress page above always shows the current status."}
+              {t(allDone ? "milestone.allDone" : "milestone.notDone")}
             </Text>
 
             <Text style={styles.paragraph}>
-              Questions or feedback? Just reply to this email.
+              {t("milestone.questions")}
             </Text>
 
             <Hr style={styles.hr} />
@@ -123,7 +119,7 @@ export const MilestoneCompletedEmail = ({
               · {COMPANY.phoneDisplay}
             </Text>
             <Text style={styles.footerSmall}>
-              If the button does not work, copy this link into your browser:{" "}
+              {t("common.copyLink")}{" "}
               <Link href={projectUrl} style={styles.link}>
                 {projectUrl}
               </Link>

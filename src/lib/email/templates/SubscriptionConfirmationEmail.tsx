@@ -13,9 +13,14 @@ import {
 } from "@react-email/components";
 import * as React from "react";
 import { EMAIL_COLORS } from "../colors";
+import { emailTranslator, formatLongDate } from "../i18n";
+import { localizePathname } from "@/i18n/paths";
+import type { Locale } from "@/i18n/routing";
+import { SITE_BASE_URL } from "@/lib/projectUrl";
 
 export interface SubscriptionConfirmationEmailProps {
   customerName: string;
+  locale: Locale;
   planName: string;
   amount: number; // in cents
   nextBillingDate: Date;
@@ -23,13 +28,11 @@ export interface SubscriptionConfirmationEmailProps {
 
 export const SubscriptionConfirmationEmail: React.FC<
   SubscriptionConfirmationEmailProps
-> = ({ customerName, planName, amount, nextBillingDate }) => {
+> = ({ customerName, locale, planName, amount, nextBillingDate }) => {
+  const t = emailTranslator(locale);
+  const managePath = localizePathname("/manage-subscription", locale);
   const formattedAmount = (amount / 100).toFixed(2);
-  const formattedDate = nextBillingDate.toLocaleDateString("en-US", {
-    year: "numeric",
-    month: "long",
-    day: "numeric",
-  });
+  const formattedDate = formatLongDate(nextBillingDate, locale);
 
   return (
     <Html>
@@ -38,22 +41,20 @@ export const SubscriptionConfirmationEmail: React.FC<
         <Container style={styles.container}>
           {/* Header - Gold gradient with dark text for readability */}
           <Section style={styles.header}>
-            <Heading style={styles.headerTitle}>Subscription Activated!</Heading>
+            <Heading style={styles.headerTitle}>{t("subscription.confirmHeading")}</Heading>
             <Text style={styles.headerSubtitle}>{planName}</Text>
           </Section>
 
           {/* Content - White background with dark text */}
           <Section style={styles.content}>
             <Text style={styles.greeting}>
-              Hi <strong>{customerName}</strong>,
+              {t.rich("common.greeting", { name: customerName, b: (chunks) => <strong>{chunks}</strong> })}
             </Text>
             <Text style={styles.paragraph}>
-              Thank you for subscribing to our{" "}
-              <strong style={{ color: EMAIL_COLORS.gold }}>{planName}</strong> service!
-              Your subscription is now active.
+              {t.rich("subscription.confirmBody", { planName, b: (chunks) => <strong style={{ color: EMAIL_COLORS.gold }}>{chunks}</strong> })}
             </Text>
 
-            {/* Subscription Details - Light gray background */}
+            {/* {t("subscription.details")} - Light gray background */}
             <Section style={styles.detailsBox}>
               <Heading as="h3" style={styles.detailsTitle}>
                 Subscription Details
@@ -61,17 +62,17 @@ export const SubscriptionConfirmationEmail: React.FC<
               <table style={styles.detailsTable}>
                 <tbody>
                   <tr>
-                    <td style={styles.detailLabel}>Plan:</td>
+                    <td style={styles.detailLabel}>{t("common.plan")}</td>
                     <td style={styles.detailValue}>{planName}</td>
                   </tr>
                   <tr>
-                    <td style={styles.detailLabel}>Monthly Amount:</td>
+                    <td style={styles.detailLabel}>{t("subscription.monthly")}</td>
                     <td style={styles.detailValueHighlight}>
-                      ${formattedAmount}/month
+                      ${formattedAmount}{t("common.perMonth")}
                     </td>
                   </tr>
                   <tr>
-                    <td style={styles.detailLabel}>Next Billing Date:</td>
+                    <td style={styles.detailLabel}>{t("subscription.nextBilling")}</td>
                     <td style={styles.detailValue}>{formattedDate}</td>
                   </tr>
                 </tbody>
@@ -81,31 +82,27 @@ export const SubscriptionConfirmationEmail: React.FC<
             {/* What's Included - Green tinted background */}
             <Section style={styles.includedBox}>
               <Heading as="h3" style={styles.includedTitle}>
-                What&apos;s Included
+                {t("subscription.included")}
               </Heading>
               <ul style={styles.includedList}>
-                <li style={styles.listItem}>Security patches and updates</li>
-                <li style={styles.listItem}>Performance monitoring and optimization</li>
-                <li style={styles.listItem}>Content updates (text, images, minor changes)</li>
-                <li style={styles.listItem}>Backup management</li>
-                <li style={styles.listItem}>Uptime monitoring</li>
-                <li style={styles.listItem}>Same-day response for urgent issues</li>
-                <li style={styles.listItem}>Technical support via email/chat</li>
+                {(t.raw("subscription.items") as string[]).map((item) => (
+                  <li style={styles.listItem} key={item}>{item}</li>
+                ))}
               </ul>
             </Section>
 
             <Hr style={styles.divider} />
 
             <Text style={styles.footerText}>
-              Questions? Contact us at{" "}
+              {t("common.questionsContact")}{" "}
               <Link href="mailto:contactus@rcweb.dev" style={styles.link}>
                 contactus@rcweb.dev
               </Link>
             </Text>
             <Text style={styles.smallText}>
-              You can manage or cancel your subscription at any time by visiting{" "}
-              <Link href="https://www.rcweb.dev/manage-subscription" style={styles.link}>
-                rcweb.dev/manage-subscription
+              {t("subscription.manageAnytime")}{" "}
+              <Link href={`${SITE_BASE_URL}${managePath}`} style={styles.link}>
+                rcweb.dev{managePath}
               </Link>
             </Text>
           </Section>
@@ -114,7 +111,7 @@ export const SubscriptionConfirmationEmail: React.FC<
           <Section style={styles.footer}>
             <Text style={styles.footerBrand}>RC Web Solutions</Text>
             <Text style={styles.footerInfo}>
-              Professional Web Development Services
+              {t("common.tagline")}
             </Text>
           </Section>
         </Container>

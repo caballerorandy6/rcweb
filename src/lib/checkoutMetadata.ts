@@ -16,6 +16,10 @@ const email = z.string().trim().toLowerCase().pipe(z.email());
 
 const isoDate = z.iso.datetime().transform((value) => new Date(value));
 
+// Language of the page the customer paid from. Sessions created before this
+// field existed parse as English.
+const locale = z.enum(["en", "es"]).default("en");
+
 export const InitialCheckoutMetadataSchema = z.object({
   paymentType: z.literal("initial"),
   // 6 chars from generateProjectCode(); unique in Project
@@ -27,6 +31,7 @@ export const InitialCheckoutMetadataSchema = z.object({
   secondPaymentAmount: integerCents,
   totalAmount: integerCents,
   termsAcceptedAt: isoDate,
+  locale,
   // Present when the deposit pays a written quote (/quote/[token]); the
   // webhook marks that quote accepted and links it to the new Project
   quoteId: z.uuid().optional(),
@@ -45,6 +50,7 @@ export const SubscriptionCheckoutMetadataSchema = z.object({
   customerName: z.string().trim().min(1),
   customerEmail: email,
   termsAcceptedAt: isoDate,
+  locale,
 });
 
 export const CheckoutMetadataSchema = z.discriminatedUnion("paymentType", [

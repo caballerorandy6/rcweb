@@ -49,6 +49,7 @@ export async function updateQuoteAction(
         email: data.email,
         name: data.name,
         offerId: data.offerId || null,
+        locale: data.locale,
         planName: data.planName,
         scope: data.scope,
         notes: data.notes || null,

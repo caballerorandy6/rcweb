@@ -36,10 +36,11 @@ export async function resendPaymentLinkAction(projectId: string): Promise<Action
     const sent = await sendProjectReadyEmail(new Resend(process.env.RESEND_API_KEY!), {
       customerEmail: project.email,
       customerName: project.name,
+      locale: project.locale,
       planName: project.planName,
       projectCode: project.projectCode,
       finalAmount: final.amount,
-      paymentUrl: getPayUrl(project.accessToken),
+      paymentUrl: getPayUrl(project.accessToken, project.locale),
     });
     if (!sent.success) {
       return { success: false, error: sent.error ?? "Email could not be sent" };

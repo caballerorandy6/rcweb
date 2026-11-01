@@ -1,3 +1,4 @@
+import ProjectLocaleSelect from "@/components/admin/ProjectLocaleSelect";
 import Link from "next/link";
 import type { Route } from "next";
 import { ArrowTopRightOnSquareIcon, DocumentArrowDownIcon } from "@heroicons/react/24/outline";
@@ -45,8 +46,8 @@ export default function ProjectDetail({ project }: { project: AdminProjectDetail
   const final = project.payments.find((p) => p.kind === "final");
   const depositPaid = deposit?.status === "paid";
   const finalPaid = final?.status === "paid";
-  const projectUrl = getProjectUrl(project.accessToken);
-  const payUrl = getPayUrl(project.accessToken);
+  const projectUrl = getProjectUrl(project.accessToken, project.locale);
+  const payUrl = getPayUrl(project.accessToken, project.locale);
 
   return (
     <div className="space-y-6 sm:space-y-8 px-4 sm:px-6 lg:px-8 py-4 sm:py-6 font-inter">
@@ -66,6 +67,7 @@ export default function ProjectDetail({ project }: { project: AdminProjectDetail
               >
                 {PROJECT_STATUS_LABELS[project.status]}
               </span>
+              <ProjectLocaleSelect projectId={project.id} locale={project.locale} />
               <span className="text-xs text-gray-500">
                 Created {formatDate(project.createdAt)} · Updated {formatDate(project.updatedAt)}
               </span>

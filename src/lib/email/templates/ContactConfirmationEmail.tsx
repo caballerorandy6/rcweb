@@ -14,15 +14,20 @@ import {
 } from "@react-email/components";
 import * as React from "react";
 import { EMAIL_COLORS } from "../colors";
+import { emailTranslator } from "../i18n";
+import { localizePathname } from "@/i18n/paths";
+import type { Locale } from "@/i18n/routing";
 
 export interface ContactConfirmationEmailProps {
   customerName: string;
+  locale: Locale;
   siteUrl: string;
 }
 
 export const ContactConfirmationEmail: React.FC<
   ContactConfirmationEmailProps
-> = ({ customerName, siteUrl }) => {
+> = ({ customerName, locale, siteUrl }) => {
+  const t = emailTranslator(locale);
   return (
     <Html>
       <Head />
@@ -30,43 +35,42 @@ export const ContactConfirmationEmail: React.FC<
         <Container style={styles.container}>
           {/* Header */}
           <Section style={styles.header}>
-            <Heading style={styles.headerTitle}>Thanks for reaching out!</Heading>
-            <Text style={styles.headerSubtitle}>We got your message</Text>
+            <Heading style={styles.headerTitle}>{t("contact.heading")}</Heading>
+            <Text style={styles.headerSubtitle}>{t("contact.subheading")}</Text>
           </Section>
 
           {/* Content */}
           <Section style={styles.content}>
             <Text style={styles.greeting}>
-              Hi <strong>{customerName}</strong>,
+              {t.rich("common.greeting", { name: customerName, b: (chunks) => <strong>{chunks}</strong> })}
             </Text>
             <Text style={styles.paragraph}>
-              Thanks for contacting RC Web Solutions. Your message is in, and
-              you&apos;ll hear back from me within 24–48 hours on business days.
+              {t("contact.body")}
             </Text>
 
             <Section style={styles.infoBox}>
               <Heading as="h3" style={styles.infoTitle}>
-                Need a faster answer?
+                {t("contact.fasterTitle")}
               </Heading>
               <Text style={styles.infoText}>
-                Call or text{" "}
+                {t("contact.callOrText")}{" "}
                 <Link href="tel:+13463757534" style={styles.link}>
                   (346) 375-7534
                 </Link>
-                , or simply reply to this email.
+                {t("contact.orReply")}
               </Text>
             </Section>
 
             <Section style={styles.buttonContainer}>
-              <Button href={`${siteUrl}/projects-portfolio`} style={styles.button}>
-                See Recent Work
+              <Button href={`${siteUrl}${localizePathname("/projects-portfolio", locale)}`} style={styles.button}>
+                {t("contact.cta")}
               </Button>
             </Section>
 
             <Hr style={styles.divider} />
 
             <Text style={styles.signature}>
-              Talk soon,
+              {t("contact.signoff")}
               <br />
               <strong>Randy Caballero</strong>
               <br />
@@ -78,7 +82,7 @@ export const ContactConfirmationEmail: React.FC<
           <Section style={styles.footer}>
             <Text style={styles.footerBrand}>RC Web Solutions</Text>
             <Text style={styles.footerInfo}>
-              Professional Web Development Services · Houston, TX
+              {t("common.taglineHouston")}
             </Text>
           </Section>
         </Container>

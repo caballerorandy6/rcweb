@@ -81,6 +81,7 @@ export async function createProjectFromQuoteAction(
         projectCode,
         customerEmail: quote.email,
         customerName: quote.name,
+        locale: quote.locale,
         planName: quote.planName,
         totalAmount: quote.totalAmount,
         firstPaymentAmount: deposit,

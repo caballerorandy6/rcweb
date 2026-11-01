@@ -6,6 +6,7 @@ const project = {
   projectCode: "ABC123",
   planName: "Landing Page",
   accessToken: "token-123",
+  locale: "es" as const,
 };
 
 const completedAt = new Date("2026-10-25T15:00:00Z");
@@ -34,7 +35,7 @@ describe("buildMilestoneCompletedEmail", () => {
       totalCount: 4,
     });
     expect(result.data.milestones.map((m) => m.title)).toEqual(["Kickoff", "Design", "Build", "Launch"]);
-    expect(result.data.projectUrl).toMatch(/\/project\/token-123$/);
+    expect(result.data.projectUrl).toMatch(/\/es\/proyecto\/token-123$/);
   });
 
   it("refuses a milestone that is not completed", () => {

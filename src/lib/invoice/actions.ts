@@ -1,6 +1,7 @@
 // lib/invoice/actions.ts
 "use server";
 
+import { emailTranslator } from "@/lib/email/i18n";
 import { prisma } from "@/lib/prisma";
 import { generateInvoiceNumber } from "./generateInvoiceNumber";
 import { generateInvoicePDF, generateInvoiceSummaryPDF } from "./generateInvoicePDF";
@@ -34,6 +35,7 @@ export async function createInvoice(
       invoiceNumber,
       type: data.type,
       customerName: data.customerName,
+      locale: data.locale,
       customerEmail: data.customerEmail,
       projectCode: data.projectCode,
       planName: data.planName,
@@ -130,6 +132,8 @@ export async function createInvoiceSummary(
     const depositPaidAt = deposit.paidAt ?? deposit.updatedAt;
     const finalPaidAt = final.paidAt ?? final.updatedAt;
 
+    const t = emailTranslator(project.locale);
+
     // 2. Generar número de invoice único
     const invoiceNumber = await generateInvoiceNumber();
 
@@ -143,18 +147,19 @@ export async function createInvoiceSummary(
       invoiceNumber,
       type: "summary",
       customerName: project.name,
+      locale: project.locale,
       customerEmail: project.email,
       projectCode: project.projectCode,
       planName: project.planName,
       items: [
         {
-          description: `Initial Payment - 50% Deposit for ${project.planName}`,
+          description: t("pdf.depositLine", { planName: project.planName }),
           amount: deposit.amount,
           paidDate: depositPaidAt,
           paymentMethod: deposit.method,
         },
         {
-          description: `Final Payment - 50% Balance for ${project.planName}`,
+          description: t("pdf.finalLine", { planName: project.planName }),
           amount: final.amount,
           paidDate: finalPaidAt,
           paymentMethod: final.method,
@@ -191,7 +196,7 @@ export async function createInvoiceSummary(
         customerEmail: project.email,
         projectCode: project.projectCode,
         planName: project.planName,
-        description: `Complete Project Summary - ${project.planName}`,
+        description: t("pdf.summaryLine", { planName: project.planName }),
         subtotal: subtotalBeforeTax,
         taxRate: DEFAULT_TAX_RATE,
         taxAmount,

@@ -59,6 +59,8 @@ export async function sendPortalLinkAction(
     const emailResult = await sendSubscriptionPortalLink(resend, {
       customerEmail: subscription.email,
       customerName: subscription.name,
+      // The email and its link keep the language the customer asked in
+      locale,
       // The emailed link keeps the language the customer asked in
       portalUrl: `${process.env.NEXT_PUBLIC_BASE_URL}${localizePathname("/manage-subscription/[token]", locale as Locale, { token })}`,
       planName: subscription.planName,
