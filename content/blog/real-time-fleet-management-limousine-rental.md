@@ -8,6 +8,8 @@ tags: ["Fleet Management", "Full Stack Development", "Next.js", "Node.js", "Case
 
 # Real-Time Fleet Management: From Backend to Frontend
 
+> Limo Renting is a demo project, not a client's business.
+
 I recently built a full vehicle management system for a limousine rental platform and wanted to share why these features matter for business success.
 
 **Live Demo:** [https://limo-rental-frontend.vercel.app/](https://limo-rental-frontend.vercel.app/)

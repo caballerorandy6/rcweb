@@ -12,7 +12,7 @@ const ProjectsList = async ({
   priorityCount?: number;
 }) => {
   const t = await getTranslations("Home.projects");
-  const labels = { caseStudy: t("caseStudy"), preview: t("preview"), github: t("github") };
+  const labels = { caseStudy: t("caseStudy"), preview: t("preview"), github: t("github"), demo: t("demo") };
 
   return (
     <div className="mx-auto max-w-7xl px-6 lg:px-8">
@@ -30,6 +30,7 @@ const ProjectsList = async ({
               image={project.image}
               github={project.github}
               url={project.url}
+              demo={project.demo}
               caseStudy={project.caseStudy}
               priority={index < priorityCount}
               labels={labels}

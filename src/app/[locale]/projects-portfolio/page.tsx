@@ -41,7 +41,16 @@ export default async function ProjectsPortfolioPage({ params }: PageProps<"/[loc
               <p className="mt-6 text-lg leading-8 text-gray-300 font-inter">{t("intro")}</p>
             </div>
 
-            <ProjectsList projects={projects} priorityCount={3} />
+            <h2 className="text-center text-3xl tracking-tight text-white sm:text-4xl font-iceland">
+              {t("clients")}
+            </h2>
+            <ProjectsList projects={projects.filter((p) => !p.demo)} priorityCount={3} />
+
+            <h2 className="mt-24 text-center text-3xl tracking-tight text-white sm:text-4xl font-iceland">
+              {t("demos")}
+            </h2>
+            <p className="mx-auto mt-4 max-w-3xl text-center text-lg text-gray-300 font-inter">{t("demosIntro")}</p>
+            <ProjectsList projects={projects.filter((p) => p.demo)} />
           </div>
         </section>
       </div>

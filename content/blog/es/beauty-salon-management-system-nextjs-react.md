@@ -6,6 +6,8 @@ tags: ["Next.js", "React 19", "TypeScript", "Desarrollo Full Stack", "Caso de es
 
 # Construyendo un sistema de gestión para salones de belleza con Next.js 15 y React 19
 
+> RC Beauty Salon es un proyecto de demostración, no el negocio de un cliente.
+
 Actualmente estoy desarrollando RC Beauty Salon, una aplicación web full-stack diseñada para digitalizar las operaciones de un salón de belleza profesional. El sistema integra reservas en línea, gestión de inventario, procesamiento de pagos y comunicación automatizada con los clientes. El proyecto está completado en aproximadamente un 80%, con la funcionalidad principal ya en pleno funcionamiento.
 
 ---

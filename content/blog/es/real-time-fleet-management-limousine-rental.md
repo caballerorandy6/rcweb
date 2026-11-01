@@ -6,6 +6,8 @@ tags: ["Gestión de flotas", "Desarrollo full stack", "Next.js", "Node.js", "Cas
 
 # Gestión de flota en tiempo real: del backend al frontend
 
+> Limo Renting es un proyecto de demostración, no el negocio de un cliente.
+
 Hace poco construí un sistema completo de gestión de vehículos para una plataforma de renta de limusinas y quería compartir por qué estas funciones importan para el éxito de un negocio.
 
 **Demo en vivo:** [https://limo-rental-frontend.vercel.app/](https://limo-rental-frontend.vercel.app/)
