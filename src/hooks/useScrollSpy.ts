@@ -1,19 +1,18 @@
 "use client";
 
 import { useEffect } from "react";
-import { useTranslations } from "next-intl";
 import { useRCWebStore } from "@/store/rcweb-store";
 import type { SectionKey } from "@/lib/navigation";
 import { withViewTransition } from "@/lib/viewTransition";
 
 /**
- * One IntersectionObserver for the whole page: updates the URL hash, the
- * document title and the navbar's active item. Sections themselves stay
- * Server Components. Section ids double as navigation keys.
+ * One IntersectionObserver for the whole page: updates the URL hash and the
+ * navbar's active item. The document title stays the one from the page metadata,
+ * which is what search engines index, and the first section keeps a clean URL.
+ * Sections themselves stay Server Components. Section ids double as navigation keys.
  */
 export function useScrollSpy(sectionIds: SectionKey[]) {
   const setActiveSection = useRCWebStore((state) => state.setActiveSection);
-  const t = useTranslations("Nav");
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -22,14 +21,8 @@ export function useScrollSpy(sectionIds: SectionKey[]) {
           if (entry.isIntersecting) {
             const id = entry.target.getAttribute("id") as SectionKey | null;
             if (id) {
-              // Actualiza la URL sin recargar
-              history.replaceState(null, "", `#${id}`);
-
-              // Cambia dinámicamente el título
-              const newTitle = t.has(id) ? `RC WEB | ${t(id)}` : "RC WEB";
-              if (document.title !== newTitle) {
-                document.title = newTitle;
-              }
+              const url = id === "home" ? location.pathname + location.search : `#${id}`;
+              history.replaceState(null, "", url);
 
               withViewTransition(() => setActiveSection(id));
             }
@@ -50,5 +43,5 @@ export function useScrollSpy(sectionIds: SectionKey[]) {
     elements.forEach((el) => observer.observe(el));
 
     return () => observer.disconnect();
-  }, [sectionIds, setActiveSection, t]);
+  }, [sectionIds, setActiveSection]);
 }
