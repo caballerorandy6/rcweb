@@ -1,12 +1,12 @@
 ---
-title: "Gestión de flota en tiempo real: un sistema full-stack de gestión de vehículos para alquiler de limusinas"
+title: "Gestión de flota en tiempo real: un sistema full-stack de gestión de vehículos para renta de limusinas"
 description: "Cómo construí un sistema de gestión de flota con CRUD en tiempo real, autenticación y borrado lógico, usando Next.js 14, Node.js, Express y PostgreSQL."
 tags: ["Gestión de flotas", "Desarrollo full stack", "Next.js", "Node.js", "Caso de estudio"]
 ---
 
 # Gestión de flota en tiempo real: del backend al frontend
 
-Hace poco construí un sistema completo de gestión de vehículos para una plataforma de alquiler de limusinas y quería compartir por qué estas funciones importan para el éxito de un negocio.
+Hace poco construí un sistema completo de gestión de vehículos para una plataforma de renta de limusinas y quería compartir por qué estas funciones importan para el éxito de un negocio.
 
 **Demo en vivo:** [https://limo-rental-frontend.vercel.app/](https://limo-rental-frontend.vercel.app/)
 
@@ -223,7 +223,7 @@ Los administradores de flota ven los cambios de inmediato, sin recargar la pági
 
 ### 2️⃣ El borrado lógico conserva la trazabilidad
 
-En lugar de eliminar los vehículos de forma permanente, los marcamos como eliminados. Así se conserva el historial para:
+En lugar de eliminar los vehículos de forma permanente, los marco como eliminados. Así se conserva el historial para:
 - Reclamos de seguros
 - Reportes de ingresos
 - Cumplimiento legal
@@ -384,7 +384,7 @@ Posibles mejoras para este sistema:
 
 Esta arquitectura es perfecta para:
 - ✅ Sistemas de gestión de flotas (de cualquier tipo de vehículo)
-- ✅ Plataformas de alquiler de equipos
+- ✅ Plataformas de renta de equipos
 - ✅ Aplicaciones de seguimiento de activos
 - ✅ Sistemas de gestión de inventario
 - ✅ Plataformas de reservas
@@ -423,7 +423,7 @@ Me encantaría conocer tu opinión sobre qué funciones importan más en tu caso
 
 ---
 
-*Este artículo forma parte de nuestra serie sobre desarrollo full-stack, aplicaciones de negocio y tecnologías web modernas. [Suscríbete a nuestro boletín](/es#contact) para enterarte cuando publiquemos nuevos artículos.*
+*Este artículo forma parte de mi serie sobre desarrollo full-stack, aplicaciones de negocio y tecnologías web modernas. [Suscríbete a mi boletín](/es#contact) para enterarte cuando publique nuevos artículos.*
 
 **RC Web Solutions LLC**
 *Construyendo el futuro, una línea de código a la vez.*

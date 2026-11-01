@@ -12,7 +12,7 @@ Hace poco completé una renovación integral de la interfaz de **rcweb.dev** con
 
 ## El reto: mantener la consistencia a escala
 
-A medida que rcweb.dev pasó de ser un simple portafolio a una aplicación de negocio completa, nos encontramos con un problema habitual: mantener la consistencia visual entre docenas de componentes. Nuestro CSS personalizado se estaba volviendo difícil de manejar y empezaban a notarse pequeñas inconsistencias de estilo.
+A medida que rcweb.dev pasó de ser un simple portafolio a una aplicación de negocio completa, me encontré con un problema habitual: mantener la consistencia visual entre docenas de componentes. Mi CSS personalizado se estaba volviendo difícil de manejar y empezaban a notarse pequeñas inconsistencias de estilo.
 
 Necesitábamos una solución que:
 
@@ -91,7 +91,7 @@ Lo que antes llevaba horas escribiendo CSS personalizado ahora toma minutos. ¿H
 
 ### Reducción de código
 
-Redujimos nuestro código CSS en aproximadamente un **60%** y, a la vez, mejoramos la consistencia visual. La función de purga de Tailwind elimina automáticamente los estilos que no se usan, lo que se traduce en paquetes más pequeños.
+Reduje mi código CSS en aproximadamente un **60%** y, a la vez, mejoré la consistencia visual. La función de purga de Tailwind elimina automáticamente los estilos que no se usan, lo que se traduce en paquetes más pequeños.
 
 ### Mejor experiencia de usuario
 
@@ -107,7 +107,7 @@ Se acabó buscar entre miles de líneas de CSS personalizado. Todo está a la vi
 
 ### Rendimiento
 
-La optimización integrada de Tailwind significa que solo enviamos el CSS que realmente usamos. El resultado: páginas que cargan más rápido y mejores puntuaciones en Core Web Vitals.
+La optimización integrada de Tailwind significa que solo se envía el CSS que realmente se usa. El resultado: páginas que cargan más rápido y mejores puntuaciones en Core Web Vitals.
 
 ---
 
@@ -128,7 +128,7 @@ Tailwind fomenta buenas prácticas de diseño:
 
 ### 3. Flexibilidad cuando hace falta
 
-Aunque las utilidades cubren el 90% de nuestras necesidades, seguimos pudiendo usar CSS personalizado cuando es necesario. Tailwind no nos encierra en un sistema rígido.
+Aunque las utilidades cubren el 90% de mis necesidades, sigo pudiendo usar CSS personalizado cuando es necesario. Tailwind no me encierra en un sistema rígido.
 
 ### 4. Escalabilidad del equipo
 
@@ -152,12 +152,12 @@ Para RC Web Solutions, Tailwind CSS significa:
 - ✅ Una presencia de marca más pulida en rcweb.dev
 - ✅ Mayor interacción de los usuarios gracias a una mejor UX
 - ✅ Ciclos de desarrollo más rápidos
-- ✅ Un sitio web que representa de verdad la calidad de nuestro trabajo
+- ✅ Un sitio web que representa de verdad la calidad de mi trabajo
 
-La transformación de rcweb.dev no se trata solo de verse mejor: se trata de construir una base que escale con nuestro negocio y ofrezca experiencias excepcionales a nuestros clientes.
+La transformación de rcweb.dev no se trata solo de verse mejor: se trata de construir una base que escale con mi negocio y ofrezca experiencias excepcionales a mis clientes.
 
 ---
 
-**¿Quieres ver los resultados?** Visita [rcweb.dev](https://rcweb.dev) y comprueba la diferencia que marca una arquitectura CSS bien pensada.
+**¿Quieres ver los resultados?** Visita [rcweb.dev](https://www.rcweb.dev/es) y comprueba la diferencia que marca una arquitectura CSS bien pensada.
 
-**¿Te interesa aprender más sobre desarrollo web moderno?** Suscríbete a nuestro blog aquí abajo para enterarte cuando publiquemos nuevos artículos sobre desarrollo web, React, Next.js y más.
+**¿Te interesa aprender más sobre desarrollo web moderno?** Suscríbete a mi blog aquí abajo para enterarte cuando publique nuevos artículos sobre desarrollo web, React, Next.js y más.

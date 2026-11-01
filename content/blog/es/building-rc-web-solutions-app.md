@@ -851,7 +851,7 @@ Las claves:
 
 ---
 
-*Este artículo forma parte de nuestra serie sobre desarrollo web, tecnología y crecimiento de negocios. [Suscríbete a nuestro newsletter](/es#contact) para enterarte cuando publiquemos nuevos artículos.*
+*Este artículo forma parte de mi serie sobre desarrollo web, tecnología y crecimiento de negocios. [Suscríbete a mi newsletter](/es#contact) para enterarte cuando publique nuevos artículos.*
 
 **RC Web Solutions LLC**
 *Construyendo el futuro, una línea de código a la vez.*

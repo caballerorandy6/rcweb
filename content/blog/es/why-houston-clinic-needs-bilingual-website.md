@@ -10,7 +10,7 @@ Houston es la ciudad más diversa de Estados Unidos. **El 44% de la población e
 
 Si el sitio web de tu clínica está solo en inglés, no solo estás desaprovechando una oportunidad de marketing: estás levantando una barrera entre tu consulta y casi la mitad de la población de Houston.
 
-Soy Randy Caballero, desarrollador web bilingüe en Houston. He construido sitios web para clínicas como [Clinica Hispana Gessner](https://www.clinicagessner.com/) y [Clinica Hispana Airline](https://www.clinicahispanaairline.com/). Te cuento por qué volverse bilingües lo cambió todo para ellas.
+Soy Randy Caballero, desarrollador web bilingüe en Houston. He construido sitios web para clínicas como [Clínica Hispana Gessner](https://www.clinicagessner.com/) y [Clínica Hispana Airline](https://www.clinicahispanaairline.com/). Te cuento por qué volverse bilingües lo cambió todo para ellas.
 
 ---
 
@@ -67,7 +67,7 @@ Es más que el idioma. Es entender la experiencia del paciente:
 
 ## Resultados reales: clínicas de Houston que he construido
 
-### Clinica Hispana Gessner
+### Clínica Hispana Gessner
 
 Cuando Clínica Gessner llegó a mí, tenía un sitio web anticuado y solo en inglés. Su base de pacientes es mayoritariamente hispanohablante, pero su presencia en línea no lo reflejaba.
 
@@ -79,7 +79,7 @@ Construí un sitio web bilingüe con:
 
 El resultado: ahora los pacientes pueden encontrar la clínica buscando en español, reservar citas en línea y tener la seguridad de que los atenderán en su idioma.
 
-### Clinica Hispana Airline
+### Clínica Hispana Airline
 
 Historia parecida, otra ubicación. Una clínica de Houston que atiende a la comunidad hispana cerca de Airline Drive necesitaba una presencia en línea profesional, a la altura de la calidad de atención que ofrece.
 

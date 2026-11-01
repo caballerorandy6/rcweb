@@ -64,7 +64,7 @@ Ambos se pueden optimizar para SEO. Pero Next.js tiene ventajas estructurales:
 
 En el caso concreto del SEO local en Houston, donde compites con todas las demás empresas de HVAC, clínicas o contratistas de la ciudad, estas ventajas técnicas se acumulan.
 
-He construido los sitios de [Clinica Hispana Gessner](https://www.clinicagessner.com/) y [Leo's Home Experts](https://www.ac-remodelingservice.com/) con Next.js y SEO local integrado. Marcado schema, carga rápida, meta etiquetas correctas: todo forma parte de la arquitectura, no se añade con plugins.
+He construido los sitios de [Clínica Hispana Gessner](https://www.clinicagessner.com/) y [Leo's Home Experts](https://www.ac-remodelingservice.com/) con Next.js y SEO local integrado. Marcado schema, carga rápida, meta etiquetas correctas: todo forma parte de la arquitectura, no se añade con plugins.
 
 ---
 

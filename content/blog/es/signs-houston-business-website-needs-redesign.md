@@ -59,7 +59,7 @@ Si no apareces en la primera página, tu sitio web no está haciendo su trabajo.
 
 **La solución:** el SEO local tiene que formar parte de la arquitectura del sitio web, no añadirse después con un plugin. Una estructura de encabezados correcta, el marcado schema, contenido específico sobre Houston y la optimización técnica marcan la diferencia.
 
-Construí [el sitio web de Clinica Hispana Gessner](https://www.clinicagessner.com/) con SEO local integrado desde el primer día, orientado a búsquedas tanto en inglés como en español en el área de Houston.
+Construí [el sitio web de Clínica Hispana Gessner](https://www.clinicagessner.com/) con SEO local integrado desde el primer día, orientado a búsquedas tanto en inglés como en español en el área de Houston.
 
 ---
 

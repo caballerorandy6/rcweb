@@ -71,8 +71,8 @@ Este es el futuro del desarrollo de software: **creatividad humana + eficiencia 
 
 En RC Web Solutions nos especializamos en convertir conceptos en realidad. Ya sea que necesites una aplicación web, una plataforma optimizada para móviles o una solución digital completa, estamos aquí para ayudarte.
 
-- 🌐 **Visítanos:** [https://rcweb.dev/es](https://rcweb.dev/es)
-- 📖 **Lee nuestro blog:** [https://rcweb.dev/es/blog](https://rcweb.dev/es/blog)
+- 🌐 **Visítanos:** [rcweb.dev/es](https://www.rcweb.dev/es)
+- 📖 **Lee nuestro blog:** [rcweb.dev/es/blog](https://www.rcweb.dev/es/blog)
 - 📩 **Hablemos:** [Contáctanos hoy](/es/agendar) para conversar sobre tu próximo proyecto.
 
 Sigue a RC Web Solutions LLC para más ideas, consejos e historias de éxito.

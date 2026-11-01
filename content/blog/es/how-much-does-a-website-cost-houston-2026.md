@@ -112,7 +112,7 @@ Ofrezco algo que la mayoría de las agencias en Houston no ofrece:
 
 - **Precios transparentes** — Ves las cifras desde el principio, no después de una llamada de ventas
 - **Pago 50/50** — La mitad al inicio y la mitad a la entrega. Nada de pagar el 100% antes de ver resultados
-- **Servicio bilingüe** — Inglés y español nativos. Entiendo el mercado hispano de Houston
+- **Servicio bilingüe** — Inglés y español nativos. Entiendo el mercado de habla hispana de Houston
 - **Tecnología moderna** — Next.js y React, la misma tecnología detrás de Nike y Netflix
 - **Enlace del proyecto** — Sigue el avance de tu proyecto a través de un enlace privado, sin necesidad de crear una cuenta
 
