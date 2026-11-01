@@ -34,6 +34,7 @@ Todos los proyectos siguen una estructura de dos pagos:
 
 - **Primer pago (50 %):** Se abona antes de empezar el trabajo para reservar tu proyecto
 - **Segundo pago (50 %):** Se abona al terminar el proyecto y antes de la entrega final
+- **Impuesto sobre las ventas:** Los precios no incluyen el impuesto sobre las ventas. Donde corresponda, se calcula según tu ubicación, se suma al pagar y aparece en tu factura
 
 ### 3.2 Servicios por suscripción (pagos recurrentes)
 

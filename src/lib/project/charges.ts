@@ -22,6 +22,11 @@ export function isPaid(payment: Pick<Payment, "status">): boolean {
   return payment.status === PaymentStatus.paid;
 }
 
+/** What the customer actually paid for a charge, tax included */
+export function chargeTotal(payment: Pick<Payment, "amount" | "taxAmount">): number {
+  return payment.amount + payment.taxAmount;
+}
+
 export type ProjectWithPayments = Prisma.ProjectGetPayload<{
   include: { payments: true };
 }>;

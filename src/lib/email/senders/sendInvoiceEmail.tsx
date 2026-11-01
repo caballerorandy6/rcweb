@@ -13,6 +13,7 @@ export interface SendInvoiceEmailParams {
   planName: string;
   invoiceNumber: string;
   firstPayment: number;
+  depositTax: number;
   secondPayment: number;
   totalAmount: number;
   type: InvoiceEmailType;
@@ -37,6 +38,7 @@ export async function sendInvoiceEmail(
     planName,
     invoiceNumber,
     firstPayment,
+    depositTax,
     secondPayment,
     totalAmount,
     type,
@@ -53,6 +55,7 @@ export async function sendInvoiceEmail(
         planName={planName}
         invoiceNumber={invoiceNumber}
         firstPayment={firstPayment}
+        depositTax={depositTax}
         secondPayment={secondPayment}
         totalAmount={totalAmount}
         projectUrl={projectUrl}

@@ -257,7 +257,7 @@
       },
       "payments": {
         "question": "¿Cómo funciona el proceso de pago?",
-        "answer": "Dos pagos: 50 % para empezar y 50 % al entregar el proyecto. La landing page y el plan de mantenimiento se pueden pagar directamente en este sitio a través de Stripe. Para todo lo demás, primero acordamos el alcance y el precio final, y después recibes un enlace de pago seguro de Stripe. También acepto Zelle."
+        "answer": "Dos pagos: 50 % para empezar y 50 % al entregar el proyecto. La landing page y el plan de mantenimiento se pueden pagar directamente en este sitio a través de Stripe. Para todo lo demás, primero acordamos el alcance y el precio final, y después recibes un enlace de pago seguro de Stripe. También acepto Zelle. El impuesto sobre las ventas se suma al pagar donde corresponda."
       },
       "progress": {
         "question": "¿Puedo ver el avance durante el desarrollo?",
@@ -336,7 +336,7 @@
       "subheading": "Precios en USD • Atiendo clientes en EE. UU. y en todo el mundo",
       "mostPopular": "El más popular",
       "usd": "USD",
-      "note": "Todos los proyectos incluyen: código fuente • configuración de dominio y hosting • capacitación • 50 % de anticipo y 50 % al terminar. La landing page y el plan de mantenimiento se pueden pagar aquí mismo; los precios «Desde» se presupuestan tras una breve conversación y el precio final depende del alcance."
+      "note": "Todos los proyectos incluyen: código fuente • configuración de dominio y hosting • capacitación • 50 % de anticipo y 50 % al terminar. La landing page y el plan de mantenimiento se pueden pagar aquí mismo; los precios «Desde» se presupuestan tras una breve conversación y el precio final depende del alcance. Los precios no incluyen el impuesto sobre las ventas, que se suma al pagar donde corresponda."
     },
     "blog": {
       "heading": "Desde el blog",
@@ -1435,7 +1435,7 @@
     "projectTotal": "Total del proyecto",
     "deposit": "Anticipo para empezar ({percent} %)",
     "balance": "Saldo a la entrega",
-    "investmentNote": "El trabajo empieza en cuanto se acredita el anticipo. El saldo solo se paga cuando se entrega el proyecto, a través de un enlace seguro enviado a tu correo.",
+    "investmentNote": "El trabajo empieza en cuanto se acredita el anticipo. El saldo solo se paga cuando se entrega el proyecto, a través de un enlace seguro enviado a tu correo. Los precios no incluyen el impuesto sobre las ventas; donde corresponda, se suma al pagar.",
     "zelle": {
       "title": "Paga el anticipo por Zelle",
       "thanks": "Gracias por aceptar el presupuesto{date}. Envía el anticipo desde el Zelle de tu banco:",
@@ -1770,8 +1770,8 @@
       "balance": "Saldo a la entrega",
       "cta": "Revisar y aceptar el presupuesto",
       "validUntil": "Este presupuesto es válido hasta el <b>{date}</b>.",
-      "accepting": "Al aceptar el presupuesto pasarás a un pago seguro de Stripe para el anticipo. El trabajo empieza en cuanto se acredita, y el saldo solo se paga cuando se entrega el proyecto.",
-      "acceptingZelle": "Al aceptar el presupuesto pasarás a un pago seguro de Stripe para el anticipo, o puedes elegir pagarlo por Zelle. El trabajo empieza en cuanto se acredita, y el saldo solo se paga cuando se entrega el proyecto.",
+      "accepting": "Al aceptar el presupuesto pasarás a un pago seguro de Stripe para el anticipo. El trabajo empieza en cuanto se acredita, y el saldo solo se paga cuando se entrega el proyecto. Los precios no incluyen el impuesto sobre las ventas; donde corresponda, se suma al pagar.",
+      "acceptingZelle": "Al aceptar el presupuesto pasarás a un pago seguro de Stripe para el anticipo, o puedes elegir pagarlo por Zelle. El trabajo empieza en cuanto se acredita, y el saldo solo se paga cuando se entrega el proyecto. Los precios no incluyen el impuesto sobre las ventas; donde corresponda, se suma al pagar.",
       "questions": "¿Dudas o cambios? Solo responde a este correo."
     },
     "invoice": {
@@ -1794,15 +1794,16 @@
       "attachedSummary": "Factura completa del proyecto adjunta",
       "paymentSummary": "Resumen de pagos",
       "initialPayment": "Pago inicial (50 %):",
-      "remaining": "Saldo pendiente:",
-      "totalCost": "Costo total del proyecto:",
+      "remaining": "Saldo pendiente (antes de impuestos):",
+      "totalCost": "Costo total del proyecto (antes de impuestos):",
       "totalPaid": "Total pagado",
       "allReceived": "✓ Todos los pagos recibidos",
       "summaryNext": "✓ Recibirás una factura con el resumen completo del proyecto en otro correo",
       "completed": "✓ PROYECTO COMPLETADO",
       "thanks": "¡Gracias por elegir RC Web Solutions!",
       "follow": "Sigue el avance de tu proyecto cuando quieras:",
-      "viewProject": "Ver tu proyecto"
+      "viewProject": "Ver tu proyecto",
+      "salesTax": "Impuesto sobre las ventas:"
     },
     "milestone": {
       "subject": "Hito completado: {title} · Proyecto {code}",
@@ -1827,7 +1828,7 @@
       "intro": "¡Buenas noticias! Tu proyecto <b>{planName}</b> está terminado y listo para la revisión final.",
       "summary": "Resumen del proyecto",
       "code": "Código del proyecto:",
-      "due": "Pago final pendiente:",
+      "due": "Pago final pendiente (antes de impuestos):",
       "payTitle": "Completa tu pago final",
       "payDirect": "Puedes completar tu pago directamente:",
       "cta": "Completar el pago final ahora",
@@ -1843,7 +1844,7 @@
       "confirmHeading": "¡Suscripción activada!",
       "confirmBody": "¡Gracias por suscribirte a nuestro servicio <b>{planName}</b>! Tu suscripción ya está activa.",
       "details": "Detalles de la suscripción",
-      "monthly": "Monto mensual:",
+      "monthly": "Monto mensual (antes de impuestos):",
       "nextBilling": "Próximo cobro:",
       "included": "Qué incluye",
       "items": [
@@ -1886,7 +1887,7 @@
       "renewalSubject": "Próxima renovación - {planName}",
       "renewalHeading": "Próxima renovación",
       "renewalBody": "Te recordamos que tu suscripción se renovará automáticamente pronto.",
-      "amount": "Monto:",
+      "amount": "Monto (antes de impuestos):",
       "renewalDate": "Fecha de renovación:",
       "renewalNoAction": "No tienes que hacer nada si quieres continuar con tu suscripción. Cobraremos automáticamente a tu método de pago registrado.",
       "renewalCta": "Gestionar la suscripción",

@@ -33,6 +33,7 @@ All projects follow a two-payment structure:
 
 - **First Payment (50%):** Due before work begins to secure your project
 - **Second Payment (50%):** Due upon project completion and before final delivery
+- **Sales tax:** Prices do not include sales tax. Where it applies, it is calculated from your location and added at checkout, and it appears on your invoice
 
 ### 3.2 Subscription Services (Recurring Payments)
 

@@ -187,7 +187,7 @@ export default function PaymentSuccess({
               <div className="flex justify-between text-sm">
                 <span className="text-gray-400">{t("paid")}</span>
                 <span className="text-green-500 font-medium">
-                  {formatCurrency(project.depositAmount)}
+                  {formatCurrency(project.depositAmount + project.depositTax)}
                 </span>
               </div>
               <div className="flex justify-between text-sm">
