@@ -18,13 +18,15 @@ export interface ProjectProps {
   image: string;
   github?: string;
   url: string;
+  /** Not built for a client: labelled on the card */
+  demo?: boolean;
   caseStudy?: Href;
   /** Above the fold on the page that renders it (first row of the portfolio) */
   priority?: boolean;
 }
 
 /** Button captions, translated by the list that renders the cards */
-export type ProjectLabels = { caseStudy: string; preview: string; github: string };
+export type ProjectLabels = { caseStudy: string; preview: string; github: string; demo: string };
 
 const Project = ({
   name,
@@ -33,13 +35,19 @@ const Project = ({
   image,
   github,
   url,
+  demo = false,
   caseStudy,
   priority = false,
   labels,
 }: ProjectProps & { labels: ProjectLabels }) => {
   return (
     <>
-      <div className="overflow-hidden rounded-t-2xl">
+      <div className="relative overflow-hidden rounded-t-2xl">
+        {demo && (
+          <span className="absolute left-3 top-3 z-10 rounded-full bg-gray-950/90 px-2.5 py-0.5 text-xs font-inter text-gold border border-gold/50">
+            {labels.demo}
+          </span>
+        )}
         <Image
           alt={name}
           src={image}

@@ -150,7 +150,7 @@
           "Cuentas de usuario",
           "Integraciones con APIs"
         ],
-        "highlight": "Como RC Beauty Salon",
+        "highlight": "Demo: MIRA Eyewear",
         "range": "$8,000 - $20,000+",
         "duration": "6-12+ semanas",
         "description": "Una tienda en línea con procesamiento de pagos, o una plataforma a medida construida alrededor de tu negocio",
@@ -270,8 +270,10 @@
       "clinicaGessner": "Sitio web bilingüe para una clínica de Houston con reserva de citas en línea, información de servicios y SEO local para llegar a pacientes de habla hispana.",
       "clinicaAirline": "Sitio web bilingüe y profesional para una clínica de Houston con pacientes de habla hispana. Incluye SEO local, páginas de servicios y un diseño amigable para el paciente, optimizado para el móvil.",
       "leosHomeExperts": "Landing page para una empresa de servicios para el hogar de Houston especializada en construcción de patios, mosquiteros motorizados e instalación de toldos. Incluye optimización de SEO local con schema JSON-LD e integración de galería de video.",
-      "rcBeautySalon": "Sitio web moderno para un salón de belleza que muestra sus servicios, permite reservas en línea y ofrece información de contacto, construido con Next.js y Tailwind CSS.",
-      "limoRenting": "Plataforma web que simplifica la renta de limusinas para ocasiones especiales, con disponibilidad de vehículos en tiempo real, personalización del servicio y reservas seguras, todo en una interfaz moderna y adaptable."
+      "rcBeautySalon": "Demo de un sitio web para un salón de belleza con lista de servicios, reservas en línea y tienda de productos, construido con Next.js y Tailwind CSS.",
+      "limoRenting": "Demo de una plataforma de renta de limusinas con disponibilidad de vehículos, personalización del servicio y reservas en línea, en una interfaz moderna y adaptable.",
+      "miraEyewear": "Demo de una tienda en línea de lentes: catálogo de monturas, prueba virtual con la cámara, pago con Stripe, seguimiento de pedidos y panel de administración, en inglés y español.",
+      "orderSystem": "Demo de un sistema de órdenes para ópticas: recetas, lentes y monturas, pagos parciales, saldos, reportes y órdenes imprimibles, con roles de personal. Las cuentas de demostración aparecen al iniciar sesión."
     },
     "testimonials": {
       "chapelli": {
@@ -314,7 +316,8 @@
       "viewAll": "Ver los {count} proyectos",
       "caseStudy": "Caso de éxito",
       "preview": "Vista previa",
-      "github": "GitHub"
+      "github": "GitHub",
+      "demo": "Demo"
     },
     "process": {
       "heading": "Mi proceso de trabajo",
@@ -792,11 +795,14 @@
   "Portfolio": {
     "metadata": {
       "title": "Proyectos y casos de éxito | Portafolio de desarrollo web",
-      "description": "Sitios web y aplicaciones web que he construido para pequeños negocios: clínicas, aire acondicionado, servicios para el hogar, renta para eventos y más. La mayoría en el área de Houston; todos con resultados reales para negocios reales."
+      "description": "Sitios web que he construido para pequeños negocios: clínicas, aire acondicionado, servicios para el hogar, renta para eventos y más, la mayoría en el área de Houston. También demos de una tienda en línea, un sistema de órdenes, un salón y una renta de limusinas."
     },
     "title": "Proyectos y",
     "titleHighlight": "casos de éxito",
-    "intro": "Sitios web reales construidos para pequeños negocios reales. Haz clic en «Caso de éxito» en cualquier proyecto para ver la historia completa: retos, soluciones y resultados."
+    "intro": "Sitios web construidos para pequeños negocios reales, y demos que muestran lo que puedo construir. Haz clic en «Caso de éxito» en un proyecto de cliente para ver la historia completa: retos, soluciones y resultados.",
+    "clients": "Proyectos de clientes",
+    "demos": "Demos",
+    "demosIntro": "Proyectos de muestra que construí para enseñar lo que es posible. No se hicieron para un cliente, y sus negocios, precios y datos son ejemplos."
   },
   "CaseStudies": {
     "back": "Volver a proyectos",

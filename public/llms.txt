@@ -69,9 +69,12 @@ Next.js, React, TypeScript, Tailwind CSS, Node.js, PostgreSQL, Prisma, Docker, A
 
 - [Dulce Antojo Snack Carts](https://dulce-antojo-snack-carts.vercel.app/) — Conversion-optimized landing page for a Houston snack cart rental business with 13+ service options. [Case study](https://www.rcweb.dev/case-study/dulce-antojo)
 
-### Beauty & Wellness
+### Demos (sample projects, not built for clients)
 
-- [RC Beauty Salon](https://www.rcbeautysalon.org/) — Beauty salon website with online bookings, service showcases and Cloudinary image management.
+- [MIRA Eyewear](https://optica-dun.vercel.app/) — Online eyewear store with virtual try-on, Stripe checkout and an admin panel
+- [Order System](https://optical-ordering-system.vercel.app/) — Order management for optical shops with prescriptions, partial payments and reports
+- [RC Beauty Salon](https://www.rcbeautysalon.org/) — Beauty salon website with online booking and a product shop
+- [Limo Renting](https://limo-renting-next-js-nu.vercel.app/) — Limousine rental platform with vehicle availability and online booking
 
 ## Client Testimonials
 
