@@ -150,7 +150,7 @@
           "User Accounts",
           "API Integrations"
         ],
-        "highlight": "Like RC Beauty Salon",
+        "highlight": "Demo: MIRA Eyewear",
         "range": "$8,000 - $20,000+",
         "duration": "6-12+ weeks",
         "description": "An online store with payment processing, or a custom platform built around your business",
@@ -270,8 +270,10 @@
       "clinicaGessner": "Bilingual website for a Houston clinic featuring online appointment booking, service information, and local SEO to reach Spanish-speaking patients.",
       "clinicaAirline": "Professional bilingual website for a Houston clinic with Spanish-speaking patients. Features local SEO, service pages, and patient-friendly design optimized for mobile.",
       "leosHomeExperts": "Landing page for a Houston-based home services company specializing in patio construction, motorized screens, and awning installations. Features local SEO optimization with JSON-LD schema and video gallery integration.",
-      "rcBeautySalon": "A modern website for a beauty salon that showcases services, allows online bookings, and provides contact information, built with Next.js and Tailwind CSS.",
-      "limoRenting": "This web-based platform streamlines the process of renting limousines for special occasions, offering users real-time access to vehicle availability, service customization, and secure booking—all within a modern, responsive interface."
+      "rcBeautySalon": "Demo of a beauty salon website with a service list, online booking and a product shop, built with Next.js and Tailwind CSS.",
+      "limoRenting": "Demo of a limousine rental platform with vehicle availability, service customization and online booking, in a modern, responsive interface.",
+      "miraEyewear": "Demo of an online eyewear store: frame catalog, virtual try-on with the camera, Stripe checkout, order tracking and an admin panel, in English and Spanish.",
+      "orderSystem": "Demo of an order system for optical shops: prescriptions, lenses and frames, partial payments, balances, reports and printable orders, with staff roles. Demo accounts are shown at sign-in."
     },
     "testimonials": {
       "chapelli": {
@@ -314,7 +316,8 @@
       "viewAll": "View All {count} Projects",
       "caseStudy": "Case Study",
       "preview": "Preview",
-      "github": "GitHub"
+      "github": "GitHub",
+      "demo": "Demo"
     },
     "process": {
       "heading": "My Work Process",
@@ -792,11 +795,14 @@
   "Portfolio": {
     "metadata": {
       "title": "Projects & Case Studies | Web Development Portfolio",
-      "description": "Websites and web apps I have built for small businesses: clinics, HVAC, home services, event rentals and more. Most are in the Houston area; all are real results for real businesses."
+      "description": "Websites I have built for small businesses: clinics, HVAC, home services, event rentals and more, most in the Houston area. Also demos of an online store, an order system, a salon and a limo rental."
     },
     "title": "Projects &",
     "titleHighlight": "Case Studies",
-    "intro": "Real websites built for real small businesses. Click “Case Study” on any project to see the full story: challenges, solutions, and results."
+    "intro": "Websites built for real small businesses, plus demos that show what I can build. Click “Case Study” on a client project to see the full story: challenges, solutions, and results.",
+    "clients": "Client projects",
+    "demos": "Demos",
+    "demosIntro": "Sample projects I built to show what is possible. They were not made for a client, and their businesses, prices and data are examples."
   },
   "CaseStudies": {
     "back": "Back to Projects",

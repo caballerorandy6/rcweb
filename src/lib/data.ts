@@ -64,8 +64,8 @@ export const experience: ExperienceProps[] = experienceShapes.map((shape) => ({
 export { experienceShapes };
 
 export const projects: ProjectProps[] = [
-  // Client work first (most complete projects lead), then live personal apps;
-  // demos and course exercises are not listed
+  // Real clients first, then demos (`demo: true`, labelled on the card and never
+  // presented as clients). Best work leads within each group; course exercises are not listed.
   {
     name: "GSM AC & General Contractor",
     tecnologies: [
@@ -86,7 +86,7 @@ export const projects: ProjectProps[] = [
     caseStudy: "/case-study/gsmactx",
   },
   {
-    name: "Dulce Antojo Snack Carts",
+    name: "Clínica Hispana Airline",
     tecnologies: [
       "NextJS",
       "React",
@@ -94,14 +94,12 @@ export const projects: ProjectProps[] = [
       "TailwindCSS",
       "Shadcn UI",
       "Zod",
-      "Stripe",
     ],
-    id: "dulceAntojo",
-    description: copy.projects.dulceAntojo,
-    image: "/dulce-antojo.avif",
-    github: "https://github.com/caballerorandy6/dulce-antojo",
-    url: "https://dulce-antojo-snack-carts.vercel.app/",
-    caseStudy: "/case-study/dulce-antojo",
+    id: "clinicaAirline",
+    description: copy.projects.clinicaAirline,
+    image: "/clinica-hispana-airline.avif",
+    url: "https://www.clinicahispanaairline.com/",
+    caseStudy: "/case-study/clinica-airline",
   },
   {
     name: "Clínica Hispana Gessner",
@@ -118,22 +116,6 @@ export const projects: ProjectProps[] = [
     image: "/clinica-gessner.avif",
     url: "https://www.clinicagessner.com/",
     caseStudy: "/case-study/clinica-gessner",
-  },
-  {
-    name: "Clínica Hispana Airline",
-    tecnologies: [
-      "NextJS",
-      "React",
-      "TypeScript",
-      "TailwindCSS",
-      "Shadcn UI",
-      "Zod",
-    ],
-    id: "clinicaAirline",
-    description: copy.projects.clinicaAirline,
-    image: "/clinica-hispana-airline.avif",
-    url: "https://www.clinicahispanaairline.com/",
-    caseStudy: "/case-study/clinica-airline",
   },
   {
     name: "Leo's Home Experts",
@@ -154,6 +136,60 @@ export const projects: ProjectProps[] = [
     caseStudy: "/case-study/leos-home-experts",
   },
   {
+    name: "Dulce Antojo Snack Carts",
+    tecnologies: [
+      "NextJS",
+      "React",
+      "TypeScript",
+      "TailwindCSS",
+      "Shadcn UI",
+      "Zod",
+      "Stripe",
+    ],
+    id: "dulceAntojo",
+    description: copy.projects.dulceAntojo,
+    image: "/dulce-antojo.avif",
+    github: "https://github.com/caballerorandy6/dulce-antojo",
+    url: "https://dulce-antojo-snack-carts.vercel.app/",
+    caseStudy: "/case-study/dulce-antojo",
+  },
+  {
+    name: "MIRA Eyewear",
+    tecnologies: [
+      "NextJS",
+      "React",
+      "TypeScript",
+      "TailwindCSS",
+      "Prisma",
+      "PostgreSQL",
+      "Stripe",
+    ],
+    id: "miraEyewear",
+    demo: true,
+    description: copy.projects.miraEyewear,
+    image: "/mira-eyewear.avif",
+    github: "https://github.com/caballerorandy6/optica",
+    url: "https://optica-dun.vercel.app/",
+  },
+  {
+    name: "Order System",
+    tecnologies: [
+      "NextJS",
+      "React",
+      "TypeScript",
+      "TailwindCSS",
+      "Prisma",
+      "PostgreSQL",
+      "Better Auth",
+    ],
+    id: "orderSystem",
+    demo: true,
+    description: copy.projects.orderSystem,
+    image: "/order-system.avif",
+    github: "https://github.com/caballerorandy6/optical-ordering-system",
+    url: "https://optical-ordering-system.vercel.app/",
+  },
+  {
     name: "RC Beauty Salon",
     tecnologies: [
       "NextJS",
@@ -167,6 +203,7 @@ export const projects: ProjectProps[] = [
       "Cloudinary",
     ],
     id: "rcBeautySalon",
+    demo: true,
     description: copy.projects.rcBeautySalon,
     image: "/rcbeautysalon.avif",
     github: "https://github.com/caballerorandy6/rcbeautysalon",
@@ -183,6 +220,7 @@ export const projects: ProjectProps[] = [
       "Zustand",
     ],
     id: "limoRenting",
+    demo: true,
     description: copy.projects.limoRenting,
     image: "/limo-renting.avif",
     github: "https://github.com/caballerorandy6/Limo-Renting-NextJS",
@@ -560,8 +598,8 @@ export type ServicePageCopy = Omit<ServicePage, "offerId" | "relatedProjects">;
 export const servicePageShapes: { offerId: OfferId; relatedProjects: string[] }[] = [
   { offerId: "business-website", relatedProjects: ["Clínica Hispana Gessner", "Clínica Hispana Airline", "Leo's Home Experts"] },
   { offerId: "website-redesign", relatedProjects: ["GSM AC & General Contractor", "Clínica Hispana Airline"] },
-  { offerId: "admin-dashboard", relatedProjects: ["GSM AC & General Contractor", "RC Beauty Salon"] },
-  { offerId: "store-and-apps", relatedProjects: ["RC Beauty Salon", "GSM AC & General Contractor"] },
+  { offerId: "admin-dashboard", relatedProjects: ["GSM AC & General Contractor", "Dulce Antojo Snack Carts"] },
+  { offerId: "store-and-apps", relatedProjects: ["Dulce Antojo Snack Carts", "GSM AC & General Contractor"] },
   { offerId: "maintenance", relatedProjects: ["Clínica Hispana Gessner", "Leo's Home Experts", "GSM AC & General Contractor"] },
 ];
 
