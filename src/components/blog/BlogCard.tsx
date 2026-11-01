@@ -9,35 +9,18 @@ import {
   ShieldCheckIcon,
 } from "@heroicons/react/24/outline";
 import { getLocale, getTranslations } from "next-intl/server";
-import type { BlogPost } from "@/lib/blog";
+import type { BlogCategory, BlogPost } from "@/lib/blog";
 import { formatDate } from "@/lib/utils";
 
-type CategoryKey = "houston" | "caseStudy" | "technical" | "business";
-
 // Every post shares the same OG image, so the card header is a typographic
-// band whose label and icon come from the post's tags instead of a photo.
-const categoryIcons: Record<CategoryKey, ComponentType<SVGProps<SVGSVGElement>>> = {
+// band whose label and icon come from the post's category (lib/blog decides
+// it from the English tags, so both languages agree) instead of a photo.
+const categoryIcons: Record<BlogCategory, ComponentType<SVGProps<SVGSVGElement>>> = {
   houston: BuildingOffice2Icon,
   caseStudy: CodeBracketIcon,
   technical: ShieldCheckIcon,
   business: BriefcaseIcon,
 };
-
-const tagToCategory: Record<string, CategoryKey> = {
-  houston: "houston",
-  "small business": "houston",
-  "case study": "caseStudy",
-  performance: "technical",
-  security: "technical",
-};
-
-function getCategory(tags: string[] = []): CategoryKey {
-  for (const tag of tags) {
-    const key = tagToCategory[tag.toLowerCase()];
-    if (key) return key;
-  }
-  return "business";
-}
 
 // Rough estimate: 200 words per minute
 function getReadTime(content: string): number {
@@ -52,8 +35,7 @@ type BlogCardProps = {
 
 export default async function BlogCard({ post, as: Heading = "h2" }: BlogCardProps) {
   const [t, locale] = await Promise.all([getTranslations("Blog"), getLocale()]);
-  const category = getCategory(post.tags);
-  const Icon = categoryIcons[category];
+  const Icon = categoryIcons[post.category];
 
   return (
     <article className="group relative flex flex-col overflow-hidden rounded-2xl bg-linear-to-br from-gray-800/50 to-gray-900/50 border border-gray-700/50 hover:border-gold/30 transition duration-300">
@@ -63,7 +45,7 @@ export default async function BlogCard({ post, as: Heading = "h2" }: BlogCardPro
           <Icon className="h-5 w-5" aria-hidden="true" />
         </span>
         <span className="text-xs font-semibold uppercase tracking-widest text-gold/80 font-inter">
-          {t(`categories.${category}`)}
+          {t(`categories.${post.category}`)}
         </span>
       </div>
 

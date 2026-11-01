@@ -3,11 +3,21 @@
 import { useId } from "react";
 import { setAnalyticsOptOut, useAnalyticsOptOut } from "@/lib/analyticsOptOut";
 
+type AnalyticsOptOutLabels = {
+  /** Checkbox label */
+  allow: string;
+  /** Status while measurement is on */
+  on: string;
+  /** Status once the visitor opted out */
+  off: string;
+};
+
 /**
  * Switch in the Privacy Policy that lets a visitor turn Google Analytics
  * (and any ad pixel) off for this browser. Measurement is on by default.
+ * The copy comes from the server (`Legal.analyticsOptOut`) in the page language.
  */
-export default function AnalyticsOptOut() {
+export default function AnalyticsOptOut({ labels }: { labels: AnalyticsOptOutLabels }) {
   const optedOut = useAnalyticsOptOut();
   const statusId = useId();
 
@@ -21,18 +31,14 @@ export default function AnalyticsOptOut() {
           aria-describedby={statusId}
           className="mt-0.5 h-5 w-5 shrink-0 cursor-pointer rounded-sm border-2 border-gray-700/60 bg-gray-800/80 text-gold transition duration-200 checked:border-gold checked:bg-gold hover:border-gold/50 focus:ring-2 focus:ring-gold/20 focus:ring-offset-0"
         />
-        <span className="font-inter text-white/80">
-          Allow Google Analytics to measure my visits
-        </span>
+        <span className="font-inter text-white/80">{labels.allow}</span>
       </label>
       <p
         id={statusId}
         aria-live="polite"
         className="mt-2 pl-8 font-inter text-sm text-white/50"
       >
-        {optedOut
-          ? "Measurement is off for this browser and the analytics cookies have been removed."
-          : "Measurement is on. Untick the box to turn it off for this browser."}
+        {optedOut ? labels.off : labels.on}
       </p>
     </div>
   );

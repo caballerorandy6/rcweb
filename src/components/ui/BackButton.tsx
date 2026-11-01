@@ -1,6 +1,7 @@
 "use client";
 
 import { useRouter } from "@/i18n/navigation";
+import { useTranslations } from "next-intl";
 import { ArrowLeftIcon } from "@heroicons/react/24/outline";
 import clsx from "clsx";
 
@@ -11,6 +12,7 @@ interface BackButtonProps {
 /** History back button: the only client bit of the legal pages */
 export default function BackButton({ className }: BackButtonProps) {
   const router = useRouter();
+  const t = useTranslations("Common");
 
   return (
     <button
@@ -22,7 +24,7 @@ export default function BackButton({ className }: BackButtonProps) {
       )}
     >
       <ArrowLeftIcon className="w-4 h-4" />
-      Go Back
+      {t("goBack")}
     </button>
   );
 }

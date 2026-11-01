@@ -9,7 +9,8 @@
     },
     "backToHome": "Back to Home",
     "orCall": "Or call directly:",
-    "call": "Call {phone}"
+    "call": "Call {phone}",
+    "goBack": "Go Back"
   },
   "Nav": {
     "global": "Global",
@@ -476,6 +477,21 @@
       "comingSoon": "Coming Soon",
       "comingSoonText": "I'm working on new content about web development, SEO, and digital marketing. Check back soon!",
       "contact": "Contact Me"
+    },
+    "metadata": {
+      "title": "Blog - Web Development Insights & Tips",
+      "description": "Read expert articles about web development, SEO, e-commerce, and digital marketing. Learn how to grow your business online with RC Web Solutions."
+    },
+    "post": {
+      "backToBlog": "Back to Blog",
+      "updated": "Updated <date></date>",
+      "enjoying": "Enjoying this article?",
+      "notify": "Get notified when I publish new posts about web development, automation, and business growth.",
+      "ctaTitle": "Ready to Start Your Project?",
+      "ctaText": "Let's bring your vision to life. Contact me today for a free consultation.",
+      "ctaButton": "Get Started",
+      "notFound": "Post Not Found",
+      "notFoundText": "The blog post you're looking for doesn't exist."
     }
   },
   "Breadcrumb": {
@@ -1703,6 +1719,15 @@
       "invalid": "Invalid checkout data",
       "planUnavailable": "Selected plan is not available",
       "failed": "Failed to create checkout session"
+    }
+  },
+  "Legal": {
+    "lastUpdated": "Last updated: <date></date>",
+    "returnToPricing": "Return to Pricing Plans",
+    "analyticsOptOut": {
+      "allow": "Allow Google Analytics to measure my visits",
+      "on": "Measurement is on. Untick the box to turn it off for this browser.",
+      "off": "Measurement is off for this browser and the analytics cookies have been removed."
     }
   }
 }

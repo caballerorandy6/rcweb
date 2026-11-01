@@ -9,7 +9,8 @@
     },
     "backToHome": "Volver al inicio",
     "orCall": "O llama directamente:",
-    "call": "Llama al {phone}"
+    "call": "Llama al {phone}",
+    "goBack": "Volver"
   },
   "Nav": {
     "global": "Principal",
@@ -476,6 +477,21 @@
       "comingSoon": "Próximamente",
       "comingSoonText": "Estoy preparando contenido nuevo sobre desarrollo web, SEO y marketing digital. ¡Vuelve pronto!",
       "contact": "Contáctame"
+    },
+    "metadata": {
+      "title": "Blog - Ideas y consejos de desarrollo web",
+      "description": "Lee artículos sobre desarrollo web, SEO, comercio electrónico y marketing digital. Aprende a hacer crecer tu negocio en línea con RC Web Solutions."
+    },
+    "post": {
+      "backToBlog": "Volver al blog",
+      "updated": "Actualizado el <date></date>",
+      "enjoying": "¿Te está gustando este artículo?",
+      "notify": "Recibe un aviso cuando publique nuevos artículos sobre desarrollo web, automatización y crecimiento de negocios.",
+      "ctaTitle": "¿Listo para empezar tu proyecto?",
+      "ctaText": "Hagamos realidad tu visión. Contáctame hoy para una consulta gratuita.",
+      "ctaButton": "Empezar",
+      "notFound": "Artículo no encontrado",
+      "notFoundText": "El artículo que buscas no existe."
     }
   },
   "Breadcrumb": {
@@ -1703,6 +1719,15 @@
       "invalid": "Datos de pago no válidos",
       "planUnavailable": "El plan seleccionado no está disponible",
       "failed": "No se pudo crear la sesión de pago"
+    }
+  },
+  "Legal": {
+    "lastUpdated": "Última actualización: <date></date>",
+    "returnToPricing": "Volver a los planes y precios",
+    "analyticsOptOut": {
+      "allow": "Permitir que Google Analytics mida mis visitas",
+      "on": "La medición está activada. Desmarca la casilla para desactivarla en este navegador.",
+      "off": "La medición está desactivada en este navegador y se han eliminado las cookies de analítica."
     }
   }
 }

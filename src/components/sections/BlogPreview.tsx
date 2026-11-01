@@ -2,12 +2,12 @@ import Button from "@/components/ui/Button";
 import { BookOpenIcon } from "@heroicons/react/24/outline";
 import Heading from "@/components/ui/Heading";
 import BlogCard from "@/components/blog/BlogCard";
-import { getTranslations } from "next-intl/server";
+import { getLocale, getTranslations } from "next-intl/server";
 import { getAllPosts } from "@/lib/blog";
 
 export default async function BlogPreview() {
-  const t = await getTranslations("Home.blog");
-  const posts = getAllPosts().slice(0, 3);
+  const [t, locale] = await Promise.all([getTranslations("Home.blog"), getLocale()]);
+  const posts = getAllPosts(locale).slice(0, 3);
 
   if (posts.length === 0) return null;
 

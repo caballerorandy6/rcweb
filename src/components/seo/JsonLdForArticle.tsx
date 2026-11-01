@@ -13,6 +13,7 @@
  *   image="https://example.com/blog/post/opengraph-image"
  *   datePublished="2026-01-01"
  *   dateModified="2026-02-01"
+ *   inLanguage="en-US"
  *   keywords={["Next.js", "SEO"]}
  *   author={{ name: "Author Name", url: "https://example.com/about" }}
  * />
@@ -27,6 +28,8 @@ type JsonLdForArticleProps = {
   image: string;
   datePublished: string;
   dateModified: string;
+  /** BCP 47 tag of the post language (see lib/seo/inLanguage) */
+  inLanguage: string;
   keywords?: string[];
   author: {
     name: string;
@@ -41,6 +44,7 @@ export function JsonLdForArticle({
   image,
   datePublished,
   dateModified,
+  inLanguage,
   keywords,
   author,
 }: JsonLdForArticleProps) {
@@ -52,7 +56,7 @@ export function JsonLdForArticle({
     image,
     datePublished,
     dateModified,
-    inLanguage: "en-US",
+    inLanguage,
     ...(keywords?.length && { keywords }),
     author: {
       "@type": "Person",

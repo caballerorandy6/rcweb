@@ -187,4 +187,4 @@ Security is an ongoing process, not a one-time task. Start with these basics and
 
 ---
 
-*Need help securing your web application? [Contact us](/contact) for a security review.*
+*Need help securing your web application? [Contact us](/#contact) for a security review.*

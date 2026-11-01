@@ -1,40 +1,42 @@
+import type { Metadata } from "next";
 import { notFound } from "next/navigation";
+import { getTranslations } from "next-intl/server";
 import { genPageMetadata } from "@/utils/genPageMetadata";
 import { JsonLdForBreadcrumb } from "@/components/seo/JsonLdForBreadcrumb";
 import { JsonLdForArticle } from "@/components/seo/JsonLdForArticle";
+import { localizedBreadcrumbs } from "@/lib/seo/breadcrumbs";
+import { IN_LANGUAGE } from "@/lib/seo/inLanguage";
 import { siteConfig } from "@/config/site";
-import { getPostBySlug, getAllSlugs } from "@/lib/blog";
+import { getPostBySlug } from "@/lib/blog";
+import { localizePathname } from "@/i18n/paths";
+import type { Locale } from "@/i18n/routing";
 import BlogPost from "@/components/blog/BlogPost";
 
-interface BlogPostPageProps {
-  params: Promise<{
-    slug: string;
-  }>;
-}
+type Props = PageProps<"/[locale]/blog/[slug]">;
 
-export async function generateStaticParams() {
-  const slugs = getAllSlugs();
-  return slugs.map((slug) => ({
-    slug,
-  }));
-}
-
-export async function generateMetadata({ params }: BlogPostPageProps) {
-  const { slug } = await params;
-  const post = getPostBySlug(slug);
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const { locale: rawLocale, slug } = await params;
+  const locale = rawLocale as Locale;
+  const post = getPostBySlug(slug, locale);
 
   if (!post) {
+    const t = await getTranslations({ locale, namespace: "Blog.post" });
     return genPageMetadata({
-      title: "Post Not Found",
-      description: "The blog post you're looking for doesn't exist.",
-      pageRoute: "/blog",
+      title: t("notFound"),
+      description: t("notFoundText"),
+      locale,
+      pathname: "/blog",
     });
   }
 
   return genPageMetadata({
     title: post.title,
     description: post.description,
-    pageRoute: `/blog/${slug}`,
+    locale,
+    pathname: "/blog/[slug]",
+    params: { slug },
+    // hreflang only when the post exists in both languages
+    hreflang: post.translations.length === 2,
     article: {
       publishedTime: post.date,
       modifiedTime: post.updated,
@@ -44,25 +46,25 @@ export async function generateMetadata({ params }: BlogPostPageProps) {
   });
 }
 
-export default async function BlogPostPage({ params }: BlogPostPageProps) {
-  const { slug } = await params;
-  const post = getPostBySlug(slug);
+export default async function BlogPostPage({ params }: Props) {
+  const { locale: rawLocale, slug } = await params;
+  const locale = rawLocale as Locale;
+  const post = getPostBySlug(slug, locale);
 
   if (!post) {
     notFound();
   }
 
-  const postUrl = `${siteConfig.baseUrl}/blog/${slug}`;
+  const postUrl = `${siteConfig.baseUrl}${localizePathname("/blog/[slug]", locale, { slug })}`;
+  const crumbs = await localizedBreadcrumbs(locale, [
+    { key: "home", pathname: "/" },
+    { key: "blog", pathname: "/blog" },
+    { name: post.title, pathname: "/blog/[slug]", params: { slug } },
+  ]);
 
   return (
     <>
-      <JsonLdForBreadcrumb
-        itemList={[
-          { name: "Home", item: siteConfig.baseUrl },
-          { name: "Blog", item: `${siteConfig.baseUrl}/blog` },
-          { name: post.title, item: postUrl },
-        ]}
-      />
+      <JsonLdForBreadcrumb itemList={crumbs} />
       <JsonLdForArticle
         url={postUrl}
         headline={post.title}
@@ -71,10 +73,11 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
         image={`${postUrl}/opengraph-image`}
         datePublished={post.date}
         dateModified={post.updated ?? post.date}
+        inLanguage={IN_LANGUAGE[locale]}
         keywords={post.tags}
         author={{
           name: siteConfig.author.name,
-          url: `${siteConfig.baseUrl}/about`,
+          url: `${siteConfig.baseUrl}${localizePathname("/about", locale)}`,
         }}
       />
       <BlogPost post={post} />
