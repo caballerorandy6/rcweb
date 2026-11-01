@@ -19,6 +19,7 @@ export type SiteConfig = {
     nextdoor: string;
     tiktok: string;
     youtube: string;
+    yelp: string;
     x: string;
   };
 };
