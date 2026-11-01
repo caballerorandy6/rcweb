@@ -349,4 +349,4 @@ The key takeaways:
 
 ---
 
-*Need help optimizing your website's performance? [Contact me](/contact) for a free performance audit.*
+*Need help optimizing your website's performance? [Contact me](/#contact) for a free performance audit.*

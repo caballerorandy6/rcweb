@@ -1,6 +1,8 @@
 "use server";
 
 import { z } from "zod";
+import { getLocale, getTranslations } from "next-intl/server";
+import type { Locale } from "@/i18n/routing";
 import { prisma } from "@/lib/prisma";
 import { checkActionRateLimit, rateLimiters } from "@/lib/rateLimit";
 import { getQuoteDisplayStatus } from "@/lib/quote/quoteStatus";
@@ -18,34 +20,33 @@ const TokenSchema = z.uuid();
 export async function acceptQuoteAction(
   token: string
 ): Promise<ActionResult<{ sessionUrl: string }>> {
+  // Messages and the success page follow the language of the quote page
+  const [t, locale] = await Promise.all([getTranslations("Actions"), getLocale()]);
   try {
     if (!TokenSchema.safeParse(token).success) {
-      return { success: false, error: "This quote link is not valid" };
+      return { success: false, error: t("quote.invalid") };
     }
 
     // Every call creates a Checkout Session: cap it per IP
     const rateCheck = await checkActionRateLimit(rateLimiters.api);
     if (!rateCheck.success) {
-      return { success: false, error: rateCheck.error ?? "Too many requests" };
+      return { success: false, error: t("tooManyRequests") };
     }
 
     const quote = await prisma.quote.findUnique({ where: { token } });
     if (!quote || quote.status === "draft") {
-      return { success: false, error: "This quote link is not valid" };
+      return { success: false, error: t("quote.invalid") };
     }
 
     const status = getQuoteDisplayStatus(quote);
     if (status === "accepted") {
-      return { success: false, error: "This quote has already been accepted" };
+      return { success: false, error: t("quote.accepted") };
     }
     if (status === "cancelled") {
-      return { success: false, error: "This quote has been withdrawn" };
+      return { success: false, error: t("quote.withdrawn") };
     }
     if (status === "expired") {
-      return {
-        success: false,
-        error: "This quote has expired. Reply to the email to request an updated one",
-      };
+      return { success: false, error: t("quote.expired") };
     }
 
     const { sessionUrl } = await createInitialPaymentCheckout({
@@ -55,12 +56,13 @@ export async function acceptQuoteAction(
       customerEmail: quote.email,
       quoteId: quote.id,
       description: `50% deposit for quote ${quote.quoteNumber}; the balance is due on delivery`,
-      cancelUrl: getQuoteUrl(quote.token),
+      cancelUrl: getQuoteUrl(quote.token, locale as Locale),
+      locale: locale as Locale,
     });
 
     return { success: true, data: { sessionUrl } };
   } catch (error) {
     console.error("❌ Error accepting quote:", error);
-    return { success: false, error: "Failed to start the payment. Please try again" };
+    return { success: false, error: t("quote.paymentFailed") };
   }
 }

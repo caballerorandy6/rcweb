@@ -1,15 +1,21 @@
-import type { Route } from "next";
 import { CodeBracketIcon } from "@heroicons/react/24/outline";
 import Heading from "@/components/ui/Heading";
 import Button from "@/components/ui/Button";
-import { projects, teachMarqueeData } from "@/lib/data";
+import { getTranslations } from "next-intl/server";
+import { teachMarqueeData } from "@/lib/data";
+import { getLocalizedCatalog } from "@/lib/catalog";
 import ProjectsList from "@/components/sections/ProjectsList";
 import TechMarquee from "@/components/ui/TechMarquee";
 
 const FEATURED_COUNT = 3;
 
 // Server Component
-const Projects = () => {
+const Projects = async () => {
+  const [t, { projects }] = await Promise.all([
+    getTranslations("Home.projects"),
+    getLocalizedCatalog(),
+  ]);
+
   // Show only projects that have case studies (real clients)
   const featuredProjects = projects
     .filter((p) => p.caseStudy)
@@ -26,9 +32,9 @@ const Projects = () => {
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
         <Heading
           icon={<CodeBracketIcon className="w-8 text-gold" />}
-          text="Real results for real small businesses"
+          text={t("subheading")}
         >
-          Featured Projects
+          {t("heading")}
         </Heading>
 
         <ProjectsList projects={displayProjects} />
@@ -36,11 +42,11 @@ const Projects = () => {
         {/* View All Projects */}
         <div className="flex justify-center mt-12">
           <Button
-            href={"/projects-portfolio" as Route}
+            href="/projects-portfolio"
             variant="secondary"
             size="lg"
           >
-            View All {projects.length} Projects
+            {t("viewAll", { count: projects.length })}
             <span aria-hidden="true">&rarr;</span>
           </Button>
         </div>

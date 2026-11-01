@@ -1,8 +1,12 @@
 import { siteConfig } from "@/config/site";
+import { getLocale, getTranslations } from "next-intl/server";
 import { ORGANIZATION_ID } from "@/components/seo/JsonLdForLocalBusiness";
+import { IN_LANGUAGE } from "@/lib/seo/inLanguage";
+import type { Locale } from "@/i18n/routing";
 
 /** The site itself; the publisher is the company block rendered next to it. No SearchAction: the site has no search. */
-export function JsonLdForWebSite() {
+export async function JsonLdForWebSite() {
+  const [locale, t] = await Promise.all([getLocale(), getTranslations("Metadata")]);
   const jsonLd = {
     "@context": "https://schema.org",
     "@type": "WebSite",
@@ -10,9 +14,9 @@ export function JsonLdForWebSite() {
     name: siteConfig.siteName,
     alternateName: siteConfig.siteNameShort,
     url: siteConfig.baseUrl,
-    description: siteConfig.description,
+    description: t("siteDescription"),
     publisher: { "@id": ORGANIZATION_ID },
-    inLanguage: "en-US",
+    inLanguage: IN_LANGUAGE[locale as Locale],
   };
 
   return (

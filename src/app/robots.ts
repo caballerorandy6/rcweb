@@ -1,19 +1,45 @@
 /**
- * Generate the robots.txt file for a Next.js site
- *
- * Requirements:
- * - Next.js 13.3.0 or higher
- * - Next.js App Router
- *
- * Usage:
- * 1. Update the allow array with routes you want search engines to index
- * 2. Update the disallow array with routes you DON'T want indexed
- * 3. The baseUrl is automatically pulled from siteConfig
- * 4. The robots.txt will be available at /robots.txt
+ * robots.txt. Public pages are listed in both languages (the English URL and
+ * its `/es/...` translation come from routing.pathnames, so a renamed slug
+ * cannot drift from here); the backoffice and the token/transactional pages
+ * are kept out of the index in both languages too.
  */
 
-import { MetadataRoute } from "next";
+import type { MetadataRoute } from "next";
 import { siteConfig } from "@/config/site";
+import { localizePathname } from "@/i18n/paths";
+import { routing, type AppPathname } from "@/i18n/routing";
+
+/** The same page in every language, e.g. `/services` and `/es/servicios` */
+function everyLanguage(pathname: AppPathname, params?: Record<string, string>): string[] {
+  return routing.locales.map((locale) => localizePathname(pathname, locale, params));
+}
+
+const PUBLIC_PAGES: AppPathname[] = [
+  "/",
+  "/about",
+  "/blog",
+  "/schedule",
+  "/privacy-policy",
+  "/terms-of-service",
+  "/refund-policy",
+  "/web-developer-houston-tx",
+  "/services",
+  "/projects-portfolio",
+  "/case-study/clinica-gessner",
+  "/case-study/clinica-airline",
+  "/case-study/leos-home-experts",
+  "/case-study/dulce-antojo",
+  "/case-study/gsmactx",
+];
+
+/** Public pages that must not be indexed: payment steps and one-visitor links */
+const PRIVATE_PAGES: AppPathname[] = [
+  "/final-payment",
+  "/payment-complete",
+  "/payment-success",
+  "/unsubscribe",
+];
 
 export default function robots(): MetadataRoute.Robots {
   return {
@@ -21,18 +47,8 @@ export default function robots(): MetadataRoute.Robots {
       {
         userAgent: "*",
         allow: [
-          "/",
-          "/about",
-          "/blog",
-          "/schedule",
-          "/privacy-policy",
-          "/terms-of-service",
-          "/refund-policy",
-          "/web-developer-houston-tx",
-          "/services",
-          "/services/*",
-          "/projects-portfolio",
-          "/case-study/*",
+          ...PUBLIC_PAGES.flatMap((pathname) => everyLanguage(pathname)),
+          ...everyLanguage("/services/[slug]", { slug: "*" }),
         ],
         disallow: [
           "/admin/login",
@@ -44,12 +60,9 @@ export default function robots(): MetadataRoute.Robots {
           "/manage-invoices",
           "/api/invoice/*",
           "/api/cron/*",
-          "/final-payment",
-          "/payment-complete",
-          "/payment-success",
-          "/pay/*",
-          "/unsubscribe",
           "/tools/*",
+          ...PRIVATE_PAGES.flatMap((pathname) => everyLanguage(pathname)),
+          ...everyLanguage("/pay/[token]", { token: "*" }),
         ],
       },
     ],

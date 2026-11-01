@@ -4,6 +4,7 @@ import WhatsAppIcon from "@/components/icons/WhatsApp";
 import { COMPANY } from "@/lib/company";
 import { siteConfig } from "@/config/site";
 import { useEffect, useRef, useState } from "react";
+import { useTranslations } from "next-intl";
 import dynamic from "next/dynamic";
 import Image from "next/image";
 import clsx from "clsx";
@@ -80,7 +81,7 @@ const primaryActions = [
     url: COMPANY.whatsappHref,
     Icon: WhatsAppIcon,
     bgClass: "bg-[#25D366] hover:bg-[#1da851]",
-    label: "WhatsApp",
+    label: "whatsapp",
   },
   {
     id: "phone",
@@ -88,9 +89,9 @@ const primaryActions = [
     url: "tel:+13463757534",
     Icon: PhoneIcon,
     bgClass: "bg-emerald-600 hover:bg-emerald-700",
-    label: "Call Now",
+    label: "callNow",
   },
-];
+] as const;
 
 // Social media links (secondary)
 const socialActions = [
@@ -146,6 +147,7 @@ const socialActions = [
 ];
 
 const FloatingCTA = () => {
+  const t = useTranslations("FloatingCta");
   const [isContactInView, setIsContactInView] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const [isChatOpen, setIsChatOpen] = useState(false);
@@ -173,7 +175,7 @@ const FloatingCTA = () => {
   }, []);
 
   // Links navigate on their own; the handlers only track and close the menu
-  const handlePrimaryClick = (action: (typeof primaryActions)[0]) => {
+  const handlePrimaryClick = (action: (typeof primaryActions)[number]) => {
     if (action.id === "phone") {
       trackPhoneConversion();
     } else {
@@ -198,7 +200,7 @@ const FloatingCTA = () => {
     setIsOpen(false);
   };
 
-  const handleSocialClick = (action: (typeof socialActions)[0]) => {
+  const handleSocialClick = (action: (typeof socialActions)[number]) => {
     trackEvent({
       action: "social_click",
       category: "engagement",
@@ -249,7 +251,7 @@ const FloatingCTA = () => {
                 />
               </div>
               <span className="font-inter font-medium text-sm whitespace-nowrap pr-1">
-                Chat with Maria
+                {t("chatWith")}
               </span>
             </button>
 
@@ -267,7 +269,7 @@ const FloatingCTA = () => {
               >
                 <action.Icon className="h-6 w-6" />
                 <span className="font-inter font-medium text-sm whitespace-nowrap pr-1">
-                  {action.label}
+                  {t(action.label)}
                 </span>
               </a>
             ))}
@@ -288,7 +290,7 @@ const FloatingCTA = () => {
                   rel="noopener noreferrer"
                   onClick={() => handleSocialClick(action)}
                   className={`flex h-9 w-9 items-center justify-center rounded-lg ${action.bgClass} text-white shadow-md hover:shadow-lg transition duration-200 hover:scale-110`}
-                  aria-label={`Connect on ${action.name}`}
+                  aria-label={t("connectOn", { network: action.name })}
                 >
                   <action.Icon />
                 </a>
@@ -309,7 +311,7 @@ const FloatingCTA = () => {
             }`}
             aria-expanded={isOpen}
             aria-controls="floating-contact-menu"
-            aria-label={isOpen ? "Close contact menu" : "Open contact menu"}
+            aria-label={isOpen ? t("closeMenu") : t("openMenu")}
           >
             {/* The key remounts the icon so the swap replays the entrance */}
             {isOpen ? (

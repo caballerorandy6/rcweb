@@ -1,5 +1,4 @@
-import Link from "next/link";
-import type { Route } from "next";
+import { Link } from "@/i18n/navigation";
 import type { ComponentType, SVGProps } from "react";
 import {
   BriefcaseIcon,
@@ -9,38 +8,19 @@ import {
   CodeBracketIcon,
   ShieldCheckIcon,
 } from "@heroicons/react/24/outline";
-import type { BlogPost } from "@/lib/blog";
+import { getLocale, getTranslations } from "next-intl/server";
+import type { BlogCategory, BlogPost } from "@/lib/blog";
 import { formatDate } from "@/lib/utils";
 
-type Category = {
-  label: string;
-  icon: ComponentType<SVGProps<SVGSVGElement>>;
-};
-
 // Every post shares the same OG image, so the card header is a typographic
-// band whose label and icon come from the post's tags instead of a photo.
-const categories = {
-  houston: { label: "Small Business", icon: BuildingOffice2Icon },
-  caseStudy: { label: "Case Study", icon: CodeBracketIcon },
-  technical: { label: "Performance & Security", icon: ShieldCheckIcon },
-  business: { label: "Business", icon: BriefcaseIcon },
-} satisfies Record<string, Category>;
-
-const tagToCategory: Record<string, keyof typeof categories> = {
-  houston: "houston",
-  "small business": "houston",
-  "case study": "caseStudy",
-  performance: "technical",
-  security: "technical",
+// band whose label and icon come from the post's category (lib/blog decides
+// it from the English tags, so both languages agree) instead of a photo.
+const categoryIcons: Record<BlogCategory, ComponentType<SVGProps<SVGSVGElement>>> = {
+  houston: BuildingOffice2Icon,
+  caseStudy: CodeBracketIcon,
+  technical: ShieldCheckIcon,
+  business: BriefcaseIcon,
 };
-
-function getCategory(tags: string[] = []): Category {
-  for (const tag of tags) {
-    const key = tagToCategory[tag.toLowerCase()];
-    if (key) return categories[key];
-  }
-  return categories.business;
-}
 
 // Rough estimate: 200 words per minute
 function getReadTime(content: string): number {
@@ -53,8 +33,9 @@ type BlogCardProps = {
   as?: "h2" | "h3";
 };
 
-export default function BlogCard({ post, as: Heading = "h2" }: BlogCardProps) {
-  const { label, icon: Icon } = getCategory(post.tags);
+export default async function BlogCard({ post, as: Heading = "h2" }: BlogCardProps) {
+  const [t, locale] = await Promise.all([getTranslations("Blog"), getLocale()]);
+  const Icon = categoryIcons[post.category];
 
   return (
     <article className="group relative flex flex-col overflow-hidden rounded-2xl bg-linear-to-br from-gray-800/50 to-gray-900/50 border border-gray-700/50 hover:border-gold/30 transition duration-300">
@@ -64,13 +45,13 @@ export default function BlogCard({ post, as: Heading = "h2" }: BlogCardProps) {
           <Icon className="h-5 w-5" aria-hidden="true" />
         </span>
         <span className="text-xs font-semibold uppercase tracking-widest text-gold/80 font-inter">
-          {label}
+          {t(`categories.${post.category}`)}
         </span>
       </div>
 
       <div className="flex flex-1 flex-col p-6">
         {post.tags && post.tags.length > 0 ? (
-          <ul className="flex flex-wrap gap-2 mb-4" aria-label="Topics">
+          <ul className="flex flex-wrap gap-2 mb-4" aria-label={t("topics")}>
             {post.tags.slice(0, 3).map((tag) => (
               <li
                 key={tag}
@@ -84,10 +65,10 @@ export default function BlogCard({ post, as: Heading = "h2" }: BlogCardProps) {
 
         {/* Stretched link: the whole card is clickable */}
         <Link
-          href={`/blog/${post.slug}` as Route}
+          href={{ pathname: "/blog/[slug]", params: { slug: post.slug } }}
           className="absolute inset-0 rounded-2xl focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gold"
         >
-          <span className="sr-only">Read: {post.title}</span>
+          <span className="sr-only">{t("read", { title: post.title })}</span>
         </Link>
 
         <Heading className="text-2xl text-gold font-iceland mb-3 group-hover:text-gold/90 transition-colors">
@@ -102,15 +83,15 @@ export default function BlogCard({ post, as: Heading = "h2" }: BlogCardProps) {
           <span className="flex items-center gap-1">
             <CalendarIcon className="w-4 h-4" aria-hidden="true" />
             <time dateTime={post.date}>
-              {formatDate(post.date, { timeZone: "UTC" })}
+              {formatDate(post.date, { timeZone: "UTC", locale })}
             </time>
           </span>
           <span className="flex items-center gap-1">
             <ClockIcon className="w-4 h-4" aria-hidden="true" />
-            {getReadTime(post.content)} min read
+            {t("readTime", { minutes: getReadTime(post.content) })}
           </span>
           <span className="ml-auto font-semibold text-gold/80 group-hover:text-gold transition-colors">
-            Read more &rarr;
+            {t("readMore")} &rarr;
           </span>
         </div>
       </div>

@@ -2,7 +2,10 @@ import { StarIcon } from "@heroicons/react/24/solid";
 import Heading from "../ui/Heading";
 import Button from "../ui/Button";
 import StarRating from "../ui/StarRating";
-import { testimonials, GOOGLE_REVIEW_URL } from "@/lib/data";
+import { getLocale, getTranslations } from "next-intl/server";
+import { GOOGLE_REVIEW_URL } from "@/lib/data";
+import { getLocalizedCatalog } from "@/lib/catalog";
+import { routing } from "@/i18n/routing";
 import { getPublicGoogleReviews } from "@/lib/googleReviews/queries";
 import { formatDate } from "@/lib/utils";
 
@@ -42,13 +45,22 @@ interface Card {
  * no hay ninguna, enseña los testimonios fijos de `src/lib/data.ts`.
  */
 const Testimonials = async () => {
-  const google = await getPublicGoogleReviews();
+  const [google, t, rating, locale, { testimonials }] = await Promise.all([
+    getPublicGoogleReviews(),
+    getTranslations("Home.testimonials"),
+    getTranslations("Rating"),
+    getLocale(),
+    getLocalizedCatalog(),
+  ]);
+  const starsLabel = (value: number) => rating("label", { rating: Number(value.toFixed(1)) });
+  // The fixed testimonials were written in English; say so when shown translated
+  const translatedNote = !google && locale !== routing.defaultLocale ? t("translated") : null;
 
   const cards: Card[] = google
     ? google.reviews.map((review) => ({
         key: review.id,
         author: review.author,
-        meta: formatDate(review.createTime),
+        meta: formatDate(review.createTime, { locale }),
         rating: review.rating,
         content: review.text,
       }))
@@ -68,24 +80,24 @@ const Testimonials = async () => {
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
         <Heading
           icon={<StarIcon />}
-          text="Real results from successful projects"
+          text={t("subheading")}
         >
-          What My Clients Say
+          {t("heading")}
         </Heading>
 
         {google && (
           <p className="mt-8 flex flex-wrap items-center justify-center gap-x-3 gap-y-2 font-inter text-white/80">
-            <StarRating rating={google.averageRating} size="lg" />
+            <StarRating rating={google.averageRating} size="lg" label={starsLabel(google.averageRating)} />
             <span>
               <span className="font-semibold text-white">
                 {google.averageRating.toFixed(1)}
               </span>{" "}
-              on Google
+              {t("onGoogle")}
               <span className="text-white/40" aria-hidden="true">
                 {" "}
                 ·{" "}
               </span>
-              {google.totalReviewCount} {google.totalReviewCount === 1 ? "review" : "reviews"}
+              {t("reviews", { count: google.totalReviewCount })}
             </span>
           </p>
         )}
@@ -101,7 +113,7 @@ const Testimonials = async () => {
                 <GoogleIcon />
               </div>
 
-              <StarRating rating={card.rating} className="flex" />
+              <StarRating rating={card.rating} className="flex" label={starsLabel(card.rating)} />
 
               <blockquote className="mt-6">
                 <p className="text-sm sm:text-base font-inter text-white/80 leading-relaxed line-clamp-6">
@@ -126,11 +138,15 @@ const Testimonials = async () => {
           ))}
         </div>
 
+        {translatedNote && (
+          <p className="mt-6 text-center text-xs font-inter text-white/40">{translatedNote}</p>
+        )}
+
         {/* Link to leave a review */}
         <div className="text-center mt-12">
           <Button href={GOOGLE_REVIEW_URL} external variant="secondary">
             <GoogleIcon />
-            Write a Review on Google
+            {t("writeReview")}
           </Button>
         </div>
       </div>

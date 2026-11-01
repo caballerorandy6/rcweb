@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, type ReactNode } from "react";
+import { useTranslations } from "next-intl";
 import { ChevronRightIcon } from "@heroicons/react/24/outline";
 import Button from "@/components/ui/Button";
 
@@ -18,6 +19,7 @@ interface ProcessStepperProps {
 
 /** Desktop stepper: the only state of the Process section (active step) */
 export default function ProcessStepper({ steps }: ProcessStepperProps) {
+  const t = useTranslations("Stepper");
   const [activeStep, setActiveStep] = useState(0);
   const currentStep = steps[activeStep] ?? steps[0];
   const lastIndex = steps.length - 1;
@@ -44,7 +46,7 @@ export default function ProcessStepper({ steps }: ProcessStepperProps) {
               type="button"
               onClick={() => setActiveStep(index)}
               aria-current={activeStep === index ? "step" : undefined}
-              aria-label={`Step ${index + 1}: ${step.title}`}
+              aria-label={t("step", { number: index + 1, title: step.title })}
               className={`relative z-10 mx-auto flex w-12 h-12 rounded-full items-center justify-center transition duration-300 hover:scale-110 active:scale-95 ${
                 activeStep >= index
                   ? "bg-gold text-gray-900"
@@ -70,7 +72,7 @@ export default function ProcessStepper({ steps }: ProcessStepperProps) {
             </div>
             <div>
               <h3 className="text-2xl font-iceland text-white">
-                Step {activeStep + 1}: {currentStep.title}
+                {t("step", { number: activeStep + 1, title: currentStep.title })}
               </h3>
               <p className="text-sm font-inter text-gold/80">
                 {currentStep.week}
@@ -102,14 +104,14 @@ export default function ProcessStepper({ steps }: ProcessStepperProps) {
               onClick={() => setActiveStep((s) => Math.max(0, s - 1))}
               disabled={activeStep === 0}
             >
-              Previous
+              {t("previous")}
             </Button>
             <Button
               size="lg"
               onClick={() => setActiveStep((s) => Math.min(lastIndex, s + 1))}
               disabled={activeStep === lastIndex}
             >
-              Next Step
+              {t("next")}
             </Button>
           </div>
         </div>

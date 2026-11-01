@@ -1,5 +1,7 @@
 "use server";
 
+import { getLocale, getTranslations } from "next-intl/server";
+import type { Locale } from "@/i18n/routing";
 import { verifyProjectAccessAction } from "@/actions/projects/verifyProjectAccessAction";
 import { createFinalPaymentCheckout } from "@/lib/project/finalPaymentCheckout";
 import type { ActionResult } from "@/types/common";
@@ -18,12 +20,14 @@ export async function createFinalPaymentSessionAction(
 
     const sessionUrl = await createFinalPaymentCheckout(
       verification.data.project,
-      "form"
+      "form",
+      (await getLocale()) as Locale
     );
 
     return { success: true, data: { sessionUrl } };
   } catch (error) {
     console.error("❌ Error creating final payment:", error);
-    return { success: false, error: "Failed to create payment session" };
+    const t = await getTranslations("Actions");
+    return { success: false, error: t("project.sessionFailed") };
   }
 }

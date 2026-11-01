@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import { Link as SiteLink, type Href } from "@/i18n/navigation";
 import { usePathname } from "next/navigation";
 import type { Route } from "next";
 import SignOutButton from "@/components/ui/SignOutButton";
@@ -128,13 +129,13 @@ const adminGroups: NavGroup[] = [
 ];
 
 // Shortcuts to the public site, collapsed by default
-const publicLinks: { name: string; href: Route; icon: IconComponent }[] = [
+const publicLinks: { name: string; href: Href; icon: IconComponent }[] = [
   { name: "Home", href: "/", icon: HomeIcon },
-  { name: "Services", href: "/#services", icon: WrenchScrewdriverIcon },
-  { name: "Projects", href: "/#projects", icon: FolderIcon },
-  { name: "Pricing", href: "/#pricing", icon: CurrencyDollarIcon },
+  { name: "Services", href: { pathname: "/", hash: "services" }, icon: WrenchScrewdriverIcon },
+  { name: "Projects", href: { pathname: "/", hash: "projects" }, icon: FolderIcon },
+  { name: "Pricing", href: { pathname: "/", hash: "pricing" }, icon: CurrencyDollarIcon },
   { name: "Blog", href: "/blog", icon: NewspaperIcon },
-  { name: "Contact", href: "/#contact", icon: PhoneIcon },
+  { name: "Contact", href: { pathname: "/", hash: "contact" }, icon: PhoneIcon },
 ];
 
 const SIDEBAR_ID = "admin-sidebar";
@@ -249,8 +250,8 @@ export default function AdminSidebar() {
                 {publicLinks.map((item) => {
                   const Icon = item.icon;
                   return (
-                    <li key={item.href}>
-                      <Link
+                    <li key={item.name}>
+                      <SiteLink
                         href={item.href}
                         onClick={closeSidebar}
                         className="flex items-center gap-3 px-3 py-2 rounded-lg font-inter text-sm text-gray-400 hover:bg-gray-800 hover:text-gold transition-colors duration-200"
@@ -258,7 +259,7 @@ export default function AdminSidebar() {
                         <Icon className="h-4 w-4 shrink-0" aria-hidden="true" />
                         <span className="flex-1">{item.name}</span>
                         <ArrowTopRightOnSquareIcon className="h-3 w-3 text-gray-600" aria-hidden="true" />
-                      </Link>
+                      </SiteLink>
                     </li>
                   );
                 })}

@@ -38,5 +38,53 @@ describe("blog content", () => {
 
   it("returns null for an unknown slug", () => {
     expect(getPostBySlug("does-not-exist")).toBeNull();
+    expect(getPostBySlug("../package", "en")).toBeNull();
+  });
+
+  describe("Spanish translations (content/blog/es)", () => {
+    const spanish = getAllPosts("es");
+
+    it("lists only translated posts, every one of them an English slug", () => {
+      const englishSlugs = new Set(getAllSlugs());
+      expect(spanish.length).toBeGreaterThan(0);
+      expect(spanish.map((post) => post.slug).sort()).toEqual([...getAllSlugs("es")].sort());
+      for (const post of spanish) {
+        expect(englishSlugs.has(post.slug), post.slug).toBe(true);
+        expect(post.locale).toBe("es");
+        expect(post.translations).toEqual(["en", "es"]);
+      }
+    });
+
+    it("translates title, description, tags and body but inherits the rest from English", () => {
+      for (const post of spanish) {
+        const english = getPostBySlug(post.slug, "en")!;
+        expect(post.title, post.slug).not.toBe(english.title);
+        expect(post.description, post.slug).not.toBe(english.description);
+        expect(post.content, post.slug).not.toBe(english.content);
+        expect(post.tags?.length, post.slug).toBe(english.tags?.length);
+        expect(post.category, post.slug).toBe(english.category);
+        expect(post.date, post.slug).toBe(english.date);
+        expect(post.updated, post.slug).toBe(english.updated);
+        expect(post.author, post.slug).toBe(english.author);
+        expect(post.image, post.slug).toBe(english.image);
+      }
+    });
+
+    it("keeps internal links on the Spanish site and code blocks untouched", () => {
+      for (const post of spanish) {
+        const english = getPostBySlug(post.slug, "en")!;
+        for (const [, href] of post.content.matchAll(/\]\((\/[^)]*)\)/g)) {
+          expect(href.startsWith("/es"), `${post.slug}: ${href}`).toBe(true);
+        }
+        const fences = (content: string) => content.match(/^```[\s\S]*?^```/gm) ?? [];
+        expect(fences(post.content), post.slug).toEqual(fences(english.content));
+      }
+    });
+
+    it("is marked as missing for a post without translation", () => {
+      const english = getPostBySlug(getAllSlugs()[0], "en")!;
+      expect(english.locale).toBe("en");
+      expect(english.translations).toContain("en");
+    });
   });
 });

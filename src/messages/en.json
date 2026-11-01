@@ -1,0 +1,1733 @@
+{
+  "Common": {
+    "skipToContent": "Skip to main content",
+    "languageSwitch": {
+      "label": "Language",
+      "en": "English",
+      "es": "Español",
+      "switchTo": "Leer en español"
+    },
+    "backToHome": "Back to Home",
+    "orCall": "Or call directly:",
+    "call": "Call {phone}",
+    "goBack": "Go Back"
+  },
+  "Nav": {
+    "global": "Global",
+    "site": "Site",
+    "siteMenu": "Site menu",
+    "openMenu": "Open menu",
+    "closeMenu": "Close menu",
+    "home": "Home",
+    "services": "Services",
+    "projects": "Projects",
+    "pricing": "Pricing",
+    "blog": "Blog",
+    "about": "About",
+    "contact": "Contact",
+    "process": "Process",
+    "faq": "FAQ",
+    "testimonials": "Testimonials",
+    "schedule": "Schedule",
+    "houston": "Houston, TX",
+    "privacy": "Privacy Policy",
+    "terms": "Terms of Service",
+    "refund": "Refund Policy",
+    "manageSubscription": "Manage Subscription",
+    "privacyChoices": "Privacy Choices",
+    "experience": "Experience",
+    "certifications": "Certifications",
+    "cta": "Get Started",
+    "letsTalk": "Let's Talk",
+    "getInTouch": "Get In Touch",
+    "tagline": "Your Digital Partner"
+  },
+  "Footer": {
+    "description": "Websites and web apps for small businesses, built and maintained by me. Based in Houston, working with clients anywhere.",
+    "navigation": "Navigation",
+    "more": "More",
+    "connect": "Connect",
+    "ready": "Ready to start your project?",
+    "discuss": "Let's discuss your project",
+    "available": "Taking New Projects",
+    "footerNav": "Footer",
+    "legalNav": "Legal",
+    "rights": "All Rights Reserved"
+  },
+  "Metadata": {
+    "siteTitle": "RC Web Solutions | Custom Websites & Web Apps for Small Businesses",
+    "siteDescription": "Randy Caballero builds and maintains fast websites and web apps for small service businesses: booking, Stripe payments and local SEO built in. Based in Houston, TX, working with small businesses anywhere. Next.js, React, English & Spanish.",
+    "ogAlt": "RC Web Solutions - Randy Caballero Web Development Services",
+    "home": {
+      "title": "Custom Websites & Web Apps for Small Businesses | RC Web Solutions",
+      "description": "Randy Caballero builds fast websites and web apps for small service businesses: booking, Stripe payments and local SEO built in. Based in Houston, TX, working with clients anywhere. From $1,000. Free consultation."
+    }
+  },
+  "Catalog": {
+    "priceFrom": "From",
+    "perMonth": "/month",
+    "offers": {
+      "business-website": {
+        "title": "Business Website",
+        "summary": "From a one-page landing to a full 5-10 page site: custom design, mobile-first, built to turn visitors into calls and form submissions.",
+        "tags": [
+          "Custom Design",
+          "Local SEO",
+          "Contact Forms",
+          "Loads in under 2 seconds"
+        ],
+        "highlight": "Like Clínica Gessner & Leo's Home Experts",
+        "range": "$1,000 - $6,000",
+        "duration": "1-4 weeks",
+        "description": "A landing page at a fixed price, or a 5-10 page site quoted on scope",
+        "features": [
+          "Custom, mobile-first design",
+          "Contact form and click-to-call",
+          "Local SEO setup",
+          "Analytics integration",
+          "Loads in under 2 seconds",
+          "30-day support"
+        ],
+        "ideal": "Perfect for: new businesses, professional services, product launches",
+        "checkoutCta": "Start a Landing Page",
+        "quoteCta": "Quote a Full Website"
+      },
+      "website-redesign": {
+        "title": "Website Redesign & Modernization",
+        "summary": "Your current site rebuilt on modern technology: faster, mobile-friendly, and easier for customers to use, with your content migrated.",
+        "tags": [
+          "Modern Design",
+          "Performance Boost",
+          "Mobile Optimization",
+          "Content Migration"
+        ],
+        "highlight": "Like GSM A/C",
+        "range": "$3,500 - $8,000",
+        "duration": "4-6 weeks",
+        "description": "Your outdated website rebuilt without losing what works",
+        "features": [
+          "Modern design and aesthetics",
+          "Performance optimization",
+          "Mobile responsive upgrade",
+          "Content migration",
+          "Rankings preserved and improved",
+          "45-day support"
+        ],
+        "ideal": "Perfect for: businesses with old websites, legacy code or poor performance",
+        "quoteCta": "Get a Quote"
+      },
+      "admin-dashboard": {
+        "title": "Admin Dashboard & Automation",
+        "summary": "A private panel to manage leads, customers, payments and campaigns from one place, with the repetitive work automated.",
+        "tags": [
+          "Lead & Customer Management",
+          "Email & SMS Campaigns",
+          "Stripe Payments",
+          "Reports"
+        ],
+        "highlight": "GSM saves 15 hours/week",
+        "range": "$7,500 - $15,000",
+        "duration": "5-6 weeks",
+        "description": "A tailored admin panel for your day-to-day operations",
+        "features": [
+          "Custom forms and workflows",
+          "Lead and customer management",
+          "Email and SMS campaigns",
+          "Stripe payments",
+          "Reports and data visualization",
+          "API integrations",
+          "60-day support"
+        ],
+        "ideal": "Perfect for: service businesses, operations management, automation",
+        "quoteCta": "Get a Quote"
+      },
+      "store-and-apps": {
+        "title": "Online Store & Custom Web Apps",
+        "summary": "Full-featured online stores with Stripe and custom platforms: booking systems, member areas, internal tools. No monthly platform fees.",
+        "tags": [
+          "Stripe Checkout",
+          "Booking Systems",
+          "User Accounts",
+          "API Integrations"
+        ],
+        "highlight": "Like RC Beauty Salon",
+        "range": "$8,000 - $20,000+",
+        "duration": "6-12+ weeks",
+        "description": "An online store with payment processing, or a custom platform built around your business",
+        "features": [
+          "Stripe checkout and subscriptions",
+          "Inventory and order processing",
+          "Customer accounts",
+          "Booking systems and member areas",
+          "Database and API development",
+          "Third-party integrations",
+          "90-day support"
+        ],
+        "ideal": "Perfect for: retail, online stores, booking-based and product-based businesses",
+        "quoteCta": "Get a Quote"
+      },
+      "maintenance": {
+        "title": "Monthly Maintenance & Support",
+        "summary": "Ongoing maintenance, security updates, backups, and technical support so your website keeps working while you run your business.",
+        "tags": [
+          "Security Updates",
+          "Uptime Monitoring",
+          "Content Updates",
+          "Priority Support"
+        ],
+        "highlight": "Peace of mind guaranteed",
+        "range": "Cancel anytime",
+        "duration": "Ongoing",
+        "description": "Monthly maintenance and support for any website I built",
+        "features": [
+          "Security patches and updates",
+          "Performance and uptime monitoring",
+          "Content updates",
+          "Backup management",
+          "Technical support",
+          "Same-day response for urgent issues"
+        ],
+        "ideal": "Perfect for: every business that wants peace of mind",
+        "checkoutCta": "Start Maintenance Plan"
+      }
+    },
+    "process": {
+      "discovery": {
+        "title": "Discovery",
+        "week": "Week 1",
+        "description": "Free video call to understand your needs and objectives, wherever you are.",
+        "details": [
+          "Requirements analysis",
+          "Competition research",
+          "Detailed proposal",
+          "Transparent quote"
+        ]
+      },
+      "design": {
+        "title": "Design & Planning",
+        "week": "Weeks 1-2",
+        "description": "Create wireframes and define your application architecture.",
+        "details": [
+          "Interactive mockups",
+          "Tech stack selection",
+          "Project timeline",
+          "Review & feedback"
+        ]
+      },
+      "development": {
+        "title": "Iterative Development",
+        "week": "Weeks 2-5",
+        "description": "Build your application with weekly demos and continuous adjustments.",
+        "details": [
+          "Weekly sprints",
+          "Friday demos",
+          "Continuous testing",
+          "Real-time adjustments"
+        ]
+      },
+      "launch": {
+        "title": "Launch & Support",
+        "week": "Week 6",
+        "description": "Production deployment with training and post-launch support (30-180 days depending on plan).",
+        "details": [
+          "Secure deployment",
+          "Complete training",
+          "Documentation",
+          "Post-launch support included"
+        ]
+      }
+    },
+    "faqs": {
+      "supportItem": "{title} ({days} days)",
+      "outsideUsa": {
+        "question": "Do you work with clients outside USA?",
+        "answer": "I work with clients worldwide. Projects are fully remote, and I use tools like Zoom and Slack to communicate and collaborate effectively. Payments are easy and secure through Stripe, so you can work with me from anywhere."
+      },
+      "timeline": {
+        "question": "How long does a typical project take?",
+        "answer": "It depends on the scope: {durations}. I always provide realistic timelines and meet them."
+      },
+      "support": {
+        "question": "Do you offer post-launch support?",
+        "answer": "Yes! Every project includes complimentary post-launch support. The duration depends on the service: {supports}. Support covers bug fixes, minor adjustments, and technical assistance. After that, the {maintenanceTitle} plan is {maintenancePrice} and covers security updates, performance monitoring, content updates and priority support."
+      },
+      "technologies": {
+        "question": "Do you work with technologies besides Next.js?",
+        "answer": "My specialty is the React/Next.js ecosystem with TypeScript, Node.js, and PostgreSQL - enterprise technology at small business pricing. I also have experience with vanilla JavaScript, and can adapt to project needs. I always recommend the best technology for each case."
+      },
+      "payments": {
+        "question": "How does the payment process work?",
+        "answer": "Two payments: 50% to start and 50% when the project is delivered. The landing page and the maintenance plan can be paid directly on this site through Stripe. For everything else we agree on the scope and the final price first, and then you receive a secure Stripe payment link. Zelle is also accepted."
+      },
+      "progress": {
+        "question": "Can I see progress during development?",
+        "answer": "Absolutely! I provide weekly progress updates and you'll have access to a staging environment where you can see real-time progress. I respond within 24 hours (usually much faster) to any questions or concerns. Transparency is key to my process."
+      }
+    },
+    "projects": {
+      "gsmactx": "Custom website and admin dashboard for a Houston HVAC company. Automated email campaigns, service request management, and real-time client-side rendering. Saved the business 15+ hours per week.",
+      "dulceAntojo": "Official website and private admin dashboard with Stripe payment links for a Houston snack cart rental business. Booking form, local SEO, and card payments that let them book companies and schools.",
+      "clinicaGessner": "Bilingual website for a Houston clinic featuring online appointment booking, service information, and local SEO to reach Spanish-speaking patients.",
+      "clinicaAirline": "Professional bilingual website for a Houston clinic with Spanish-speaking patients. Features local SEO, service pages, and patient-friendly design optimized for mobile.",
+      "leosHomeExperts": "Landing page for a Houston-based home services company specializing in patio construction, motorized screens, and awning installations. Features local SEO optimization with JSON-LD schema and video gallery integration.",
+      "rcBeautySalon": "A modern website for a beauty salon that showcases services, allows online bookings, and provides contact information, built with Next.js and Tailwind CSS.",
+      "limoRenting": "This web-based platform streamlines the process of renting limousines for special occasions, offering users real-time access to vehicle availability, service customization, and secure booking—all within a modern, responsive interface."
+    },
+    "testimonials": {
+      "chapelli": {
+        "content": "Randy transformed our business with a complete website rebuild. Our old site was slow and outdated – the new one is fast, modern, and professional. But the real value was the custom admin dashboard he created for managing our customer communications. We're now saving 15 hours per week on administrative tasks. What used to take hours now takes minutes. Randy's custom email campaign system is intuitive and exactly what we needed. Randy was professional, communicative, and delivered on time. He explained everything clearly and was always available. Highly recommend RC Web Solutions to any Houston business.",
+        "highlight": "Saving 15 hours per week"
+      },
+      "lecour": {
+        "content": "Working with Randy from RC Web Solutions LLC was a great experience. He was professional, responsive, and really took the time to understand my business. The website turned out clean, modern, and easy for customers to use. I'm very happy with the results and would definitely recommend him to anyone needing a professional website.",
+        "highlight": "Clean, modern, and easy to use"
+      },
+      "aguilar": {
+        "content": "Excellent experience working on the development of our website. Professional, responsible, and technically skilled. Delivered on time, optimized speed and SEO structure, and was always willing to improve details.",
+        "highlight": "Optimized speed and SEO"
+      }
+    }
+  },
+  "Home": {
+    "hero": {
+      "title": "Websites That Win Customers",
+      "badge": "Your Digital Partner",
+      "intro": "Fast websites and web apps for small service businesses, with booking, payments and local SEO built in. Based in Houston, working with clients anywhere.",
+      "signals": [
+        "Loads in Under 2 Seconds",
+        "Local SEO Built In",
+        "English & Español"
+      ],
+      "scheduleCta": "Schedule a Free Call",
+      "servicesCta": "View Services",
+      "orCall": "Or call directly:"
+    },
+    "services": {
+      "heading": "How I Can Help You",
+      "subheading": "I build websites, web apps and admin dashboards that turn visitors into calls and appointments",
+      "seePricing": "See Pricing",
+      "viewAll": "View All Services"
+    },
+    "projects": {
+      "heading": "Featured Projects",
+      "subheading": "Real results for real small businesses",
+      "viewAll": "View All {count} Projects",
+      "caseStudy": "Case Study",
+      "preview": "Preview",
+      "github": "GitHub"
+    },
+    "process": {
+      "heading": "My Work Process",
+      "subheading": "Four steps from the first call to launch, with weekly demos along the way"
+    },
+    "testimonials": {
+      "heading": "What My Clients Say",
+      "subheading": "Real results from successful projects",
+      "onGoogle": "on Google",
+      "reviews": "{count, plural, one {# review} other {# reviews}}",
+      "writeReview": "Write a Review on Google",
+      "translated": "Translated from English"
+    },
+    "pricing": {
+      "heading": "Clear & Transparent Pricing",
+      "subheading": "Pricing in USD • Serving clients in the US and worldwide",
+      "mostPopular": "Most Popular",
+      "usd": "USD",
+      "note": "All projects include: Source code • Domain & hosting setup • Training • 50% deposit, 50% on completion. The landing page and the maintenance plan can be paid right here; “From” prices are quoted after a short conversation, and the final price depends on the scope."
+    },
+    "blog": {
+      "heading": "From the Blog",
+      "subheading": "Tips and insights for small business owners",
+      "viewAll": "View All Posts"
+    },
+    "faq": {
+      "heading": "Frequently Asked Questions",
+      "subheading": "Everything you need to know before we start"
+    },
+    "contact": {
+      "heading": "Contact",
+      "subheading": "Get in Touch",
+      "schedule": "Schedule Free Consultation",
+      "call": "Call {phone}",
+      "orMessage": "Or send me a message below"
+    }
+  },
+  "Stepper": {
+    "step": "Step {number}: {title}",
+    "previous": "Previous",
+    "next": "Next Step"
+  },
+  "Marquee": {
+    "technologies": "Technologies I work with",
+    "play": "Play animation",
+    "pause": "Pause animation"
+  },
+  "Rating": {
+    "label": "{rating} out of 5 stars"
+  },
+  "FloatingCta": {
+    "chatWith": "Chat with Maria",
+    "callNow": "Call Now",
+    "whatsapp": "WhatsApp",
+    "connectOn": "Connect on {network}",
+    "openMenu": "Open contact menu",
+    "closeMenu": "Close contact menu"
+  },
+  "Chat": {
+    "dialogLabel": "Chat with Maria",
+    "title": "Maria",
+    "assistant": "AI Assistant",
+    "close": "Close chat",
+    "welcome": "Hi! I'm Maria, your virtual assistant for RC Web Solutions. I'm here to help you with information about our services, pricing, projects, and answer any questions you might have. How can I assist you today?",
+    "error": "Sorry, something went wrong on my side. Try again in a moment, or call +1 (346) 375-7534.",
+    "typing": "Maria is typing…",
+    "yourMessage": "Your message",
+    "placeholder": "Type your message…",
+    "send": "Send message",
+    "disclaimer": "AI can make mistakes. Verify important information."
+  },
+  "Forms": {
+    "contact": {
+      "title": "Let's Connect",
+      "name": "Full name",
+      "email": "Email address",
+      "phone": "Phone number",
+      "service": "What do you need?",
+      "notSure": "Not sure yet",
+      "channel": "How should I reach you?",
+      "channels": {
+        "call": "Phone",
+        "whatsapp": "WhatsApp",
+        "email": "Email"
+      },
+      "message": "Your message",
+      "consent": "I would like to receive promotional and informational emails and SMS messages from RC Web Solutions LLC about its services.",
+      "consentNote": "Message frequency may vary. Message & data rates may apply. Reply STOP to opt-out. Consent is not a condition of purchase or service. You can unsubscribe at any time.",
+      "send": "Send Message",
+      "sending": "Sending…",
+      "placeholders": {
+        "name": "Your full name…",
+        "email": "you@yourbusiness.com…",
+        "phone": "(346) 555-0123…",
+        "message": "Tell me about your project…"
+      },
+      "recaptcha": "This site is protected by reCAPTCHA and the Google <privacy>Privacy Policy</privacy> and <terms>Terms of Service</terms> apply.",
+      "toasts": {
+        "bot": "Something went wrong. Please try again.",
+        "tooFast": "Please take a moment to review your message.",
+        "recaptcha": "We couldn't verify your submission. Please disable ad blockers or refresh and try again.",
+        "sending": "Sending message…",
+        "sent": "Message sent! I'll get back to you soon.",
+        "failed": "Failed to send message"
+      }
+    },
+    "checkout": {
+      "title": "Complete Your Order",
+      "selectedPlan": "Selected plan",
+      "monthly": "Monthly payment",
+      "initial": "Initial payment (50%)",
+      "perMonth": "/month",
+      "name": "Your name",
+      "email": "Email address",
+      "namePlaceholder": "Maria Lopez…",
+      "emailPlaceholder": "maria@yourbusiness.com…",
+      "submit": "Go to Terms & Pay",
+      "loading": "Loading…",
+      "cancel": "Cancel",
+      "errors": {
+        "name": "Enter your name so I know who to contact.",
+        "email": "Enter a valid email so I can send your invoice."
+      }
+    },
+    "validation": {
+      "nameShort": "Name is too short",
+      "emailInvalid": "Invalid email address",
+      "phoneShort": "Phone number is too short",
+      "phoneLong": "Phone number is too long",
+      "messageLong": "Message is too long",
+      "messageShort": "Message is too short"
+    },
+    "terms": {
+      "noticeTitle": "Important: Review Required",
+      "noticeText": "Please carefully review and accept our Terms of Service before proceeding to payment. This legal agreement outlines the conditions of our service.",
+      "missing": "Missing information. Please start from pricing.",
+      "processing": "Processing…",
+      "redirecting": "Redirecting to secure payment…",
+      "failed": "Failed to process",
+      "error": "An error occurred",
+      "confirm": "By clicking “I Accept These Terms”, you confirm that you have read, understood, and agree to be bound by these Terms of Service.",
+      "accept": "I Accept These Terms",
+      "back": "Return to Pricing Plans"
+    }
+  },
+  "Blog": {
+    "categories": {
+      "houston": "Small Business",
+      "caseStudy": "Case Study",
+      "technical": "Performance & Security",
+      "business": "Business"
+    },
+    "topics": "Topics",
+    "read": "Read: {title}",
+    "readTime": "{minutes} min read",
+    "readMore": "Read more",
+    "list": {
+      "heading": "Web Development Blog",
+      "subheading": "Learn, Grow, Succeed",
+      "comingSoon": "Coming Soon",
+      "comingSoonText": "I'm working on new content about web development, SEO, and digital marketing. Check back soon!",
+      "contact": "Contact Me"
+    },
+    "metadata": {
+      "title": "Blog - Web Development Insights & Tips",
+      "description": "Read expert articles about web development, SEO, e-commerce, and digital marketing. Learn how to grow your business online with RC Web Solutions."
+    },
+    "post": {
+      "backToBlog": "Back to Blog",
+      "updated": "Updated <date></date>",
+      "enjoying": "Enjoying this article?",
+      "notify": "Get notified when I publish new posts about web development, automation, and business growth.",
+      "ctaTitle": "Ready to Start Your Project?",
+      "ctaText": "Let's bring your vision to life. Contact me today for a free consultation.",
+      "ctaButton": "Get Started",
+      "notFound": "Post Not Found",
+      "notFoundText": "The blog post you're looking for doesn't exist."
+    }
+  },
+  "Breadcrumb": {
+    "home": "Home",
+    "services": "Services",
+    "projects": "Projects",
+    "caseStudies": "Case Studies",
+    "about": "About",
+    "letsTalk": "Let's Talk",
+    "houston": "Web Developer Houston TX",
+    "blog": "Blog"
+  },
+  "About": {
+    "metadata": {
+      "title": "About Randy Caballero - Full-Stack Web Developer",
+      "description": "Learn about Randy Caballero, a full-stack developer with 6+ years of experience in React, Next.js, and TypeScript who has shipped 20+ production sites. Based in Houston, TX, serving clients nationwide."
+    },
+    "heading": "Meet the Founder",
+    "subheading": "The Developer Behind RC Web Solutions",
+    "bio1": "Full-stack developer with <strong>6+ years of experience</strong> building React and Next.js applications. Through RC Web Solutions I have built and shipped <strong>20+ production sites</strong> for small businesses, most of them in the Houston area, from the frontend and APIs to the database and deployment. I work remotely with clients anywhere: video calls, a staging site you can check at any time, and Stripe payments. I started at Revature in 2022 and, alongside RC Web Solutions, spent 2024–2025 as a software developer at Atser Systems Inc., contributing to <strong>full-stack application development</strong> in Agile teams.",
+    "bio2": "I work across the full stack with <gold>Next.js, TypeScript, Node.js, PostgreSQL, and Prisma</gold>, and I also own the layer that brings customers in: <gold>Google Ads, Meta Ads, conversion tracking, and local SEO</gold>. On one client site I cut load time from 7–8 seconds to under 1 second, which restored the performance of their paid campaigns.",
+    "imageAlt": "Randy Caballero - Full-Stack Web Developer in Houston, TX",
+    "location": "Houston, TX",
+    "basedIn": "Based in Houston, TX",
+    "anywhere": "Working with clients anywhere",
+    "downloadCv": "Download CV",
+    "person": {
+      "jobTitle": "Full-Stack Web Developer",
+      "description": "Full-stack developer with 6+ years building React and Next.js applications. Founder of RC Web Solutions LLC, based in Houston, TX, with 20+ production sites shipped for small businesses across the US."
+    },
+    "experience": {
+      "heading": "Experience",
+      "subheading": "My professional journey in software development.",
+      "items": {
+        "founder": {
+          "title": "Founder & Lead Developer",
+          "description": "Built and deployed 20+ production Next.js sites for small businesses, most of them in the Houston area, owning the full cycle from requirements to post-launch maintenance, plus the analytics and paid-acquisition layer.",
+          "date": "Sept 2022 - Present"
+        },
+        "atser": {
+          "title": "Software Developer",
+          "description": "Built responsive web applications with Next.js, TypeScript, Tailwind CSS, and shadcn/ui, integrating C#/.NET REST APIs in a cross-functional Agile team.",
+          "date": "Nov 2024 - Apr 2025"
+        },
+        "revature": {
+          "title": "Software Developer",
+          "description": "Developed and maintained website features alongside senior developers, integrating third-party APIs and running cross-browser testing.",
+          "date": "Apr 2022 - Sept 2022"
+        },
+        "camaguey": {
+          "title": "Frontend Developer",
+          "description": "Built web applications and real-time operational dashboards for agricultural management systems with JavaScript, HTML5, CSS3, and Bootstrap.",
+          "date": "Sept 2015 - Feb 2017"
+        },
+        "edd": {
+          "title": "Doctor of Education (EdD)",
+          "description": "Doctoral program in progress",
+          "date": "May 2024 - Present"
+        },
+        "msed": {
+          "title": "M.S., Education",
+          "description": "Master of Science in Education",
+          "date": "May 2021 - Apr 2024"
+        },
+        "bs": {
+          "title": "B.S., Software Engineering",
+          "description": "Bachelor of Science in Software Engineering",
+          "date": "Graduated July 2012"
+        }
+      }
+    },
+    "certifications": {
+      "heading": "Degrees & Certifications",
+      "subheading": "Degrees and the courses that shaped how I build",
+      "previous": "Previous certification",
+      "next": "Next certification",
+      "seePdf": "See PDF",
+      "seeCertificate": "See Certificate",
+      "download": "Download",
+      "pdfCertificate": "PDF certificate",
+      "items": {
+        "bs": {
+          "name": "B.S., Software Engineering",
+          "description": "Bachelor's degree in Software Engineering, evaluated as equivalent to a U.S. bachelor's degree."
+        },
+        "msed": {
+          "name": "M.S., Education",
+          "description": "Master of Science in Education."
+        },
+        "advancedReact": {
+          "name": "Advanced React",
+          "description": "Hooks, context, higher-order components, testing and performance in React applications."
+        },
+        "reactBasics": {
+          "name": "React Basics",
+          "description": "Components, state, props and routing in React."
+        },
+        "javascript": {
+          "name": "Programming with JavaScript",
+          "description": "JavaScript fundamentals, data structures and testing with Jest."
+        }
+      }
+    }
+  },
+  "Services": {
+    "metadata": {
+      "title": "Web Development Services for Small Businesses",
+      "description": "Business websites, redesigns, admin dashboards, online stores and monthly maintenance for small businesses. Based in Houston, TX, working with clients anywhere. Free consultation."
+    },
+    "title": "Web Development Services for",
+    "titleHighlight": "Small Businesses",
+    "intro": "Custom websites and web applications for service businesses, from landing pages to full-stack platforms. Built with modern technology, optimized for Google, available in English and Spanish, and delivered remotely from Houston, TX to clients anywhere.",
+    "learnMore": "Learn more",
+    "detail": {
+      "allServices": "All Services",
+      "startingAt": "Starting at",
+      "typically": "Typically {range}",
+      "included": "What's Included",
+      "related": "Related Projects",
+      "relatedIntro": "Houston businesses I've built this type of solution for.",
+      "visitSite": "Visit site",
+      "readyTitle": "Ready to Get Started?",
+      "readyText": "Book a free 30-minute consultation. I'll review your current situation and show you exactly what I can build for your business."
+    },
+    "pages": {
+      "business-website": {
+        "metaTitle": "Business Website Design Houston TX | Custom Sites from $1,000",
+        "metaDescription": "Custom business websites built with Next.js: mobile-first, fast, with local SEO and bilingual English/Spanish support. Based in Houston, TX, working anywhere. From $1,000.",
+        "headline": "Business Websites Built to Bring in Calls",
+        "subheadline": "From a one-page landing to a full 5-10 page site: custom design, mobile-first, built to turn visitors into calls, appointments and form submissions.",
+        "content": "Your website is often the first contact a customer has with your business, and it works while you are busy with everything else. I build business websites that load in under two seconds, read well on a phone and make it obvious how to call you or book. Every site is designed mobile-first because most people looking for a local service are searching from their phones. I use Next.js and React, the same stack large companies rely on, so the site stays fast and keeps ranking as it grows. A landing page has a fixed price and can be started right here; a larger site is quoted after a short conversation about the pages you need. English and Spanish versions are included when your customers speak both, written by a native Spanish speaker rather than a translator plugin.",
+        "features": [
+          {
+            "title": "Mobile-First Design",
+            "description": "Designed for phone screens first, then scaled up. The buttons, forms and phone number work where your customers actually are."
+          },
+          {
+            "title": "Loads in Under 2 Seconds",
+            "description": "Built with Next.js, with images and scripts kept lean. Google rewards fast sites, and visitors stay instead of leaving."
+          },
+          {
+            "title": "Local SEO Built In",
+            "description": "Meta tags, structured data and a clean page structure so Google understands what you do and where you serve. Search Console and analytics set up before launch."
+          },
+          {
+            "title": "Bilingual When You Need It",
+            "description": "English and Spanish in one site, with the right language shown to each searcher. Localized by a native speaker, not machine-translated."
+          },
+          {
+            "title": "Contact Forms and Click-to-Call",
+            "description": "Calls to action placed where they convert, spam-protected forms, and leads delivered to your inbox or your admin panel."
+          },
+          {
+            "title": "30 Days of Support",
+            "description": "After launch I stay available for adjustments and questions. Source code, domain and hosting are yours."
+          }
+        ],
+        "cta": "Get a Custom Website"
+      },
+      "website-redesign": {
+        "metaTitle": "Website Redesign Houston TX | Modernize Your Site from $3,500",
+        "metaDescription": "Website redesign and modernization: your current site rebuilt on Next.js, faster and mobile-friendly, with your content and rankings migrated. Based in Houston, TX. From $3,500.",
+        "headline": "Website Redesign & Modernization",
+        "subheadline": "Your current site rebuilt on modern technology: faster, mobile-friendly and easier for customers to use, with your content and your Google rankings carried over.",
+        "content": "An old website costs you customers quietly: it loads slowly on phones, looks dated next to competitors and is hard to update. A redesign is not just a new coat of paint. I rebuild the site on Next.js, keep every page and URL that already ranks, set up redirects for anything that moves and migrate your content, photos and reviews. The result is a site that loads in under two seconds, works on every screen and that you can keep updating without breaking it. That is what I did for GSM A/C, whose rebuilt site went from a slow template to a fast, conversion-focused site that now books jobs on its own. The price depends on how many pages you have and what needs to be rewritten, so we agree on the scope first.",
+        "features": [
+          {
+            "title": "Modern Design",
+            "description": "A clean, current look built around your brand, with clear calls to action instead of cluttered templates."
+          },
+          {
+            "title": "Performance Boost",
+            "description": "Rebuilt from scratch on Next.js: faster load times, better Core Web Vitals and no plugins slowing things down."
+          },
+          {
+            "title": "Mobile Optimization",
+            "description": "Every page redesigned for phones first, so the people searching from their car can still call you with one tap."
+          },
+          {
+            "title": "Content Migration",
+            "description": "Pages, blog posts, images and reviews moved over. Nothing you have built up gets lost in the move."
+          },
+          {
+            "title": "Rankings Preserved",
+            "description": "Existing URLs kept or redirected, structured data added and Search Console checked after launch so Google keeps sending traffic."
+          },
+          {
+            "title": "45 Days of Support",
+            "description": "Time to catch the details that only show up once real customers use the new site."
+          }
+        ],
+        "cta": "Quote My Redesign"
+      },
+      "admin-dashboard": {
+        "metaTitle": "Custom Admin Dashboard Houston TX | Business Automation from $7,500",
+        "metaDescription": "Custom admin dashboards for small businesses: leads, customers, payments, email and SMS campaigns and reports in one private panel, with the repetitive work automated. From $7,500.",
+        "headline": "Admin Dashboard & Automation",
+        "subheadline": "A private panel to manage leads, customers, payments and campaigns from one place, with the repetitive work automated.",
+        "content": "Most small businesses run on a mix of spreadsheets, text messages and three different apps that do not talk to each other. A custom admin dashboard puts that in one place: your leads come in from the website, you see who called, who paid and who needs a follow-up, and campaigns go out by email or SMS from the same screen. I build these panels with Next.js, TypeScript and PostgreSQL, the stack this very site runs on, and connect them to the tools you already use, such as Stripe, Google or Twilio. The scope is tailored to how you work: for GSM A/C the dashboard replaced about fifteen hours a week of manual follow-up. We start with a conversation about your daily routine, agree on what the first version needs to do, and build from there.",
+        "features": [
+          {
+            "title": "Lead and Customer Management",
+            "description": "Every inquiry from your website, phone or campaigns lands in one list with its status, notes and history."
+          },
+          {
+            "title": "Custom Forms and Workflows",
+            "description": "The forms, statuses and steps that match your business, not a generic CRM you have to bend to fit."
+          },
+          {
+            "title": "Email and SMS Campaigns",
+            "description": "Send newsletters and text campaigns to the customers who opted in, with consent, quotas and unsubscribe handled for you."
+          },
+          {
+            "title": "Stripe Payments",
+            "description": "Deposits, final payments, subscriptions and invoices tracked in the panel, with secure payment links for your customers."
+          },
+          {
+            "title": "Reports and Data Visualization",
+            "description": "Leads by source, revenue by month, campaign results: the numbers you need to decide, without exporting anything."
+          },
+          {
+            "title": "API Integrations and 60 Days of Support",
+            "description": "Connections to the services you already pay for, and two months of support to tune the panel once your team uses it daily."
+          }
+        ],
+        "cta": "Quote My Dashboard"
+      },
+      "store-and-apps": {
+        "metaTitle": "E-Commerce & Custom Web Apps Houston TX | Online Stores from $8,000",
+        "metaDescription": "Custom online stores with Stripe payments and custom web applications: booking systems, member areas and internal tools built with Next.js. No monthly platform fees. From $8,000.",
+        "headline": "Online Store & Custom Web Apps",
+        "subheadline": "Full-featured online stores with Stripe and custom platforms built around your business: booking systems, member areas, internal tools. No monthly platform fees.",
+        "content": "Template platforms are a quick start and a long-term ceiling: monthly fees, limited customization, slow pages and plugins that break on every update. When your business outgrows them, I build the store or the platform you actually need. An online store includes Stripe payment processing, real-time inventory, order tracking, customer accounts and an admin panel where you run everything. A custom web application can be a booking system like the one RC Beauty Salon uses, a member area, a portal for your clients or an internal tool for your team. You own the code, pay only for hosting and Stripe's standard fees, and every feature is built for your workflow. Projects this size start with a scoping conversation and a written quote, then a 50% deposit to begin.",
+        "features": [
+          {
+            "title": "Stripe Checkout and Subscriptions",
+            "description": "Cards, Apple Pay and Google Pay, one-time purchases or recurring plans, with receipts and refunds handled through Stripe."
+          },
+          {
+            "title": "Inventory and Order Processing",
+            "description": "Stock levels, product variants, low-stock alerts and an order flow from paid to shipped, all visible in your admin panel."
+          },
+          {
+            "title": "Customer Accounts",
+            "description": "Order history, saved details and member-only content when your business needs it, with secure sign-in."
+          },
+          {
+            "title": "Booking Systems and Member Areas",
+            "description": "Appointments, reservations and private areas built into the site, so customers book and pay without calling."
+          },
+          {
+            "title": "Database and API Development",
+            "description": "PostgreSQL databases and APIs designed to grow with you, plus integrations with the third-party services you already use."
+          },
+          {
+            "title": "No Platform Fees and 90 Days of Support",
+            "description": "No monthly subscription to a store builder, and three months of support after launch while the first orders come in."
+          }
+        ],
+        "cta": "Quote My Project"
+      },
+      "maintenance": {
+        "metaTitle": "Website Maintenance & Support | $200/month, Cancel Anytime",
+        "metaDescription": "Monthly website maintenance and support: security updates, backups, uptime monitoring, content updates and technical support for sites I built. $200/month, cancel anytime.",
+        "headline": "Monthly Maintenance & Support",
+        "subheadline": "Ongoing maintenance, security updates, backups and technical support so your website keeps working while you run your business.",
+        "content": "A website is not finished when it launches. Dependencies get security updates, hosting and domains renew, content goes stale and one day a form stops sending. The maintenance plan covers that for any site I built: I keep the stack updated, monitor uptime and performance, keep backups, make the small content changes you send me and answer technical questions the same day when something is urgent. It is a monthly subscription paid through Stripe that you can cancel at any time from the link in your invoice email. If you need bigger changes, such as a new page or a new feature, I quote them separately so the monthly price stays predictable.",
+        "features": [
+          {
+            "title": "Security Patches and Updates",
+            "description": "Framework, dependencies and hosting kept current so known vulnerabilities do not sit on your site."
+          },
+          {
+            "title": "Performance and Uptime Monitoring",
+            "description": "I get alerted if the site goes down or slows down, usually before you or your customers notice."
+          },
+          {
+            "title": "Content Updates",
+            "description": "Send me the new photo, price or opening hours and it is live without you touching anything."
+          },
+          {
+            "title": "Backup Management",
+            "description": "Regular backups of your site and database, tested, so a mistake or an outage is a restore and not a rebuild."
+          },
+          {
+            "title": "Technical Support",
+            "description": "Domain, email, analytics or a form that stopped working: one person to write to who already knows your site."
+          },
+          {
+            "title": "Same-Day Response for Urgent Issues",
+            "description": "When the site is down or a payment fails, I respond the same day. Cancel anytime; no long-term contract."
+          }
+        ],
+        "cta": "Start Maintenance Plan"
+      }
+    }
+  },
+  "Portfolio": {
+    "metadata": {
+      "title": "Projects & Case Studies | Web Development Portfolio",
+      "description": "Websites and web apps I have built for small businesses: clinics, HVAC, home services, event rentals and more. Most are in the Houston area; all are real results for real businesses."
+    },
+    "title": "Projects &",
+    "titleHighlight": "Case Studies",
+    "intro": "Real websites built for real small businesses. Click “Case Study” on any project to see the full story: challenges, solutions, and results."
+  },
+  "CaseStudies": {
+    "back": "Back to Projects",
+    "badge": "Case Study",
+    "visitSite": "Visit Live Site",
+    "startProject": "Start Your Project",
+    "technologies": "Technologies Used",
+    "challenges": "The",
+    "challengesHighlight": "Challenges",
+    "solution": "The",
+    "solutionHighlight": "Solution",
+    "results": "The",
+    "resultsHighlight": "Results",
+    "items": {
+      "gsmactx": {
+        "metaTitle": "GSM AC Case Study - HVAC Business Automation",
+        "metaDescription": "How I helped GSM A/C & General Contractor save 15 hours per week with a custom admin dashboard, automated email campaigns, and modern website. Full case study with results.",
+        "crumb": "GSM AC",
+        "name": "GSM A/C &",
+        "nameHighlight": "General Contractor",
+        "subtitle": "How I helped a Houston HVAC company save 15+ hours per week with a custom admin dashboard and automated email marketing system.",
+        "imageAlt": "GSM AC Website Screenshot",
+        "stats": [
+          "Hours Saved Weekly",
+          "Systems: Website + Admin",
+          "Lighthouse Score",
+          "Send Reaches Every Customer"
+        ],
+        "challengesIntro": "Before working with me, GSM AC faced several operational challenges that were holding back business growth.",
+        "challenges": [
+          {
+            "title": "Time-Consuming Admin Tasks",
+            "description": "Michel was spending 15+ hours per week on repetitive administrative tasks like managing service requests, tracking leads, and sending follow-up emails manually."
+          },
+          {
+            "title": "No Admin System",
+            "description": "Service requests, customer details and follow-ups were all managed by hand, and there was no way to email their customers: marketing relied on word-of-mouth and expensive traditional advertising."
+          },
+          {
+            "title": "Outdated Website",
+            "description": "The old website ran on obsolete technology: slow to load, poor on phones, and it was not turning visitors into service requests."
+          }
+        ],
+        "solutionsIntro": "I built a comprehensive solution that addressed all challenges and transformed their business operations.",
+        "solutions": [
+          {
+            "title": "Custom Admin Dashboard",
+            "description": "Built a comprehensive admin panel to manage service requests, customer data, and business operations from one place.",
+            "features": [
+              "Real-time service request management",
+              "Customer database with search & filters",
+              "Automated status updates",
+              "Analytics and reporting"
+            ]
+          },
+          {
+            "title": "Bulk Email Campaign System",
+            "description": "Integrated email marketing capabilities allowing Michel to reach thousands of customers with promotional offers and updates.",
+            "features": [
+              "Email template builder",
+              "Contact list management",
+              "Offers and updates to all customers in one send",
+              "Admin accounts with password recovery"
+            ]
+          },
+          {
+            "title": "Modern Responsive Website",
+            "description": "Rebuilt the public website from scratch with Next.js: a page for each service, online appointment booking, click-to-call and a financing link, with a focus on conversions and mobile experience.",
+            "features": [
+              "Online appointment booking and click-to-call",
+              "Mobile-first responsive design",
+              "Local SEO for Cypress and Houston",
+              "95+ Lighthouse performance score"
+            ]
+          }
+        ],
+        "results": [
+          {
+            "metric": "15+ Hours Saved Weekly",
+            "description": "Automated workflows eliminated repetitive manual tasks"
+          },
+          {
+            "metric": "Increased Customer Reach",
+            "description": "Email campaigns now reach thousands of customers instantly"
+          },
+          {
+            "metric": "Better Lead Conversion",
+            "description": "Modern website converts more visitors into service requests"
+          }
+        ],
+        "testimonial": {
+          "quote": "Randy transformed our business operations. The admin dashboard alone saves me over 15 hours every week. The email system lets me reach all my customers with just a few clicks. Highly recommend RC Web Solutions!",
+          "company": "Owner, GSM A/C & General Contractor Inc."
+        },
+        "ctaTitle": "Ready to Transform",
+        "ctaTitleHighlight": "Your Business?",
+        "ctaDescription": "Let's discuss how I can build a custom solution that saves you time and grows your business.",
+        "ctaLinks": [
+          "Start Your Project",
+          "Schedule a Call"
+        ]
+      },
+      "dulceAntojo": {
+        "metaTitle": "Dulce Antojo Case Study - Website & Stripe Payments for a Houston Caterer",
+        "metaDescription": "How I took Dulce Antojo Snack Carts from Instagram-only to an official website with Stripe card payments, so a Houston event caterer could book companies and schools.",
+        "crumb": "Dulce Antojo",
+        "name": "Dulce Antojo",
+        "nameHighlight": "Snack Carts",
+        "subtitle": "How I took a Houston snack cart rental business from Instagram-only to an official website with Stripe card payments, so they could book companies and organizations, not just individuals.",
+        "imageAlt": "Dulce Antojo Snack Carts website screenshot",
+        "stats": [
+          "Star Google Reviews",
+          "Snack Cart Options",
+          "Lighthouse Score",
+          "Load Time"
+        ],
+        "challengesIntro": "Before working with me, Dulce Antojo rented Mexican dessert and snack carts (mini pancakes, paletas locas, churro sundaes, elote cups) for events in Houston with no official website, only social media, and no way to accept card payments.",
+        "challenges": [
+          {
+            "title": "No Official Website",
+            "description": "The business operated entirely through Instagram DMs and word-of-mouth. Potential customers had no centralized place to see all 13+ snack cart options, pricing, or how to book, and there was zero Google presence."
+          },
+          {
+            "title": "Could Not Take Card Payments",
+            "description": "Corporations, schools and other organizations usually pay by card and need a proper receipt. Without card payments, Dulce Antojo could not take those bookings at all."
+          },
+          {
+            "title": "No Lead or Payment Tracking",
+            "description": "Inquiries came through Instagram DMs, easy to miss and hard to track, and payments were scattered across messages and bank apps with no record of who had paid."
+          }
+        ],
+        "solutionsIntro": "I built their official website with a booking form, and a private admin dashboard with Stripe payments so the owner can charge any client by card.",
+        "solutions": [
+          {
+            "title": "Official Website Built to Book Events",
+            "description": "A modern, mobile-first website showcasing all 13+ snack cart options with a photo gallery, FAQ and a booking request form that captures event details (date, type, guests, preferred carts) and emails them instantly. Optimized for local search in Houston.",
+            "features": [
+              "13+ snack cart service showcases",
+              "Event booking form with validation",
+              "LocalBusiness schema and Houston keyword targeting",
+              "Fast loading under 2 seconds"
+            ]
+          },
+          {
+            "title": "Stripe Payment Links from a Private Dashboard",
+            "description": "The owner creates a payment link for each event and sends it by text or email. The client pays in seconds on Stripe's secure checkout, card data never touches the business's servers, and both sides get an automatic email receipt.",
+            "features": [
+              "Payment link per event, sent by SMS or email",
+              "Stripe-hosted checkout with fraud protection and PCI compliance",
+              "All major cards accepted, including corporate cards",
+              "No monthly fee, only a fee per transaction"
+            ]
+          },
+          {
+            "title": "Every Payment Recorded Automatically",
+            "description": "Stripe webhooks record each payment the moment it clears, so the dashboard always shows who paid, how much and when. Payments can be searched, receipted or refunded from one place, and admin credentials are stored encrypted and can be changed without a developer.",
+            "features": [
+              "Webhooks that log every payment",
+              "Paid, pending and followed-up status per booking",
+              "Instant notification to the business",
+              "Encrypted admin credentials the owner controls"
+            ]
+          }
+        ],
+        "results": [
+          {
+            "metric": "Companies and Schools as Clients",
+            "description": "Dulce Antojo can now book organizations that pay by card and need a receipt, not just individuals"
+          },
+          {
+            "metric": "Bookings and Payments in One Place",
+            "description": "Every booking and payment is organized and under the owner's control, instead of scattered across messages"
+          },
+          {
+            "metric": "5-Star Client Review",
+            "description": "The owner praised the modern design and how easy it is for customers to book events"
+          }
+        ],
+        "ctaTitle": "Still Turning Away Clients Because",
+        "ctaTitleHighlight": "You Can't Take Cards?",
+        "ctaDescription": "I build websites with secure Stripe payments for Houston businesses. Let's discuss how a professional website can generate more leads and let you charge any client by card.",
+        "ctaLinks": [
+          "Schedule Free Consultation",
+          "Web Design Services"
+        ]
+      },
+      "clinicaGessner": {
+        "metaTitle": "Clinica Hispana Gessner Case Study - Bilingual Healthcare Website",
+        "metaDescription": "How I helped Clinica Hispana Gessner replace their outdated WordPress site with a modern bilingual website. Lead capture, Google Business integration, and local SEO.",
+        "crumb": "Clinica Gessner",
+        "name": "Clinica Hispana",
+        "nameHighlight": "Gessner",
+        "subtitle": "How I replaced an outdated WordPress site with a modern bilingual website that helps Houston's Hispanic community find and contact the clinic online.",
+        "imageAlt": "Clinica Hispana Gessner website screenshot",
+        "stats": [
+          "Star Google Reviews",
+          "Languages (EN/ES)",
+          "Lighthouse Score",
+          "Load Time"
+        ],
+        "challengesIntro": "Before working with me, Clinica Gessner was struggling to connect with patients online despite serving a large Hispanic community in Houston.",
+        "challenges": [
+          {
+            "title": "Outdated WordPress Site",
+            "description": "The clinic had an old WordPress website that was slow, difficult to update, and didn't represent the quality of care they provide. Not mobile-friendly, a problem when most patients search from their phones."
+          },
+          {
+            "title": "No Bilingual Presence",
+            "description": "Despite serving Houston's Hispanic community, the website didn't have proper Spanish content. Patients who preferred Spanish had no way to browse services or book appointments in their language."
+          },
+          {
+            "title": "Invisible on Google",
+            "description": "No SEO optimization, no schema markup, and no Google Business Profile integration. Patients searching for 'clinica hispana Houston' couldn't find them online."
+          }
+        ],
+        "solutionsIntro": "I built a complete digital presence from scratch that connects the clinic with Houston's Hispanic community.",
+        "solutions": [
+          {
+            "title": "Modern Bilingual Website",
+            "description": "Built from scratch with Next.js, featuring native Spanish content written by a native speaker, not machine translated. Proper hreflang tags for bilingual SEO.",
+            "features": [
+              "Native Spanish localization",
+              "Mobile-first responsive design",
+              "Fast loading (under 2 seconds)",
+              "Professional, trust-building design"
+            ]
+          },
+          {
+            "title": "Lead Capture System",
+            "description": "Contact form that captures patient information and sends instant email notifications to the clinic. Every new lead arrives in their inbox with all details needed to follow up.",
+            "features": [
+              "Patient contact form with validation",
+              "Instant email notifications to clinic",
+              "Complete patient info in every email",
+              "Spam protection with Zod validation"
+            ]
+          },
+          {
+            "title": "Local SEO & Google Integration",
+            "description": "Comprehensive local SEO with schema markup, optimized meta tags for Houston healthcare searches, and Google Business Profile integration.",
+            "features": [
+              "LocalBusiness schema markup",
+              "Google Business Profile integration",
+              "Houston-targeted meta tags",
+              "Bilingual SEO optimization"
+            ]
+          }
+        ],
+        "results": [
+          {
+            "metric": "Found on Google",
+            "description": "The clinic now appears in Google searches for Spanish healthcare terms in Houston"
+          },
+          {
+            "metric": "Patient Leads via Website",
+            "description": "New patients find and contact the clinic directly through the website contact form"
+          },
+          {
+            "metric": "5-Star Client Review",
+            "description": "The clinic left a 5-star review praising the professional results and bilingual service"
+          }
+        ],
+        "ctaTitle": "Need a Website for",
+        "ctaTitleHighlight": "Your Clinic?",
+        "ctaDescription": "I build bilingual websites for Houston healthcare providers. Let's discuss how a modern website can bring more patients to your practice.",
+        "ctaLinks": [
+          "Schedule Free Consultation",
+          "Business Websites (English & Spanish)"
+        ]
+      },
+      "clinicaAirline": {
+        "metaTitle": "Clinica Hispana Airline Case Study - Bilingual Healthcare Website",
+        "metaDescription": "How I helped Clinica Hispana Airline replace their WordPress site with a modern bilingual website. Lead capture, Google Business integration, and local SEO for Houston.",
+        "crumb": "Clinica Airline",
+        "name": "Clinica Hispana",
+        "nameHighlight": "Airline",
+        "subtitle": "How I built a modern bilingual website that connects a Houston clinic near Airline Drive with the Hispanic community they serve.",
+        "imageAlt": "Clinica Hispana Airline website screenshot",
+        "stats": [
+          "Star Google Reviews",
+          "Languages (EN/ES)",
+          "Lighthouse Score",
+          "Load Time"
+        ],
+        "challengesIntro": "Before working with me, Clinica Hispana Airline was missing the online presence needed to serve their community effectively.",
+        "challenges": [
+          {
+            "title": "Outdated WordPress Site",
+            "description": "The clinic's WordPress website was slow, not mobile-optimized, and looked outdated. It didn't reflect the professional healthcare services they provide near Airline Drive."
+          },
+          {
+            "title": "Missing Spanish Content",
+            "description": "The majority of their patients are Spanish-speaking, yet the website had no proper Spanish version. Patients couldn't browse services in their preferred language."
+          },
+          {
+            "title": "Poor Google Visibility",
+            "description": "No SEO strategy, no schema markup, and no connection to their Google Business Profile. Patients searching for healthcare near Airline Drive couldn't find them."
+          }
+        ],
+        "solutionsIntro": "I built a modern bilingual website that serves as the clinic's primary patient acquisition channel.",
+        "solutions": [
+          {
+            "title": "Modern Bilingual Website",
+            "description": "Built from scratch with Next.js. Native Spanish content written by a native speaker ensures patients feel comfortable and trust the clinic from their first online interaction.",
+            "features": [
+              "Native Spanish content (not machine translated)",
+              "Mobile-first design for phone searches",
+              "Professional healthcare-focused layout",
+              "Fast loading under 2 seconds"
+            ]
+          },
+          {
+            "title": "Patient Lead Capture",
+            "description": "Contact form that captures patient information and instantly notifies the clinic via email. Every potential patient's details arrive in the clinic's inbox within seconds.",
+            "features": [
+              "Patient inquiry form with validation",
+              "Instant email notifications",
+              "Complete patient details in every lead",
+              "Protected against spam submissions"
+            ]
+          },
+          {
+            "title": "Local SEO & Google Integration",
+            "description": "Full local SEO targeting the Airline Drive area and broader Houston Hispanic community. Google Business Profile recognizes the new website as the clinic's official presence.",
+            "features": [
+              "LocalBusiness schema markup",
+              "Google Business Profile integration",
+              "Houston healthcare search targeting",
+              "Bilingual meta tags and SEO"
+            ]
+          }
+        ],
+        "results": [
+          {
+            "metric": "Google Visibility",
+            "description": "The clinic now appears in local searches for Hispanic healthcare services near Airline Drive"
+          },
+          {
+            "metric": "Online Patient Leads",
+            "description": "New patients discover and contact the clinic directly through the website's lead capture form"
+          },
+          {
+            "metric": "5-Star Client Review",
+            "description": "The clinic gave a 5-star review recognizing the quality and professionalism of the new website"
+          }
+        ],
+        "ctaTitle": "Need a Website for",
+        "ctaTitleHighlight": "Your Clinic?",
+        "ctaDescription": "I build bilingual websites for Houston healthcare providers. Let's discuss how a modern website can bring more patients to your practice.",
+        "ctaLinks": [
+          "Schedule Free Consultation",
+          "Business Websites (English & Spanish)"
+        ]
+      },
+      "leosHomeExperts": {
+        "metaTitle": "Leo's Home Experts Case Study - Home Services Website Houston",
+        "metaDescription": "How I built a modern website for Leo's Home Experts, a Houston home services company. Lead capture, video gallery, local SEO, and Google Business integration.",
+        "crumb": "Leo's Home Experts",
+        "name": "Leo's Home",
+        "nameHighlight": "Experts",
+        "subtitle": "How I built a professional website for a Houston home services company specializing in patio construction, motorized screens, and awning installations.",
+        "imageAlt": "Leo's Home Experts website screenshot",
+        "stats": [
+          "Star Google Reviews",
+          "Mile Service Radius",
+          "Lighthouse Score",
+          "Load Time"
+        ],
+        "challengesIntro": "Before working with me, Leo's Home Experts had no professional online presence to showcase their quality craftsmanship to Houston homeowners.",
+        "challenges": [
+          {
+            "title": "No Professional Website",
+            "description": "The business relied on word-of-mouth and social media but had no dedicated website. Potential customers searching for patio builders or motorized screens in Houston couldn't find them online."
+          },
+          {
+            "title": "No Way to Showcase Work",
+            "description": "Leo's team produces high-quality patio and screen installations, but had no professional platform to display their video portfolio and project photos to prospective clients."
+          },
+          {
+            "title": "Invisible on Google",
+            "description": "Without a website, there was no SEO presence. Homeowners searching for 'patio builder Houston' or 'motorized screens Houston' had no way to discover the business."
+          }
+        ],
+        "solutionsIntro": "I built a professional landing page optimized for lead generation and local visibility across the Greater Houston area.",
+        "solutions": [
+          {
+            "title": "Professional Landing Page",
+            "description": "A modern, mobile-first website showcasing all three service lines with clear descriptions, warranty information, and strong calls-to-action. Designed to build trust with homeowners from the first visit.",
+            "features": [
+              "Service showcases for patios, screens, and awnings",
+              "Warranty information (5-year motors, lifetime frame)",
+              "Mobile-first responsive design",
+              "Fast loading under 2 seconds"
+            ]
+          },
+          {
+            "title": "Video Gallery & Lead Capture",
+            "description": "Integrated a video gallery showcasing completed projects so homeowners can see the quality of work before contacting. A lead capture form with service selection sends instant notifications.",
+            "features": [
+              "Video gallery of completed projects",
+              "Lead capture form with service dropdown",
+              "Instant email notifications to Leo's team",
+              "Form validation with React Hook Form + Zod"
+            ]
+          },
+          {
+            "title": "Local SEO for Houston Area",
+            "description": "Implemented local SEO targeting the Houston metropolitan area and surrounding 150-mile radius. Schema markup and Google Business Profile integration ensure the business appears in local searches.",
+            "features": [
+              "JSON-LD LocalBusiness schema markup",
+              "Google Business Profile integration",
+              "Houston home services keyword targeting",
+              "Service area coverage (150-mile radius)"
+            ]
+          }
+        ],
+        "results": [
+          {
+            "metric": "Professional Online Presence",
+            "description": "The business now has a dedicated website that showcases their craftsmanship and builds trust"
+          },
+          {
+            "metric": "Lead Generation",
+            "description": "Homeowners find and contact the business directly through the website's lead capture form"
+          },
+          {
+            "metric": "5-Star Client Review",
+            "description": "Leonardo praised the clean, modern design and professional results"
+          }
+        ],
+        "testimonial": {
+          "quote": "Working with Randy from RC Web Solutions LLC was a great experience. He was professional, responsive, and really took the time to understand my business. The website turned out clean, modern, and easy for customers to use. I'm very happy with the results and would definitely recommend him to anyone needing a professional website.",
+          "company": "Leo's Home Experts"
+        },
+        "ctaTitle": "Need a Website for",
+        "ctaTitleHighlight": "Your Home Services Business?",
+        "ctaDescription": "I build websites for Houston contractors and home service companies. Let's discuss how a professional website can generate leads for your business.",
+        "ctaLinks": [
+          "Schedule Free Consultation",
+          "Web Design Services"
+        ]
+      }
+    }
+  },
+  "Schedule": {
+    "metadata": {
+      "title": "Let's Talk About Your Project",
+      "description": "Tell RC Web Solutions what you need and how you'd like to be contacted: form, phone, WhatsApp, email or a free 30-minute call. You get a clear quote within 24 hours."
+    },
+    "back": "Back to Contact",
+    "heading": "Let's Talk About Your Project",
+    "subheading": "Tell me what you need and how you'd like me to reach you. No account, no commitment: you get a clear quote and decide from there.",
+    "talkNow": "Prefer to talk now?",
+    "talkNowText": "Same person on every channel. If I can't pick up, I get back to you the same business day.",
+    "bookCall": "Or book a free 30-minute call",
+    "bookCallText": "Video or phone, whichever you prefer. Pick the slot that suits you and I'll send the invitation.",
+    "whatNext": "What Happens Next",
+    "steps": [
+      {
+        "title": "Tell me what you need",
+        "description": "Send the form or write to me on the channel you prefer. I reply within 24 hours, usually much sooner."
+      },
+      {
+        "title": "We agree on the scope",
+        "description": "A short conversation, by phone, WhatsApp or email, to understand your business and what the first version must do."
+      },
+      {
+        "title": "You get a quote and we start",
+        "description": "A written quote with a secure Stripe payment link: 50% to start, 50% on delivery, and a private link to follow the progress."
+      }
+    ],
+    "pickTime": "Pick a time on the calendar"
+  },
+  "Houston": {
+    "metadata": {
+      "title": "Web Developer in Houston, TX | Custom Websites for Local Businesses",
+      "description": "Looking for a web developer in Houston, TX? Randy Caballero builds fast, custom websites for small businesses in Katy, Sugar Land, The Heights, East Houston & beyond. Bilingual English & Spanish. Free consultation."
+    },
+    "badge": "Houston, Texas",
+    "title": "Web Developer in",
+    "titleHighlight": "Houston, TX",
+    "intro": "I'm Randy Caballero, a full-stack web developer based in Houston, Texas. I build fast, modern websites and web applications that help local businesses grow online. Bilingual service in English and Spanish.",
+    "freeConsultation": "Free Consultation",
+    "whyTitle": "Why Hire a Local Houston Web Developer?",
+    "whyText": "Working with a developer who knows Houston means your website is built to reach the right customers in your area.",
+    "services": [
+      {
+        "title": "Custom Business Websites",
+        "description": "Professional websites built with Next.js and React that load fast, rank well on Google, and convert visitors into customers."
+      },
+      {
+        "title": "Mobile-First Design",
+        "description": "Every site is designed mobile-first, because most people looking for a local business are searching from their phones."
+      },
+      {
+        "title": "E-Commerce Solutions",
+        "description": "Online stores with Stripe payments, inventory management, and everything your Houston business needs to sell online."
+      },
+      {
+        "title": "SEO & Local Visibility",
+        "description": "Built-in local SEO so your business shows up when Houston customers search for your services on Google."
+      },
+      {
+        "title": "Bilingual Websites",
+        "description": "English and Spanish versions of your site, written by a native Spanish speaker, so customers can read it in the language they prefer."
+      },
+      {
+        "title": "Affordable Plans",
+        "description": "Transparent pricing starting at $1,000. No hidden fees, 50/50 payment split, and a private link to follow your project's progress."
+      }
+    ],
+    "helpedTitle": "Houston Businesses I've Helped",
+    "helpedText": "Real results for real Houston businesses, from HVAC contractors to home service companies.",
+    "caseStudies": [
+      {
+        "result": "Bilingual clinic website with online appointment booking",
+        "industry": "Healthcare"
+      },
+      {
+        "result": "Bilingual clinic website with local SEO for Spanish-speaking patients in Houston",
+        "industry": "Healthcare"
+      },
+      {
+        "result": "Saved 15 hours/week with automated admin dashboard and email campaigns",
+        "industry": "HVAC Services"
+      },
+      {
+        "result": "Local SEO optimized landing page with video gallery and lead capture",
+        "industry": "Home Services"
+      },
+      {
+        "result": "Conversion-optimized landing page for event catering bookings",
+        "industry": "Food & Events"
+      }
+    ],
+    "viewProject": "View project",
+    "areasTitle": "Serving the Greater Houston Area",
+    "areasText": "Based in Houston, I work with businesses across the entire metropolitan area. 100% remote-friendly with in-person meetings available.",
+    "whatYouGetTitle": "What You Get Working With Me",
+    "whatYouGet": [
+      "Custom website built with Next.js, the same technology used by Nike, Netflix, and Twitch",
+      "Mobile-responsive design that works on every device",
+      "Built-in SEO so Google can find your Houston business",
+      "Fast loading speeds (under 2 seconds) that keep visitors engaged",
+      "Bilingual support: I speak English and Spanish fluently",
+      "Private link to follow your project's progress, no account needed",
+      "50/50 payment plan: pay half upfront, half on delivery",
+      "Free 30-minute consultation, no obligation, no pressure"
+    ],
+    "ctaTitle": "Ready to Grow Your Houston Business Online?",
+    "ctaText": "Let's talk about your project. Book a free 30-minute consultation and I'll show you exactly how a custom website can bring more customers to your business.",
+    "scheduleCta": "Schedule Free Consultation"
+  },
+  "ThankYou": {
+    "metadata": {
+      "title": "Thank You - Message Received",
+      "description": "Thank you for contacting RC Web Solutions LLC. Your message has been received and I will get back to you shortly."
+    },
+    "title": "Thank You!",
+    "received": "Your message has been successfully received.",
+    "whatNext": "What Happens Next?",
+    "steps": [
+      {
+        "title": "Confirmation Email",
+        "description": "You'll receive a confirmation email shortly with a copy of your message."
+      },
+      {
+        "title": "Quick Response Time",
+        "description": "I review every message personally and respond within 24-48 hours on business days."
+      },
+      {
+        "title": "Personalized Consultation",
+        "description": "I'll discuss your project requirements and propose a solution tailored to your needs."
+      }
+    ],
+    "needHelp": "Need immediate assistance?",
+    "backHome": "Back to Home",
+    "secure": "🔒 Your information is secure and will never be shared with third parties"
+  },
+  "NotFound": {
+    "title": "Page Not Found",
+    "text": "Oops! Looks like you've ventured into uncharted territory. The page you're looking for doesn't exist or has been moved to another dimension.",
+    "errorCode": "Error Code",
+    "pagesFound": "Pages Found",
+    "possibilities": "Possibilities",
+    "goHome": "Go Back Home",
+    "previous": "Previous Page",
+    "lost": "Lost? Try the",
+    "sitemap": "sitemap",
+    "or": "or",
+    "contact": "contact me"
+  },
+  "ErrorPage": {
+    "title": "Something went wrong",
+    "text": "Sorry, an unexpected error has occurred.",
+    "tryAgain": "Try again",
+    "goHome": "Go home",
+    "errorId": "Error ID: {id}"
+  },
+  "Quote": {
+    "metadata": {
+      "title": "Your Quote",
+      "description": "Review your written quote and start your project."
+    },
+    "number": "Quote {number}",
+    "preparedFor": "Prepared for {name}",
+    "validUntil": "Valid until {date}",
+    "accepted": {
+      "title": "Quote accepted",
+      "thanks": "Thank you! Your deposit was received",
+      "on": " on {date}",
+      "code": " and your project code is",
+      "track": "Track progress →"
+    },
+    "expired": {
+      "title": "This quote has expired",
+      "text": "It was valid until {date}. Reply to the email you received or write to",
+      "send": "and I'll send you an updated one."
+    },
+    "cancelled": {
+      "title": "This quote was withdrawn",
+      "text": "It is no longer available for payment. If you still want to go ahead, write to"
+    },
+    "client": "Client",
+    "project": "Project",
+    "total": "Total",
+    "included": "What's included",
+    "notes": "Notes",
+    "investment": "Investment",
+    "projectTotal": "Project total",
+    "deposit": "Deposit to start ({percent}%)",
+    "balance": "Balance on delivery",
+    "investmentNote": "Work starts as soon as the deposit clears. The balance is only due when the project is delivered, through a secure link sent to your email.",
+    "zelle": {
+      "title": "Pay the deposit by Zelle",
+      "thanks": "Thank you for accepting the quote{date}. Send the deposit from your bank's Zelle:",
+      "on": " on {date}",
+      "amount": "Amount",
+      "sendTo": "Send to",
+      "memo": "Memo",
+      "note": "Work starts as soon as the transfer is confirmed. You'll receive your invoice and a link to follow the project by email."
+    },
+    "questions": "Questions about this quote?",
+    "contact": "Contact me",
+    "form": {
+      "readyCard": "Prefer to pay by card after all?",
+      "ready": "Ready to start?",
+      "agree": "I have read and agree to the <terms>Terms of Service</terms> and the <refund>Refund Policy</refund>, and I accept this quote as the scope of the project.",
+      "accept": "Accept and Pay {amount} Deposit",
+      "processing": "Processing…",
+      "secure": "Secure payment by Stripe. You'll receive an invoice by email.",
+      "zelleAsk": "Prefer to pay the deposit by Zelle?",
+      "oneMoment": "One moment…",
+      "zelleHint": "Accept the terms above first. You'll see where to send it and work starts once the transfer is confirmed.",
+      "redirecting": "Redirecting to secure payment…",
+      "zelleThanks": "Thanks! Here are the Zelle details"
+    }
+  },
+  "Project": {
+    "metadata": {
+      "title": "Project Progress",
+      "description": "Track your project progress and milestones"
+    },
+    "title": "Project Progress",
+    "subtitle": "Track the progress of your project in real-time",
+    "code": "Project Code",
+    "client": "Client",
+    "plan": "Plan",
+    "status": {
+      "pending": "Pending",
+      "in_progress": "In Progress",
+      "ready_for_payment": "Ready for Payment",
+      "completed": "Completed"
+    },
+    "ready": {
+      "title": "Your project is ready",
+      "text": "Complete the final payment{amount} to receive your deliverables.",
+      "of": " of {amount}",
+      "pay": "Pay Final Balance"
+    },
+    "milestones": "Project Milestones",
+    "questions": "Questions about your project?",
+    "contact": "Contact me",
+    "milestone": {
+      "completed": "Completed",
+      "in_progress": "In Progress",
+      "pending": "Pending",
+      "none": "No milestones have been set up yet",
+      "checkBack": "Check back soon for project updates",
+      "overall": "Overall Progress",
+      "count": "{completed} of {total} milestones completed",
+      "due": "Due: {date}",
+      "completedOn": "Completed: {date}"
+    }
+  },
+  "FinalPayment": {
+    "metadata": {
+      "title": "Final Payment - Complete Your Project",
+      "description": "Complete your final payment to receive your completed project. Secure payment processing through Stripe for RC Web Solutions LLC projects."
+    },
+    "notices": {
+      "invalid-link": "That payment link is not valid. Enter your email and project code below to continue.",
+      "project-not-ready": "Your project is not ready for the final payment yet. You'll receive an email as soon as it is.",
+      "payment-failed": "We couldn't start the payment from your link. Try again below or contact support.",
+      "too-many-requests": "Too many attempts from your connection. Wait a minute and try again."
+    },
+    "title": "Complete Your Payment",
+    "subtitle": "Enter your project details to proceed with the final payment",
+    "email": "Email Address",
+    "emailPlaceholder": "john@example.com",
+    "code": "Project Code",
+    "codeHint": "The 6-character code from your initial payment",
+    "verify": "Verify Project",
+    "verifying": "Verifying…",
+    "details": "Project Details",
+    "project": "Project:",
+    "codeLabel": "Code:",
+    "finalPayment": "Final Payment:",
+    "proceed": "Proceed to Payment",
+    "processing": "Processing…",
+    "help": "Need help? Contact",
+    "toasts": {
+      "missing": "Please enter both email and project code",
+      "verified": "Project verified successfully!",
+      "failed": "Verification failed",
+      "popups": "Please allow popups to continue to payment.",
+      "sessionFailed": "Failed to create payment session"
+    }
+  },
+  "PaymentSuccess": {
+    "metadata": {
+      "title": "Payment Successful - Thank You!",
+      "description": "Your payment has been successfully processed. Thank you for choosing RC Web Solutions LLC for your project."
+    },
+    "noSession": "No session ID provided. Please contact support if you completed a payment.",
+    "processing": {
+      "title": "Payment Received, Finishing Up",
+      "text": "Stripe confirmed your payment, but your project is still being registered. This usually takes a few seconds.",
+      "code": "Your project code is <code></code>. Keep it: you'll need it for the final payment.",
+      "checkAgain": "Check Again",
+      "invoice": "You'll also receive your invoice by email once it is ready."
+    },
+    "error": {
+      "title": "Payment Processing Issue",
+      "text": "Don't worry! If your payment was successful in Stripe, I'll process it shortly. Please save your confirmation email."
+    },
+    "title": "Payment Successful! 🎉",
+    "thanks": "Thank you for your payment. Your project has been initiated and I'll be in touch within 24 hours.",
+    "codeLabel": "Your Project Code",
+    "copy": "Copy to clipboard",
+    "copied": "Project code copied!",
+    "saveCode": "Save this code - you'll need it for the final payment",
+    "plan": "Plan:",
+    "paid": "Amount Paid:",
+    "remaining": "Remaining Balance:",
+    "status": "Status:",
+    "inProgress": "In Progress",
+    "next": {
+      "title": "What happens next?",
+      "items": [
+        "I'll contact you within 24 hours to discuss project details",
+        "Development will begin based on your selected plan timeline",
+        "You'll receive updates throughout the development process",
+        "Final payment will be due upon project completion"
+      ]
+    },
+    "home": "Return to Home",
+    "support": "Contact Support",
+    "footer": "You'll receive a confirmation email shortly with all the details.",
+    "subscription": {
+      "processing": "Subscription is being processed. Please check your email for confirmation.",
+      "errorTitle": "Subscription Processing Issue",
+      "errorText": "Don't worry! If your payment was successful in Stripe, I'll process it shortly. Please check your email for confirmation.",
+      "title": "Subscription Active!",
+      "thanks": "Thank you for subscribing to the maintenance plan. Your website is now protected and supported.",
+      "monthly": "Monthly Amount:",
+      "perMonth": "/mo",
+      "status": "Status:",
+      "nextBilling": "Next Billing Date:",
+      "in30Days": "In approximately 30 days",
+      "email": "Email:",
+      "id": "Subscription ID:",
+      "includedTitle": "What's Included in Your Plan",
+      "included": [
+        "Security patches & updates",
+        "Performance monitoring",
+        "Content updates (up to 4 hours/month)",
+        "Technical support via email",
+        "Monthly reports"
+      ]
+    }
+  },
+  "PaymentComplete": {
+    "metadata": {
+      "title": "Payment Successful - Thank You!",
+      "description": "Your payment has been successfully processed. Thank you for choosing RC Web Solutions LLC."
+    },
+    "title": "Project Fully Paid! 🎉",
+    "thanks": "Thank you for your business!",
+    "nextTitle": "What Happens Next:",
+    "next": [
+      "You'll receive an email with all project files and documentation within 24 hours",
+      "Access credentials for hosting and admin panels will be provided",
+      "Training session will be scheduled based on your availability",
+      "Support period begins today as per your plan"
+    ],
+    "reference": "Project Reference:",
+    "save": "Save this for your records",
+    "home": "Return to Home",
+    "support": "Contact Support",
+    "receipt": "A detailed receipt has been sent to your email address.",
+    "questions": "For any questions, please contact me at {email}"
+  },
+  "ManageSubscription": {
+    "metadata": {
+      "title": "Manage Subscription",
+      "description": "Manage your RC Web Solutions subscription. Update payment methods, view billing history, or cancel your subscription."
+    },
+    "errors": {
+      "expired-link": "That link has expired or was replaced by a newer one. Enter your email to get a fresh link.",
+      "portal-unavailable": "We could not open the subscription portal right now. Please try again in a few minutes or contact us."
+    },
+    "title": "Manage Subscription",
+    "subtitle": "Enter your email to receive a secure management link",
+    "placeholder": "your@email.com",
+    "send": "Send Management Link",
+    "sending": "Sending…",
+    "success": {
+      "title": "Check Your Email",
+      "text": "If you have an active subscription, I've sent a secure link to manage it. The link will expire in 24 hours.",
+      "another": "Send another link"
+    },
+    "helpTitle": "What can you do with the management link?",
+    "help": [
+      "Update your payment method",
+      "View your billing history and invoices",
+      "Cancel your subscription at any time"
+    ],
+    "needHelp": "Need help?",
+    "support": "Contact Support",
+    "toasts": {
+      "sending": "Sending management link…",
+      "sent": "Check your email for the management link!",
+      "failed": "An error occurred. Please try again."
+    },
+    "invalidEmail": "Please enter a valid email address"
+  },
+  "Unsubscribe": {
+    "metadata": {
+      "title": "Unsubscribe",
+      "description": "Unsubscribe from RC Web Solutions LLC email communications."
+    },
+    "invalid": "Invalid unsubscribe link",
+    "done": {
+      "title": "Unsubscribed Successfully",
+      "text": "{email} has been removed from RC Web Solutions marketing emails.",
+      "transactional": "You will still receive transactional emails about your projects.",
+      "home": "Back to Home"
+    },
+    "title": "Unsubscribe from Emails",
+    "confirm": "Are you sure you want to unsubscribe <email></email> from marketing emails?",
+    "noLonger": "You will no longer receive:",
+    "items": [
+      "Marketing updates",
+      "Service updates",
+      "Newsletter"
+    ],
+    "unsubscribe": "Unsubscribe",
+    "processing": "Processing…",
+    "cancel": "Cancel"
+  },
+  "BlogSubscribe": {
+    "title": "Subscribe to Blog",
+    "text": "Get new articles about web development, React and Next.js, plus news from RC Web Solutions, by email.",
+    "email": "Email address",
+    "placeholder": "you@email.com…",
+    "subscribe": "Subscribe",
+    "subscribing": "Subscribing…",
+    "consent": "By subscribing you agree to receive emails from RC Web Solutions LLC. No spam. <link>Unsubscribe anytime</link>.",
+    "toasts": {
+      "subscribing": "Subscribing…",
+      "failed": "Something went wrong. Please try again."
+    },
+    "invalidEmail": "Please enter a valid email address"
+  },
+  "Actions": {
+    "tooManyRequests": "Too many requests. Please try again later.",
+    "quote": {
+      "invalid": "This quote link is not valid",
+      "accepted": "This quote has already been accepted",
+      "withdrawn": "This quote has been withdrawn",
+      "expired": "This quote has expired. Reply to the email to request an updated one",
+      "paymentFailed": "Failed to start the payment. Please try again",
+      "zelleUnavailable": "Zelle payments are not available right now",
+      "failed": "Something went wrong. Please try again"
+    },
+    "project": {
+      "invalidCredentials": "Invalid email or project code",
+      "depositPending": "Initial payment not completed",
+      "notReady": "Project is not ready for final payment yet",
+      "verificationFailed": "Verification failed",
+      "sessionFailed": "Failed to create payment session"
+    },
+    "portal": {
+      "invalidEmail": "Please enter a valid email address",
+      "emailFailed": "Failed to send email. Please try again.",
+      "failed": "An error occurred. Please try again later."
+    },
+    "blog": {
+      "invalid": "Please enter a valid email address",
+      "alreadySubscribed": "This email is already subscribed to the blog.",
+      "subscribed": "Successfully subscribed to the blog.",
+      "failed": "An error occurred while subscribing to the blog."
+    },
+    "unsubscribe": {
+      "notFound": "Contact not found",
+      "failed": "Failed to unsubscribe"
+    },
+    "checkout": {
+      "invalid": "Invalid checkout data",
+      "planUnavailable": "Selected plan is not available",
+      "failed": "Failed to create checkout session"
+    }
+  },
+  "Legal": {
+    "lastUpdated": "Last updated: <date></date>",
+    "returnToPricing": "Return to Pricing Plans",
+    "analyticsOptOut": {
+      "allow": "Allow Google Analytics to measure my visits",
+      "on": "Measurement is on. Untick the box to turn it off for this browser.",
+      "off": "Measurement is off for this browser and the analytics cookies have been removed."
+    }
+  }
+}

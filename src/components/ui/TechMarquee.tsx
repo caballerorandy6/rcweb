@@ -1,5 +1,7 @@
 "use client";
 
+import { useTranslations } from "next-intl";
+
 import Marquee from "react-fast-marquee";
 import { PauseIcon, PlayIcon } from "@heroicons/react/24/solid";
 import { useEffect, useRef, useState } from "react";
@@ -17,6 +19,7 @@ export interface TeachMarqueeProps {
  * paused by the visitor.
  */
 const TechMarquee = ({ items }: { items: TeachMarqueeProps[] }) => {
+  const t = useTranslations("Marquee");
   const containerRef = useRef<HTMLDivElement>(null);
   const [inView, setInView] = useState(false);
   const [paused, setPaused] = useState(false);
@@ -59,7 +62,7 @@ const TechMarquee = ({ items }: { items: TeachMarqueeProps[] }) => {
         </Marquee>
       </div>
 
-      <ul className="sr-only" aria-label="Technologies I work with">
+      <ul className="sr-only" aria-label={t("technologies")}>
         {items.map((item) => (
           <li key={item.name}>
             <a href={item.href} target="_blank" rel="noopener noreferrer">
@@ -81,7 +84,7 @@ const TechMarquee = ({ items }: { items: TeachMarqueeProps[] }) => {
           ) : (
             <PauseIcon className="h-4 w-4" aria-hidden="true" />
           )}
-          {paused ? "Play animation" : "Pause animation"}
+          {paused ? t("play") : t("pause")}
         </button>
       </div>
     </div>

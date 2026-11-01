@@ -1,3 +1,4 @@
+import { getLocale, getTranslations } from "next-intl/server";
 import { formatDate } from "@/lib/utils";
 import {
   CheckCircleIcon,
@@ -10,9 +11,10 @@ type ClientMilestoneViewProps = {
   milestones: Milestone[];
 };
 
-export default function ClientMilestoneView({
+export default async function ClientMilestoneView({
   milestones,
 }: ClientMilestoneViewProps) {
+  const [t, locale] = await Promise.all([getTranslations("Project.milestone"), getLocale()]);
   const completedCount = milestones.filter(
     (m) => m.status === "completed"
   ).length;
@@ -34,16 +36,7 @@ export default function ClientMilestoneView({
     }
   };
 
-  const getStatusLabel = (status: Milestone["status"]) => {
-    switch (status) {
-      case "completed":
-        return "Completed";
-      case "in_progress":
-        return "In Progress";
-      default:
-        return "Pending";
-    }
-  };
+  const getStatusLabel = (status: Milestone["status"]) => t(status);
 
   const getStatusBg = (status: Milestone["status"]) => {
     switch (status) {
@@ -60,12 +53,8 @@ export default function ClientMilestoneView({
     return (
       <div className="text-center py-12 flex flex-col justify-center items-center">
         <ClockIcon className="w-16 h-16 text-gray-600 mx-auto mb-4" />
-        <p className="text-gray-400 font-inter">
-          No milestones have been set up yet
-        </p>
-        <p className="text-gray-500 text-sm font-inter mt-1">
-          Check back soon for project updates
-        </p>
+        <p className="text-gray-400 font-inter">{t("none")}</p>
+        <p className="text-gray-500 text-sm font-inter mt-1">{t("checkBack")}</p>
       </div>
     );
   }
@@ -75,9 +64,7 @@ export default function ClientMilestoneView({
       {/* Progress Overview */}
       <div className="bg-gray-800/50 rounded-xl p-6 border border-gray-700">
         <div className="flex justify-between items-center mb-4">
-          <h3 className="text-lg font-semibold text-white font-inter">
-            Overall Progress
-          </h3>
+          <h3 className="text-lg font-semibold text-white font-inter">{t("overall")}</h3>
           <span className="text-2xl text-gold font-iceland">
             {progressPercent}%
           </span>
@@ -89,7 +76,7 @@ export default function ClientMilestoneView({
           />
         </div>
         <p className="text-gray-400 text-sm mt-3 font-inter">
-          {completedCount} of {milestones.length} milestones completed
+          {t("count", { completed: completedCount, total: milestones.length })}
         </p>
       </div>
 
@@ -138,14 +125,11 @@ export default function ClientMilestoneView({
                 {/* Dates */}
                 <div className="flex gap-4 mt-2 text-xs text-gray-500 font-inter">
                   {milestone.dueDate && (
-                    <span>
-                      Due: {formatDate(milestone.dueDate)}
-                    </span>
+                    <span>{t("due", { date: formatDate(milestone.dueDate, { locale }) })}</span>
                   )}
                   {milestone.completedAt && (
                     <span className="text-green-500">
-                      Completed:{" "}
-                      {formatDate(milestone.completedAt)}
+                      {t("completedOn", { date: formatDate(milestone.completedAt, { locale }) })}
                     </span>
                   )}
                 </div>

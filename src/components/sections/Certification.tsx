@@ -1,7 +1,18 @@
 import Image from "next/image";
 import { useState } from "react";
 
+/** Button and placeholder captions, translated by the section that renders the list */
+export type CertificationLabels = {
+  previous: string;
+  next: string;
+  seePdf: string;
+  seeCertificate: string;
+  download: string;
+  pdfCertificate: string;
+};
+
 export interface CertificationProps {
+  labels: CertificationLabels;
   name: string;
   platform: string;
   description: string;
@@ -17,6 +28,7 @@ const Certification = ({
   image,
   url,
   pdfThumbnail,
+  labels,
 }: CertificationProps) => {
   const [imageError, setImageError] = useState(false);
   const isPDF = image.endsWith(".pdf");
@@ -50,7 +62,7 @@ const Certification = ({
             >
               <path d="M14,2H6A2,2 0 0,0 4,4V20A2,2 0 0,0 6,22H18A2,2 0 0,0 20,20V8L14,2M18,20H6V4H13V9H18V20M10,19L8,14H10L12,19H10M14,19L12,14H14L16,19H14Z" />
             </svg>
-            <p className="text-xs text-white/60 font-inter">PDF certificate</p>
+            <p className="text-xs text-white/60 font-inter">{labels.pdfCertificate}</p>
           </div>
 
           {/* Opción B: Si quieres usar react-pdf, descomentar esto */}
@@ -114,7 +126,7 @@ const Certification = ({
               d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"
             />
           </svg>
-          {isPDF ? "See PDF" : "See Certificate"}
+          {isPDF ? labels.seePdf : labels.seeCertificate}
         </a>
         <button
           onClick={() => {
@@ -143,7 +155,7 @@ const Certification = ({
               d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
             />
           </svg>
-          Download
+          {labels.download}
         </button>
       </div>
     </div>

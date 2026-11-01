@@ -1,12 +1,10 @@
 import { create } from "zustand";
 import { persist, createJSONStorage } from "zustand/middleware";
-import { navigation } from "@/lib/navigation";
-
-type SectionName = (typeof navigation)[number]["name"];
+import type { SectionKey } from "@/lib/navigation";
 
 interface RCWebState {
-  activeSection: SectionName;
-  setActiveSection: (section: SectionName) => void;
+  activeSection: SectionKey;
+  setActiveSection: (section: SectionKey) => void;
   isOpen: boolean;
   setIsOpen: (open: boolean) => void;
   handleClickModal: () => void;
@@ -17,7 +15,7 @@ interface RCWebState {
 export const useRCWebStore = create<RCWebState>()(
   persist(
     (set) => ({
-      activeSection: "Home",
+      activeSection: "home",
       setActiveSection: (section) => set({ activeSection: section }),
       isOpen: false,
       setIsOpen: (open) => set({ isOpen: open }),
@@ -27,7 +25,10 @@ export const useRCWebStore = create<RCWebState>()(
         set({ isOpenLetsContactDialog: open }),
     }),
     {
+      // v2: section keys instead of English labels
       name: "rcweb-storage",
+      version: 2,
+      migrate: () => ({ activeSection: "home" as SectionKey }),
       storage: createJSONStorage(() =>
         typeof window !== "undefined" ? localStorage : sessionStorage
       ),
