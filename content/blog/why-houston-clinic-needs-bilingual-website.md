@@ -13,7 +13,7 @@ Houston is the most diverse city in the United States. **44% of the population i
 
 If your clinic's website is English-only, you're not just missing a marketing opportunity — you're creating a barrier between your practice and nearly half of Houston's population.
 
-I'm Randy Caballero, a bilingual web developer in Houston. I've built websites for clinics like [Clinica Hispana Gessner](https://www.clinicagessner.com/) and [Clinica Hispana Airline](https://www.clinicahispanaairline.com/). Here's why going bilingual changed everything for them.
+I'm Randy Caballero, a bilingual web developer in Houston. I've built websites for clinics like [Clínica Hispana Nueva Salud Gessner](https://www.clinicagessner.com/) and [Clinica Hispana Airline](https://www.clinicahispanaairline.com/). Here's why going bilingual changed everything for them.
 
 ---
 
@@ -70,9 +70,9 @@ It's more than language. It's understanding the patient experience:
 
 ## Real Results: Houston Clinics I've Built
 
-### Clinica Hispana Gessner
+### Clínica Hispana Nueva Salud Gessner
 
-When Clinica Gessner came to me, they had an outdated English-only website. Their patient base is overwhelmingly Spanish-speaking, but their online presence didn't reflect that.
+When Clínica Hispana Nueva Salud Gessner came to me, they had an outdated English-only website. Their patient base is overwhelmingly Spanish-speaking, but their online presence didn't reflect that.
 
 I built a bilingual website with:
 - Native Spanish content written by a native speaker (me)

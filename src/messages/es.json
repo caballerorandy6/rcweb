@@ -76,7 +76,7 @@
           "Formularios de contacto",
           "Carga en menos de 2 segundos"
         ],
-        "highlight": "Como Clínica Gessner y Leo's Home Experts",
+        "highlight": "Como Clínica Hispana Nueva Salud Gessner y Leo's Home Experts",
         "range": "$1,000 - $6,000",
         "duration": "1-4 semanas",
         "description": "Una landing page a precio fijo, o un sitio de 5 a 10 páginas presupuestado según el alcance",
@@ -266,7 +266,7 @@
     },
     "projects": {
       "gsmactx": "Sitio web a medida y panel de administración para una empresa de aire acondicionado de Houston. Campañas de email automatizadas, gestión de solicitudes de servicio y renderizado en tiempo real del lado del cliente. Le ahorró al negocio más de 15 horas a la semana.",
-      "dulceAntojo": "Sitio web y panel de administración privado con enlaces de pago de Stripe, construidos para un negocio de renta de carritos de snacks en Houston y ahora presentados como proyecto de portafolio. Formulario de reservas, SEO local y pagos con tarjeta para empresas y escuelas.",
+      "dulceAntojo": "Demo de un sitio web y panel de administración privado con enlaces de pago de Stripe para un negocio de renta de carritos de snacks en Houston. Formulario de reservas, SEO local y pagos con tarjeta. No es el sitio actual del negocio.",
       "clinicaGessner": "Sitio web bilingüe para una clínica de Houston con reserva de citas en línea, información de servicios y SEO local para llegar a pacientes de habla hispana.",
       "clinicaAirline": "Sitio web bilingüe y profesional para una clínica de Houston con pacientes de habla hispana. Incluye SEO local, páginas de servicios y un diseño amigable para el paciente, optimizado para el móvil.",
       "leosHomeExperts": "Landing page para una empresa de servicios para el hogar de Houston especializada en construcción de patios, mosquiteros motorizados e instalación de toldos. Incluye optimización de SEO local con schema JSON-LD e integración de galería de video.",
@@ -795,14 +795,14 @@
   "Portfolio": {
     "metadata": {
       "title": "Proyectos y casos de éxito | Portafolio de desarrollo web",
-      "description": "Sitios web que he construido para pequeños negocios: clínicas, aire acondicionado, servicios para el hogar, renta para eventos y más, la mayoría en el área de Houston. También demos de una tienda en línea, un sistema de órdenes, un salón y una renta de limusinas."
+      "description": "Sitios web que he construido para pequeños negocios: clínicas, aire acondicionado, servicios para el hogar y más, la mayoría en el área de Houston. También demos de una tienda en línea, un sistema de órdenes, un salón, una renta de limusinas y un negocio de carritos de snacks."
     },
     "title": "Proyectos y",
     "titleHighlight": "casos de éxito",
     "intro": "Sitios web construidos para pequeños negocios reales, y demos que muestran lo que puedo construir. Haz clic en «Caso de éxito» en un proyecto de cliente para ver la historia completa: retos, soluciones y resultados.",
     "clients": "Proyectos de clientes",
     "demos": "Demos",
-    "demosIntro": "Proyectos de muestra que construí para enseñar lo que es posible. No se hicieron para un cliente, y sus negocios, precios y datos son ejemplos."
+    "demosIntro": "Proyectos de muestra que enseñan lo que puedo construir. Ninguno es el sitio de un cliente actual, y sus negocios, precios y datos pueden ser ejemplos."
   },
   "CaseStudies": {
     "back": "Volver a proyectos",
@@ -934,7 +934,7 @@
             "description": "Las consultas llegaban por mensajes directos de Instagram, fáciles de pasar por alto y difíciles de rastrear, y los pagos estaban dispersos entre mensajes y apps bancarias sin registro de quién había pagado."
           }
         ],
-        "solutionsIntro": "Construí un sitio web con formulario de reservas y un panel de administración privado con pagos de Stripe para que la dueña pudiera cobrar con tarjeta a cualquier cliente. El enlace de esta página abre la versión de portafolio del proyecto.",
+        "solutionsIntro": "Construí un sitio web con formulario de reservas y un panel de administración privado con pagos de Stripe para que la dueña pudiera cobrar con tarjeta a cualquier cliente. El enlace de esta página abre una versión de demostración del proyecto, no el sitio actual del negocio.",
         "solutions": [
           {
             "title": "Sitio web hecho para reservar eventos",
@@ -990,20 +990,20 @@
         ]
       },
       "clinicaGessner": {
-        "metaTitle": "Caso de éxito Clínica Hispana Gessner - Sitio web bilingüe para salud",
-        "metaDescription": "Cómo ayudé a Clínica Hispana Gessner a reemplazar su sitio anticuado en WordPress por un sitio web bilingüe moderno. Captura de prospectos, integración con Google Business y SEO local.",
-        "crumb": "Clínica Gessner",
-        "name": "Clínica Hispana",
+        "metaTitle": "Caso de éxito Clínica Hispana Nueva Salud Gessner - Sitio web bilingüe para salud",
+        "metaDescription": "Cómo ayudé a Clínica Hispana Nueva Salud Gessner a reemplazar su sitio anticuado en WordPress por un sitio web bilingüe moderno. Captura de prospectos, integración con Google Business y SEO local.",
+        "crumb": "Clínica Hispana Nueva Salud Gessner",
+        "name": "Clínica Hispana Nueva Salud",
         "nameHighlight": "Gessner",
         "subtitle": "Cómo reemplacé un sitio anticuado en WordPress por un sitio web bilingüe moderno que ayuda a la comunidad hispana de Houston a encontrar y contactar a la clínica en línea.",
-        "imageAlt": "Captura del sitio web de Clínica Hispana Gessner",
+        "imageAlt": "Captura del sitio web de Clínica Hispana Nueva Salud Gessner",
         "stats": [
           "Estrellas en reseñas de Google",
           "Idiomas (EN/ES)",
           "Puntuación Lighthouse",
           "Tiempo de carga"
         ],
-        "challengesIntro": "Antes de trabajar conmigo, Clínica Gessner tenía dificultades para conectar con pacientes en línea a pesar de atender a una gran comunidad hispana en Houston.",
+        "challengesIntro": "Antes de trabajar conmigo, Clínica Hispana Nueva Salud Gessner tenía dificultades para conectar con pacientes en línea a pesar de atender a una gran comunidad hispana en Houston.",
         "challenges": [
           {
             "title": "Sitio anticuado en WordPress",
@@ -1332,10 +1332,6 @@
       {
         "result": "Landing page optimizada para SEO local con galería de video y captura de prospectos",
         "industry": "Servicios para el hogar"
-      },
-      {
-        "result": "Landing page optimizada para conversión de reservas de catering para eventos",
-        "industry": "Comida y eventos"
       }
     ],
     "viewProject": "Ver proyecto",
