@@ -1,16 +1,27 @@
-import Link from "next/link";
+import NextLink from "next/link";
 import type { Route } from "next";
+import { Link, type Href } from "@/i18n/navigation";
+import { isAdminPath, type AdminHref } from "@/config/adminRoutes";
 import clsx from "clsx";
 import type { ReactNode, MouseEventHandler } from "react";
 
 type ButtonVariant = "primary" | "secondary" | "danger";
+
+/** Destinations rendered as a plain anchor: other sites, dialer, mail, downloadable files */
+export type ExternalHref =
+  | `http://${string}`
+  | `https://${string}`
+  | `tel:${string}`
+  | `mailto:${string}`
+  | `/${string}.${string}`;
 type ButtonSize = "sm" | "md" | "lg";
 
 interface ButtonProps {
   children: ReactNode;
   variant?: ButtonVariant;
   size?: ButtonSize;
-  href?: Route | string;
+  /** Internal page (locale-aware) or an external/tel/mailto/file URL */
+  href?: Href | ExternalHref | AdminHref;
   external?: boolean;
   /** Download attribute for file links (served as a plain anchor) */
   download?: string;
@@ -78,18 +89,19 @@ const Button = ({
   );
 
   if (href) {
+    const isPlainAnchor = typeof href === "string" && (external || /^(https?:|tel:|mailto:)|\.\w+$/.test(href));
     // tel:/mailto: open the dialer or mail client: plain anchor, same tab
-    if (/^(tel|mailto):/.test(href)) {
+    if (typeof href === "string" && /^(tel|mailto):/.test(href)) {
       return (
         <a href={href} className={classes} onClick={onClick} aria-label={ariaLabel}>
           {content}
         </a>
       );
     }
-    if (external) {
+    if (isPlainAnchor) {
       return (
         <a
-          href={href}
+          href={href as string}
           target="_blank"
           rel="noopener noreferrer"
           download={download}
@@ -101,9 +113,17 @@ const Button = ({
         </a>
       );
     }
+    // Admin pages have no locale: plain next/link
+    if (typeof href === "string" && isAdminPath(href.split(/[?#]/)[0])) {
+      return (
+        <NextLink href={href as Route} className={classes} onClick={onClick} aria-label={ariaLabel}>
+          {content}
+        </NextLink>
+      );
+    }
     return (
       <Link
-        href={href as Route}
+        href={href as Href}
         className={classes}
         onClick={onClick}
         aria-label={ariaLabel}

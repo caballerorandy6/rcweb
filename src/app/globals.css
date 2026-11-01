@@ -241,6 +241,7 @@
     color: --alpha(var(--color-gold) / 90%);
   }
   & h4 {
+    margin-top: --spacing(4);
     margin-bottom: --spacing(2);
     font-family: var(--next-font-inter);
     font-size: var(--text-lg);
@@ -270,6 +271,17 @@
   }
   & strong {
     color: var(--color-gold);
+  }
+  /* Note boxes from `> [!tone]` blockquotes (see lib/markdown/remarkCallouts) */
+  & .callout {
+    margin-block: --spacing(4);
+    padding: --spacing(4);
+    border-width: 1px;
+    border-radius: var(--radius-lg);
+  }
+  & .callout p {
+    font-weight: 600;
+    color: --alpha(var(--color-white) / 90%);
   }
 }
 

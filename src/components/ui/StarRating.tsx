@@ -5,6 +5,8 @@ interface StarRatingProps {
   rating: number;
   size?: "sm" | "md" | "lg";
   className?: string;
+  /** Accessible name in the visitor's language; English by default */
+  label?: string;
 }
 
 const SIZES = { sm: "h-4 w-4", md: "h-5 w-5", lg: "h-6 w-6" } as const;
@@ -15,13 +17,13 @@ const SIZES = { sm: "h-4 w-4", md: "h-5 w-5", lg: "h-6 w-6" } as const;
  * depender de los huecos entre estrellas. Server Component, sin JS. La raíz
  * es un `span` para poder ir dentro de un `<p>` sin romper el HTML.
  */
-export default function StarRating({ rating, size = "md", className = "" }: StarRatingProps) {
+export default function StarRating({ rating, size = "md", className = "", label }: StarRatingProps) {
   const value = Math.max(0, Math.min(5, rating));
-  const label = `${Number(value.toFixed(1))} out of 5 stars`;
+  const name = label ?? `${Number(value.toFixed(1))} out of 5 stars`;
   const box = SIZES[size];
 
   return (
-    <span className={`inline-flex gap-1 ${className}`} role="img" aria-label={label}>
+    <span className={`inline-flex gap-1 ${className}`} role="img" aria-label={name}>
       {Array.from({ length: 5 }, (_, index) => {
         const fill = Math.max(0, Math.min(1, value - index));
         return (

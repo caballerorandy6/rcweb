@@ -11,6 +11,8 @@ import {
 } from "@react-email/components";
 import * as React from "react";
 import { EMAIL_COLORS } from "../colors";
+import { emailTranslator } from "../i18n";
+import type { Locale } from "@/i18n/routing";
 import type { InvoiceType } from "@/generated/prisma/enums";
 
 export type InvoiceEmailType = InvoiceType;
@@ -18,9 +20,12 @@ export type InvoiceEmailType = InvoiceType;
 export interface InvoiceEmailProps {
   type: InvoiceEmailType;
   customerName: string;
+  locale: Locale;
   planName: string;
   invoiceNumber: string;
   firstPayment: number;
+  /** Sales tax paid with the deposit, in cents */
+  depositTax: number;
   secondPayment: number;
   totalAmount: number;
   /** Public progress page (/project/{accessToken}); replaces the old client portal */
@@ -36,28 +41,31 @@ const headerGradients = {
   summary: "linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%)",
 };
 
-const titles = {
-  initial: "Payment Confirmed!",
-  final: "Final Payment Received!",
-  summary: "Project Complete!",
-};
+const titleKeys = {
+  initial: "invoice.titleInitial",
+  final: "invoice.titleFinal",
+  summary: "invoice.titleSummary",
+} as const;
 
-const subtitles = {
-  initial: "Your invoice is attached",
-  final: "Your project is ready",
-  summary: "Full Invoice Summary",
-};
+const subtitleKeys = {
+  initial: "invoice.subtitleInitial",
+  final: "invoice.subtitleFinal",
+  summary: "invoice.subtitleSummary",
+} as const;
 
 export const InvoiceEmail = ({
   type,
   customerName,
+  locale,
   planName,
   invoiceNumber,
   firstPayment,
+  depositTax,
   secondPayment,
   totalAmount,
   projectUrl,
 }: InvoiceEmailProps) => {
+  const t = emailTranslator(locale);
   return (
     <Html>
       <Head />
@@ -70,70 +78,70 @@ export const InvoiceEmail = ({
               background: headerGradients[type],
             }}
           >
-            <Heading style={styles.headerTitle}>{titles[type]}</Heading>
-            <Text style={styles.headerSubtitle}>{subtitles[type]}</Text>
+            <Heading style={styles.headerTitle}>{t(titleKeys[type])}</Heading>
+            <Text style={styles.headerSubtitle}>{t(subtitleKeys[type])}</Text>
           </Section>
 
           {/* Content */}
           <Section style={styles.content}>
             <Text style={styles.greeting}>
-              Hi <strong>{customerName}</strong>,
+              {t.rich("common.greeting", { name: customerName, b: (chunks) => <strong>{chunks}</strong> })}
             </Text>
 
             {/* Type-specific message */}
             {type === "initial" && (
               <Text style={styles.message}>
-                Thank you for your initial payment. We&apos;ve started working on
-                your <strong style={{ color: colors.gold }}>{planName}</strong>{" "}
-                project!
+                {t.rich("invoice.bodyInitial", { planName, b: (chunks) => <strong style={{ color: colors.gold }}>{chunks}</strong> })}
               </Text>
             )}
 
             {type === "final" && (
               <Text style={styles.message}>
-                Your final payment of{" "}
-                <strong style={{ color: colors.green, fontSize: "18px" }}>
-                  ${(secondPayment / 100).toFixed(2)}
-                </strong>{" "}
-                has been received. Your project is now complete!
+                {t.rich("invoice.bodyFinal", { amount: `$${(secondPayment / 100).toFixed(2)}`, b: (chunks) => <strong style={{ color: colors.green, fontSize: "18px" }}>{chunks}</strong> })}
               </Text>
             )}
 
             {type === "summary" && (
               <Text style={styles.message}>
-                Here is your complete invoice summary for the{" "}
-                <strong>{planName}</strong> project. This invoice shows both
-                payments and the total amount paid.
+                {t.rich("invoice.bodySummary", { planName, b: (chunks) => <strong>{chunks}</strong> })}
               </Text>
             )}
 
             {/* Invoice Number Box */}
             <Section style={styles.invoiceBox}>
               <Text style={styles.invoiceLabel}>
-                {type === "summary" ? "Summary Invoice Number" : "Invoice Number"}
+                {t(type === "summary" ? "invoice.summaryNumber" : "invoice.number")}
               </Text>
               <Text style={styles.invoiceNumber}>{invoiceNumber}</Text>
               <Text style={styles.invoiceNote}>
-                {type === "initial" && "PDF invoice attached to this email"}
-                {type === "final" && "PDF invoice attached • Full summary coming next"}
-                {type === "summary" && "Complete project invoice attached"}
+                {type === "initial" && t("invoice.attachedInitial")}
+                {type === "final" && t("invoice.attachedFinal")}
+                {type === "summary" && t("invoice.attachedSummary")}
               </Text>
             </Section>
 
-            {/* Payment Summary - Only for initial and summary */}
+            {/* {t("invoice.paymentSummary")} - Only for initial and summary */}
             {type === "initial" && (
               <Section style={styles.summaryBox}>
                 <Text style={styles.summaryTitle}>Payment Summary</Text>
                 <table style={{ width: "100%", fontSize: "14px" }}>
                   <tbody>
                     <tr>
-                      <td style={styles.summaryLabel}>Initial Payment (50%):</td>
+                      <td style={styles.summaryLabel}>{t("invoice.initialPayment")}</td>
                       <td style={styles.summaryValuePaid}>
                         ${(firstPayment / 100).toFixed(2)} ✓
                       </td>
                     </tr>
+                    {depositTax > 0 && (
+                      <tr>
+                        <td style={styles.summaryLabel}>{t("invoice.salesTax")}</td>
+                        <td style={styles.summaryValuePaid}>
+                          ${(depositTax / 100).toFixed(2)} ✓
+                        </td>
+                      </tr>
+                    )}
                     <tr>
-                      <td style={styles.summaryLabel}>Remaining Balance:</td>
+                      <td style={styles.summaryLabel}>{t("invoice.remaining")}</td>
                       <td style={styles.summaryValue}>
                         ${(secondPayment / 100).toFixed(2)}
                       </td>
@@ -148,7 +156,7 @@ export const InvoiceEmail = ({
                           color: colors.gray,
                         }}
                       >
-                        Total Project Cost:
+                        {t("invoice.totalCost")}
                       </td>
                       <td
                         style={{
@@ -167,14 +175,14 @@ export const InvoiceEmail = ({
               </Section>
             )}
 
-            {/* Total Paid - Only for summary */}
+            {/* {t("invoice.totalPaid")} - Only for summary */}
             {type === "summary" && (
               <Section style={styles.summaryBox}>
                 <Text style={styles.summaryTitle}>Total Paid</Text>
                 <Text style={styles.totalAmount}>
                   ${(totalAmount / 100).toFixed(2)}
                 </Text>
-                <Text style={styles.allPaymentsNote}>✓ All payments received</Text>
+                <Text style={styles.allPaymentsNote}>{t("invoice.allReceived")}</Text>
               </Section>
             )}
 
@@ -182,8 +190,7 @@ export const InvoiceEmail = ({
             {type === "final" && (
               <Section style={styles.noticeBox}>
                 <Text style={styles.noticeText}>
-                  ✓ You will receive a complete project summary invoice in a
-                  separate email
+                  {t("invoice.summaryNext")}
                 </Text>
               </Section>
             )}
@@ -191,9 +198,9 @@ export const InvoiceEmail = ({
             {/* Project Complete Badge - Only for summary */}
             {type === "summary" && (
               <Section style={styles.completeBadge}>
-                <Text style={styles.completeBadgeTitle}>✓ PROJECT COMPLETED</Text>
+                <Text style={styles.completeBadgeTitle}>{t("invoice.completed")}</Text>
                 <Text style={styles.completeBadgeText}>
-                  Thank you for choosing RC Web Solutions!
+                  {t("invoice.thanks")}
                 </Text>
               </Section>
             )}
@@ -201,10 +208,10 @@ export const InvoiceEmail = ({
             {projectUrl && (
               <Section style={styles.projectLinkBox}>
                 <Text style={styles.projectLinkText}>
-                  Follow the progress of your project at any time:
+                  {t("invoice.follow")}
                 </Text>
                 <Link href={projectUrl} style={styles.projectButton}>
-                  View your project
+                  {t("invoice.viewProject")}
                 </Link>
               </Section>
             )}
@@ -212,7 +219,7 @@ export const InvoiceEmail = ({
             <Hr style={styles.hr} />
 
             <Text style={styles.footer}>
-              Questions? Contact us at{" "}
+              {t("common.questionsContact")}{" "}
               <Link href="mailto:admin@rcweb.dev" style={styles.link}>
                 admin@rcweb.dev
               </Link>

@@ -1,3 +1,4 @@
+import type { Locale } from "@/i18n/routing";
 import { COMPANY } from "@/lib/company";
 import { InvoiceStatus, InvoiceType, PaymentMethod } from "@/generated/prisma/enums";
 
@@ -10,12 +11,14 @@ export interface CreateInvoiceData {
   projectId: string;
   type: InvoiceType;
   customerName: string;
+  locale: Locale;
   customerEmail: string;
   projectCode: string;
   planName: string;
   description: string;
-  subtotal: number; // En centavos
-  taxRate: number; // Porcentaje (ej: 8.5 para 8.5%)
+  subtotal: number; // En centavos, sin impuesto
+  /** Impuesto realmente cobrado en este pago, en centavos */
+  taxAmount: number;
   /** How the charge was collected; Stripe unless the admin recorded it by hand */
   paymentMethod: PaymentMethod;
   /** Only for Stripe payments */
@@ -31,6 +34,7 @@ export interface InvoiceData {
   invoiceNumber: string;
   type: InvoiceType;
   customerName: string;
+  locale: Locale;
   customerEmail: string;
   projectCode: string;
   planName: string;
@@ -82,18 +86,6 @@ export const RC_WEB_COMPANY_INFO: CompanyInfo = {
 };
 
 /**
- * Configuración de impuestos por estado/región
- */
-export interface TaxConfig {
-  state: string;
-  rate: number; // Porcentaje
-  description: string;
-}
-
-// Default tax rate (Florida sales tax)
-export const DEFAULT_TAX_RATE = 7.0; // 7% Florida sales tax
-
-/**
  * Resultado de la generación del invoice
  */
 export interface GenerateInvoiceResult {
@@ -118,10 +110,12 @@ export function dollarsToCents(dollars: number): number {
 }
 
 /**
- * Calcula el monto de impuestos
+ * Porcentaje efectivo para mostrar en la factura, derivado de lo cobrado.
+ * En Texas sale 6.6: 8.25 % sobre el 80 % gravable del diseño web.
  */
-export function calculateTaxAmount(subtotal: number, taxRate: number): number {
-  return Math.round((subtotal * taxRate) / 100);
+export function effectiveTaxRate(subtotal: number, taxAmount: number): number {
+  if (subtotal <= 0) return 0;
+  return Math.round((taxAmount / subtotal) * 10000) / 100;
 }
 
 /**
@@ -131,13 +125,3 @@ export function calculateTotal(subtotal: number, taxAmount: number): number {
   return subtotal + taxAmount;
 }
 
-/**
- * Formatea una fecha para mostrar en el invoice
- */
-export function formatInvoiceDate(date: Date): string {
-  return date.toLocaleDateString("en-US", {
-    year: "numeric",
-    month: "long",
-    day: "numeric",
-  });
-}

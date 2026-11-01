@@ -1,6 +1,7 @@
 import Image from "next/image";
-import Link from "next/link";
-import type { Route } from "next";
+import { getTranslations } from "next-intl/server";
+import { Link } from "@/i18n/navigation";
+import type { Href } from "@/i18n/navigation";
 import Button from "@/components/ui/Button";
 import {
   ArrowLeftIcon,
@@ -63,7 +64,7 @@ export type CaseStudyData = {
   name: string;
   nameHighlight: string;
   subtitle: string;
-  siteUrl: string;
+  siteUrl: `https://${string}`;
   image: string;
   imageAlt: string;
   stats: Stat[];
@@ -77,10 +78,12 @@ export type CaseStudyData = {
   ctaTitle: string;
   ctaTitleHighlight: string;
   ctaDescription: string;
-  ctaLinks: { label: string; href: string; primary?: boolean }[];
+  ctaLinks: { label: string; href: Href; primary?: boolean }[];
 };
 
-export default function CaseStudyTemplate({ data }: { data: CaseStudyData }) {
+export default async function CaseStudyTemplate({ data }: { data: CaseStudyData }) {
+  const t = await getTranslations("CaseStudies");
+
   return (
     <div className="bg-gray-900 min-h-screen">
       {/* Hero Section */}
@@ -93,11 +96,11 @@ export default function CaseStudyTemplate({ data }: { data: CaseStudyData }) {
         <div className="mx-auto max-w-7xl px-6 lg:px-8">
           <div className="mb-8 animate-enter">
             <Link
-              href={"/#projects" as Route}
+              href={{ pathname: "/", hash: "projects" }}
               className="inline-flex items-center gap-2 text-gold hover:text-gold/80 transition-colors font-inter text-sm"
             >
               <ArrowLeftIcon className="w-4 h-4" />
-              Back to Projects
+              {t("back")}
             </Link>
           </div>
 
@@ -105,7 +108,7 @@ export default function CaseStudyTemplate({ data }: { data: CaseStudyData }) {
             <div className="animate-enter [animation-delay:100ms]">
               <div className="inline-flex items-center gap-2 px-4 py-2 bg-gold/10 border border-gold/30 rounded-full mb-6">
                 <span className="text-gold text-sm font-inter font-medium">
-                  Case Study
+                  {t("badge")}
                 </span>
               </div>
 
@@ -120,11 +123,11 @@ export default function CaseStudyTemplate({ data }: { data: CaseStudyData }) {
 
               <div className="flex flex-wrap gap-4">
                 <Button href={data.siteUrl} external>
-                  Visit Live Site
+                  {t("visitSite")}
                   <ArrowTopRightOnSquareIcon className="w-5 h-5" />
                 </Button>
-                <Button href={"/schedule" as Route} variant="secondary">
-                  Start Your Project
+                <Button href="/schedule" variant="secondary">
+                  {t("startProject")}
                 </Button>
               </div>
             </div>
@@ -168,7 +171,7 @@ export default function CaseStudyTemplate({ data }: { data: CaseStudyData }) {
       <section className="py-16 border-t border-white/5">
         <div className="mx-auto max-w-7xl px-6 lg:px-8">
           <div className="text-center mb-8 reveal">
-            <h2 className="text-sm font-semibold text-gold font-inter uppercase tracking-wider">Technologies Used</h2>
+            <h2 className="text-sm font-semibold text-gold font-inter uppercase tracking-wider">{t("technologies")}</h2>
           </div>
           <div className="flex flex-wrap justify-center gap-3 reveal">
             {data.techStack.map((tech) => (
@@ -182,7 +185,7 @@ export default function CaseStudyTemplate({ data }: { data: CaseStudyData }) {
       <section className="py-20">
         <div className="mx-auto max-w-7xl px-6 lg:px-8">
           <div className="text-center mb-16 reveal">
-            <h2 className="text-3xl sm:text-4xl text-white font-iceland mb-4">The <span className="text-gold">Challenges</span></h2>
+            <h2 className="text-3xl sm:text-4xl text-white font-iceland mb-4">{t("challenges")} <span className="text-gold">{t("challengesHighlight")}</span></h2>
             <p className="text-white/60 font-inter max-w-2xl mx-auto">{data.challengesIntro}</p>
           </div>
           <div className="grid md:grid-cols-3 gap-8">
@@ -204,7 +207,7 @@ export default function CaseStudyTemplate({ data }: { data: CaseStudyData }) {
       <section className="py-20 bg-gray-800/30">
         <div className="mx-auto max-w-7xl px-6 lg:px-8">
           <div className="text-center mb-16 reveal">
-            <h2 className="text-3xl sm:text-4xl text-white font-iceland mb-4">The <span className="text-gold">Solution</span></h2>
+            <h2 className="text-3xl sm:text-4xl text-white font-iceland mb-4">{t("solution")} <span className="text-gold">{t("solutionHighlight")}</span></h2>
             <p className="text-white/60 font-inter max-w-2xl mx-auto">{data.solutionsIntro}</p>
           </div>
           <div className="space-y-12">
@@ -239,7 +242,7 @@ export default function CaseStudyTemplate({ data }: { data: CaseStudyData }) {
       <section className="py-20">
         <div className="mx-auto max-w-7xl px-6 lg:px-8">
           <div className="text-center mb-16 reveal">
-            <h2 className="text-3xl sm:text-4xl text-white font-iceland mb-4">The <span className="text-gold">Results</span></h2>
+            <h2 className="text-3xl sm:text-4xl text-white font-iceland mb-4">{t("results")} <span className="text-gold">{t("resultsHighlight")}</span></h2>
           </div>
           <div className="grid md:grid-cols-3 gap-8">
             {data.results.map((result) => (
@@ -292,7 +295,7 @@ export default function CaseStudyTemplate({ data }: { data: CaseStudyData }) {
               {data.ctaLinks.map((link) => (
                 <Button
                   key={link.label}
-                  href={link.href as Route}
+                  href={link.href}
                   variant={link.primary ? "primary" : "secondary"}
                   size="lg"
                 >

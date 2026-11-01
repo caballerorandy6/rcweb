@@ -1,6 +1,8 @@
 "use client";
 
 import { useEffect } from "react";
+import { useLocale, useTranslations } from "next-intl";
+import { COMPANY } from "@/lib/company";
 import Button from "@/components/ui/Button";
 import {
   CheckCircleIcon,
@@ -24,6 +26,8 @@ export default function SubscriptionSuccess({
   subscription,
   error,
 }: SubscriptionSuccessProps) {
+  const t = useTranslations("PaymentSuccess");
+  const locale = useLocale();
   useEffect(() => {
     if (subscription && !error) {
       confetti({
@@ -49,8 +53,8 @@ export default function SubscriptionSuccess({
   }, [subscription, error]);
 
   const formatDate = (date: Date | null) => {
-    if (!date) return "In approximately 30 days";
-    return formatDateUtil(date, { month: "long" });
+    if (!date) return t("subscription.in30Days");
+    return formatDateUtil(date, { month: "long", locale });
   };
 
   if (error) {
@@ -63,14 +67,11 @@ export default function SubscriptionSuccess({
             <ExclamationTriangleIcon className="w-16 h-16 mx-auto" />
           </div>
           <h2 className="text-2xl font-bold text-white mb-2">
-            Subscription Processing Issue
+            {t("subscription.errorTitle")}
           </h2>
           <p className="text-gray-300 mb-6">{error}</p>
-          <p className="text-sm text-gray-400 mb-6">
-            Don&apos;t worry! If your payment was successful in Stripe, I&apos;ll
-            process it shortly. Please check your email for confirmation.
-          </p>
-          <Button href="mailto:contactus@rcweb.dev">Contact Support</Button>
+          <p className="text-sm text-gray-400 mb-6">{t("subscription.errorText")}</p>
+          <Button href={`mailto:${COMPANY.contactEmail}`}>{t("support")}</Button>
         </div>
       </div>
     );
@@ -89,13 +90,10 @@ export default function SubscriptionSuccess({
         {/* Main Content */}
         <div className="bg-gray-800/50 backdrop-blur-xs rounded-2xl p-8 border border-gold/20">
           <h1 className="text-4xl font-bold text-gold text-center mb-4">
-            Subscription Active!
+            {t("subscription.title")}
           </h1>
 
-          <p className="text-gray-300 text-center mb-8 font-inter">
-            Thank you for subscribing to the maintenance plan. Your website is
-            now protected and supported.
-          </p>
+          <p className="text-gray-300 text-center mb-8 font-inter">{t("subscription.thanks")}</p>
 
           {/* Subscription Details */}
           {subscription && (
@@ -110,13 +108,13 @@ export default function SubscriptionSuccess({
                 </div>
                 <div className="grid grid-cols-2 gap-4 text-sm">
                   <div>
-                    <span className="text-gray-400">Monthly Amount:</span>
+                    <span className="text-gray-400">{t("subscription.monthly")}</span>
                     <p className="text-white font-semibold text-lg">
-                      {formatCurrency(subscription.amount)}/mo
+                      {formatCurrency(subscription.amount)}{t("subscription.perMonth")}
                     </p>
                   </div>
                   <div>
-                    <span className="text-gray-400">Status:</span>
+                    <span className="text-gray-400">{t("subscription.status")}</span>
                     <p className="text-green-500 font-semibold capitalize">
                       {subscription.status}
                     </p>
@@ -129,7 +127,7 @@ export default function SubscriptionSuccess({
                 <div className="flex items-center gap-3">
                   <CalendarIcon className="w-5 h-5 text-gray-400" />
                   <div>
-                    <span className="text-gray-400 text-sm">Next Billing Date:</span>
+                    <span className="text-gray-400 text-sm">{t("subscription.nextBilling")}</span>
                     <p className="text-white font-medium">
                       {formatDate(subscription.currentPeriodEnd)}
                     </p>
@@ -141,11 +139,11 @@ export default function SubscriptionSuccess({
               <div className="bg-gray-700/30 rounded-xl p-4 border border-gray-600/30">
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm">
                   <div>
-                    <span className="text-gray-400">Email:</span>
+                    <span className="text-gray-400">{t("subscription.email")}</span>
                     <p className="text-white">{subscription.email}</p>
                   </div>
                   <div>
-                    <span className="text-gray-400">Subscription ID:</span>
+                    <span className="text-gray-400">{t("subscription.id")}</span>
                     <p className="text-gray-300 font-mono text-xs truncate">
                       {subscription.stripeSubscriptionId}
                     </p>
@@ -157,48 +155,30 @@ export default function SubscriptionSuccess({
 
           {/* What's Included */}
           <div className="bg-blue-900/20 rounded-lg p-4 mb-8 border border-blue-500/30 font-inter">
-            <h3 className="text-blue-400 font-semibold mb-3">
-              What&apos;s Included in Your Plan
-            </h3>
+            <h3 className="text-blue-400 font-semibold mb-3">{t("subscription.includedTitle")}</h3>
             <ul className="text-sm text-gray-300 space-y-2">
-              <li className="flex items-center gap-2">
-                <CheckCircleIcon className="w-4 h-4 text-green-500" />
-                Security patches & updates
-              </li>
-              <li className="flex items-center gap-2">
-                <CheckCircleIcon className="w-4 h-4 text-green-500" />
-                Performance monitoring
-              </li>
-              <li className="flex items-center gap-2">
-                <CheckCircleIcon className="w-4 h-4 text-green-500" />
-                Content updates (up to 4 hours/month)
-              </li>
-              <li className="flex items-center gap-2">
-                <CheckCircleIcon className="w-4 h-4 text-green-500" />
-                Technical support via email
-              </li>
-              <li className="flex items-center gap-2">
-                <CheckCircleIcon className="w-4 h-4 text-green-500" />
-                Monthly reports
-              </li>
+              {(t.raw("subscription.included") as string[]).map((item) => (
+                <li key={item} className="flex items-center gap-2">
+                  <CheckCircleIcon className="w-4 h-4 text-green-500" />
+                  {item}
+                </li>
+              ))}
             </ul>
           </div>
 
           {/* Actions */}
           <div className="flex flex-col sm:flex-row gap-4 font-inter">
             <Button href="/" className="flex-1">
-              Return to Home
+              {t("home")}
             </Button>
-            <Button href="mailto:contactus@rcweb.dev" variant="secondary" className="flex-1">
-              Contact Support
+            <Button href={`mailto:${COMPANY.contactEmail}`} variant="secondary" className="flex-1">
+              {t("support")}
             </Button>
           </div>
         </div>
 
         {/* Footer Note */}
-        <p className="text-center text-gray-400 text-sm mt-6 font-inter mx-auto">
-          You&apos;ll receive a confirmation email shortly with all the details.
-        </p>
+        <p className="text-center text-gray-400 text-sm mt-6 font-inter mx-auto">{t("footer")}</p>
       </div>
     </div>
   );

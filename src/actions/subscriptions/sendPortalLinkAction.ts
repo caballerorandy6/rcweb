@@ -1,6 +1,9 @@
 "use server";
 
 import { randomBytes } from "node:crypto";
+import { getLocale, getTranslations } from "next-intl/server";
+import { localizePathname } from "@/i18n/paths";
+import type { Locale } from "@/i18n/routing";
 import { Resend } from "resend";
 import { prisma } from "@/lib/prisma";
 import { sendSubscriptionPortalLink } from "@/lib/email/senders";
@@ -21,15 +24,16 @@ export const PORTAL_LINK_TTL_MS = 24 * 60 * 60 * 1000;
 export async function sendPortalLinkAction(
   email: string
 ): Promise<ActionResultSimple> {
+  const [t, locale] = await Promise.all([getTranslations("Actions"), getLocale()]);
   try {
     const rateCheck = await checkActionRateLimit(rateLimiters.contact);
     if (!rateCheck.success) {
-      return { success: false, error: rateCheck.error! };
+      return { success: false, error: t("tooManyRequests") };
     }
 
     const parsed = ManageSubscriptionSchema.safeParse({ email });
     if (!parsed.success) {
-      return { success: false, error: "Please enter a valid email address" };
+      return { success: false, error: t("portal.invalidEmail") };
     }
 
     const subscription = await prisma.subscription.findFirst({
@@ -55,21 +59,21 @@ export async function sendPortalLinkAction(
     const emailResult = await sendSubscriptionPortalLink(resend, {
       customerEmail: subscription.email,
       customerName: subscription.name,
-      portalUrl: `${process.env.NEXT_PUBLIC_BASE_URL}/manage-subscription/${token}`,
+      // The email and its link keep the language the customer asked in
+      locale,
+      // The emailed link keeps the language the customer asked in
+      portalUrl: `${process.env.NEXT_PUBLIC_BASE_URL}${localizePathname("/manage-subscription/[token]", locale as Locale, { token })}`,
       planName: subscription.planName,
     });
 
     if (!emailResult.success) {
       console.error("Failed to send portal link email:", emailResult.error);
-      return { success: false, error: "Failed to send email. Please try again." };
+      return { success: false, error: t("portal.emailFailed") };
     }
 
     return { success: true };
   } catch (error) {
     console.error("❌ Error sending portal link:", error);
-    return {
-      success: false,
-      error: "An error occurred. Please try again later.",
-    };
+    return { success: false, error: t("portal.failed") };
   }
 }

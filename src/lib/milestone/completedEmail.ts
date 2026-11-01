@@ -1,8 +1,10 @@
+import type { Locale } from "@/i18n/routing";
 import type { MilestoneStatus } from "@/generated/prisma/enums";
 import { getProjectUrl } from "@/lib/projectUrl";
 
 type ProjectLike = {
   name: string;
+  locale: Locale;
   projectCode: string;
   planName: string;
   accessToken: string;
@@ -19,6 +21,7 @@ type MilestoneLike = {
 
 export type MilestoneCompletedEmailData = {
   customerName: string;
+  locale: Locale;
   projectCode: string;
   planName: string;
   milestoneTitle: string;
@@ -59,6 +62,7 @@ export function buildMilestoneCompletedEmail(
     ok: true,
     data: {
       customerName: project.name,
+      locale: project.locale,
       projectCode: project.projectCode,
       planName: project.planName,
       milestoneTitle: milestone.title,
@@ -67,7 +71,7 @@ export function buildMilestoneCompletedEmail(
       completedCount: ordered.filter((m) => m.status === "completed").length,
       totalCount: ordered.length,
       milestones: ordered.map((m) => ({ title: m.title, status: m.status })),
-      projectUrl: getProjectUrl(project.accessToken),
+      projectUrl: getProjectUrl(project.accessToken, project.locale),
     },
   };
 }

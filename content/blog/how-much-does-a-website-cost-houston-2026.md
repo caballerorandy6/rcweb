@@ -31,7 +31,7 @@ A single-page website focused on one goal — usually getting phone calls or for
 
 **Best for:** New businesses, service promotions, event pages
 
-**Real example:** I built a landing page for [Dulce Antojo Snack Carts](https://dulce-antojo-snack-carts.vercel.app/), a Houston-based event catering business. The page focuses on booking conversions with clear service showcases and an interactive contact form.
+**Real example:** I built a landing page for [Dulce Antojo Snack Carts](https://dulce-antojo-snack-carts.vercel.app/), a Houston-based event catering business. The page focuses on booking conversions with clear service showcases and an interactive contact form. The business has since moved to a different website.
 
 ---
 
@@ -115,7 +115,7 @@ I offer something most agencies in Houston don't:
 
 - **Transparent pricing** — You see the numbers upfront, not after a sales call
 - **50/50 payment split** — Half upfront, half on delivery. No paying 100% before seeing results
-- **Bilingual service** — Native English and Spanish. I understand the Houston Hispanic market
+- **Bilingual service** — Native English and Spanish. I understand Houston's Spanish-speaking market
 - **Modern technology** — Next.js and React, the same tech behind Nike and Netflix
 - **Project link** — Follow your project's progress through a private link, no account needed
 

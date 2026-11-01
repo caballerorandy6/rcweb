@@ -1,3 +1,4 @@
+import type { Locale } from "@/i18n/routing";
 import type { QuoteStatus } from "@/generated/prisma/enums";
 import type { QuoteDisplayStatus } from "@/lib/quote/quoteStatus";
 
@@ -11,6 +12,7 @@ export type AdminQuote = {
   token: string;
   email: string;
   name: string;
+  locale: Locale;
   offerId: string | null;
   planName: string;
   scope: string[];

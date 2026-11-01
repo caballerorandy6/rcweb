@@ -1,6 +1,9 @@
+import { emailTranslator } from "@/lib/email/i18n";
 import stripe from "@/lib/stripe";
 import type { FinalCheckoutMetadataInput } from "@/lib/checkoutMetadata";
 import { getProjectUrl, SITE_BASE_URL } from "@/lib/projectUrl";
+import { localizePathname } from "@/i18n/paths";
+import { routing, type Locale } from "@/i18n/routing";
 
 export interface FinalPaymentProject {
   id: string;
@@ -22,8 +25,10 @@ export type FinalPaymentOrigin = "form" | "magic-link";
  */
 export async function createFinalPaymentCheckout(
   project: FinalPaymentProject,
-  origin: FinalPaymentOrigin
+  origin: FinalPaymentOrigin,
+  locale: Locale = routing.defaultLocale
 ): Promise<string> {
+  const t = emailTranslator(locale);
   const metadata = {
     paymentType: "final",
     projectId: project.id,
@@ -32,6 +37,7 @@ export async function createFinalPaymentCheckout(
   } satisfies FinalCheckoutMetadataInput;
 
   const session = await stripe.checkout.sessions.create({
+    locale,
     allowed_payment_method_types: ["card"],
     mode: "payment",
     customer_email: project.email,
@@ -41,8 +47,8 @@ export async function createFinalPaymentCheckout(
         price_data: {
           currency: "usd",
           product_data: {
-            name: `${project.planName} - Final Payment (50%)`,
-            description: "Final payment upon project completion",
+            name: t("checkout.finalName", { planName: project.planName }),
+            description: t("checkout.finalDescription"),
           },
           unit_amount: project.finalAmount,
         },
@@ -50,11 +56,11 @@ export async function createFinalPaymentCheckout(
       },
     ],
     automatic_tax: { enabled: true },
-    success_url: `${SITE_BASE_URL}/payment-complete?code=${project.projectCode}`,
+    success_url: `${SITE_BASE_URL}${localizePathname("/payment-complete", locale)}?code=${project.projectCode}`,
     cancel_url:
       origin === "magic-link"
-        ? getProjectUrl(project.accessToken)
-        : `${SITE_BASE_URL}/final-payment`,
+        ? getProjectUrl(project.accessToken, locale)
+        : `${SITE_BASE_URL}${localizePathname("/final-payment", locale)}`,
   });
 
   if (!session.url) {

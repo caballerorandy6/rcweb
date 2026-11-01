@@ -1,8 +1,10 @@
-import Link from "next/link";
+import { Link } from "@/i18n/navigation";
 import Button from "@/components/ui/Button";
 import Image from "next/image";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
+import { urlTransform } from "@/lib/markdown/urlTransform";
+import { getLocale, getTranslations } from "next-intl/server";
 import {
   ArrowLeftIcon,
   ArrowPathIcon,
@@ -14,6 +16,7 @@ import type { BlogPost as BlogPostType } from "@/lib/blog";
 import { formatDate } from "@/lib/utils";
 import { siteConfig } from "@/config/site";
 import BlogSubscriptionForm from "@/components/blog/BlogSubscriptionForm";
+import PageMessages from "@/components/layout/PageMessages";
 
 interface BlogPostProps {
   post: BlogPostType;
@@ -25,7 +28,13 @@ const calculateReadTime = (content: string): number => {
   return Math.ceil(words / 200);
 };
 
-export default function BlogPost({ post }: BlogPostProps) {
+export default async function BlogPost({ post }: BlogPostProps) {
+  const [t, tBlog, locale] = await Promise.all([
+    getTranslations("Blog.post"),
+    getTranslations("Blog"),
+    getLocale(),
+  ]);
+  const dateOptions = { month: "long", timeZone: "UTC", locale } as const;
 
   return (
     <section className="relative isolate overflow-hidden py-24 sm:py-32 bg-linear-to-b from-gray-900 via-gray-900/95 to-gray-900 min-h-screen">
@@ -44,7 +53,7 @@ export default function BlogPost({ post }: BlogPostProps) {
             className="inline-flex items-center gap-2 px-4 py-2 bg-gray-800 hover:bg-gray-700 text-white rounded-lg transition-colors border border-gray-600 font-inter text-sm"
           >
             <ArrowLeftIcon className="w-4 h-4" />
-            Back to Blog
+            {t("backToBlog")}
           </Link>
         </div>
 
@@ -98,189 +107,181 @@ export default function BlogPost({ post }: BlogPostProps) {
               </div>
               <div className="flex items-center gap-2">
                 <CalendarIcon className="w-5 h-5" />
-                <time dateTime={post.date}>
-                  {formatDate(post.date, { month: "long", timeZone: "UTC" })}
-                </time>
+                <time dateTime={post.date}>{formatDate(post.date, dateOptions)}</time>
               </div>
               {post.updated && (
                 <div className="flex items-center gap-2">
                   <ArrowPathIcon className="w-5 h-5" />
                   <span>
-                    Updated{" "}
-                    <time dateTime={post.updated}>
-                      {formatDate(post.updated, { month: "long", timeZone: "UTC" })}
-                    </time>
+                    {t.rich("updated", {
+                      date: () => (
+                        <time dateTime={post.updated}>{formatDate(post.updated!, dateOptions)}</time>
+                      ),
+                    })}
                   </span>
                 </div>
               )}
               <div className="flex items-center gap-2">
                 <ClockIcon className="w-5 h-5" />
-                <span>{calculateReadTime(post.content)} min read</span>
+                <span>{tBlog("readTime", { minutes: calculateReadTime(post.content) })}</span>
               </div>
             </div>
 
-            {/* Mid-Post Subscription CTA */}
-            <div className="mt-8 p-6 bg-gray-800/50 border border-gold/20 rounded-xl">
-              <p className="text-gold font-inter font-semibold text-lg mb-2">
-                Enjoying this article?
-              </p>
-              <p className="text-gray-400 text-sm font-inter mb-4">
-                Get notified when I publish new posts about web development,
-                automation, and business growth.
-              </p>
-              <BlogSubscriptionForm />
-            </div>
+            <PageMessages namespaces={["BlogSubscribe"]}>
+              {/* Mid-Post Subscription CTA */}
+              <div className="mt-8 p-6 bg-gray-800/50 border border-gold/20 rounded-xl">
+                <p className="text-gold font-inter font-semibold text-lg mb-2">{t("enjoying")}</p>
+                <p className="text-gray-400 text-sm font-inter mb-4">{t("notify")}</p>
+                <BlogSubscriptionForm />
+              </div>
 
-            {/* Article Content */}
-            <div className="prose prose-invert prose-lg max-w-none mt-8">
-              <ReactMarkdown
-                remarkPlugins={[remarkGfm]}
-                components={{
-                  // The post title is already the page h1
-                  h1: ({ children }) => (
-                    <h2 className="text-3xl text-gold font-iceland mt-8 mb-4">
-                      {children}
-                    </h2>
-                  ),
-                  h2: ({ children }) => (
-                    <h2 className="text-2xl text-gold font-iceland mt-8 mb-4">
-                      {children}
-                    </h2>
-                  ),
-                  h3: ({ children }) => (
-                    <h3 className="text-xl text-gold/90 font-inter font-semibold mt-6 mb-3">
-                      {children}
-                    </h3>
-                  ),
-                  h4: ({ children }) => (
-                    <h4 className="text-lg text-gold/80 font-inter font-semibold mt-4 mb-2">
-                      {children}
-                    </h4>
-                  ),
-                  p: ({ children }) => (
-                    <p className="text-white/80 leading-relaxed mb-4 font-inter">
-                      {children}
-                    </p>
-                  ),
-                  a: ({ href, children }) => (
-                    <a
-                      href={href}
-                      className="text-gold hover:text-gold/80 underline transition-colors font-inter"
-                      target={href?.startsWith("http") ? "_blank" : undefined}
-                      rel={
-                        href?.startsWith("http")
-                          ? "noopener noreferrer"
-                          : undefined
-                      }
-                    >
-                      {children}
-                    </a>
-                  ),
-                  ul: ({ children }) => (
-                    <ul className="list-disc list-inside text-white/80 mb-4 space-y-2 font-inter">
-                      {children}
-                    </ul>
-                  ),
-                  ol: ({ children }) => (
-                    <ol className="list-decimal list-inside text-white/80 mb-4 space-y-2 font-inter">
-                      {children}
-                    </ol>
-                  ),
-                  li: ({ children }) => (
-                    <li className="text-white/80 font-inter">{children}</li>
-                  ),
-                  blockquote: ({ children }) => (
-                    <blockquote className="border-l-4 border-gold/50 pl-4 py-2 my-4 bg-gold/5 rounded-r-lg italic text-white/70 font-inter">
-                      {children}
-                    </blockquote>
-                  ),
-                  code: ({ children }) => (
-                    <code className="bg-gray-800 px-2 py-1 rounded-sm text-gold text-sm font-mono">
-                      {children}
-                    </code>
-                  ),
-                  pre: ({ children }) => (
-                    <pre className="bg-gray-800 p-4 rounded-lg overflow-x-auto mb-4 border border-gray-700">
-                      {children}
-                    </pre>
-                  ),
-                  strong: ({ children }) => (
-                    <strong className="font-bold text-white font-inter">
-                      {children}
-                    </strong>
-                  ),
-                  em: ({ children }) => (
-                    <em className="italic text-white/90 font-inter">
-                      {children}
-                    </em>
-                  ),
-                  hr: () => <hr className="border-gray-700 my-8" />,
-                  table: ({ children }) => (
-                    <div className="overflow-x-auto my-6">
-                      <table className="min-w-full border border-gray-700 rounded-lg overflow-hidden">
+              {/* Article Content */}
+              <div className="prose prose-invert prose-lg max-w-none mt-8">
+                <ReactMarkdown
+                  remarkPlugins={[remarkGfm]}
+                  urlTransform={urlTransform}
+                  components={{
+                    // The post title is already the page h1
+                    h1: ({ children }) => (
+                      <h2 className="text-3xl text-gold font-iceland mt-8 mb-4">
                         {children}
-                      </table>
-                    </div>
-                  ),
-                  thead: ({ children }) => (
-                    <thead className="bg-gray-800">{children}</thead>
-                  ),
-                  tbody: ({ children }) => (
-                    <tbody className="divide-y divide-gray-700">{children}</tbody>
-                  ),
-                  tr: ({ children }) => (
-                    <tr className="bg-gray-800/50 hover:bg-gray-800/70 transition-colors">
-                      {children}
-                    </tr>
-                  ),
-                  th: ({ children }) => (
-                    <th className="px-4 py-3 text-left text-gold font-semibold font-inter border-b border-gray-700">
-                      {children}
-                    </th>
-                  ),
-                  td: ({ children }) => (
-                    <td className="px-4 py-3 text-white/80 font-inter">
-                      {children}
-                    </td>
-                  ),
-                  // Handle GFM task list checkboxes for accessibility
-                  input: ({ type, checked, disabled }) => {
-                    if (type === "checkbox") {
-                      return (
-                        <input
-                          type="checkbox"
-                          checked={checked}
-                          disabled={disabled}
-                          readOnly
-                          aria-label={checked ? "Completed task" : "Incomplete task"}
-                          className="mr-2 accent-gold"
-                        />
-                      );
-                    }
-                    return <input type={type} />;
-                  },
-                }}
-              >
-                {post.content}
-              </ReactMarkdown>
-            </div>
+                      </h2>
+                    ),
+                    h2: ({ children }) => (
+                      <h2 className="text-2xl text-gold font-iceland mt-8 mb-4">
+                        {children}
+                      </h2>
+                    ),
+                    h3: ({ children }) => (
+                      <h3 className="text-xl text-gold/90 font-inter font-semibold mt-6 mb-3">
+                        {children}
+                      </h3>
+                    ),
+                    h4: ({ children }) => (
+                      <h4 className="text-lg text-gold/80 font-inter font-semibold mt-4 mb-2">
+                        {children}
+                      </h4>
+                    ),
+                    p: ({ children }) => (
+                      <p className="text-white/80 leading-relaxed mb-4 font-inter">
+                        {children}
+                      </p>
+                    ),
+                    a: ({ href, children }) => (
+                      <a
+                        href={href}
+                        className="text-gold hover:text-gold/80 underline transition-colors font-inter"
+                        target={href?.startsWith("http") ? "_blank" : undefined}
+                        rel={
+                          href?.startsWith("http")
+                            ? "noopener noreferrer"
+                            : undefined
+                        }
+                      >
+                        {children}
+                      </a>
+                    ),
+                    ul: ({ children }) => (
+                      <ul className="list-disc list-inside text-white/80 mb-4 space-y-2 font-inter">
+                        {children}
+                      </ul>
+                    ),
+                    ol: ({ children }) => (
+                      <ol className="list-decimal list-inside text-white/80 mb-4 space-y-2 font-inter">
+                        {children}
+                      </ol>
+                    ),
+                    li: ({ children }) => (
+                      <li className="text-white/80 font-inter">{children}</li>
+                    ),
+                    blockquote: ({ children }) => (
+                      <blockquote className="border-l-4 border-gold/50 pl-4 py-2 my-4 bg-gold/5 rounded-r-lg italic text-white/70 font-inter">
+                        {children}
+                      </blockquote>
+                    ),
+                    code: ({ children }) => (
+                      <code className="bg-gray-800 px-2 py-1 rounded-sm text-gold text-sm font-mono">
+                        {children}
+                      </code>
+                    ),
+                    pre: ({ children }) => (
+                      <pre className="bg-gray-800 p-4 rounded-lg overflow-x-auto mb-4 border border-gray-700">
+                        {children}
+                      </pre>
+                    ),
+                    strong: ({ children }) => (
+                      <strong className="font-bold text-white font-inter">
+                        {children}
+                      </strong>
+                    ),
+                    em: ({ children }) => (
+                      <em className="italic text-white/90 font-inter">
+                        {children}
+                      </em>
+                    ),
+                    hr: () => <hr className="border-gray-700 my-8" />,
+                    table: ({ children }) => (
+                      <div className="overflow-x-auto my-6">
+                        <table className="min-w-full border border-gray-700 rounded-lg overflow-hidden">
+                          {children}
+                        </table>
+                      </div>
+                    ),
+                    thead: ({ children }) => (
+                      <thead className="bg-gray-800">{children}</thead>
+                    ),
+                    tbody: ({ children }) => (
+                      <tbody className="divide-y divide-gray-700">{children}</tbody>
+                    ),
+                    tr: ({ children }) => (
+                      <tr className="bg-gray-800/50 hover:bg-gray-800/70 transition-colors">
+                        {children}
+                      </tr>
+                    ),
+                    th: ({ children }) => (
+                      <th className="px-4 py-3 text-left text-gold font-semibold font-inter border-b border-gray-700">
+                        {children}
+                      </th>
+                    ),
+                    td: ({ children }) => (
+                      <td className="px-4 py-3 text-white/80 font-inter">
+                        {children}
+                      </td>
+                    ),
+                    // Handle GFM task list checkboxes for accessibility
+                    input: ({ type, checked, disabled }) => {
+                      if (type === "checkbox") {
+                        return (
+                          <input
+                            type="checkbox"
+                            checked={checked}
+                            disabled={disabled}
+                            readOnly
+                            aria-label={checked ? "Completed task" : "Incomplete task"}
+                            className="mr-2 accent-gold"
+                          />
+                        );
+                      }
+                      return <input type={type} />;
+                    },
+                  }}
+                >
+                  {post.content}
+                </ReactMarkdown>
+              </div>
 
-            {/* Call to Action */}
-            <div className="mt-12 p-8 bg-linear-to-r from-gold/10 to-gold/5 rounded-xl border border-gold/20">
-              <h3 className="text-2xl text-gold font-iceland mb-3">
-                Ready to Start Your Project?
-              </h3>
-              <p className="text-white/70 font-inter mb-6">
-                Let&apos;s bring your vision to life. Contact me today for a
-                free consultation.
-              </p>
-              <Button href="/#contact">Get Started</Button>
-            </div>
+              {/* Call to Action */}
+              <div className="mt-12 p-8 bg-linear-to-r from-gold/10 to-gold/5 rounded-xl border border-gold/20">
+                <h3 className="text-2xl text-gold font-iceland mb-3">{t("ctaTitle")}</h3>
+                <p className="text-white/70 font-inter mb-6">{t("ctaText")}</p>
+                <Button href={{ pathname: "/", hash: "contact" }}>{t("ctaButton")}</Button>
+              </div>
 
-            {/* Blog Subscription */}
-            <div className="mt-8">
-              <BlogSubscriptionForm />
-            </div>
+              {/* Blog Subscription */}
+              <div className="mt-8">
+                <BlogSubscriptionForm />
+              </div>
+            </PageMessages>
           </div>
         </article>
       </div>

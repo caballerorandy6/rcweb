@@ -13,6 +13,7 @@ export function toAdminQuote(quote: QuoteWithProject, now: Date = new Date()): A
     token: quote.token,
     email: quote.email,
     name: quote.name,
+    locale: quote.locale,
     offerId: quote.offerId,
     planName: quote.planName,
     scope: quote.scope,

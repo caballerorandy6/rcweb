@@ -1,0 +1,1945 @@
+{
+  "Common": {
+    "skipToContent": "Saltar al contenido principal",
+    "languageSwitch": {
+      "label": "Idioma",
+      "en": "English",
+      "es": "Español",
+      "switchTo": "Read in English"
+    },
+    "backToHome": "Volver al inicio",
+    "orCall": "O llama directamente:",
+    "call": "Llama al {phone}",
+    "goBack": "Volver"
+  },
+  "Nav": {
+    "global": "Principal",
+    "site": "Sitio",
+    "siteMenu": "Menú del sitio",
+    "openMenu": "Abrir menú",
+    "closeMenu": "Cerrar menú",
+    "home": "Inicio",
+    "services": "Servicios",
+    "projects": "Proyectos",
+    "pricing": "Precios",
+    "blog": "Blog",
+    "about": "Sobre mí",
+    "contact": "Contacto",
+    "process": "Proceso",
+    "faq": "Preguntas frecuentes",
+    "testimonials": "Testimonios",
+    "schedule": "Agendar",
+    "houston": "Houston, TX",
+    "privacy": "Política de privacidad",
+    "terms": "Términos de servicio",
+    "refund": "Política de reembolso",
+    "manageSubscription": "Gestionar suscripción",
+    "privacyChoices": "Opciones de privacidad",
+    "experience": "Experiencia",
+    "certifications": "Certificaciones",
+    "cta": "Empieza ahora",
+    "letsTalk": "Hablemos",
+    "getInTouch": "Contáctame",
+    "tagline": "Tu socio digital"
+  },
+  "Footer": {
+    "description": "Sitios web y aplicaciones web para pequeños negocios, creados y mantenidos por mí. Con sede en Houston, trabajo con clientes de cualquier lugar.",
+    "navigation": "Navegación",
+    "more": "Más",
+    "connect": "Conecta",
+    "ready": "¿Listo para empezar tu proyecto?",
+    "discuss": "Hablemos de tu proyecto",
+    "available": "Aceptando nuevos proyectos",
+    "footerNav": "Pie de página",
+    "legalNav": "Legal",
+    "rights": "Todos los derechos reservados"
+  },
+  "Metadata": {
+    "siteTitle": "RC Web Solutions | Sitios web y aplicaciones web a medida para pequeños negocios",
+    "siteDescription": "Randy Caballero crea y mantiene sitios web y aplicaciones web rápidos para pequeños negocios de servicios: reservas, pagos con Stripe y SEO local incluidos. Con sede en Houston, TX, trabaja con pequeños negocios de cualquier lugar. Next.js, React, inglés y español.",
+    "ogAlt": "RC Web Solutions - Servicios de desarrollo web de Randy Caballero",
+    "home": {
+      "title": "Sitios web y aplicaciones web a medida para pequeños negocios | RC Web Solutions",
+      "description": "Randy Caballero crea sitios web y aplicaciones web rápidos para pequeños negocios de servicios: reservas, pagos con Stripe y SEO local incluidos. Con sede en Houston, TX, trabaja con clientes de cualquier lugar. Desde $1,000. Consulta gratis."
+    }
+  },
+  "Catalog": {
+    "priceFrom": "Desde",
+    "perMonth": "/mes",
+    "offers": {
+      "business-website": {
+        "title": "Sitio web para tu negocio",
+        "summary": "Desde una landing de una página hasta un sitio completo de 5 a 10 páginas: diseño a medida, pensado primero para el móvil y hecho para convertir visitas en llamadas y formularios.",
+        "tags": [
+          "Diseño a medida",
+          "SEO local",
+          "Formularios de contacto",
+          "Carga en menos de 2 segundos"
+        ],
+        "highlight": "Como Clínica Hispana Nueva Salud Gessner y Leo's Home Experts",
+        "range": "$1,000 - $6,000",
+        "duration": "1-4 semanas",
+        "description": "Una landing page a precio fijo, o un sitio de 5 a 10 páginas presupuestado según el alcance",
+        "features": [
+          "Diseño a medida, pensado para el móvil",
+          "Formulario de contacto y llamada con un toque",
+          "Configuración de SEO local",
+          "Integración de analítica",
+          "Carga en menos de 2 segundos",
+          "30 días de soporte"
+        ],
+        "ideal": "Ideal para: negocios nuevos, servicios profesionales, lanzamientos de productos",
+        "checkoutCta": "Empezar una landing page",
+        "quoteCta": "Presupuestar un sitio completo"
+      },
+      "website-redesign": {
+        "title": "Rediseño y modernización web",
+        "summary": "Tu sitio actual reconstruido con tecnología moderna: más rápido, adaptado al móvil y más fácil de usar para tus clientes, con tu contenido migrado.",
+        "tags": [
+          "Diseño moderno",
+          "Más velocidad",
+          "Optimización móvil",
+          "Migración de contenido"
+        ],
+        "highlight": "Como GSM A/C",
+        "range": "$3,500 - $8,000",
+        "duration": "4-6 semanas",
+        "description": "Tu web anticuada reconstruida sin perder lo que funciona",
+        "features": [
+          "Diseño y estética modernos",
+          "Optimización del rendimiento",
+          "Adaptación completa al móvil",
+          "Migración de contenido",
+          "Posicionamiento conservado y mejorado",
+          "45 días de soporte"
+        ],
+        "ideal": "Ideal para: negocios con webs antiguas, código heredado o mal rendimiento",
+        "quoteCta": "Pedir presupuesto"
+      },
+      "admin-dashboard": {
+        "title": "Panel de administración y automatización",
+        "summary": "Un panel privado para gestionar prospectos, clientes, pagos y campañas desde un solo lugar, con el trabajo repetitivo automatizado.",
+        "tags": [
+          "Gestión de prospectos y clientes",
+          "Campañas por email y SMS",
+          "Pagos con Stripe",
+          "Reportes"
+        ],
+        "highlight": "GSM ahorra 15 horas a la semana",
+        "range": "$7,500 - $15,000",
+        "duration": "5-6 semanas",
+        "description": "Un panel de administración a la medida de tu operación diaria",
+        "features": [
+          "Formularios y flujos a medida",
+          "Gestión de prospectos y clientes",
+          "Campañas por email y SMS",
+          "Pagos con Stripe",
+          "Reportes y visualización de datos",
+          "Integraciones con APIs",
+          "60 días de soporte"
+        ],
+        "ideal": "Ideal para: negocios de servicios, gestión de operaciones, automatización",
+        "quoteCta": "Pedir presupuesto"
+      },
+      "store-and-apps": {
+        "title": "Tienda en línea y aplicaciones web a medida",
+        "summary": "Tiendas en línea completas con Stripe y plataformas a medida: sistemas de reservas, áreas de miembros, herramientas internas. Sin cuotas mensuales de plataforma.",
+        "tags": [
+          "Stripe Checkout",
+          "Sistemas de reservas",
+          "Cuentas de usuario",
+          "Integraciones con APIs"
+        ],
+        "highlight": "Demo: MIRA Eyewear",
+        "range": "$8,000 - $20,000+",
+        "duration": "6-12+ semanas",
+        "description": "Una tienda en línea con procesamiento de pagos, o una plataforma a medida construida alrededor de tu negocio",
+        "features": [
+          "Stripe Checkout y suscripciones",
+          "Inventario y procesamiento de pedidos",
+          "Cuentas de clientes",
+          "Sistemas de reservas y áreas de miembros",
+          "Desarrollo de base de datos y API",
+          "Integraciones con terceros",
+          "90 días de soporte"
+        ],
+        "ideal": "Ideal para: comercios, tiendas en línea, negocios basados en reservas o productos",
+        "quoteCta": "Pedir presupuesto"
+      },
+      "maintenance": {
+        "title": "Mantenimiento y soporte mensual",
+        "summary": "Mantenimiento continuo, actualizaciones de seguridad, copias de seguridad y soporte técnico para que tu sitio siga funcionando mientras tú atiendes tu negocio.",
+        "tags": [
+          "Actualizaciones de seguridad",
+          "Monitoreo de disponibilidad",
+          "Actualizaciones de contenido",
+          "Soporte prioritario"
+        ],
+        "highlight": "Tranquilidad garantizada",
+        "range": "Cancela cuando quieras",
+        "duration": "Continuo",
+        "description": "Mantenimiento y soporte mensual para cualquier sitio que yo haya construido",
+        "features": [
+          "Parches y actualizaciones de seguridad",
+          "Monitoreo de rendimiento y disponibilidad",
+          "Actualizaciones de contenido",
+          "Gestión de copias de seguridad",
+          "Soporte técnico",
+          "Respuesta el mismo día para urgencias"
+        ],
+        "ideal": "Ideal para: cualquier negocio que quiera tranquilidad",
+        "checkoutCta": "Empezar plan de mantenimiento"
+      }
+    },
+    "process": {
+      "discovery": {
+        "title": "Descubrimiento",
+        "week": "Semana 1",
+        "description": "Videollamada gratuita para entender tus necesidades y objetivos, estés donde estés.",
+        "details": [
+          "Análisis de requisitos",
+          "Investigación de la competencia",
+          "Propuesta detallada",
+          "Presupuesto transparente"
+        ]
+      },
+      "design": {
+        "title": "Diseño y planificación",
+        "week": "Semanas 1-2",
+        "description": "Creación de wireframes y definición de la arquitectura de tu aplicación.",
+        "details": [
+          "Maquetas interactivas",
+          "Selección de tecnologías",
+          "Cronograma del proyecto",
+          "Revisión y comentarios"
+        ]
+      },
+      "development": {
+        "title": "Desarrollo iterativo",
+        "week": "Semanas 2-5",
+        "description": "Construcción de tu aplicación con demos semanales y ajustes continuos.",
+        "details": [
+          "Sprints semanales",
+          "Demos los viernes",
+          "Pruebas continuas",
+          "Ajustes en tiempo real"
+        ]
+      },
+      "launch": {
+        "title": "Lanzamiento y soporte",
+        "week": "Semana 6",
+        "description": "Despliegue en producción con capacitación y soporte posterior al lanzamiento (de 30 a 180 días según el plan).",
+        "details": [
+          "Despliegue seguro",
+          "Capacitación completa",
+          "Documentación",
+          "Soporte posterior al lanzamiento incluido"
+        ]
+      }
+    },
+    "faqs": {
+      "supportItem": "{title} ({days} días)",
+      "outsideUsa": {
+        "question": "¿Trabajas con clientes fuera de Estados Unidos?",
+        "answer": "Trabajo con clientes de todo el mundo. Los proyectos son totalmente remotos y uso herramientas como Zoom y Slack para comunicarnos y colaborar sin problemas. Los pagos son fáciles y seguros a través de Stripe, así que puedes trabajar conmigo desde cualquier lugar."
+      },
+      "timeline": {
+        "question": "¿Cuánto tarda un proyecto típico?",
+        "answer": "Depende del alcance: {durations}. Siempre doy plazos realistas y los cumplo."
+      },
+      "support": {
+        "question": "¿Ofreces soporte después del lanzamiento?",
+        "answer": "¡Sí! Todos los proyectos incluyen soporte gratuito después del lanzamiento. La duración depende del servicio: {supports}. El soporte cubre corrección de errores, ajustes menores y asistencia técnica. Después, el plan {maintenanceTitle} cuesta {maintenancePrice} y cubre actualizaciones de seguridad, monitoreo del rendimiento, actualizaciones de contenido y soporte prioritario."
+      },
+      "technologies": {
+        "question": "¿Trabajas con otras tecnologías además de Next.js?",
+        "answer": "Mi especialidad es el ecosistema React/Next.js con TypeScript, Node.js y PostgreSQL: tecnología de nivel empresarial a precios de pequeño negocio. También tengo experiencia con JavaScript puro y puedo adaptarme a las necesidades del proyecto. Siempre recomiendo la mejor tecnología para cada caso."
+      },
+      "payments": {
+        "question": "¿Cómo funciona el proceso de pago?",
+        "answer": "Dos pagos: 50 % para empezar y 50 % al entregar el proyecto. La landing page y el plan de mantenimiento se pueden pagar directamente en este sitio a través de Stripe. Para todo lo demás, primero acordamos el alcance y el precio final, y después recibes un enlace de pago seguro de Stripe. También acepto Zelle. El impuesto sobre las ventas se suma al pagar donde corresponda."
+      },
+      "progress": {
+        "question": "¿Puedo ver el avance durante el desarrollo?",
+        "answer": "¡Por supuesto! Envío actualizaciones semanales y tendrás acceso a un entorno de pruebas donde podrás ver el avance en tiempo real. Respondo en menos de 24 horas (normalmente mucho antes) a cualquier duda. La transparencia es clave en mi proceso."
+      }
+    },
+    "projects": {
+      "gsmactx": "Sitio web a medida y panel de administración para una empresa de aire acondicionado de Houston. Campañas de email automatizadas, gestión de solicitudes de servicio y renderizado en tiempo real del lado del cliente. Le ahorró al negocio más de 15 horas a la semana.",
+      "dulceAntojo": "Sitio web y panel de administración privado con enlaces de pago de Stripe, construidos para un cliente anterior, un negocio de renta de carritos de snacks en Houston. El enlace abre una copia de portafolio, no el sitio actual del negocio.",
+      "clinicaGessner": "Sitio web bilingüe para una clínica de Houston con reserva de citas en línea, información de servicios y SEO local para llegar a pacientes de habla hispana.",
+      "clinicaAirline": "Sitio web bilingüe y profesional para una clínica de Houston con pacientes de habla hispana. Incluye SEO local, páginas de servicios y un diseño amigable para el paciente, optimizado para el móvil.",
+      "leosHomeExperts": "Landing page para una empresa de servicios para el hogar de Houston especializada en construcción de patios, mosquiteros motorizados e instalación de toldos. Incluye optimización de SEO local con schema JSON-LD e integración de galería de video.",
+      "rcBeautySalon": "Demo de un sitio web para un salón de belleza con lista de servicios, reservas en línea y tienda de productos, construido con Next.js y Tailwind CSS.",
+      "limoRenting": "Demo de una plataforma de renta de limusinas con disponibilidad de vehículos, personalización del servicio y reservas en línea, en una interfaz moderna y adaptable.",
+      "miraEyewear": "Demo de una tienda en línea de lentes: catálogo de monturas, prueba virtual con la cámara, pago con Stripe, seguimiento de pedidos y panel de administración, en inglés y español.",
+      "orderSystem": "Demo de un sistema de órdenes para ópticas: recetas, lentes y monturas, pagos parciales, saldos, reportes y órdenes imprimibles, con roles de personal. Las cuentas de demostración aparecen al iniciar sesión."
+    },
+    "testimonials": {
+      "chapelli": {
+        "content": "Randy transformó nuestro negocio con una reconstrucción completa del sitio web. Nuestro sitio anterior era lento y anticuado; el nuevo es rápido, moderno y profesional. Pero el verdadero valor fue el panel de administración a medida que creó para gestionar la comunicación con nuestros clientes. Ahora ahorramos 15 horas a la semana en tareas administrativas. Lo que antes tomaba horas ahora toma minutos. El sistema de campañas de email de Randy es intuitivo y exactamente lo que necesitábamos. Randy fue profesional, comunicativo y entregó a tiempo. Explicó todo con claridad y siempre estuvo disponible. Recomiendo RC Web Solutions a cualquier negocio de Houston.",
+        "highlight": "Ahorro de 15 horas a la semana"
+      },
+      "lecour": {
+        "content": "Trabajar con Randy de RC Web Solutions LLC fue una gran experiencia. Fue profesional, atento y realmente se tomó el tiempo de entender mi negocio. El sitio web quedó limpio, moderno y fácil de usar para los clientes. Estoy muy contento con el resultado y sin duda lo recomendaría a cualquiera que necesite un sitio web profesional.",
+        "highlight": "Limpio, moderno y fácil de usar"
+      },
+      "aguilar": {
+        "content": "Excelente experiencia trabajando en el desarrollo de nuestro sitio web. Profesional, responsable y con gran capacidad técnica. Entregó a tiempo, optimizó la velocidad y la estructura SEO, y siempre estuvo dispuesto a mejorar los detalles.",
+        "highlight": "Velocidad y SEO optimizados"
+      }
+    }
+  },
+  "Home": {
+    "hero": {
+      "title": "Sitios web que ganan clientes",
+      "badge": "Tu socio digital",
+      "intro": "Sitios web y aplicaciones web rápidos para pequeños negocios de servicios, con reservas, pagos y SEO local incluidos. Con sede en Houston, trabajo con clientes de cualquier lugar.",
+      "signals": [
+        "Carga en menos de 2 segundos",
+        "SEO local incluido",
+        "English & Español"
+      ],
+      "scheduleCta": "Agenda una llamada gratis",
+      "servicesCta": "Ver servicios",
+      "orCall": "O llama directamente:"
+    },
+    "services": {
+      "heading": "Cómo puedo ayudarte",
+      "subheading": "Construyo sitios web, aplicaciones web y paneles de administración que convierten visitas en llamadas y citas",
+      "seePricing": "Ver precios",
+      "viewAll": "Ver todos los servicios"
+    },
+    "projects": {
+      "heading": "Proyectos destacados",
+      "subheading": "Resultados reales para pequeños negocios reales",
+      "viewAll": "Ver los {count} proyectos",
+      "caseStudy": "Caso de éxito",
+      "preview": "Vista previa",
+      "github": "GitHub",
+      "demo": "Demo"
+    },
+    "process": {
+      "heading": "Mi proceso de trabajo",
+      "subheading": "Cuatro pasos desde la primera llamada hasta el lanzamiento, con demos semanales por el camino"
+    },
+    "testimonials": {
+      "heading": "Lo que dicen mis clientes",
+      "subheading": "Resultados reales de proyectos exitosos",
+      "onGoogle": "en Google",
+      "reviews": "{count, plural, one {# reseña} other {# reseñas}}",
+      "writeReview": "Escribe una reseña en Google",
+      "translated": "Traducido del inglés"
+    },
+    "pricing": {
+      "heading": "Precios claros y transparentes",
+      "subheading": "Precios en USD • Atiendo clientes en EE. UU. y en todo el mundo",
+      "mostPopular": "El más popular",
+      "usd": "USD",
+      "note": "Todos los proyectos incluyen: código fuente • configuración de dominio y hosting • capacitación • 50 % de anticipo y 50 % al terminar. La landing page y el plan de mantenimiento se pueden pagar aquí mismo; los precios «Desde» se presupuestan tras una breve conversación y el precio final depende del alcance. Los precios no incluyen el impuesto sobre las ventas, que se suma al pagar donde corresponda."
+    },
+    "blog": {
+      "heading": "Desde el blog",
+      "subheading": "Consejos e ideas para dueños de pequeños negocios",
+      "viewAll": "Ver todas las publicaciones"
+    },
+    "faq": {
+      "heading": "Preguntas frecuentes",
+      "subheading": "Todo lo que necesitas saber antes de empezar"
+    },
+    "contact": {
+      "heading": "Contacto",
+      "subheading": "Ponte en contacto",
+      "schedule": "Agenda una consulta gratis",
+      "call": "Llama al {phone}",
+      "orMessage": "O envíame un mensaje aquí abajo"
+    }
+  },
+  "Stepper": {
+    "step": "Paso {number}: {title}",
+    "previous": "Anterior",
+    "next": "Siguiente paso"
+  },
+  "Marquee": {
+    "technologies": "Tecnologías con las que trabajo",
+    "play": "Reproducir animación",
+    "pause": "Pausar animación"
+  },
+  "Rating": {
+    "label": "{rating} de 5 estrellas"
+  },
+  "FloatingCta": {
+    "chatWith": "Chatea con Maria",
+    "callNow": "Llamar ahora",
+    "whatsapp": "WhatsApp",
+    "connectOn": "Conecta en {network}",
+    "openMenu": "Abrir menú de contacto",
+    "closeMenu": "Cerrar menú de contacto"
+  },
+  "Chat": {
+    "dialogLabel": "Chat con Maria",
+    "title": "Maria",
+    "assistant": "Asistente con IA",
+    "close": "Cerrar chat",
+    "welcome": "¡Hola! Soy Maria, tu asistente virtual de RC Web Solutions. Estoy aquí para ayudarte con información sobre nuestros servicios, precios, proyectos y cualquier duda que tengas. ¿En qué puedo ayudarte hoy?",
+    "error": "Lo siento, algo salió mal de mi lado. Inténtalo de nuevo en un momento o llama al +1 (346) 375-7534.",
+    "typing": "Maria está escribiendo…",
+    "yourMessage": "Tu mensaje",
+    "placeholder": "Escribe tu mensaje…",
+    "send": "Enviar mensaje",
+    "disclaimer": "La IA puede cometer errores. Verifica la información importante."
+  },
+  "Forms": {
+    "contact": {
+      "title": "Hablemos",
+      "name": "Nombre completo",
+      "email": "Correo electrónico",
+      "phone": "Número de teléfono",
+      "service": "¿Qué necesitas?",
+      "notSure": "Aún no lo sé",
+      "channel": "¿Cómo prefieres que te contacte?",
+      "channels": {
+        "call": "Teléfono",
+        "whatsapp": "WhatsApp",
+        "email": "Correo"
+      },
+      "message": "Tu mensaje",
+      "consent": "Quiero recibir correos y mensajes SMS promocionales e informativos de RC Web Solutions LLC sobre sus servicios.",
+      "consentNote": "La frecuencia de los mensajes puede variar. Pueden aplicarse tarifas de mensajes y datos. Responde STOP para darte de baja. El consentimiento no es condición para la compra ni el servicio. Puedes cancelar la suscripción en cualquier momento.",
+      "send": "Enviar mensaje",
+      "sending": "Enviando…",
+      "placeholders": {
+        "name": "Tu nombre completo…",
+        "email": "tu@tunegocio.com…",
+        "phone": "(346) 555-0123…",
+        "message": "Cuéntame sobre tu proyecto…"
+      },
+      "recaptcha": "Este sitio está protegido por reCAPTCHA y se aplican la <privacy>Política de privacidad</privacy> y los <terms>Términos de servicio</terms> de Google.",
+      "toasts": {
+        "bot": "Algo salió mal. Inténtalo de nuevo.",
+        "tooFast": "Tómate un momento para revisar tu mensaje.",
+        "recaptcha": "No pudimos verificar tu envío. Desactiva los bloqueadores de anuncios o recarga la página e inténtalo de nuevo.",
+        "sending": "Enviando mensaje…",
+        "sent": "¡Mensaje enviado! Te responderé pronto.",
+        "failed": "No se pudo enviar el mensaje"
+      }
+    },
+    "checkout": {
+      "title": "Completa tu pedido",
+      "selectedPlan": "Plan seleccionado",
+      "monthly": "Pago mensual",
+      "initial": "Pago inicial (50 %)",
+      "perMonth": "/mes",
+      "name": "Tu nombre",
+      "email": "Correo electrónico",
+      "namePlaceholder": "María López…",
+      "emailPlaceholder": "maria@tunegocio.com…",
+      "submit": "Ir a los términos y pagar",
+      "loading": "Cargando…",
+      "cancel": "Cancelar",
+      "errors": {
+        "name": "Escribe tu nombre para saber a quién contactar.",
+        "email": "Escribe un correo válido para enviarte la factura."
+      }
+    },
+    "validation": {
+      "nameShort": "El nombre es demasiado corto",
+      "emailInvalid": "Correo electrónico no válido",
+      "phoneShort": "El número de teléfono es demasiado corto",
+      "phoneLong": "El número de teléfono es demasiado largo",
+      "messageLong": "El mensaje es demasiado largo",
+      "messageShort": "El mensaje es demasiado corto"
+    },
+    "terms": {
+      "noticeTitle": "Importante: revisión necesaria",
+      "noticeText": "Revisa con atención y acepta nuestros Términos de servicio antes de continuar al pago. Este acuerdo legal establece las condiciones de nuestro servicio.",
+      "missing": "Falta información. Empieza desde la sección de precios.",
+      "processing": "Procesando…",
+      "redirecting": "Redirigiendo al pago seguro…",
+      "failed": "No se pudo procesar",
+      "error": "Ocurrió un error",
+      "confirm": "Al hacer clic en «Acepto estos términos», confirmas que has leído, entendido y aceptas quedar vinculado por estos Términos de servicio.",
+      "accept": "Acepto estos términos",
+      "back": "Volver a los planes de precios"
+    }
+  },
+  "Blog": {
+    "categories": {
+      "houston": "Pequeños negocios",
+      "caseStudy": "Caso de éxito",
+      "technical": "Rendimiento y seguridad",
+      "business": "Negocios"
+    },
+    "topics": "Temas",
+    "read": "Leer: {title}",
+    "readTime": "{minutes} min de lectura",
+    "readMore": "Leer más",
+    "list": {
+      "heading": "Blog de desarrollo web",
+      "subheading": "Aprende, crece, triunfa",
+      "comingSoon": "Próximamente",
+      "comingSoonText": "Estoy preparando contenido nuevo sobre desarrollo web, SEO y marketing digital. ¡Vuelve pronto!",
+      "contact": "Contáctame"
+    },
+    "metadata": {
+      "title": "Blog - Ideas y consejos de desarrollo web",
+      "description": "Lee artículos sobre desarrollo web, SEO, comercio electrónico y marketing digital. Aprende a hacer crecer tu negocio en línea con RC Web Solutions."
+    },
+    "post": {
+      "backToBlog": "Volver al blog",
+      "updated": "Actualizado el <date></date>",
+      "enjoying": "¿Te está gustando este artículo?",
+      "notify": "Recibe un aviso cuando publique nuevos artículos sobre desarrollo web, automatización y crecimiento de negocios.",
+      "ctaTitle": "¿Listo para empezar tu proyecto?",
+      "ctaText": "Hagamos realidad tu visión. Contáctame hoy para una consulta gratuita.",
+      "ctaButton": "Empezar",
+      "notFound": "Artículo no encontrado",
+      "notFoundText": "El artículo que buscas no existe."
+    }
+  },
+  "Breadcrumb": {
+    "home": "Inicio",
+    "services": "Servicios",
+    "projects": "Proyectos",
+    "caseStudies": "Casos de éxito",
+    "about": "Sobre mí",
+    "letsTalk": "Hablemos",
+    "houston": "Desarrollador web Houston TX",
+    "blog": "Blog"
+  },
+  "About": {
+    "metadata": {
+      "title": "Sobre Randy Caballero - Desarrollador web full-stack",
+      "description": "Conoce a Randy Caballero, desarrollador full-stack con más de 6 años de experiencia en React, Next.js y TypeScript y más de 20 sitios en producción. Con sede en Houston, TX, atiende clientes en todo el país."
+    },
+    "heading": "Conoce al fundador",
+    "subheading": "El desarrollador detrás de RC Web Solutions",
+    "bio1": "Desarrollador full-stack con <strong>más de 6 años de experiencia</strong> creando aplicaciones con React y Next.js. A través de RC Web Solutions he construido y publicado <strong>más de 20 sitios en producción</strong> para pequeños negocios, la mayoría en el área de Houston, desde el frontend y las APIs hasta la base de datos y el despliegue. Trabajo a distancia con clientes de cualquier lugar: videollamadas, un sitio de pruebas que puedes revisar en cualquier momento y pagos con Stripe. Empecé en Revature en 2022 y, en paralelo a RC Web Solutions, fui desarrollador de software en Atser Systems Inc. entre 2024 y 2025, participando en el <strong>desarrollo de aplicaciones full-stack</strong> en equipos ágiles.",
+    "bio2": "Trabajo en todo el stack con <gold>Next.js, TypeScript, Node.js, PostgreSQL y Prisma</gold>, y también me ocupo de la capa que trae clientes: <gold>Google Ads, Meta Ads, seguimiento de conversiones y SEO local</gold>. En el sitio de un cliente reduje el tiempo de carga de 7-8 segundos a menos de 1 segundo, lo que recuperó el rendimiento de sus campañas de pago.",
+    "imageAlt": "Randy Caballero - Desarrollador web full-stack en Houston, TX",
+    "location": "Houston, TX",
+    "basedIn": "Con sede en Houston, TX",
+    "anywhere": "Trabajo con clientes de cualquier lugar",
+    "downloadCv": "Descargar CV",
+    "person": {
+      "jobTitle": "Desarrollador web full-stack",
+      "description": "Desarrollador full-stack con más de 6 años creando aplicaciones con React y Next.js. Fundador de RC Web Solutions LLC, con sede en Houston, TX, y más de 20 sitios en producción para pequeños negocios de Estados Unidos."
+    },
+    "experience": {
+      "heading": "Experiencia",
+      "subheading": "Mi trayectoria profesional en el desarrollo de software.",
+      "items": {
+        "founder": {
+          "title": "Fundador y desarrollador principal",
+          "description": "Construí y desplegué más de 20 sitios en producción con Next.js para pequeños negocios, la mayoría en el área de Houston, a cargo del ciclo completo desde los requisitos hasta el mantenimiento posterior al lanzamiento, además de la capa de analítica y adquisición de pago.",
+          "date": "Sept. 2022 - Actualidad"
+        },
+        "atser": {
+          "title": "Desarrollador de software",
+          "description": "Desarrollé aplicaciones web adaptables con Next.js, TypeScript, Tailwind CSS y shadcn/ui, integrando APIs REST en C#/.NET dentro de un equipo ágil multidisciplinario.",
+          "date": "Nov. 2024 - Abr. 2025"
+        },
+        "revature": {
+          "title": "Desarrollador de software",
+          "description": "Desarrollé y mantuve funcionalidades web junto a desarrolladores sénior, integrando APIs de terceros y realizando pruebas en distintos navegadores.",
+          "date": "Abr. 2022 - Sept. 2022"
+        },
+        "camaguey": {
+          "title": "Desarrollador frontend",
+          "description": "Construí aplicaciones web y paneles operativos en tiempo real para sistemas de gestión agropecuaria con JavaScript, HTML5, CSS3 y Bootstrap.",
+          "date": "Sept. 2015 - Feb. 2017"
+        },
+        "edd": {
+          "title": "Doctorado en Educación (EdD)",
+          "description": "Programa doctoral en curso",
+          "date": "Mayo 2024 - Actualidad"
+        },
+        "msed": {
+          "title": "Maestría en Educación",
+          "description": "Master of Science in Education",
+          "date": "Mayo 2021 - Abr. 2024"
+        },
+        "bs": {
+          "title": "Ingeniería en Software",
+          "description": "Título de ingeniero en Ciencias Informáticas",
+          "date": "Graduado en julio de 2012"
+        }
+      }
+    },
+    "certifications": {
+      "heading": "Títulos y certificaciones",
+      "subheading": "Los títulos y cursos que definieron mi forma de construir",
+      "previous": "Certificación anterior",
+      "next": "Certificación siguiente",
+      "seePdf": "Ver PDF",
+      "seeCertificate": "Ver certificado",
+      "download": "Descargar",
+      "pdfCertificate": "Certificado en PDF",
+      "items": {
+        "bs": {
+          "name": "Ingeniería en Software",
+          "description": "Título de ingeniería en software, evaluado como equivalente a un título universitario de Estados Unidos."
+        },
+        "msed": {
+          "name": "Maestría en Educación",
+          "description": "Master of Science in Education."
+        },
+        "advancedReact": {
+          "name": "Advanced React",
+          "description": "Hooks, contexto, componentes de orden superior, pruebas y rendimiento en aplicaciones React."
+        },
+        "reactBasics": {
+          "name": "React Basics",
+          "description": "Componentes, estado, props y enrutado en React."
+        },
+        "javascript": {
+          "name": "Programming with JavaScript",
+          "description": "Fundamentos de JavaScript, estructuras de datos y pruebas con Jest."
+        }
+      }
+    }
+  },
+  "Services": {
+    "metadata": {
+      "title": "Servicios de desarrollo web para pequeños negocios",
+      "description": "Sitios web para negocios, rediseños, paneles de administración, tiendas en línea y mantenimiento mensual para pequeños negocios. Con sede en Houston, TX, trabajo con clientes de cualquier lugar. Consulta gratis."
+    },
+    "title": "Servicios de desarrollo web para",
+    "titleHighlight": "pequeños negocios",
+    "intro": "Sitios web y aplicaciones web a medida para negocios de servicios, desde landing pages hasta plataformas full-stack. Construidos con tecnología moderna, optimizados para Google, disponibles en inglés y español, y entregados a distancia desde Houston, TX a clientes de cualquier lugar.",
+    "learnMore": "Saber más",
+    "detail": {
+      "allServices": "Todos los servicios",
+      "startingAt": "Desde",
+      "typically": "Normalmente {range}",
+      "included": "Qué incluye",
+      "related": "Proyectos relacionados",
+      "relatedIntro": "Negocios de Houston para los que he construido este tipo de solución.",
+      "visitSite": "Visitar sitio",
+      "readyTitle": "¿Listo para empezar?",
+      "readyText": "Reserva una consulta gratuita de 30 minutos. Revisaré tu situación actual y te mostraré exactamente qué puedo construir para tu negocio."
+    },
+    "pages": {
+      "business-website": {
+        "metaTitle": "Diseño web para negocios en Houston TX | Sitios a medida desde $1,000",
+        "metaDescription": "Sitios web para negocios construidos con Next.js: pensados para el móvil, rápidos, con SEO local y versión bilingüe inglés/español. Con sede en Houston, TX, trabajo con clientes de cualquier lugar. Desde $1,000.",
+        "headline": "Sitios web para negocios hechos para generar llamadas",
+        "subheadline": "Desde una landing de una página hasta un sitio completo de 5 a 10 páginas: diseño a medida, pensado primero para el móvil y hecho para convertir visitas en llamadas, citas y formularios.",
+        "content": "Tu sitio web suele ser el primer contacto de un cliente con tu negocio, y trabaja mientras tú estás ocupado con todo lo demás. Construyo sitios web para negocios que cargan en menos de dos segundos, se leen bien en el teléfono y dejan claro cómo llamarte o reservar. Cada sitio se diseña primero para el móvil, porque la mayoría de las personas que buscan un servicio local lo hacen desde el teléfono. Uso Next.js y React, el mismo stack en el que confían las grandes empresas, para que el sitio siga siendo rápido y siga posicionando a medida que crece. Una landing page tiene precio fijo y se puede empezar aquí mismo; un sitio más grande se presupuesta tras una breve conversación sobre las páginas que necesitas. Las versiones en inglés y español van incluidas cuando tus clientes hablan ambos idiomas, escritas por un hispanohablante nativo y no por un plugin de traducción.",
+        "features": [
+          {
+            "title": "Diseño pensado para el móvil",
+            "description": "Diseñado primero para la pantalla del teléfono y luego ampliado. Los botones, formularios y el número de teléfono funcionan donde realmente están tus clientes."
+          },
+          {
+            "title": "Carga en menos de 2 segundos",
+            "description": "Construido con Next.js, con imágenes y scripts ligeros. Google premia los sitios rápidos y las visitas se quedan en lugar de irse."
+          },
+          {
+            "title": "SEO local incluido",
+            "description": "Metaetiquetas, datos estructurados y una estructura de páginas limpia para que Google entienda qué haces y dónde atiendes. Search Console y la analítica quedan configurados antes del lanzamiento."
+          },
+          {
+            "title": "Bilingüe cuando lo necesitas",
+            "description": "Inglés y español en un solo sitio, mostrando el idioma correcto a cada persona que busca. Localizado por un hablante nativo, sin traducción automática."
+          },
+          {
+            "title": "Formularios de contacto y llamada con un toque",
+            "description": "Llamadas a la acción colocadas donde convierten, formularios protegidos contra spam y prospectos entregados en tu bandeja de entrada o en tu panel de administración."
+          },
+          {
+            "title": "30 días de soporte",
+            "description": "Después del lanzamiento sigo disponible para ajustes y dudas. El código fuente, el dominio y el hosting son tuyos."
+          }
+        ],
+        "cta": "Quiero un sitio web a medida"
+      },
+      "website-redesign": {
+        "metaTitle": "Rediseño web en Houston TX | Moderniza tu sitio desde $3,500",
+        "metaDescription": "Rediseño y modernización web: tu sitio actual reconstruido con Next.js, más rápido y adaptado al móvil, con tu contenido y tu posicionamiento migrados. Con sede en Houston, TX. Desde $3,500.",
+        "headline": "Rediseño y modernización web",
+        "subheadline": "Tu sitio actual reconstruido con tecnología moderna: más rápido, adaptado al móvil y más fácil de usar para tus clientes, conservando tu contenido y tu posicionamiento en Google.",
+        "content": "Un sitio web antiguo te cuesta clientes sin que lo notes: carga lento en el teléfono, se ve anticuado junto a la competencia y es difícil de actualizar. Un rediseño no es solo una mano de pintura. Reconstruyo el sitio con Next.js, conservo cada página y URL que ya posiciona, configuro redirecciones para todo lo que cambie de lugar y migro tu contenido, fotos y reseñas. El resultado es un sitio que carga en menos de dos segundos, funciona en cualquier pantalla y que puedes seguir actualizando sin romperlo. Eso fue lo que hice para GSM A/C, cuyo sitio pasó de una plantilla lenta a un sitio rápido y enfocado en conversiones que ahora agenda trabajos por sí solo. El precio depende de cuántas páginas tienes y de qué hay que reescribir, así que primero acordamos el alcance.",
+        "features": [
+          {
+            "title": "Diseño moderno",
+            "description": "Un aspecto limpio y actual construido alrededor de tu marca, con llamadas a la acción claras en lugar de plantillas recargadas."
+          },
+          {
+            "title": "Más velocidad",
+            "description": "Reconstruido desde cero con Next.js: tiempos de carga más rápidos, mejores Core Web Vitals y sin plugins que frenen el sitio."
+          },
+          {
+            "title": "Optimización móvil",
+            "description": "Cada página rediseñada primero para el teléfono, para que quien busca desde el carro pueda llamarte con un solo toque."
+          },
+          {
+            "title": "Migración de contenido",
+            "description": "Páginas, publicaciones del blog, imágenes y reseñas trasladadas. Nada de lo que has construido se pierde en la mudanza."
+          },
+          {
+            "title": "Posicionamiento conservado",
+            "description": "URLs existentes conservadas o redirigidas, datos estructurados añadidos y Search Console revisado tras el lanzamiento para que Google siga enviando tráfico."
+          },
+          {
+            "title": "45 días de soporte",
+            "description": "Tiempo para pulir los detalles que solo aparecen cuando clientes reales usan el nuevo sitio."
+          }
+        ],
+        "cta": "Presupuestar mi rediseño"
+      },
+      "admin-dashboard": {
+        "metaTitle": "Panel de administración a medida en Houston TX | Automatización desde $7,500",
+        "metaDescription": "Paneles de administración a medida para pequeños negocios: prospectos, clientes, pagos, campañas por email y SMS y reportes en un panel privado, con el trabajo repetitivo automatizado. Desde $7,500.",
+        "headline": "Panel de administración y automatización",
+        "subheadline": "Un panel privado para gestionar prospectos, clientes, pagos y campañas desde un solo lugar, con el trabajo repetitivo automatizado.",
+        "content": "La mayoría de los pequeños negocios funcionan con una mezcla de hojas de cálculo, mensajes de texto y tres aplicaciones distintas que no se comunican entre sí. Un panel de administración a medida pone todo eso en un solo lugar: tus prospectos llegan desde el sitio web, ves quién llamó, quién pagó y a quién hay que dar seguimiento, y las campañas salen por email o SMS desde la misma pantalla. Construyo estos paneles con Next.js, TypeScript y PostgreSQL, el mismo stack con el que funciona este sitio, y los conecto con las herramientas que ya usas, como Stripe, Google o Twilio. El alcance se adapta a tu forma de trabajar: para GSM A/C el panel reemplazó unas quince horas semanales de seguimiento manual. Empezamos con una conversación sobre tu rutina diaria, acordamos qué debe hacer la primera versión y construimos a partir de ahí.",
+        "features": [
+          {
+            "title": "Gestión de prospectos y clientes",
+            "description": "Cada consulta desde tu sitio web, teléfono o campañas llega a una sola lista con su estado, notas e historial."
+          },
+          {
+            "title": "Formularios y flujos a medida",
+            "description": "Los formularios, estados y pasos que encajan con tu negocio, no un CRM genérico al que tengas que adaptarte."
+          },
+          {
+            "title": "Campañas por email y SMS",
+            "description": "Envía boletines y campañas de texto a los clientes que dieron su consentimiento, con permisos, cuotas y bajas gestionados por ti."
+          },
+          {
+            "title": "Pagos con Stripe",
+            "description": "Anticipos, pagos finales, suscripciones y facturas controlados desde el panel, con enlaces de pago seguros para tus clientes."
+          },
+          {
+            "title": "Reportes y visualización de datos",
+            "description": "Prospectos por origen, ingresos por mes, resultados de campañas: los números que necesitas para decidir, sin exportar nada."
+          },
+          {
+            "title": "Integraciones con APIs y 60 días de soporte",
+            "description": "Conexiones con los servicios que ya pagas y dos meses de soporte para ajustar el panel cuando tu equipo lo use a diario."
+          }
+        ],
+        "cta": "Presupuestar mi panel"
+      },
+      "store-and-apps": {
+        "metaTitle": "Tienda en línea y aplicaciones web a medida en Houston TX | Desde $8,000",
+        "metaDescription": "Tiendas en línea a medida con pagos de Stripe y aplicaciones web personalizadas: sistemas de reservas, áreas de miembros y herramientas internas construidas con Next.js. Sin cuotas mensuales de plataforma. Desde $8,000.",
+        "headline": "Tienda en línea y aplicaciones web a medida",
+        "subheadline": "Tiendas en línea completas con Stripe y plataformas a medida construidas alrededor de tu negocio: sistemas de reservas, áreas de miembros, herramientas internas. Sin cuotas mensuales de plataforma.",
+        "content": "Las plataformas de plantillas son un arranque rápido y un techo a largo plazo: cuotas mensuales, personalización limitada, páginas lentas y plugins que se rompen con cada actualización. Cuando tu negocio las supera, construyo la tienda o la plataforma que realmente necesitas. Una tienda en línea incluye procesamiento de pagos con Stripe, inventario en tiempo real, seguimiento de pedidos, cuentas de clientes y un panel de administración desde el que lo gestionas todo. Una aplicación web a medida puede ser un sistema de reservas como el que usa RC Beauty Salon, un área de miembros, un portal para tus clientes o una herramienta interna para tu equipo. El código es tuyo, pagas solo el hosting y las comisiones estándar de Stripe, y cada función se construye para tu flujo de trabajo. Los proyectos de este tamaño empiezan con una conversación para definir el alcance y un presupuesto por escrito, y después un anticipo del 50 % para arrancar.",
+        "features": [
+          {
+            "title": "Stripe Checkout y suscripciones",
+            "description": "Tarjetas, Apple Pay y Google Pay, compras únicas o planes recurrentes, con recibos y reembolsos gestionados a través de Stripe."
+          },
+          {
+            "title": "Inventario y procesamiento de pedidos",
+            "description": "Niveles de stock, variantes de producto, alertas de stock bajo y un flujo de pedidos de pagado a enviado, todo visible en tu panel de administración."
+          },
+          {
+            "title": "Cuentas de clientes",
+            "description": "Historial de pedidos, datos guardados y contenido exclusivo para miembros cuando tu negocio lo necesite, con inicio de sesión seguro."
+          },
+          {
+            "title": "Sistemas de reservas y áreas de miembros",
+            "description": "Citas, reservas y áreas privadas integradas en el sitio, para que los clientes reserven y paguen sin llamar."
+          },
+          {
+            "title": "Desarrollo de base de datos y API",
+            "description": "Bases de datos PostgreSQL y APIs diseñadas para crecer contigo, además de integraciones con los servicios de terceros que ya usas."
+          },
+          {
+            "title": "Sin cuotas de plataforma y 90 días de soporte",
+            "description": "Sin suscripción mensual a un creador de tiendas, y tres meses de soporte tras el lanzamiento mientras llegan los primeros pedidos."
+          }
+        ],
+        "cta": "Presupuestar mi proyecto"
+      },
+      "maintenance": {
+        "metaTitle": "Mantenimiento y soporte web | $200 al mes, cancela cuando quieras",
+        "metaDescription": "Mantenimiento y soporte web mensual: actualizaciones de seguridad, copias de seguridad, monitoreo de disponibilidad, actualizaciones de contenido y soporte técnico para los sitios que construí. $200 al mes, cancela cuando quieras.",
+        "headline": "Mantenimiento y soporte mensual",
+        "subheadline": "Mantenimiento continuo, actualizaciones de seguridad, copias de seguridad y soporte técnico para que tu sitio web siga funcionando mientras tú atiendes tu negocio.",
+        "content": "Un sitio web no está terminado cuando se lanza. Las dependencias reciben actualizaciones de seguridad, el hosting y los dominios se renuevan, el contenido se queda viejo y un día un formulario deja de enviar. El plan de mantenimiento cubre todo eso para cualquier sitio que yo haya construido: mantengo el stack actualizado, monitoreo la disponibilidad y el rendimiento, conservo copias de seguridad, hago los pequeños cambios de contenido que me envíes y respondo las dudas técnicas el mismo día cuando algo es urgente. Es una suscripción mensual que se paga a través de Stripe y que puedes cancelar en cualquier momento desde el enlace del correo de tu factura. Si necesitas cambios mayores, como una página nueva o una función nueva, los presupuesto aparte para que el precio mensual siga siendo predecible.",
+        "features": [
+          {
+            "title": "Parches y actualizaciones de seguridad",
+            "description": "Framework, dependencias y hosting al día para que las vulnerabilidades conocidas no se queden en tu sitio."
+          },
+          {
+            "title": "Monitoreo de rendimiento y disponibilidad",
+            "description": "Recibo una alerta si el sitio se cae o se vuelve lento, normalmente antes de que tú o tus clientes lo noten."
+          },
+          {
+            "title": "Actualizaciones de contenido",
+            "description": "Envíame la foto, el precio o el horario nuevo y queda publicado sin que tengas que tocar nada."
+          },
+          {
+            "title": "Gestión de copias de seguridad",
+            "description": "Copias de seguridad periódicas de tu sitio y tu base de datos, probadas, para que un error o una caída sea una restauración y no una reconstrucción."
+          },
+          {
+            "title": "Soporte técnico",
+            "description": "Dominio, correo, analítica o un formulario que dejó de funcionar: una sola persona a la que escribir que ya conoce tu sitio."
+          },
+          {
+            "title": "Respuesta el mismo día para urgencias",
+            "description": "Cuando el sitio está caído o falla un pago, respondo el mismo día. Cancela cuando quieras; sin contrato a largo plazo."
+          }
+        ],
+        "cta": "Empezar plan de mantenimiento"
+      }
+    }
+  },
+  "Portfolio": {
+    "metadata": {
+      "title": "Proyectos y casos de éxito | Portafolio de desarrollo web",
+      "description": "Sitios web que he construido para pequeños negocios: clínicas, aire acondicionado, servicios para el hogar, renta para eventos y más, la mayoría en el área de Houston. También demos de una tienda en línea, un sistema de órdenes, un salón y una renta de limusinas."
+    },
+    "title": "Proyectos y",
+    "titleHighlight": "casos de éxito",
+    "intro": "Sitios web construidos para pequeños negocios reales, y demos que muestran lo que puedo construir. Haz clic en «Caso de éxito» en un proyecto de cliente para ver la historia completa: retos, soluciones y resultados.",
+    "clients": "Proyectos de clientes",
+    "demos": "Demos",
+    "demosIntro": "Proyectos de muestra que enseñan lo que puedo construir. Ninguno es el sitio de un cliente actual, y sus negocios, precios y datos pueden ser ejemplos."
+  },
+  "CaseStudies": {
+    "back": "Volver a proyectos",
+    "badge": "Caso de éxito",
+    "visitSite": "Visitar el sitio",
+    "startProject": "Empieza tu proyecto",
+    "technologies": "Tecnologías utilizadas",
+    "challenges": "Los",
+    "challengesHighlight": "retos",
+    "solution": "La",
+    "solutionHighlight": "solución",
+    "results": "Los",
+    "resultsHighlight": "resultados",
+    "items": {
+      "gsmactx": {
+        "metaTitle": "Caso de éxito GSM AC - Automatización de un negocio de aire acondicionado",
+        "metaDescription": "Cómo ayudé a GSM A/C & General Contractor a ahorrar 15 horas a la semana con un panel de administración a medida, campañas de email automatizadas y un sitio web moderno. Caso de éxito completo con resultados.",
+        "crumb": "GSM AC",
+        "name": "GSM A/C &",
+        "nameHighlight": "General Contractor",
+        "subtitle": "Cómo ayudé a una empresa de aire acondicionado de Houston a ahorrar más de 15 horas a la semana con un panel de administración a medida y un sistema de email marketing automatizado.",
+        "imageAlt": "Captura del sitio web de GSM AC",
+        "stats": [
+          "Horas ahorradas a la semana",
+          "Sistemas: web + panel",
+          "Puntuación Lighthouse",
+          "Envío llega a todos los clientes"
+        ],
+        "challengesIntro": "Antes de trabajar conmigo, GSM AC enfrentaba varios retos operativos que frenaban el crecimiento del negocio.",
+        "challenges": [
+          {
+            "title": "Tareas administrativas que consumían tiempo",
+            "description": "Michel dedicaba más de 15 horas a la semana a tareas administrativas repetitivas como gestionar solicitudes de servicio, hacer seguimiento de prospectos y enviar correos de seguimiento a mano."
+          },
+          {
+            "title": "Sin sistema de administración",
+            "description": "Las solicitudes de servicio, los datos de clientes y los seguimientos se gestionaban a mano, y no había forma de enviar correos a sus clientes: el marketing dependía del boca a boca y de publicidad tradicional costosa."
+          },
+          {
+            "title": "Sitio web anticuado",
+            "description": "El sitio anterior funcionaba con tecnología obsoleta: lento, deficiente en el teléfono y no convertía visitas en solicitudes de servicio."
+          }
+        ],
+        "solutionsIntro": "Construí una solución integral que resolvió todos los retos y transformó la operación del negocio.",
+        "solutions": [
+          {
+            "title": "Panel de administración a medida",
+            "description": "Construí un panel de administración completo para gestionar solicitudes de servicio, datos de clientes y la operación del negocio desde un solo lugar.",
+            "features": [
+              "Gestión de solicitudes de servicio en tiempo real",
+              "Base de datos de clientes con búsqueda y filtros",
+              "Actualizaciones de estado automáticas",
+              "Analítica y reportes"
+            ]
+          },
+          {
+            "title": "Sistema de campañas de email masivas",
+            "description": "Integré capacidades de email marketing que permiten a Michel llegar a miles de clientes con ofertas promocionales y novedades.",
+            "features": [
+              "Editor de plantillas de email",
+              "Gestión de listas de contactos",
+              "Ofertas y novedades a todos los clientes en un solo envío",
+              "Cuentas de administrador con recuperación de contraseña"
+            ]
+          },
+          {
+            "title": "Sitio web moderno y adaptable",
+            "description": "Reconstruí el sitio público desde cero con Next.js: una página por servicio, reserva de citas en línea, llamada con un toque y un enlace de financiamiento, con foco en conversiones y en la experiencia móvil.",
+            "features": [
+              "Reserva de citas en línea y llamada con un toque",
+              "Diseño adaptable pensado para el móvil",
+              "SEO local para Cypress y Houston",
+              "Puntuación de rendimiento Lighthouse de 95+"
+            ]
+          }
+        ],
+        "results": [
+          {
+            "metric": "Más de 15 horas ahorradas a la semana",
+            "description": "Los flujos automatizados eliminaron las tareas manuales repetitivas"
+          },
+          {
+            "metric": "Mayor alcance de clientes",
+            "description": "Las campañas de email ahora llegan a miles de clientes al instante"
+          },
+          {
+            "metric": "Mejor conversión de prospectos",
+            "description": "El sitio moderno convierte más visitas en solicitudes de servicio"
+          }
+        ],
+        "testimonial": {
+          "quote": "Randy transformó la operación de nuestro negocio. Solo el panel de administración me ahorra más de 15 horas cada semana. El sistema de email me permite llegar a todos mis clientes con unos pocos clics. ¡Recomiendo totalmente RC Web Solutions!",
+          "company": "Propietario, GSM A/C & General Contractor Inc."
+        },
+        "ctaTitle": "¿Listo para transformar",
+        "ctaTitleHighlight": "tu negocio?",
+        "ctaDescription": "Hablemos de cómo puedo construir una solución a medida que te ahorre tiempo y haga crecer tu negocio.",
+        "ctaLinks": [
+          "Empieza tu proyecto",
+          "Agenda una llamada"
+        ]
+      },
+      "dulceAntojo": {
+        "metaTitle": "Caso de éxito Dulce Antojo - Sitio web y pagos con Stripe para un catering de Houston",
+        "metaDescription": "Cómo llevé a Dulce Antojo Snack Carts de estar solo en Instagram a un sitio web completo con pagos con tarjeta por Stripe, construido para que un catering de eventos de Houston pudiera atender empresas y escuelas.",
+        "crumb": "Dulce Antojo",
+        "name": "Dulce Antojo",
+        "nameHighlight": "Snack Carts",
+        "subtitle": "Cómo llevé a un negocio de renta de carritos de snacks de Houston de estar solo en Instagram a un sitio web completo con pagos con tarjeta por Stripe, construido para poder atender empresas y organizaciones, no solo particulares.",
+        "imageAlt": "Captura del sitio web de Dulce Antojo Snack Carts",
+        "stats": [
+          "Estrellas en reseñas de Google",
+          "Opciones de carritos",
+          "Puntuación Lighthouse",
+          "Tiempo de carga"
+        ],
+        "challengesIntro": "Antes de trabajar conmigo, Dulce Antojo rentaba carritos de postres y antojitos mexicanos (mini pancakes, paletas locas, churro sundaes, vasos de elote) para eventos en Houston sin sitio web oficial, solo redes sociales, y sin forma de aceptar pagos con tarjeta.",
+        "challenges": [
+          {
+            "title": "Sin sitio web",
+            "description": "El negocio funcionaba por completo a través de mensajes directos de Instagram y del boca a boca. Los posibles clientes no tenían un lugar centralizado para ver las más de 13 opciones de carritos, los precios o cómo reservar, y no había presencia alguna en Google."
+          },
+          {
+            "title": "No podían cobrar con tarjeta",
+            "description": "Las empresas, escuelas y otras organizaciones suelen pagar con tarjeta y necesitan un recibo formal. Sin pagos con tarjeta, Dulce Antojo no podía aceptar esas reservas."
+          },
+          {
+            "title": "Sin seguimiento de prospectos ni pagos",
+            "description": "Las consultas llegaban por mensajes directos de Instagram, fáciles de pasar por alto y difíciles de rastrear, y los pagos estaban dispersos entre mensajes y apps bancarias sin registro de quién había pagado."
+          }
+        ],
+        "solutionsIntro": "Construí un sitio web con formulario de reservas y un panel de administración privado con pagos de Stripe para que la dueña pudiera cobrar con tarjeta a cualquier cliente. Dulce Antojo pasó después a otro sitio web, así que el enlace de esta página abre una copia de portafolio de lo que construí.",
+        "solutions": [
+          {
+            "title": "Sitio web hecho para reservar eventos",
+            "description": "Un sitio moderno, pensado para el móvil, que muestra las más de 13 opciones de carritos con galería de fotos, preguntas frecuentes y un formulario de solicitud de reserva que captura los detalles del evento (fecha, tipo, invitados, carritos preferidos) y los envía por correo al instante. Optimizado para búsquedas locales en Houston.",
+            "features": [
+              "Más de 13 fichas de servicio de carritos",
+              "Formulario de reserva de eventos con validación",
+              "Schema LocalBusiness y palabras clave de Houston",
+              "Carga rápida en menos de 2 segundos"
+            ]
+          },
+          {
+            "title": "Enlaces de pago de Stripe desde un panel privado",
+            "description": "El panel crea un enlace de pago por cada evento, para enviarlo por mensaje de texto o correo. El cliente paga en segundos en el checkout seguro de Stripe, los datos de la tarjeta nunca tocan los servidores del negocio y ambas partes reciben un recibo automático por correo.",
+            "features": [
+              "Enlace de pago por evento, enviado por SMS o correo",
+              "Checkout alojado en Stripe con protección contra fraude y cumplimiento PCI",
+              "Se aceptan todas las tarjetas principales, incluidas las corporativas",
+              "Sin cuota mensual, solo una comisión por transacción"
+            ]
+          },
+          {
+            "title": "Cada pago registrado automáticamente",
+            "description": "Los webhooks de Stripe registran cada pago en cuanto se confirma, así el panel siempre muestra quién pagó, cuánto y cuándo. Los pagos se pueden buscar, emitir recibos o reembolsar desde un solo lugar, y las credenciales de administrador se guardan cifradas y se pueden cambiar sin un desarrollador.",
+            "features": [
+              "Webhooks que registran cada pago",
+              "Estado pagado, pendiente y con seguimiento por reserva",
+              "Notificación instantánea al negocio",
+              "Credenciales de administrador cifradas que controla la dueña"
+            ]
+          }
+        ],
+        "results": [
+          {
+            "metric": "Hecho para empresas y escuelas",
+            "description": "El proyecto le permitió a Dulce Antojo atender organizaciones que pagan con tarjeta y necesitan recibo, no solo particulares"
+          },
+          {
+            "metric": "Reservas y pagos en un solo lugar",
+            "description": "El panel mantuvo cada reserva y cada pago organizados y bajo el control de la dueña, en lugar de dispersos entre mensajes"
+          },
+          {
+            "metric": "Reseña de 5 estrellas del cliente",
+            "description": "La dueña destacó el diseño moderno y lo fácil que es para sus clientes reservar eventos"
+          }
+        ],
+        "ctaTitle": "¿Sigues perdiendo clientes porque",
+        "ctaTitleHighlight": "no puedes cobrar con tarjeta?",
+        "ctaDescription": "Construyo sitios web con pagos seguros de Stripe para negocios de Houston. Hablemos de cómo un sitio web profesional puede generar más prospectos y permitirte cobrar con tarjeta a cualquier cliente.",
+        "ctaLinks": [
+          "Agenda una consulta gratis",
+          "Servicios de diseño web"
+        ]
+      },
+      "clinicaGessner": {
+        "metaTitle": "Caso de éxito Clínica Hispana Nueva Salud Gessner - Sitio web bilingüe para salud",
+        "metaDescription": "Cómo ayudé a Clínica Hispana Nueva Salud Gessner a reemplazar su sitio anticuado en WordPress por un sitio web bilingüe moderno. Captura de prospectos, integración con Google Business y SEO local.",
+        "crumb": "Clínica Hispana Nueva Salud Gessner",
+        "name": "Clínica Hispana Nueva Salud",
+        "nameHighlight": "Gessner",
+        "subtitle": "Cómo reemplacé un sitio anticuado en WordPress por un sitio web bilingüe moderno que ayuda a la comunidad hispana de Houston a encontrar y contactar a la clínica en línea.",
+        "imageAlt": "Captura del sitio web de Clínica Hispana Nueva Salud Gessner",
+        "stats": [
+          "Estrellas en reseñas de Google",
+          "Idiomas (EN/ES)",
+          "Puntuación Lighthouse",
+          "Tiempo de carga"
+        ],
+        "challengesIntro": "Antes de trabajar conmigo, Clínica Hispana Nueva Salud Gessner tenía dificultades para conectar con pacientes en línea a pesar de atender a una gran comunidad hispana en Houston.",
+        "challenges": [
+          {
+            "title": "Sitio anticuado en WordPress",
+            "description": "La clínica tenía un sitio antiguo en WordPress que era lento, difícil de actualizar y no representaba la calidad de atención que ofrece. No estaba adaptado al móvil, un problema cuando la mayoría de los pacientes buscan desde el teléfono."
+          },
+          {
+            "title": "Sin presencia bilingüe",
+            "description": "A pesar de atender a la comunidad hispana de Houston, el sitio no tenía contenido en español adecuado. Los pacientes que preferían el español no podían ver los servicios ni pedir cita en su idioma."
+          },
+          {
+            "title": "Invisible en Google",
+            "description": "Sin optimización SEO, sin datos estructurados y sin integración con el Perfil de Empresa de Google. Los pacientes que buscaban «clínica hispana Houston» no podían encontrarla en línea."
+          }
+        ],
+        "solutionsIntro": "Construí desde cero una presencia digital completa que conecta a la clínica con la comunidad hispana de Houston.",
+        "solutions": [
+          {
+            "title": "Sitio web bilingüe moderno",
+            "description": "Construido desde cero con Next.js, con contenido en español escrito por un hablante nativo, no traducido automáticamente. Etiquetas hreflang correctas para el SEO bilingüe.",
+            "features": [
+              "Localización nativa al español",
+              "Diseño adaptable pensado para el móvil",
+              "Carga rápida (menos de 2 segundos)",
+              "Diseño profesional que genera confianza"
+            ]
+          },
+          {
+            "title": "Sistema de captura de prospectos",
+            "description": "Formulario de contacto que recoge los datos del paciente y envía notificaciones instantáneas por correo a la clínica. Cada nuevo prospecto llega a su bandeja de entrada con todos los detalles necesarios para dar seguimiento.",
+            "features": [
+              "Formulario de contacto para pacientes con validación",
+              "Notificaciones instantáneas por correo a la clínica",
+              "Datos completos del paciente en cada correo",
+              "Protección contra spam con validación Zod"
+            ]
+          },
+          {
+            "title": "SEO local e integración con Google",
+            "description": "SEO local completo con datos estructurados, metaetiquetas optimizadas para búsquedas de salud en Houston e integración con el Perfil de Empresa de Google.",
+            "features": [
+              "Datos estructurados LocalBusiness",
+              "Integración con el Perfil de Empresa de Google",
+              "Metaetiquetas orientadas a Houston",
+              "Optimización SEO bilingüe"
+            ]
+          }
+        ],
+        "results": [
+          {
+            "metric": "Visible en Google",
+            "description": "La clínica ahora aparece en las búsquedas de Google de términos de salud en español en Houston"
+          },
+          {
+            "metric": "Prospectos de pacientes por el sitio web",
+            "description": "Los nuevos pacientes encuentran y contactan a la clínica directamente a través del formulario de contacto del sitio"
+          },
+          {
+            "metric": "Reseña de 5 estrellas del cliente",
+            "description": "La clínica dejó una reseña de 5 estrellas destacando los resultados profesionales y el servicio bilingüe"
+          }
+        ],
+        "ctaTitle": "¿Necesitas un sitio web para",
+        "ctaTitleHighlight": "tu clínica?",
+        "ctaDescription": "Construyo sitios web bilingües para proveedores de salud de Houston. Hablemos de cómo un sitio web moderno puede traer más pacientes a tu clínica.",
+        "ctaLinks": [
+          "Agenda una consulta gratis",
+          "Sitios web para negocios (inglés y español)"
+        ]
+      },
+      "clinicaAirline": {
+        "metaTitle": "Caso de éxito Clínica Hispana Airline - Sitio web bilingüe para salud",
+        "metaDescription": "Cómo ayudé a Clínica Hispana Airline a reemplazar su sitio en WordPress por un sitio web bilingüe moderno. Captura de prospectos, integración con Google Business y SEO local para Houston.",
+        "crumb": "Clínica Airline",
+        "name": "Clínica Hispana",
+        "nameHighlight": "Airline",
+        "subtitle": "Cómo construí un sitio web bilingüe moderno que conecta a una clínica de Houston cercana a Airline Drive con la comunidad hispana a la que atiende.",
+        "imageAlt": "Captura del sitio web de Clínica Hispana Airline",
+        "stats": [
+          "Estrellas en reseñas de Google",
+          "Idiomas (EN/ES)",
+          "Puntuación Lighthouse",
+          "Tiempo de carga"
+        ],
+        "challengesIntro": "Antes de trabajar conmigo, a Clínica Hispana Airline le faltaba la presencia en línea necesaria para atender bien a su comunidad.",
+        "challenges": [
+          {
+            "title": "Sitio anticuado en WordPress",
+            "description": "El sitio en WordPress de la clínica era lento, no estaba optimizado para el móvil y se veía anticuado. No reflejaba los servicios de salud profesionales que ofrece cerca de Airline Drive."
+          },
+          {
+            "title": "Sin contenido en español",
+            "description": "La mayoría de sus pacientes hablan español, pero el sitio no tenía una versión en español adecuada. Los pacientes no podían ver los servicios en su idioma preferido."
+          },
+          {
+            "title": "Poca visibilidad en Google",
+            "description": "Sin estrategia SEO, sin datos estructurados y sin conexión con su Perfil de Empresa de Google. Los pacientes que buscaban atención médica cerca de Airline Drive no podían encontrarla."
+          }
+        ],
+        "solutionsIntro": "Construí un sitio web bilingüe moderno que funciona como el principal canal de captación de pacientes de la clínica.",
+        "solutions": [
+          {
+            "title": "Sitio web bilingüe moderno",
+            "description": "Construido desde cero con Next.js. El contenido en español escrito por un hablante nativo hace que los pacientes se sientan cómodos y confíen en la clínica desde su primera interacción en línea.",
+            "features": [
+              "Contenido en español nativo (sin traducción automática)",
+              "Diseño pensado para búsquedas desde el teléfono",
+              "Maquetación profesional enfocada en salud",
+              "Carga rápida en menos de 2 segundos"
+            ]
+          },
+          {
+            "title": "Captura de prospectos de pacientes",
+            "description": "Formulario de contacto que recoge los datos del paciente y avisa a la clínica por correo al instante. Los datos de cada posible paciente llegan a la bandeja de entrada de la clínica en segundos.",
+            "features": [
+              "Formulario de consulta para pacientes con validación",
+              "Notificaciones instantáneas por correo",
+              "Datos completos del paciente en cada prospecto",
+              "Protegido contra envíos de spam"
+            ]
+          },
+          {
+            "title": "SEO local e integración con Google",
+            "description": "SEO local completo orientado a la zona de Airline Drive y a la comunidad hispana de Houston en general. El Perfil de Empresa de Google reconoce el nuevo sitio como la presencia oficial de la clínica.",
+            "features": [
+              "Datos estructurados LocalBusiness",
+              "Integración con el Perfil de Empresa de Google",
+              "Orientación a búsquedas de salud en Houston",
+              "Metaetiquetas y SEO bilingües"
+            ]
+          }
+        ],
+        "results": [
+          {
+            "metric": "Visibilidad en Google",
+            "description": "La clínica ahora aparece en las búsquedas locales de servicios de salud en español cerca de Airline Drive"
+          },
+          {
+            "metric": "Prospectos de pacientes en línea",
+            "description": "Los nuevos pacientes descubren y contactan a la clínica directamente a través del formulario del sitio"
+          },
+          {
+            "metric": "Reseña de 5 estrellas del cliente",
+            "description": "La clínica dio una reseña de 5 estrellas reconociendo la calidad y el profesionalismo del nuevo sitio"
+          }
+        ],
+        "ctaTitle": "¿Necesitas un sitio web para",
+        "ctaTitleHighlight": "tu clínica?",
+        "ctaDescription": "Construyo sitios web bilingües para proveedores de salud de Houston. Hablemos de cómo un sitio web moderno puede traer más pacientes a tu clínica.",
+        "ctaLinks": [
+          "Agenda una consulta gratis",
+          "Sitios web para negocios (inglés y español)"
+        ]
+      },
+      "leosHomeExperts": {
+        "metaTitle": "Caso de éxito Leo's Home Experts - Sitio web de servicios para el hogar en Houston",
+        "metaDescription": "Cómo construí un sitio web moderno para Leo's Home Experts, una empresa de servicios para el hogar de Houston. Captura de prospectos, galería de video, SEO local e integración con Google Business.",
+        "crumb": "Leo's Home Experts",
+        "name": "Leo's Home",
+        "nameHighlight": "Experts",
+        "subtitle": "Cómo construí un sitio web profesional para una empresa de servicios para el hogar de Houston especializada en construcción de patios, mosquiteros motorizados e instalación de toldos.",
+        "imageAlt": "Captura del sitio web de Leo's Home Experts",
+        "stats": [
+          "Estrellas en reseñas de Google",
+          "Millas de radio de servicio",
+          "Puntuación Lighthouse",
+          "Tiempo de carga"
+        ],
+        "challengesIntro": "Antes de trabajar conmigo, Leo's Home Experts no tenía una presencia profesional en línea para mostrar la calidad de su trabajo a los propietarios de Houston.",
+        "challenges": [
+          {
+            "title": "Sin sitio web profesional",
+            "description": "El negocio dependía del boca a boca y de las redes sociales, pero no tenía un sitio web propio. Los posibles clientes que buscaban constructores de patios o mosquiteros motorizados en Houston no podían encontrarlos en línea."
+          },
+          {
+            "title": "Sin forma de mostrar su trabajo",
+            "description": "El equipo de Leo realiza instalaciones de patios y mosquiteros de alta calidad, pero no tenía una plataforma profesional donde mostrar su portafolio en video y las fotos de sus proyectos a posibles clientes."
+          },
+          {
+            "title": "Invisible en Google",
+            "description": "Sin sitio web no había presencia SEO. Los propietarios que buscaban «patio builder Houston» o «motorized screens Houston» no tenían forma de descubrir el negocio."
+          }
+        ],
+        "solutionsIntro": "Construí una landing page profesional optimizada para generar prospectos y ganar visibilidad local en toda el área metropolitana de Houston.",
+        "solutions": [
+          {
+            "title": "Landing page profesional",
+            "description": "Un sitio moderno, pensado para el móvil, que presenta las tres líneas de servicio con descripciones claras, información de garantía y llamadas a la acción contundentes. Diseñado para generar confianza en los propietarios desde la primera visita.",
+            "features": [
+              "Fichas de servicio para patios, mosquiteros y toldos",
+              "Información de garantía (motores 5 años, estructura de por vida)",
+              "Diseño adaptable pensado para el móvil",
+              "Carga rápida en menos de 2 segundos"
+            ]
+          },
+          {
+            "title": "Galería de video y captura de prospectos",
+            "description": "Integré una galería de video con proyectos terminados para que los propietarios vean la calidad del trabajo antes de contactar. Un formulario de captura con selección de servicio envía notificaciones instantáneas.",
+            "features": [
+              "Galería de video de proyectos terminados",
+              "Formulario de captura con selector de servicio",
+              "Notificaciones instantáneas por correo al equipo de Leo",
+              "Validación de formularios con React Hook Form + Zod"
+            ]
+          },
+          {
+            "title": "SEO local para el área de Houston",
+            "description": "Implementé SEO local orientado al área metropolitana de Houston y a un radio de 150 millas. Los datos estructurados y la integración con el Perfil de Empresa de Google aseguran que el negocio aparezca en las búsquedas locales.",
+            "features": [
+              "Datos estructurados LocalBusiness en JSON-LD",
+              "Integración con el Perfil de Empresa de Google",
+              "Palabras clave de servicios para el hogar en Houston",
+              "Cobertura de área de servicio (radio de 150 millas)"
+            ]
+          }
+        ],
+        "results": [
+          {
+            "metric": "Presencia profesional en línea",
+            "description": "El negocio ahora tiene un sitio web propio que muestra su trabajo y genera confianza"
+          },
+          {
+            "metric": "Generación de prospectos",
+            "description": "Los propietarios encuentran y contactan al negocio directamente a través del formulario del sitio"
+          },
+          {
+            "metric": "Reseña de 5 estrellas del cliente",
+            "description": "Leonardo destacó el diseño limpio y moderno y los resultados profesionales"
+          }
+        ],
+        "testimonial": {
+          "quote": "Trabajar con Randy de RC Web Solutions LLC fue una gran experiencia. Fue profesional, atento y realmente se tomó el tiempo de entender mi negocio. El sitio web quedó limpio, moderno y fácil de usar para los clientes. Estoy muy contento con el resultado y sin duda lo recomendaría a cualquiera que necesite un sitio web profesional.",
+          "company": "Leo's Home Experts"
+        },
+        "ctaTitle": "¿Necesitas un sitio web para",
+        "ctaTitleHighlight": "tu negocio de servicios para el hogar?",
+        "ctaDescription": "Construyo sitios web para contratistas y empresas de servicios para el hogar de Houston. Hablemos de cómo un sitio web profesional puede generar prospectos para tu negocio.",
+        "ctaLinks": [
+          "Agenda una consulta gratis",
+          "Servicios de diseño web"
+        ]
+      }
+    }
+  },
+  "Schedule": {
+    "metadata": {
+      "title": "Hablemos de tu proyecto",
+      "description": "Cuéntale a RC Web Solutions qué necesitas y cómo prefieres que te contacten: formulario, teléfono, WhatsApp, correo o una llamada gratuita de 30 minutos. Recibes un presupuesto claro en menos de 24 horas."
+    },
+    "back": "Volver a contacto",
+    "heading": "Hablemos de tu proyecto",
+    "subheading": "Cuéntame qué necesitas y cómo prefieres que te contacte. Sin cuenta, sin compromiso: recibes un presupuesto claro y decides a partir de ahí.",
+    "talkNow": "¿Prefieres hablar ahora?",
+    "talkNowText": "La misma persona en todos los canales. Si no puedo contestar, te respondo el mismo día hábil.",
+    "bookCall": "O reserva una llamada gratuita de 30 minutos",
+    "bookCallText": "Por video o por teléfono, como prefieras. Elige el horario que te convenga y te envío la invitación.",
+    "whatNext": "Qué pasa después",
+    "steps": [
+      {
+        "title": "Cuéntame qué necesitas",
+        "description": "Envía el formulario o escríbeme por el canal que prefieras. Respondo en menos de 24 horas, normalmente mucho antes."
+      },
+      {
+        "title": "Acordamos el alcance",
+        "description": "Una conversación breve, por teléfono, WhatsApp o correo, para entender tu negocio y qué debe hacer la primera versión."
+      },
+      {
+        "title": "Recibes el presupuesto y empezamos",
+        "description": "Un presupuesto por escrito con un enlace de pago seguro de Stripe: 50 % para empezar, 50 % a la entrega, y un enlace privado para seguir el avance."
+      }
+    ],
+    "pickTime": "Elige una hora en el calendario"
+  },
+  "Houston": {
+    "metadata": {
+      "title": "Desarrollador web en Houston, TX | Sitios web a medida para negocios locales",
+      "description": "¿Buscas un desarrollador web en Houston, TX? Randy Caballero crea sitios web rápidos y a medida para pequeños negocios en Katy, Sugar Land, The Heights, East Houston y más. Bilingüe inglés y español. Consulta gratis."
+    },
+    "badge": "Houston, Texas",
+    "title": "Desarrollador web en",
+    "titleHighlight": "Houston, TX",
+    "intro": "Soy Randy Caballero, desarrollador web full-stack con sede en Houston, Texas. Construyo sitios web y aplicaciones web rápidos y modernos que ayudan a los negocios locales a crecer en línea. Servicio bilingüe en inglés y español.",
+    "freeConsultation": "Consulta gratis",
+    "whyTitle": "¿Por qué contratar a un desarrollador web local de Houston?",
+    "whyText": "Trabajar con un desarrollador que conoce Houston significa que tu sitio web está hecho para llegar a los clientes correctos de tu zona.",
+    "services": [
+      {
+        "title": "Sitios web a medida para negocios",
+        "description": "Sitios web profesionales construidos con Next.js y React que cargan rápido, posicionan bien en Google y convierten visitas en clientes."
+      },
+      {
+        "title": "Diseño pensado para el móvil",
+        "description": "Cada sitio se diseña primero para el móvil, porque la mayoría de las personas que buscan un negocio local lo hacen desde el teléfono."
+      },
+      {
+        "title": "Soluciones de comercio electrónico",
+        "description": "Tiendas en línea con pagos de Stripe, gestión de inventario y todo lo que tu negocio de Houston necesita para vender en línea."
+      },
+      {
+        "title": "SEO y visibilidad local",
+        "description": "SEO local incluido para que tu negocio aparezca cuando los clientes de Houston busquen tus servicios en Google."
+      },
+      {
+        "title": "Sitios web bilingües",
+        "description": "Versiones en inglés y español de tu sitio, escritas por un hispanohablante nativo, para que los clientes lo lean en el idioma que prefieran."
+      },
+      {
+        "title": "Planes accesibles",
+        "description": "Precios transparentes desde $1,000. Sin costos ocultos, pago dividido 50/50 y un enlace privado para seguir el avance de tu proyecto."
+      }
+    ],
+    "helpedTitle": "Negocios de Houston a los que he ayudado",
+    "helpedText": "Resultados reales para negocios reales de Houston, desde contratistas de aire acondicionado hasta empresas de servicios para el hogar.",
+    "caseStudies": [
+      {
+        "result": "Sitio web bilingüe para clínica con reserva de citas en línea",
+        "industry": "Salud"
+      },
+      {
+        "result": "Sitio web bilingüe para clínica con SEO local para pacientes de habla hispana en Houston",
+        "industry": "Salud"
+      },
+      {
+        "result": "Ahorro de 15 horas a la semana con panel de administración automatizado y campañas de email",
+        "industry": "Aire acondicionado"
+      },
+      {
+        "result": "Landing page optimizada para SEO local con galería de video y captura de prospectos",
+        "industry": "Servicios para el hogar"
+      },
+      {
+        "result": "Landing page optimizada para conversión de reservas de catering para eventos",
+        "industry": "Comida y eventos"
+      }
+    ],
+    "viewProject": "Ver proyecto",
+    "areasTitle": "Atiendo toda el área metropolitana de Houston",
+    "areasText": "Con sede en Houston, trabajo con negocios de toda el área metropolitana. 100 % a distancia, con reuniones presenciales disponibles.",
+    "whatYouGetTitle": "Qué obtienes al trabajar conmigo",
+    "whatYouGet": [
+      "Sitio web a medida construido con Next.js, la misma tecnología que usan Nike, Netflix y Twitch",
+      "Diseño adaptable que funciona en cualquier dispositivo",
+      "SEO incluido para que Google encuentre tu negocio de Houston",
+      "Velocidad de carga rápida (menos de 2 segundos) que mantiene a las visitas interesadas",
+      "Atención bilingüe: hablo inglés y español con fluidez",
+      "Enlace privado para seguir el avance de tu proyecto, sin necesidad de cuenta",
+      "Plan de pago 50/50: la mitad al empezar y la mitad a la entrega",
+      "Consulta gratuita de 30 minutos, sin obligación ni presión"
+    ],
+    "ctaTitle": "¿Listo para hacer crecer tu negocio de Houston en línea?",
+    "ctaText": "Hablemos de tu proyecto. Reserva una consulta gratuita de 30 minutos y te mostraré exactamente cómo un sitio web a medida puede traer más clientes a tu negocio.",
+    "scheduleCta": "Agenda una consulta gratis"
+  },
+  "ThankYou": {
+    "metadata": {
+      "title": "Gracias - Mensaje recibido",
+      "description": "Gracias por contactar a RC Web Solutions LLC. Tu mensaje ha sido recibido y te responderé en breve."
+    },
+    "title": "¡Gracias!",
+    "received": "Tu mensaje se ha recibido correctamente.",
+    "whatNext": "¿Qué pasa después?",
+    "steps": [
+      {
+        "title": "Correo de confirmación",
+        "description": "Recibirás en breve un correo de confirmación con una copia de tu mensaje."
+      },
+      {
+        "title": "Respuesta rápida",
+        "description": "Reviso cada mensaje personalmente y respondo en 24-48 horas en días hábiles."
+      },
+      {
+        "title": "Consulta personalizada",
+        "description": "Hablaremos de los requisitos de tu proyecto y te propondré una solución adaptada a tus necesidades."
+      }
+    ],
+    "needHelp": "¿Necesitas ayuda inmediata?",
+    "backHome": "Volver al inicio",
+    "secure": "🔒 Tu información está segura y nunca se compartirá con terceros"
+  },
+  "NotFound": {
+    "title": "Página no encontrada",
+    "text": "¡Ups! Parece que te has adentrado en territorio desconocido. La página que buscas no existe o se ha movido a otra dimensión.",
+    "errorCode": "Código de error",
+    "pagesFound": "Páginas encontradas",
+    "possibilities": "Posibilidades",
+    "goHome": "Volver al inicio",
+    "previous": "Página anterior",
+    "lost": "¿Te perdiste? Prueba el",
+    "sitemap": "mapa del sitio",
+    "or": "o",
+    "contact": "contáctame"
+  },
+  "ErrorPage": {
+    "title": "Algo salió mal",
+    "text": "Lo sentimos, ha ocurrido un error inesperado.",
+    "tryAgain": "Intentar de nuevo",
+    "goHome": "Ir al inicio",
+    "errorId": "ID del error: {id}"
+  },
+  "Quote": {
+    "metadata": {
+      "title": "Tu presupuesto",
+      "description": "Revisa tu presupuesto por escrito y empieza tu proyecto."
+    },
+    "number": "Presupuesto {number}",
+    "preparedFor": "Preparado para {name}",
+    "validUntil": "Válido hasta el {date}",
+    "accepted": {
+      "title": "Presupuesto aceptado",
+      "thanks": "¡Gracias! Tu anticipo se recibió",
+      "on": " el {date}",
+      "code": " y el código de tu proyecto es",
+      "track": "Seguir el avance →"
+    },
+    "expired": {
+      "title": "Este presupuesto ha caducado",
+      "text": "Era válido hasta el {date}. Responde al correo que recibiste o escribe a",
+      "send": "y te enviaré uno actualizado."
+    },
+    "cancelled": {
+      "title": "Este presupuesto fue retirado",
+      "text": "Ya no está disponible para pago. Si aún quieres seguir adelante, escribe a"
+    },
+    "client": "Cliente",
+    "project": "Proyecto",
+    "total": "Total",
+    "included": "Qué incluye",
+    "notes": "Notas",
+    "investment": "Inversión",
+    "projectTotal": "Total del proyecto",
+    "deposit": "Anticipo para empezar ({percent} %)",
+    "balance": "Saldo a la entrega",
+    "investmentNote": "El trabajo empieza en cuanto se acredita el anticipo. El saldo solo se paga cuando se entrega el proyecto, a través de un enlace seguro enviado a tu correo. Los precios no incluyen el impuesto sobre las ventas; donde corresponda, se suma al pagar.",
+    "zelle": {
+      "title": "Paga el anticipo por Zelle",
+      "thanks": "Gracias por aceptar el presupuesto{date}. Envía el anticipo desde el Zelle de tu banco:",
+      "on": " el {date}",
+      "amount": "Monto",
+      "sendTo": "Enviar a",
+      "memo": "Concepto",
+      "note": "El trabajo empieza en cuanto se confirma la transferencia. Recibirás tu factura y un enlace para seguir el proyecto por correo."
+    },
+    "questions": "¿Dudas sobre este presupuesto?",
+    "contact": "Escríbeme",
+    "form": {
+      "readyCard": "¿Prefieres pagar con tarjeta después de todo?",
+      "ready": "¿Listo para empezar?",
+      "agree": "He leído y acepto los <terms>Términos de servicio</terms> y la <refund>Política de reembolso</refund>, y acepto este presupuesto como el alcance del proyecto.",
+      "accept": "Aceptar y pagar el anticipo de {amount}",
+      "processing": "Procesando…",
+      "secure": "Pago seguro con Stripe. Recibirás una factura por correo.",
+      "zelleAsk": "¿Prefieres pagar el anticipo por Zelle?",
+      "oneMoment": "Un momento…",
+      "zelleHint": "Acepta primero los términos de arriba. Verás a dónde enviarlo y el trabajo empieza en cuanto se confirme la transferencia.",
+      "redirecting": "Redirigiendo al pago seguro…",
+      "zelleThanks": "¡Gracias! Aquí tienes los datos de Zelle"
+    }
+  },
+  "Project": {
+    "metadata": {
+      "title": "Avance del proyecto",
+      "description": "Sigue el avance y los hitos de tu proyecto"
+    },
+    "title": "Avance del proyecto",
+    "subtitle": "Sigue el avance de tu proyecto en tiempo real",
+    "code": "Código del proyecto",
+    "client": "Cliente",
+    "plan": "Plan",
+    "status": {
+      "pending": "Pendiente",
+      "in_progress": "En curso",
+      "ready_for_payment": "Listo para el pago",
+      "completed": "Completado"
+    },
+    "ready": {
+      "title": "Tu proyecto está listo",
+      "text": "Completa el pago final{amount} para recibir tus entregables.",
+      "of": " de {amount}",
+      "pay": "Pagar el saldo final"
+    },
+    "milestones": "Hitos del proyecto",
+    "questions": "¿Dudas sobre tu proyecto?",
+    "contact": "Escríbeme",
+    "milestone": {
+      "completed": "Completado",
+      "in_progress": "En curso",
+      "pending": "Pendiente",
+      "none": "Todavía no se han definido hitos",
+      "checkBack": "Vuelve pronto para ver novedades del proyecto",
+      "overall": "Avance general",
+      "count": "{completed} de {total} hitos completados",
+      "due": "Fecha límite: {date}",
+      "completedOn": "Completado: {date}"
+    }
+  },
+  "FinalPayment": {
+    "metadata": {
+      "title": "Pago final - Completa tu proyecto",
+      "description": "Completa tu pago final para recibir tu proyecto terminado. Pago seguro a través de Stripe para los proyectos de RC Web Solutions LLC."
+    },
+    "notices": {
+      "invalid-link": "Ese enlace de pago no es válido. Escribe tu correo y el código de tu proyecto aquí abajo para continuar.",
+      "project-not-ready": "Tu proyecto todavía no está listo para el pago final. Recibirás un correo en cuanto lo esté.",
+      "payment-failed": "No pudimos iniciar el pago desde tu enlace. Inténtalo de nuevo aquí abajo o contacta a soporte.",
+      "too-many-requests": "Demasiados intentos desde tu conexión. Espera un minuto e inténtalo de nuevo."
+    },
+    "title": "Completa tu pago",
+    "subtitle": "Escribe los datos de tu proyecto para continuar con el pago final",
+    "email": "Correo electrónico",
+    "emailPlaceholder": "juan@ejemplo.com",
+    "code": "Código del proyecto",
+    "codeHint": "El código de 6 caracteres de tu pago inicial",
+    "verify": "Verificar proyecto",
+    "verifying": "Verificando…",
+    "details": "Datos del proyecto",
+    "project": "Proyecto:",
+    "codeLabel": "Código:",
+    "finalPayment": "Pago final:",
+    "proceed": "Continuar al pago",
+    "processing": "Procesando…",
+    "help": "¿Necesitas ayuda? Escribe a",
+    "toasts": {
+      "missing": "Escribe el correo y el código del proyecto",
+      "verified": "¡Proyecto verificado!",
+      "failed": "La verificación falló",
+      "popups": "Permite las ventanas emergentes para continuar al pago.",
+      "sessionFailed": "No se pudo crear la sesión de pago"
+    }
+  },
+  "PaymentSuccess": {
+    "metadata": {
+      "title": "Pago realizado - ¡Gracias!",
+      "description": "Tu pago se procesó correctamente. Gracias por elegir RC Web Solutions LLC para tu proyecto."
+    },
+    "noSession": "No se recibió el identificador de la sesión. Contacta a soporte si completaste un pago.",
+    "processing": {
+      "title": "Pago recibido, ya casi terminamos",
+      "text": "Stripe confirmó tu pago, pero tu proyecto todavía se está registrando. Normalmente tarda unos segundos.",
+      "code": "El código de tu proyecto es <code></code>. Guárdalo: lo necesitarás para el pago final.",
+      "checkAgain": "Comprobar de nuevo",
+      "invoice": "También recibirás tu factura por correo en cuanto esté lista."
+    },
+    "error": {
+      "title": "Problema al procesar el pago",
+      "text": "¡No te preocupes! Si tu pago se completó en Stripe, lo procesaré en breve. Guarda tu correo de confirmación."
+    },
+    "title": "¡Pago realizado! 🎉",
+    "thanks": "Gracias por tu pago. Tu proyecto ya está en marcha y me pondré en contacto contigo en menos de 24 horas.",
+    "codeLabel": "El código de tu proyecto",
+    "copy": "Copiar al portapapeles",
+    "copied": "¡Código copiado!",
+    "saveCode": "Guarda este código: lo necesitarás para el pago final",
+    "plan": "Plan:",
+    "paid": "Monto pagado:",
+    "remaining": "Saldo pendiente:",
+    "status": "Estado:",
+    "inProgress": "En curso",
+    "next": {
+      "title": "¿Qué pasa después?",
+      "items": [
+        "Te contactaré en menos de 24 horas para hablar de los detalles del proyecto",
+        "El desarrollo empezará según el cronograma del plan elegido",
+        "Recibirás novedades durante todo el proceso de desarrollo",
+        "El pago final se realiza al terminar el proyecto"
+      ]
+    },
+    "home": "Volver al inicio",
+    "support": "Contactar a soporte",
+    "footer": "Recibirás en breve un correo de confirmación con todos los detalles.",
+    "subscription": {
+      "processing": "La suscripción se está procesando. Revisa tu correo para ver la confirmación.",
+      "errorTitle": "Problema al procesar la suscripción",
+      "errorText": "¡No te preocupes! Si tu pago se completó en Stripe, lo procesaré en breve. Revisa tu correo para ver la confirmación.",
+      "title": "¡Suscripción activa!",
+      "thanks": "Gracias por suscribirte al plan de mantenimiento. Tu sitio web ya está protegido y con soporte.",
+      "monthly": "Monto mensual:",
+      "perMonth": "/mes",
+      "status": "Estado:",
+      "nextBilling": "Próximo cobro:",
+      "in30Days": "En aproximadamente 30 días",
+      "email": "Correo:",
+      "id": "ID de suscripción:",
+      "includedTitle": "Qué incluye tu plan",
+      "included": [
+        "Parches y actualizaciones de seguridad",
+        "Monitoreo del rendimiento",
+        "Actualizaciones de contenido (hasta 4 horas al mes)",
+        "Soporte técnico por correo",
+        "Reportes mensuales"
+      ]
+    }
+  },
+  "PaymentComplete": {
+    "metadata": {
+      "title": "Pago realizado - ¡Gracias!",
+      "description": "Tu pago se procesó correctamente. Gracias por elegir RC Web Solutions LLC."
+    },
+    "title": "¡Proyecto pagado por completo! 🎉",
+    "thanks": "¡Gracias por confiar en mí!",
+    "nextTitle": "Qué pasa después:",
+    "next": [
+      "Recibirás un correo con todos los archivos y la documentación del proyecto en menos de 24 horas",
+      "Te entregaré las credenciales de acceso al hosting y a los paneles de administración",
+      "Agendaremos la sesión de capacitación según tu disponibilidad",
+      "El periodo de soporte empieza hoy, según tu plan"
+    ],
+    "reference": "Referencia del proyecto:",
+    "save": "Guárdala para tus registros",
+    "home": "Volver al inicio",
+    "support": "Contactar a soporte",
+    "receipt": "Se ha enviado un recibo detallado a tu correo electrónico.",
+    "questions": "Para cualquier duda, escríbeme a {email}"
+  },
+  "ManageSubscription": {
+    "metadata": {
+      "title": "Gestionar suscripción",
+      "description": "Gestiona tu suscripción de RC Web Solutions. Actualiza tu método de pago, consulta tu historial de facturación o cancela tu suscripción."
+    },
+    "errors": {
+      "expired-link": "Ese enlace caducó o fue reemplazado por uno más reciente. Escribe tu correo para recibir un enlace nuevo.",
+      "portal-unavailable": "No pudimos abrir el portal de suscripción en este momento. Inténtalo de nuevo en unos minutos o contáctanos."
+    },
+    "title": "Gestionar suscripción",
+    "subtitle": "Escribe tu correo para recibir un enlace de gestión seguro",
+    "placeholder": "tu@correo.com",
+    "send": "Enviar enlace de gestión",
+    "sending": "Enviando…",
+    "success": {
+      "title": "Revisa tu correo",
+      "text": "Si tienes una suscripción activa, te he enviado un enlace seguro para gestionarla. El enlace caduca en 24 horas.",
+      "another": "Enviar otro enlace"
+    },
+    "helpTitle": "¿Qué puedes hacer con el enlace de gestión?",
+    "help": [
+      "Actualizar tu método de pago",
+      "Ver tu historial de facturación y tus facturas",
+      "Cancelar tu suscripción en cualquier momento"
+    ],
+    "needHelp": "¿Necesitas ayuda?",
+    "support": "Contactar a soporte",
+    "toasts": {
+      "sending": "Enviando el enlace de gestión…",
+      "sent": "¡Revisa tu correo para encontrar el enlace de gestión!",
+      "failed": "Ocurrió un error. Inténtalo de nuevo."
+    },
+    "invalidEmail": "Escribe un correo electrónico válido"
+  },
+  "Unsubscribe": {
+    "metadata": {
+      "title": "Cancelar suscripción",
+      "description": "Cancela la suscripción a las comunicaciones por correo de RC Web Solutions LLC."
+    },
+    "invalid": "Enlace de cancelación no válido",
+    "done": {
+      "title": "Suscripción cancelada",
+      "text": "{email} se ha eliminado de los correos de marketing de RC Web Solutions.",
+      "transactional": "Seguirás recibiendo los correos transaccionales sobre tus proyectos.",
+      "home": "Volver al inicio"
+    },
+    "title": "Cancelar suscripción a los correos",
+    "confirm": "¿Seguro que quieres dar de baja a <email></email> de los correos de marketing?",
+    "noLonger": "Dejarás de recibir:",
+    "items": [
+      "Novedades de marketing",
+      "Novedades de servicios",
+      "Boletín"
+    ],
+    "unsubscribe": "Cancelar suscripción",
+    "processing": "Procesando…",
+    "cancel": "Cancelar"
+  },
+  "BlogSubscribe": {
+    "title": "Suscríbete al blog",
+    "text": "Recibe por correo los nuevos artículos sobre desarrollo web, React y Next.js, además de las novedades de RC Web Solutions.",
+    "email": "Correo electrónico",
+    "placeholder": "tu@correo.com…",
+    "subscribe": "Suscribirme",
+    "subscribing": "Suscribiendo…",
+    "consent": "Al suscribirte aceptas recibir correos de RC Web Solutions LLC. Sin spam. <link>Cancela cuando quieras</link>.",
+    "toasts": {
+      "subscribing": "Suscribiendo…",
+      "failed": "Algo salió mal. Inténtalo de nuevo."
+    },
+    "invalidEmail": "Escribe un correo electrónico válido"
+  },
+  "Actions": {
+    "tooManyRequests": "Demasiadas solicitudes. Inténtalo de nuevo más tarde.",
+    "quote": {
+      "invalid": "Este enlace de presupuesto no es válido",
+      "accepted": "Este presupuesto ya fue aceptado",
+      "withdrawn": "Este presupuesto fue retirado",
+      "expired": "Este presupuesto ha caducado. Responde al correo para pedir uno actualizado",
+      "paymentFailed": "No se pudo iniciar el pago. Inténtalo de nuevo",
+      "zelleUnavailable": "Los pagos por Zelle no están disponibles en este momento",
+      "failed": "Algo salió mal. Inténtalo de nuevo"
+    },
+    "project": {
+      "invalidCredentials": "Correo o código de proyecto no válidos",
+      "depositPending": "El pago inicial no se ha completado",
+      "notReady": "El proyecto todavía no está listo para el pago final",
+      "verificationFailed": "La verificación falló",
+      "sessionFailed": "No se pudo crear la sesión de pago"
+    },
+    "portal": {
+      "invalidEmail": "Escribe un correo electrónico válido",
+      "emailFailed": "No se pudo enviar el correo. Inténtalo de nuevo.",
+      "failed": "Ocurrió un error. Inténtalo de nuevo más tarde."
+    },
+    "blog": {
+      "invalid": "Escribe un correo electrónico válido",
+      "alreadySubscribed": "Este correo ya está suscrito al blog.",
+      "subscribed": "Te has suscrito al blog correctamente.",
+      "failed": "Ocurrió un error al suscribirte al blog."
+    },
+    "unsubscribe": {
+      "notFound": "Contacto no encontrado",
+      "failed": "No se pudo cancelar la suscripción"
+    },
+    "checkout": {
+      "invalid": "Datos de pago no válidos",
+      "planUnavailable": "El plan seleccionado no está disponible",
+      "failed": "No se pudo crear la sesión de pago"
+    }
+  },
+  "Legal": {
+    "lastUpdated": "Última actualización: <date></date>",
+    "returnToPricing": "Volver a los planes y precios",
+    "analyticsOptOut": {
+      "allow": "Permitir que Google Analytics mida mis visitas",
+      "on": "La medición está activada. Desmarca la casilla para desactivarla en este navegador.",
+      "off": "La medición está desactivada en este navegador y se han eliminado las cookies de analítica."
+    }
+  },
+  "Emails": {
+    "common": {
+      "greeting": "Hola, <b>{name}</b>:",
+      "questionsContact": "¿Dudas? Escríbenos a",
+      "helpContact": "¿Necesitas ayuda? Escríbenos a",
+      "tagline": "Servicios profesionales de desarrollo web",
+      "taglineHouston": "Servicios profesionales de desarrollo web · Houston, TX",
+      "copyLink": "Si el botón no funciona, copia este enlace en tu navegador:",
+      "perMonth": "/mes",
+      "plan": "Plan:"
+    },
+    "contact": {
+      "subject": "¡Recibimos tu mensaje! - RC Web Solutions",
+      "heading": "¡Gracias por escribir!",
+      "subheading": "Recibimos tu mensaje",
+      "body": "Gracias por contactar a RC Web Solutions. Tu mensaje llegó bien y te responderé en 24 a 48 horas en días hábiles.",
+      "fasterTitle": "¿Necesitas una respuesta más rápida?",
+      "callOrText": "Llama o envía un mensaje de texto al",
+      "orReply": ", o simplemente responde a este correo.",
+      "cta": "Ver trabajos recientes",
+      "signoff": "Hablamos pronto,"
+    },
+    "quote": {
+      "subject": "Tu presupuesto {quoteNumber} para {planName} - RC Web Solutions",
+      "heading": "Tu presupuesto está listo",
+      "subheading": "Presupuesto {quoteNumber} · {planName}",
+      "intro": "Gracias por dedicar tiempo a conversar sobre tu proyecto. Aquí abajo está el presupuesto por escrito que acordamos. Revísalo con calma; el enlace del final tiene el alcance completo y te permite empezar cuando quieras.",
+      "included": "Qué incluye",
+      "investment": "Inversión",
+      "total": "Total del proyecto",
+      "deposit": "Anticipo para empezar ({percent} %)",
+      "balance": "Saldo a la entrega",
+      "cta": "Revisar y aceptar el presupuesto",
+      "validUntil": "Este presupuesto es válido hasta el <b>{date}</b>.",
+      "accepting": "Al aceptar el presupuesto pasarás a un pago seguro de Stripe para el anticipo. El trabajo empieza en cuanto se acredita, y el saldo solo se paga cuando se entrega el proyecto. Los precios no incluyen el impuesto sobre las ventas; donde corresponda, se suma al pagar.",
+      "acceptingZelle": "Al aceptar el presupuesto pasarás a un pago seguro de Stripe para el anticipo, o puedes elegir pagarlo por Zelle. El trabajo empieza en cuanto se acredita, y el saldo solo se paga cuando se entrega el proyecto. Los precios no incluyen el impuesto sobre las ventas; donde corresponda, se suma al pagar.",
+      "questions": "¿Dudas o cambios? Solo responde a este correo."
+    },
+    "invoice": {
+      "subjectInitial": "Pago confirmado - Factura {number}",
+      "subjectFinal": "Pago final recibido - Factura {number}",
+      "subjectSummary": "Proyecto completado - Factura completa {number}",
+      "titleInitial": "¡Pago confirmado!",
+      "titleFinal": "¡Pago final recibido!",
+      "titleSummary": "¡Proyecto completado!",
+      "subtitleInitial": "Tu factura va adjunta",
+      "subtitleFinal": "Tu proyecto está listo",
+      "subtitleSummary": "Resumen completo de la factura",
+      "bodyInitial": "Gracias por tu pago inicial. ¡Ya empezamos a trabajar en tu proyecto <b>{planName}</b>!",
+      "bodyFinal": "Recibimos tu pago final de <b>{amount}</b>. ¡Tu proyecto ya está completo!",
+      "bodySummary": "Este es el resumen completo de la factura del proyecto <b>{planName}</b>. Muestra los dos pagos y el total pagado.",
+      "summaryNumber": "Número de factura resumen",
+      "number": "Número de factura",
+      "attachedInitial": "Factura en PDF adjunta a este correo",
+      "attachedFinal": "Factura en PDF adjunta • El resumen completo llega después",
+      "attachedSummary": "Factura completa del proyecto adjunta",
+      "paymentSummary": "Resumen de pagos",
+      "initialPayment": "Pago inicial (50 %):",
+      "remaining": "Saldo pendiente (antes de impuestos):",
+      "totalCost": "Costo total del proyecto (antes de impuestos):",
+      "totalPaid": "Total pagado",
+      "allReceived": "✓ Todos los pagos recibidos",
+      "summaryNext": "✓ Recibirás una factura con el resumen completo del proyecto en otro correo",
+      "completed": "✓ PROYECTO COMPLETADO",
+      "thanks": "¡Gracias por elegir RC Web Solutions!",
+      "follow": "Sigue el avance de tu proyecto cuando quieras:",
+      "viewProject": "Ver tu proyecto",
+      "salesTax": "Impuesto sobre las ventas:"
+    },
+    "milestone": {
+      "subject": "Hito completado: {title} · Proyecto {code}",
+      "heading": "Hito completado",
+      "subheading": "Proyecto {code} · {planName}",
+      "intro": "Una novedad rápida sobre tu proyecto: acabamos de completar <b>{title}</b>.",
+      "completedOn": "Completado el {date}",
+      "standing": "Cómo va todo",
+      "count": "<b>{completed} de {total}</b> {total, plural, one {hito completado} other {hitos completados}}",
+      "statusCompleted": "Completado",
+      "statusInProgress": "En curso",
+      "statusPending": "Pendiente",
+      "cta": "Ver el avance del proyecto",
+      "allDone": "Todos los hitos están completos. Te escribiremos pronto con el siguiente paso.",
+      "notDone": "Te avisaremos cuando se complete el siguiente hito. Mientras tanto, la página de avance siempre muestra lo más reciente.",
+      "questions": "¿Dudas o comentarios? Solo responde a este correo."
+    },
+    "ready": {
+      "subject": "¡Tu proyecto {planName} está listo! Falta el pago final de {amount}",
+      "heading": "¡Tu proyecto está listo!",
+      "subheading": "Falta el pago final para la entrega",
+      "intro": "¡Buenas noticias! Tu proyecto <b>{planName}</b> está terminado y listo para la revisión final.",
+      "summary": "Resumen del proyecto",
+      "code": "Código del proyecto:",
+      "due": "Pago final pendiente (antes de impuestos):",
+      "payTitle": "Completa tu pago final",
+      "payDirect": "Puedes completar tu pago directamente:",
+      "cta": "Completar el pago final ahora",
+      "orVisit": "O entra en",
+      "useCredentials": "y usa tu correo <b>{email}</b> y el código de proyecto <b>{code}</b>.",
+      "thanks": "¡Gracias por elegir RC Web!",
+      "excited": "Nos entusiasma entregarte tu nuevo sitio web en cuanto se complete el pago.",
+      "unsubscribe": "Puedes darte de baja de los correos de marketing en cualquier momento haciendo clic",
+      "here": "aquí"
+    },
+    "subscription": {
+      "confirmSubject": "Suscripción confirmada - {planName}",
+      "confirmHeading": "¡Suscripción activada!",
+      "confirmBody": "¡Gracias por suscribirte a nuestro servicio <b>{planName}</b>! Tu suscripción ya está activa.",
+      "details": "Detalles de la suscripción",
+      "monthly": "Monto mensual (antes de impuestos):",
+      "nextBilling": "Próximo cobro:",
+      "included": "Qué incluye",
+      "items": [
+        "Parches y actualizaciones de seguridad",
+        "Monitoreo y optimización del rendimiento",
+        "Actualizaciones de contenido (textos, imágenes, cambios menores)",
+        "Gestión de copias de seguridad",
+        "Monitoreo de disponibilidad",
+        "Respuesta el mismo día para urgencias",
+        "Soporte técnico por correo o chat"
+      ],
+      "manageAnytime": "Puedes gestionar o cancelar tu suscripción en cualquier momento en",
+      "failedSubject": "Pago fallido - Acción necesaria",
+      "failedHeading": "Pago fallido",
+      "failedSubheading": "Acción necesaria",
+      "failedBody": "No pudimos procesar tu pago de <b>{amount}</b> de tu suscripción <b>{planName}</b>.",
+      "failedUpdate": "Para evitar interrupciones en tu servicio, actualiza tu método de pago lo antes posible.",
+      "failedCta": "Actualizar el método de pago",
+      "failedReasons": "Motivos habituales de un pago fallido:",
+      "reasons": [
+        "Fondos insuficientes",
+        "Tarjeta vencida",
+        "Tarjeta rechazada por el banco",
+        "Datos de facturación incorrectos"
+      ],
+      "failedDeadline": "Si no actualizas el pago en 7 días, tu suscripción puede suspenderse.",
+      "failedBank": "Si crees que es un error, consulta con tu banco o escríbenos.",
+      "portalSubject": "Gestiona tu suscripción - RC Web Solutions",
+      "portalHeading": "Gestiona tu suscripción",
+      "portalBody": "Pediste acceso para gestionar tu suscripción. Haz clic en el botón de abajo para entrar al portal, donde puedes:",
+      "portalItems": [
+        "Actualizar tu método de pago",
+        "Ver tu historial de facturación",
+        "Descargar facturas",
+        "Cancelar tu suscripción"
+      ],
+      "portalCta": "Entrar al portal de suscripción",
+      "portalExpiry": "Por seguridad, este enlace caduca en 24 horas.",
+      "portalIgnore": "Si no pediste este enlace, puedes ignorar este correo.",
+      "renewalSubject": "Próxima renovación - {planName}",
+      "renewalHeading": "Próxima renovación",
+      "renewalBody": "Te recordamos que tu suscripción se renovará automáticamente pronto.",
+      "amount": "Monto (antes de impuestos):",
+      "renewalDate": "Fecha de renovación:",
+      "renewalNoAction": "No tienes que hacer nada si quieres continuar con tu suscripción. Cobraremos automáticamente a tu método de pago registrado.",
+      "renewalCta": "Gestionar la suscripción",
+      "renewalChange": "Si quieres cancelar o actualizar tu método de pago, haz clic en el botón de arriba antes de la fecha de renovación."
+    },
+    "pdf": {
+      "invoice": "FACTURA",
+      "projectSummary": "RESUMEN DEL PROYECTO",
+      "invoiceNumber": "Factura n.º: {number}",
+      "issueDate": "Fecha de emisión: {date}",
+      "dueDate": "Fecha de vencimiento: {date}",
+      "status": {
+        "paid": "PAGADA",
+        "pending": "PENDIENTE",
+        "cancelled": "CANCELADA"
+      },
+      "paidInFull": "✓ PAGADA POR COMPLETO",
+      "billTo": "Facturar a:",
+      "projectCode": "CÓDIGO DEL PROYECTO",
+      "projectDetails": "Detalles del proyecto:",
+      "description": "DESCRIPCIÓN",
+      "amount": "MONTO",
+      "subtotal": "Subtotal:",
+      "tax": "Impuesto ({rate} %):",
+      "total": "TOTAL:",
+      "received": "✓ Pago recibido",
+      "paymentDate": "Fecha de pago: {date}",
+      "paymentMethod": "Método de pago: {method}",
+      "transaction": "ID de transacción: {id}...",
+      "method": {
+        "stripe": "Tarjeta (Stripe)",
+        "zelle": "Zelle",
+        "cash": "Efectivo",
+        "other": "Otro"
+      },
+      "paymentDescription": "DESCRIPCIÓN DEL PAGO",
+      "datePaid": "FECHA DE PAGO",
+      "totalPaid": "TOTAL PAGADO:",
+      "completed": "✓ PROYECTO COMPLETADO - TODOS LOS PAGOS RECIBIDOS",
+      "choosing": "¡Gracias por elegir RC Web Solutions para tus necesidades de desarrollo web!",
+      "thanks": "¡Gracias por tu confianza!",
+      "questions": "¿Dudas? Escríbenos a {email}",
+      "depositLine": "Pago inicial - Anticipo del 50 % de {planName}",
+      "finalLine": "Pago final - Saldo del 50 % de {planName}",
+      "summaryLine": "Resumen completo del proyecto - {planName}"
+    },
+    "checkout": {
+      "depositName": "{planName} - Pago inicial (50 %)",
+      "depositDescription": "Anticipo del 50 % de {planName}; el saldo se paga a la entrega",
+      "quoteDescription": "Anticipo del 50 % del presupuesto {quoteNumber}; el saldo se paga a la entrega",
+      "finalName": "{planName} - Pago final (50 %)",
+      "finalDescription": "Pago final al terminar el proyecto"
+    }
+  }
+}

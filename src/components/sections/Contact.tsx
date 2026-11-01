@@ -7,11 +7,17 @@ import {
   PhoneIcon,
 } from "@heroicons/react/24/outline";
 import DialogForm from "@/components/forms/DialogForm";
-import { serviceOptions } from "@/lib/data";
-
+import { getTranslations } from "next-intl/server";
+import { getLocalizedCatalog } from "@/lib/catalog";
 
 // Server Component; the form inside is the client island
-const Contact = () => {
+const Contact = async () => {
+  const [t, { offers }] = await Promise.all([
+    getTranslations("Home.contact"),
+    getLocalizedCatalog(),
+  ]);
+  const serviceOptions = offers.map(({ id, title }) => ({ id, title }));
+
   return (
     <section
       id="contact"
@@ -20,9 +26,9 @@ const Contact = () => {
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
         <Heading
           icon={<EnvelopeIcon className="w-8 text-gold" />}
-          text="Get in Touch"
+          text={t("subheading")}
         >
-          Contact
+          {t("heading")}
         </Heading>
 
         {/* Quick Contact Options */}
@@ -30,15 +36,15 @@ const Contact = () => {
         <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
           <Button href="/schedule" size="lg">
             <CalendarDaysIcon className="w-5 h-5" />
-            Schedule Free Consultation
+            {t("schedule")}
           </Button>
           <Button href={COMPANY.phoneHref} variant="secondary">
             <PhoneIcon className="w-5 h-5" />
-            Call {COMPANY.phoneDisplay}
+            {t("call", { phone: COMPANY.phoneDisplay })}
           </Button>
         </div>
         <p className="text-center text-white/70 mt-4 font-inter text-sm sm:text-base">
-          Or send me a message below
+          {t("orMessage")}
         </p>
       </div>
 

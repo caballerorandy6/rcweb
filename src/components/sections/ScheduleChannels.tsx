@@ -7,12 +7,12 @@ import { COMPANY } from "@/lib/company";
 import { trackPhoneConversion } from "@/lib/phoneConversion";
 
 /** The direct ways to reach Randy; a client island only for the call tracking */
-export default function ScheduleChannels() {
+export default function ScheduleChannels({ callLabel }: { callLabel: string }) {
   return (
     <div className="flex flex-col gap-3">
       <Button href={COMPANY.phoneHref} onClick={trackPhoneConversion} size="lg" fullWidth>
         <PhoneIcon className="h-5 w-5" aria-hidden="true" />
-        Call {COMPANY.phoneDisplay}
+        {callLabel}
       </Button>
       <Button
         href={COMPANY.whatsappHref}

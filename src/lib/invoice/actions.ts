@@ -1,6 +1,7 @@
 // lib/invoice/actions.ts
 "use server";
 
+import { emailTranslator } from "@/lib/email/i18n";
 import { prisma } from "@/lib/prisma";
 import { generateInvoiceNumber } from "./generateInvoiceNumber";
 import { generateInvoicePDF, generateInvoiceSummaryPDF } from "./generateInvoicePDF";
@@ -9,9 +10,8 @@ import {
   CreateInvoiceData,
   InvoiceData,
   InvoiceSummaryData,
-  calculateTaxAmount,
   calculateTotal,
-  DEFAULT_TAX_RATE,
+  effectiveTaxRate,
 } from "./types";
 import { getProjectCharges, isPaid } from "@/lib/project/charges";
 
@@ -26,7 +26,8 @@ export async function createInvoice(
     const invoiceNumber = await generateInvoiceNumber();
 
     // 2. Calcular impuestos y total
-    const taxAmount = calculateTaxAmount(data.subtotal, data.taxRate);
+    const { taxAmount } = data;
+    const taxRate = effectiveTaxRate(data.subtotal, taxAmount);
     const total = calculateTotal(data.subtotal, taxAmount);
 
     // 3. Preparar datos del invoice
@@ -34,12 +35,13 @@ export async function createInvoice(
       invoiceNumber,
       type: data.type,
       customerName: data.customerName,
+      locale: data.locale,
       customerEmail: data.customerEmail,
       projectCode: data.projectCode,
       planName: data.planName,
       description: data.description,
       subtotal: data.subtotal,
-      taxRate: data.taxRate,
+      taxRate,
       taxAmount,
       total,
       currency: "USD",
@@ -73,7 +75,7 @@ export async function createInvoice(
         planName: data.planName,
         description: data.description,
         subtotal: data.subtotal,
-        taxRate: data.taxRate,
+        taxRate,
         taxAmount,
         total,
         currency: "USD",
@@ -130,40 +132,44 @@ export async function createInvoiceSummary(
     const depositPaidAt = deposit.paidAt ?? deposit.updatedAt;
     const finalPaidAt = final.paidAt ?? final.updatedAt;
 
+    const t = emailTranslator(project.locale);
+
     // 2. Generar número de invoice único
     const invoiceNumber = await generateInvoiceNumber();
 
-    // 3. Calcular impuestos sobre el total (ya incluidos en ambos cobros)
-    // Asumimos que los montos YA incluyen impuestos
-    const subtotalBeforeTax = Math.round(project.totalAmount / (1 + DEFAULT_TAX_RATE / 100));
-    const taxAmount = project.totalAmount - subtotalBeforeTax;
+    // 3. Totales de los dos cobros: `amount` no incluye impuesto
+    const subtotal = deposit.amount + final.amount;
+    const taxAmount = deposit.taxAmount + final.taxAmount;
+    const taxRate = effectiveTaxRate(subtotal, taxAmount);
+    const total = calculateTotal(subtotal, taxAmount);
 
     // 4. Preparar datos del invoice summary
     const invoiceSummaryData: InvoiceSummaryData = {
       invoiceNumber,
       type: "summary",
       customerName: project.name,
+      locale: project.locale,
       customerEmail: project.email,
       projectCode: project.projectCode,
       planName: project.planName,
       items: [
         {
-          description: `Initial Payment - 50% Deposit for ${project.planName}`,
+          description: t("pdf.depositLine", { planName: project.planName }),
           amount: deposit.amount,
           paidDate: depositPaidAt,
           paymentMethod: deposit.method,
         },
         {
-          description: `Final Payment - 50% Balance for ${project.planName}`,
+          description: t("pdf.finalLine", { planName: project.planName }),
           amount: final.amount,
           paidDate: finalPaidAt,
           paymentMethod: final.method,
         },
       ],
-      subtotal: subtotalBeforeTax,
-      taxRate: DEFAULT_TAX_RATE,
+      subtotal,
+      taxRate,
       taxAmount,
-      total: project.totalAmount,
+      total,
       currency: "USD",
       status: "paid",
       issueDate: new Date(),
@@ -191,11 +197,11 @@ export async function createInvoiceSummary(
         customerEmail: project.email,
         projectCode: project.projectCode,
         planName: project.planName,
-        description: `Complete Project Summary - ${project.planName}`,
-        subtotal: subtotalBeforeTax,
-        taxRate: DEFAULT_TAX_RATE,
+        description: t("pdf.summaryLine", { planName: project.planName }),
+        subtotal,
+        taxRate,
         taxAmount,
-        total: project.totalAmount,
+        total,
         currency: "USD",
         pdfUrl,
         pdfBlobKey,

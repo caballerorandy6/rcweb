@@ -1,7 +1,10 @@
+import { emailTranslator } from "@/lib/email/i18n";
 import stripe from "@/lib/stripe";
 import { splitDepositAmount } from "@/lib/project/charges";
 import { uniqueProjectCode } from "@/lib/project/uniqueProjectCode";
 import { SITE_BASE_URL } from "@/lib/projectUrl";
+import { localizePathname } from "@/i18n/paths";
+import { routing, type Locale } from "@/i18n/routing";
 import type { InitialCheckoutMetadataInput } from "@/lib/checkoutMetadata";
 
 export interface InitialPaymentInput {
@@ -18,6 +21,8 @@ export interface InitialPaymentInput {
   description?: string;
   /** Where the customer lands if they leave Checkout */
   cancelUrl: string;
+  /** Language of the page the customer came from; the success page keeps it */
+  locale?: Locale;
 }
 
 /**
@@ -29,6 +34,8 @@ export interface InitialPaymentInput {
 export async function createInitialPaymentCheckout(
   input: InitialPaymentInput
 ): Promise<{ sessionUrl: string; projectCode: string }> {
+  const locale = input.locale ?? routing.defaultLocale;
+  const t = emailTranslator(locale);
   const projectCode = await uniqueProjectCode();
   const { deposit, balance } = splitDepositAmount(input.totalAmount);
 
@@ -45,10 +52,12 @@ export async function createInitialPaymentCheckout(
     secondPaymentAmount: balance.toString(),
     totalAmount: input.totalAmount.toString(),
     termsAcceptedAt,
+    locale,
     ...(input.quoteId && { quoteId: input.quoteId }),
   } satisfies InitialCheckoutMetadataInput;
 
   const session = await stripe.checkout.sessions.create({
+    locale,
     allowed_payment_method_types: ["card"],
     mode: "payment",
     customer_email: input.customerEmail,
@@ -59,10 +68,10 @@ export async function createInitialPaymentCheckout(
         price_data: {
           currency: "usd",
           product_data: {
-            name: `${input.planName} - Initial Payment (50%)`,
+            name: t("checkout.depositName", { planName: input.planName }),
             description:
               input.description ??
-              `50% deposit for ${input.planName}; the balance is due on delivery`,
+              t("checkout.depositDescription", { planName: input.planName }),
           },
           unit_amount: deposit,
         },
@@ -70,7 +79,7 @@ export async function createInitialPaymentCheckout(
       },
     ],
     automatic_tax: { enabled: true },
-    success_url: `${SITE_BASE_URL}/payment-success?session_id={CHECKOUT_SESSION_ID}&code=${projectCode}`,
+    success_url: `${SITE_BASE_URL}${localizePathname("/payment-success", input.locale ?? routing.defaultLocale)}?session_id={CHECKOUT_SESSION_ID}&code=${projectCode}`,
     cancel_url: input.cancelUrl,
   });
 

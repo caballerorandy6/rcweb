@@ -1,22 +1,32 @@
 import Image from "next/image";
-import Link from "next/link";
-import type { Route } from "next";
+import { Link, type Href } from "@/i18n/navigation";
 
 //Icons
 import GithubIcon from "@/components/icons/Github";
 import Website from "@/components/icons/Website";
 
+import type en from "@/messages/en.json";
+
+export type ProjectKey = keyof typeof en.Catalog.projects;
+
 export interface ProjectProps {
+  /** Stable id; also the key of its description in the dictionaries */
+  id: ProjectKey;
   name: string;
   tecnologies: string[];
   description: string;
   image: string;
   github?: string;
   url: string;
-  caseStudy?: string;
+  /** Not built for a client: labelled on the card */
+  demo?: boolean;
+  caseStudy?: Href;
   /** Above the fold on the page that renders it (first row of the portfolio) */
   priority?: boolean;
 }
+
+/** Button captions, translated by the list that renders the cards */
+export type ProjectLabels = { caseStudy: string; preview: string; github: string; demo: string };
 
 const Project = ({
   name,
@@ -25,12 +35,19 @@ const Project = ({
   image,
   github,
   url,
+  demo = false,
   caseStudy,
   priority = false,
-}: ProjectProps) => {
+  labels,
+}: ProjectProps & { labels: ProjectLabels }) => {
   return (
     <>
-      <div className="overflow-hidden rounded-t-2xl">
+      <div className="relative overflow-hidden rounded-t-2xl">
+        {demo && (
+          <span className="absolute left-3 top-3 z-10 rounded-full bg-gray-950/90 px-2.5 py-0.5 text-xs font-inter text-gold border border-gold/50">
+            {labels.demo}
+          </span>
+        )}
         <Image
           alt={name}
           src={image}
@@ -69,15 +86,15 @@ const Project = ({
             className="flex-1 py-3 text-base font-inter text-gold hover:bg-gray-800 transition rounded-bl-2xl border-r border-gold/50"
           >
             <GithubIcon className="inline-block w-5 h-5 mr-2" />
-            GitHub
+            {labels.github}
           </a>
         )}
         {caseStudy && (
           <Link
-            href={caseStudy as Route}
+            href={caseStudy}
             className={`flex-1 py-3 text-base font-inter text-gold hover:bg-gray-800 transition border-r border-gold/50 ${!github ? "rounded-bl-2xl" : ""}`}
           >
-            Case Study
+            {labels.caseStudy}
           </Link>
         )}
         <a
@@ -87,7 +104,7 @@ const Project = ({
           className={`flex-1 py-3 text-base font-inter text-gold hover:bg-gray-800 transition ${github || caseStudy ? "rounded-br-2xl" : "rounded-b-2xl"}`}
         >
           <Website className="inline-block w-5 h-5 mr-2" />
-          Preview
+          {labels.preview}
         </a>
       </div>
     </>

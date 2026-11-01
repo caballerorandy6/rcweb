@@ -1,26 +1,26 @@
 /**
- * Generate metadata for a page in Next.js
+ * Page metadata: title, description, canonical, Open Graph and Twitter cards,
+ * plus the hreflang pairs when the page exists in both languages.
  *
- * Requirements:
- * - Next.js 13.2.0 or higher
- * - Next.js App Router
+ * Usage (public page, localized):
+ *   export async function generateMetadata({ params }: PageProps<"/[locale]/services">) {
+ *     const { locale } = await params;
+ *     const t = await getTranslations({ locale, namespace: "Services.metadata" });
+ *     return genPageMetadata({ title: t("title"), description: t("description"), locale, pathname: "/services" });
+ *   }
  *
- * Usage:
- * import { genPageMetadata } from "@/utils/genPageMetadata";
- *
- * export const metadata = genPageMetadata({
- *   title: "Page Title",
- *   description: "Page description",
- *   pageRoute: "/page-route",
- *   ogImg: "/og-custom.png", // optional
- * });
+ * Backoffice pages (no translation) pass `pageRoute` instead of `pathname`.
  */
 
 import { Metadata } from "next";
 import { siteConfig } from "@/config/site";
+import { localizePathname, languageAlternates } from "@/i18n/paths";
+import { routing, type AppPathname, type Locale } from "@/i18n/routing";
 
 /** The default OG image (public/og-image.jpg) is 1200×630 */
 const DEFAULT_OG_SIZE = { width: 1200, height: 630 };
+
+const OG_LOCALE: Record<Locale, string> = { en: "en_US", es: "es_US" };
 
 type ArticleMetadata = {
   /** ISO date (YYYY-MM-DD) of publication */
@@ -34,7 +34,16 @@ type ArticleMetadata = {
 type PageMetadataProps = {
   title: string;
   description: string;
-  pageRoute: string;
+  /** Language of this rendering; English when omitted */
+  locale?: Locale;
+  /** Internal pathname (key of routing.pathnames); emits canonical + hreflang */
+  pathname?: AppPathname;
+  /** Values for the dynamic segments of `pathname` */
+  params?: Record<string, string | number>;
+  /** Pages with one language only (hreflang off): the plain route, e.g. "/admin/login" */
+  pageRoute?: string;
+  /** Skip hreflang although the pathname is bilingual (e.g. a post without translation) */
+  hreflang?: boolean;
   ogImg?: string;
   noIndex?: boolean;
   /**
@@ -49,12 +58,17 @@ type PageMetadataProps = {
 export function genPageMetadata({
   title,
   description,
+  locale = routing.defaultLocale,
+  pathname,
+  params,
   pageRoute,
+  hreflang = true,
   ogImg,
   noIndex = false,
   article,
 }: PageMetadataProps): Metadata {
-  const url = `${siteConfig.baseUrl}${pageRoute}`;
+  const route = pathname ? localizePathname(pathname, locale, params) : (pageRoute ?? "/");
+  const url = `${siteConfig.baseUrl}${route}`;
   const ogImage = ogImg || siteConfig.defaultOgImg;
   const socialTitle = `${title} | ${siteConfig.siteName}`;
 
@@ -63,7 +77,7 @@ export function genPageMetadata({
     description,
     url,
     siteName: siteConfig.siteName,
-    locale: "en_US",
+    locale: OG_LOCALE[locale],
   };
 
   const openGraph: Metadata["openGraph"] = article
@@ -86,6 +100,8 @@ export function genPageMetadata({
     description,
     alternates: {
       canonical: url,
+      ...(pathname &&
+        hreflang && { languages: languageAlternates(siteConfig.baseUrl, pathname, params) }),
     },
     ...(noIndex && {
       robots: {

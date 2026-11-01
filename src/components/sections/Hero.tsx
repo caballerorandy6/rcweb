@@ -1,5 +1,5 @@
 import Image from "next/image";
-import type { Route } from "next";
+import { getTranslations } from "next-intl/server";
 import Button from "@/components/ui/Button";
 import CustomBadge from "@/components/ui/CustomBadge";
 import PhoneLink from "@/components/tracking/PhoneLink";
@@ -11,7 +11,10 @@ import { PhoneIcon, CalendarDaysIcon } from "@heroicons/react/24/outline";
  * Server Component: the headline (LCP) and every CTA are in the initial HTML.
  * Entrance motion is CSS only (animate-enter), so nothing waits for JS.
  */
-const Hero = () => {
+const Hero = async () => {
+  const t = await getTranslations("Home.hero");
+  const signals = t.raw("signals") as string[];
+
   return (
     <section
       id="home"
@@ -34,23 +37,21 @@ const Hero = () => {
         <div className="mx-auto max-w-3xl text-center">
           {/* h1 = LCP: sin opacidad animada, solo transform */}
           <h1 className="text-5xl sm:text-7xl lg:text-8xl font-iceland tracking-tight text-gold animate-hero-title">
-            Websites That Win Customers
+            {t("title")}
           </h1>
 
           <div className="animate-enter [animation-delay:100ms]">
-            <CustomBadge>Your Digital Partner</CustomBadge>
+            <CustomBadge>{t("badge")}</CustomBadge>
           </div>
 
           {/* LCP candidate on phones (larger than the h1): transform only, no fade */}
           <p className="mt-8 mx-auto max-w-xl font-inter text-white/80 text-base sm:text-lg animate-rise [animation-delay:150ms]">
-            Fast websites and web apps for small service businesses, with
-            booking, payments and local SEO built in. Based in Houston, working
-            with clients anywhere.
+            {t("intro")}
           </p>
 
           {/* Señales de calidad concretas */}
           <ul className="mt-6 flex flex-wrap justify-center gap-x-8 gap-y-2 sm:gap-x-12 text-sm sm:text-base md:text-lg font-inter font-semibold text-gold animate-enter [animation-delay:200ms]">
-            {["Loads in Under 2 Seconds", "Local SEO Built In", "English & Español"].map(
+            {signals.map(
               (signal) => (
                 <li
                   key={signal}
@@ -65,17 +66,17 @@ const Hero = () => {
           {/* One primary action (free call), one secondary (services); the
               phone line below is the only other way in, not a third CTA */}
           <div className="mt-10 flex flex-col sm:flex-row gap-4 items-center justify-center animate-enter [animation-delay:250ms]">
-            <Button href={"/schedule" as Route} size="lg">
+            <Button href="/schedule" size="lg">
               <CalendarDaysIcon className="w-5 h-5" />
-              Schedule a Free Call
+              {t("scheduleCta")}
             </Button>
-            <Button href={"#services" as Route} variant="secondary" size="lg">
-              View Services
+            <Button href={{ pathname: "/", hash: "services" }} variant="secondary" size="lg">
+              {t("servicesCta")}
             </Button>
           </div>
 
           <p className="mt-8 text-center font-inter text-sm sm:text-base text-white/70 animate-enter [animation-delay:350ms]">
-            Or call directly:{" "}
+            {t("orCall")}{" "}
             <PhoneLink
               href={COMPANY.phoneHref}
               className="inline-flex items-center gap-2 font-semibold text-gold hover:text-gold/80 transition-[color,transform] duration-200 hover:scale-105"

@@ -1,6 +1,8 @@
 "use server";
 
 import { z } from "zod";
+import { getLocale, getTranslations } from "next-intl/server";
+import type { Locale } from "@/i18n/routing";
 import { headers } from "next/headers";
 import { Resend } from "resend";
 import { prisma } from "@/lib/prisma";
@@ -24,36 +26,34 @@ const TokenSchema = z.uuid();
 export async function requestZellePaymentAction(
   token: string
 ): Promise<ActionResult<{ depositAmount: number }>> {
+  const [t, locale] = await Promise.all([getTranslations("Actions"), getLocale()]);
   try {
     if (!TokenSchema.safeParse(token).success) {
-      return { success: false, error: "This quote link is not valid" };
+      return { success: false, error: t("quote.invalid") };
     }
     if (!isZelleAvailable()) {
-      return { success: false, error: "Zelle payments are not available right now" };
+      return { success: false, error: t("quote.zelleUnavailable") };
     }
 
     const rateCheck = await checkActionRateLimit(rateLimiters.api);
     if (!rateCheck.success) {
-      return { success: false, error: rateCheck.error ?? "Too many requests" };
+      return { success: false, error: t("tooManyRequests") };
     }
 
     const quote = await prisma.quote.findUnique({ where: { token } });
     if (!quote || quote.status === "draft") {
-      return { success: false, error: "This quote link is not valid" };
+      return { success: false, error: t("quote.invalid") };
     }
 
     const status = getQuoteDisplayStatus(quote);
     if (status === "accepted") {
-      return { success: false, error: "This quote has already been accepted" };
+      return { success: false, error: t("quote.accepted") };
     }
     if (status === "cancelled") {
-      return { success: false, error: "This quote has been withdrawn" };
+      return { success: false, error: t("quote.withdrawn") };
     }
     if (status === "expired") {
-      return {
-        success: false,
-        error: "This quote has expired. Reply to the email to request an updated one",
-      };
+      return { success: false, error: t("quote.expired") };
     }
 
     const headerList = await headers();
@@ -64,6 +64,8 @@ export async function requestZellePaymentAction(
     await prisma.quote.update({
       where: { id: quote.id },
       data: {
+        // The project takes its language from here when the admin creates it
+        locale: locale as Locale,
         zelleRequestedAt: quote.zelleRequestedAt ?? now,
         // Keep the first acceptance: pressing the button twice is not a new contract
         termsAcceptedAt: quote.termsAcceptedAt ?? now,
@@ -89,6 +91,6 @@ export async function requestZellePaymentAction(
     return { success: true, data: { depositAmount: deposit } };
   } catch (error) {
     console.error("❌ Error requesting Zelle payment:", error);
-    return { success: false, error: "Something went wrong. Please try again" };
+    return { success: false, error: t("quote.failed") };
   }
 }

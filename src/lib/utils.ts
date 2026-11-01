@@ -49,6 +49,8 @@ type DateFormatOptions = {
   day?: "numeric" | "2-digit";
   /** Pass "UTC" for date-only values (YYYY-MM-DD) so the day never shifts */
   timeZone?: string;
+  /** BCP 47 tag of the visitor's language; US English by default */
+  locale?: string;
 };
 
 function toDate(date: Date | string | null): Date | null {
@@ -57,11 +59,14 @@ function toDate(date: Date | string | null): Date | null {
   return isNaN(dateObj.getTime()) ? null : dateObj;
 }
 
-function getDateFormatter(options: Intl.DateTimeFormatOptions): Intl.DateTimeFormat {
-  const key = JSON.stringify(options);
+function getDateFormatter(
+  options: Intl.DateTimeFormatOptions,
+  locale = "en-US"
+): Intl.DateTimeFormat {
+  const key = `${locale}:${JSON.stringify(options)}`;
   let formatter = dateFormatters.get(key);
   if (!formatter) {
-    formatter = new Intl.DateTimeFormat("en-US", options);
+    formatter = new Intl.DateTimeFormat(locale, options);
     dateFormatters.set(key, formatter);
   }
   return formatter;
@@ -77,12 +82,15 @@ export function formatDate(
   const dateObj = toDate(date);
   if (!dateObj) return "N/A";
 
-  return getDateFormatter({
-    year: options?.year || "numeric",
-    month: options?.month || "short",
-    day: options?.day || "numeric",
-    timeZone: options?.timeZone,
-  }).format(dateObj);
+  return getDateFormatter(
+    {
+      year: options?.year || "numeric",
+      month: options?.month || "short",
+      day: options?.day || "numeric",
+      timeZone: options?.timeZone,
+    },
+    options?.locale
+  ).format(dateObj);
 }
 
 /** Date with time ("Jan 15, 2025, 3:42 PM") for logs and sent timestamps */

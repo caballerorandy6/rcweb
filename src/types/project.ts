@@ -3,6 +3,7 @@
  * Used in both admin and client contexts
  */
 
+import type { Locale } from "@/i18n/routing";
 import type {
   InvoiceStatus,
   InvoiceType,
@@ -37,8 +38,10 @@ export type AdminProject = {
 export type AdminProjectPayment = {
   id: string;
   kind: PaymentKind;
-  /** Cents */
+  /** Cents, before tax */
   amount: number;
+  /** Sales tax collected on top, in cents */
+  taxAmount: number;
   status: PaymentStatus;
   method: PaymentMethod;
   paidAt: string | null;
@@ -64,6 +67,7 @@ export type AdminProjectDetail = {
   id: string;
   projectCode: string;
   accessToken: string;
+  locale: Locale;
   email: string;
   name: string;
   planName: string;
@@ -111,6 +115,8 @@ export type PaymentSuccessData = {
   planName: string;
   totalAmount: number;
   depositAmount: number;
+  /** Sales tax paid with the deposit, in cents */
+  depositTax: number;
   finalAmount: number;
   stripeSessionId: string | null;
 };

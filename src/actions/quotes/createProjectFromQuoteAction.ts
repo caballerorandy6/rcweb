@@ -16,6 +16,8 @@ const CreateProjectFromQuoteSchema = z.object({
   method: z.enum(MANUAL_PAYMENT_METHODS),
   /** Calendar day the deposit arrived, YYYY-MM-DD */
   paidOn: z.iso.date(),
+  /** Sales tax included in what the customer sent, in cents */
+  taxCents: z.number().int().min(0).max(10_000_000),
 });
 
 export type CreateProjectFromQuoteInput = z.infer<typeof CreateProjectFromQuoteSchema>;
@@ -55,7 +57,7 @@ export async function createProjectFromQuoteAction(
     if (!parsed.success) {
       return { success: false, error: z.prettifyError(parsed.error) };
     }
-    const { method, paidOn } = parsed.data;
+    const { method, paidOn, taxCents } = parsed.data;
     const paidAt = toPaidAt(paidOn);
     if (paidAt.getTime() > Date.now() + 24 * 60 * 60 * 1000) {
       return { success: false, error: "The payment date cannot be in the future" };
@@ -81,11 +83,12 @@ export async function createProjectFromQuoteAction(
         projectCode,
         customerEmail: quote.email,
         customerName: quote.name,
+        locale: quote.locale,
         planName: quote.planName,
         totalAmount: quote.totalAmount,
         firstPaymentAmount: deposit,
         secondPaymentAmount: balance,
-        deposit: { method, paidAt },
+        deposit: { method, paidAt, taxAmount: taxCents },
         terms: quote.termsAcceptedAt
           ? {
               acceptedAt: quote.termsAcceptedAt,

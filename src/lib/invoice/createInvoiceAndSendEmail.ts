@@ -3,10 +3,11 @@
 
 import { Resend } from "resend";
 import { createInvoice, createInvoiceSummary } from "./actions";
-import { InvoiceType, DEFAULT_TAX_RATE } from "./types";
+import { InvoiceType } from "./types";
 import { sendInvoiceEmail } from "@/lib/email/senders";
+import { emailTranslator } from "@/lib/email/i18n";
 import { getProjectUrl } from "@/lib/projectUrl";
-import { getProjectCharges, type ProjectWithPayments } from "@/lib/project/charges";
+import { chargeTotal, getProjectCharges, type ProjectWithPayments } from "@/lib/project/charges";
 
 interface CreateInvoiceAndSendEmailParams {
   project: ProjectWithPayments;
@@ -42,21 +43,22 @@ export async function createInvoiceAndSendEmail({
     } else {
       const charge = type === "initial" ? deposit : final;
       const amount = charge.amount;
-      const description =
-        type === "initial"
-          ? `Initial Payment - 50% Deposit for ${project.planName}`
-          : `Final Payment - 50% Balance for ${project.planName}`;
+      const description = emailTranslator(project.locale)(
+        type === "initial" ? "pdf.depositLine" : "pdf.finalLine",
+        { planName: project.planName }
+      );
 
       invoiceResult = await createInvoice({
         projectId: project.id,
         type,
         customerName: project.name,
+        locale: project.locale,
         customerEmail: project.email,
         projectCode: project.projectCode,
         planName: project.planName,
         description,
         subtotal: amount,
-        taxRate: DEFAULT_TAX_RATE,
+        taxAmount: charge.taxAmount,
         paymentMethod: charge.method,
         stripeSessionId: charge.method === "stripe" ? stripeSessionId : undefined,
         paidDate: charge.paidAt ?? new Date(),
@@ -74,14 +76,18 @@ export async function createInvoiceAndSendEmail({
     const sent = await sendInvoiceEmail(resend, {
       customerEmail: project.email,
       customerName: project.name,
+      locale: project.locale,
       planName: project.planName,
       invoiceNumber: invoiceResult.invoiceNumber,
       firstPayment: deposit.amount,
-      secondPayment: final.amount,
-      totalAmount: project.totalAmount,
+      depositTax: deposit.taxAmount,
+      // The final and summary emails state what was paid, tax included; the
+      // initial one still shows the balance and the project before tax
+      secondPayment: type === "initial" ? final.amount : chargeTotal(final),
+      totalAmount: type === "summary" ? chargeTotal(deposit) + chargeTotal(final) : project.totalAmount,
       type,
       pdfBuffer,
-      projectUrl: getProjectUrl(project.accessToken),
+      projectUrl: getProjectUrl(project.accessToken, project.locale),
     });
     if (!sent.success) {
       throw new Error(

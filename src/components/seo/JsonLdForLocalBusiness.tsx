@@ -1,6 +1,7 @@
 import { siteConfig } from "@/config/site";
 import { offers } from "@/lib/data";
 import { offerToSchemaOffer } from "@/lib/seo/offerJsonLd";
+import { getTranslations } from "next-intl/server";
 import { getPublicGoogleReviews } from "@/lib/googleReviews/queries";
 
 /** Stable identifier other blocks (WebSite, Service) point at instead of repeating the company */
@@ -14,7 +15,10 @@ export const ORGANIZATION_ID = `${siteConfig.baseUrl}/#organization`;
  * engines and other consumers still read them.
  */
 export async function JsonLdForLocalBusiness() {
-  const google = await getPublicGoogleReviews();
+  const [google, t] = await Promise.all([
+    getPublicGoogleReviews(),
+    getTranslations("Metadata"),
+  ]);
 
   const jsonLd = {
     "@context": "https://schema.org",
@@ -22,7 +26,7 @@ export async function JsonLdForLocalBusiness() {
     "@id": ORGANIZATION_ID,
     name: siteConfig.siteName,
     alternateName: siteConfig.siteNameShort,
-    description: siteConfig.description,
+    description: t("siteDescription"),
     url: siteConfig.baseUrl,
     telephone: "+1-346-375-7534",
     email: siteConfig.author.email,

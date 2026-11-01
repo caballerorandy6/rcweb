@@ -3,8 +3,11 @@
 import { useSearchParams } from "next/navigation";
 import Button from "@/components/ui/Button";
 import { useEffect } from "react";
+import { useTranslations } from "next-intl";
+import { COMPANY } from "@/lib/company";
 
 export default function PaymentComplete() {
+  const t = useTranslations("PaymentComplete");
   const searchParams = useSearchParams();
   const projectCode = searchParams.get("code");
 
@@ -81,121 +84,54 @@ export default function PaymentComplete() {
         </div>
 
         <h1 className="text-4xl mb-2 font-iceland text-gold">
-          Project Fully Paid! 🎉
+          {t("title")}
         </h1>
 
-        <p className="text-xl text-white mb-6 font-inter">
-          Thank you for your business!
-        </p>
+        <p className="text-xl text-white mb-6 font-inter">{t("thanks")}</p>
 
         <div className="bg-gray-700/50 rounded-lg p-6 mb-6 text-left">
-          <h3 className="text-gold font-semibold mb-4 text-center font-inter">
-            What Happens Next:
-          </h3>
+          <h3 className="text-gold font-semibold mb-4 text-center font-inter">{t("nextTitle")}</h3>
           <ul className="space-y-3 text-sm text-gray-300 font-inter">
-            <li className="flex items-start">
-              <svg
-                className="w-5 h-5 text-green-500 mr-2 mt-0.5 shrink-0"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M5 13l4 4L19 7"
-                />
-              </svg>
-              <span>
-                You&apos;ll receive an email with all project files and
-                documentation within 24 hours
-              </span>
-            </li>
-            <li className="flex items-start">
-              <svg
-                className="w-5 h-5 text-green-500 mr-2 mt-0.5 shrink-0"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M5 13l4 4L19 7"
-                />
-              </svg>
-              <span>
-                Access credentials for hosting and admin panels will be provided
-              </span>
-            </li>
-            <li className="flex items-start">
-              <svg
-                className="w-5 h-5 text-green-500 mr-2 mt-0.5 shrink-0"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M5 13l4 4L19 7"
-                />
-              </svg>
-              <span>
-                Training session will be scheduled based on your availability
-              </span>
-            </li>
-            <li className="flex items-start">
-              <svg
-                className="w-5 h-5 text-green-500 mr-2 mt-0.5 shrink-0"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M5 13l4 4L19 7"
-                />
-              </svg>
-              <span>Support period begins today as per your plan</span>
-            </li>
+            {(t.raw("next") as string[]).map((item) => (
+              <li key={item} className="flex items-start">
+                <svg
+                  className="w-5 h-5 text-green-500 mr-2 mt-0.5 shrink-0"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                  aria-hidden="true"
+                >
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                </svg>
+                <span>{item}</span>
+              </li>
+            ))}
           </ul>
         </div>
 
         {projectCode && (
           <div className="bg-gray-700 rounded-lg p-4 mb-6">
-            <p className="text-sm text-gray-400 mb-1 font-inter">
-              Project Reference:
-            </p>
+            <p className="text-sm text-gray-400 mb-1 font-inter">{t("reference")}</p>
             <p className="text-2xl font-bold text-gold font-mono">
               {projectCode}
             </p>
-            <p className="text-xs text-gray-500 mt-1 font-inter">
-              Save this for your records
-            </p>
+            <p className="text-xs text-gray-500 mt-1 font-inter">{t("save")}</p>
           </div>
         )}
 
         <div className="space-y-3 font-inter">
           <Button href="/" fullWidth>
-            Return to Home
+            {t("home")}
           </Button>
-          <Button href="mailto:contactus@rcweb.dev" variant="secondary" fullWidth>
-            Contact Support
+          <Button href={`mailto:${COMPANY.contactEmail}`} variant="secondary" fullWidth>
+            {t("support")}
           </Button>
         </div>
 
         <div className="mt-8 pt-6 border-t border-gray-700">
-          <p className="text-sm text-gray-400 font-inter">
-            A detailed receipt has been sent to your email address.
-          </p>
+          <p className="text-sm text-gray-400 font-inter">{t("receipt")}</p>
           <p className="text-xs text-gray-500 mt-2 font-inter">
-            For any questions, please contact me at contactus@rcweb.dev
+            {t("questions", { email: COMPANY.contactEmail })}
           </p>
         </div>
       </div>

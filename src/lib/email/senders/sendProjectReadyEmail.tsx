@@ -1,5 +1,7 @@
 // src/lib/email/senders/sendProjectReadyEmail.tsx
 
+import { emailTranslator } from "../i18n";
+import type { Locale } from "@/i18n/routing";
 import { Resend } from "resend";
 import { render } from "@react-email/components";
 import { ProjectReadyEmail } from "../templates";
@@ -7,6 +9,7 @@ import { ProjectReadyEmail } from "../templates";
 export interface SendProjectReadyEmailParams {
   customerEmail: string;
   customerName: string;
+  locale: Locale;
   planName: string;
   projectCode: string;
   finalAmount: number;
@@ -20,6 +23,7 @@ export async function sendProjectReadyEmail(
   const {
     customerEmail,
     customerName,
+    locale,
     planName,
     projectCode,
     finalAmount,
@@ -30,6 +34,7 @@ export async function sendProjectReadyEmail(
     const html = await render(
       <ProjectReadyEmail
         customerName={customerName}
+        locale={locale}
         planName={planName}
         projectCode={projectCode}
         finalAmount={finalAmount}
@@ -38,12 +43,14 @@ export async function sendProjectReadyEmail(
       />
     );
 
-    const formattedAmount = (finalAmount / 100).toFixed(2);
 
     const { error: sendError } = await resend.emails.send({
       from: "RC Web Solutions <no-reply@rcweb.dev>",
       to: customerEmail,
-      subject: `Your ${planName} project is ready! Final payment of $${formattedAmount} required`,
+      subject: emailTranslator(locale)("ready.subject", {
+        planName,
+        amount: `$${(finalAmount / 100).toFixed(2)}`,
+      }),
       html,
     });
     if (sendError) throw new Error(sendError.message);

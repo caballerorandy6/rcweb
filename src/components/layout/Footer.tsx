@@ -1,6 +1,7 @@
-import Link from "next/link";
-import type { Route } from "next";
+import { getTranslations } from "next-intl/server";
+import { Link } from "@/i18n/navigation";
 import {
+  contactItem,
   navigation,
   secondaryNavigation,
   footerNavigation,
@@ -8,13 +9,16 @@ import {
 } from "@/lib/navigation";
 import Button from "@/components/ui/Button";
 import Logo from "@/components/layout/Logo";
+import LanguageSwitch from "@/components/layout/LanguageSwitch";
 
-export default function Footer() {
-  const mainNavigation = navigation.slice(0, -2);
-  const contactItem = navigation.find((item) => item.name === "Contact");
+export default async function Footer() {
+  const [t, nav] = await Promise.all([
+    getTranslations("Footer"),
+    getTranslations("Nav"),
+  ]);
 
   // Dividir en grupos para mejor organización
-  const primaryLinks = mainNavigation;
+  const primaryLinks = navigation;
   const secondaryLinks = secondaryNavigation;
 
   return (
@@ -36,15 +40,12 @@ export default function Footer() {
             <div className="sm:col-span-2 lg:col-span-2 flex flex-col items-center lg:items-start">
               <Logo className="w-36 lg:w-40 h-auto mb-6" />
               <p className="text-white/60 font-inter text-sm leading-relaxed mb-6 text-center lg:text-left max-w-sm mx-auto lg:mx-0">
-                Websites and web apps for small businesses, built and
-                maintained by me. Based in Houston, working with clients
-                anywhere.
+                {t("description")}
               </p>
 
               {/* Contact CTA */}
-              {contactItem && (
-                <Button href={contactItem.hash as Route} size="sm">
-                  Get In Touch
+              <Button href={contactItem.href} size="sm">
+                  {nav("getInTouch")}
                   <svg
                     className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1"
                     fill="none"
@@ -58,25 +59,24 @@ export default function Footer() {
                       d="M17 8l4 4m0 0l-4 4m4-4H3"
                     />
                   </svg>
-                </Button>
-              )}
+              </Button>
             </div>
 
             {/* Columnas de navegación - Cada una ocupa 1 columna */}
             <div className="text-center sm:text-left sm:col-span-1">
               <h2 className="text-gold font-inter font-semibold text-sm uppercase tracking-wider mb-4 flex items-center justify-center sm:justify-start gap-2">
                 <span className="w-8 h-px bg-linear-to-r from-gold/50 to-transparent hidden sm:block" />
-                Navigation
+                {t("navigation")}
               </h2>
               <ul className="space-y-2">
                 {primaryLinks.map((item) => (
-                  <li key={item.name}>
+                  <li key={item.key}>
                     <Link
-                      href={item.hash as Route}
+                      href={item.href}
                       className="text-white/60 hover:text-gold transition duration-200 font-inter text-sm inline-flex items-center justify-center sm:justify-start w-full sm:w-auto py-1 group"
                     >
                       <span className="w-1 h-1 bg-gold/50 rounded-full mr-2 opacity-0 group-hover:opacity-100 transition-opacity duration-200" />
-                      {item.name}
+                      {nav(item.key)}
                     </Link>
                   </li>
                 ))}
@@ -86,28 +86,28 @@ export default function Footer() {
             <div className="text-center sm:text-left sm:col-span-1">
               <h2 className="text-gold font-inter font-semibold text-sm uppercase tracking-wider mb-4 flex items-center justify-center sm:justify-start gap-2">
                 <span className="w-8 h-px bg-linear-to-r from-gold/50 to-transparent hidden sm:block" />
-                More
+                {t("more")}
               </h2>
               <ul className="space-y-2">
                 {secondaryLinks.map((item) => (
-                  <li key={item.name}>
+                  <li key={item.key}>
                     <Link
-                      href={item.hash as Route}
+                      href={item.href}
                       className="text-white/60 hover:text-gold transition duration-200 font-inter text-sm inline-flex items-center justify-center sm:justify-start w-full sm:w-auto py-1 group"
                     >
                       <span className="w-1 h-1 bg-gold/50 rounded-full mr-2 opacity-0 group-hover:opacity-100 transition-opacity duration-200" />
-                      {item.name}
+                      {nav(item.key)}
                     </Link>
                   </li>
                 ))}
                 {footerNavigation.map((item) => (
-                  <li key={item.name}>
+                  <li key={item.key}>
                     <Link
-                      href={item.hash as Route}
+                      href={item.href}
                       className="text-white/60 hover:text-gold transition duration-200 font-inter text-sm inline-flex items-center justify-center sm:justify-start w-full sm:w-auto py-1 group"
                     >
                       <span className="w-1 h-1 bg-gold/50 rounded-full mr-2 opacity-0 group-hover:opacity-100 transition-opacity duration-200" />
-                      {item.name}
+                      {nav(item.key)}
                     </Link>
                   </li>
                 ))}
@@ -117,15 +117,11 @@ export default function Footer() {
             <div className="text-center sm:text-left sm:col-span-1">
               <h2 className="text-gold font-inter font-semibold text-sm uppercase tracking-wider mb-4 flex items-center justify-center sm:justify-start gap-2">
                 <span className="w-8 h-px bg-linear-to-r from-gold/50 to-transparent hidden sm:block" />
-                Connect
+                {t("connect")}
               </h2>
               <div className="space-y-3">
-                <p className="text-white/60 font-inter text-sm">
-                  Ready to start your project?
-                </p>
-                <p className="text-white/50 font-inter text-xs">
-                  Let&apos;s discuss your project
-                </p>
+                <p className="text-white/60 font-inter text-sm">{t("ready")}</p>
+                <p className="text-white/50 font-inter text-xs">{t("discuss")}</p>
 
                 {/* Estado de disponibilidad */}
                 <div className="flex items-center justify-center sm:justify-start gap-2">
@@ -134,9 +130,11 @@ export default function Footer() {
                     <span className="relative inline-flex rounded-full h-2 w-2 bg-green-500" />
                   </span>
                   <span className="text-green-400 font-inter text-xs font-medium">
-                    Taking New Projects
+                    {t("available")}
                   </span>
                 </div>
+
+                <LanguageSwitch className="mt-2" />
               </div>
             </div>
           </div>
@@ -151,28 +149,28 @@ export default function Footer() {
             {/* Links navegación y legales */}
             <div className="flex flex-col sm:flex-row justify-between items-center gap-6">
               {/* Links principales */}
-              <nav aria-label="Footer" className="flex flex-wrap justify-center sm:justify-start gap-x-6 gap-y-2">
-                {mainNavigation.slice(0, 4).map((item) => (
+              <nav aria-label={t("footerNav")} className="flex flex-wrap justify-center sm:justify-start gap-x-6 gap-y-2">
+                {navigation.slice(0, 4).map((item) => (
                   <Link
-                    key={item.name}
-                    href={item.hash as Route}
+                    key={item.key}
+                    href={item.href}
                     className="text-white/50 hover:text-gold transition-colors duration-200 font-inter text-xs relative inline-block py-1 group"
                   >
-                    {item.name}
+                    {nav(item.key)}
                     <span className="absolute bottom-0.5 left-0 w-full h-px bg-gold scale-x-0 origin-left transition-transform duration-300 group-hover:scale-x-100" />
                   </Link>
                 ))}
               </nav>
 
               {/* Links legales */}
-              <nav aria-label="Legal" className="flex flex-wrap justify-center sm:justify-end gap-x-6 gap-y-2">
+              <nav aria-label={t("legalNav")} className="flex flex-wrap justify-center sm:justify-end gap-x-6 gap-y-2">
                 {extraFooterLinks.map((link) => (
                   <Link
-                    key={link.name}
-                    href={link.hash as Route}
+                    key={link.key}
+                    href={link.href}
                     className="text-white/50 hover:text-gold transition-colors duration-200 font-inter text-xs relative inline-block py-1 group"
                   >
-                    {link.name}
+                    {nav(link.key)}
                     <span className="absolute bottom-0.5 left-0 w-full h-px bg-gold scale-x-0 origin-left transition-transform duration-300 group-hover:scale-x-100" />
                   </Link>
                 ))}
@@ -185,9 +183,7 @@ export default function Footer() {
                 © {new Date().getFullYear()} RC Web Solutions LLC
               </p>
               <span className="text-white/30">•</span>
-              <p className="text-white/50 font-inter text-xs">
-                All Rights Reserved
-              </p>
+              <p className="text-white/50 font-inter text-xs">{t("rights")}</p>
             </div>
           </div>
         </div>

@@ -45,11 +45,13 @@ export default function RecordPaymentButton({ projectId, payment, label }: Recor
     const data = new FormData(form);
     const method = String(data.get("method"));
     const paidOn = String(data.get("paidOn"));
+    const taxCents = Math.round(Number(data.get("taxDollars")) * 100);
     startTransition(async () => {
       const result = await recordManualPaymentAction(projectId, {
         kind: payment.kind,
         method: method as (typeof MANUAL_PAYMENT_METHODS)[number],
         paidOn,
+        taxCents,
       });
       if (!result.success) {
         toast.error(result.error);
@@ -146,6 +148,26 @@ export default function RecordPaymentButton({ projectId, payment, label }: Recor
                 max={todayIso()}
                 className={input}
               />
+            </div>
+
+            <div className="space-y-1">
+              <label htmlFor={`${titleId}-tax`} className="block text-xs text-gray-300">
+                Sales tax included (USD)
+              </label>
+              <input
+                id={`${titleId}-tax`}
+                name="taxDollars"
+                type="number"
+                inputMode="decimal"
+                min="0"
+                step="0.01"
+                defaultValue="0"
+                required
+                className={input}
+              />
+              <p className="text-xs text-gray-500">
+                Only if the customer also sent the tax. It goes on the invoice.
+              </p>
             </div>
 
             <div className="flex justify-end gap-2 pt-2">

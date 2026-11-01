@@ -12,6 +12,8 @@ datasource db {
 model Contact {
   id               String   @id @default(uuid())
   name             String
+  // Language of this customer's emails and invoices
+  locale CustomerLocale @default(en)
   marketingConsent Boolean  @default(false)
   source           String? // web_form, sms_opt_in, manual, etc.
   createdAt        DateTime @default(now())
@@ -143,6 +145,8 @@ model Project {
   accessToken String @unique @default(uuid()) // Secret token for customer URLs
   email       String
   name        String
+  // Language of this customer's emails and invoices
+  locale CustomerLocale @default(en)
   planName    String
   totalAmount Int // Total in cents
 
@@ -182,6 +186,8 @@ model Quote {
   // Customer snapshot; email is lowercased and becomes Project.email
   email String
   name  String
+  // Language of this customer's emails and invoices
+  locale CustomerLocale @default(en)
 
   // Which catalogue offer it is based on (src/lib/offerIds.ts); null for a custom quote
   offerId  String?
@@ -233,7 +239,9 @@ model Payment {
   project   Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
 
   kind   PaymentKind
-  amount Int // In cents
+  amount Int // In cents, before tax: this is the revenue
+  // Sales tax collected on top of `amount`, in cents (Stripe Tax, or typed by the admin)
+  taxAmount Int @default(0)
   status PaymentStatus @default(pending)
   method PaymentMethod @default(stripe)
 
@@ -269,6 +277,8 @@ model Subscription {
   stripeCustomerId     String
   email                String
   name                 String
+  // Language of this customer's emails and invoices
+  locale CustomerLocale @default(en)
   planName             String
   amount               Int // Amount in cents ($200 = 20000)
   currency             String @default("USD")
@@ -316,6 +326,11 @@ model SmsLog {
   @@index([phoneNumber])
   @@index([direction])
   @@index([createdAt])
+}
+
+enum CustomerLocale {
+  en
+  es
 }
 
 enum ContactChannel {

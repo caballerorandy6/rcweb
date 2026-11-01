@@ -1,5 +1,9 @@
 import type { NextConfig } from "next";
 import { withSentryConfig } from "@sentry/nextjs/config";
+import createNextIntlPlugin from "next-intl/plugin";
+
+// Points the server at the per-request i18n config (locale + messages)
+const withNextIntl = createNextIntlPlugin("./src/i18n/request.ts");
 
 // Security headers configuration
 const securityHeaders = [
@@ -149,7 +153,7 @@ const nextConfig: NextConfig = {
   },
 };
 
-export default withSentryConfig(nextConfig, {
+export default withSentryConfig(withNextIntl(nextConfig), {
   // Provided by the Vercel <-> Sentry integration
   org: process.env.SENTRY_ORG,
   project: process.env.SENTRY_PROJECT,

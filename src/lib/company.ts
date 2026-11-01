@@ -35,14 +35,14 @@ export const COMPANY = {
 export const COMPANY_POSTAL_ADDRESS = `${COMPANY.address}, ${COMPANY.city}, ${COMPANY.state} ${COMPANY.zip}`;
 
 /**
- * Fecha de la última revisión de Privacy, Terms y Refund. Cambiarla aquí
- * actualiza las tres páginas y la versión que se guarda con cada aceptación.
+ * Fecha de la última revisión de Privacy, Terms y Refund (content/legal).
+ * Cambiarla aquí actualiza las tres páginas en los dos idiomas (la fecha se
+ * formatea en el idioma de la página) y la versión que se guarda con cada
+ * aceptación.
  */
 export const LEGAL_LAST_UPDATED = {
-  /** Se guarda en TermsAcceptance.termsVersion */
-  version: "2026-10-29",
-  /** Texto visible en las páginas legales */
-  label: "October 29, 2026",
+  /** Se guarda en TermsAcceptance.termsVersion y se muestra formateada */
+  version: "2026-11-01",
 } as const;
 
 /**

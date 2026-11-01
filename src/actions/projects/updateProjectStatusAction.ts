@@ -62,10 +62,11 @@ export async function updateProjectStatusAction(
         {
           customerEmail: project.email,
           customerName: project.name,
+          locale: project.locale,
           planName: project.planName,
           projectCode: project.projectCode,
           finalAmount: final.amount,
-          paymentUrl: getPayUrl(project.accessToken),
+          paymentUrl: getPayUrl(project.accessToken, project.locale),
         }
       );
       if (!sent.success) emailError = sent.error ?? "Email could not be sent";

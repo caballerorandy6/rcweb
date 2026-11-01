@@ -1,8 +1,9 @@
 "use client";
 
 import { useId, useState, useTransition } from "react";
-import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { useTranslations } from "next-intl";
+import { Link } from "@/i18n/navigation";
+import { useRouter } from "@/i18n/navigation";
 import { toast } from "sonner";
 import { ShieldCheckIcon } from "@heroicons/react/24/outline";
 import Button from "@/components/ui/Button";
@@ -33,6 +34,7 @@ export default function QuoteAcceptForm({
   zelleRequested,
 }: QuoteAcceptFormProps) {
   const router = useRouter();
+  const t = useTranslations("Quote.form");
   // Choosing Zelle already meant accepting the terms
   const [accepted, setAccepted] = useState(zelleRequested);
   const [isPending, startTransition] = useTransition();
@@ -46,7 +48,7 @@ export default function QuoteAcceptForm({
     startTransition(async () => {
       const result = await acceptQuoteAction(token);
       if (result.success) {
-        toast.success("Redirecting to secure payment…");
+        toast.success(t("redirecting"));
         window.location.href = result.data.sessionUrl;
       } else {
         toast.error(result.error);
@@ -62,7 +64,7 @@ export default function QuoteAcceptForm({
       try {
         const result = await requestZellePaymentAction(token);
         if (result.success) {
-          toast.success("Thanks! Here are the Zelle details");
+          toast.success(t("zelleThanks"));
           router.refresh();
         } else {
           toast.error(result.error);
@@ -76,7 +78,7 @@ export default function QuoteAcceptForm({
   return (
     <div className="bg-gold/10 border border-gold/40 rounded-xl p-6 mb-8">
       <h2 className="text-xl text-white font-iceland mb-4">
-        {zelleRequested ? "Prefer to pay by card after all?" : "Ready to start?"}
+        {zelleRequested ? t("readyCard") : t("ready")}
       </h2>
 
       <label htmlFor={checkboxId} className="flex gap-3 cursor-pointer font-inter">
@@ -89,15 +91,18 @@ export default function QuoteAcceptForm({
           className="mt-1 h-4 w-4 shrink-0 rounded border-gray-600 bg-gray-900 text-gold focus:ring-gold focus:ring-offset-gray-900"
         />
         <span className="text-gray-300 text-sm">
-          I have read and agree to the{" "}
-          <Link href="/terms-of-service" target="_blank" className="text-gold hover:underline">
-            Terms of Service
-          </Link>{" "}
-          and the{" "}
-          <Link href="/refund-policy" target="_blank" className="text-gold hover:underline">
-            Refund Policy
-          </Link>
-          , and I accept this quote as the scope of the project.
+          {t.rich("agree", {
+            terms: (chunks) => (
+              <Link href="/terms-of-service" target="_blank" className="text-gold hover:underline">
+                {chunks}
+              </Link>
+            ),
+            refund: (chunks) => (
+              <Link href="/refund-policy" target="_blank" className="text-gold hover:underline">
+                {chunks}
+              </Link>
+            ),
+          })}
         </span>
       </label>
 
@@ -105,11 +110,11 @@ export default function QuoteAcceptForm({
         <Button onClick={handleAccept} disabled={!accepted || isPending} size="lg">
           <ShieldCheckIcon className="w-5 h-5" aria-hidden="true" />
           {pendingAction === "card"
-            ? "Processing…"
-            : `Accept and Pay ${formatCurrency(depositAmount)} Deposit`}
+            ? t("processing")
+            : t("accept", { amount: formatCurrency(depositAmount) })}
         </Button>
         <p id={hintId} className="text-gray-500 text-xs font-inter">
-          Secure payment by Stripe. You&apos;ll receive an invoice by email.
+          {t("secure")}
         </p>
       </div>
 
@@ -121,11 +126,10 @@ export default function QuoteAcceptForm({
             disabled={!accepted || isPending}
             className="text-sm font-inter text-gold hover:underline disabled:text-gray-500 disabled:no-underline disabled:cursor-not-allowed"
           >
-            {pendingAction === "zelle" ? "One moment…" : "Prefer to pay the deposit by Zelle?"}
+            {pendingAction === "zelle" ? t("oneMoment") : t("zelleAsk")}
           </button>
           <p className="text-gray-500 text-xs font-inter mt-1">
-            Accept the terms above first. You&apos;ll see where to send it and work
-            starts once the transfer is confirmed.
+            {t("zelleHint")}
           </p>
         </div>
       ) : null}

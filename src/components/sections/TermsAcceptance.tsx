@@ -2,7 +2,9 @@
 
 import { useTransition } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
-import Link from "next/link";
+import { useLocale, useTranslations } from "next-intl";
+import type { Route } from "next";
+import { getPathname, Link } from "@/i18n/navigation";
 import { toast } from "sonner";
 import { ShieldCheckIcon, ExclamationTriangleIcon } from "@heroicons/react/24/outline";
 import BackButton from "@/components/ui/BackButton";
@@ -17,6 +19,7 @@ import { getCheckoutCustomer } from "@/lib/checkoutCustomer";
  */
 
 export function TermsReviewNotice() {
+  const t = useTranslations("Forms.terms");
   const planId = useSearchParams().get("plan");
   if (!planId) return null;
 
@@ -29,13 +32,9 @@ export function TermsReviewNotice() {
           </div>
           <div className="grow">
             <h2 className="text-amber-500 text-2xl mb-1 font-iceland">
-              Important: Review Required
+              {t("noticeTitle")}
             </h2>
-            <p className="text-white/80 text-sm sm:text-base font-inter">
-              Please carefully review and accept our Terms of Service before
-              proceeding to payment. This legal agreement outlines the
-              conditions of our service.
-            </p>
+            <p className="text-white/80 text-sm sm:text-base font-inter">{t("noticeText")}</p>
           </div>
           <BackButton className="shrink-0" />
         </div>
@@ -45,7 +44,9 @@ export function TermsReviewNotice() {
 }
 
 export function TermsAcceptActions() {
+  const t = useTranslations("Forms.terms");
   const router = useRouter();
+  const locale = useLocale();
   const planId = useSearchParams().get("plan");
   const [isPending, startTransition] = useTransition();
 
@@ -55,14 +56,15 @@ export function TermsAcceptActions() {
     const customer = getCheckoutCustomer();
 
     if (!customer) {
-      toast.error("Missing information. Please start from pricing.");
-      router.push("/#pricing");
+      toast.error(t("missing"));
+      // Home + hash in the visitor's language; the typed router takes no hash
+      router.push(`${getPathname({ href: "/", locale })}#pricing` as Route);
       return;
     }
 
     startTransition(async () => {
       try {
-        toast.loading("Processing…");
+        toast.loading(t("processing"));
 
         // El servidor calcula precio y fecha de aceptación de términos.
         const result = await createStripeCheckoutAction({ planId, customer });
@@ -70,7 +72,7 @@ export function TermsAcceptActions() {
         toast.dismiss();
 
         if (result.success && result.sessionUrl) {
-          toast.success("Redirecting to secure payment…");
+          toast.success(t("redirecting"));
 
           if (result.projectCode) {
             sessionStorage.setItem("tempProjectCode", result.projectCode);
@@ -78,11 +80,11 @@ export function TermsAcceptActions() {
 
           window.location.href = result.sessionUrl;
         } else if (!result.success) {
-          toast.error(result.error || "Failed to process");
+          toast.error(result.error || t("failed"));
         }
       } catch (error) {
         toast.dismiss();
-        toast.error("An error occurred");
+        toast.error(t("error"));
         console.error("Error in handleAcceptTerms:", error);
       }
     });
@@ -92,25 +94,23 @@ export function TermsAcceptActions() {
     <div className="mt-12 max-w-5xl mx-auto reveal">
       <div className="text-center mb-6 font-inter flex flex-col items-center">
         <p className="text-white/70 text-sm">
-          By clicking &quot;I Accept These Terms&quot;, you confirm that you
-          have read, understood, and agree to be bound by these Terms of
-          Service.
+          {t("confirm")}
         </p>
       </div>
 
       <div className="flex justify-center">
         <Button onClick={handleAcceptTerms} disabled={isPending}>
           <ShieldCheckIcon className="w-5 h-5" />
-          {isPending ? "Processing…" : "I Accept These Terms"}
+          {isPending ? t("processing") : t("accept")}
         </Button>
       </div>
 
       <div className="mt-6 text-center font-inter">
         <Link
-          href="/#pricing"
+          href={{ pathname: "/", hash: "pricing" }}
           className="text-white/50 hover:text-gold underline text-sm transition-colors"
         >
-          Return to Pricing Plans
+          {t("back")}
         </Link>
       </div>
     </div>
