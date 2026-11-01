@@ -64,7 +64,7 @@ export const experience: ExperienceProps[] = experienceShapes.map((shape) => ({
 export { experienceShapes };
 
 export const projects: ProjectProps[] = [
-  // Real clients first, then demos (`demo: true`, labelled on the card and never
+  // Clients, current and past, first, then demos (`demo: true`, labelled on the card and never
   // presented as clients). Best work leads within each group; course exercises are not listed.
   {
     name: "GSM AC & General Contractor",
@@ -136,6 +136,24 @@ export const projects: ProjectProps[] = [
     caseStudy: "/case-study/leos-home-experts",
   },
   {
+    name: "Dulce Antojo Snack Carts",
+    tecnologies: [
+      "NextJS",
+      "React",
+      "TypeScript",
+      "TailwindCSS",
+      "Shadcn UI",
+      "Zod",
+      "Stripe",
+    ],
+    id: "dulceAntojo",
+    description: copy.projects.dulceAntojo,
+    image: "/dulce-antojo.avif",
+    github: "https://github.com/caballerorandy6/dulce-antojo",
+    url: "https://dulce-antojo-snack-carts.vercel.app/",
+    caseStudy: "/case-study/dulce-antojo",
+  },
+  {
     name: "MIRA Eyewear",
     tecnologies: [
       "NextJS",
@@ -190,25 +208,6 @@ export const projects: ProjectProps[] = [
     image: "/rcbeautysalon.avif",
     github: "https://github.com/caballerorandy6/rcbeautysalon",
     url: "https://www.rcbeautysalon.org/",
-  },
-  {
-    name: "Dulce Antojo Snack Carts",
-    tecnologies: [
-      "NextJS",
-      "React",
-      "TypeScript",
-      "TailwindCSS",
-      "Shadcn UI",
-      "Zod",
-      "Stripe",
-    ],
-    id: "dulceAntojo",
-    demo: true,
-    description: copy.projects.dulceAntojo,
-    image: "/dulce-antojo.avif",
-    github: "https://github.com/caballerorandy6/dulce-antojo",
-    url: "https://dulce-antojo-snack-carts.vercel.app/",
-    caseStudy: "/case-study/dulce-antojo",
   },
   {
     name: "Limo Renting",
@@ -599,8 +598,8 @@ export type ServicePageCopy = Omit<ServicePage, "offerId" | "relatedProjects">;
 export const servicePageShapes: { offerId: OfferId; relatedProjects: string[] }[] = [
   { offerId: "business-website", relatedProjects: ["Clínica Hispana Nueva Salud Gessner", "Clínica Hispana Airline", "Leo's Home Experts"] },
   { offerId: "website-redesign", relatedProjects: ["GSM AC & General Contractor", "Clínica Hispana Airline"] },
-  { offerId: "admin-dashboard", relatedProjects: ["GSM AC & General Contractor"] },
-  { offerId: "store-and-apps", relatedProjects: ["GSM AC & General Contractor"] },
+  { offerId: "admin-dashboard", relatedProjects: ["GSM AC & General Contractor", "Dulce Antojo Snack Carts"] },
+  { offerId: "store-and-apps", relatedProjects: ["Dulce Antojo Snack Carts", "GSM AC & General Contractor"] },
   { offerId: "maintenance", relatedProjects: ["Clínica Hispana Nueva Salud Gessner", "Leo's Home Experts", "GSM AC & General Contractor"] },
 ];
 

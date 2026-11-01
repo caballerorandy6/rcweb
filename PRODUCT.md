@@ -47,7 +47,7 @@ RC Web Solutions (rcweb.dev) is the public site of a one-person web studio run b
 
 ## Evidence on Hand
 
-- Portfolio: 7 real client sites (GSM A/C, Dulce Antojo, Clínica Gessner, Airline, Leo's Home Experts, RC Beauty Salon, Limo Renting) in `src/lib/data.ts`; case studies for GSM and Dulce Antojo.
+- Portfolio: client sites (GSM A/C, Clínica Airline, Clínica Hispana Nueva Salud Gessner, Leo's Home Experts, and past client Dulce Antojo) and labelled demos (MIRA Eyewear, Order System, RC Beauty Salon, Limo Renting) in `src/lib/data.ts`; case studies for GSM and Dulce Antojo.
 - Three Google reviews (Michel Chapelli / GSM A/C, Leonardo Lecour Acosta / Leo's Home Experts, Yoannis Aguilar Fonseca) rendered statically until the Business Profile API access is granted.
 - Clinic-network results above (stated by Randy on 2026-10-19; underlying Search Console / call data not yet in the repo — obtain it before publishing the numbers on the site).
 - Absent, do not fabricate: client logos beyond the portfolio, press, awards, certifications beyond those listed on /about, team members.

@@ -69,6 +69,7 @@ const caseStudyLinks = [
   { name: "Clínica Hispana Airline", url: "https://www.clinicahispanaairline.com/" },
   { name: "GSM A/C & General Contractor", url: "/case-study/gsmactx" },
   { name: "Leo's Home Experts", url: "https://www.ac-remodelingservice.com/" },
+  { name: "Dulce Antojo Snack Carts", url: "https://dulce-antojo-snack-carts.vercel.app/" },
 ];
 
 export default async function WebDeveloperHoustonPage({ params }: Props) {

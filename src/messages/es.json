@@ -266,7 +266,7 @@
     },
     "projects": {
       "gsmactx": "Sitio web a medida y panel de administración para una empresa de aire acondicionado de Houston. Campañas de email automatizadas, gestión de solicitudes de servicio y renderizado en tiempo real del lado del cliente. Le ahorró al negocio más de 15 horas a la semana.",
-      "dulceAntojo": "Demo de un sitio web y panel de administración privado con enlaces de pago de Stripe para un negocio de renta de carritos de snacks en Houston. Formulario de reservas, SEO local y pagos con tarjeta. No es el sitio actual del negocio.",
+      "dulceAntojo": "Sitio web y panel de administración privado con enlaces de pago de Stripe, construidos para un cliente anterior, un negocio de renta de carritos de snacks en Houston. El enlace abre una copia de portafolio, no el sitio actual del negocio.",
       "clinicaGessner": "Sitio web bilingüe para una clínica de Houston con reserva de citas en línea, información de servicios y SEO local para llegar a pacientes de habla hispana.",
       "clinicaAirline": "Sitio web bilingüe y profesional para una clínica de Houston con pacientes de habla hispana. Incluye SEO local, páginas de servicios y un diseño amigable para el paciente, optimizado para el móvil.",
       "leosHomeExperts": "Landing page para una empresa de servicios para el hogar de Houston especializada en construcción de patios, mosquiteros motorizados e instalación de toldos. Incluye optimización de SEO local con schema JSON-LD e integración de galería de video.",
@@ -795,7 +795,7 @@
   "Portfolio": {
     "metadata": {
       "title": "Proyectos y casos de éxito | Portafolio de desarrollo web",
-      "description": "Sitios web que he construido para pequeños negocios: clínicas, aire acondicionado, servicios para el hogar y más, la mayoría en el área de Houston. También demos de una tienda en línea, un sistema de órdenes, un salón, una renta de limusinas y un negocio de carritos de snacks."
+      "description": "Sitios web que he construido para pequeños negocios: clínicas, aire acondicionado, servicios para el hogar, renta para eventos y más, la mayoría en el área de Houston. También demos de una tienda en línea, un sistema de órdenes, un salón y una renta de limusinas."
     },
     "title": "Proyectos y",
     "titleHighlight": "casos de éxito",
@@ -934,7 +934,7 @@
             "description": "Las consultas llegaban por mensajes directos de Instagram, fáciles de pasar por alto y difíciles de rastrear, y los pagos estaban dispersos entre mensajes y apps bancarias sin registro de quién había pagado."
           }
         ],
-        "solutionsIntro": "Construí un sitio web con formulario de reservas y un panel de administración privado con pagos de Stripe para que la dueña pudiera cobrar con tarjeta a cualquier cliente. El enlace de esta página abre una versión de demostración del proyecto, no el sitio actual del negocio.",
+        "solutionsIntro": "Construí un sitio web con formulario de reservas y un panel de administración privado con pagos de Stripe para que la dueña pudiera cobrar con tarjeta a cualquier cliente. Dulce Antojo pasó después a otro sitio web, así que el enlace de esta página abre una copia de portafolio de lo que construí.",
         "solutions": [
           {
             "title": "Sitio web hecho para reservar eventos",
@@ -1332,6 +1332,10 @@
       {
         "result": "Landing page optimizada para SEO local con galería de video y captura de prospectos",
         "industry": "Servicios para el hogar"
+      },
+      {
+        "result": "Landing page optimizada para conversión de reservas de catering para eventos",
+        "industry": "Comida y eventos"
       }
     ],
     "viewProject": "Ver proyecto",

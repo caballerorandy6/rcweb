@@ -65,12 +65,15 @@ Next.js, React, TypeScript, Tailwind CSS, Node.js, PostgreSQL, Prisma, Docker, A
 
 - [Leo's Home Experts](https://www.ac-remodelingservice.com/) — Landing page for a Houston home services company (patios, motorized screens, awnings) with video gallery and local SEO. [Case study](https://www.rcweb.dev/case-study/leos-home-experts)
 
-### Demos (sample projects, not current client sites)
+### Food & Events
+
+- [Dulce Antojo Snack Carts](https://dulce-antojo-snack-carts.vercel.app/) — Past client: website with a booking form for a Houston snack cart rental business; the link is a portfolio copy
+
+### Demos (sample projects, not built for clients)
 
 - [MIRA Eyewear](https://optica-dun.vercel.app/) — Online eyewear store with virtual try-on, Stripe checkout and an admin panel
 - [Order System](https://optical-ordering-system.vercel.app/) — Order management for optical shops with prescriptions, partial payments and reports
 - [RC Beauty Salon](https://www.rcbeautysalon.org/) — Beauty salon website with online booking and a product shop
-- [Dulce Antojo Snack Carts](https://dulce-antojo-snack-carts.vercel.app/) — Demo of a website with a booking form for a Houston snack cart rental business; not the business's current site
 - [Limo Renting](https://limo-renting-next-js-nu.vercel.app/) — Limousine rental platform with vehicle availability and online booking
 
 ## Client Testimonials
