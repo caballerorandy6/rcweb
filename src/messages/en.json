@@ -76,7 +76,7 @@
           "Contact Forms",
           "Loads in under 2 seconds"
         ],
-        "highlight": "Like Clínica Gessner & Leo's Home Experts",
+        "highlight": "Like Clínica Hispana Nueva Salud Gessner & Leo's Home Experts",
         "range": "$1,000 - $6,000",
         "duration": "1-4 weeks",
         "description": "A landing page at a fixed price, or a 5-10 page site quoted on scope",
@@ -266,7 +266,7 @@
     },
     "projects": {
       "gsmactx": "Custom website and admin dashboard for a Houston HVAC company. Automated email campaigns, service request management, and real-time client-side rendering. Saved the business 15+ hours per week.",
-      "dulceAntojo": "Official website and private admin dashboard with Stripe payment links for a Houston snack cart rental business. Booking form, local SEO, and card payments that let them book companies and schools.",
+      "dulceAntojo": "Demo of a website and private admin dashboard with Stripe payment links for a Houston snack cart rental business. Booking form, local SEO and card payments. It is not the business's current site.",
       "clinicaGessner": "Bilingual website for a Houston clinic featuring online appointment booking, service information, and local SEO to reach Spanish-speaking patients.",
       "clinicaAirline": "Professional bilingual website for a Houston clinic with Spanish-speaking patients. Features local SEO, service pages, and patient-friendly design optimized for mobile.",
       "leosHomeExperts": "Landing page for a Houston-based home services company specializing in patio construction, motorized screens, and awning installations. Features local SEO optimization with JSON-LD schema and video gallery integration.",
@@ -795,14 +795,14 @@
   "Portfolio": {
     "metadata": {
       "title": "Projects & Case Studies | Web Development Portfolio",
-      "description": "Websites I have built for small businesses: clinics, HVAC, home services, event rentals and more, most in the Houston area. Also demos of an online store, an order system, a salon and a limo rental."
+      "description": "Websites I have built for small businesses: clinics, HVAC, home services and more, most in the Houston area. Also demos of an online store, an order system, a salon, a limo rental and a snack cart business."
     },
     "title": "Projects &",
     "titleHighlight": "Case Studies",
     "intro": "Websites built for real small businesses, plus demos that show what I can build. Click “Case Study” on a client project to see the full story: challenges, solutions, and results.",
     "clients": "Client projects",
     "demos": "Demos",
-    "demosIntro": "Sample projects I built to show what is possible. They were not made for a client, and their businesses, prices and data are examples."
+    "demosIntro": "Sample projects that show what I can build. None is a current client's website, and their businesses, prices and data may be examples."
   },
   "CaseStudies": {
     "back": "Back to Projects",
@@ -907,11 +907,11 @@
       },
       "dulceAntojo": {
         "metaTitle": "Dulce Antojo Case Study - Website & Stripe Payments for a Houston Caterer",
-        "metaDescription": "How I took Dulce Antojo Snack Carts from Instagram-only to an official website with Stripe card payments, so a Houston event caterer could book companies and schools.",
+        "metaDescription": "How I took Dulce Antojo Snack Carts from Instagram-only to a full website with Stripe card payments, built so a Houston event caterer could book companies and schools.",
         "crumb": "Dulce Antojo",
         "name": "Dulce Antojo",
         "nameHighlight": "Snack Carts",
-        "subtitle": "How I took a Houston snack cart rental business from Instagram-only to an official website with Stripe card payments, so they could book companies and organizations, not just individuals.",
+        "subtitle": "How I took a Houston snack cart rental business from Instagram-only to a full website with Stripe card payments, built so they could book companies and organizations, not just individuals.",
         "imageAlt": "Dulce Antojo Snack Carts website screenshot",
         "stats": [
           "Star Google Reviews",
@@ -922,7 +922,7 @@
         "challengesIntro": "Before working with me, Dulce Antojo rented Mexican dessert and snack carts (mini pancakes, paletas locas, churro sundaes, elote cups) for events in Houston with no official website, only social media, and no way to accept card payments.",
         "challenges": [
           {
-            "title": "No Official Website",
+            "title": "No Website",
             "description": "The business operated entirely through Instagram DMs and word-of-mouth. Potential customers had no centralized place to see all 13+ snack cart options, pricing, or how to book, and there was zero Google presence."
           },
           {
@@ -934,10 +934,10 @@
             "description": "Inquiries came through Instagram DMs, easy to miss and hard to track, and payments were scattered across messages and bank apps with no record of who had paid."
           }
         ],
-        "solutionsIntro": "I built their official website with a booking form, and a private admin dashboard with Stripe payments so the owner can charge any client by card.",
+        "solutionsIntro": "I built a website with a booking form, and a private admin dashboard with Stripe payments so the owner could charge any client by card. The link on this page opens a demo version of the project, not the business's current website.",
         "solutions": [
           {
-            "title": "Official Website Built to Book Events",
+            "title": "Website Built to Book Events",
             "description": "A modern, mobile-first website showcasing all 13+ snack cart options with a photo gallery, FAQ and a booking request form that captures event details (date, type, guests, preferred carts) and emails them instantly. Optimized for local search in Houston.",
             "features": [
               "13+ snack cart service showcases",
@@ -948,7 +948,7 @@
           },
           {
             "title": "Stripe Payment Links from a Private Dashboard",
-            "description": "The owner creates a payment link for each event and sends it by text or email. The client pays in seconds on Stripe's secure checkout, card data never touches the business's servers, and both sides get an automatic email receipt.",
+            "description": "The dashboard creates a payment link for each event, to send by text or email. The client pays in seconds on Stripe's secure checkout, card data never touches the business's servers, and both sides get an automatic email receipt.",
             "features": [
               "Payment link per event, sent by SMS or email",
               "Stripe-hosted checkout with fraud protection and PCI compliance",
@@ -969,12 +969,12 @@
         ],
         "results": [
           {
-            "metric": "Companies and Schools as Clients",
-            "description": "Dulce Antojo can now book organizations that pay by card and need a receipt, not just individuals"
+            "metric": "Built for Companies and Schools",
+            "description": "The build let Dulce Antojo take organizations that pay by card and need a receipt, not just individuals"
           },
           {
             "metric": "Bookings and Payments in One Place",
-            "description": "Every booking and payment is organized and under the owner's control, instead of scattered across messages"
+            "description": "The dashboard kept every booking and payment organized and under the owner's control, instead of scattered across messages"
           },
           {
             "metric": "5-Star Client Review",
@@ -990,20 +990,20 @@
         ]
       },
       "clinicaGessner": {
-        "metaTitle": "Clinica Hispana Gessner Case Study - Bilingual Healthcare Website",
-        "metaDescription": "How I helped Clinica Hispana Gessner replace their outdated WordPress site with a modern bilingual website. Lead capture, Google Business integration, and local SEO.",
-        "crumb": "Clinica Gessner",
-        "name": "Clinica Hispana",
+        "metaTitle": "Clínica Hispana Nueva Salud Gessner Case Study - Bilingual Healthcare Website",
+        "metaDescription": "How I helped Clínica Hispana Nueva Salud Gessner replace their outdated WordPress site with a modern bilingual website. Lead capture, Google Business integration, and local SEO.",
+        "crumb": "Clínica Hispana Nueva Salud Gessner",
+        "name": "Clínica Hispana Nueva Salud",
         "nameHighlight": "Gessner",
         "subtitle": "How I replaced an outdated WordPress site with a modern bilingual website that helps Houston's Hispanic community find and contact the clinic online.",
-        "imageAlt": "Clinica Hispana Gessner website screenshot",
+        "imageAlt": "Clínica Hispana Nueva Salud Gessner website screenshot",
         "stats": [
           "Star Google Reviews",
           "Languages (EN/ES)",
           "Lighthouse Score",
           "Load Time"
         ],
-        "challengesIntro": "Before working with me, Clinica Gessner was struggling to connect with patients online despite serving a large Hispanic community in Houston.",
+        "challengesIntro": "Before working with me, Clínica Hispana Nueva Salud Gessner was struggling to connect with patients online despite serving a large Hispanic community in Houston.",
         "challenges": [
           {
             "title": "Outdated WordPress Site",
@@ -1332,10 +1332,6 @@
       {
         "result": "Local SEO optimized landing page with video gallery and lead capture",
         "industry": "Home Services"
-      },
-      {
-        "result": "Conversion-optimized landing page for event catering bookings",
-        "industry": "Food & Events"
       }
     ],
     "viewProject": "View project",

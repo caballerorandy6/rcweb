@@ -62,7 +62,7 @@ If you're not on the first page, your website isn't doing its job.
 
 **The fix:** Local SEO needs to be built into the website's architecture, not added as an afterthought with a plugin. Proper heading structure, schema markup, Houston-specific content, and technical optimization make the difference.
 
-I built [Clinica Hispana Gessner's website](https://www.clinicagessner.com/) with local SEO built in from day one — targeting both English and Spanish searches in the Houston area.
+I built [Clínica Hispana Nueva Salud Gessner's website](https://www.clinicagessner.com/) with local SEO built in from day one — targeting both English and Spanish searches in the Houston area.
 
 ---
 

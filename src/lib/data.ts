@@ -102,7 +102,7 @@ export const projects: ProjectProps[] = [
     caseStudy: "/case-study/clinica-airline",
   },
   {
-    name: "Clínica Hispana Gessner",
+    name: "Clínica Hispana Nueva Salud Gessner",
     tecnologies: [
       "NextJS",
       "React",
@@ -134,24 +134,6 @@ export const projects: ProjectProps[] = [
     github: "https://github.com/caballerorandy6/leos-home-experts",
     url: "https://www.ac-remodelingservice.com/",
     caseStudy: "/case-study/leos-home-experts",
-  },
-  {
-    name: "Dulce Antojo Snack Carts",
-    tecnologies: [
-      "NextJS",
-      "React",
-      "TypeScript",
-      "TailwindCSS",
-      "Shadcn UI",
-      "Zod",
-      "Stripe",
-    ],
-    id: "dulceAntojo",
-    description: copy.projects.dulceAntojo,
-    image: "/dulce-antojo.avif",
-    github: "https://github.com/caballerorandy6/dulce-antojo",
-    url: "https://dulce-antojo-snack-carts.vercel.app/",
-    caseStudy: "/case-study/dulce-antojo",
   },
   {
     name: "MIRA Eyewear",
@@ -208,6 +190,25 @@ export const projects: ProjectProps[] = [
     image: "/rcbeautysalon.avif",
     github: "https://github.com/caballerorandy6/rcbeautysalon",
     url: "https://www.rcbeautysalon.org/",
+  },
+  {
+    name: "Dulce Antojo Snack Carts",
+    tecnologies: [
+      "NextJS",
+      "React",
+      "TypeScript",
+      "TailwindCSS",
+      "Shadcn UI",
+      "Zod",
+      "Stripe",
+    ],
+    id: "dulceAntojo",
+    demo: true,
+    description: copy.projects.dulceAntojo,
+    image: "/dulce-antojo.avif",
+    github: "https://github.com/caballerorandy6/dulce-antojo",
+    url: "https://dulce-antojo-snack-carts.vercel.app/",
+    caseStudy: "/case-study/dulce-antojo",
   },
   {
     name: "Limo Renting",
@@ -596,11 +597,11 @@ export type ServicePageCopy = Omit<ServicePage, "offerId" | "relatedProjects">;
 
 /** What the dictionary cannot hold: which portfolio projects each page shows */
 export const servicePageShapes: { offerId: OfferId; relatedProjects: string[] }[] = [
-  { offerId: "business-website", relatedProjects: ["Clínica Hispana Gessner", "Clínica Hispana Airline", "Leo's Home Experts"] },
+  { offerId: "business-website", relatedProjects: ["Clínica Hispana Nueva Salud Gessner", "Clínica Hispana Airline", "Leo's Home Experts"] },
   { offerId: "website-redesign", relatedProjects: ["GSM AC & General Contractor", "Clínica Hispana Airline"] },
-  { offerId: "admin-dashboard", relatedProjects: ["GSM AC & General Contractor", "Dulce Antojo Snack Carts"] },
-  { offerId: "store-and-apps", relatedProjects: ["Dulce Antojo Snack Carts", "GSM AC & General Contractor"] },
-  { offerId: "maintenance", relatedProjects: ["Clínica Hispana Gessner", "Leo's Home Experts", "GSM AC & General Contractor"] },
+  { offerId: "admin-dashboard", relatedProjects: ["GSM AC & General Contractor"] },
+  { offerId: "store-and-apps", relatedProjects: ["GSM AC & General Contractor"] },
+  { offerId: "maintenance", relatedProjects: ["Clínica Hispana Nueva Salud Gessner", "Leo's Home Experts", "GSM AC & General Contractor"] },
 ];
 
 export const servicePages: ServicePage[] = servicePageShapes.map((shape) => ({

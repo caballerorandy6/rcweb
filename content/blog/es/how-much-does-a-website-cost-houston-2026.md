@@ -28,7 +28,7 @@ Un sitio de una sola página enfocado en un único objetivo: normalmente consegu
 
 **Ideal para:** negocios nuevos, promociones de servicios, páginas de eventos
 
-**Ejemplo real:** construí una landing page para [Dulce Antojo Snack Carts](https://dulce-antojo-snack-carts.vercel.app/), un negocio de catering para eventos con sede en Houston. La página se centra en convertir visitas en reservas, con una presentación clara de los servicios y un formulario de contacto interactivo.
+**Ejemplo:** construí una landing page para [Dulce Antojo Snack Carts](https://dulce-antojo-snack-carts.vercel.app/), un negocio de catering para eventos con sede en Houston. La página se centra en convertir visitas en reservas, con una presentación clara de los servicios y un formulario de contacto interactivo. Desde entonces, el negocio pasó a otro sitio web.
 
 ---
 
