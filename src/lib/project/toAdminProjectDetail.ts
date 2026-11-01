@@ -25,6 +25,7 @@ export function toAdminProjectDetail(project: AdminProjectDetailPayload): AdminP
     id: project.id,
     projectCode: project.projectCode,
     accessToken: project.accessToken,
+    locale: project.locale,
     email: project.email,
     name: project.name,
     planName: project.planName,

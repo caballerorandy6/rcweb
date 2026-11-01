@@ -1,5 +1,6 @@
 // src/lib/email/senders/sendMilestoneCompletedEmail.tsx
 
+import { emailTranslator } from "../i18n";
 import { render } from "@react-email/components";
 import { MilestoneCompletedEmail, type MilestoneCompletedEmailProps } from "../templates";
 import { ADMIN_EMAIL } from "../adminEmail";
@@ -24,7 +25,10 @@ export async function sendMilestoneCompletedEmail(
         to: customerEmail,
         // "Just reply to this email" must reach the monitored inbox
         replyTo: ADMIN_EMAIL,
-        subject: `Milestone completed: ${props.milestoneTitle} · Project ${props.projectCode}`,
+        subject: emailTranslator(props.locale)("milestone.subject", {
+          title: props.milestoneTitle,
+          code: props.projectCode,
+        }),
         html,
       },
       { failOnQuotaExceeded: true }

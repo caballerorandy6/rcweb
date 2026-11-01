@@ -5,6 +5,7 @@ import { Resend } from "resend";
 import { createInvoice, createInvoiceSummary } from "./actions";
 import { InvoiceType, DEFAULT_TAX_RATE } from "./types";
 import { sendInvoiceEmail } from "@/lib/email/senders";
+import { emailTranslator } from "@/lib/email/i18n";
 import { getProjectUrl } from "@/lib/projectUrl";
 import { getProjectCharges, type ProjectWithPayments } from "@/lib/project/charges";
 
@@ -42,15 +43,16 @@ export async function createInvoiceAndSendEmail({
     } else {
       const charge = type === "initial" ? deposit : final;
       const amount = charge.amount;
-      const description =
-        type === "initial"
-          ? `Initial Payment - 50% Deposit for ${project.planName}`
-          : `Final Payment - 50% Balance for ${project.planName}`;
+      const description = emailTranslator(project.locale)(
+        type === "initial" ? "pdf.depositLine" : "pdf.finalLine",
+        { planName: project.planName }
+      );
 
       invoiceResult = await createInvoice({
         projectId: project.id,
         type,
         customerName: project.name,
+        locale: project.locale,
         customerEmail: project.email,
         projectCode: project.projectCode,
         planName: project.planName,
@@ -74,6 +76,7 @@ export async function createInvoiceAndSendEmail({
     const sent = await sendInvoiceEmail(resend, {
       customerEmail: project.email,
       customerName: project.name,
+      locale: project.locale,
       planName: project.planName,
       invoiceNumber: invoiceResult.invoiceNumber,
       firstPayment: deposit.amount,
@@ -81,7 +84,7 @@ export async function createInvoiceAndSendEmail({
       totalAmount: project.totalAmount,
       type,
       pdfBuffer,
-      projectUrl: getProjectUrl(project.accessToken),
+      projectUrl: getProjectUrl(project.accessToken, project.locale),
     });
     if (!sent.success) {
       throw new Error(

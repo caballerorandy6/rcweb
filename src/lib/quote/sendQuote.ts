@@ -27,6 +27,7 @@ export async function sendQuote(quote: Quote): Promise<SendQuoteResult> {
   const sent = await sendQuoteEmail({
     customerEmail: quote.email,
     customerName: quote.name,
+    locale: quote.locale,
     quoteNumber: quote.quoteNumber,
     planName: quote.planName,
     scope: quote.scope,
@@ -35,7 +36,7 @@ export async function sendQuote(quote: Quote): Promise<SendQuoteResult> {
     depositAmount: deposit,
     balanceAmount: balance,
     expiresAt,
-    quoteUrl: getQuoteUrl(quote.token),
+    quoteUrl: getQuoteUrl(quote.token, quote.locale),
   });
 
   if (!sent.success) {

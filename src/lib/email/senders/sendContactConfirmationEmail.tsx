@@ -1,5 +1,6 @@
 // src/lib/email/senders/sendContactConfirmationEmail.tsx
 
+import { emailTranslator } from "../i18n";
 import { render } from "@react-email/components";
 import {
   ContactConfirmationEmail,
@@ -16,12 +17,12 @@ export interface SendContactConfirmationEmailParams
 export async function sendContactConfirmationEmail(
   params: SendContactConfirmationEmailParams
 ): Promise<{ success: boolean; error?: string }> {
-  const { customerEmail, customerName } = params;
+  const { customerEmail, customerName, locale } = params;
   const siteUrl = process.env.NEXT_PUBLIC_BASE_URL || "https://www.rcweb.dev";
 
   try {
     const html = await render(
-      <ContactConfirmationEmail customerName={customerName} siteUrl={siteUrl} />
+      <ContactConfirmationEmail customerName={customerName} locale={locale} siteUrl={siteUrl} />
     );
 
     const result = await sendEmailWithQuota({
@@ -29,7 +30,7 @@ export async function sendContactConfirmationEmail(
       to: customerEmail,
       // Replies must land in the inbox that is actually monitored.
       replyTo: ADMIN_EMAIL,
-      subject: "Got your message! - RC Web Solutions",
+      subject: emailTranslator(locale)("contact.subject"),
       html,
     });
 

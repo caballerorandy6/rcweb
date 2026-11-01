@@ -14,9 +14,12 @@ import {
 } from "@react-email/components";
 import * as React from "react";
 import { EMAIL_COLORS } from "../colors";
+import { emailTranslator, formatLongDate } from "../i18n";
+import type { Locale } from "@/i18n/routing";
 
 export interface SubscriptionRenewalReminderEmailProps {
   customerName: string;
+  locale: Locale;
   planName: string;
   amount: number; // in cents
   renewalDate: Date;
@@ -25,13 +28,10 @@ export interface SubscriptionRenewalReminderEmailProps {
 
 export const SubscriptionRenewalReminderEmail: React.FC<
   SubscriptionRenewalReminderEmailProps
-> = ({ customerName, planName, amount, renewalDate, manageUrl }) => {
+> = ({ customerName, locale, planName, amount, renewalDate, manageUrl }) => {
+  const t = emailTranslator(locale);
   const formattedAmount = (amount / 100).toFixed(2);
-  const formattedDate = renewalDate.toLocaleDateString("en-US", {
-    year: "numeric",
-    month: "long",
-    day: "numeric",
-  });
+  const formattedDate = formatLongDate(renewalDate, locale);
 
   return (
     <Html>
@@ -40,18 +40,17 @@ export const SubscriptionRenewalReminderEmail: React.FC<
         <Container style={styles.container}>
           {/* Header */}
           <Section style={styles.header}>
-            <Heading style={styles.headerTitle}>Upcoming Renewal</Heading>
+            <Heading style={styles.headerTitle}>{t("subscription.renewalHeading")}</Heading>
             <Text style={styles.headerSubtitle}>{planName}</Text>
           </Section>
 
           {/* Content */}
           <Section style={styles.content}>
             <Text style={styles.greeting}>
-              Hi <strong>{customerName}</strong>,
+              {t.rich("common.greeting", { name: customerName, b: (chunks) => <strong>{chunks}</strong> })}
             </Text>
             <Text style={styles.paragraph}>
-              This is a friendly reminder that your subscription will
-              automatically renew soon.
+              {t("subscription.renewalBody")}
             </Text>
 
             {/* Renewal Details */}
@@ -59,17 +58,17 @@ export const SubscriptionRenewalReminderEmail: React.FC<
               <table style={styles.detailsTable}>
                 <tbody>
                   <tr>
-                    <td style={styles.detailLabel}>Plan:</td>
+                    <td style={styles.detailLabel}>{t("common.plan")}</td>
                     <td style={styles.detailValue}>{planName}</td>
                   </tr>
                   <tr>
-                    <td style={styles.detailLabel}>Amount:</td>
+                    <td style={styles.detailLabel}>{t("subscription.amount")}</td>
                     <td style={styles.detailValueHighlight}>
-                      ${formattedAmount}/month
+                      ${formattedAmount}{t("common.perMonth")}
                     </td>
                   </tr>
                   <tr>
-                    <td style={styles.detailLabel}>Renewal Date:</td>
+                    <td style={styles.detailLabel}>{t("subscription.renewalDate")}</td>
                     <td style={styles.detailValue}>{formattedDate}</td>
                   </tr>
                 </tbody>
@@ -77,26 +76,24 @@ export const SubscriptionRenewalReminderEmail: React.FC<
             </Section>
 
             <Text style={styles.paragraph}>
-              No action is needed if you wish to continue your subscription. Your
-              payment method on file will be charged automatically.
+              {t("subscription.renewalNoAction")}
             </Text>
 
             {/* CTA Button */}
             <Section style={styles.buttonContainer}>
               <Button href={manageUrl} style={styles.button}>
-                Manage Subscription
+                {t("subscription.renewalCta")}
               </Button>
             </Section>
 
             <Text style={styles.smallText}>
-              If you wish to cancel or update your payment method, click the
-              button above before the renewal date.
+              {t("subscription.renewalChange")}
             </Text>
 
             <Hr style={styles.divider} />
 
             <Text style={styles.footerText}>
-              Questions? Contact us at{" "}
+              {t("common.questionsContact")}{" "}
               <Link href="mailto:contactus@rcweb.dev" style={styles.link}>
                 contactus@rcweb.dev
               </Link>
@@ -107,7 +104,7 @@ export const SubscriptionRenewalReminderEmail: React.FC<
           <Section style={styles.footer}>
             <Text style={styles.footerBrand}>RC Web Solutions</Text>
             <Text style={styles.footerInfo}>
-              Professional Web Development Services
+              {t("common.tagline")}
             </Text>
           </Section>
         </Container>

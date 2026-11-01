@@ -1,3 +1,4 @@
+import { emailTranslator } from "@/lib/email/i18n";
 import stripe from "@/lib/stripe";
 import { splitDepositAmount } from "@/lib/project/charges";
 import { uniqueProjectCode } from "@/lib/project/uniqueProjectCode";
@@ -33,6 +34,8 @@ export interface InitialPaymentInput {
 export async function createInitialPaymentCheckout(
   input: InitialPaymentInput
 ): Promise<{ sessionUrl: string; projectCode: string }> {
+  const locale = input.locale ?? routing.defaultLocale;
+  const t = emailTranslator(locale);
   const projectCode = await uniqueProjectCode();
   const { deposit, balance } = splitDepositAmount(input.totalAmount);
 
@@ -49,11 +52,12 @@ export async function createInitialPaymentCheckout(
     secondPaymentAmount: balance.toString(),
     totalAmount: input.totalAmount.toString(),
     termsAcceptedAt,
+    locale,
     ...(input.quoteId && { quoteId: input.quoteId }),
   } satisfies InitialCheckoutMetadataInput;
 
   const session = await stripe.checkout.sessions.create({
-    locale: input.locale ?? routing.defaultLocale,
+    locale,
     allowed_payment_method_types: ["card"],
     mode: "payment",
     customer_email: input.customerEmail,
@@ -64,10 +68,10 @@ export async function createInitialPaymentCheckout(
         price_data: {
           currency: "usd",
           product_data: {
-            name: `${input.planName} - Initial Payment (50%)`,
+            name: t("checkout.depositName", { planName: input.planName }),
             description:
               input.description ??
-              `50% deposit for ${input.planName}; the balance is due on delivery`,
+              t("checkout.depositDescription", { planName: input.planName }),
           },
           unit_amount: deposit,
         },

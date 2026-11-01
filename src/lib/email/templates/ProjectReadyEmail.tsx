@@ -12,10 +12,14 @@ import {
 } from "@react-email/components";
 import * as React from "react";
 import { EMAIL_COLORS } from "../colors";
+import { emailTranslator } from "../i18n";
+import { localizePathname } from "@/i18n/paths";
+import type { Locale } from "@/i18n/routing";
 import { SITE_BASE_URL } from "@/lib/projectUrl";
 
 export interface ProjectReadyEmailProps {
   customerName: string;
+  locale: Locale;
   planName: string;
   projectCode: string;
   finalAmount: number;
@@ -29,13 +33,16 @@ const colors = EMAIL_COLORS;
 
 export const ProjectReadyEmail = ({
   customerName,
+  locale,
   planName,
   projectCode,
   finalAmount,
   customerEmail,
   paymentUrl,
 }: ProjectReadyEmailProps) => {
-  const baseUrl = SITE_BASE_URL;
+  const t = emailTranslator(locale);
+  const finalPaymentUrl = `${SITE_BASE_URL}${localizePathname("/final-payment", locale)}`;
+  const unsubscribeUrl = `${SITE_BASE_URL}${localizePathname("/unsubscribe", locale)}?email=${encodeURIComponent(customerEmail)}`;
 
   return (
     <Html>
@@ -44,38 +51,37 @@ export const ProjectReadyEmail = ({
         <Container style={styles.container}>
           {/* Header */}
           <Section style={styles.header}>
-            <Heading style={styles.headerTitle}>Your Project is Ready!</Heading>
+            <Heading style={styles.headerTitle}>{t("ready.heading")}</Heading>
             <Text style={styles.headerSubtitle}>
-              Final payment required to deliver
+              {t("ready.subheading")}
             </Text>
           </Section>
 
           {/* Content */}
           <Section style={styles.content}>
             <Text style={styles.greeting}>
-              Hi <strong>{customerName}</strong>,
+              {t.rich("common.greeting", { name: customerName, b: (chunks) => <strong>{chunks}</strong> })}
             </Text>
 
             <Text style={styles.message}>
-              Great news! Your <strong>{planName}</strong> project is complete
-              and ready for final review.
+              {t.rich("ready.intro", { planName, b: (chunks) => <strong>{chunks}</strong> })}
             </Text>
 
-            {/* Project Summary */}
+            {/* {t("ready.summary")} */}
             <Section style={styles.summaryBox}>
               <Text style={styles.summaryTitle}>Project Summary</Text>
               <table style={{ width: "100%", fontSize: "14px" }}>
                 <tbody>
                   <tr>
-                    <td style={styles.summaryLabel}>Project Code:</td>
+                    <td style={styles.summaryLabel}>{t("ready.code")}</td>
                     <td style={styles.summaryValueCode}>{projectCode}</td>
                   </tr>
                   <tr>
-                    <td style={styles.summaryLabel}>Plan:</td>
+                    <td style={styles.summaryLabel}>{t("common.plan")}</td>
                     <td style={styles.summaryValue}>{planName}</td>
                   </tr>
                   <tr>
-                    <td style={styles.summaryLabel}>Final Payment Due:</td>
+                    <td style={styles.summaryLabel}>{t("ready.due")}</td>
                     <td style={styles.summaryValueAmount}>
                       ${(finalAmount / 100).toFixed(2)}
                     </td>
@@ -86,40 +92,38 @@ export const ProjectReadyEmail = ({
 
             {/* Payment Instructions */}
             <Section style={styles.paymentBox}>
-              <Text style={styles.paymentTitle}>Complete Your Final Payment</Text>
+              <Text style={styles.paymentTitle}>{t("ready.payTitle")}</Text>
               <Text style={styles.paymentText}>
-                You can complete your payment directly:
+                {t("ready.payDirect")}
               </Text>
               <Section style={{ textAlign: "center", margin: "20px 0" }}>
                 <Button href={paymentUrl} style={styles.paymentButton}>
-                  Complete Final Payment Now
+                  {t("ready.cta")}
                 </Button>
               </Section>
               <Text style={styles.paymentInstructions}>
-                Or visit{" "}
-                <Link href={`${baseUrl}/final-payment`} style={styles.link}>
-                  {baseUrl}/final-payment
+                {t("ready.orVisit")}{" "}
+                <Link href={finalPaymentUrl} style={styles.link}>
+                  {finalPaymentUrl}
                 </Link>{" "}
-                and use your email <strong>{customerEmail}</strong> and project
-                code <strong>{projectCode}</strong>.
+                {t.rich("ready.useCredentials", { email: customerEmail, code: projectCode, b: (chunks) => <strong>{chunks}</strong> })}
               </Text>
             </Section>
 
             {/* Thank You */}
             <Section style={styles.thankYouBox}>
               <Text style={styles.thankYouTitle}>
-                Thank you for choosing RC Web!
+                {t("ready.thanks")}
               </Text>
               <Text style={styles.thankYouText}>
-                We&apos;re excited to deliver your new website once payment is
-                completed.
+                {t("ready.excited")}
               </Text>
             </Section>
 
             <Hr style={styles.hr} />
 
             <Text style={styles.footer}>
-              Questions? Contact us at{" "}
+              {t("common.questionsContact")}{" "}
               <Link href="mailto:contactus@rcweb.dev" style={styles.link}>
                 contactus@rcweb.dev
               </Link>
@@ -128,12 +132,12 @@ export const ProjectReadyEmail = ({
             <Hr style={styles.hr} />
 
             <Text style={styles.unsubscribe}>
-              You can unsubscribe from marketing emails at any time by clicking{" "}
+              {t("ready.unsubscribe")}{" "}
               <Link
-                href={`${baseUrl}/unsubscribe?email=${encodeURIComponent(customerEmail)}`}
+                href={unsubscribeUrl}
                 style={styles.link}
               >
-                here
+                {t("ready.here")}
               </Link>
               .
             </Text>

@@ -1,5 +1,6 @@
 "use client";
 
+import type { Locale } from "@/i18n/routing";
 import { useTransition } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
@@ -20,6 +21,7 @@ type PrefillContact = {
   id: string;
   name: string;
   email: string;
+  locale: Locale;
   serviceInterest: string | null;
 };
 
@@ -60,6 +62,7 @@ export default function QuoteForm(props: QuoteFormProps) {
     resolver: zodResolver(QuoteInputSchema),
     defaultValues: {
       name: quote?.name ?? contact?.name ?? "",
+      locale: quote?.locale ?? contact?.locale ?? "en",
       email: quote?.email ?? contact?.email ?? "",
       offerId: (prefillOffer ?? "") as QuoteInput["offerId"],
       planName: quote?.planName ?? leadOffer?.title ?? "",
@@ -213,6 +216,15 @@ export default function QuoteForm(props: QuoteFormProps) {
                   {option.title}
                 </option>
               ))}
+            </select>
+          </div>
+          <div>
+            <label htmlFor="quote-locale" className={labelClass}>
+              Customer language
+            </label>
+            <select id="quote-locale" {...register("locale")} className={inputClass}>
+              <option value="en">English</option>
+              <option value="es">Spanish</option>
             </select>
           </div>
           <div>

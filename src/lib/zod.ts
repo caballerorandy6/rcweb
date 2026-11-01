@@ -110,6 +110,8 @@ export const QuoteInputSchema = z.object({
     .number({ message: "Enter the total amount" })
     .min(100, { message: "The minimum quote is $100" })
     .max(500000, { message: "Amount is too large" }),
+  // Language of the quote email and of everything the customer receives later
+  locale: z.enum(["en", "es"]),
   // Lead the quote is for; the form's hidden field sends "" when there is none
   contactId: z.union([z.uuid(), z.literal("")]).optional(),
 });

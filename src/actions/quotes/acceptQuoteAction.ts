@@ -1,5 +1,6 @@
 "use server";
 
+import { emailTranslator } from "@/lib/email/i18n";
 import { z } from "zod";
 import { getLocale, getTranslations } from "next-intl/server";
 import type { Locale } from "@/i18n/routing";
@@ -55,7 +56,7 @@ export async function acceptQuoteAction(
       customerName: quote.name,
       customerEmail: quote.email,
       quoteId: quote.id,
-      description: `50% deposit for quote ${quote.quoteNumber}; the balance is due on delivery`,
+      description: emailTranslator(locale as Locale)("checkout.quoteDescription", { quoteNumber: quote.quoteNumber }),
       cancelUrl: getQuoteUrl(quote.token, locale as Locale),
       locale: locale as Locale,
     });

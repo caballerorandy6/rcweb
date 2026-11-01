@@ -3,6 +3,7 @@
  * Used in both admin and client contexts
  */
 
+import type { Locale } from "@/i18n/routing";
 import type {
   InvoiceStatus,
   InvoiceType,
@@ -64,6 +65,7 @@ export type AdminProjectDetail = {
   id: string;
   projectCode: string;
   accessToken: string;
+  locale: Locale;
   email: string;
   name: string;
   planName: string;

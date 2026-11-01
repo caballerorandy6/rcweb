@@ -1,3 +1,4 @@
+import type { Locale } from "@/i18n/routing";
 import { COMPANY } from "@/lib/company";
 import { InvoiceStatus, InvoiceType, PaymentMethod } from "@/generated/prisma/enums";
 
@@ -10,6 +11,7 @@ export interface CreateInvoiceData {
   projectId: string;
   type: InvoiceType;
   customerName: string;
+  locale: Locale;
   customerEmail: string;
   projectCode: string;
   planName: string;
@@ -31,6 +33,7 @@ export interface InvoiceData {
   invoiceNumber: string;
   type: InvoiceType;
   customerName: string;
+  locale: Locale;
   customerEmail: string;
   projectCode: string;
   planName: string;
@@ -131,13 +134,3 @@ export function calculateTotal(subtotal: number, taxAmount: number): number {
   return subtotal + taxAmount;
 }
 
-/**
- * Formatea una fecha para mostrar en el invoice
- */
-export function formatInvoiceDate(date: Date): string {
-  return date.toLocaleDateString("en-US", {
-    year: "numeric",
-    month: "long",
-    day: "numeric",
-  });
-}

@@ -1,5 +1,6 @@
 // app/api/stripe/webhook/route.ts
 
+import { localizePathname } from "@/i18n/paths";
 import { NextResponse } from "next/server";
 import Stripe from "stripe";
 import { prisma } from "@/lib/prisma";
@@ -104,6 +105,7 @@ export async function POST(req: Request) {
             projectCode,
             customerEmail,
             customerName,
+            locale: metadata.locale,
             planName,
             totalAmount,
             firstPaymentAmount,
@@ -282,7 +284,7 @@ export async function POST(req: Request) {
     }
     // ============= SUBSCRIPTION PAYMENT =============
     else {
-      const { customerEmail, customerName, planName, termsAcceptedAt } =
+      const { customerEmail, customerName, planName, termsAcceptedAt, locale } =
         metadata;
 
       try {
@@ -331,6 +333,7 @@ export async function POST(req: Request) {
               stripeCustomerId: customerId,
               email: customerEmail,
               name: customerName,
+              locale,
               planName,
               amount: amount,
               status: toSubscriptionStatus(stripeSubscription.status),
@@ -363,6 +366,7 @@ export async function POST(req: Request) {
         const customerResult = await sendSubscriptionConfirmation(resend, {
           customerEmail,
           customerName,
+          locale,
           planName,
           amount,
           nextBillingDate,
@@ -475,10 +479,11 @@ export async function POST(req: Request) {
           await sendSubscriptionRenewalReminder(resend, {
             customerEmail: subscription.email,
             customerName: subscription.name,
+            locale: subscription.locale,
             planName: subscription.planName,
             amount: subscription.amount,
             renewalDate,
-            manageUrl: `${baseUrl}/manage-subscription`,
+            manageUrl: `${baseUrl}${localizePathname("/manage-subscription", subscription.locale)}`,
           });
         }
 
@@ -521,9 +526,10 @@ export async function POST(req: Request) {
           await sendSubscriptionPaymentFailed(resend, {
             customerEmail: subscription.email,
             customerName: subscription.name,
+            locale: subscription.locale,
             planName: subscription.planName,
             amount: subscription.amount,
-            updatePaymentUrl: `${baseUrl}/manage-subscription`,
+            updatePaymentUrl: `${baseUrl}${localizePathname("/manage-subscription", subscription.locale)}`,
           });
 
           // Email to admin

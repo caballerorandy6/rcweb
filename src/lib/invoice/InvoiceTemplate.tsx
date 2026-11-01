@@ -2,7 +2,7 @@
 // Professional PDF Invoice Template using @react-pdf/renderer
 
 import React from "react";
-import { PAYMENT_METHOD_LABELS } from "@/lib/project/paymentMethod";
+import { emailTranslator, formatLongDate } from "@/lib/email/i18n";
 import {
   Document,
   Page,
@@ -15,7 +15,6 @@ import {
   InvoiceSummaryData,
   RC_WEB_COMPANY_INFO,
   centsToDollars,
-  formatInvoiceDate,
 } from "./types";
 
 // Estilos profesionales para el PDF
@@ -195,6 +194,7 @@ interface InvoiceSummaryTemplateProps {
  * Template para invoices individuales (initial, final)
  */
 export const InvoiceTemplate: React.FC<InvoiceTemplateProps> = ({ data }) => {
+  const t = emailTranslator(data.locale);
   return (
     <Document>
       <Page size="A4" style={styles.page}>
@@ -208,23 +208,23 @@ export const InvoiceTemplate: React.FC<InvoiceTemplateProps> = ({ data }) => {
             )}
           </View>
           <View>
-            <Text style={styles.invoiceTitle}>INVOICE</Text>
+            <Text style={styles.invoiceTitle}>{t("pdf.invoice")}</Text>
             <View style={styles.invoiceDetails}>
-              <Text>Invoice #: {data.invoiceNumber}</Text>
-              <Text>Issue Date: {formatInvoiceDate(data.issueDate)}</Text>
+              <Text>{t("pdf.invoiceNumber", { number: data.invoiceNumber })}</Text>
+              <Text>{t("pdf.issueDate", { date: formatLongDate(data.issueDate, data.locale) })}</Text>
               {data.dueDate && (
-                <Text>Due Date: {formatInvoiceDate(data.dueDate)}</Text>
+                <Text>{t("pdf.dueDate", { date: formatLongDate(data.dueDate, data.locale) })}</Text>
               )}
             </View>
             <View style={styles.statusBadge}>
-              <Text>✓ {data.status.toUpperCase()}</Text>
+              <Text>✓ {t(`pdf.status.${data.status}`)}</Text>
             </View>
           </View>
         </View>
 
         {/* Bill To */}
         <View style={styles.section}>
-          <Text style={styles.sectionTitle}>Bill To:</Text>
+          <Text style={styles.sectionTitle}>{t("pdf.billTo")}</Text>
           <View style={styles.billTo}>
             <Text
               style={{ fontFamily: "Helvetica-Bold", marginBottom: 3 }}
@@ -234,7 +234,7 @@ export const InvoiceTemplate: React.FC<InvoiceTemplateProps> = ({ data }) => {
             <Text>{data.customerEmail}</Text>
             <View style={styles.projectCode}>
               <Text style={{ fontSize: 8, color: "#92400e", marginBottom: 3 }}>
-                PROJECT CODE
+                {t("pdf.projectCode")}
               </Text>
               <Text style={styles.projectCodeText}>{data.projectCode}</Text>
             </View>
@@ -243,7 +243,7 @@ export const InvoiceTemplate: React.FC<InvoiceTemplateProps> = ({ data }) => {
 
         {/* Project Info */}
         <View style={styles.section}>
-          <Text style={styles.sectionTitle}>Project Details:</Text>
+          <Text style={styles.sectionTitle}>{t("pdf.projectDetails")}</Text>
           <Text style={{ fontSize: 10, color: "#4a4a4a" }}>
             {data.planName}
           </Text>
@@ -252,8 +252,8 @@ export const InvoiceTemplate: React.FC<InvoiceTemplateProps> = ({ data }) => {
         {/* Items Table */}
         <View style={styles.table}>
           <View style={styles.tableHeader}>
-            <Text style={styles.tableColDescription}>DESCRIPTION</Text>
-            <Text style={styles.tableColAmount}>AMOUNT</Text>
+            <Text style={styles.tableColDescription}>{t("pdf.description")}</Text>
+            <Text style={styles.tableColAmount}>{t("pdf.amount")}</Text>
           </View>
           <View style={styles.tableRow}>
             <Text style={styles.tableColDescription}>{data.description}</Text>
@@ -266,21 +266,21 @@ export const InvoiceTemplate: React.FC<InvoiceTemplateProps> = ({ data }) => {
         {/* Totals */}
         <View style={styles.totalsSection}>
           <View style={styles.totalRow}>
-            <Text style={styles.totalLabel}>Subtotal:</Text>
+            <Text style={styles.totalLabel}>{t("pdf.subtotal")}</Text>
             <Text style={styles.totalAmount}>
               ${centsToDollars(data.subtotal)}
             </Text>
           </View>
           <View style={styles.totalRow}>
             <Text style={styles.totalLabel}>
-              Tax ({data.taxRate}%):
+              {t("pdf.tax", { rate: data.taxRate })}
             </Text>
             <Text style={styles.totalAmount}>
               ${centsToDollars(data.taxAmount)}
             </Text>
           </View>
           <View style={styles.grandTotal}>
-            <Text style={styles.grandTotalLabel}>TOTAL:</Text>
+            <Text style={styles.grandTotalLabel}>{t("pdf.total")}</Text>
             <Text style={styles.grandTotalAmount}>
               ${centsToDollars(data.total)}
             </Text>
@@ -296,17 +296,17 @@ export const InvoiceTemplate: React.FC<InvoiceTemplateProps> = ({ data }) => {
                 { fontFamily: "Helvetica-Bold", marginBottom: 5 },
               ]}
             >
-              ✓ Payment Received
+              {t("pdf.received")}
             </Text>
             <Text style={styles.paymentInfoText}>
-              Payment Date: {formatInvoiceDate(data.paidDate)}
+              {t("pdf.paymentDate", { date: formatLongDate(data.paidDate, data.locale) })}
             </Text>
             <Text style={styles.paymentInfoText}>
-              Payment Method: {PAYMENT_METHOD_LABELS[data.paymentMethod]}
+              {t("pdf.paymentMethod", { method: t(`pdf.method.${data.paymentMethod}`) })}
             </Text>
             {data.stripeSessionId && (
               <Text style={styles.paymentInfoText}>
-                Transaction ID: {data.stripeSessionId.substring(0, 24)}...
+                {t("pdf.transaction", { id: data.stripeSessionId.substring(0, 24) })}
               </Text>
             )}
           </View>
@@ -314,9 +314,9 @@ export const InvoiceTemplate: React.FC<InvoiceTemplateProps> = ({ data }) => {
 
         {/* Footer */}
         <View style={styles.footer}>
-          <Text>Thank you for your business!</Text>
+          <Text>{t("pdf.thanks")}</Text>
           <Text style={{ marginTop: 5 }}>
-            Questions? Contact us at {RC_WEB_COMPANY_INFO.email}
+            {t("pdf.questions", { email: RC_WEB_COMPANY_INFO.email })}
           </Text>
           <Text style={{ marginTop: 5 }}>
             {RC_WEB_COMPANY_INFO.website}
@@ -333,6 +333,7 @@ export const InvoiceTemplate: React.FC<InvoiceTemplateProps> = ({ data }) => {
 export const InvoiceSummaryTemplate: React.FC<InvoiceSummaryTemplateProps> = ({
   data,
 }) => {
+  const t = emailTranslator(data.locale);
   return (
     <Document>
       <Page size="A4" style={styles.page}>
@@ -346,23 +347,23 @@ export const InvoiceSummaryTemplate: React.FC<InvoiceSummaryTemplateProps> = ({
             )}
           </View>
           <View>
-            <Text style={styles.invoiceTitle}>INVOICE</Text>
+            <Text style={styles.invoiceTitle}>{t("pdf.invoice")}</Text>
             <Text style={[styles.invoiceTitle, { fontSize: 12, marginTop: 2 }]}>
-              PROJECT SUMMARY
+              {t("pdf.projectSummary")}
             </Text>
             <View style={styles.invoiceDetails}>
-              <Text>Invoice #: {data.invoiceNumber}</Text>
-              <Text>Issue Date: {formatInvoiceDate(data.issueDate)}</Text>
+              <Text>{t("pdf.invoiceNumber", { number: data.invoiceNumber })}</Text>
+              <Text>{t("pdf.issueDate", { date: formatLongDate(data.issueDate, data.locale) })}</Text>
             </View>
             <View style={styles.statusBadge}>
-              <Text>✓ PAID IN FULL</Text>
+              <Text>{t("pdf.paidInFull")}</Text>
             </View>
           </View>
         </View>
 
         {/* Bill To */}
         <View style={styles.section}>
-          <Text style={styles.sectionTitle}>Bill To:</Text>
+          <Text style={styles.sectionTitle}>{t("pdf.billTo")}</Text>
           <View style={styles.billTo}>
             <Text
               style={{ fontFamily: "Helvetica-Bold", marginBottom: 3 }}
@@ -372,7 +373,7 @@ export const InvoiceSummaryTemplate: React.FC<InvoiceSummaryTemplateProps> = ({
             <Text>{data.customerEmail}</Text>
             <View style={styles.projectCode}>
               <Text style={{ fontSize: 8, color: "#92400e", marginBottom: 3 }}>
-                PROJECT CODE
+                {t("pdf.projectCode")}
               </Text>
               <Text style={styles.projectCodeText}>{data.projectCode}</Text>
             </View>
@@ -381,7 +382,7 @@ export const InvoiceSummaryTemplate: React.FC<InvoiceSummaryTemplateProps> = ({
 
         {/* Project Info */}
         <View style={styles.section}>
-          <Text style={styles.sectionTitle}>Project Details:</Text>
+          <Text style={styles.sectionTitle}>{t("pdf.projectDetails")}</Text>
           <Text style={{ fontSize: 10, color: "#4a4a4a" }}>
             {data.planName}
           </Text>
@@ -390,17 +391,17 @@ export const InvoiceSummaryTemplate: React.FC<InvoiceSummaryTemplateProps> = ({
         {/* Payment Items Table */}
         <View style={styles.table}>
           <View style={styles.tableHeader}>
-            <Text style={styles.tableColDescription}>PAYMENT DESCRIPTION</Text>
-            <Text style={styles.tableCol}>DATE PAID</Text>
-            <Text style={styles.tableColAmount}>AMOUNT</Text>
+            <Text style={styles.tableColDescription}>{t("pdf.paymentDescription")}</Text>
+            <Text style={styles.tableCol}>{t("pdf.datePaid")}</Text>
+            <Text style={styles.tableColAmount}>{t("pdf.amount")}</Text>
           </View>
           {data.items.map((item) => (
             <View key={`${item.description}-${item.paidDate}`} style={styles.tableRow}>
               <Text style={styles.tableColDescription}>
-                {item.description} ({PAYMENT_METHOD_LABELS[item.paymentMethod]})
+                {item.description} ({t(`pdf.method.${item.paymentMethod}`)})
               </Text>
               <Text style={styles.tableCol}>
-                {formatInvoiceDate(item.paidDate)}
+                {formatLongDate(item.paidDate, data.locale)}
               </Text>
               <Text style={styles.tableColAmount}>
                 ${centsToDollars(item.amount)}
@@ -412,21 +413,21 @@ export const InvoiceSummaryTemplate: React.FC<InvoiceSummaryTemplateProps> = ({
         {/* Totals */}
         <View style={styles.totalsSection}>
           <View style={styles.totalRow}>
-            <Text style={styles.totalLabel}>Subtotal:</Text>
+            <Text style={styles.totalLabel}>{t("pdf.subtotal")}</Text>
             <Text style={styles.totalAmount}>
               ${centsToDollars(data.subtotal)}
             </Text>
           </View>
           <View style={styles.totalRow}>
             <Text style={styles.totalLabel}>
-              Tax ({data.taxRate}%):
+              {t("pdf.tax", { rate: data.taxRate })}
             </Text>
             <Text style={styles.totalAmount}>
               ${centsToDollars(data.taxAmount)}
             </Text>
           </View>
           <View style={styles.grandTotal}>
-            <Text style={styles.grandTotalLabel}>TOTAL PAID:</Text>
+            <Text style={styles.grandTotalLabel}>{t("pdf.totalPaid")}</Text>
             <Text style={styles.grandTotalAmount}>
               ${centsToDollars(data.total)}
             </Text>
@@ -446,19 +447,18 @@ export const InvoiceSummaryTemplate: React.FC<InvoiceSummaryTemplateProps> = ({
               },
             ]}
           >
-            ✓ PROJECT COMPLETED - ALL PAYMENTS RECEIVED
+            {t("pdf.completed")}
           </Text>
           <Text style={[styles.paymentInfoText, { textAlign: "center" }]}>
-            Thank you for choosing RC Web Solutions for your web development
-            needs!
+            {t("pdf.choosing")}
           </Text>
         </View>
 
         {/* Footer */}
         <View style={styles.footer}>
-          <Text>Thank you for your business!</Text>
+          <Text>{t("pdf.thanks")}</Text>
           <Text style={{ marginTop: 5 }}>
-            Questions? Contact us at {RC_WEB_COMPANY_INFO.email}
+            {t("pdf.questions", { email: RC_WEB_COMPANY_INFO.email })}
           </Text>
           <Text style={{ marginTop: 5 }}>
             {RC_WEB_COMPANY_INFO.website}

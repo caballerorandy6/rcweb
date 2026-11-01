@@ -1,3 +1,4 @@
+import { emailTranslator } from "@/lib/email/i18n";
 import stripe from "@/lib/stripe";
 import type { FinalCheckoutMetadataInput } from "@/lib/checkoutMetadata";
 import { getProjectUrl, SITE_BASE_URL } from "@/lib/projectUrl";
@@ -27,6 +28,7 @@ export async function createFinalPaymentCheckout(
   origin: FinalPaymentOrigin,
   locale: Locale = routing.defaultLocale
 ): Promise<string> {
+  const t = emailTranslator(locale);
   const metadata = {
     paymentType: "final",
     projectId: project.id,
@@ -45,8 +47,8 @@ export async function createFinalPaymentCheckout(
         price_data: {
           currency: "usd",
           product_data: {
-            name: `${project.planName} - Final Payment (50%)`,
-            description: "Final payment upon project completion",
+            name: t("checkout.finalName", { planName: project.planName }),
+            description: t("checkout.finalDescription"),
           },
           unit_amount: project.finalAmount,
         },

@@ -53,6 +53,7 @@ export async function createQuoteAction(
         quoteNumber,
         email: data.email,
         name: data.name,
+        locale: data.locale,
         offerId: data.offerId || null,
         planName: data.planName,
         scope: data.scope,

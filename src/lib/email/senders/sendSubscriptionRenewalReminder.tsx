@@ -1,5 +1,6 @@
 // src/lib/email/senders/sendSubscriptionRenewalReminder.tsx
 
+import { emailTranslator } from "../i18n";
 import { Resend } from "resend";
 import { render } from "@react-email/components";
 import {
@@ -19,6 +20,7 @@ export async function sendSubscriptionRenewalReminder(
   const {
     customerEmail,
     customerName,
+    locale,
     planName,
     amount,
     renewalDate,
@@ -29,6 +31,7 @@ export async function sendSubscriptionRenewalReminder(
     const html = await render(
       <SubscriptionRenewalReminderEmail
         customerName={customerName}
+        locale={locale}
         planName={planName}
         amount={amount}
         renewalDate={renewalDate}
@@ -39,7 +42,7 @@ export async function sendSubscriptionRenewalReminder(
     const { error: sendError } = await resend.emails.send({
       from: "RC Web Solutions <no-reply@rcweb.dev>",
       to: customerEmail,
-      subject: `Upcoming Renewal - ${planName}`,
+      subject: emailTranslator(locale)("subscription.renewalSubject", { planName }),
       html,
     });
     if (sendError) throw new Error(sendError.message);

@@ -57,6 +57,7 @@ export async function createStripeCheckoutAction(
           customerName: customer.name,
           customerEmail: customer.email,
           termsAcceptedAt,
+          locale,
         } satisfies SubscriptionCheckoutMetadataInput,
         line_items: [
           {

@@ -1,5 +1,6 @@
 import * as Sentry from "@sentry/nextjs";
 import type { Resend } from "resend";
+import type { Locale } from "@/i18n/routing";
 import { prisma } from "@/lib/prisma";
 import type { Prisma } from "@/generated/prisma/client";
 import type { PaymentMethod } from "@/generated/prisma/enums";
@@ -19,6 +20,8 @@ export interface DepositProjectInput {
   /** Lowercased: becomes Project.email */
   customerEmail: string;
   customerName: string;
+  /** Language of the emails and invoices from now on */
+  locale: Locale;
   planName: string;
   totalAmount: number;
   firstPaymentAmount: number;
@@ -94,6 +97,7 @@ export async function createProjectFromDeposit(
       projectCode: input.projectCode,
       email: input.customerEmail,
       name: input.customerName,
+      locale: input.locale,
       planName: input.planName,
       totalAmount: input.totalAmount,
       status: "in_progress",

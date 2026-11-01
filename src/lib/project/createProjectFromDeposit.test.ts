@@ -26,6 +26,7 @@ const input: DepositProjectInput = {
   projectCode: "ABC123",
   customerEmail: "ana@example.com",
   customerName: "Ana",
+  locale: "es",
   planName: "Website Redesign",
   totalAmount: 240000,
   firstPaymentAmount: 120000,

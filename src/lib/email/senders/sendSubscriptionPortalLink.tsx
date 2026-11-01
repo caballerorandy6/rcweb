@@ -1,5 +1,6 @@
 // src/lib/email/senders/sendSubscriptionPortalLink.tsx
 
+import { emailTranslator } from "../i18n";
 import { Resend } from "resend";
 import { render } from "@react-email/components";
 import {
@@ -16,12 +17,13 @@ export async function sendSubscriptionPortalLink(
   resend: Resend,
   params: SendSubscriptionPortalLinkParams
 ): Promise<{ success: boolean; error?: string }> {
-  const { customerEmail, customerName, portalUrl, planName } = params;
+  const { customerEmail, customerName, locale, portalUrl, planName } = params;
 
   try {
     const html = await render(
       <SubscriptionPortalLinkEmail
         customerName={customerName}
+        locale={locale}
         portalUrl={portalUrl}
         planName={planName}
       />
@@ -30,7 +32,7 @@ export async function sendSubscriptionPortalLink(
     const { error: sendError } = await resend.emails.send({
       from: "RC Web Solutions <no-reply@rcweb.dev>",
       to: customerEmail,
-      subject: "Manage Your Subscription - RC Web Solutions",
+      subject: emailTranslator(locale)("subscription.portalSubject"),
       html,
     });
     if (sendError) throw new Error(sendError.message);
