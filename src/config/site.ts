@@ -19,6 +19,7 @@ export type SiteConfig = {
     nextdoor: string;
     tiktok: string;
     youtube: string;
+    yelp: string;
     x: string;
   };
 };
@@ -47,5 +48,7 @@ export const siteConfig: SiteConfig = {
     youtube: "https://www.youtube.com/@rcwebsolutions",
     // Back since 2026-10-27: posts daily through the API
     x: "https://x.com/RCWeb2025",
+    // Approved 2026-10-25
+    yelp: "https://www.yelp.com/biz/rc-web-solutions-missouri-city",
   },
 };
