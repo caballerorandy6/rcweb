@@ -266,7 +266,7 @@
     },
     "projects": {
       "gsmactx": "Sitio web a medida y panel de administración para una empresa de aire acondicionado de Houston. Campañas de email automatizadas, gestión de solicitudes de servicio y renderizado en tiempo real del lado del cliente. Le ahorró al negocio más de 15 horas a la semana.",
-      "dulceAntojo": "Sitio web oficial y panel de administración privado con enlaces de pago de Stripe para un negocio de renta de carritos de snacks en Houston. Formulario de reservas, SEO local y pagos con tarjeta que les permiten atender a empresas y escuelas.",
+      "dulceAntojo": "Sitio web y panel de administración privado con enlaces de pago de Stripe, construidos para un negocio de renta de carritos de snacks en Houston y ahora presentados como proyecto de portafolio. Formulario de reservas, SEO local y pagos con tarjeta para empresas y escuelas.",
       "clinicaGessner": "Sitio web bilingüe para una clínica de Houston con reserva de citas en línea, información de servicios y SEO local para llegar a pacientes de habla hispana.",
       "clinicaAirline": "Sitio web bilingüe y profesional para una clínica de Houston con pacientes de habla hispana. Incluye SEO local, páginas de servicios y un diseño amigable para el paciente, optimizado para el móvil.",
       "leosHomeExperts": "Landing page para una empresa de servicios para el hogar de Houston especializada en construcción de patios, mosquiteros motorizados e instalación de toldos. Incluye optimización de SEO local con schema JSON-LD e integración de galería de video.",
@@ -901,11 +901,11 @@
       },
       "dulceAntojo": {
         "metaTitle": "Caso de éxito Dulce Antojo - Sitio web y pagos con Stripe para un catering de Houston",
-        "metaDescription": "Cómo llevé a Dulce Antojo Snack Carts de estar solo en Instagram a un sitio web oficial con pagos con tarjeta por Stripe, para que un catering de eventos de Houston pudiera atender empresas y escuelas.",
+        "metaDescription": "Cómo llevé a Dulce Antojo Snack Carts de estar solo en Instagram a un sitio web completo con pagos con tarjeta por Stripe, construido para que un catering de eventos de Houston pudiera atender empresas y escuelas.",
         "crumb": "Dulce Antojo",
         "name": "Dulce Antojo",
         "nameHighlight": "Snack Carts",
-        "subtitle": "Cómo llevé a un negocio de renta de carritos de snacks de Houston de estar solo en Instagram a un sitio web oficial con pagos con tarjeta por Stripe, para poder atender empresas y organizaciones, no solo particulares.",
+        "subtitle": "Cómo llevé a un negocio de renta de carritos de snacks de Houston de estar solo en Instagram a un sitio web completo con pagos con tarjeta por Stripe, construido para poder atender empresas y organizaciones, no solo particulares.",
         "imageAlt": "Captura del sitio web de Dulce Antojo Snack Carts",
         "stats": [
           "Estrellas en reseñas de Google",
@@ -916,7 +916,7 @@
         "challengesIntro": "Antes de trabajar conmigo, Dulce Antojo rentaba carritos de postres y antojitos mexicanos (mini pancakes, paletas locas, churro sundaes, vasos de elote) para eventos en Houston sin sitio web oficial, solo redes sociales, y sin forma de aceptar pagos con tarjeta.",
         "challenges": [
           {
-            "title": "Sin sitio web oficial",
+            "title": "Sin sitio web",
             "description": "El negocio funcionaba por completo a través de mensajes directos de Instagram y del boca a boca. Los posibles clientes no tenían un lugar centralizado para ver las más de 13 opciones de carritos, los precios o cómo reservar, y no había presencia alguna en Google."
           },
           {
@@ -928,10 +928,10 @@
             "description": "Las consultas llegaban por mensajes directos de Instagram, fáciles de pasar por alto y difíciles de rastrear, y los pagos estaban dispersos entre mensajes y apps bancarias sin registro de quién había pagado."
           }
         ],
-        "solutionsIntro": "Construí su sitio web oficial con un formulario de reservas y un panel de administración privado con pagos de Stripe para que la dueña pueda cobrar con tarjeta a cualquier cliente.",
+        "solutionsIntro": "Construí un sitio web con formulario de reservas y un panel de administración privado con pagos de Stripe para que la dueña pudiera cobrar con tarjeta a cualquier cliente. El enlace de esta página abre la versión de portafolio del proyecto.",
         "solutions": [
           {
-            "title": "Sitio web oficial hecho para reservar eventos",
+            "title": "Sitio web hecho para reservar eventos",
             "description": "Un sitio moderno, pensado para el móvil, que muestra las más de 13 opciones de carritos con galería de fotos, preguntas frecuentes y un formulario de solicitud de reserva que captura los detalles del evento (fecha, tipo, invitados, carritos preferidos) y los envía por correo al instante. Optimizado para búsquedas locales en Houston.",
             "features": [
               "Más de 13 fichas de servicio de carritos",
@@ -942,7 +942,7 @@
           },
           {
             "title": "Enlaces de pago de Stripe desde un panel privado",
-            "description": "La dueña crea un enlace de pago por cada evento y lo envía por mensaje de texto o correo. El cliente paga en segundos en el checkout seguro de Stripe, los datos de la tarjeta nunca tocan los servidores del negocio y ambas partes reciben un recibo automático por correo.",
+            "description": "El panel crea un enlace de pago por cada evento, para enviarlo por mensaje de texto o correo. El cliente paga en segundos en el checkout seguro de Stripe, los datos de la tarjeta nunca tocan los servidores del negocio y ambas partes reciben un recibo automático por correo.",
             "features": [
               "Enlace de pago por evento, enviado por SMS o correo",
               "Checkout alojado en Stripe con protección contra fraude y cumplimiento PCI",
@@ -963,12 +963,12 @@
         ],
         "results": [
           {
-            "metric": "Empresas y escuelas como clientes",
-            "description": "Dulce Antojo ahora puede atender organizaciones que pagan con tarjeta y necesitan recibo, no solo particulares"
+            "metric": "Hecho para empresas y escuelas",
+            "description": "El proyecto le permitió a Dulce Antojo atender organizaciones que pagan con tarjeta y necesitan recibo, no solo particulares"
           },
           {
             "metric": "Reservas y pagos en un solo lugar",
-            "description": "Cada reserva y cada pago están organizados y bajo el control de la dueña, en lugar de dispersos entre mensajes"
+            "description": "El panel mantuvo cada reserva y cada pago organizados y bajo el control de la dueña, en lugar de dispersos entre mensajes"
           },
           {
             "metric": "Reseña de 5 estrellas del cliente",

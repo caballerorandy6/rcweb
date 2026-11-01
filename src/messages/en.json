@@ -266,7 +266,7 @@
     },
     "projects": {
       "gsmactx": "Custom website and admin dashboard for a Houston HVAC company. Automated email campaigns, service request management, and real-time client-side rendering. Saved the business 15+ hours per week.",
-      "dulceAntojo": "Official website and private admin dashboard with Stripe payment links for a Houston snack cart rental business. Booking form, local SEO, and card payments that let them book companies and schools.",
+      "dulceAntojo": "Website and private admin dashboard with Stripe payment links, built for a Houston snack cart rental business and now shown as a portfolio project. Booking form, local SEO, and card payments for companies and schools.",
       "clinicaGessner": "Bilingual website for a Houston clinic featuring online appointment booking, service information, and local SEO to reach Spanish-speaking patients.",
       "clinicaAirline": "Professional bilingual website for a Houston clinic with Spanish-speaking patients. Features local SEO, service pages, and patient-friendly design optimized for mobile.",
       "leosHomeExperts": "Landing page for a Houston-based home services company specializing in patio construction, motorized screens, and awning installations. Features local SEO optimization with JSON-LD schema and video gallery integration.",
@@ -901,11 +901,11 @@
       },
       "dulceAntojo": {
         "metaTitle": "Dulce Antojo Case Study - Website & Stripe Payments for a Houston Caterer",
-        "metaDescription": "How I took Dulce Antojo Snack Carts from Instagram-only to an official website with Stripe card payments, so a Houston event caterer could book companies and schools.",
+        "metaDescription": "How I took Dulce Antojo Snack Carts from Instagram-only to a full website with Stripe card payments, built so a Houston event caterer could book companies and schools.",
         "crumb": "Dulce Antojo",
         "name": "Dulce Antojo",
         "nameHighlight": "Snack Carts",
-        "subtitle": "How I took a Houston snack cart rental business from Instagram-only to an official website with Stripe card payments, so they could book companies and organizations, not just individuals.",
+        "subtitle": "How I took a Houston snack cart rental business from Instagram-only to a full website with Stripe card payments, built so they could book companies and organizations, not just individuals.",
         "imageAlt": "Dulce Antojo Snack Carts website screenshot",
         "stats": [
           "Star Google Reviews",
@@ -916,7 +916,7 @@
         "challengesIntro": "Before working with me, Dulce Antojo rented Mexican dessert and snack carts (mini pancakes, paletas locas, churro sundaes, elote cups) for events in Houston with no official website, only social media, and no way to accept card payments.",
         "challenges": [
           {
-            "title": "No Official Website",
+            "title": "No Website",
             "description": "The business operated entirely through Instagram DMs and word-of-mouth. Potential customers had no centralized place to see all 13+ snack cart options, pricing, or how to book, and there was zero Google presence."
           },
           {
@@ -928,10 +928,10 @@
             "description": "Inquiries came through Instagram DMs, easy to miss and hard to track, and payments were scattered across messages and bank apps with no record of who had paid."
           }
         ],
-        "solutionsIntro": "I built their official website with a booking form, and a private admin dashboard with Stripe payments so the owner can charge any client by card.",
+        "solutionsIntro": "I built a website with a booking form, and a private admin dashboard with Stripe payments so the owner could charge any client by card. The link on this page opens the portfolio version of the project.",
         "solutions": [
           {
-            "title": "Official Website Built to Book Events",
+            "title": "Website Built to Book Events",
             "description": "A modern, mobile-first website showcasing all 13+ snack cart options with a photo gallery, FAQ and a booking request form that captures event details (date, type, guests, preferred carts) and emails them instantly. Optimized for local search in Houston.",
             "features": [
               "13+ snack cart service showcases",
@@ -942,7 +942,7 @@
           },
           {
             "title": "Stripe Payment Links from a Private Dashboard",
-            "description": "The owner creates a payment link for each event and sends it by text or email. The client pays in seconds on Stripe's secure checkout, card data never touches the business's servers, and both sides get an automatic email receipt.",
+            "description": "The dashboard creates a payment link for each event, to send by text or email. The client pays in seconds on Stripe's secure checkout, card data never touches the business's servers, and both sides get an automatic email receipt.",
             "features": [
               "Payment link per event, sent by SMS or email",
               "Stripe-hosted checkout with fraud protection and PCI compliance",
@@ -963,12 +963,12 @@
         ],
         "results": [
           {
-            "metric": "Companies and Schools as Clients",
-            "description": "Dulce Antojo can now book organizations that pay by card and need a receipt, not just individuals"
+            "metric": "Built for Companies and Schools",
+            "description": "The build let Dulce Antojo take organizations that pay by card and need a receipt, not just individuals"
           },
           {
             "metric": "Bookings and Payments in One Place",
-            "description": "Every booking and payment is organized and under the owner's control, instead of scattered across messages"
+            "description": "The dashboard kept every booking and payment organized and under the owner's control, instead of scattered across messages"
           },
           {
             "metric": "5-Star Client Review",
