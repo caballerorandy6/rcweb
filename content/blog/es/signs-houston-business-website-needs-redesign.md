@@ -126,7 +126,7 @@ El precio de un rediseño depende del alcance:
 
 Trabajo con un esquema de pago 50/50: la mitad al inicio y la otra mitad a la entrega. Nada de pagar el 100% antes de ver resultados.
 
-[Consulta los precios detallados aquí](/es/servicios/web-design-houston).
+[Consulta los precios detallados aquí](/es/servicios/diseno-web-houston).
 
 ---
 
@@ -140,4 +140,4 @@ O llama al: [+1 (346) 375-7534](tel:+13463757534)
 
 ---
 
-*Randy Caballero es desarrollador web full-stack en Houston, TX. [Ver servicios de rediseño web](/es/servicios/web-design-houston).*
+*Randy Caballero es desarrollador web full-stack en Houston, TX. [Ver servicios de rediseño web](/es/servicios/rediseno-web-houston).*

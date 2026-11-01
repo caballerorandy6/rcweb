@@ -138,4 +138,4 @@ O llámame: [+1 (346) 375-7534](tel:+13463757534). Sí, hablo español.
 
 ---
 
-*Randy Caballero es desarrollador web bilingüe en Houston, TX. [Ver servicios de sitios web para negocios, en inglés y español](/es/servicios/web-design-houston).*
+*Randy Caballero es desarrollador web bilingüe en Houston, TX. [Ver servicios de sitios web para negocios, en inglés y español](/es/servicios/diseno-web-houston).*
