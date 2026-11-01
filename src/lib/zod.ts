@@ -129,16 +129,17 @@ export const LoginSchema = z.object({
 
 export type LoginData = z.infer<typeof LoginSchema>;
 
+/** Single-email forms (manage subscription, blog) with the message in the visitor's language */
+export function buildEmailSchema(message: string) {
+  return z.object({ email: z.email({ message }) });
+}
+
 // Manage Subscription Schema
-export const ManageSubscriptionSchema = z.object({
-  email: z.email({ message: "Please enter a valid email address" }),
-});
+export const ManageSubscriptionSchema = buildEmailSchema("Please enter a valid email address");
 
 // Blog Subscription Schema: subscribing adds the email to the newsletter
 // audience (Contact with marketingConsent)
-export const BlogSubscriptionSchema = z.object({
-  email: z.email({ message: "Please enter a valid email address" }),
-});
+export const BlogSubscriptionSchema = buildEmailSchema("Please enter a valid email address");
 
 export type BlogSubscriptionData = z.infer<typeof BlogSubscriptionSchema>;
 export type ManageSubscriptionData = z.infer<typeof ManageSubscriptionSchema>;

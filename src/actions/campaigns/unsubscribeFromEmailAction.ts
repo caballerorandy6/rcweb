@@ -1,5 +1,6 @@
 "use server";
 
+import { getTranslations } from "next-intl/server";
 import { prisma } from "@/lib/prisma";
 import { Resend } from "resend";
 import type { ActionResultSimple } from "@/types/common";
@@ -9,6 +10,7 @@ const resend = new Resend(process.env.RESEND_API_KEY!);
 export async function unsubscribeFromEmailAction(
   email: string
 ): Promise<ActionResultSimple> {
+  const t = await getTranslations("Actions");
   try {
     const contact = await prisma.contact.findFirst({
       where: {
@@ -19,7 +21,7 @@ export async function unsubscribeFromEmailAction(
     });
 
     if (!contact) {
-      return { success: false, error: "Contact not found" };
+      return { success: false, error: t("unsubscribe.notFound") };
     }
 
     await prisma.contact.update({
@@ -50,7 +52,7 @@ export async function unsubscribeFromEmailAction(
     return { success: true };
   } catch (error) {
     console.error("Error unsubscribing:", error);
-    return { success: false, error: "Failed to unsubscribe" };
+    return { success: false, error: t("unsubscribe.failed") };
   }
 }
 

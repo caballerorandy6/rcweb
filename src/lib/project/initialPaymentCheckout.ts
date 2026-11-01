@@ -2,6 +2,8 @@ import stripe from "@/lib/stripe";
 import { splitDepositAmount } from "@/lib/project/charges";
 import { uniqueProjectCode } from "@/lib/project/uniqueProjectCode";
 import { SITE_BASE_URL } from "@/lib/projectUrl";
+import { localizePathname } from "@/i18n/paths";
+import { routing, type Locale } from "@/i18n/routing";
 import type { InitialCheckoutMetadataInput } from "@/lib/checkoutMetadata";
 
 export interface InitialPaymentInput {
@@ -18,6 +20,8 @@ export interface InitialPaymentInput {
   description?: string;
   /** Where the customer lands if they leave Checkout */
   cancelUrl: string;
+  /** Language of the page the customer came from; the success page keeps it */
+  locale?: Locale;
 }
 
 /**
@@ -70,7 +74,7 @@ export async function createInitialPaymentCheckout(
       },
     ],
     automatic_tax: { enabled: true },
-    success_url: `${SITE_BASE_URL}/payment-success?session_id={CHECKOUT_SESSION_ID}&code=${projectCode}`,
+    success_url: `${SITE_BASE_URL}${localizePathname("/payment-success", input.locale ?? routing.defaultLocale)}?session_id={CHECKOUT_SESSION_ID}&code=${projectCode}`,
     cancel_url: input.cancelUrl,
   });
 

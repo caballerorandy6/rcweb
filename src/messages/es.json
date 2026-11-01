@@ -445,6 +445,18 @@
       "phoneLong": "El número de teléfono es demasiado largo",
       "messageLong": "El mensaje es demasiado largo",
       "messageShort": "El mensaje es demasiado corto"
+    },
+    "terms": {
+      "noticeTitle": "Importante: revisión necesaria",
+      "noticeText": "Revisa con atención y acepta nuestros Términos de servicio antes de continuar al pago. Este acuerdo legal establece las condiciones de nuestro servicio.",
+      "missing": "Falta información. Empieza desde la sección de precios.",
+      "processing": "Procesando…",
+      "redirecting": "Redirigiendo al pago seguro…",
+      "failed": "No se pudo procesar",
+      "error": "Ocurrió un error",
+      "confirm": "Al pulsar «Acepto estos términos», confirmas que has leído, entendido y aceptas quedar vinculado por estos Términos de servicio.",
+      "accept": "Acepto estos términos",
+      "back": "Volver a los planes de precios"
     }
   },
   "Blog": {
@@ -1367,5 +1379,330 @@
     "tryAgain": "Intentar de nuevo",
     "goHome": "Ir al inicio",
     "errorId": "ID del error: {id}"
+  },
+  "Quote": {
+    "metadata": {
+      "title": "Tu presupuesto",
+      "description": "Revisa tu presupuesto por escrito y empieza tu proyecto."
+    },
+    "number": "Presupuesto {number}",
+    "preparedFor": "Preparado para {name}",
+    "validUntil": "Válido hasta el {date}",
+    "accepted": {
+      "title": "Presupuesto aceptado",
+      "thanks": "¡Gracias! Tu anticipo se recibió",
+      "on": " el {date}",
+      "code": " y el código de tu proyecto es",
+      "track": "Seguir el avance →"
+    },
+    "expired": {
+      "title": "Este presupuesto ha caducado",
+      "text": "Era válido hasta el {date}. Responde al correo que recibiste o escribe a",
+      "send": "y te enviaré uno actualizado."
+    },
+    "cancelled": {
+      "title": "Este presupuesto fue retirado",
+      "text": "Ya no está disponible para pago. Si aún quieres seguir adelante, escribe a"
+    },
+    "client": "Cliente",
+    "project": "Proyecto",
+    "total": "Total",
+    "included": "Qué incluye",
+    "notes": "Notas",
+    "investment": "Inversión",
+    "projectTotal": "Total del proyecto",
+    "deposit": "Anticipo para empezar ({percent} %)",
+    "balance": "Saldo a la entrega",
+    "investmentNote": "El trabajo empieza en cuanto se acredita el anticipo. El saldo solo se paga cuando se entrega el proyecto, a través de un enlace seguro enviado a tu correo.",
+    "zelle": {
+      "title": "Paga el anticipo por Zelle",
+      "thanks": "Gracias por aceptar el presupuesto{date}. Envía el anticipo desde el Zelle de tu banco:",
+      "on": " el {date}",
+      "amount": "Importe",
+      "sendTo": "Enviar a",
+      "memo": "Concepto",
+      "note": "El trabajo empieza en cuanto se confirma la transferencia. Recibirás tu factura y un enlace para seguir el proyecto por correo."
+    },
+    "questions": "¿Dudas sobre este presupuesto?",
+    "contact": "Escríbeme",
+    "form": {
+      "readyCard": "¿Prefieres pagar con tarjeta después de todo?",
+      "ready": "¿Listo para empezar?",
+      "agree": "He leído y acepto los <terms>Términos de servicio</terms> y la <refund>Política de reembolso</refund>, y acepto este presupuesto como el alcance del proyecto.",
+      "accept": "Aceptar y pagar el anticipo de {amount}",
+      "processing": "Procesando…",
+      "secure": "Pago seguro con Stripe. Recibirás una factura por correo.",
+      "zelleAsk": "¿Prefieres pagar el anticipo por Zelle?",
+      "oneMoment": "Un momento…",
+      "zelleHint": "Acepta primero los términos de arriba. Verás a dónde enviarlo y el trabajo empieza en cuanto se confirme la transferencia.",
+      "redirecting": "Redirigiendo al pago seguro…",
+      "zelleThanks": "¡Gracias! Aquí tienes los datos de Zelle"
+    }
+  },
+  "Project": {
+    "metadata": {
+      "title": "Avance del proyecto",
+      "description": "Sigue el avance y los hitos de tu proyecto"
+    },
+    "title": "Avance del proyecto",
+    "subtitle": "Sigue el avance de tu proyecto en tiempo real",
+    "code": "Código del proyecto",
+    "client": "Cliente",
+    "plan": "Plan",
+    "status": {
+      "pending": "Pendiente",
+      "in_progress": "En curso",
+      "ready_for_payment": "Listo para el pago",
+      "completed": "Completado"
+    },
+    "ready": {
+      "title": "Tu proyecto está listo",
+      "text": "Completa el pago final{amount} para recibir tus entregables.",
+      "of": " de {amount}",
+      "pay": "Pagar el saldo final"
+    },
+    "milestones": "Hitos del proyecto",
+    "questions": "¿Dudas sobre tu proyecto?",
+    "contact": "Escríbeme",
+    "milestone": {
+      "completed": "Completado",
+      "in_progress": "En curso",
+      "pending": "Pendiente",
+      "none": "Todavía no se han definido hitos",
+      "checkBack": "Vuelve pronto para ver novedades del proyecto",
+      "overall": "Avance general",
+      "count": "{completed} de {total} hitos completados",
+      "due": "Fecha límite: {date}",
+      "completedOn": "Completado: {date}"
+    }
+  },
+  "FinalPayment": {
+    "metadata": {
+      "title": "Pago final - Completa tu proyecto",
+      "description": "Completa tu pago final para recibir tu proyecto terminado. Pago seguro a través de Stripe para los proyectos de RC Web Solutions LLC."
+    },
+    "notices": {
+      "invalid-link": "Ese enlace de pago no es válido. Escribe tu correo y el código de tu proyecto aquí abajo para continuar.",
+      "project-not-ready": "Tu proyecto todavía no está listo para el pago final. Recibirás un correo en cuanto lo esté.",
+      "payment-failed": "No pudimos iniciar el pago desde tu enlace. Inténtalo de nuevo aquí abajo o contacta con soporte.",
+      "too-many-requests": "Demasiados intentos desde tu conexión. Espera un minuto e inténtalo de nuevo."
+    },
+    "title": "Completa tu pago",
+    "subtitle": "Escribe los datos de tu proyecto para continuar con el pago final",
+    "email": "Correo electrónico",
+    "emailPlaceholder": "juan@ejemplo.com",
+    "code": "Código del proyecto",
+    "codeHint": "El código de 6 caracteres de tu pago inicial",
+    "verify": "Verificar proyecto",
+    "verifying": "Verificando…",
+    "details": "Datos del proyecto",
+    "project": "Proyecto:",
+    "codeLabel": "Código:",
+    "finalPayment": "Pago final:",
+    "proceed": "Continuar al pago",
+    "processing": "Procesando…",
+    "help": "¿Necesitas ayuda? Escribe a",
+    "toasts": {
+      "missing": "Escribe el correo y el código del proyecto",
+      "verified": "¡Proyecto verificado!",
+      "failed": "La verificación falló",
+      "popups": "Permite las ventanas emergentes para continuar al pago.",
+      "sessionFailed": "No se pudo crear la sesión de pago"
+    }
+  },
+  "PaymentSuccess": {
+    "metadata": {
+      "title": "Pago realizado - ¡Gracias!",
+      "description": "Tu pago se procesó correctamente. Gracias por elegir RC Web Solutions LLC para tu proyecto."
+    },
+    "noSession": "No se recibió el identificador de la sesión. Contacta con soporte si completaste un pago.",
+    "processing": {
+      "title": "Pago recibido, terminando",
+      "text": "Stripe confirmó tu pago, pero tu proyecto todavía se está registrando. Normalmente tarda unos segundos.",
+      "code": "El código de tu proyecto es <code></code>. Guárdalo: lo necesitarás para el pago final.",
+      "checkAgain": "Comprobar de nuevo",
+      "invoice": "También recibirás tu factura por correo en cuanto esté lista."
+    },
+    "error": {
+      "title": "Problema al procesar el pago",
+      "text": "¡No te preocupes! Si tu pago se completó en Stripe, lo procesaré en breve. Guarda tu correo de confirmación."
+    },
+    "title": "¡Pago realizado! 🎉",
+    "thanks": "Gracias por tu pago. Tu proyecto ha quedado iniciado y me pondré en contacto contigo en menos de 24 horas.",
+    "codeLabel": "El código de tu proyecto",
+    "copy": "Copiar al portapapeles",
+    "copied": "¡Código copiado!",
+    "saveCode": "Guarda este código: lo necesitarás para el pago final",
+    "plan": "Plan:",
+    "paid": "Importe pagado:",
+    "remaining": "Saldo pendiente:",
+    "status": "Estado:",
+    "inProgress": "En curso",
+    "next": {
+      "title": "¿Qué pasa después?",
+      "items": [
+        "Te contactaré en menos de 24 horas para hablar de los detalles del proyecto",
+        "El desarrollo empezará según el cronograma del plan elegido",
+        "Recibirás novedades durante todo el proceso de desarrollo",
+        "El pago final se realiza al terminar el proyecto"
+      ]
+    },
+    "home": "Volver al inicio",
+    "support": "Contactar con soporte",
+    "footer": "Recibirás en breve un correo de confirmación con todos los detalles.",
+    "subscription": {
+      "processing": "La suscripción se está procesando. Revisa tu correo para ver la confirmación.",
+      "errorTitle": "Problema al procesar la suscripción",
+      "errorText": "¡No te preocupes! Si tu pago se completó en Stripe, lo procesaré en breve. Revisa tu correo para ver la confirmación.",
+      "title": "¡Suscripción activa!",
+      "thanks": "Gracias por suscribirte al plan de mantenimiento. Tu sitio web ya está protegido y con soporte.",
+      "monthly": "Importe mensual:",
+      "perMonth": "/mes",
+      "status": "Estado:",
+      "nextBilling": "Próximo cobro:",
+      "in30Days": "En aproximadamente 30 días",
+      "email": "Correo:",
+      "id": "ID de suscripción:",
+      "includedTitle": "Qué incluye tu plan",
+      "included": [
+        "Parches y actualizaciones de seguridad",
+        "Monitoreo del rendimiento",
+        "Actualizaciones de contenido (hasta 4 horas al mes)",
+        "Soporte técnico por correo",
+        "Reportes mensuales"
+      ]
+    }
+  },
+  "PaymentComplete": {
+    "metadata": {
+      "title": "Pago realizado - ¡Gracias!",
+      "description": "Tu pago se procesó correctamente. Gracias por elegir RC Web Solutions LLC."
+    },
+    "title": "¡Proyecto pagado por completo! 🎉",
+    "thanks": "¡Gracias por confiar en mí!",
+    "nextTitle": "Qué pasa después:",
+    "next": [
+      "Recibirás un correo con todos los archivos y la documentación del proyecto en menos de 24 horas",
+      "Te entregaré las credenciales de acceso al hosting y a los paneles de administración",
+      "Agendaremos la sesión de capacitación según tu disponibilidad",
+      "El periodo de soporte empieza hoy, según tu plan"
+    ],
+    "reference": "Referencia del proyecto:",
+    "save": "Guárdala para tus registros",
+    "home": "Volver al inicio",
+    "support": "Contactar con soporte",
+    "receipt": "Se ha enviado un recibo detallado a tu correo electrónico.",
+    "questions": "Para cualquier duda, escríbeme a {email}"
+  },
+  "ManageSubscription": {
+    "metadata": {
+      "title": "Gestionar suscripción",
+      "description": "Gestiona tu suscripción de RC Web Solutions. Actualiza tu método de pago, consulta tu historial de facturación o cancela tu suscripción."
+    },
+    "errors": {
+      "expired-link": "Ese enlace caducó o fue reemplazado por uno más reciente. Escribe tu correo para recibir un enlace nuevo.",
+      "portal-unavailable": "No pudimos abrir el portal de suscripción en este momento. Inténtalo de nuevo en unos minutos o contáctanos."
+    },
+    "title": "Gestionar suscripción",
+    "subtitle": "Escribe tu correo para recibir un enlace de gestión seguro",
+    "placeholder": "tu@correo.com",
+    "send": "Enviar enlace de gestión",
+    "sending": "Enviando…",
+    "success": {
+      "title": "Revisa tu correo",
+      "text": "Si tienes una suscripción activa, te he enviado un enlace seguro para gestionarla. El enlace caduca en 24 horas.",
+      "another": "Enviar otro enlace"
+    },
+    "helpTitle": "¿Qué puedes hacer con el enlace de gestión?",
+    "help": [
+      "Actualizar tu método de pago",
+      "Ver tu historial de facturación y tus facturas",
+      "Cancelar tu suscripción en cualquier momento"
+    ],
+    "needHelp": "¿Necesitas ayuda?",
+    "support": "Contactar con soporte",
+    "toasts": {
+      "sending": "Enviando el enlace de gestión…",
+      "sent": "¡Revisa tu correo para encontrar el enlace de gestión!",
+      "failed": "Ocurrió un error. Inténtalo de nuevo."
+    },
+    "invalidEmail": "Escribe un correo electrónico válido"
+  },
+  "Unsubscribe": {
+    "metadata": {
+      "title": "Cancelar suscripción",
+      "description": "Cancela la suscripción a las comunicaciones por correo de RC Web Solutions LLC."
+    },
+    "invalid": "Enlace de cancelación no válido",
+    "done": {
+      "title": "Suscripción cancelada",
+      "text": "{email} se ha eliminado de los correos de marketing de RC Web Solutions.",
+      "transactional": "Seguirás recibiendo los correos transaccionales sobre tus proyectos.",
+      "home": "Volver al inicio"
+    },
+    "title": "Cancelar suscripción a los correos",
+    "confirm": "¿Seguro que quieres dar de baja a <email></email> de los correos de marketing?",
+    "noLonger": "Dejarás de recibir:",
+    "items": [
+      "Novedades de marketing",
+      "Novedades de servicios",
+      "Boletín"
+    ],
+    "unsubscribe": "Cancelar suscripción",
+    "processing": "Procesando…",
+    "cancel": "Cancelar"
+  },
+  "BlogSubscribe": {
+    "title": "Suscríbete al blog",
+    "text": "Recibe por correo los nuevos artículos sobre desarrollo web, React y Next.js, además de las novedades de RC Web Solutions.",
+    "email": "Correo electrónico",
+    "placeholder": "tu@correo.com…",
+    "subscribe": "Suscribirme",
+    "subscribing": "Suscribiendo…",
+    "consent": "Al suscribirte aceptas recibir correos de RC Web Solutions LLC. Sin spam. <link>Cancela cuando quieras</link>.",
+    "toasts": {
+      "subscribing": "Suscribiendo…",
+      "failed": "Algo salió mal. Inténtalo de nuevo."
+    },
+    "invalidEmail": "Escribe un correo electrónico válido"
+  },
+  "Actions": {
+    "tooManyRequests": "Demasiadas solicitudes. Inténtalo de nuevo más tarde.",
+    "quote": {
+      "invalid": "Este enlace de presupuesto no es válido",
+      "accepted": "Este presupuesto ya fue aceptado",
+      "withdrawn": "Este presupuesto fue retirado",
+      "expired": "Este presupuesto ha caducado. Responde al correo para pedir uno actualizado",
+      "paymentFailed": "No se pudo iniciar el pago. Inténtalo de nuevo",
+      "zelleUnavailable": "Los pagos por Zelle no están disponibles en este momento",
+      "failed": "Algo salió mal. Inténtalo de nuevo"
+    },
+    "project": {
+      "invalidCredentials": "Correo o código de proyecto no válidos",
+      "depositPending": "El pago inicial no se ha completado",
+      "notReady": "El proyecto todavía no está listo para el pago final",
+      "verificationFailed": "La verificación falló",
+      "sessionFailed": "No se pudo crear la sesión de pago"
+    },
+    "portal": {
+      "invalidEmail": "Escribe un correo electrónico válido",
+      "emailFailed": "No se pudo enviar el correo. Inténtalo de nuevo.",
+      "failed": "Ocurrió un error. Inténtalo de nuevo más tarde."
+    },
+    "blog": {
+      "invalid": "Escribe un correo electrónico válido",
+      "alreadySubscribed": "Este correo ya está suscrito al blog.",
+      "subscribed": "Te has suscrito al blog correctamente.",
+      "failed": "Ocurrió un error al suscribirte al blog."
+    },
+    "unsubscribe": {
+      "notFound": "Contacto no encontrado",
+      "failed": "No se pudo cancelar la suscripción"
+    },
+    "checkout": {
+      "invalid": "Datos de pago no válidos",
+      "planUnavailable": "El plan seleccionado no está disponible",
+      "failed": "No se pudo crear la sesión de pago"
+    }
   }
 }

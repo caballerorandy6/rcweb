@@ -1,5 +1,8 @@
 "use server";
 
+import { getLocale, getTranslations } from "next-intl/server";
+import { localizePathname } from "@/i18n/paths";
+import type { Locale } from "@/i18n/routing";
 import stripe from "@/lib/stripe";
 import { checkoutPlans } from "@/lib/data";
 import { CheckoutRequestSchema, type CheckoutRequest } from "@/lib/zod";
@@ -21,12 +24,11 @@ export interface StripeCheckoutResponse {
 export async function createStripeCheckoutAction(
   request: CheckoutRequest
 ): Promise<StripeCheckoutResponse> {
+  const [t, rawLocale] = await Promise.all([getTranslations("Actions"), getLocale()]);
+  const locale = rawLocale as Locale;
   const parsed = CheckoutRequestSchema.safeParse(request);
   if (!parsed.success) {
-    return {
-      success: false,
-      error: parsed.error.issues[0]?.message ?? "Invalid checkout data",
-    };
+    return { success: false, error: t("checkout.invalid") };
   }
 
   const { planId, customer } = parsed.data;
@@ -35,7 +37,7 @@ export async function createStripeCheckoutAction(
   // Solo los planes de alcance fijo se cobran aquí; el resto va por presupuesto.
   const checkoutPlan = checkoutPlans.find((p) => p.id === planId);
   if (!checkoutPlan) {
-    return { success: false, error: "Selected plan is not available" };
+    return { success: false, error: t("checkout.planUnavailable") };
   }
 
   try {
@@ -62,8 +64,8 @@ export async function createStripeCheckoutAction(
           },
         ],
         automatic_tax: { enabled: true },
-        success_url: `${SITE_BASE_URL}/payment-success?session_id={CHECKOUT_SESSION_ID}&subscription=true`,
-        cancel_url: `${SITE_BASE_URL}/#pricing`,
+        success_url: `${SITE_BASE_URL}${localizePathname("/payment-success", locale)}?session_id={CHECKOUT_SESSION_ID}&subscription=true`,
+        cancel_url: `${SITE_BASE_URL}${localizePathname("/", locale)}#pricing`,
       });
 
       return {
@@ -79,7 +81,8 @@ export async function createStripeCheckoutAction(
       totalAmount: checkoutPlan.priceInCents,
       customerName: customer.name,
       customerEmail: customer.email,
-      cancelUrl: `${SITE_BASE_URL}/#pricing`,
+      cancelUrl: `${SITE_BASE_URL}${localizePathname("/", locale)}#pricing`,
+      locale,
     });
 
     return { success: true, sessionUrl, projectCode };
@@ -87,7 +90,7 @@ export async function createStripeCheckoutAction(
     console.error("❌ Error creating Stripe session:", error);
     return {
       success: false,
-      error: error instanceof Error ? error.message : "Failed to create checkout session",
+      error: t("checkout.failed"),
     };
   }
 }

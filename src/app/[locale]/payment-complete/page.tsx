@@ -1,20 +1,32 @@
+import type { Metadata } from "next";
+import { Suspense } from "react";
+import { getTranslations } from "next-intl/server";
 import PaymentComplete from "@/components/payment/PaymentComplete";
 import PaymentCompleteSkeleton from "@/components/skeletons/PaymentCompleteSkeleton";
+import PageMessages from "@/components/layout/PageMessages";
+import type { Locale } from "@/i18n/routing";
 import { genPageMetadata } from "@/utils/genPageMetadata";
-import { Suspense } from "react";
 
-export const metadata = genPageMetadata({
-  title: "Payment Successful - Thank You!",
-  description:
-    "Your payment has been successfully processed. Thank you for choosing RC Web Solutions LLC.",
-  pageRoute: "/payment-complete",
-  noIndex: true,
-});
+type Props = PageProps<"/[locale]/payment-complete">;
+
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const locale = (await params).locale as Locale;
+  const t = await getTranslations({ locale, namespace: "PaymentComplete" });
+  return genPageMetadata({
+    title: t("metadata.title"),
+    description: t("metadata.description"),
+    locale,
+    pathname: "/payment-complete",
+    noIndex: true,
+  });
+}
 
 export default function PaymentCompletePage() {
   return (
-    <Suspense fallback={<PaymentCompleteSkeleton />}>
-      <PaymentComplete />
-    </Suspense>
+    <PageMessages namespaces={["PaymentComplete"]}>
+      <Suspense fallback={<PaymentCompleteSkeleton />}>
+        <PaymentComplete />
+      </Suspense>
+    </PageMessages>
   );
 }

@@ -1,21 +1,19 @@
 "use client";
 
 import Button from "@/components/ui/Button";
-import { useState } from "react";
+import { useMemo, useState } from "react";
+import { useTranslations } from "next-intl";
+import { COMPANY } from "@/lib/company";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { ErrorMessage } from "@hookform/error-message";
 import { toast } from "sonner";
 import { sendPortalLinkAction } from "@/actions/subscriptions/sendPortalLinkAction";
-import { ManageSubscriptionSchema, ManageSubscriptionData } from "@/lib/zod";
+import { buildEmailSchema, type ManageSubscriptionData } from "@/lib/zod";
 import { CheckCircleIcon, ExclamationTriangleIcon } from "@heroicons/react/24/outline";
 
-const LINK_ERRORS: Record<string, string> = {
-  "expired-link":
-    "That link has expired or was replaced by a newer one. Enter your email to get a fresh link.",
-  "portal-unavailable":
-    "We could not open the subscription portal right now. Please try again in a few minutes or contact us.",
-};
+const LINK_ERRORS = ["expired-link", "portal-unavailable"] as const;
+type LinkError = (typeof LINK_ERRORS)[number];
 
 interface ManageSubscriptionProps {
   /** `error` query param set by /manage-subscription/[token] */
@@ -23,8 +21,13 @@ interface ManageSubscriptionProps {
 }
 
 export default function ManageSubscription({ error }: ManageSubscriptionProps) {
+  const t = useTranslations("ManageSubscription");
   const [isSuccess, setIsSuccess] = useState(false);
-  const linkError = error ? LINK_ERRORS[error] : undefined;
+  const linkError =
+    error && (LINK_ERRORS as readonly string[]).includes(error)
+      ? t(`errors.${error as LinkError}`)
+      : undefined;
+  const schema = useMemo(() => buildEmailSchema(t("invalidEmail")), [t]);
 
   const {
     register,
@@ -32,23 +35,23 @@ export default function ManageSubscription({ error }: ManageSubscriptionProps) {
     reset,
     formState: { errors, isSubmitting },
   } = useForm<ManageSubscriptionData>({
-    resolver: zodResolver(ManageSubscriptionSchema),
+    resolver: zodResolver(schema),
     defaultValues: {
       email: "",
     },
   });
 
   const onSubmit: SubmitHandler<ManageSubscriptionData> = async (data) => {
-    const toastId = toast.loading("Sending management link…");
+    const toastId = toast.loading(t("toasts.sending"));
 
     const result = await sendPortalLinkAction(data.email);
 
     if (result.success) {
-      toast.success("Check your email for the management link!", { id: toastId });
+      toast.success(t("toasts.sent"), { id: toastId });
       setIsSuccess(true);
       reset();
     } else if (!result.success) {
-      toast.error(result.error || "An error occurred. Please try again.", { id: toastId });
+      toast.error(result.error || t("toasts.failed"), { id: toastId });
     }
   };
 
@@ -65,11 +68,11 @@ export default function ManageSubscription({ error }: ManageSubscriptionProps) {
             {/* Header */}
             <div className="relative">
               <h1 className="text-4xl md:text-5xl text-gold text-center font-iceland tracking-wide">
-                Manage Subscription
+                {t("title")}
               </h1>
               <div className="w-24 h-1 bg-linear-to-r from-transparent via-gold to-transparent mx-auto mt-4 rounded-full"></div>
               <p className="text-center text-gray-400 text-sm mt-4 font-inter">
-                Enter your email to receive a secure management link
+                {t("subtitle")}
               </p>
             </div>
 
@@ -90,17 +93,14 @@ export default function ManageSubscription({ error }: ManageSubscriptionProps) {
                   <CheckCircleIcon className="w-8 h-8 text-green-400" />
                 </div>
                 <h2 className="text-2xl font-iceland text-white mb-4">
-                  Check Your Email
+                  {t("success.title")}
                 </h2>
-                <p className="text-gray-400 font-inter mb-6">
-                  If you have an active subscription, I&apos;ve sent a secure link to manage it.
-                  The link will expire in 24 hours.
-                </p>
+                <p className="text-gray-400 font-inter mb-6">{t("success.text")}</p>
                 <button
                   onClick={() => setIsSuccess(false)}
                   className="text-gold hover:text-yellow-400 font-inter font-medium transition-colors"
                 >
-                  Send another link
+                  {t("success.another")}
                 </button>
               </div>
             ) : (
@@ -114,7 +114,7 @@ export default function ManageSubscription({ error }: ManageSubscriptionProps) {
                       type="email"
                       id="email"
                       className="w-full p-4 bg-gray-800/80 text-white rounded-xl border border-gray-700/60 focus:outline-hidden focus:border-gold focus:ring-2 focus:ring-gold/20 transition-all duration-300 font-inter placeholder-gray-400 hover:bg-gray-800 peer"
-                      placeholder="your@email.com"
+                      placeholder={t("placeholder")}
                       autoComplete="email"
                     />
                     <div className="absolute inset-0 rounded-xl bg-linear-to-r from-gold/0 via-gold/5 to-gold/0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"></div>
@@ -134,7 +134,7 @@ export default function ManageSubscription({ error }: ManageSubscriptionProps) {
                 {/* Submit Button */}
                 <div className="pt-2">
                   <Button type="submit" size="lg" fullWidth disabled={isSubmitting}>
-                    {isSubmitting ? "Sending…" : "Send Management Link"}
+                    {isSubmitting ? t("sending") : t("send")}
                     {!isSubmitting && (
                       <svg
                         className="w-5 h-5 transform group-hover:translate-x-1 transition-transform duration-300"
@@ -159,33 +159,24 @@ export default function ManageSubscription({ error }: ManageSubscriptionProps) {
             {/* Help Text */}
             <div className="relative pt-6 border-t border-gray-700/50">
               <h3 className="text-sm font-medium font-inter text-gray-300 mb-3">
-                What can you do with the management link?
+                {t("helpTitle")}
               </h3>
               <ul className="space-y-2 text-sm text-gray-400 font-inter">
-                <li className="flex items-start gap-2">
-                  <span className="text-gold mt-0.5">•</span>
-                  Update your payment method
-                </li>
-                <li className="flex items-start gap-2">
-                  <span className="text-gold mt-0.5">•</span>
-                  View your billing history and invoices
-                </li>
-                <li className="flex items-start gap-2">
-                  <span className="text-gold mt-0.5">•</span>
-                  Cancel your subscription at any time
-                </li>
+                {(t.raw("help") as string[]).map((item) => (
+                  <li key={item} className="flex items-start gap-2">
+                    <span className="text-gold mt-0.5">•</span>
+                    {item}
+                  </li>
+                ))}
               </ul>
             </div>
 
             {/* Footer */}
             <div className="relative text-center">
               <p className="text-gray-400 text-xs font-inter">
-                Need help?{" "}
-                <a
-                  href="mailto:contactus@rcweb.dev"
-                  className="text-gold hover:text-yellow-400 transition-colors"
-                >
-                  Contact Support
+                {t("needHelp")}{" "}
+                <a href={`mailto:${COMPANY.contactEmail}`} className="text-gold hover:text-yellow-400 transition-colors">
+                  {t("support")}
                 </a>
               </p>
             </div>

@@ -1,4 +1,8 @@
 import { Suspense } from "react";
+import type { Metadata } from "next";
+import { getTranslations } from "next-intl/server";
+import PageMessages from "@/components/layout/PageMessages";
+import type { Locale } from "@/i18n/routing";
 import * as Sentry from "@sentry/nextjs";
 import { prisma } from "@/lib/prisma";
 import { getProjectCharges } from "@/lib/project/charges";
@@ -8,18 +12,18 @@ import SubscriptionSuccess from "@/components/payment/SubscriptionSuccess";
 import PaymentSuccessSkeleton from "@/components/skeletons/PaymentSuccessSkeleton";
 import { genPageMetadata } from "@/utils/genPageMetadata";
 
-export const metadata = genPageMetadata({
-  title: "Payment Successful - Thank You!",
-  description:
-    "Your payment has been successfully processed. Thank you for choosing RC Web Solutions LLC for your project.",
-  pageRoute: "/payment-success",
-  noIndex: true,
-});
+type Props = PageProps<"/[locale]/payment-success">;
 
-type SearchParams = Promise<{ [key: string]: string | string[] | undefined }>;
-
-interface PageProps {
-  searchParams: SearchParams;
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const locale = (await params).locale as Locale;
+  const t = await getTranslations({ locale, namespace: "PaymentSuccess" });
+  return genPageMetadata({
+    title: t("metadata.title"),
+    description: t("metadata.description"),
+    locale,
+    pathname: "/payment-success",
+    noIndex: true,
+  });
 }
 
 // Stripe sends the customer here before, or at the same time as, the webhook
@@ -71,16 +75,14 @@ async function findPaidDeposit(sessionId: string): Promise<PaymentSuccessData | 
   };
 }
 
-async function Content({ searchParams }: PageProps) {
-  const params = await searchParams;
+async function Content({ searchParams }: Pick<Props, "searchParams">) {
+  const [params, t] = await Promise.all([searchParams, getTranslations("PaymentSuccess")]);
   const sessionId = typeof params.session_id === "string" ? params.session_id : "";
   const isSubscription = params.subscription === "true";
   const code = typeof params.code === "string" ? params.code : undefined;
 
   if (!sessionId) {
-    return (
-      <PaymentSuccess error="No session ID provided. Please contact support if you completed a payment." />
-    );
+    return <PaymentSuccess error={t("noSession")} />;
   }
 
   // Subscription flow
@@ -91,9 +93,7 @@ async function Content({ searchParams }: PageProps) {
     );
 
     if (!subscription) {
-      return (
-        <SubscriptionSuccess error="Subscription is being processed. Please check your email for confirmation." />
-      );
+      return <SubscriptionSuccess error={t("subscription.processing")} />;
     }
 
     return <SubscriptionSuccess subscription={subscription} />;
@@ -112,10 +112,12 @@ async function Content({ searchParams }: PageProps) {
   return <PaymentSuccess project={project} projectCode={project.projectCode} />;
 }
 
-export default function PaymentSuccessPage({ searchParams }: PageProps) {
+export default function PaymentSuccessPage({ searchParams }: Props) {
   return (
-    <Suspense fallback={<PaymentSuccessSkeleton />}>
-      <Content searchParams={searchParams} />
-    </Suspense>
+    <PageMessages namespaces={["PaymentSuccess"]}>
+      <Suspense fallback={<PaymentSuccessSkeleton />}>
+        <Content searchParams={searchParams} />
+      </Suspense>
+    </PageMessages>
   );
 }

@@ -445,6 +445,18 @@
       "phoneLong": "Phone number is too long",
       "messageLong": "Message is too long",
       "messageShort": "Message is too short"
+    },
+    "terms": {
+      "noticeTitle": "Important: Review Required",
+      "noticeText": "Please carefully review and accept our Terms of Service before proceeding to payment. This legal agreement outlines the conditions of our service.",
+      "missing": "Missing information. Please start from pricing.",
+      "processing": "Processing…",
+      "redirecting": "Redirecting to secure payment…",
+      "failed": "Failed to process",
+      "error": "An error occurred",
+      "confirm": "By clicking “I Accept These Terms”, you confirm that you have read, understood, and agree to be bound by these Terms of Service.",
+      "accept": "I Accept These Terms",
+      "back": "Return to Pricing Plans"
     }
   },
   "Blog": {
@@ -1367,5 +1379,330 @@
     "tryAgain": "Try again",
     "goHome": "Go home",
     "errorId": "Error ID: {id}"
+  },
+  "Quote": {
+    "metadata": {
+      "title": "Your Quote",
+      "description": "Review your written quote and start your project."
+    },
+    "number": "Quote {number}",
+    "preparedFor": "Prepared for {name}",
+    "validUntil": "Valid until {date}",
+    "accepted": {
+      "title": "Quote accepted",
+      "thanks": "Thank you! Your deposit was received",
+      "on": " on {date}",
+      "code": " and your project code is",
+      "track": "Track progress →"
+    },
+    "expired": {
+      "title": "This quote has expired",
+      "text": "It was valid until {date}. Reply to the email you received or write to",
+      "send": "and I'll send you an updated one."
+    },
+    "cancelled": {
+      "title": "This quote was withdrawn",
+      "text": "It is no longer available for payment. If you still want to go ahead, write to"
+    },
+    "client": "Client",
+    "project": "Project",
+    "total": "Total",
+    "included": "What's included",
+    "notes": "Notes",
+    "investment": "Investment",
+    "projectTotal": "Project total",
+    "deposit": "Deposit to start ({percent}%)",
+    "balance": "Balance on delivery",
+    "investmentNote": "Work starts as soon as the deposit clears. The balance is only due when the project is delivered, through a secure link sent to your email.",
+    "zelle": {
+      "title": "Pay the deposit by Zelle",
+      "thanks": "Thank you for accepting the quote{date}. Send the deposit from your bank's Zelle:",
+      "on": " on {date}",
+      "amount": "Amount",
+      "sendTo": "Send to",
+      "memo": "Memo",
+      "note": "Work starts as soon as the transfer is confirmed. You'll receive your invoice and a link to follow the project by email."
+    },
+    "questions": "Questions about this quote?",
+    "contact": "Contact me",
+    "form": {
+      "readyCard": "Prefer to pay by card after all?",
+      "ready": "Ready to start?",
+      "agree": "I have read and agree to the <terms>Terms of Service</terms> and the <refund>Refund Policy</refund>, and I accept this quote as the scope of the project.",
+      "accept": "Accept and Pay {amount} Deposit",
+      "processing": "Processing…",
+      "secure": "Secure payment by Stripe. You'll receive an invoice by email.",
+      "zelleAsk": "Prefer to pay the deposit by Zelle?",
+      "oneMoment": "One moment…",
+      "zelleHint": "Accept the terms above first. You'll see where to send it and work starts once the transfer is confirmed.",
+      "redirecting": "Redirecting to secure payment…",
+      "zelleThanks": "Thanks! Here are the Zelle details"
+    }
+  },
+  "Project": {
+    "metadata": {
+      "title": "Project Progress",
+      "description": "Track your project progress and milestones"
+    },
+    "title": "Project Progress",
+    "subtitle": "Track the progress of your project in real-time",
+    "code": "Project Code",
+    "client": "Client",
+    "plan": "Plan",
+    "status": {
+      "pending": "Pending",
+      "in_progress": "In Progress",
+      "ready_for_payment": "Ready for Payment",
+      "completed": "Completed"
+    },
+    "ready": {
+      "title": "Your project is ready",
+      "text": "Complete the final payment{amount} to receive your deliverables.",
+      "of": " of {amount}",
+      "pay": "Pay Final Balance"
+    },
+    "milestones": "Project Milestones",
+    "questions": "Questions about your project?",
+    "contact": "Contact me",
+    "milestone": {
+      "completed": "Completed",
+      "in_progress": "In Progress",
+      "pending": "Pending",
+      "none": "No milestones have been set up yet",
+      "checkBack": "Check back soon for project updates",
+      "overall": "Overall Progress",
+      "count": "{completed} of {total} milestones completed",
+      "due": "Due: {date}",
+      "completedOn": "Completed: {date}"
+    }
+  },
+  "FinalPayment": {
+    "metadata": {
+      "title": "Final Payment - Complete Your Project",
+      "description": "Complete your final payment to receive your completed project. Secure payment processing through Stripe for RC Web Solutions LLC projects."
+    },
+    "notices": {
+      "invalid-link": "That payment link is not valid. Enter your email and project code below to continue.",
+      "project-not-ready": "Your project is not ready for the final payment yet. You'll receive an email as soon as it is.",
+      "payment-failed": "We couldn't start the payment from your link. Try again below or contact support.",
+      "too-many-requests": "Too many attempts from your connection. Wait a minute and try again."
+    },
+    "title": "Complete Your Payment",
+    "subtitle": "Enter your project details to proceed with the final payment",
+    "email": "Email Address",
+    "emailPlaceholder": "john@example.com",
+    "code": "Project Code",
+    "codeHint": "The 6-character code from your initial payment",
+    "verify": "Verify Project",
+    "verifying": "Verifying…",
+    "details": "Project Details",
+    "project": "Project:",
+    "codeLabel": "Code:",
+    "finalPayment": "Final Payment:",
+    "proceed": "Proceed to Payment",
+    "processing": "Processing…",
+    "help": "Need help? Contact",
+    "toasts": {
+      "missing": "Please enter both email and project code",
+      "verified": "Project verified successfully!",
+      "failed": "Verification failed",
+      "popups": "Please allow popups to continue to payment.",
+      "sessionFailed": "Failed to create payment session"
+    }
+  },
+  "PaymentSuccess": {
+    "metadata": {
+      "title": "Payment Successful - Thank You!",
+      "description": "Your payment has been successfully processed. Thank you for choosing RC Web Solutions LLC for your project."
+    },
+    "noSession": "No session ID provided. Please contact support if you completed a payment.",
+    "processing": {
+      "title": "Payment Received, Finishing Up",
+      "text": "Stripe confirmed your payment, but your project is still being registered. This usually takes a few seconds.",
+      "code": "Your project code is <code></code>. Keep it: you'll need it for the final payment.",
+      "checkAgain": "Check Again",
+      "invoice": "You'll also receive your invoice by email once it is ready."
+    },
+    "error": {
+      "title": "Payment Processing Issue",
+      "text": "Don't worry! If your payment was successful in Stripe, I'll process it shortly. Please save your confirmation email."
+    },
+    "title": "Payment Successful! 🎉",
+    "thanks": "Thank you for your payment. Your project has been initiated and I'll be in touch within 24 hours.",
+    "codeLabel": "Your Project Code",
+    "copy": "Copy to clipboard",
+    "copied": "Project code copied!",
+    "saveCode": "Save this code - you'll need it for the final payment",
+    "plan": "Plan:",
+    "paid": "Amount Paid:",
+    "remaining": "Remaining Balance:",
+    "status": "Status:",
+    "inProgress": "In Progress",
+    "next": {
+      "title": "What happens next?",
+      "items": [
+        "I'll contact you within 24 hours to discuss project details",
+        "Development will begin based on your selected plan timeline",
+        "You'll receive updates throughout the development process",
+        "Final payment will be due upon project completion"
+      ]
+    },
+    "home": "Return to Home",
+    "support": "Contact Support",
+    "footer": "You'll receive a confirmation email shortly with all the details.",
+    "subscription": {
+      "processing": "Subscription is being processed. Please check your email for confirmation.",
+      "errorTitle": "Subscription Processing Issue",
+      "errorText": "Don't worry! If your payment was successful in Stripe, I'll process it shortly. Please check your email for confirmation.",
+      "title": "Subscription Active!",
+      "thanks": "Thank you for subscribing to the maintenance plan. Your website is now protected and supported.",
+      "monthly": "Monthly Amount:",
+      "perMonth": "/mo",
+      "status": "Status:",
+      "nextBilling": "Next Billing Date:",
+      "in30Days": "In approximately 30 days",
+      "email": "Email:",
+      "id": "Subscription ID:",
+      "includedTitle": "What's Included in Your Plan",
+      "included": [
+        "Security patches & updates",
+        "Performance monitoring",
+        "Content updates (up to 4 hours/month)",
+        "Technical support via email",
+        "Monthly reports"
+      ]
+    }
+  },
+  "PaymentComplete": {
+    "metadata": {
+      "title": "Payment Successful - Thank You!",
+      "description": "Your payment has been successfully processed. Thank you for choosing RC Web Solutions LLC."
+    },
+    "title": "Project Fully Paid! 🎉",
+    "thanks": "Thank you for your business!",
+    "nextTitle": "What Happens Next:",
+    "next": [
+      "You'll receive an email with all project files and documentation within 24 hours",
+      "Access credentials for hosting and admin panels will be provided",
+      "Training session will be scheduled based on your availability",
+      "Support period begins today as per your plan"
+    ],
+    "reference": "Project Reference:",
+    "save": "Save this for your records",
+    "home": "Return to Home",
+    "support": "Contact Support",
+    "receipt": "A detailed receipt has been sent to your email address.",
+    "questions": "For any questions, please contact me at {email}"
+  },
+  "ManageSubscription": {
+    "metadata": {
+      "title": "Manage Subscription",
+      "description": "Manage your RC Web Solutions subscription. Update payment methods, view billing history, or cancel your subscription."
+    },
+    "errors": {
+      "expired-link": "That link has expired or was replaced by a newer one. Enter your email to get a fresh link.",
+      "portal-unavailable": "We could not open the subscription portal right now. Please try again in a few minutes or contact us."
+    },
+    "title": "Manage Subscription",
+    "subtitle": "Enter your email to receive a secure management link",
+    "placeholder": "your@email.com",
+    "send": "Send Management Link",
+    "sending": "Sending…",
+    "success": {
+      "title": "Check Your Email",
+      "text": "If you have an active subscription, I've sent a secure link to manage it. The link will expire in 24 hours.",
+      "another": "Send another link"
+    },
+    "helpTitle": "What can you do with the management link?",
+    "help": [
+      "Update your payment method",
+      "View your billing history and invoices",
+      "Cancel your subscription at any time"
+    ],
+    "needHelp": "Need help?",
+    "support": "Contact Support",
+    "toasts": {
+      "sending": "Sending management link…",
+      "sent": "Check your email for the management link!",
+      "failed": "An error occurred. Please try again."
+    },
+    "invalidEmail": "Please enter a valid email address"
+  },
+  "Unsubscribe": {
+    "metadata": {
+      "title": "Unsubscribe",
+      "description": "Unsubscribe from RC Web Solutions LLC email communications."
+    },
+    "invalid": "Invalid unsubscribe link",
+    "done": {
+      "title": "Unsubscribed Successfully",
+      "text": "{email} has been removed from RC Web Solutions marketing emails.",
+      "transactional": "You will still receive transactional emails about your projects.",
+      "home": "Back to Home"
+    },
+    "title": "Unsubscribe from Emails",
+    "confirm": "Are you sure you want to unsubscribe <email></email> from marketing emails?",
+    "noLonger": "You will no longer receive:",
+    "items": [
+      "Marketing updates",
+      "Service updates",
+      "Newsletter"
+    ],
+    "unsubscribe": "Unsubscribe",
+    "processing": "Processing…",
+    "cancel": "Cancel"
+  },
+  "BlogSubscribe": {
+    "title": "Subscribe to Blog",
+    "text": "Get new articles about web development, React and Next.js, plus news from RC Web Solutions, by email.",
+    "email": "Email address",
+    "placeholder": "you@email.com…",
+    "subscribe": "Subscribe",
+    "subscribing": "Subscribing…",
+    "consent": "By subscribing you agree to receive emails from RC Web Solutions LLC. No spam. <link>Unsubscribe anytime</link>.",
+    "toasts": {
+      "subscribing": "Subscribing…",
+      "failed": "Something went wrong. Please try again."
+    },
+    "invalidEmail": "Please enter a valid email address"
+  },
+  "Actions": {
+    "tooManyRequests": "Too many requests. Please try again later.",
+    "quote": {
+      "invalid": "This quote link is not valid",
+      "accepted": "This quote has already been accepted",
+      "withdrawn": "This quote has been withdrawn",
+      "expired": "This quote has expired. Reply to the email to request an updated one",
+      "paymentFailed": "Failed to start the payment. Please try again",
+      "zelleUnavailable": "Zelle payments are not available right now",
+      "failed": "Something went wrong. Please try again"
+    },
+    "project": {
+      "invalidCredentials": "Invalid email or project code",
+      "depositPending": "Initial payment not completed",
+      "notReady": "Project is not ready for final payment yet",
+      "verificationFailed": "Verification failed",
+      "sessionFailed": "Failed to create payment session"
+    },
+    "portal": {
+      "invalidEmail": "Please enter a valid email address",
+      "emailFailed": "Failed to send email. Please try again.",
+      "failed": "An error occurred. Please try again later."
+    },
+    "blog": {
+      "invalid": "Please enter a valid email address",
+      "alreadySubscribed": "This email is already subscribed to the blog.",
+      "subscribed": "Successfully subscribed to the blog.",
+      "failed": "An error occurred while subscribing to the blog."
+    },
+    "unsubscribe": {
+      "notFound": "Contact not found",
+      "failed": "Failed to unsubscribe"
+    },
+    "checkout": {
+      "invalid": "Invalid checkout data",
+      "planUnavailable": "Selected plan is not available",
+      "failed": "Failed to create checkout session"
+    }
   }
 }

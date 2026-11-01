@@ -1,5 +1,6 @@
 "use server";
 
+import { getTranslations } from "next-intl/server";
 import { prisma } from "@/lib/prisma";
 import { BlogSubscriptionData, BlogSubscriptionSchema } from "@/lib/zod";
 import { sendNewLeadNotification } from "@/lib/email/senders/sendNewLeadNotification";
@@ -12,11 +13,11 @@ const SOURCE = "blog_subscription";
  * and /unsubscribe works for everyone.
  */
 export const subscribeToBlogAction = async (data: BlogSubscriptionData) => {
+  const t = await getTranslations("Actions");
   const parsedData = BlogSubscriptionSchema.safeParse(data);
 
   if (!parsedData.success) {
-    const firstError = parsedData.error.issues[0]?.message || "Invalid data";
-    return { success: false, message: firstError };
+    return { success: false, message: t("blog.invalid") };
   }
 
   const email = parsedData.data.email.toLowerCase();
@@ -29,10 +30,7 @@ export const subscribeToBlogAction = async (data: BlogSubscriptionData) => {
 
     if (existingEmail) {
       if (existingEmail.contact.marketingConsent) {
-        return {
-          success: false,
-          message: "This email is already subscribed to the blog.",
-        };
+        return { success: false, message: t("blog.alreadySubscribed") };
       }
 
       // Known lead (or someone who unsubscribed) opting back in
@@ -41,7 +39,7 @@ export const subscribeToBlogAction = async (data: BlogSubscriptionData) => {
         data: { marketingConsent: true },
       });
 
-      return { success: true, message: "Successfully subscribed to the blog." };
+      return { success: true, message: t("blog.subscribed") };
     }
 
     await prisma.contact.create({
@@ -60,12 +58,9 @@ export const subscribeToBlogAction = async (data: BlogSubscriptionData) => {
       source: SOURCE,
     }).catch((error) => console.error("Blog lead notification failed:", error));
 
-    return { success: true, message: "Successfully subscribed to the blog." };
+    return { success: true, message: t("blog.subscribed") };
   } catch (error) {
     console.error("Error subscribing to blog:", error);
-    return {
-      success: false,
-      message: "An error occurred while subscribing to the blog.",
-    };
+    return { success: false, message: t("blog.failed") };
   }
 };

@@ -1,5 +1,6 @@
 "use server";
 
+import { getTranslations } from "next-intl/server";
 import { prisma } from "@/lib/prisma";
 import type { ActionResult } from "@/types/common";
 import type { VerifiedProjectAccess } from "@/types/project";
@@ -11,10 +12,11 @@ export async function verifyProjectAccessAction(
   email: string,
   projectCode: string
 ): Promise<ActionResult<{ project: VerifiedProjectAccess }>> {
+  const t = await getTranslations("Actions");
   try {
     const rateCheck = await checkActionRateLimit(rateLimiters.contact);
     if (!rateCheck.success) {
-      return { success: false, error: rateCheck.error! };
+      return { success: false, error: t("tooManyRequests") };
     }
 
     // Project.email is stored lowercased (CheckoutRequestSchema)
@@ -27,20 +29,17 @@ export async function verifyProjectAccessAction(
     });
 
     if (!project) {
-      return { success: false, error: "Invalid email or project code" };
+      return { success: false, error: t("project.invalidCredentials") };
     }
 
     const { deposit, final } = getProjectCharges(project.payments);
 
     if (!isPaid(deposit)) {
-      return { success: false, error: "Initial payment not completed" };
+      return { success: false, error: t("project.depositPending") };
     }
 
     if (project.status !== "ready_for_payment") {
-      return {
-        success: false,
-        error: "Project is not ready for final payment yet",
-      };
+      return { success: false, error: t("project.notReady") };
     }
 
     return {
@@ -58,6 +57,6 @@ export async function verifyProjectAccessAction(
     };
   } catch (error) {
     console.error("Error verifying project:", error);
-    return { success: false, error: "Verification failed" };
+    return { success: false, error: t("project.verificationFailed") };
   }
 }

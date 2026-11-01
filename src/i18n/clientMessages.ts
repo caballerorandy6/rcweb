@@ -1,10 +1,11 @@
 import type { Messages } from "next-intl";
 
 /**
- * Namespaces that client components read with `useTranslations`. Only these
- * are serialized into the page for the browser; everything else (long page
- * copy, legal texts) stays on the server. Add a namespace here when a
- * `'use client'` component starts using it.
+ * Namespaces that client components read with `useTranslations` on every
+ * page. Only these are serialized into the HTML for the browser; long page
+ * copy and legal texts stay on the server. Add a namespace here when a
+ * `'use client'` component used site-wide starts using it; a page-specific
+ * client island gets its namespace through <PageMessages> instead.
  */
 export const CLIENT_NAMESPACES = [
   "Common",
@@ -20,8 +21,13 @@ export const CLIENT_NAMESPACES = [
 
 export type ClientNamespace = (typeof CLIENT_NAMESPACES)[number];
 
-export function pickClientMessages(messages: Messages): Pick<Messages, ClientNamespace> {
-  return Object.fromEntries(
-    CLIENT_NAMESPACES.map((ns) => [ns, messages[ns]])
-  ) as Pick<Messages, ClientNamespace>;
+export function pickClientMessages<Extra extends keyof Messages>(
+  messages: Messages,
+  extra: readonly Extra[] = []
+): Pick<Messages, ClientNamespace | Extra> {
+  const names = [...CLIENT_NAMESPACES, ...extra] as (ClientNamespace | Extra)[];
+  return Object.fromEntries(names.map((ns) => [ns, messages[ns]])) as Pick<
+    Messages,
+    ClientNamespace | Extra
+  >;
 }

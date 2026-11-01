@@ -1,5 +1,8 @@
 import { Metadata } from "next";
 import { notFound } from "next/navigation";
+import { getTranslations } from "next-intl/server";
+import type { Locale } from "@/i18n/routing";
+import { COMPANY } from "@/lib/company";
 import { getPublicMilestonesAction } from "@/actions/milestones/getPublicMilestonesAction";
 import ClientMilestoneView from "@/components/project/ClientMilestoneView";
 import {
@@ -8,24 +11,28 @@ import {
   DocumentTextIcon,
 } from "@heroicons/react/24/outline";
 import { formatCurrency, getProjectStatusLabel } from "@/lib/utils";
+import type { ProjectStatus } from "@/generated/prisma/enums";
 import Button from "@/components/ui/Button";
 
-export const metadata: Metadata = {
-  title: "Project Progress",
-  description: "Track your project progress and milestones",
-  robots: {
-    index: false,
-    follow: false,
-  },
-};
+type Props = PageProps<"/[locale]/project/[accessToken]">;
 
-type Params = Promise<{ accessToken: string }>;
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const locale = (await params).locale as Locale;
+  const t = await getTranslations({ locale, namespace: "Project" });
+  return {
+    title: t("metadata.title"),
+    description: t("metadata.description"),
+    robots: { index: false, follow: false },
+  };
+}
 
-export default async function ProjectPage(props: { params: Params }) {
-  const params = await props.params;
-  const { accessToken } = params;
+export default async function ProjectPage({ params }: Props) {
+  const { accessToken } = await params;
 
-  const result = await getPublicMilestonesAction(accessToken);
+  const [result, t] = await Promise.all([
+    getPublicMilestonesAction(accessToken),
+    getTranslations("Project"),
+  ]);
 
   if (!result.success || !result.data) {
     notFound();
@@ -33,19 +40,21 @@ export default async function ProjectPage(props: { params: Params }) {
 
   const { project, milestones } = result.data;
 
-  const status = getProjectStatusLabel(project.status);
+  // Colour from the shared map; the label in the visitor's language
+  const status = {
+    color: getProjectStatusLabel(project.status).color,
+    label: t.has(`status.${project.status as ProjectStatus}`)
+      ? t(`status.${project.status as ProjectStatus}`)
+      : project.status,
+  };
 
   return (
     <div className="min-h-screen bg-gray-900 pt-28 pb-12 px-4">
       <div className="max-w-3xl mx-auto">
         {/* Header */}
         <div className="text-center mb-8">
-          <h1 className="text-4xl text-gold font-iceland mb-2">
-            Project Progress
-          </h1>
-          <p className="text-gray-400 font-inter mx-auto">
-            Track the progress of your project in real-time
-          </p>
+          <h1 className="text-4xl text-gold font-iceland mb-2">{t("title")}</h1>
+          <p className="text-gray-400 font-inter mx-auto">{t("subtitle")}</p>
         </div>
 
         {/* Project Info Card */}
@@ -57,7 +66,7 @@ export default async function ProjectPage(props: { params: Params }) {
                 <CodeBracketIcon className="w-5 h-5 text-gold" />
               </div>
               <div>
-                <p className="text-xs text-gray-500 font-inter">Project Code</p>
+                <p className="text-xs text-gray-500 font-inter">{t("code")}</p>
                 <p className="font-mono text-gold font-semibold">
                   {project.projectCode}
                 </p>
@@ -70,7 +79,7 @@ export default async function ProjectPage(props: { params: Params }) {
                 <UserIcon className="w-5 h-5 text-blue-400" />
               </div>
               <div>
-                <p className="text-xs text-gray-500 font-inter">Client</p>
+                <p className="text-xs text-gray-500 font-inter">{t("client")}</p>
                 <p className="text-white font-inter">{project.name}</p>
               </div>
             </div>
@@ -81,7 +90,7 @@ export default async function ProjectPage(props: { params: Params }) {
                 <DocumentTextIcon className="w-5 h-5 text-purple-400" />
               </div>
               <div>
-                <p className="text-xs text-gray-500 font-inter">Plan</p>
+                <p className="text-xs text-gray-500 font-inter">{t("plan")}</p>
                 <p className="text-white font-inter">{project.planName}</p>
               </div>
             </div>
@@ -101,37 +110,34 @@ export default async function ProjectPage(props: { params: Params }) {
         {project.status === "ready_for_payment" && (
           <div className="bg-gold/10 border border-gold/40 rounded-xl p-6 mb-8 flex flex-col sm:flex-row sm:items-center gap-4">
             <div className="flex-1">
-              <p className="text-white font-semibold font-inter">
-                Your project is ready
-              </p>
+              <p className="text-white font-semibold font-inter">{t("ready.title")}</p>
               <p className="text-gray-400 text-sm font-inter">
-                Complete the final payment
-                {project.finalAmount !== null &&
-                  ` of ${formatCurrency(project.finalAmount)}`}{" "}
-                to receive your deliverables.
+                {t("ready.text", {
+                  amount:
+                    project.finalAmount !== null
+                      ? t("ready.of", { amount: formatCurrency(project.finalAmount) })
+                      : "",
+                })}
               </p>
             </div>
-            <Button href={{ pathname: "/pay/[token]", params: { token: accessToken } }}>Pay Final Balance</Button>
+            <Button href={{ pathname: "/pay/[token]", params: { token: accessToken } }}>
+              {t("ready.pay")}
+            </Button>
           </div>
         )}
 
         {/* Milestones */}
         <div className="bg-gray-800 rounded-xl p-6 border border-gray-700">
-          <h2 className="text-xl text-white font-iceland mb-6">
-            Project Milestones
-          </h2>
+          <h2 className="text-xl text-white font-iceland mb-6">{t("milestones")}</h2>
           <ClientMilestoneView milestones={milestones} />
         </div>
 
         {/* Footer */}
         <div className="text-center mt-8">
           <p className="text-gray-500 text-sm font-inter mx-auto">
-            Questions about your project?{" "}
-            <a
-              href="mailto:contactus@rcweb.dev"
-              className="text-gold hover:underline"
-            >
-              Contact me
+            {t("questions")}{" "}
+            <a href={`mailto:${COMPANY.contactEmail}`} className="text-gold hover:underline">
+              {t("contact")}
             </a>
           </p>
         </div>

@@ -1,37 +1,41 @@
+import type { Metadata } from "next";
+import { getTranslations } from "next-intl/server";
 import FinalPayment from "@/components/payment/FinalPayment";
+import PageMessages from "@/components/layout/PageMessages";
+import type { Locale } from "@/i18n/routing";
 import { genPageMetadata } from "@/utils/genPageMetadata";
 
-export const metadata = genPageMetadata({
-  title: "Final Payment - Complete Your Project",
-  description:
-    "Complete your final payment to receive your completed project. Secure payment processing through Stripe for RC Web Solutions LLC projects.",
-  pageRoute: "/final-payment",
-  noIndex: true,
-});
+type Props = PageProps<"/[locale]/final-payment">;
+
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const locale = (await params).locale as Locale;
+  const t = await getTranslations({ locale, namespace: "FinalPayment" });
+  return genPageMetadata({
+    title: t("metadata.title"),
+    description: t("metadata.description"),
+    locale,
+    pathname: "/final-payment",
+    noIndex: true,
+  });
+}
 
 // Reasons /pay/[token] sends the customer here instead of to Stripe
-const NOTICES: Record<string, string> = {
-  "invalid-link":
-    "That payment link is not valid. Enter your email and project code below to continue.",
-  "project-not-ready":
-    "Your project is not ready for the final payment yet. You'll receive an email as soon as it is.",
-  "payment-failed":
-    "We couldn't start the payment from your link. Try again below or contact support.",
-  "too-many-requests":
-    "Too many attempts from your connection. Wait a minute and try again.",
-};
+const NOTICE_KEYS = ["invalid-link", "project-not-ready", "payment-failed", "too-many-requests"] as const;
+type NoticeKey = (typeof NOTICE_KEYS)[number];
 
-type SearchParams = Promise<{ error?: string | string[] }>;
-
-export default async function FinalPaymentPage(props: {
-  searchParams: SearchParams;
-}) {
-  const { error } = await props.searchParams;
-  const notice = typeof error === "string" ? NOTICES[error] : undefined;
+export default async function FinalPaymentPage({ searchParams }: Props) {
+  const { error } = await searchParams;
+  const t = await getTranslations("FinalPayment");
+  const notice =
+    typeof error === "string" && (NOTICE_KEYS as readonly string[]).includes(error)
+      ? t(`notices.${error as NoticeKey}`)
+      : undefined;
 
   return (
     <section id="final-payment">
-      <FinalPayment notice={notice} />
+      <PageMessages namespaces={["FinalPayment"]}>
+        <FinalPayment notice={notice} />
+      </PageMessages>
     </section>
   );
 }

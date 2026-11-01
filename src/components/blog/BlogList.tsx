@@ -3,6 +3,7 @@ import { BookOpenIcon } from "@heroicons/react/24/outline";
 import Heading from "@/components/ui/Heading";
 import BlogCard from "@/components/blog/BlogCard";
 import BlogSubscriptionForm from "@/components/blog/BlogSubscriptionForm";
+import PageMessages from "@/components/layout/PageMessages";
 import { getTranslations } from "next-intl/server";
 import type { BlogPost } from "@/lib/blog";
 
@@ -33,7 +34,9 @@ export default async function BlogList({ posts }: BlogListProps) {
 
         {/* Newsletter Subscription */}
         <div className="mt-12">
-          <BlogSubscriptionForm />
+          <PageMessages namespaces={["BlogSubscribe"]}>
+            <BlogSubscriptionForm />
+          </PageMessages>
         </div>
 
         {/* Blog Posts Grid */}

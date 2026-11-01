@@ -60,7 +60,8 @@ export default async function MagicLinkPaymentPage(props: { params: Params }) {
   try {
     sessionUrl = await createFinalPaymentCheckout(
       { ...project, finalAmount: final.amount },
-      "magic-link"
+      "magic-link",
+      locale
     );
   } catch (error) {
     console.error("❌ Error creating final payment from magic link:", error);
