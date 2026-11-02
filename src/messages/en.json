@@ -633,6 +633,9 @@
         "headline": "Business Websites Built to Bring in Calls",
         "subheadline": "From a one-page landing to a full 5-10 page site: custom design, mobile-first, built to turn visitors into calls, appointments and form submissions.",
         "content": "Your website is often the first contact a customer has with your business, and it works while you are busy with everything else. I build business websites that load in under two seconds, read well on a phone and make it obvious how to call you or book. Every site is designed mobile-first because most people looking for a local service are searching from their phones. I use Next.js and React, the same stack large companies rely on, so the site stays fast and keeps ranking as it grows. A landing page has a fixed price and can be started right here; a larger site is quoted after a short conversation about the pages you need. English and Spanish versions are included when your customers speak both, written by a native Spanish speaker rather than a translator plugin.",
+        "localHeading": "Business Websites for Houston Companies",
+        "localContent": "Most of the websites I have built are for Houston service businesses, and what they need changes with the trade. Clínica Hispana Airline and Clínica Hispana Nueva Salud Gessner needed patients to find them and read everything in English or Spanish; Leo's Home Experts needed homeowners to see their patios, motorized screens and awnings and ask for a quote. I can do the same for a business in Katy, Sugar Land, Missouri City, Pearland or The Woodlands, with a site built around the searches your customers make in your part of town.",
+        "remoteNote": "Not in Houston? I also work remotely with businesses in other cities: video calls, a staging site you can check at any time and Stripe payments.",
         "features": [
           {
             "title": "Mobile-First Design",
@@ -667,6 +670,9 @@
         "headline": "Website Redesign & Modernization",
         "subheadline": "Your current site rebuilt on modern technology: faster, mobile-friendly and easier for customers to use, with your content and your Google rankings carried over.",
         "content": "An old website costs you customers quietly: it loads slowly on phones, looks dated next to competitors and is hard to update. A redesign is not just a new coat of paint. I rebuild the site on Next.js, keep every page and URL that already ranks, set up redirects for anything that moves and migrate your content, photos and reviews. The result is a site that loads in under two seconds, works on every screen and that you can keep updating without breaking it. That is what I did for GSM A/C, whose rebuilt site went from a slow template to a fast, conversion-focused site that now books jobs on its own. The price depends on how many pages you have and what needs to be rewritten, so we agree on the scope first.",
+        "localHeading": "Redesigning Websites for Houston Businesses",
+        "localContent": "Plenty of Houston companies have a site that was fine years ago and now loses to whoever shows up first on a phone. GSM A/C came to me with a slow template site, and both Clínica Hispana Airline and Clínica Hispana Nueva Salud Gessner replaced older WordPress sites. The job is always the same: keep what the business already had on Google and make the site work for the people calling from around Houston, in English and in Spanish where the customers need it. I work with businesses across the metro area, from The Heights to Pearland and Katy, and we can talk in either language.",
+        "remoteNote": "If your business is in another city, the process is the same: I work remotely with video calls and a staging site you can review before anything goes live.",
         "features": [
           {
             "title": "Modern Design",
@@ -701,6 +707,9 @@
         "headline": "Admin Dashboard & Automation",
         "subheadline": "A private panel to manage leads, customers, payments and campaigns from one place, with the repetitive work automated.",
         "content": "Most small businesses run on a mix of spreadsheets, text messages and three different apps that do not talk to each other. A custom admin dashboard puts that in one place: your leads come in from the website, you see who called, who paid and who needs a follow-up, and campaigns go out by email or SMS from the same screen. I build these panels with Next.js, TypeScript and PostgreSQL, the stack this very site runs on, and connect them to the tools you already use, such as Stripe, Google or Twilio. The scope is tailored to how you work: for GSM A/C the dashboard replaced about fifteen hours a week of manual follow-up. We start with a conversation about your daily routine, agree on what the first version needs to do, and build from there.",
+        "localHeading": "Admin Dashboards for Houston Service Businesses",
+        "localContent": "Dashboards make the most sense for businesses with crews or events to coordinate. GSM A/C, a Houston HVAC and general contractor, uses one to handle service requests and email campaigns. For Dulce Antojo, a Houston snack cart rental business and a past client, I built a private panel with Stripe payment links so they could bill companies and schools by card. If you run a similar operation in Sugar Land, Missouri City, Humble or Cypress, we can go through your daily routine by video call or in person in the Houston area, in English or Spanish.",
+        "remoteNote": "The panel is web-based, so I also build them remotely for businesses in other cities.",
         "features": [
           {
             "title": "Lead and Customer Management",
@@ -734,7 +743,10 @@
         "metaDescription": "Custom online stores with Stripe payments and custom web applications: booking systems, member areas and internal tools built with Next.js. No monthly platform fees. From $8,000.",
         "headline": "Online Store & Custom Web Apps",
         "subheadline": "Full-featured online stores with Stripe and custom platforms built around your business: booking systems, member areas, internal tools. No monthly platform fees.",
-        "content": "Template platforms are a quick start and a long-term ceiling: monthly fees, limited customization, slow pages and plugins that break on every update. When your business outgrows them, I build the store or the platform you actually need. An online store includes Stripe payment processing, real-time inventory, order tracking, customer accounts and an admin panel where you run everything. A custom web application can be a booking system like the one RC Beauty Salon uses, a member area, a portal for your clients or an internal tool for your team. You own the code, pay only for hosting and Stripe's standard fees, and every feature is built for your workflow. Projects this size start with a scoping conversation and a written quote, then a 50% deposit to begin.",
+        "content": "Template platforms are a quick start and a long-term ceiling: monthly fees, limited customization, slow pages and plugins that break on every update. When your business outgrows them, I build the store or the platform you actually need. An online store includes Stripe payment processing, real-time inventory, order tracking, customer accounts and an admin panel where you run everything. A custom web application can be a booking system like my RC Beauty Salon demo, a member area, a portal for your clients or an internal tool for your team. You own the code, pay only for hosting and Stripe's standard fees, and every feature is built for your workflow. Projects this size start with a scoping conversation and a written quote, then a 50% deposit to begin.",
+        "localHeading": "Online Stores and Web Apps for Houston Businesses",
+        "localContent": "Not every Houston business that needs to take payments online needs a big catalogue. Dulce Antojo, a past client that rented snack carts for events around Houston, went from Instagram-only to a website that takes card payments through Stripe, which let them book companies and schools. Whether you sell products from Bellaire or take bookings in Richmond or League City, I start from how your customers buy today and build only what that needs, with English and Spanish where your customers use both.",
+        "remoteNote": "I also build stores and web apps remotely for businesses outside Houston; the scoping conversation and the written quote work the same way.",
         "features": [
           {
             "title": "Stripe Checkout and Subscriptions",
@@ -769,6 +781,9 @@
         "headline": "Monthly Maintenance & Support",
         "subheadline": "Ongoing maintenance, security updates, backups and technical support so your website keeps working while you run your business.",
         "content": "A website is not finished when it launches. Dependencies get security updates, hosting and domains renew, content goes stale and one day a form stops sending. The maintenance plan covers that for any site I built: I keep the stack updated, monitor uptime and performance, keep backups, make the small content changes you send me and answer technical questions the same day when something is urgent. It is a monthly subscription paid through Stripe that you can cancel at any time from the link in your invoice email. If you need bigger changes, such as a new page or a new feature, I quote them separately so the monthly price stays predictable.",
+        "localHeading": "Website Support from Houston",
+        "localContent": "I am based in the Houston area, so support runs on Central Time and you deal directly with the person who built your site, in English or Spanish. That matters for the businesses I work with here, such as clinics and home service companies, where a broken contact form means missed calls. The plan covers sites I built, whether your business is in Houston, Katy, Sugar Land or Pasadena.",
+        "remoteNote": "Location makes no difference to the plan: the work is remote, so businesses in other cities get the same support.",
         "features": [
           {
             "title": "Security Patches and Updates",
