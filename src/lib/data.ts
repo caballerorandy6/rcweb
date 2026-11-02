@@ -588,19 +588,20 @@ export type ServicePage = {
     description: string;
   }[];
   relatedProjects: string[];
+  relatedServices: OfferId[];
   cta: string;
 };
 
 /** Long-form copy of a service page; `Services.pages.<offerId>` in the dictionaries */
-export type ServicePageCopy = Omit<ServicePage, "offerId" | "relatedProjects">;
+export type ServicePageCopy = Omit<ServicePage, "offerId" | "relatedProjects" | "relatedServices">;
 
-/** What the dictionary cannot hold: which portfolio projects each page shows */
-export const servicePageShapes: { offerId: OfferId; relatedProjects: string[] }[] = [
-  { offerId: "business-website", relatedProjects: ["Clínica Hispana Nueva Salud Gessner", "Clínica Hispana Airline", "Leo's Home Experts"] },
-  { offerId: "website-redesign", relatedProjects: ["GSM AC & General Contractor", "Clínica Hispana Airline"] },
-  { offerId: "admin-dashboard", relatedProjects: ["GSM AC & General Contractor", "Dulce Antojo Snack Carts"] },
-  { offerId: "store-and-apps", relatedProjects: ["Dulce Antojo Snack Carts", "GSM AC & General Contractor"] },
-  { offerId: "maintenance", relatedProjects: ["Clínica Hispana Nueva Salud Gessner", "Leo's Home Experts", "GSM AC & General Contractor"] },
+/** What the dictionary cannot hold: which projects and other services each page links to */
+export const servicePageShapes: { offerId: OfferId; relatedProjects: string[]; relatedServices: OfferId[] }[] = [
+  { offerId: "business-website", relatedProjects: ["Clínica Hispana Nueva Salud Gessner", "Clínica Hispana Airline", "Leo's Home Experts"], relatedServices: ["website-redesign", "store-and-apps", "maintenance"] },
+  { offerId: "website-redesign", relatedProjects: ["GSM AC & General Contractor", "Clínica Hispana Airline"], relatedServices: ["business-website", "admin-dashboard", "maintenance"] },
+  { offerId: "admin-dashboard", relatedProjects: ["GSM AC & General Contractor", "Dulce Antojo Snack Carts"], relatedServices: ["business-website", "store-and-apps", "maintenance"] },
+  { offerId: "store-and-apps", relatedProjects: ["Dulce Antojo Snack Carts", "GSM AC & General Contractor"], relatedServices: ["business-website", "admin-dashboard", "maintenance"] },
+  { offerId: "maintenance", relatedProjects: ["Clínica Hispana Nueva Salud Gessner", "Leo's Home Experts", "GSM AC & General Contractor"], relatedServices: ["business-website", "website-redesign"] },
 ];
 
 export const servicePages: ServicePage[] = servicePageShapes.map((shape) => ({

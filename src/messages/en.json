@@ -59,7 +59,7 @@
     "siteDescription": "Randy Caballero builds and maintains fast websites and web apps for small service businesses: booking, Stripe payments and local SEO built in. Based in Houston, TX, working with small businesses anywhere. Next.js, React, English & Spanish.",
     "ogAlt": "RC Web Solutions - Randy Caballero Web Development Services",
     "home": {
-      "title": "Custom Websites & Web Apps for Small Businesses | RC Web Solutions",
+      "title": "RC Web Solutions | Custom Websites & Web Apps for Small Businesses",
       "description": "Randy Caballero builds fast websites and web apps for small service businesses: booking, Stripe payments and local SEO built in. Based in Houston, TX, working with clients anywhere. From $1,000. Free consultation."
     }
   },
@@ -307,6 +307,7 @@
     "services": {
       "heading": "How I Can Help You",
       "subheading": "I build websites, web apps and admin dashboards that turn visitors into calls and appointments",
+      "learnMore": "Learn more",
       "seePricing": "See Pricing",
       "viewAll": "View All Services"
     },
@@ -510,20 +511,21 @@
   "About": {
     "metadata": {
       "title": "About Randy Caballero - Full-Stack Web Developer",
-      "description": "Learn about Randy Caballero, a full-stack developer with 6+ years of experience in React, Next.js, and TypeScript who has shipped 20+ production sites. Based in Houston, TX, serving clients nationwide."
+      "description": "Learn about Randy Caballero, a full-stack developer with 6+ years of experience in web development, including 4+ with React and Next.js, who has shipped 20+ production sites. Based in Houston, TX, serving clients nationwide."
     },
     "heading": "Meet the Founder",
     "subheading": "The Developer Behind RC Web Solutions",
-    "bio1": "Full-stack developer with <strong>6+ years of experience</strong> building React and Next.js applications. Through RC Web Solutions I have built and shipped <strong>20+ production sites</strong> for small businesses, most of them in the Houston area, from the frontend and APIs to the database and deployment. I work remotely with clients anywhere: video calls, a staging site you can check at any time, and Stripe payments. I started at Revature in 2022 and, alongside RC Web Solutions, spent 2024–2025 as a software developer at Atser Systems Inc., contributing to <strong>full-stack application development</strong> in Agile teams.",
+    "bio1": "Full-stack developer with <strong>6+ years of experience</strong> in web development, including 4+ building React and Next.js applications. Through RC Web Solutions I have built and shipped <strong>20+ production sites</strong> for small businesses, most of them in the Houston area, from the frontend and APIs to the database and deployment. I work remotely with clients anywhere: video calls, a staging site you can check at any time, and Stripe payments. I started at Revature in 2022 and, alongside RC Web Solutions, spent 2024–2025 as a software developer at Atser Systems Inc., contributing to <strong>full-stack application development</strong> in Agile teams.",
     "bio2": "I work across the full stack with <gold>Next.js, TypeScript, Node.js, PostgreSQL, and Prisma</gold>, and I also own the layer that brings customers in: <gold>Google Ads, Meta Ads, conversion tracking, and local SEO</gold>. On one client site I cut load time from 7–8 seconds to under 1 second, which restored the performance of their paid campaigns.",
     "imageAlt": "Randy Caballero - Full-Stack Web Developer in Houston, TX",
     "location": "Houston, TX",
     "basedIn": "Based in Houston, TX",
     "anywhere": "Working with clients anywhere",
     "downloadCv": "Download CV",
+    "servicesLink": "See the services I offer",
     "person": {
       "jobTitle": "Full-Stack Web Developer",
-      "description": "Full-stack developer with 6+ years building React and Next.js applications. Founder of RC Web Solutions LLC, based in Houston, TX, with 20+ production sites shipped for small businesses across the US."
+      "description": "Full-stack developer with 6+ years in web development, including 4+ building React and Next.js applications. Founder of RC Web Solutions LLC, based in Houston, TX, with 20+ production sites shipped for small businesses across the US."
     },
     "experience": {
       "heading": "Experience",
@@ -615,7 +617,8 @@
       "included": "What's Included",
       "related": "Related Projects",
       "relatedIntro": "Houston businesses I've built this type of solution for.",
-      "visitSite": "Visit site",
+      "readCaseStudy": "Read the case study",
+      "relatedServices": "Related Services",
       "readyTitle": "Ready to Get Started?",
       "readyText": "Book a free 30-minute consultation. I'll review your current situation and show you exactly what I can build for your business."
     },
@@ -757,7 +760,7 @@
         "cta": "Quote My Project"
       },
       "maintenance": {
-        "metaTitle": "Website Maintenance & Support | $200/month, Cancel Anytime",
+        "metaTitle": "Houston Website Maintenance & Support | $200/month, Cancel Anytime",
         "metaDescription": "Monthly website maintenance and support: security updates, backups, uptime monitoring, content updates and technical support for sites I built. $200/month, cancel anytime.",
         "headline": "Monthly Maintenance & Support",
         "subheadline": "Ongoing maintenance, security updates, backups and technical support so your website keeps working while you run your business.",

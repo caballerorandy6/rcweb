@@ -1,14 +1,14 @@
 import { Link } from "@/i18n/navigation";
 import { Cog6ToothIcon } from "@heroicons/react/24/outline";
 import { getTranslations } from "next-intl/server";
-import { offerPriceLabel } from "@/lib/data";
+import { offerPriceLabel, offerSlug } from "@/lib/data";
 import { getLocalizedCatalog } from "@/lib/catalog";
 import Heading from "@/components/ui/Heading";
 import Button from "@/components/ui/Button";
 
 // Server Component: cards are in the HTML; reveal-on-scroll is CSS only
 const Services = async () => {
-  const [t, { offers, priceLabels }] = await Promise.all([
+  const [t, { locale, offers, priceLabels }] = await Promise.all([
     getTranslations("Home.services"),
     getLocalizedCatalog(),
   ]);
@@ -66,7 +66,7 @@ const Services = async () => {
               </div>
 
               <div className="mt-auto pt-4 border-t border-gold/10">
-                <div className="flex items-center justify-between">
+                <div className="flex items-center justify-between gap-3">
                   <p className="text-sm font-inter text-gold/80 italic">
                     {offer.highlight}
                   </p>
@@ -76,14 +76,24 @@ const Services = async () => {
                 </div>
               </div>
 
-              <Button
-                href={{ pathname: "/", hash: "pricing" }}
-                variant="secondary"
-                className="relative mt-4 w-full sm:w-auto"
-              >
-                {t("seePricing")}
-                <span aria-hidden="true">→</span>
-              </Button>
+              <div className="relative mt-4 flex flex-wrap gap-3">
+                <Button
+                  href={{ pathname: "/services/[slug]", params: { slug: offerSlug(offer, locale) } }}
+                  variant="secondary"
+                  className="w-full sm:w-auto"
+                >
+                  {t("learnMore")}
+                  <span className="sr-only">: {offer.title}</span>
+                </Button>
+                <Button
+                  href={{ pathname: "/", hash: "pricing" }}
+                  variant="secondary"
+                  className="w-full sm:w-auto"
+                >
+                  {t("seePricing")}
+                  <span aria-hidden="true">→</span>
+                </Button>
+              </div>
             </li>
           ))}
         </ul>

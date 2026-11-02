@@ -86,6 +86,11 @@ const About = async () => {
               <p className="text-sm sm:text-base text-gray-100 leading-relaxed text-justify lg:text-left reveal">
                 {t.rich("bio2", { gold: goldText })}
               </p>
+
+              <Button href="/services" variant="secondary" className="mt-8">
+                {t("servicesLink")}
+                <span aria-hidden="true">→</span>
+              </Button>
             </div>
 
             <div className="flex flex-col items-center lg:items-end reveal">
