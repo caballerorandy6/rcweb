@@ -188,6 +188,16 @@ export default async function ServicePage({ params }: Props) {
               <p className="text-gray-300 font-inter leading-8 text-lg">
                 {service.content}
               </p>
+
+              <h2 className="mt-16 text-3xl tracking-tight text-white sm:text-4xl font-iceland">
+                {service.localHeading}
+              </h2>
+              <p className="mt-6 text-gray-300 font-inter leading-8 text-lg">
+                {service.localContent}
+              </p>
+              <p className="mt-6 text-gray-300 font-inter leading-8 text-lg">
+                {service.remoteNote}
+              </p>
             </div>
           </div>
         </section>

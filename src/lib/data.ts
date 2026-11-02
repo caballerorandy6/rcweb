@@ -583,6 +583,9 @@ export type ServicePage = {
   headline: string;
   subheadline: string;
   content: string;
+  localHeading: string;
+  localContent: string;
+  remoteNote: string;
   features: {
     title: string;
     description: string;
