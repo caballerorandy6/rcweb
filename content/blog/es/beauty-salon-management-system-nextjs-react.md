@@ -57,12 +57,12 @@ Aprovechamos los Route Groups de Next.js 15 para organizar la aplicación según
 
 ```
 src/app/
-├── (public)/          # Public pages (landing, services, staff)
-├── (auth)/            # Login, register, password reset
-├── (customer)/        # Customer portal (appointments, orders, account)
-├── (staff)/           # Staff portal
-├── (admin)/           # Admin dashboard
-└── api/               # API routes and webhooks
+├── (public)/          # Páginas públicas (landing, servicios, personal)
+├── (auth)/            # Inicio de sesión, registro, restablecer contraseña
+├── (customer)/        # Portal de clientes (citas, pedidos, cuenta)
+├── (staff)/           # Portal del personal
+├── (admin)/           # Panel de administración
+└── api/               # Rutas de API y webhooks
 ```
 
 Esta estructura ofrece una separación clara de responsabilidades y facilita aplicar layouts y middleware a roles de usuario concretos.
@@ -72,14 +72,14 @@ Esta estructura ofrece una separación clara de responsabilidades y facilita apl
 Implementamos 103 Server Actions para manejar toda la lógica del lado del servidor, lo que elimina la necesidad de rutas de API tradicionales para las operaciones CRUD:
 
 ```typescript
-// Example: Server Action for creating appointments
+// Ejemplo: Server Action para crear citas
 export async function createAppointment(data: AppointmentFormData) {
   const session = await auth()
 
-  // Zod validation
+  // Validación con Zod
   const validated = appointmentSchema.parse(data)
 
-  // Check staff availability
+  // Verificar la disponibilidad del personal
   const isAvailable = await checkStaffAvailability(
     validated.staffId,
     validated.date,
@@ -87,18 +87,18 @@ export async function createAppointment(data: AppointmentFormData) {
   )
 
   if (!isAvailable) {
-    return { success: false, error: "Time slot not available" }
+    return { success: false, error: "Horario no disponible" }
   }
 
-  // Create appointment in database
+  // Crear la cita en la base de datos
   const appointment = await prisma.appointment.create({
     data: validated
   })
 
-  // Send confirmation email
+  // Enviar el correo de confirmación
   await sendAppointmentConfirmation(appointment)
 
-  // Revalidate cache
+  // Revalidar la caché
   revalidatePath('/appointments')
 
   return { success: true, appointment }
@@ -125,7 +125,7 @@ El flujo de reserva sigue un proceso de 4 pasos:
 4. **Confirmación y pago** - Depósito de $50 a través de Stripe
 
 ```typescript
-// Booking flow with state management
+// Flujo de reserva con manejo de estado
 const useBookingStore = create<BookingState>((set) => ({
   step: 1,
   selectedService: null,
@@ -195,7 +195,7 @@ Uso React Email para crear plantillas tipadas y reutilizables, con 10 tipos de c
 - Confirmación de pedido
 
 ```typescript
-// Email template with React Email
+// Plantilla de correo con React Email
 export const AppointmentConfirmation = ({
   customerName,
   serviceName,
@@ -207,13 +207,13 @@ export const AppointmentConfirmation = ({
     <Head />
     <Body style={main}>
       <Container style={container}>
-        <Heading style={h1}>Appointment Confirmed!</Heading>
+        <Heading style={h1}>¡Cita confirmada!</Heading>
         <Text style={text}>
-          Hi {customerName}, your {serviceName} appointment
-          with {staffName} is confirmed for {date} at {time}.
+          Hola {customerName}, tu cita de {serviceName}
+          con {staffName} está confirmada para el {date} a las {time}.
         </Text>
         <Button style={button} href={appointmentUrl}>
-          View Appointment
+          Ver cita
         </Button>
       </Container>
     </Body>
@@ -232,7 +232,7 @@ Tres roles de usuario con permisos específicos:
 | CUSTOMER | Reservas, pedidos, reseñas, gestión de la cuenta |
 
 ```typescript
-// Middleware for role-based access
+// Middleware para acceso basado en roles
 export default auth((req) => {
   const { pathname } = req.nextUrl
   const role = req.auth?.user?.role
@@ -260,7 +260,7 @@ Experiencia de compra completa con:
 - Gestión de inventario
 
 ```typescript
-// Cart store with localStorage persistence
+// Store del carrito con persistencia en localStorage
 const useCartStore = create(
   persist<CartState>(
     (set, get) => ({
@@ -305,7 +305,7 @@ const handleStatusChange = (newStatus: string) => {
   startTransition(async () => {
     const result = await updateAppointmentStatus(id, newStatus)
     if (result.success) {
-      toast.success("Status updated")
+      toast.success("Estado actualizado")
     }
   })
 }
@@ -315,7 +315,7 @@ return (
     onClick={() => handleStatusChange('completed')}
     disabled={isPending}
   >
-    {isPending ? <Spinner /> : 'Complete'}
+    {isPending ? <Spinner /> : 'Completar'}
   </Button>
 )
 ```
@@ -332,7 +332,7 @@ return (
 El esquema de Prisma incluye 20 modelos interconectados:
 
 ```prisma
-// Core models overview
+// Resumen de los modelos principales
 model User {
   id        String   @id @default(cuid())
   email     String   @unique
@@ -355,7 +355,7 @@ model Service {
   id          String   @id @default(cuid())
   name        String
   price       Decimal
-  duration    Int      // minutes
+  duration    Int      // minutos
   category    ServiceCategory @relation(...)
   staff       StaffService[]
 }

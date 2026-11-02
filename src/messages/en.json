@@ -1,5 +1,6 @@
 {
   "Common": {
+    "notifications": "Notifications",
     "skipToContent": "Skip to main content",
     "languageSwitch": {
       "label": "Language",
@@ -330,7 +331,8 @@
       "onGoogle": "on Google",
       "reviews": "{count, plural, one {# review} other {# reviews}}",
       "writeReview": "Write a Review on Google",
-      "translated": "Translated from English"
+      "translated": "Translated from English",
+      "translatedAuto": "Automatically translated"
     },
     "pricing": {
       "heading": "Clear & Transparent Pricing",
@@ -487,6 +489,8 @@
       "description": "Read expert articles about web development, SEO, e-commerce, and digital marketing. Learn how to grow your business online with RC Web Solutions."
     },
     "post": {
+      "taskDone": "Completed task",
+      "taskPending": "Incomplete task",
       "backToBlog": "Back to Blog",
       "updated": "Updated <date></date>",
       "enjoying": "Enjoying this article?",
@@ -1692,6 +1696,12 @@
     "invalidEmail": "Please enter a valid email address"
   },
   "Actions": {
+    "contact": {
+      "verification": "Verification failed. Please refresh the page and try again.",
+      "tooFast": "Please take a moment to review your message.",
+      "invalid": "Please check the form and try again.",
+      "failed": "The message could not be sent. Please try again or call us."
+    },
     "tooManyRequests": "Too many requests. Please try again later.",
     "quote": {
       "invalid": "This quote link is not valid",

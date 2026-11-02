@@ -78,7 +78,7 @@ export function sanitizeEmail(email: string | null | undefined): string {
 ```typescript
 export function sanitizePhone(phone: string | null | undefined): string {
   if (!phone) return "";
-  // Remove everything except digits, spaces, and phone-related characters
+  // Eliminar todo excepto dígitos, espacios y caracteres propios de un teléfono
   const sanitized = phone.replace(/[^\d\s+()-]/g, "");
   return escapeHtml(sanitized);
 }
@@ -111,16 +111,16 @@ Aplicamos la sanitización en dos puntos clave:
 Ambos renderizan la entrada del usuario en emails HTML que se envían a nuestro administrador.
 
 ```typescript
-// In our contact action
+// En nuestra acción de contacto
 const safeName = escapeHtml(name);
 const safeEmail = sanitizeEmail(email);
 const safePhone = sanitizePhone(phone);
 const safeMessage = escapeHtml(message);
 
-// Use sanitized values in the email template
+// Usar los valores sanitizados en la plantilla del correo
 await resend.emails.send({
-  subject: `New message from ${safeName}`,
-  html: `<p>Message: ${safeMessage}</p>`
+  subject: `Nuevo mensaje de ${safeName}`,
+  html: `<p>Mensaje: ${safeMessage}</p>`
 });
 ```
 
@@ -131,20 +131,20 @@ await resend.emails.send({
 ### 1. Sanitizar demasiado tarde
 
 ```typescript
-// Wrong: sanitizing after storing
+// Incorrecto: sanitizar después de guardar
 const user = await prisma.user.create({ data: { name: userInput } });
-const safeName = escapeHtml(user.name); // Too late if already rendered elsewhere
+const safeName = escapeHtml(user.name); // Demasiado tarde si ya se renderizó en otro lugar
 ```
 
 ### 2. Olvidar los casos límite
 
 ```typescript
-// Wrong: not handling null/undefined
+// Incorrecto: no manejar null/undefined
 function escapeHtml(text: string): string {
-  return text.replace(/</g, "&lt;"); // Crashes if text is null
+  return text.replace(/</g, "&lt;"); // Falla si text es null
 }
 
-// Correct: handle edge cases
+// Correcto: manejar los casos límite
 function escapeHtml(text: string | null | undefined): string {
   if (!text) return "";
   // ...

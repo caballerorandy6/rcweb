@@ -520,6 +520,10 @@ model GoogleReview {
   isAnonymous      Boolean   @default(false)
   rating           Int // 1-5
   comment          String? // null = reseña solo con estrellas
+  commentLanguage  String? // idioma en que se escribió (ISO 639-1)
+  commentEn        String?
+  commentEs        String?
+  translatedFrom   String? // `comment` que se tradujo: si cambia, se traduce otra vez
   replyComment     String?
   replyTime        DateTime?
   createTime       DateTime

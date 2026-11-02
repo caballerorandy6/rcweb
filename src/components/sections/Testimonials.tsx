@@ -5,7 +5,7 @@ import StarRating from "../ui/StarRating";
 import { getLocale, getTranslations } from "next-intl/server";
 import { GOOGLE_REVIEW_URL } from "@/lib/data";
 import { getLocalizedCatalog } from "@/lib/catalog";
-import { routing } from "@/i18n/routing";
+import { routing, type Locale } from "@/i18n/routing";
 import { getPublicGoogleReviews } from "@/lib/googleReviews/queries";
 import { formatDate } from "@/lib/utils";
 
@@ -37,6 +37,8 @@ interface Card {
   meta: string | null;
   rating: number;
   content: string;
+  /** La reseña se muestra traducida por el sync, no como se escribió */
+  autoTranslated?: boolean;
 }
 
 /**
@@ -62,7 +64,8 @@ const Testimonials = async () => {
         author: review.author,
         meta: formatDate(review.createTime, { locale }),
         rating: review.rating,
-        content: review.text,
+        content: review.translation?.[locale as Locale] ?? review.text,
+        autoTranslated: Boolean(review.translation && review.translation.language !== locale),
       }))
     : testimonials.map((testimonial) => ({
         key: testimonial.author,
@@ -119,6 +122,9 @@ const Testimonials = async () => {
                 <p className="text-sm sm:text-base font-inter text-white/80 leading-relaxed line-clamp-6">
                   &quot;{card.content}&quot;
                 </p>
+                {card.autoTranslated && (
+                  <p className="mt-2 text-xs font-inter text-white/40">{t("translatedAuto")}</p>
+                )}
               </blockquote>
 
               <div className="mt-8 flex items-center gap-4">

@@ -46,7 +46,7 @@ describe("getPublicGoogleReviews", () => {
       totalReviewCount: 9,
       syncedAt,
       reviews: [
-        { id: "r1", author: "Ana", rating: 5, text: "Great job", createTime: new Date("2026-02-12T00:00:00Z") },
+        { id: "r1", author: "Ana", rating: 5, text: "Great job", translation: null, createTime: new Date("2026-02-12T00:00:00Z") },
       ],
     });
     expect(prisma.googleReview.findMany.mock.calls[0][0]).toMatchObject({

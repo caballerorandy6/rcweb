@@ -37,7 +37,7 @@ El backend ofrece una API robusta y segura para todas las operaciones con vehíc
 
 #### **1. API RESTful con autenticación JWT**
 ```javascript
-// Protected routes with role-based access
+// Rutas protegidas con acceso basado en roles
 router.get('/vehicles', authenticateToken, getVehicles);
 router.post('/vehicles', authenticateToken, authorizeRole('admin'), createVehicle);
 router.put('/vehicles/:id', authenticateToken, authorizeRole('admin'), updateVehicle);
@@ -51,7 +51,7 @@ router.delete('/vehicles/:id', authenticateToken, authorizeRole('admin'), delete
 
 #### **2. Borrado lógico (soft delete) para la trazabilidad**
 ```javascript
-// Instead of permanently deleting, mark as deleted
+// En lugar de eliminar permanentemente, marcar como eliminado
 async function softDeleteVehicle(id) {
   return await prisma.vehicle.update({
     where: { id },
@@ -71,9 +71,9 @@ async function softDeleteVehicle(id) {
 
 #### **3. Validación de esquemas con Zod**
 ```typescript
-// Type-safe validation for all inputs
+// Validación con tipos seguros para todas las entradas
 const VehicleSchema = z.object({
-  name: z.string().min(2, 'Name too short'),
+  name: z.string().min(2, 'Nombre demasiado corto'),
   type: z.enum(['sedan', 'suv', 'luxury', 'van']),
   capacity: z.number().min(1).max(50),
   pricePerHour: z.number().positive(),
@@ -90,11 +90,11 @@ const VehicleSchema = z.object({
 
 #### **4. Capa de middleware seguro**
 ```javascript
-// Security layers
-app.use(helmet()); // Security headers
-app.use(cors(corsOptions)); // CORS protection
-app.use(express.json({ limit: '10mb' })); // JSON parsing
-app.use(rateLimiter); // Prevent abuse
+// Capas de seguridad
+app.use(helmet()); // Encabezados de seguridad
+app.use(cors(corsOptions)); // Protección CORS
+app.use(express.json({ limit: '10mb' })); // Parseo de JSON
+app.use(rateLimiter); // Evitar el abuso
 ```
 
 ---
@@ -105,9 +105,9 @@ El frontend ofrece un panel de administración moderno y responsivo para los adm
 
 #### **1. Server Components para el rendimiento**
 ```typescript
-// Server-side rendering for initial page load
+// Renderizado en el servidor para la carga inicial de la página
 export default async function VehiclesPage() {
-  const vehicles = await fetchVehicles(); // Fetched on server
+  const vehicles = await fetchVehicles(); // Obtenidos en el servidor
 
   return (
     <div>
@@ -125,13 +125,13 @@ export default async function VehiclesPage() {
 
 #### **2. Validación de formularios en tiempo real**
 ```typescript
-// React Hook Form + Zod for instant feedback
+// React Hook Form + Zod para retroalimentación instantánea
 const form = useForm<VehicleFormData>({
   resolver: zodResolver(VehicleSchema),
-  mode: 'onChange', // Validate on every change
+  mode: 'onChange', // Validar en cada cambio
 });
 
-// Display errors immediately
+// Mostrar los errores de inmediato
 {form.formState.errors.name && (
   <span className="text-red-500">
     {form.formState.errors.name.message}
@@ -147,17 +147,17 @@ const form = useForm<VehicleFormData>({
 
 #### **3. Sistema de modales con estado compartido**
 ```typescript
-// Centralized modal management
+// Manejo centralizado de modales
 const [isOpen, setIsOpen] = useState(false);
 const [selectedVehicle, setSelectedVehicle] = useState<Vehicle | null>(null);
 
-// Edit modal
+// Modal de edición
 <Dialog open={isOpen} onOpenChange={setIsOpen}>
   <VehicleForm
     vehicle={selectedVehicle}
     onSuccess={() => {
       setIsOpen(false);
-      refreshVehicles(); // Update list immediately
+      refreshVehicles(); // Actualizar la lista de inmediato
     }}
   />
 </Dialog>
@@ -171,13 +171,13 @@ const [selectedVehicle, setSelectedVehicle] = useState<Vehicle | null>(null);
 
 #### **4. Gestión de imágenes con Vercel Blob**
 ```typescript
-// Upload images to Vercel Blob Storage
+// Subir imágenes a Vercel Blob Storage
 async function uploadVehicleImage(file: File) {
   const blob = await put(`vehicles/${file.name}`, file, {
     access: 'public',
   });
 
-  return blob.url; // Returns CDN URL
+  return blob.url; // Devuelve la URL de la CDN
 }
 ```
 
@@ -189,18 +189,18 @@ async function uploadVehicleImage(file: File) {
 
 #### **5. Actualizaciones optimistas de la interfaz**
 ```typescript
-// Update UI immediately, rollback if failed
+// Actualizar la UI de inmediato, revertir si falla
 async function deleteVehicle(id: string) {
-  // Remove from UI immediately
+  // Quitar de la UI de inmediato
   setVehicles(vehicles.filter(v => v.id !== id));
 
   try {
     await api.delete(`/vehicles/${id}`);
-    toast.success('Vehicle deleted');
+    toast.success('Vehículo eliminado');
   } catch (error) {
-    // Rollback on error
+    // Revertir si hay error
     setVehicles(originalVehicles);
-    toast.error('Delete failed');
+    toast.error('No se pudo eliminar');
   }
 }
 ```

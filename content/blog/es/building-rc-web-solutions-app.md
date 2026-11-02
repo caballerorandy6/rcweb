@@ -104,12 +104,12 @@ Estas son todas las tecnologías detrás de rcweb.dev y por qué elegí cada una
 #### **Next.js 14 (App Router)**
 ```javascript
 // Framework: Next.js 14
-Why I chose it:
-✅ Server-side rendering (SSR) = better SEO
-✅ Static site generation (SSG) = lightning-fast pages
-✅ API routes = backend and frontend in one project
-✅ Image optimization = automatic WebP conversion
-✅ File-based routing = intuitive structure
+Por qué lo elegí:
+✅ Server-side rendering (SSR) = mejor SEO
+✅ Static site generation (SSG) = páginas ultrarrápidas
+✅ API routes = backend y frontend en un solo proyecto
+✅ Image optimization = conversión automática a WebP
+✅ File-based routing = estructura intuitiva
 ```
 
 **Alternativa considerada:** React sin framework
@@ -117,7 +117,7 @@ Why I chose it:
 
 #### **TypeScript**
 ```typescript
-// Type safety across the entire application
+// Seguridad de tipos en toda la aplicación
 interface ContactFormData {
   name: string;
   email: string;
@@ -136,7 +136,7 @@ interface ContactFormData {
 #### **Tailwind CSS**
 ```jsx
 <button className="px-6 py-3 bg-gold text-black rounded-lg hover:bg-gold/90">
-  Contact Us
+  Contáctanos
 </button>
 ```
 
@@ -156,7 +156,7 @@ interface ContactFormData {
   animate={{ opacity: 1, y: 0 }}
   transition={{ duration: 0.5 }}
 >
-  Content here
+  Contenido aquí
 </motion.div>
 ```
 
@@ -172,7 +172,7 @@ interface ContactFormData {
 
 #### **Base de datos PostgreSQL**
 ```sql
--- Relational database for structured data
+-- Base de datos relacional para datos estructurados
 CREATE TABLE contacts (
   id SERIAL PRIMARY KEY,
   name VARCHAR(255),
@@ -196,7 +196,7 @@ CREATE TABLE contacts (
 
 #### **Prisma ORM**
 ```typescript
-// Type-safe database queries
+// Consultas a la base de datos con tipos seguros
 const contacts = await prisma.contact.findMany({
   where: {
     marketingConsent: true,
@@ -243,12 +243,12 @@ export async function createContactAction(data: FormData) {
 
 #### **Stripe (pagos)**
 ```typescript
-// Secure payment processing
+// Procesamiento seguro de pagos
 const checkout = await stripe.checkout.sessions.create({
   line_items: [{
     price_data: {
       currency: 'usd',
-      product_data: { name: 'Web Development Services' },
+      product_data: { name: 'Servicios de desarrollo web' },
       unit_amount: 149900, // $1,499.00
     },
     quantity: 1,
@@ -267,11 +267,11 @@ const checkout = await stripe.checkout.sessions.create({
 
 #### **Resend (servicio de email)**
 ```typescript
-// Transactional emails + newsletter campaigns
+// Correos transaccionales + campañas de newsletter
 await resend.emails.send({
   from: 'RC Web <no-reply@rcweb.dev>',
   to: ['customer@example.com'],
-  subject: 'Thank you for contacting us!',
+  subject: '¡Gracias por contactarnos!',
   html: emailTemplate,
 });
 ```
@@ -290,9 +290,9 @@ await resend.emails.send({
 
 #### **Twilio (SMS marketing)**
 ```typescript
-// SMS campaigns to contacts who opted in
+// Campañas de SMS a los contactos que dieron su consentimiento
 await twilio.messages.create({
-  body: 'New on the RC Web blog: how much a website costs in Houston in 2026.',
+  body: 'Nuevo en el blog de RC Web: cuánto cuesta un sitio web en Houston en 2026.',
   from: '+1234567890',
   to: customer.phone,
 });
@@ -305,7 +305,7 @@ await twilio.messages.create({
 
 #### **Google Analytics 4 + Facebook Pixel**
 ```typescript
-// Track conversions and user behavior
+// Medir conversiones y comportamiento de los usuarios
 gtag('event', 'conversion', {
   send_to: 'AW-XXXXXXX/XXXXXX',
   value: 1499.00,
@@ -324,9 +324,9 @@ gtag('event', 'conversion', {
 
 #### **Vercel (hosting y despliegue)**
 ```bash
-# Automatic deployments on every git push
+# Despliegues automáticos con cada git push
 git push origin main
-# → Vercel automatically builds and deploys
+# → Vercel compila y despliega automáticamente
 ```
 
 **Por qué Vercel:**
@@ -338,7 +338,7 @@ git push origin main
 
 #### **Neon (hosting de PostgreSQL)**
 ```javascript
-// Serverless PostgreSQL database
+// Base de datos PostgreSQL serverless
 DATABASE_URL="postgresql://user:pass@ep-xxx.us-east-2.aws.neon.tech/rcweb"
 ```
 
@@ -350,7 +350,7 @@ DATABASE_URL="postgresql://user:pass@ep-xxx.us-east-2.aws.neon.tech/rcweb"
 
 #### **Git y GitHub**
 ```bash
-# Version control and collaboration
+# Control de versiones y colaboración
 git commit -m "Add newsletter campaign system"
 git push origin main
 ```
@@ -372,13 +372,13 @@ git push origin main
 **La solución:** construí un sistema propio de procesamiento por lotes
 
 ```typescript
-// Send 100 emails/day automatically
+// Enviar 100 correos al día automáticamente
 async function sendBatchCampaign(campaignId: string) {
   const campaign = await prisma.campaign.findUnique({
     where: { id: campaignId },
   });
 
-  // Get next 100 contacts who haven't received the email
+  // Obtener los siguientes 100 contactos que no han recibido el correo
   const contacts = await prisma.contact.findMany({
     where: {
       marketingConsent: true,
@@ -389,7 +389,7 @@ async function sendBatchCampaign(campaignId: string) {
     take: 100,
   });
 
-  // Send emails
+  // Enviar los correos
   for (const contact of contacts) {
     await resend.emails.send({
       from: 'RC Web <no-reply@rcweb.dev>',
@@ -399,7 +399,7 @@ async function sendBatchCampaign(campaignId: string) {
     });
   }
 
-  // Update campaign status
+  // Actualizar el estado de la campaña
   await prisma.campaign.update({
     where: { id: campaignId },
     data: {
@@ -420,7 +420,7 @@ async function sendBatchCampaign(campaignId: string) {
 ### **2. Procesamiento de pagos con Stripe**
 
 ```typescript
-// Create checkout session
+// Crear la sesión de Checkout
 export async function createStripeCheckoutAction(
   packageId: string,
   amount: number,
@@ -432,10 +432,10 @@ export async function createStripeCheckoutAction(
       price_data: {
         currency: 'usd',
         product_data: {
-          name: `${packageId} Package`,
-          description: 'Professional web development services',
+          name: `Paquete ${packageId}`,
+          description: 'Servicios profesionales de desarrollo web',
         },
-        unit_amount: amount * 100, // Convert to cents
+        unit_amount: amount * 100, // Convertir a centavos
       },
       quantity: 1,
     }],
@@ -459,24 +459,24 @@ export async function createStripeCheckoutAction(
 **Protección contra bots en varias capas:**
 
 ```typescript
-// Layer 1: Honeypot field (invisible to humans, visible to bots)
+// Capa 1: campo honeypot (invisible para personas, visible para bots)
 <input
   type="text"
   name="website"
   style={{ position: 'absolute', left: '-9999px' }}
 />
 
-// Layer 2: Minimum time check (humans take >3 seconds)
+// Capa 2: verificación de tiempo mínimo (las personas tardan >3 segundos)
 const timeSpent = Date.now() - formMountTime;
 if (timeSpent < 3000) {
-  return { error: 'Form submitted too quickly' };
+  return { error: 'Formulario enviado demasiado rápido' };
 }
 
-// Layer 3: reCAPTCHA v3 (invisible verification)
+// Capa 3: reCAPTCHA v3 (verificación invisible)
 const token = await grecaptcha.execute(SITE_KEY, { action: 'submit' });
 const score = await verifyRecaptchaToken(token);
 if (score < 0.5) {
-  return { error: 'Verification failed' };
+  return { error: 'La verificación falló' };
 }
 ```
 
@@ -485,14 +485,14 @@ if (score < 0.5) {
 ### **4. Consentimiento de cookies (conforme a GDPR/CCPA)**
 
 ```typescript
-// Track essential vs. optional cookies
+// Controlar cookies esenciales vs. opcionales
 const [consent, setConsent] = useState({
-  essential: true,    // Required (can't be disabled)
-  analytics: false,   // Optional (GA4)
-  marketing: false,   // Optional (Facebook Pixel, ads)
+  essential: true,    // Obligatorias (no se pueden desactivar)
+  analytics: false,   // Opcionales (GA4)
+  marketing: false,   // Opcionales (Facebook Pixel, anuncios)
 });
 
-// Only load scripts if user consents
+// Cargar los scripts solo si el usuario da su consentimiento
 {consent.analytics && <GoogleAnalytics />}
 {consent.marketing && <FacebookPixel />}
 ```
@@ -506,14 +506,14 @@ const [consent, setConsent] = useState({
 ### **5. Sistema de blog con Markdown**
 
 ```typescript
-// No database needed for blog posts!
+// ¡Los posts del blog no necesitan base de datos!
 // content/blog/my-post.md
 ---
-title: "My Blog Post"
+title: "Mi post del blog"
 date: "2025-01-22"
 ---
 
-# Content here in Markdown
+# Contenido aquí en Markdown
 ```
 
 **Por qué Markdown:**
@@ -531,15 +531,15 @@ date: "2025-01-22"
 
 ```
 src/
-├── app/                    # Next.js app router
-│   ├── (routes)/          # Page routes
-│   ├── api/               # API routes
-│   ├── components/        # Shared components
+├── app/                    # App Router de Next.js
+│   ├── (routes)/          # Rutas de páginas
+│   ├── api/               # Rutas de API
+│   ├── components/        # Componentes compartidos
 │   └── actions/           # Server actions
-├── lib/                   # Utility functions
-├── hooks/                 # Custom React hooks
-├── config/                # Configuration files
-└── types/                 # TypeScript types
+├── lib/                   # Funciones utilitarias
+├── hooks/                 # Hooks personalizados de React
+├── config/                # Archivos de configuración
+└── types/                 # Tipos de TypeScript
 ```
 
 ### **Patrones de diseño utilizados**
@@ -557,42 +557,42 @@ src/
 
 ### **1. Optimización de imágenes**
 ```jsx
-// Automatic WebP conversion, lazy loading, responsive sizes
+// Conversión automática a WebP, lazy loading, tamaños responsivos
 <Image
   src="/hero.jpg"
   width={1920}
   height={1080}
   alt="Hero"
-  priority // Load immediately (above fold)
+  priority // Cargar de inmediato (above the fold)
 />
 ```
 
 ### **2. División de código (code splitting)**
 ```typescript
-// Dynamic imports for heavy components
+// Imports dinámicos para componentes pesados
 const HeavyComponent = dynamic(() => import('./HeavyComponent'), {
   loading: () => <Skeleton />,
-  ssr: false, // Don't render on server
+  ssr: false, // No renderizar en el servidor
 });
 ```
 
 ### **3. Optimización de fuentes**
 ```typescript
-// Preload critical fonts
+// Precargar las fuentes críticas
 import { Inter, Iceland } from 'next/font/google';
 
 const inter = Inter({
   subsets: ['latin'],
-  display: 'swap', // Prevent invisible text
+  display: 'swap', // Evitar el texto invisible
 });
 ```
 
 ### **4. Estrategia de caché**
 ```typescript
-// Static pages cached at CDN edge
-export const revalidate = 3600; // Revalidate every hour
+// Páginas estáticas en caché en el edge de la CDN
+export const revalidate = 3600; // Revalidar cada hora
 
-// Dynamic data cached in-memory
+// Datos dinámicos en caché en memoria
 const cachedData = unstable_cache(
   async () => await fetchExpensiveData(),
   ['cache-key'],
@@ -612,36 +612,36 @@ const cachedData = unstable_cache(
 
 ### **1. Validación de entradas**
 ```typescript
-// Zod schema validation
+// Validación con esquemas de Zod
 const FormSchema = z.object({
-  email: z.string().email('Invalid email'),
-  phone: z.string().regex(/^\+?[1-9]\d{1,14}$/, 'Invalid phone'),
-  message: z.string().min(10, 'Message too short').max(1000, 'Message too long'),
+  email: z.string().email('Correo inválido'),
+  phone: z.string().regex(/^\+?[1-9]\d{1,14}$/, 'Teléfono inválido'),
+  message: z.string().min(10, 'Mensaje demasiado corto').max(1000, 'Mensaje demasiado largo'),
 });
 ```
 
 ### **2. Prevención de inyección SQL**
 ```typescript
-// Prisma uses parameterized queries automatically
-// ✅ SAFE:
+// Prisma usa consultas parametrizadas automáticamente
+// ✅ SEGURO:
 await prisma.contact.findMany({ where: { email } });
 
-// ❌ NEVER DO THIS:
+// ❌ NUNCA HAGAS ESTO:
 await prisma.$executeRaw(`SELECT * FROM contacts WHERE email = '${email}'`);
 ```
 
 ### **3. Limitación de peticiones (rate limiting)**
 ```typescript
-// Prevent abuse of API endpoints
+// Evitar el abuso de los endpoints de la API
 const rateLimit = new RateLimiter({
-  interval: 60 * 1000, // 1 minute
-  max: 10, // 10 requests per minute
+  interval: 60 * 1000, // 1 minuto
+  max: 10, // 10 solicitudes por minuto
 });
 ```
 
 ### **4. Variables de entorno**
 ```bash
-# Never commit secrets to Git
+# Nunca subas secretos a Git
 DATABASE_URL="postgresql://..."
 STRIPE_SECRET_KEY="sk_live_..."
 RESEND_API_KEY="re_..."

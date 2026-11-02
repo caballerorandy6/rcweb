@@ -1,5 +1,6 @@
 {
   "Common": {
+    "notifications": "Notificaciones",
     "skipToContent": "Saltar al contenido principal",
     "languageSwitch": {
       "label": "Idioma",
@@ -330,7 +331,8 @@
       "onGoogle": "en Google",
       "reviews": "{count, plural, one {# reseña} other {# reseñas}}",
       "writeReview": "Escribe una reseña en Google",
-      "translated": "Traducido del inglés"
+      "translated": "Traducido del inglés",
+      "translatedAuto": "Traducida automáticamente"
     },
     "pricing": {
       "heading": "Precios claros y transparentes",
@@ -487,6 +489,8 @@
       "description": "Lee artículos sobre desarrollo web, SEO, comercio electrónico y marketing digital. Aprende a hacer crecer tu negocio en línea con RC Web Solutions."
     },
     "post": {
+      "taskDone": "Tarea completada",
+      "taskPending": "Tarea pendiente",
       "backToBlog": "Volver al blog",
       "updated": "Actualizado el <date></date>",
       "enjoying": "¿Te está gustando este artículo?",
@@ -558,7 +562,7 @@
         },
         "msed": {
           "title": "Maestría en Educación",
-          "description": "Master of Science in Education",
+          "description": "Maestría en Ciencias de la Educación",
           "date": "Mayo 2021 - Abr. 2024"
         },
         "bs": {
@@ -584,7 +588,7 @@
         },
         "msed": {
           "name": "Maestría en Educación",
-          "description": "Master of Science in Education."
+          "description": "Maestría en Ciencias de la Educación."
         },
         "advancedReact": {
           "name": "Advanced React",
@@ -1692,6 +1696,12 @@
     "invalidEmail": "Escribe un correo electrónico válido"
   },
   "Actions": {
+    "contact": {
+      "verification": "No se pudo verificar el envío. Recarga la página e inténtalo de nuevo.",
+      "tooFast": "Tómate un momento para revisar tu mensaje.",
+      "invalid": "Revisa el formulario e inténtalo de nuevo.",
+      "failed": "No se pudo enviar el mensaje. Inténtalo de nuevo o llámanos."
+    },
     "tooManyRequests": "Demasiadas solicitudes. Inténtalo de nuevo más tarde.",
     "quote": {
       "invalid": "Este enlace de presupuesto no es válido",
