@@ -33,7 +33,7 @@ Necesitábamos una solución que:
 Antes de Tailwind teníamos múltiples variantes de botón repartidas por distintos archivos CSS. Ahora tenemos un sistema unificado:
 
 ```tsx
-// Primary button with gradient and shine effect
+// Botón principal con degradado y efecto de brillo
 <button
   className="relative px-6 py-3 text-lg font-semibold text-black 
   bg-gradient-to-r from-gold via-yellow-200 to-gold 
@@ -45,7 +45,7 @@ Antes de Tailwind teníamos múltiples variantes de botón repartidas por distin
     className="absolute inset-0 bg-white/20 translate-x-[-100%] 
     group-hover:translate-x-[100%] transition-transform duration-700 skew-x-12"
   ></div>
-  <span className="relative">Get Started</span>
+  <span className="relative">Comenzar</span>
 </button>
 ```
 
@@ -66,7 +66,7 @@ Las utilidades responsive de Tailwind hicieron que la optimización para móvile
 
 ```tsx
 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-  {/* Content automatically adapts to screen size */}
+  {/* El contenido se adapta automáticamente al tamaño de pantalla */}
 </div>
 ```
 

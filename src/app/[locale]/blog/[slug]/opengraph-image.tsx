@@ -6,7 +6,7 @@ import { formatDate } from "@/lib/utils";
 import { loadOgFonts } from "@/lib/og/fonts";
 import { BlogPostOgImage } from "@/lib/og/BlogPostOgImage";
 
-export const alt = `Article on the ${siteConfig.siteNameShort} blog`;
+export const alt = `${siteConfig.siteNameShort} blog`;
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 

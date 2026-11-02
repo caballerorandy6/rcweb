@@ -257,7 +257,7 @@ export default async function BlogPost({ post }: BlogPostProps) {
                             checked={checked}
                             disabled={disabled}
                             readOnly
-                            aria-label={checked ? "Completed task" : "Incomplete task"}
+                            aria-label={t(checked ? "taskDone" : "taskPending")}
                             className="mr-2 accent-gold"
                           />
                         );

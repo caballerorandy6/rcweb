@@ -9,6 +9,8 @@ export interface PublicGoogleReview {
   author: string;
   rating: number;
   text: string;
+  /** Idioma original y texto por idioma; null hasta que se traduzca */
+  translation: { language: string; en: string; es: string } | null;
   createTime: Date;
 }
 
@@ -34,7 +36,17 @@ export const getPublicGoogleReviews = cache(async (): Promise<PublicGoogleReview
         where: { hidden: false, comment: { not: null } },
         orderBy: { createTime: "desc" },
         take: GOOGLE_REVIEWS_HOME_LIMIT,
-        select: { id: true, reviewerName: true, rating: true, comment: true, createTime: true },
+        select: {
+          id: true,
+          reviewerName: true,
+          rating: true,
+          comment: true,
+          commentLanguage: true,
+          commentEn: true,
+          commentEs: true,
+          translatedFrom: true,
+          createTime: true,
+        },
       }),
     ]);
     if (!summary || summary.totalReviewCount === 0) return null;
@@ -48,6 +60,13 @@ export const getPublicGoogleReviews = cache(async (): Promise<PublicGoogleReview
         author: review.reviewerName,
         rating: review.rating,
         text: reviewDisplayText(review.comment ?? ""),
+        translation:
+          review.translatedFrom === review.comment &&
+          review.commentLanguage &&
+          review.commentEn &&
+          review.commentEs
+            ? { language: review.commentLanguage, en: review.commentEn, es: review.commentEs }
+            : null,
         createTime: review.createTime,
       })),
     };

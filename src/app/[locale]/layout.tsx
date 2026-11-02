@@ -131,7 +131,7 @@ export default async function RootLayout({
           <UTMTracker />
         </Suspense>
 
-        <Toaster position="top-center" richColors closeButton />
+        <Toaster position="top-center" richColors closeButton containerAriaLabel={t("notifications")} />
         {/* Client components only get the namespaces they use (see clientMessages) */}
         <NextIntlClientProvider messages={pickClientMessages(messages)}>
           <ConditionalLayout header={<Header />} footer={<Footer />}>

@@ -58,7 +58,7 @@ La sección hero usaba originalmente un video de fondo en bucle. Aunque visualme
 
 **Problema:**
 ```tsx
-// Before: Video element competing with LCP
+// Antes: elemento de video compitiendo con el LCP
 <video autoPlay loop muted playsInline preload="none">
   <source src="/hero.webm" type="video/webm" />
 </video>
@@ -66,7 +66,7 @@ La sección hero usaba originalmente un video de fondo en bucle. Aunque visualme
 
 **Solución:**
 ```tsx
-// After: Optimized image with priority loading
+// Después: imagen optimizada con carga prioritaria
 import Image from "next/image";
 import heroImage from "../../../public/hero.webp";
 
@@ -91,7 +91,7 @@ reCAPTCHA v3 carga un paquete de JavaScript considerable (~150KB). Cargarlo de i
 
 **Problema:**
 ```tsx
-// Before: reCAPTCHA loads on page load
+// Antes: reCAPTCHA se carga al cargar la página
 <Script
   src={`https://www.google.com/recaptcha/api.js?render=${SITE_KEY}`}
   strategy="afterInteractive"
@@ -100,14 +100,14 @@ reCAPTCHA v3 carga un paquete de JavaScript considerable (~150KB). Cargarlo de i
 
 **Solución:**
 ```tsx
-// After: reCAPTCHA loads only when user interacts with form
+// Después: reCAPTCHA se carga solo cuando el usuario interactúa con el formulario
 const [loadRecaptcha, setLoadRecaptcha] = useState(false);
 
 const handleFormInteraction = useCallback(() => {
   if (!loadRecaptcha) setLoadRecaptcha(true);
 }, [loadRecaptcha]);
 
-// Only render Script when needed
+// Renderizar Script solo cuando haga falta
 {loadRecaptcha && (
   <Script
     src={`https://www.google.com/recaptcha/api.js?render=${SITE_KEY}`}
@@ -115,7 +115,7 @@ const handleFormInteraction = useCallback(() => {
   />
 )}
 
-// Trigger on form focus
+// Activar al enfocar el formulario
 <form onFocus={handleFormInteraction}>
 ```
 
@@ -129,7 +129,7 @@ Las animaciones de Framer Motion que empiezan con `opacity: 0` bloquean el LCP, 
 
 **Problema:**
 ```tsx
-// Before: h1 wrapped in motion.div with opacity: 0
+// Antes: h1 envuelto en motion.div con opacity: 0
 <motion.div
   initial={{ opacity: 0 }}
   animate={{ opacity: 1 }}
@@ -140,12 +140,12 @@ Las animaciones de Framer Motion que empiezan con `opacity: 0` bloquean el LCP, 
 
 **Solución:**
 ```tsx
-// After: h1 outside motion.div, uses CSS animation
+// Después: h1 fuera de motion.div, usa animación CSS
 <h1 className="animate-hero-title">
   RC Web Solutions
 </h1>
 
-// CSS animation that doesn't affect LCP
+// Animación CSS que no afecta el LCP
 @keyframes hero-title {
   from {
     transform: scale(0.96) translateY(12px);
@@ -168,13 +168,13 @@ Los banners de consentimiento de cookies que aparecen durante los primeros 2.5 s
 
 **Problema:**
 ```tsx
-// Before: Banner appears after 1 second
+// Antes: el banner aparece después de 1 segundo
 setTimeout(() => setIsVisible(true), 1000);
 ```
 
 **Solución:**
 ```tsx
-// After: Banner appears after 5 seconds (past LCP window)
+// Después: el banner aparece después de 5 segundos (pasada la ventana del LCP)
 setTimeout(() => setIsVisible(true), 5000);
 ```
 
@@ -276,10 +276,10 @@ Los scripts de analítica no necesitan cargarse de inmediato.
 Usar `filter: blur()` en las animaciones disparó el TBT de 70ms a 240ms:
 
 ```css
-/* Don't do this on LCP elements */
+/* No hagas esto en elementos LCP */
 @keyframes hero-title {
   from {
-    filter: blur(3px); /* Expensive! */
+    filter: blur(3px); /* ¡Costoso! */
   }
 }
 ```
@@ -291,7 +291,7 @@ Usar `filter: blur()` en las animaciones disparó el TBT de 70ms a 240ms:
 Cualquier animación que empiece con `opacity: 0` bloqueará el LCP:
 
 ```tsx
-// This blocks LCP
+// Esto bloquea el LCP
 initial={{ opacity: 0 }}
 ```
 

@@ -20,6 +20,16 @@ describe("sitemap", () => {
     });
   });
 
+  it("gives each service page its own slug in each language", () => {
+    const spanish = entries.find((entry) => entry.url === `${siteConfig.baseUrl}/es/servicios/diseno-web-houston`);
+    expect(spanish?.alternates?.languages).toEqual({
+      en: `${siteConfig.baseUrl}/services/web-design-houston`,
+      es: `${siteConfig.baseUrl}/es/servicios/diseno-web-houston`,
+      "x-default": `${siteConfig.baseUrl}/services/web-design-houston`,
+    });
+    expect(urls).not.toContain(`${siteConfig.baseUrl}/es/servicios/web-design-houston`);
+  });
+
   it("adds a Spanish post only when its translation exists", () => {
     for (const post of getAllPosts()) {
       const english = `${siteConfig.baseUrl}/blog/${post.slug}`;

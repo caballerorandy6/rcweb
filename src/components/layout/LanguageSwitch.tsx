@@ -2,9 +2,10 @@
 
 import clsx from "clsx";
 import { useLocale, useTranslations } from "next-intl";
-import { useParams } from "next/navigation";
+import { useParams, useSearchParams } from "next/navigation";
 import { Link, usePathname } from "@/i18n/navigation";
 import { routing, type Locale } from "@/i18n/routing";
+import { translateServiceSlug } from "@/i18n/serviceSlugs";
 
 type LanguageSwitchProps = {
   className?: string;
@@ -14,7 +15,8 @@ type LanguageSwitchProps = {
 
 /**
  * The EN | ES toggle. Links to the same page in the other language, with its
- * translated slug (`/about` ↔ `/es/sobre-mi`); the URL alone carries the
+ * translated slug (`/about` ↔ `/es/sobre-mi`, also for each service) and its
+ * query string; the URL alone carries the
  * choice, so there is no cookie and nobody is redirected automatically.
  */
 export default function LanguageSwitch({ className, onNavigate }: LanguageSwitchProps) {
@@ -22,6 +24,8 @@ export default function LanguageSwitch({ className, onNavigate }: LanguageSwitch
   const locale = useLocale();
   const pathname = usePathname();
   const params = useParams();
+  // Links in emails carry their token or session in the query: keep it
+  const query = Object.fromEntries(useSearchParams());
 
   return (
     <nav
@@ -50,7 +54,14 @@ export default function LanguageSwitch({ className, onNavigate }: LanguageSwitch
             // The current route's params always match its pathname template,
             // so the pair is valid by construction.
             // @ts-expect-error -- TypeScript validates params per pathname
-            href={{ pathname, params }}
+            href={{
+              pathname,
+              query,
+              params:
+                pathname === "/services/[slug]"
+                  ? { ...params, slug: translateServiceSlug(String(params.slug), target) }
+                  : params,
+            }}
             locale={target}
             lang={target}
             aria-label={t(target)}

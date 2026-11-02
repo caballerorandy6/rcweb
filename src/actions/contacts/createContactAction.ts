@@ -1,11 +1,11 @@
 "use server";
 
-import { getLocale } from "next-intl/server";
+import { getLocale, getMessages, getTranslations } from "next-intl/server";
 import type { Locale } from "@/i18n/routing";
 import { prisma } from "@/lib/prisma";
 import { auth } from "@/lib/auth";
 import { z } from "zod";
-import { FormSchema, type FormData } from "@/lib/zod";
+import { buildFormSchema, type FormData } from "@/lib/zod";
 import { Resend } from "resend";
 import { checkAndReserveEmailQuota, releaseEmailQuota } from "@/lib/emailQuota";
 import { escapeHtml, sanitizeEmail, sanitizePhone } from "@/lib/sanitize";
@@ -46,6 +46,7 @@ export const createContactAction = async (
   const session = await auth();
   const isAdmin = session?.user?.role === "ADMIN";
   const locale = (await getLocale()) as Locale;
+  const [t, messages] = await Promise.all([getTranslations("Actions"), getMessages()]);
   const skipBotChecks = isAdmin || process.env.NODE_ENV === "development";
 
   if (!skipBotChecks) {
@@ -54,7 +55,7 @@ export const createContactAction = async (
       console.warn("🚫 Bot detected: reCAPTCHA failed");
       return {
         success: false,
-        message: "Verification failed. Please refresh the page and try again.",
+        message: t("contact.verification"),
         errors: {},
       };
     }
@@ -64,18 +65,18 @@ export const createContactAction = async (
       console.warn(`🚫 Bot detected: Form submitted too quickly (${timeSpent}ms)`);
       return {
         success: false,
-        message: "Please take a moment to review your message.",
+        message: t("contact.tooFast"),
         errors: {},
       };
     }
   }
 
-  const parsed = FormSchema.safeParse(data);
+  const parsed = buildFormSchema(messages.Forms.validation).safeParse(data);
 
   if (!parsed.success) {
     return {
       success: false,
-      message: "Validation Failed",
+      message: t("contact.invalid"),
       errors: z.flattenError(parsed.error).fieldErrors,
     };
   }
@@ -308,11 +309,9 @@ export const createContactAction = async (
     };
   } catch (error) {
     console.error("Error in createContactAction:", error);
-    const errorMessage =
-      error instanceof Error ? error.message : "Unknown error occurred";
     return {
       success: false,
-      message: `Failed to send message: ${errorMessage}`,
+      message: t("contact.failed"),
       errors: {},
     };
   }

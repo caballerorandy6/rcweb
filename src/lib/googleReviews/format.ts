@@ -5,6 +5,14 @@
  */
 const TRANSLATED = /^\s*\(Translated by Google\)\s*([\s\S]*?)\s*\(Original\)/;
 
+const ORIGINAL = /\(Original\)\s*([\s\S]*)$/;
+
+/** Lo que escribió el cliente, sin la traducción de Google. */
+export function reviewOriginalText(comment: string): string {
+  const match = TRANSLATED.test(comment) ? comment.match(ORIGINAL) : null;
+  return (match ? match[1] : comment).trim();
+}
+
 export function reviewDisplayText(comment: string): string {
   const match = comment.match(TRANSLATED);
   return (match ? match[1] : comment).trim();

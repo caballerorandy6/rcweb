@@ -1,16 +1,17 @@
 import type { MetadataRoute } from "next";
 import { siteConfig } from "@/config/site";
 import { getAllPosts } from "@/lib/blog";
-import { offers } from "@/lib/data";
+import { offers, offerSlug } from "@/lib/data";
 import { LEGAL_LAST_UPDATED } from "@/lib/company";
 import { languageAlternates, localizePathname } from "@/i18n/paths";
-import { routing, type AppPathname } from "@/i18n/routing";
+import { routing, type AppPathname, type Locale } from "@/i18n/routing";
 
 type Params = Record<string, string | number>;
+type LocalizedParams = Params | ((locale: Locale) => Params);
 
 type StaticRoute = {
   pathname: AppPathname;
-  params?: Params;
+  params?: LocalizedParams;
   /** Date of the last content change (YYYY-MM-DD). Bump it when the page changes. */
   lastModified: string;
   changeFrequency: "weekly" | "monthly";
@@ -23,8 +24,8 @@ type StaticRoute = {
  * changed every day teaches Google to ignore the field.
  */
 const STATIC_ROUTES: StaticRoute[] = [
-  { pathname: "/", lastModified: "2026-10-25", changeFrequency: "weekly", priority: 1.0 },
-  { pathname: "/about", lastModified: "2026-10-25", changeFrequency: "monthly", priority: 0.8 },
+  { pathname: "/", lastModified: "2026-11-02", changeFrequency: "weekly", priority: 1.0 },
+  { pathname: "/about", lastModified: "2026-11-02", changeFrequency: "monthly", priority: 0.8 },
   { pathname: "/blog", lastModified: "2026-10-22", changeFrequency: "weekly", priority: 0.8 },
   { pathname: "/schedule", lastModified: "2026-10-25", changeFrequency: "monthly", priority: 0.9 },
   { pathname: "/projects-portfolio", lastModified: "2026-10-25", changeFrequency: "monthly", priority: 0.8 },
@@ -37,8 +38,8 @@ const STATIC_ROUTES: StaticRoute[] = [
   { pathname: "/services", lastModified: "2026-10-25", changeFrequency: "monthly", priority: 0.9 },
   ...offers.map((offer) => ({
     pathname: "/services/[slug]" as const,
-    params: { slug: offer.slug },
-    lastModified: "2026-10-25",
+    params: (locale: Locale) => ({ slug: offerSlug(offer, locale) }),
+    lastModified: "2026-11-02",
     changeFrequency: "monthly" as const,
     priority: 0.8,
   })),
@@ -54,10 +55,10 @@ type EntryFields = Pick<MetadataRoute.Sitemap[number], "lastModified" | "changeF
  * other language and `x-default` as alternates (Google reads hreflang from
  * the sitemap as well as from `<head>`).
  */
-function localizedEntries(pathname: AppPathname, params: Params | undefined, fields: EntryFields): MetadataRoute.Sitemap {
+function localizedEntries(pathname: AppPathname, params: LocalizedParams | undefined, fields: EntryFields): MetadataRoute.Sitemap {
   const languages = languageAlternates(siteConfig.baseUrl, pathname, params);
   return routing.locales.map((locale) => ({
-    url: `${siteConfig.baseUrl}${localizePathname(pathname, locale, params)}`,
+    url: `${siteConfig.baseUrl}${localizePathname(pathname, locale, typeof params === "function" ? params(locale) : params)}`,
     alternates: { languages },
     ...fields,
   }));

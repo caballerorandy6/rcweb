@@ -70,13 +70,18 @@ describe("blog content", () => {
       }
     });
 
-    it("keeps internal links on the Spanish site and code blocks untouched", () => {
+    it("keeps internal links on the Spanish site and the shape of every code block", () => {
       for (const post of spanish) {
         const english = getPostBySlug(post.slug, "en")!;
         for (const [, href] of post.content.matchAll(/\]\((\/[^)]*)\)/g)) {
           expect(href.startsWith("/es"), `${post.slug}: ${href}`).toBe(true);
         }
-        const fences = (content: string) => content.match(/^```[\s\S]*?^```/gm) ?? [];
+        // Comments inside the code are translated, so compare language and length, not text
+        const fences = (content: string) =>
+          (content.match(/^```[\s\S]*?^```/gm) ?? []).map((block) => [
+            block.split("\n")[0],
+            block.split("\n").length,
+          ]);
         expect(fences(post.content), post.slug).toEqual(fences(english.content));
       }
     });

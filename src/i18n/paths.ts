@@ -27,18 +27,20 @@ export function localizePathname(
 
 /**
  * hreflang map for a page: one absolute URL per language plus `x-default`
- * pointing at English, the version shown when no language matches.
+ * pointing at English, the version shown when no language matches. `params`
+ * is a function for a page whose slug changes with the language.
  */
 export function languageAlternates(
   baseUrl: string,
   pathname: AppPathname,
-  params?: Params
+  params?: Params | ((locale: Locale) => Params)
 ): Record<string, string> {
+  const paramsFor = (locale: Locale) => (typeof params === "function" ? params(locale) : params);
   const entries = routing.locales.map(
-    (locale) => [locale, `${baseUrl}${localizePathname(pathname, locale, params)}`] as const
+    (locale) => [locale, `${baseUrl}${localizePathname(pathname, locale, paramsFor(locale))}`] as const
   );
   return {
     ...Object.fromEntries(entries),
-    "x-default": `${baseUrl}${localizePathname(pathname, routing.defaultLocale, params)}`,
+    "x-default": `${baseUrl}${localizePathname(pathname, routing.defaultLocale, paramsFor(routing.defaultLocale))}`,
   };
 }

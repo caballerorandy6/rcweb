@@ -14,7 +14,7 @@ const Logo = ({ className, onClick }: LogoProps) => {
         viewBox="0 0 300 100"
         xmlns="http://www.w3.org/2000/svg"
         role="img"
-        aria-label="RC Web Logo"
+        aria-label="RC Web"
         className={`${className} rounded-full p-2`}
       >
         <text
