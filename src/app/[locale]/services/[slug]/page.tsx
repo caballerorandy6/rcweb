@@ -1,8 +1,8 @@
 import Button from "@/components/ui/Button";
 import { COMPANY } from "@/lib/company";
-import type { Metadata } from "next";
+import type { Metadata, Route } from "next";
 import { Link, type Href } from "@/i18n/navigation";
-import { notFound } from "next/navigation";
+import { notFound, permanentRedirect } from "next/navigation";
 
 import { getTranslations } from "next-intl/server";
 import { JsonLdForBreadcrumb } from "@/components/seo/JsonLdForBreadcrumb";
@@ -62,7 +62,13 @@ export default async function ServicePage({ params }: Props) {
 
   if (!entry) notFound();
 
-  const [t, common, { projects }, crumbs] = await Promise.all([
+  // The EN/ES switch keeps the slug of the page it is on: send it to this language's own slug
+  const canonicalSlug = offerSlug(entry.offer, locale);
+  if (slug !== canonicalSlug) {
+    permanentRedirect(localizePathname("/services/[slug]", locale, { slug: canonicalSlug }) as Route);
+  }
+
+  const [t, common, { offers: localizedOffers, projects }, crumbs] = await Promise.all([
     getTranslations("Services.detail"),
     getTranslations("Common"),
     getLocalizedCatalog(locale),
@@ -81,8 +87,11 @@ export default async function ServicePage({ params }: Props) {
     ? { pathname: "/schedule", query: { service: offer.id } }
     : { pathname: "/", hash: "pricing" };
 
-  const relatedProjects = projects.filter((p) =>
-    service.relatedProjects.includes(p.name)
+  const relatedProjects = projects.filter(
+    (p) => p.caseStudy && service.relatedProjects.includes(p.name)
+  );
+  const relatedServices = localizedOffers.filter((o) =>
+    service.relatedServices.includes(o.id)
   );
 
   const serviceJsonLd = {
@@ -223,11 +232,9 @@ export default async function ServicePage({ params }: Props) {
 
               <div className="mx-auto max-w-4xl grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3">
                 {relatedProjects.map((project) => (
-                  <a
+                  <Link
                     key={project.name}
-                    href={project.url}
-                    target="_blank"
-                    rel="noopener noreferrer"
+                    href={project.caseStudy!}
                     className="group rounded-2xl border border-gold/20 bg-gray-900/50 p-6 lg:p-8 shadow-lg shadow-black/20 transition duration-200 hover:border-gold/50 hover:bg-gold/5"
                   >
                     <h3 className="text-2xl text-white font-iceland group-hover:text-gold transition-colors">
@@ -237,17 +244,45 @@ export default async function ServicePage({ params }: Props) {
                       {project.description}
                     </p>
                     <span className="mt-4 inline-flex text-sm font-medium text-gold group-hover:underline font-inter">
-                      {t("visitSite")} &rarr;
+                      {t("readCaseStudy")} &rarr;
                     </span>
-                  </a>
+                  </Link>
                 ))}
               </div>
             </div>
           </section>
         )}
 
-        {/* CTA */}
+        {/* Related Services */}
         <section className="py-20 sm:py-28 bg-white/2">
+          <div className="mx-auto max-w-7xl px-6 lg:px-8">
+            <div className="mx-auto max-w-2xl text-center mb-16">
+              <h2 className="text-3xl tracking-tight text-white sm:text-4xl font-iceland">
+                {t("relatedServices")}
+              </h2>
+            </div>
+
+            <div className="mx-auto max-w-4xl grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3">
+              {relatedServices.map((related) => (
+                <Link
+                  key={related.id}
+                  href={{ pathname: "/services/[slug]", params: { slug: offerSlug(related, locale) } }}
+                  className="group rounded-2xl border border-gold/20 bg-gray-900/50 p-6 lg:p-8 shadow-lg shadow-black/20 transition duration-200 hover:border-gold/50 hover:bg-gold/5"
+                >
+                  <h3 className="text-2xl text-white font-iceland group-hover:text-gold transition-colors">
+                    {related.title}
+                  </h3>
+                  <p className="mt-3 text-gray-400 font-inter leading-7 line-clamp-3">
+                    {related.summary}
+                  </p>
+                </Link>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* CTA */}
+        <section className="py-20 sm:py-28">
           <div className="mx-auto max-w-7xl px-6 lg:px-8">
             <div className="mx-auto max-w-2xl text-center">
               <h2 className="text-3xl tracking-tight text-white sm:text-4xl font-iceland">

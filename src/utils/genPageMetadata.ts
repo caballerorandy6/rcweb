@@ -70,7 +70,8 @@ export function genPageMetadata({
   const route = pathname ? localizePathname(pathname, locale, params) : (pageRoute ?? "/");
   const url = `${siteConfig.baseUrl}${route}`;
   const ogImage = ogImg || siteConfig.defaultOgImg;
-  const socialTitle = `${title} | ${siteConfig.siteName}`;
+  // A title that already carries the brand (the home page) does not repeat it
+  const socialTitle = title.includes(siteConfig.siteNameShort) ? title : `${title} | ${siteConfig.siteName}`;
 
   const shared = {
     title: socialTitle,

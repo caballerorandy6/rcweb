@@ -59,7 +59,7 @@
     "siteDescription": "Randy Caballero crea y mantiene sitios web y aplicaciones web rápidos para pequeños negocios de servicios: reservas, pagos con Stripe y SEO local incluidos. Con sede en Houston, TX, trabaja con pequeños negocios de cualquier lugar. Next.js, React, inglés y español.",
     "ogAlt": "RC Web Solutions - Servicios de desarrollo web de Randy Caballero",
     "home": {
-      "title": "Sitios web y aplicaciones web a medida para pequeños negocios | RC Web Solutions",
+      "title": "RC Web Solutions | Sitios web y aplicaciones web a medida para pequeños negocios",
       "description": "Randy Caballero crea sitios web y aplicaciones web rápidos para pequeños negocios de servicios: reservas, pagos con Stripe y SEO local incluidos. Con sede en Houston, TX, trabaja con clientes de cualquier lugar. Desde $1,000. Consulta gratis."
     }
   },
@@ -307,6 +307,7 @@
     "services": {
       "heading": "Cómo puedo ayudarte",
       "subheading": "Construyo sitios web, aplicaciones web y paneles de administración que convierten visitas en llamadas y citas",
+      "learnMore": "Saber más",
       "seePricing": "Ver precios",
       "viewAll": "Ver todos los servicios"
     },
@@ -510,20 +511,21 @@
   "About": {
     "metadata": {
       "title": "Sobre Randy Caballero - Desarrollador web full-stack",
-      "description": "Conoce a Randy Caballero, desarrollador full-stack con más de 6 años de experiencia en React, Next.js y TypeScript y más de 20 sitios en producción. Con sede en Houston, TX, atiende clientes en todo el país."
+      "description": "Conoce a Randy Caballero, desarrollador full-stack con más de 6 años de experiencia en desarrollo web, incluidos más de 4 con React y Next.js, y más de 20 sitios en producción. Con sede en Houston, TX, atiende clientes en todo el país."
     },
     "heading": "Conoce al fundador",
     "subheading": "El desarrollador detrás de RC Web Solutions",
-    "bio1": "Desarrollador full-stack con <strong>más de 6 años de experiencia</strong> creando aplicaciones con React y Next.js. A través de RC Web Solutions he construido y publicado <strong>más de 20 sitios en producción</strong> para pequeños negocios, la mayoría en el área de Houston, desde el frontend y las APIs hasta la base de datos y el despliegue. Trabajo a distancia con clientes de cualquier lugar: videollamadas, un sitio de pruebas que puedes revisar en cualquier momento y pagos con Stripe. Empecé en Revature en 2022 y, en paralelo a RC Web Solutions, fui desarrollador de software en Atser Systems Inc. entre 2024 y 2025, participando en el <strong>desarrollo de aplicaciones full-stack</strong> en equipos ágiles.",
+    "bio1": "Desarrollador full-stack con <strong>más de 6 años de experiencia</strong> en desarrollo web, incluidos más de 4 creando aplicaciones con React y Next.js. A través de RC Web Solutions he construido y publicado <strong>más de 20 sitios en producción</strong> para pequeños negocios, la mayoría en el área de Houston, desde el frontend y las APIs hasta la base de datos y el despliegue. Trabajo a distancia con clientes de cualquier lugar: videollamadas, un sitio de pruebas que puedes revisar en cualquier momento y pagos con Stripe. Empecé en Revature en 2022 y, en paralelo a RC Web Solutions, fui desarrollador de software en Atser Systems Inc. entre 2024 y 2025, participando en el <strong>desarrollo de aplicaciones full-stack</strong> en equipos ágiles.",
     "bio2": "Trabajo en todo el stack con <gold>Next.js, TypeScript, Node.js, PostgreSQL y Prisma</gold>, y también me ocupo de la capa que trae clientes: <gold>Google Ads, Meta Ads, seguimiento de conversiones y SEO local</gold>. En el sitio de un cliente reduje el tiempo de carga de 7-8 segundos a menos de 1 segundo, lo que recuperó el rendimiento de sus campañas de pago.",
     "imageAlt": "Randy Caballero - Desarrollador web full-stack en Houston, TX",
     "location": "Houston, TX",
     "basedIn": "Con sede en Houston, TX",
     "anywhere": "Trabajo con clientes de cualquier lugar",
     "downloadCv": "Descargar CV",
+    "servicesLink": "Ver los servicios que ofrezco",
     "person": {
       "jobTitle": "Desarrollador web full-stack",
-      "description": "Desarrollador full-stack con más de 6 años creando aplicaciones con React y Next.js. Fundador de RC Web Solutions LLC, con sede en Houston, TX, y más de 20 sitios en producción para pequeños negocios de Estados Unidos."
+      "description": "Desarrollador full-stack con más de 6 años en desarrollo web, incluidos más de 4 creando aplicaciones con React y Next.js. Fundador de RC Web Solutions LLC, con sede en Houston, TX, y más de 20 sitios en producción para pequeños negocios de Estados Unidos."
     },
     "experience": {
       "heading": "Experiencia",
@@ -615,7 +617,8 @@
       "included": "Qué incluye",
       "related": "Proyectos relacionados",
       "relatedIntro": "Negocios de Houston para los que he construido este tipo de solución.",
-      "visitSite": "Visitar sitio",
+      "readCaseStudy": "Leer el caso de éxito",
+      "relatedServices": "Servicios relacionados",
       "readyTitle": "¿Listo para empezar?",
       "readyText": "Reserva una consulta gratuita de 30 minutos. Revisaré tu situación actual y te mostraré exactamente qué puedo construir para tu negocio."
     },
