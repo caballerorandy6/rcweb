@@ -15,6 +15,7 @@ import UTMTracker from "@/components/tracking/UTMTracker";
 import { hasLocale, NextIntlClientProvider } from "next-intl";
 import { getMessages, getTranslations } from "next-intl/server";
 import { notFound } from "next/navigation";
+import { headers } from "next/headers";
 import { localizedRootMetadata, rootMetadata } from "@/config/metadata";
 import { routing } from "@/i18n/routing";
 import { pickClientMessages } from "@/i18n/clientMessages";
@@ -46,9 +47,10 @@ export default async function RootLayout({
   const { locale } = await params;
   if (!hasLocale(routing.locales, locale)) notFound();
 
-  const [messages, t] = await Promise.all([
+  const [messages, t, requestHeaders] = await Promise.all([
     getMessages(),
     getTranslations("Common"),
+    headers(),
   ]);
 
   return (
@@ -67,6 +69,7 @@ export default async function RootLayout({
         <Script
           id="google-consent-mode"
           strategy="beforeInteractive"
+          nonce={requestHeaders.get("x-nonce") ?? undefined}
           dangerouslySetInnerHTML={{
             __html: `
               window.dataLayer = window.dataLayer || [];
