@@ -1,8 +1,6 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
-const { tx, listGoogleReviews, db, translateReview } = vi.hoisted(() => ({
-  db: { findMany: vi.fn(async (): Promise<unknown[]> => []), update: vi.fn() },
-  translateReview: vi.fn(),
+const { tx, listGoogleReviews } = vi.hoisted(() => ({
   tx: {
     googleReview: { upsert: vi.fn(), deleteMany: vi.fn(async () => ({ count: 1 })) },
     googleReviewSummary: { upsert: vi.fn() },
@@ -11,11 +9,10 @@ const { tx, listGoogleReviews, db, translateReview } = vi.hoisted(() => ({
 }));
 
 vi.mock("@/lib/prisma", () => ({
-  prisma: { $transaction: vi.fn(async (fn: (t: typeof tx) => unknown) => fn(tx)), googleReview: db },
+  prisma: { $transaction: vi.fn(async (fn: (t: typeof tx) => unknown) => fn(tx)) },
 }));
 vi.mock("@sentry/nextjs", () => ({ captureException: vi.fn() }));
 vi.mock("@/lib/googleReviews/api", () => ({ listGoogleReviews }));
-vi.mock("@/lib/googleReviews/translate", () => ({ translateReview }));
 
 import { syncGoogleReviews } from "./sync";
 
@@ -76,33 +73,6 @@ describe("syncGoogleReviews", () => {
       update: { averageRating: 4.5, totalReviewCount: 2 },
     });
     expect(tx.googleReview.deleteMany).toHaveBeenCalledWith({ where: { id: { notIn: ["a", "b"] } } });
-  });
-
-  it("translates the original of new or edited reviews and survives a failed translation", async () => {
-    listGoogleReviews.mockResolvedValueOnce({ reviews: [], averageRating: 5, totalReviewCount: 3 });
-    db.findMany.mockResolvedValueOnce([
-      { id: "done", comment: "Great", translatedFrom: "Great" },
-      { id: "fails", comment: "Nice", translatedFrom: null },
-      { id: "new", comment: "(Translated by Google) Good\n\n(Original)\nBueno", translatedFrom: null },
-    ]);
-    translateReview
-      .mockRejectedValueOnce(new Error("boom"))
-      .mockResolvedValueOnce({ language: "es", en: "Good", es: "Bueno" });
-
-    const outcome = await syncGoogleReviews();
-
-    expect(outcome.ok).toBe(true);
-    expect(translateReview.mock.calls).toEqual([["Nice"], ["Bueno"]]);
-    expect(db.update).toHaveBeenCalledTimes(1);
-    expect(db.update).toHaveBeenCalledWith({
-      where: { id: "new" },
-      data: {
-        commentLanguage: "es",
-        commentEn: "Good",
-        commentEs: "Bueno",
-        translatedFrom: "(Translated by Google) Good\n\n(Original)\nBueno",
-      },
-    });
   });
 
   it("reports not_configured when a variable is missing and api_error when Google fails", async () => {

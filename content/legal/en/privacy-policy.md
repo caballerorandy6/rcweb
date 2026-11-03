@@ -232,7 +232,7 @@ We use third-party service providers based in the United States, including:
 - Twilio (SMS services) - USA
 - Resend (email services) - USA
 - Google (analytics, reCAPTCHA) - USA/Global
-- OpenAI (AI chat assistant and translation of public reviews) - USA
+- OpenAI (AI chat assistant) - USA
 - Sentry (error monitoring) - USA
 - Calendly (appointment scheduling) - USA
 - Vercel (hosting) - USA/Global
@@ -286,8 +286,6 @@ We are not running paid advertising at the moment, so no ad pixel is loaded. If 
 #### OpenAI
 
 The messages You type into the chat widget on this website are sent to OpenAI to generate the reply. We do not store chat transcripts, and under OpenAI’s API terms Your messages are not used to train their models. Please do not share passwords, payment details or other sensitive information in the chat.
-
-We also send the text of the public reviews on our Google Business Profile to OpenAI to show them in English and Spanish on this website. The reviewer’s name is not sent, and translated reviews are labelled as such.
 
 OpenAI Privacy Policy: [https://openai.com/policies/privacy-policy](https://openai.com/policies/privacy-policy)
 

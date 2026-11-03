@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { StarIcon } from "@heroicons/react/24/solid";
 import Heading from "../ui/Heading";
 import Button from "../ui/Button";
@@ -5,7 +6,7 @@ import StarRating from "../ui/StarRating";
 import { getLocale, getTranslations } from "next-intl/server";
 import { GOOGLE_REVIEW_URL } from "@/lib/data";
 import { getLocalizedCatalog } from "@/lib/catalog";
-import { routing, type Locale } from "@/i18n/routing";
+import { routing } from "@/i18n/routing";
 import { getPublicGoogleReviews } from "@/lib/googleReviews/queries";
 import { formatDate } from "@/lib/utils";
 
@@ -33,12 +34,12 @@ const GoogleIcon = () => (
 interface Card {
   key: string;
   author: string;
+  /** Foto de perfil de Google; sin ella se ve la inicial */
+  photoUrl?: string | null;
   /** Empresa (testimonios fijos) o fecha de la reseña (Google). */
   meta: string | null;
   rating: number;
   content: string;
-  /** La reseña se muestra traducida por el sync, no como se escribió */
-  autoTranslated?: boolean;
 }
 
 /**
@@ -62,10 +63,10 @@ const Testimonials = async () => {
     ? google.reviews.map((review) => ({
         key: review.id,
         author: review.author,
+        photoUrl: review.photoUrl,
         meta: formatDate(review.createTime, { locale }),
         rating: review.rating,
-        content: review.translation?.[locale as Locale] ?? review.text,
-        autoTranslated: Boolean(review.translation && review.translation.language !== locale),
+        content: review.text,
       }))
     : testimonials.map((testimonial) => ({
         key: testimonial.author,
@@ -122,16 +123,26 @@ const Testimonials = async () => {
                 <p className="text-sm sm:text-base font-inter text-white/80 leading-relaxed line-clamp-6">
                   &quot;{card.content}&quot;
                 </p>
-                {card.autoTranslated && (
-                  <p className="mt-2 text-xs font-inter text-white/40">{t("translatedAuto")}</p>
-                )}
               </blockquote>
 
               <div className="mt-8 flex items-center gap-4">
-                <div className="h-12 w-12 rounded-full bg-gold/10 flex items-center justify-center">
+                <div className="relative h-12 w-12 shrink-0 overflow-hidden rounded-full bg-gold/10 flex items-center justify-center">
                   <span className="text-base font-inter font-semibold text-gold">
                     {card.author.charAt(0).toUpperCase()}
                   </span>
+                  {/* Encima de la inicial: si la URL de Google caduca, la inicial sigue visible */}
+                  {card.photoUrl && (
+                    <Image
+                      src={card.photoUrl}
+                      alt=""
+                      width={48}
+                      height={48}
+                      unoptimized
+                      loading="lazy"
+                      referrerPolicy="no-referrer"
+                      className="absolute inset-0 h-full w-full object-cover"
+                    />
+                  )}
                 </div>
                 <div>
                   <p className="text-sm font-inter text-white">{card.author}</p>

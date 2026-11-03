@@ -233,7 +233,7 @@ Usamos proveedores de servicios externos con sede en Estados Unidos, entre ellos
 - Twilio (servicios de SMS) - EE. UU.
 - Resend (servicios de correo electrónico) - EE. UU.
 - Google (analítica, reCAPTCHA) - EE. UU./global
-- OpenAI (asistente de chat con IA y traducción de reseñas públicas) - EE. UU.
+- OpenAI (asistente de chat con IA) - EE. UU.
 - Sentry (monitoreo de errores) - EE. UU.
 - Calendly (agenda de citas) - EE. UU.
 - Vercel (alojamiento) - EE. UU./global
@@ -287,8 +287,6 @@ Por ahora no hacemos publicidad de pago, así que no se carga ningún píxel pub
 #### OpenAI
 
 Los mensajes que escribes en el chat de este sitio web se envían a OpenAI para generar la respuesta. No guardamos las transcripciones del chat y, según los términos de la API de OpenAI, tus mensajes no se usan para entrenar sus modelos. No compartas contraseñas, datos de pago ni otra información sensible en el chat.
-
-También enviamos a OpenAI el texto de las reseñas públicas de nuestro perfil de empresa en Google para mostrarlas en inglés y español en este sitio web. No se envía el nombre de quien escribe la reseña, y las reseñas traducidas se identifican como tales.
 
 Política de privacidad de OpenAI: [https://openai.com/policies/privacy-policy](https://openai.com/policies/privacy-policy)
 

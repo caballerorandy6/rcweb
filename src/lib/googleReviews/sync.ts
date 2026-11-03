@@ -2,8 +2,6 @@ import * as Sentry from "@sentry/nextjs";
 import { prisma } from "@/lib/prisma";
 import { listGoogleReviews } from "@/lib/googleReviews/api";
 import { getGoogleReviewsConfig } from "@/lib/googleReviews/config";
-import { reviewOriginalText } from "@/lib/googleReviews/format";
-import { translateReview } from "@/lib/googleReviews/translate";
 
 export interface GoogleReviewsSyncResult {
   totalReviewCount: number;
@@ -17,40 +15,9 @@ export type GoogleReviewsSyncOutcome =
   | { ok: false; error: "not_configured" | "api_error"; message: string };
 
 /**
- * Traduce las reseñas nuevas o editadas para la web bilingüe. Un fallo no
- * tumba la sincronización: esa reseña se ve como se escribió y se reintenta
- * en la siguiente.
- */
-async function translatePendingReviews(): Promise<void> {
-  const reviews = await prisma.googleReview.findMany({
-    where: { comment: { not: null } },
-    select: { id: true, comment: true, translatedFrom: true },
-  });
-  for (const { id, comment, translatedFrom } of reviews) {
-    if (!comment || comment === translatedFrom) continue;
-    try {
-      const translation = await translateReview(reviewOriginalText(comment));
-      if (!translation) return;
-      await prisma.googleReview.update({
-        where: { id },
-        data: {
-          commentLanguage: translation.language,
-          commentEn: translation.en,
-          commentEs: translation.es,
-          translatedFrom: comment,
-        },
-      });
-    } catch (error) {
-      Sentry.captureException(error, { tags: { feature: "google-reviews" } });
-      console.error("Google review translation failed:", error);
-    }
-  }
-}
-
-/**
  * Copia las reseñas del perfil a GoogleReview y la nota/total a
  * GoogleReviewSummary, borra las que Google ya no devuelve y regenera la
- * home, y traduce las pendientes. Idempotente; conserva el `hidden` que haya puesto el admin.
+ * home. Idempotente; conserva el `hidden` que haya puesto el admin.
  */
 export async function syncGoogleReviews(): Promise<GoogleReviewsSyncOutcome> {
   const config = getGoogleReviewsConfig();
@@ -82,8 +49,6 @@ export async function syncGoogleReviews(): Promise<GoogleReviewsSyncOutcome> {
       });
       return tx.googleReview.deleteMany({ where: { id: { notIn: ids } } });
     });
-
-    await translatePendingReviews();
 
     // La home se renderiza en cada petición (CSP con nonce), así que la
     // próxima visita ya lee las reseñas nuevas.
