@@ -331,8 +331,7 @@
       "onGoogle": "en Google",
       "reviews": "{count, plural, one {# reseña} other {# reseñas}}",
       "writeReview": "Escribe una reseña en Google",
-      "translated": "Traducido del inglés",
-      "translatedAuto": "Traducida automáticamente"
+      "translated": "Traducido del inglés"
     },
     "pricing": {
       "heading": "Precios claros y transparentes",

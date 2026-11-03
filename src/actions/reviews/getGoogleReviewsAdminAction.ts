@@ -3,7 +3,7 @@
 import { prisma } from "@/lib/prisma";
 import { requireAdmin } from "@/lib/authGuard";
 import { getGoogleReviewsConfig, GOOGLE_REVIEWS_HOME_LIMIT } from "@/lib/googleReviews/config";
-import { reviewDisplayText } from "@/lib/googleReviews/format";
+import { reviewOriginalText } from "@/lib/googleReviews/format";
 
 export interface AdminGoogleReview {
   id: string;
@@ -56,8 +56,8 @@ export async function getGoogleReviewsAdminAction(): Promise<GoogleReviewsAdminR
       id: review.id,
       author: review.reviewerName,
       rating: review.rating,
-      text: review.comment ? reviewDisplayText(review.comment) : null,
-      reply: review.replyComment ? reviewDisplayText(review.replyComment) : null,
+      text: review.comment ? reviewOriginalText(review.comment) : null,
+      reply: review.replyComment ? reviewOriginalText(review.replyComment) : null,
       createTime: review.createTime.toISOString(),
       hidden: review.hidden,
     };

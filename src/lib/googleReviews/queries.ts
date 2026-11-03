@@ -2,15 +2,16 @@ import { cache } from "react";
 import * as Sentry from "@sentry/nextjs";
 import { prisma } from "@/lib/prisma";
 import { GOOGLE_REVIEWS_HOME_LIMIT } from "@/lib/googleReviews/config";
-import { reviewDisplayText } from "@/lib/googleReviews/format";
+import { reviewOriginalText } from "@/lib/googleReviews/format";
 
 export interface PublicGoogleReview {
   id: string;
   author: string;
+  /** Foto de perfil de Google; null si no hay o la reseña es anónima */
+  photoUrl: string | null;
   rating: number;
+  /** Tal como se escribió, en su idioma original */
   text: string;
-  /** Idioma original y texto por idioma; null hasta que se traduzca */
-  translation: { language: string; en: string; es: string } | null;
   createTime: Date;
 }
 
@@ -39,12 +40,10 @@ export const getPublicGoogleReviews = cache(async (): Promise<PublicGoogleReview
         select: {
           id: true,
           reviewerName: true,
+          reviewerPhotoUrl: true,
+          isAnonymous: true,
           rating: true,
           comment: true,
-          commentLanguage: true,
-          commentEn: true,
-          commentEs: true,
-          translatedFrom: true,
           createTime: true,
         },
       }),
@@ -58,15 +57,9 @@ export const getPublicGoogleReviews = cache(async (): Promise<PublicGoogleReview
       reviews: reviews.map((review) => ({
         id: review.id,
         author: review.reviewerName,
+        photoUrl: review.isAnonymous ? null : review.reviewerPhotoUrl,
         rating: review.rating,
-        text: reviewDisplayText(review.comment ?? ""),
-        translation:
-          review.translatedFrom === review.comment &&
-          review.commentLanguage &&
-          review.commentEn &&
-          review.commentEs
-            ? { language: review.commentLanguage, en: review.commentEn, es: review.commentEs }
-            : null,
+        text: reviewOriginalText(review.comment ?? ""),
         createTime: review.createTime,
       })),
     };
