@@ -235,7 +235,7 @@ export default function QuoteForm(props: QuoteFormProps) {
               id="quote-total"
               type="number"
               inputMode="decimal"
-              min={1}
+              min={100}
               step={50}
               {...register("totalDollars")}
               aria-invalid={errors.totalDollars ? true : undefined}

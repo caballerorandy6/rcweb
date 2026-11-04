@@ -102,7 +102,7 @@ export async function POST(req: Request) {
       } = metadata;
 
       try {
-        const { project, emailErrors } = await createProjectFromDeposit(
+        const { project, created, emailErrors } = await createProjectFromDeposit(
           {
             projectCode,
             customerEmail,
@@ -130,18 +130,22 @@ export async function POST(req: Request) {
         );
 
         // ============= ADMIN EMAIL =============
-        const adminResult = await sendAdminInitialPaymentNotification(resend, {
-          projectCode,
-          customerName,
-          customerEmail,
-          planName,
-          firstPaymentAmount,
-          secondPaymentAmount,
-          projectId: project.id,
-        });
+        // Only for the delivery that created the project: a Stripe retry or a manual
+        // resend (to recover a failed invoice) must not notify the admin again
+        if (created) {
+          const adminResult = await sendAdminInitialPaymentNotification(resend, {
+            projectCode,
+            customerName,
+            customerEmail,
+            planName,
+            firstPaymentAmount,
+            secondPaymentAmount,
+            projectId: project.id,
+          });
 
-        if (!adminResult.success && adminResult.error) {
-          emailErrors.push(adminResult.error);
+          if (!adminResult.success && adminResult.error) {
+            emailErrors.push(adminResult.error);
+          }
         }
 
         // If there were email errors, include them in response (but don't fail)

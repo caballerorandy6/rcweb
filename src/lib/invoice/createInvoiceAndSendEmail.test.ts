@@ -1,8 +1,8 @@
 import { afterEach, describe, expect, it, vi } from "vitest";
 
 const { createInvoice, createInvoiceSummary, sendInvoiceEmail } = vi.hoisted(() => ({
-  createInvoice: vi.fn(async () => ({ invoiceId: "i", invoiceNumber: "INV-1", pdfUrl: "https://x.test/a.pdf" })),
-  createInvoiceSummary: vi.fn(async () => ({ invoiceId: "i", invoiceNumber: "INV-2", pdfUrl: "https://x.test/a.pdf" })),
+  createInvoice: vi.fn(async () => ({ invoiceId: "i", invoiceNumber: "INV-1", pdfUrl: "https://x.test/a.pdf", pdfBuffer: Buffer.from("%PDF") })),
+  createInvoiceSummary: vi.fn(async () => ({ invoiceId: "i", invoiceNumber: "INV-2", pdfUrl: "https://x.test/a.pdf", pdfBuffer: Buffer.from("%PDF") })),
   sendInvoiceEmail: vi.fn(async () => ({ success: true })),
 }));
 
@@ -29,7 +29,16 @@ const project = {
 afterEach(() => vi.clearAllMocks());
 
 describe("createInvoiceAndSendEmail", () => {
-  vi.stubGlobal("fetch", vi.fn(async () => new Response(new ArrayBuffer(1))));
+  it("attaches the PDF it just generated, without downloading it again", async () => {
+    const fetchSpy = vi.spyOn(globalThis, "fetch");
+    await createInvoiceAndSendEmail({ project, type: "initial", resend: {} as never });
+
+    expect(fetchSpy).not.toHaveBeenCalled();
+    expect(sendInvoiceEmail).toHaveBeenCalledWith(
+      expect.anything(),
+      expect.objectContaining({ pdfBuffer: Buffer.from("%PDF") })
+    );
+  });
 
   it("invoices the tax Stripe actually charged", async () => {
     await createInvoiceAndSendEmail({ project, type: "initial", resend: {} as never });

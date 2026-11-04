@@ -2,7 +2,7 @@
 // Función helper para crear invoices y enviar emails con PDFs adjuntos
 
 import { Resend } from "resend";
-import { createInvoice, createInvoiceSummary } from "./actions";
+import { createInvoice, createInvoiceSummary, type CreatedInvoice } from "./actions";
 import { InvoiceType } from "./types";
 import { sendInvoiceEmail } from "@/lib/email/senders";
 import { emailTranslator } from "@/lib/email/i18n";
@@ -16,11 +16,7 @@ interface CreateInvoiceAndSendEmailParams {
   stripeSessionId?: string;
 }
 
-interface InvoiceResult {
-  invoiceId: string;
-  invoiceNumber: string;
-  pdfUrl: string;
-}
+type InvoiceResult = Omit<CreatedInvoice, "pdfBuffer">;
 
 /**
  * Crea un invoice, genera el PDF y lo envía por email.
@@ -35,7 +31,7 @@ export async function createInvoiceAndSendEmail({
 }: CreateInvoiceAndSendEmailParams): Promise<InvoiceResult> {
   try {
     const { deposit, final } = getProjectCharges(project.payments);
-    let invoiceResult: InvoiceResult;
+    let invoiceResult: CreatedInvoice;
 
     // Crear invoice según el tipo
     if (type === "summary") {
@@ -65,10 +61,7 @@ export async function createInvoiceAndSendEmail({
       });
     }
 
-    // Descargar el PDF desde Vercel Blob
-    const pdfResponse = await fetch(invoiceResult.pdfUrl);
-    const pdfArrayBuffer = await pdfResponse.arrayBuffer();
-    const pdfBuffer = Buffer.from(pdfArrayBuffer);
+    const { pdfBuffer, ...created } = invoiceResult;
 
     // Enviar email usando el sender con react-email template. El sender no
     // lanza: si falla, el invoice ya existe (fila + PDF) y el que llama debe
@@ -95,7 +88,7 @@ export async function createInvoiceAndSendEmail({
       );
     }
 
-    return invoiceResult;
+    return created;
   } catch (error) {
     console.error("Error creating invoice and sending email:", error);
     throw new Error(
