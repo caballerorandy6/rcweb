@@ -15,12 +15,20 @@ import {
 } from "./types";
 import { getProjectCharges, isPaid } from "@/lib/project/charges";
 
+/** The PDF travels back with the row: re-downloading it from Blob right after the upload can return a 404 */
+export interface CreatedInvoice {
+  invoiceId: string;
+  invoiceNumber: string;
+  pdfUrl: string;
+  pdfBuffer: Buffer;
+}
+
 /**
  * Crea un invoice individual (initial o final) y genera su PDF
  */
 export async function createInvoice(
   data: CreateInvoiceData
-): Promise<{ invoiceId: string; invoiceNumber: string; pdfUrl: string }> {
+): Promise<CreatedInvoice> {
   try {
     // 1. Generar número de invoice único
     const invoiceNumber = await generateInvoiceNumber();
@@ -94,6 +102,7 @@ export async function createInvoice(
       invoiceId: invoice.id,
       invoiceNumber: invoice.invoiceNumber,
       pdfUrl: invoice.pdfUrl!,
+      pdfBuffer,
     };
   } catch (error) {
     console.error("Error creating invoice:", error);
@@ -110,7 +119,7 @@ export async function createInvoice(
  */
 export async function createInvoiceSummary(
   projectId: string
-): Promise<{ invoiceId: string; invoiceNumber: string; pdfUrl: string }> {
+): Promise<CreatedInvoice> {
   try {
     // 1. Obtener el proyecto con sus dos cobros
     const project = await prisma.project.findUnique({
@@ -216,6 +225,7 @@ export async function createInvoiceSummary(
       invoiceId: invoice.id,
       invoiceNumber: invoice.invoiceNumber,
       pdfUrl: invoice.pdfUrl!,
+      pdfBuffer,
     };
   } catch (error) {
     console.error("Error creating invoice summary:", error);
