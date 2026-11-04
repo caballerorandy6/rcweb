@@ -142,6 +142,12 @@ const nextConfig: NextConfig = {
     'prisma',
   ],
 
+  // pdfkit (under @react-pdf/renderer) loads its built-in fonts through the "#standard-fonts/*"
+  // subpath import, which file tracing does not follow: without this, invoice PDFs fail in production
+  outputFileTracingIncludes: {
+    '/**': ['./node_modules/pdfkit/js/standard-fonts/**/*.cjs'],
+  },
+
   // Experimental features
   experimental: {
     serverActions: {
