@@ -108,7 +108,7 @@ export const QuoteInputSchema = z.object({
   notes: z.string().trim().max(2000, { message: "Notes are too long" }).optional(),
   totalDollars: z.coerce
     .number({ message: "Enter the total amount" })
-    .min(100, { message: "The minimum quote is $100" })
+    .min(1, { message: "The minimum quote is $1" })
     .max(500000, { message: "Amount is too large" }),
   // Language of the quote email and of everything the customer receives later
   locale: z.enum(["en", "es"]),

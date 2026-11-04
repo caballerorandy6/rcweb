@@ -103,10 +103,10 @@ describe("QuoteInputSchema (admin quote form)", () => {
     expect(QuoteInputSchema.safeParse({ ...valid, offerId: undefined }).success).toBe(true);
   });
 
-  it("rejects an empty scope, an unknown offer and a total under $100", () => {
+  it("rejects an empty scope, an unknown offer and a total under $1", () => {
     expect(QuoteInputSchema.safeParse({ ...valid, scope: "\n  \n" }).success).toBe(false);
     expect(QuoteInputSchema.safeParse({ ...valid, offerId: "free-stuff" }).success).toBe(false);
-    expect(QuoteInputSchema.safeParse({ ...valid, totalDollars: "99" }).success).toBe(false);
+    expect(QuoteInputSchema.safeParse({ ...valid, totalDollars: "0.5" }).success).toBe(false);
     expect(QuoteInputSchema.safeParse({ ...valid, totalDollars: "" }).success).toBe(false);
   });
 });
