@@ -30,6 +30,7 @@ export function proxy(request: NextRequest) {
 
   const requestHeaders = new Headers(request.headers);
   requestHeaders.set("Content-Security-Policy", csp);
+  requestHeaders.set("x-nonce", nonce);
 
   // The backoffice has no locale segment: skip the language routing (which
   // would rewrite /admin-dashboard to /en/admin-dashboard) and only add the CSP.
