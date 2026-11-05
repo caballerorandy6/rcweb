@@ -55,7 +55,7 @@ export default async function GoogleReviews() {
               value={
                 <span className="inline-flex flex-col sm:flex-row items-center gap-1 sm:gap-2">
                   {summary.averageRating.toFixed(1)}
-                  <StarRating rating={summary.averageRating} size="sm" className="flex" />
+                  <StarRating rating={summary.averageRating} size="sm" />
                 </span>
               }
             />
@@ -72,7 +72,7 @@ export default async function GoogleReviews() {
               <p className="min-w-0 flex-1 text-sm text-gray-300 truncate">
                 <span className="text-gray-500">Latest: </span>
                 <span className="text-white font-semibold">{latest.author}</span>
-                <StarRating rating={latest.rating} size="sm" className="inline-flex align-middle mx-2" />
+                <StarRating rating={latest.rating} size="sm" className="inline-block align-middle mx-2" />
                 <span className="text-gray-500">{formatDate(latest.createTime)}</span>
               </p>
             ) : (
