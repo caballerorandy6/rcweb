@@ -25,7 +25,7 @@ function ReviewRow({ review }: { review: AdminGoogleReview }) {
       <div className="min-w-0 flex-1">
         <div className="flex flex-wrap items-center gap-x-3 gap-y-1">
           <span className="text-sm text-white font-inter font-semibold truncate">{review.author}</span>
-          <StarRating rating={review.rating} size="sm" className="flex" />
+          <StarRating rating={review.rating} size="sm" />
           <span className="text-xs text-gray-500 font-inter">{formatDate(review.createTime)}</span>
           {review.hidden && (
             <span className="text-[10px] uppercase tracking-wide text-yellow-400/80 font-inter border border-yellow-400/30 rounded px-1.5 py-0.5">
@@ -104,7 +104,7 @@ export default async function GoogleReviewsManagement() {
               value={
                 <span className="inline-flex flex-col sm:flex-row items-center gap-1 sm:gap-2">
                   {summary.averageRating.toFixed(1)}
-                  <StarRating rating={summary.averageRating} size="sm" className="flex" />
+                  <StarRating rating={summary.averageRating} size="sm" />
                 </span>
               }
             />

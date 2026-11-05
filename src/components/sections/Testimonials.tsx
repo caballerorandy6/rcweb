@@ -117,7 +117,7 @@ const Testimonials = async () => {
                 <GoogleIcon />
               </div>
 
-              <StarRating rating={card.rating} className="flex" label={starsLabel(card.rating)} />
+              <StarRating rating={card.rating} label={starsLabel(card.rating)} />
 
               <blockquote className="mt-6">
                 <p className="text-sm sm:text-base font-inter text-white/80 leading-relaxed line-clamp-6">
