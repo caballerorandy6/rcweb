@@ -1,5 +1,5 @@
 ---
-title: "Política de privacidad"
+title: "Política de privacidad de RC Web Solutions"
 subtitle: "Tu privacidad importa"
 description: "Política de privacidad de RC Web Solutions LLC. Conoce cómo recopilamos, usamos y protegemos tus datos personales cuando usas nuestros servicios de desarrollo web."
 intro:
@@ -177,6 +177,20 @@ RC Web Solutions LLC publica sus propios videos en su canal de YouTube a través
 La autorización concedida a nuestra aplicación puede revocarse en cualquier momento desde la página de configuración de seguridad de Google: [https://security.google.com/settings/security/permissions](https://security.google.com/settings/security/permissions). Al revocarla, nuestra aplicación deja de poder usar la API de YouTube.
 
 Para pedirnos que eliminemos los tokens almacenados o los registros de subida, escribe a [contactus@rcweb.dev](mailto:contactus@rcweb.dev) con el asunto «YouTube data deletion». Eliminamos los datos en un plazo de **30 días** desde la solicitud y lo confirmamos por correo electrónico.
+
+## TikTok {#tiktok}
+
+RC Web Solutions LLC publica sus propios videos en su cuenta de TikTok a través de la app **RC Web Solutions**, que usa TikTok Login Kit y la Content Posting API. La app funciona solo dentro de una herramienta privada de este sitio web (/tools/tiktok) que únicamente puede abrir nuestro administrador; ningún visitante de este sitio web inicia sesión con TikTok. El tratamiento de datos por parte de TikTok se describe en la [Política de privacidad de TikTok](https://www.tiktok.com/legal/page/us/privacy-policy/en).
+
+### Qué datos de TikTok usamos y almacenamos
+
+- **Permisos solicitados:** `user.info.basic` (para mostrar qué cuenta está conectada), `video.upload` y `video.publish` (para publicar nuestros propios videos en nuestra cuenta). No solicitamos ningún otro permiso.
+- **Datos de la cuenta:** el open ID, el avatar y el nombre visible de nuestra propia cuenta de TikTok, que se muestran en la herramienta para saber qué cuenta está conectada. No solicitamos ni recopilamos datos de ningún otro usuario de TikTok.
+- **Tokens de acceso:** los tokens que emite TikTok se guardan cifrados en una cookie del navegador del administrador, limitada a la herramienta, y caducan cuando caduca la autorización de TikTok. No se guardan en nuestra base de datos y nunca se venden ni se comparten.
+
+### Revocar el acceso y eliminar los datos almacenados
+
+El botón «Disconnect» de la herramienta borra los tokens al instante. El acceso también puede revocarse en cualquier momento en la app de TikTok, en **Configuración y privacidad › Seguridad y permisos › Permisos de apps y servicios › Eliminar acceso**; al revocarlo, la app deja de poder usar la API de TikTok. Si tienes alguna pregunta sobre estos datos, escribe a [contactus@rcweb.dev](mailto:contactus@rcweb.dev).
 
 ## Datos de suscripción y pago
 

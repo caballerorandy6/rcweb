@@ -1,5 +1,5 @@
 ---
-title: "Términos de servicio"
+title: "Términos de servicio de RC Web Solutions"
 subtitle: "Acuerdo legal"
 description: "Términos de servicio de RC Web Solutions LLC. Revisa las condiciones del servicio, los pagos, la propiedad intelectual, las garantías, la responsabilidad y las obligaciones del cliente en los proyectos de desarrollo web."
 intro:
@@ -25,6 +25,8 @@ RC Web Solutions LLC presta servicios profesionales de desarrollo web, diseño y
 - Servicios de marketing digital y SEO
 - Gestión de alojamiento y dominios
 - Consultoría y asesoría técnica
+
+También usamos servicios de terceros para operar nuestro propio negocio, como la app **RC Web Solutions** en TikTok, que publica nuestros propios videos en nuestra cuenta de TikTok. Su uso está sujeto a los términos de cada proveedor y se describe en nuestra [Política de privacidad](/privacy-policy#tiktok).
 
 ## 3. Condiciones de pago
 
