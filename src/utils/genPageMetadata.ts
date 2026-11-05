@@ -97,7 +97,8 @@ export function genPageMetadata({
       };
 
   return {
-    title,
+    // Skip the layout's "| RC Web Solutions" template when the brand is already there
+    title: socialTitle === title ? { absolute: title } : title,
     description,
     alternates: {
       canonical: url,

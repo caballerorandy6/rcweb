@@ -1,5 +1,5 @@
 ---
-title: "Privacy Policy"
+title: "RC Web Solutions Privacy Policy"
 subtitle: "Your Privacy Matters"
 description: "Privacy Policy for RC Web Solutions LLC. Learn how we collect, use, and protect your personal data when using our web development services."
 intro:
@@ -176,6 +176,20 @@ RC Web Solutions LLC publishes its own videos on its YouTube channel through You
 The authorization granted to Our application can be revoked at any time from the Google security settings page: [https://security.google.com/settings/security/permissions](https://security.google.com/settings/security/permissions). Revoking it stops any further use of the YouTube API by Our application.
 
 To ask Us to delete the stored tokens or upload records, email [contactus@rcweb.dev](mailto:contactus@rcweb.dev) with the subject “YouTube data deletion”. We delete the data within **30 days** of the request and confirm by email.
+
+## TikTok {#tiktok}
+
+RC Web Solutions LLC publishes its own videos on its TikTok account through the **RC Web Solutions** app, which uses TikTok Login Kit and the Content Posting API. The app runs only inside a private tool of this website (/tools/tiktok) that only Our administrator can open; no visitor of this website signs in with TikTok. TikTok’s handling of data is described in the [TikTok Privacy Policy](https://www.tiktok.com/legal/page/us/privacy-policy/en).
+
+### What TikTok data We use and store
+
+- **Permissions requested:** `user.info.basic` (to show which account is connected), `video.upload` and `video.publish` (to post Our own videos to Our account). We do not request any other permission.
+- **Account data:** the open ID, avatar and display name of Our own TikTok account, shown in the tool so We know which account is connected. We do not request or collect data of any other TikTok user.
+- **Access tokens:** the tokens TikTok issues are kept encrypted in a cookie of the administrator’s browser, limited to the tool, and expire when TikTok’s authorization expires. They are not stored in Our database, and they are never sold or shared.
+
+### Revoking access and deleting stored data
+
+The “Disconnect” button in the tool deletes the tokens at once. Access can also be revoked at any time in the TikTok app under **Settings and privacy › Security & permissions › Apps and services permissions › Remove access**, which stops any further use of the TikTok API by the app. To ask a question about this data, email [contactus@rcweb.dev](mailto:contactus@rcweb.dev).
 
 ## Subscription and Payment Data
 
