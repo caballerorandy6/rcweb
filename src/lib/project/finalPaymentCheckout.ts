@@ -41,6 +41,10 @@ export async function createFinalPaymentCheckout(
     allowed_payment_method_types: ["card"],
     mode: "payment",
     customer_email: project.email,
+    // A real Customer (not a guest) gives the payment a recipient email, so
+    // Stripe can email the refund receipt; payment receipts stay off in the
+    // Dashboard because our own invoice covers them
+    customer_creation: "always",
     metadata,
     line_items: [
       {
