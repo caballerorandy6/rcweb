@@ -39,7 +39,7 @@ The stack moves fast (Next.js 16, React 19, Prisma 7, Tailwind 4, Zod 4). Before
 | Any `.tsx` component (after editing, run the review checklist) | `vercel:react-best-practices` |
 | Caching: `'use cache'`, `cacheLife`, `cacheTag`, PPR | `vercel:next-cache-components` |
 | Prisma schema, migrations, queries, relations | `prisma-expert` |
-| Stripe checkout, webhooks, invoices, API version bumps | `stripe-best-practices`, `upgrade-stripe` |
+| Stripe checkout, webhooks, invoices, API version bumps | `stripe:stripe-best-practices`, `stripe:upgrade-stripe` |
 | Auth, input validation, anything OWASP | `secure-code-guardian` |
 | Playwright / Vitest tests | `e2e-testing-patterns` |
 | Tailwind classes, theme tokens in `globals.css` | `tailwind-css` |
@@ -50,7 +50,7 @@ The stack moves fast (Next.js 16, React 19, Prisma 7, Tailwind 4, Zod 4). Before
 | Adding an external service (monitoring, email, search…) | `vercel:marketplace` |
 | Upgrading Next.js majors | `vercel:next-upgrade` |
 
-`vercel:*` skills come from the Vercel plugin (always current). Unprefixed ones live in `.claude/skills/` (project) or `~/.claude/skills/` (user). Prefer `vercel:nextjs` and `vercel:react-best-practices` over the older user-level `nextjs` / `vercel-react-best-practices` copies.
+`vercel:*` skills come from the Vercel plugin (always current). Stripe skills come from the Stripe plugin (`stripe:stripe-best-practices`, `stripe:upgrade-stripe`). The other unprefixed ones are checked in under `.claude/skills/`, so they work in any session; `.claude/settings.json` enables the `vercel`, `stripe` and `impeccable` plugins and turns off `posthog` and `frontend-design` (the site uses GA4 + Sentry, and Impeccable owns UI direction).
 
 Also read the Next.js docs shipped with the installed version (`node_modules/next/dist/docs/`) when an API looks different from what you expect — see the block at the end of [AGENTS.md](./AGENTS.md).
 
