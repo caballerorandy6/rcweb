@@ -13,8 +13,11 @@ import { ManageSubscriptionSchema } from "@/lib/zod";
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 
-/** The emailed link stays valid this long; the email copy promises 24 hours. */
-export const PORTAL_LINK_TTL_MS = 24 * 60 * 60 * 1000;
+/**
+ * The emailed link stays valid this long; the email copy promises 24 hours.
+ * Not exported: a "use server" file may only export async functions.
+ */
+const PORTAL_LINK_TTL_MS = 24 * 60 * 60 * 1000;
 
 /**
  * Emails a magic link to /manage-subscription/[token]. That page creates the
