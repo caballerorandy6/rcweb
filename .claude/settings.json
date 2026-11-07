@@ -9,6 +9,6 @@
   "enabledMcpjsonServers": ["prisma-local"],
   "permissions": {
     "deny": ["Skill(ui-styling)", "mcp__prisma-local__migrate-reset"],
-    "ask": ["mcp__resend", "mcp__twilio"]
+    "ask": ["mcp__resend"]
   }
 }
