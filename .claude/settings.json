@@ -1,0 +1,14 @@
+{
+  "enabledPlugins": {
+    "vercel@claude-plugins-official": true,
+    "stripe@claude-plugins-official": true,
+    "impeccable@impeccable": true,
+    "posthog@claude-plugins-official": false,
+    "frontend-design@claude-plugins-official": false
+  },
+  "enabledMcpjsonServers": ["prisma-local"],
+  "permissions": {
+    "deny": ["Skill(ui-styling)", "mcp__prisma-local__migrate-reset"],
+    "ask": ["mcp__resend"]
+  }
+}

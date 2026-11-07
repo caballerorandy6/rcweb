@@ -12,7 +12,7 @@ Every major dependency has changed recently. Before writing code in an area, loa
 
 - `vercel:nextjs` — routing, RSC boundaries, async `params`/`cookies()`/`headers()`, `proxy.ts`, hydration, metadata, images, fonts, scripts.
 - `vercel:react-best-practices` — run its checklist after editing `.tsx` components.
-- `prisma-expert`, `stripe-best-practices`, `secure-code-guardian`, `e2e-testing-patterns`, `tailwind-css`, `fixing-*`, `seo-*` — see the table in CLAUDE.md.
+- `prisma-expert`, `stripe:stripe-best-practices`, `secure-code-guardian`, `e2e-testing-patterns`, `tailwind-css`, `fixing-*`, `seo-*` — see the table in CLAUDE.md.
 
 ## React & Next.js performance (Vercel Engineering, v1.0.0, 64 rules)
 
