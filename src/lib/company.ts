@@ -52,7 +52,7 @@ export const LEGAL_LAST_UPDATED = {
  */
 export const ZELLE_PAYMENT: { recipient: string; contact: string | null } = {
   recipient: COMPANY.name,
-  contact: null,
+  contact: "caballerorandy6@gmail.com",
 };
 
 export const isZelleAvailable = () => ZELLE_PAYMENT.contact !== null;
