@@ -9,6 +9,7 @@ import { linkProjectToContact } from "@/lib/project/linkToContact";
 import { markQuoteAccepted } from "@/lib/quote/markQuoteAccepted";
 import { getProjectCharges } from "@/lib/project/charges";
 import { isUniqueConstraintError } from "@/lib/prismaErrors";
+import type { BillingAddress } from "@/lib/tax/billingAddress";
 
 export type ProjectWithPaymentsAndInvoices = Prisma.ProjectGetPayload<{
   include: { payments: true; invoices: true };
@@ -44,6 +45,8 @@ export interface DepositProjectInput {
   } | null;
   /** Written quote the deposit pays; it is marked accepted and linked */
   quoteId?: string;
+  /** Checkout customer address or the one typed with the Zelle request */
+  billingAddress?: BillingAddress | null;
 }
 
 export interface DepositProjectResult {
@@ -103,6 +106,7 @@ export async function createProjectFromDeposit(
       planName: input.planName,
       totalAmount: input.totalAmount,
       status: "in_progress",
+      ...(input.billingAddress && { billingAddress: input.billingAddress }),
       payments: {
         create: [
           {

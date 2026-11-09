@@ -61,6 +61,8 @@ export default async function QuotePage({ params }: Props) {
 
   const status = getQuoteDisplayStatus(quote);
   const { deposit, balance } = splitDepositAmount(quote.totalAmount);
+  // Sales tax calculated when the customer chose Zelle (0 before, or outside Texas)
+  const zelleTax = quote.zelleTaxAmount ?? 0;
   const validUntil = quote.expiresAt ? date(quote.expiresAt, "long") : null;
 
   return (
@@ -229,10 +231,22 @@ export default async function QuotePage({ params }: Props) {
                     date: quote.termsAcceptedAt ? t("zelle.on", { date: date(quote.termsAcceptedAt) }) : "",
                   })}
                 </p>
-                <dl className="mt-4 divide-y divide-gray-700 text-sm">
+                <dl className="mt-4 divide-y divide-gray-700 text-sm tabular-nums">
+                  {zelleTax > 0 ? (
+                    <>
+                      <div className="flex justify-between gap-4 py-2">
+                        <dt className="text-gray-400">{t("zelle.deposit")}</dt>
+                        <dd className="text-white">{formatCurrency(deposit)}</dd>
+                      </div>
+                      <div className="flex justify-between gap-4 py-2">
+                        <dt className="text-gray-400">{t("zelle.tax")}</dt>
+                        <dd className="text-white">{formatCurrency(zelleTax)}</dd>
+                      </div>
+                    </>
+                  ) : null}
                   <div className="flex justify-between gap-4 py-2">
                     <dt className="text-gray-400">{t("zelle.amount")}</dt>
-                    <dd className="text-gold font-semibold">{formatCurrency(deposit)}</dd>
+                    <dd className="text-gold font-semibold">{formatCurrency(deposit + zelleTax)}</dd>
                   </div>
                   <div className="flex justify-between gap-4 py-2">
                     <dt className="text-gray-400">{t("zelle.sendTo")}</dt>
@@ -246,6 +260,9 @@ export default async function QuotePage({ params }: Props) {
                     <dd className="text-white font-mono">{quote.quoteNumber}</dd>
                   </div>
                 </dl>
+                {quote.zelleTaxCalculationId && zelleTax === 0 ? (
+                  <p className="text-gray-400 text-xs mt-4">{t("zelle.noTax")}</p>
+                ) : null}
                 <p className="text-gray-500 text-xs mt-4">{t("zelle.note")}</p>
               </div>
             </div>

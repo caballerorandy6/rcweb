@@ -8,12 +8,21 @@ import Modal from "@/components/ui/Modal";
 import { createProjectFromQuoteAction } from "@/actions/quotes/createProjectFromQuoteAction";
 import { MANUAL_PAYMENT_METHODS, PAYMENT_METHOD_LABELS } from "@/lib/project/paymentMethod";
 import { formatCurrency, formatDate } from "@/lib/utils";
+import { formatBillingPlace } from "@/lib/tax/billingAddress";
+import AdminBillingAddress, { readBillingAddress } from "@/components/admin/AdminBillingAddress";
 import type { AdminQuote } from "@/types/quote";
 
 type CreateProjectFromQuoteButtonProps = {
   quote: Pick<
     AdminQuote,
-    "id" | "quoteNumber" | "name" | "totalAmount" | "zelleRequestedAt" | "termsAcceptedAt"
+    | "id"
+    | "quoteNumber"
+    | "name"
+    | "totalAmount"
+    | "zelleRequestedAt"
+    | "termsAcceptedAt"
+    | "billingAddress"
+    | "zelleTaxAmount"
   >;
   /** Cents: the 50 % the customer sent */
   depositAmount: number;
@@ -45,6 +54,17 @@ export default function CreateProjectFromQuoteButton({
   const [isPending, startTransition] = useTransition();
   const methodRef = useRef<HTMLSelectElement>(null);
   const titleId = `deposit-received-${quote.id}`;
+  const storedTax = ((quote.zelleTaxAmount ?? 0) / 100).toFixed(2);
+  const [taxDollars, setTaxDollars] = useState(storedTax);
+  // The customer never gave an address (no Zelle request): the admin types it
+  const needsAddress = quote.billingAddress === null;
+  const [typedTax, setTypedTax] = useState<number | null>(null);
+
+  const openDialog = () => {
+    setTaxDollars(storedTax);
+    setTypedTax(null);
+    setOpen(true);
+  };
 
   const submit = (form: HTMLFormElement) => {
     const data = new FormData(form);
@@ -52,13 +72,24 @@ export default function CreateProjectFromQuoteButton({
     const paidOn = String(data.get("paidOn"));
     const taxCents = Math.round(Number(data.get("taxDollars")) * 100);
     startTransition(async () => {
-      const result = await createProjectFromQuoteAction(quote.id, { method, paidOn, taxCents });
+      const result = await createProjectFromQuoteAction(quote.id, {
+        method,
+        paidOn,
+        taxCents,
+        ...(needsAddress ? { billingAddress: readBillingAddress(data) } : {}),
+      });
       if (!result.success) {
         toast.error(result.error);
         return;
       }
       setOpen(false);
       toast.success(`Project ${result.data.projectCode} created from ${quote.quoteNumber}`);
+      if (result.data.taxWarning) {
+        toast.warning("Sale not recorded in Stripe Tax", {
+          description: result.data.taxWarning,
+          duration: 15_000,
+        });
+      }
       if (result.data.invoiceErrors.length > 0) {
         toast.warning("Project created, but the invoice could not be sent", {
           description: result.data.invoiceErrors.join(" · "),
@@ -75,7 +106,7 @@ export default function CreateProjectFromQuoteButton({
     <>
       <button
         type="button"
-        onClick={() => setOpen(true)}
+        onClick={openDialog}
         className={`${button} bg-gold/10 text-gold border-gold/30 hover:bg-gold/20`}
       >
         <BanknotesIcon className="w-5 h-5" aria-hidden="true" />
@@ -173,14 +204,37 @@ export default function CreateProjectFromQuoteButton({
                 inputMode="decimal"
                 min="0"
                 step="0.01"
-                defaultValue="0"
+                value={taxDollars}
+                onChange={(event) => setTaxDollars(event.target.value)}
                 required
                 className={input}
               />
               <p className="text-xs text-gray-500">
-                Only if the customer also sent the tax. It goes on the invoice.
+                {quote.billingAddress ? (
+                  <>
+                    Calculated by Stripe Tax for {formatBillingPlace(quote.billingAddress)}. Change it only
+                    if the customer sent a different amount; the sale is recorded in Stripe Tax
+                    when it matches.
+                  </>
+                ) : typedTax === null ? (
+                  "Enter the billing address below and calculate the tax."
+                ) : (
+                  "Calculated by Stripe Tax for the address below. Change it only if the customer sent a different amount."
+                )}
               </p>
             </div>
+
+            {needsAddress ? (
+              <AdminBillingAddress
+                idPrefix={`${titleId}-billing`}
+                amount={depositAmount}
+                kind="deposit"
+                onCalculated={(taxCents) => {
+                  setTypedTax(taxCents);
+                  if (taxCents !== null) setTaxDollars((taxCents / 100).toFixed(2));
+                }}
+              />
+            ) : null}
 
             <div className="flex justify-end gap-2 pt-2">
               <button
@@ -193,7 +247,7 @@ export default function CreateProjectFromQuoteButton({
               </button>
               <button
                 type="submit"
-                disabled={isPending}
+                disabled={isPending || (needsAddress && typedTax === null)}
                 className={`${button} bg-gold/10 text-gold border-gold/30 hover:bg-gold/20`}
               >
                 {isPending ? "Creating…" : "Create project"}

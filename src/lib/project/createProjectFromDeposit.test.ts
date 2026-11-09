@@ -18,6 +18,7 @@ vi.mock("@/lib/quote/markQuoteAccepted", () => ({ markQuoteAccepted }));
 vi.mock("@/lib/invoice/createInvoiceAndSendEmail", () => ({ createInvoiceAndSendEmail }));
 
 import { createProjectFromDeposit, type DepositProjectInput } from "./createProjectFromDeposit";
+import { BillingAddressSchema } from "@/lib/tax/billingAddress";
 
 const resend = {} as never;
 const paidAt = new Date("2026-10-28T12:00:00Z");
@@ -160,5 +161,23 @@ describe("createProjectFromDeposit", () => {
       data: { payments: { create: { kind: string; taxAmount?: number }[] } };
     };
     expect(data.payments.create[0]).toMatchObject({ kind: "deposit", taxAmount: 3300 });
+  });
+
+  it("keeps the billing address on the project, and leaves it out when there is none", async () => {
+    const billingAddress = BillingAddressSchema.parse({
+      line1: "1 Fountain Sq",
+      city: "Missouri City",
+      state: "TX",
+      postalCode: "77489",
+    });
+    prisma.project.findUnique.mockResolvedValue(null);
+    prisma.project.create.mockResolvedValue(row({ invoices: [{ type: "initial" }] }));
+
+    await createProjectFromDeposit({ ...input, billingAddress }, resend);
+    await createProjectFromDeposit({ ...input, billingAddress: null }, resend);
+
+    const [withAddress, without] = prisma.project.create.mock.calls.map((call) => call[0].data);
+    expect(withAddress.billingAddress).toEqual(billingAddress);
+    expect(without).not.toHaveProperty("billingAddress");
   });
 });

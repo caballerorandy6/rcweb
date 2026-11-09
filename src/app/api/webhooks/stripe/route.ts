@@ -25,6 +25,7 @@ import {
   sendSubscriptionRenewalReminder,
   sendSubscriptionPaymentFailed,
 } from "@/lib/email";
+import { fromStripeAddress } from "@/lib/tax/billingAddress";
 
 // Environment variables validation
 if (!process.env.STRIPE_WEBHOOK_SECRET) {
@@ -125,6 +126,7 @@ export async function POST(req: Request) {
               userAgent: "stripe-checkout",
             },
             quoteId: metadata.quoteId,
+            billingAddress: fromStripeAddress(session.customer_details?.address),
           },
           resend
         );

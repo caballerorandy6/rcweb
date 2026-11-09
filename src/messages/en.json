@@ -1461,10 +1461,13 @@
       "title": "Pay the deposit by Zelle",
       "thanks": "Thank you for accepting the quote{date}. Send the deposit from your bank's Zelle:",
       "on": " on {date}",
-      "amount": "Amount",
+      "amount": "Total to send",
       "sendTo": "Send to",
       "memo": "Memo",
-      "note": "Work starts as soon as the transfer is confirmed. You'll receive your invoice and a link to follow the project by email."
+      "note": "Work starts as soon as the transfer is confirmed. You'll receive your invoice and a link to follow the project by email.",
+      "deposit": "Deposit",
+      "tax": "Sales tax",
+      "noTax": "No sales tax applies to your billing address."
     },
     "questions": "Questions about this quote?",
     "contact": "Contact me",
@@ -1479,7 +1482,16 @@
       "oneMoment": "One moment…",
       "zelleHint": "Accept the terms above first. You'll see where to send it and work starts once the transfer is confirmed.",
       "redirecting": "Redirecting to secure payment…",
-      "zelleThanks": "Thanks! Here are the Zelle details"
+      "zelleThanks": "Thanks! Here are the Zelle details",
+      "addressTitle": "Billing address",
+      "addressHint": "Sales tax depends on where you are, so we need it to tell you the exact amount to send.",
+      "line1": "Street address",
+      "line2": "Apt, suite (optional)",
+      "city": "City",
+      "state": "State",
+      "postalCode": "ZIP code",
+      "showZelle": "Show the Zelle details",
+      "cancelZelle": "Cancel"
     }
   },
   "Project": {
@@ -1724,7 +1736,8 @@
       "expired": "This quote has expired. Reply to the email to request an updated one",
       "paymentFailed": "Failed to start the payment. Please try again",
       "zelleUnavailable": "Zelle payments are not available right now",
-      "failed": "Something went wrong. Please try again"
+      "failed": "Something went wrong. Please try again",
+      "addressInvalid": "We couldn't verify that address. Check the street, city, state and ZIP code"
     },
     "project": {
       "invalidCredentials": "Invalid email or project code",

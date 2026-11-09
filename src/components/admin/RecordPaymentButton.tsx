@@ -6,6 +6,11 @@ import { toast } from "sonner";
 import { BanknotesIcon } from "@heroicons/react/24/outline";
 import Modal from "@/components/ui/Modal";
 import { recordManualPaymentAction } from "@/actions/payments/recordManualPaymentAction";
+import {
+  previewChargeTaxAction,
+  type ChargeTaxPreview,
+} from "@/actions/payments/previewChargeTaxAction";
+import AdminBillingAddress, { readBillingAddress } from "@/components/admin/AdminBillingAddress";
 import { MANUAL_PAYMENT_METHODS, PAYMENT_METHOD_LABELS } from "@/lib/project/paymentMethod";
 import { formatCurrency } from "@/lib/utils";
 import type { AdminProjectPayment } from "@/types/project";
@@ -40,6 +45,28 @@ export default function RecordPaymentButton({ projectId, payment, label }: Recor
   const [isPending, startTransition] = useTransition();
   const methodRef = useRef<HTMLSelectElement>(null);
   const titleId = `record-payment-${payment.id}`;
+  const [taxDollars, setTaxDollars] = useState("0");
+  const [preview, setPreview] = useState<ChargeTaxPreview | "loading" | null>(null);
+  // No address on file: the admin types it and calculates before recording
+  const needsAddress = preview !== "loading" && preview?.taxAmount === null && preview.needsAddress;
+  const [typedTax, setTypedTax] = useState<number | null>(null);
+
+  // Suggest the tax Stripe calculates for the billing address on file
+  const openDialog = async () => {
+    setOpen(true);
+    setTaxDollars("0");
+    setTypedTax(null);
+    setPreview("loading");
+    const result = await previewChargeTaxAction(projectId, payment.kind);
+    if (!result.success) {
+      setPreview({ taxAmount: null, reason: result.error, needsAddress: false });
+      return;
+    }
+    setPreview(result.data);
+    if (result.data.taxAmount !== null) {
+      setTaxDollars((result.data.taxAmount / 100).toFixed(2));
+    }
+  };
 
   const submit = (form: HTMLFormElement) => {
     const data = new FormData(form);
@@ -52,6 +79,7 @@ export default function RecordPaymentButton({ projectId, payment, label }: Recor
         method: method as (typeof MANUAL_PAYMENT_METHODS)[number],
         paidOn,
         taxCents,
+        ...(needsAddress ? { billingAddress: readBillingAddress(data) } : {}),
       });
       if (!result.success) {
         toast.error(result.error);
@@ -63,6 +91,12 @@ export default function RecordPaymentButton({ projectId, payment, label }: Recor
           ? "Final payment recorded — project completed"
           : "Deposit recorded"
       );
+      if (result.data.taxWarning) {
+        toast.warning("Sale not recorded in Stripe Tax", {
+          description: result.data.taxWarning,
+          duration: 15_000,
+        });
+      }
       if (result.data.invoiceErrors.length > 0) {
         toast.warning("Payment recorded, but an invoice could not be sent", {
           description: result.data.invoiceErrors.join(" · "),
@@ -78,7 +112,7 @@ export default function RecordPaymentButton({ projectId, payment, label }: Recor
     <>
       <button
         type="button"
-        onClick={() => setOpen(true)}
+        onClick={openDialog}
         className={`${button} bg-gold/10 text-gold border-gold/30 hover:bg-gold/20`}
       >
         <BanknotesIcon className="w-4 h-4" aria-hidden="true" />
@@ -161,14 +195,46 @@ export default function RecordPaymentButton({ projectId, payment, label }: Recor
                 inputMode="decimal"
                 min="0"
                 step="0.01"
-                defaultValue="0"
+                value={taxDollars}
+                onChange={(event) => setTaxDollars(event.target.value)}
+                aria-describedby={`${titleId}-tax-note`}
                 required
                 className={input}
               />
-              <p className="text-xs text-gray-500">
-                Only if the customer also sent the tax. It goes on the invoice.
+              <p id={`${titleId}-tax-note`} className="text-xs text-gray-500" aria-live="polite">
+                {preview === "loading" ? (
+                  "Calculating with Stripe Tax…"
+                ) : preview && preview.taxAmount !== null ? (
+                  <>
+                    Calculated by Stripe Tax for {preview.place}. Change it only if the customer
+                    sent a different amount; the sale is recorded in Stripe Tax when it matches.
+                  </>
+                ) : needsAddress ? (
+                  typedTax === null ? (
+                    "Enter the billing address below and calculate the tax."
+                  ) : (
+                    "Calculated by Stripe Tax for the address below. Change it only if the customer sent a different amount."
+                  )
+                ) : (
+                  <>
+                    {preview ? `${preview.reason}. ` : ""}Enter the tax the customer sent, if any.
+                    It goes on the invoice; the sale will not be recorded in Stripe Tax.
+                  </>
+                )}
               </p>
             </div>
+
+            {needsAddress ? (
+              <AdminBillingAddress
+                idPrefix={`${titleId}-billing`}
+                amount={payment.amount}
+                kind={payment.kind}
+                onCalculated={(taxCents) => {
+                  setTypedTax(taxCents);
+                  if (taxCents !== null) setTaxDollars((taxCents / 100).toFixed(2));
+                }}
+              />
+            ) : null}
 
             <div className="flex justify-end gap-2 pt-2">
               <button
@@ -181,7 +247,7 @@ export default function RecordPaymentButton({ projectId, payment, label }: Recor
               </button>
               <button
                 type="submit"
-                disabled={isPending}
+                disabled={isPending || preview === "loading" || (needsAddress && typedTax === null)}
                 className={`${button} bg-gold/10 text-gold border-gold/30 hover:bg-gold/20`}
               >
                 {isPending ? "Recording…" : "Record payment"}
