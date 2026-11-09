@@ -1,18 +1,22 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { getTranslations } from "next-intl/server";
+import { getTranslations, setRequestLocale } from "next-intl/server";
 import { genPageMetadata } from "@/utils/genPageMetadata";
 import { JsonLdForBreadcrumb } from "@/components/seo/JsonLdForBreadcrumb";
 import { JsonLdForArticle } from "@/components/seo/JsonLdForArticle";
 import { localizedBreadcrumbs } from "@/lib/seo/breadcrumbs";
 import { IN_LANGUAGE } from "@/lib/seo/inLanguage";
 import { siteConfig } from "@/config/site";
-import { getPostBySlug } from "@/lib/blog";
+import { getAllSlugs, getPostBySlug } from "@/lib/blog";
 import { localizePathname } from "@/i18n/paths";
 import type { Locale } from "@/i18n/routing";
 import BlogPost from "@/components/blog/BlogPost";
 
 type Props = PageProps<"/[locale]/blog/[slug]">;
+
+export function generateStaticParams({ params }: { params: { locale: string } }) {
+  return getAllSlugs(params.locale as Locale).map((slug) => ({ slug }));
+}
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { locale: rawLocale, slug } = await params;
@@ -49,6 +53,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 export default async function BlogPostPage({ params }: Props) {
   const { locale: rawLocale, slug } = await params;
   const locale = rawLocale as Locale;
+  setRequestLocale(locale);
   const post = getPostBySlug(slug, locale);
 
   if (!post) {

@@ -13,7 +13,7 @@ import { pickClientMessages } from "@/i18n/clientMessages";
 
 export const metadata: Metadata = rootMetadata;
 
-// Per-request rendering: the CSP nonce (src/proxy.ts) is stamped at render time
+// The admin always shows live data: never prerender it
 export const dynamic = "force-dynamic";
 
 /**

@@ -1,6 +1,7 @@
 "use client";
 
 import clsx from "clsx";
+import { Suspense } from "react";
 import { useLocale, useTranslations } from "next-intl";
 import { useParams, useSearchParams } from "next/navigation";
 import { Link, usePathname } from "@/i18n/navigation";
@@ -19,13 +20,30 @@ type LanguageSwitchProps = {
  * query string; the URL alone carries the
  * choice, so there is no cookie and nobody is redirected automatically.
  */
-export default function LanguageSwitch({ className, onNavigate }: LanguageSwitchProps) {
+export default function LanguageSwitch(props: LanguageSwitchProps) {
+  // Pages are prerendered without a query string: the links get it once the
+  // page hydrates (useSearchParams needs a Suspense boundary for that)
+  return (
+    <Suspense fallback={<Switch {...props} query={{}} />}>
+      <SwitchWithQuery {...props} />
+    </Suspense>
+  );
+}
+
+function SwitchWithQuery(props: LanguageSwitchProps) {
+  // Links in emails carry their token or session in the query: keep it
+  return <Switch {...props} query={Object.fromEntries(useSearchParams())} />;
+}
+
+function Switch({
+  className,
+  onNavigate,
+  query,
+}: LanguageSwitchProps & { query: Record<string, string> }) {
   const t = useTranslations("Common.languageSwitch");
   const locale = useLocale();
   const pathname = usePathname();
   const params = useParams();
-  // Links in emails carry their token or session in the query: keep it
-  const query = Object.fromEntries(useSearchParams());
 
   return (
     <nav

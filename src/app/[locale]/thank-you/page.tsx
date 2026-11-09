@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { getTranslations } from "next-intl/server";
+import { getTranslations, setRequestLocale } from "next-intl/server";
 import Button from "@/components/ui/Button";
 import { COMPANY } from "@/lib/company";
 import type { Locale } from "@/i18n/routing";
@@ -20,7 +20,8 @@ export async function generateMetadata({ params }: PageProps<"/[locale]/thank-yo
 
 const STEP_ICONS = [EnvelopeIcon, ClockIcon, CheckCircleIcon];
 
-export default async function ThankYouPage() {
+export default async function ThankYouPage({ params }: PageProps<"/[locale]/thank-you">) {
+  setRequestLocale((await params).locale as Locale);
   const t = await getTranslations("ThankYou");
   const steps = (t.raw("steps") as { title: string; description: string }[]).map((step, i) => ({
     ...step,

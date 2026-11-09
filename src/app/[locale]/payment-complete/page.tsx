@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { Suspense } from "react";
-import { getTranslations } from "next-intl/server";
+import { getTranslations, setRequestLocale } from "next-intl/server";
 import PaymentComplete from "@/components/payment/PaymentComplete";
 import PaymentCompleteSkeleton from "@/components/skeletons/PaymentCompleteSkeleton";
 import PageMessages from "@/components/layout/PageMessages";
@@ -21,7 +21,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   });
 }
 
-export default function PaymentCompletePage() {
+export default async function PaymentCompletePage({ params }: Props) {
+  setRequestLocale((await params).locale as Locale);
   return (
     <PageMessages namespaces={["PaymentComplete"]}>
       <Suspense fallback={<PaymentCompleteSkeleton />}>

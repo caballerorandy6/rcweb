@@ -4,6 +4,7 @@ import { z } from "zod";
 import * as Sentry from "@sentry/nextjs";
 import { prisma } from "@/lib/prisma";
 import { requireAdmin } from "@/lib/authGuard";
+import { revalidatePagesWithReviews } from "@/lib/googleReviews/revalidate";
 import type { ActionResultSimple } from "@/types/common";
 
 const inputSchema = z.object({
@@ -43,5 +44,6 @@ export async function setGoogleReviewHiddenAction(
     return { success: false, error: "Could not update the review." };
   }
 
+  revalidatePagesWithReviews();
   return { success: true };
 }

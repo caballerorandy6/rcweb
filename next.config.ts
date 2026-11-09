@@ -1,6 +1,7 @@
 import type { NextConfig } from "next";
 import { withSentryConfig } from "@sentry/nextjs/config";
 import createNextIntlPlugin from "next-intl/plugin";
+import { buildContentSecurityPolicy } from "./src/lib/security/csp";
 
 // Points the server at the per-request i18n config (locale + messages)
 const withNextIntl = createNextIntlPlugin("./src/i18n/request.ts");
@@ -36,6 +37,11 @@ const securityHeaders = [
   {
     key: "Permissions-Policy",
     value: "camera=(), microphone=(), geolocation=(self), interest-cohort=()",
+  },
+  {
+    // Static on purpose so pages stay prerendered (see src/lib/security/csp)
+    key: "Content-Security-Policy",
+    value: buildContentSecurityPolicy(process.env.NODE_ENV === "development"),
   },
 ];
 
@@ -86,8 +92,7 @@ const nextConfig: NextConfig = {
     ];
   },
 
-  // Static security headers for all routes. The Content-Security-Policy
-  // needs a nonce per request, so it is set in src/proxy.ts instead.
+  // Static security headers for all routes, Content-Security-Policy included
   async headers() {
     return [
       {

@@ -1,38 +1,36 @@
 /**
  * Content Security Policy.
  *
- * Built per request in `src/proxy.ts` with a fresh nonce: `script-src` trusts
- * only the scripts that carry it (Next.js puts it on its own bundles and on
- * every `next/script`) and, through `'strict-dynamic'`, whatever those scripts
- * load themselves (gtag, the Meta/LinkedIn pixels, reCAPTCHA, Calendly). No
- * `'unsafe-inline'`: an injected `<script>` cannot guess the nonce, so it
+ * Static, sent from next.config.ts with the other security headers, so pages
+ * can be prerendered and served from the CDN. A per-request nonce forced
+ * every page to render on each visit (2026-10-30 to 2026-11-09) and nearly
+ * used up the Vercel Hobby CPU quota. `script-src` therefore allows
+ * `'unsafe-inline'` (Next.js inlines its flight data and the consent-mode
+ * snippet) plus an explicit list of hosts: a script from any other origin
  * never runs. `'unsafe-eval'` only in development (React rebuilds server
  * stack traces with eval there).
  *
  * Each third-party domain is grouped by service so it is easy to audit what
- * each one needs. The host list under `script-src` is the fallback for
- * browsers without `'strict-dynamic'`; modern browsers ignore it. Adding a
- * tracker means allowing the endpoints it sends data to (`connect-src`,
- * `img-src`, `frame-src`), not just its script.
+ * each one needs. Adding a tracker means allowing its script host here and
+ * the endpoints it sends data to (`connect-src`, `img-src`, `frame-src`).
  *
  * JSON-LD blocks (`type="application/ld+json"`) are data, not scripts: CSP
- * does not apply to them, so they need no nonce.
+ * does not apply to them.
  *
  * `style-src` keeps `'unsafe-inline'` on purpose: React and Framer Motion
  * render `style=""` attributes, and `experimental.inlineCss` ships Tailwind
  * in a `<style>` tag. CSS injection is a far smaller risk than script
- * injection and a nonce there would silently break the layout.
+ * injection.
  */
 
 type CspDirectives = Record<string, string[]>;
 
-function buildDirectives(nonce: string, isDev: boolean): CspDirectives {
+function buildDirectives(isDev: boolean): CspDirectives {
   return {
     "default-src": ["'self'"],
     "script-src": [
       "'self'",
-      `'nonce-${nonce}'`,
-      "'strict-dynamic'",
+      "'unsafe-inline'",
       ...(isDev ? ["'unsafe-eval'"] : []),
       // Google Analytics 4 y Google Tag
       "https://www.googletagmanager.com",
@@ -115,14 +113,9 @@ function buildDirectives(nonce: string, isDev: boolean): CspDirectives {
   };
 }
 
-/** Random, unguessable, base64 (the format browsers expect in `'nonce-…'`). */
-export function createCspNonce(): string {
-  return Buffer.from(crypto.randomUUID()).toString("base64");
-}
-
-/** The header value for one request. */
-export function buildContentSecurityPolicy(nonce: string, isDev: boolean): string {
-  return Object.entries(buildDirectives(nonce, isDev))
+/** The header value, the same for every page. */
+export function buildContentSecurityPolicy(isDev: boolean): string {
+  return Object.entries(buildDirectives(isDev))
     .map(([directive, sources]) => `${directive} ${sources.join(" ")}`)
     .join("; ");
 }

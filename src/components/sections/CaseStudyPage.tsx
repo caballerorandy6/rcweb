@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { setRequestLocale } from "next-intl/server";
 import type { Locale } from "@/i18n/routing";
 import { genPageMetadata } from "@/utils/genPageMetadata";
 import { JsonLdForBreadcrumb } from "@/components/seo/JsonLdForBreadcrumb";
@@ -14,6 +15,7 @@ export async function caseStudyMetadata(key: CaseStudyKey, locale: Locale): Prom
 
 /** Breadcrumb JSON-LD + the template, in the page language */
 export default async function CaseStudyPage({ caseKey, locale }: { caseKey: CaseStudyKey; locale: Locale }) {
+  setRequestLocale(locale);
   const { data, meta, pathname } = await getCaseStudy(caseKey, locale);
   const crumbs = await localizedBreadcrumbs(locale, [
     { key: "home", pathname: "/" },

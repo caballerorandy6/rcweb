@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { setRequestLocale } from "next-intl/server";
 import { Suspense } from "react";
 import { DocumentTextIcon } from "@heroicons/react/24/outline";
 import { genPageMetadata } from "@/utils/genPageMetadata";
@@ -25,6 +26,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 /** The checkout flow lands here with `?plan=`; the notice and the accept actions only show then. */
 export default async function TermsOfServicePage({ params }: Props) {
   const locale = (await params).locale as Locale;
+  setRequestLocale(locale);
   const doc = getLegalDocument("terms-of-service", locale);
   const crumbs = await localizedBreadcrumbs(locale, [
     { key: "home", pathname: "/" },

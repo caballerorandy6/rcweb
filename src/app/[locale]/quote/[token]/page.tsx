@@ -20,6 +20,9 @@ import { DEPOSIT_PERCENT, splitDepositAmount } from "@/lib/project/charges";
 import { getQuoteDisplayStatus } from "@/lib/quote/quoteStatus";
 import QuoteAcceptForm from "@/components/quote/QuoteAcceptForm";
 
+// Per-customer data behind a token: never prerendered or cached
+export const dynamic = "force-dynamic";
+
 type Props = PageProps<"/[locale]/quote/[token]">;
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
