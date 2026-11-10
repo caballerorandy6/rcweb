@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { setRequestLocale } from "next-intl/server";
 import { ShieldCheckIcon } from "@heroicons/react/24/outline";
 import { genPageMetadata } from "@/utils/genPageMetadata";
 import { JsonLdForBreadcrumb } from "@/components/seo/JsonLdForBreadcrumb";
@@ -23,6 +24,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 export default async function PrivacyPolicyPage({ params }: Props) {
   const locale = (await params).locale as Locale;
+  setRequestLocale(locale);
   const doc = getLegalDocument("privacy-policy", locale);
   const crumbs = await localizedBreadcrumbs(locale, [
     { key: "home", pathname: "/" },

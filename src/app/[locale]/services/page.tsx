@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { getTranslations } from "next-intl/server";
+import { getTranslations, setRequestLocale } from "next-intl/server";
 import { ArrowRightIcon } from "@heroicons/react/24/outline";
 
 import { Link } from "@/i18n/navigation";
@@ -19,6 +19,7 @@ export async function generateMetadata({ params }: PageProps<"/[locale]/services
 
 export default async function ServicesPage({ params }: PageProps<"/[locale]/services">) {
   const locale = (await params).locale as Locale;
+  setRequestLocale(locale);
   const [t, common, crumbs, { offers, priceLabels }, pages] = await Promise.all([
     getTranslations("Services"),
     getTranslations("Common"),

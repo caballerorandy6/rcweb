@@ -13,9 +13,8 @@ import MarketingPixels from "@/components/tracking/MarketingPixels";
 import FacebookPixel from "@/components/tracking/FacebookPixel";
 import UTMTracker from "@/components/tracking/UTMTracker";
 import { hasLocale, NextIntlClientProvider } from "next-intl";
-import { getMessages, getTranslations } from "next-intl/server";
+import { getMessages, getTranslations, setRequestLocale } from "next-intl/server";
 import { notFound } from "next/navigation";
-import { headers } from "next/headers";
 import { localizedRootMetadata, rootMetadata } from "@/config/metadata";
 import { routing } from "@/i18n/routing";
 import { pickClientMessages } from "@/i18n/clientMessages";
@@ -27,11 +26,11 @@ export async function generateMetadata({ params }: LayoutProps<"/[locale]">): Pr
   return localizedRootMetadata(locale, await getTranslations({ locale, namespace: "Metadata" }));
 }
 
-// Every page renders per request: the Content-Security-Policy carries a
-// fresh nonce (src/proxy.ts) that Next.js stamps on its scripts while
-// rendering, and a page built ahead of time would have none. The CDN keeps
-// serving the bundles, fonts and images; only the HTML is generated live.
-export const dynamic = "force-dynamic";
+// Both languages are prerendered. Pages with per-customer data (tokens,
+// Checkout results) opt into per-request rendering on their own.
+export function generateStaticParams() {
+  return routing.locales.map((locale) => ({ locale }));
+}
 
 /** Ad pixels ship only while a paid campaign is configured (see MarketingPixels). */
 const hasMarketingPixels = Boolean(
@@ -46,12 +45,10 @@ export default async function RootLayout({
 }: LayoutProps<"/[locale]">) {
   const { locale } = await params;
   if (!hasLocale(routing.locales, locale)) notFound();
+  // Lets next-intl read the locale without request headers (static rendering)
+  setRequestLocale(locale);
 
-  const [messages, t, requestHeaders] = await Promise.all([
-    getMessages(),
-    getTranslations("Common"),
-    headers(),
-  ]);
+  const [messages, t] = await Promise.all([getMessages(), getTranslations("Common")]);
 
   return (
     <html
@@ -69,7 +66,6 @@ export default async function RootLayout({
         <Script
           id="google-consent-mode"
           strategy="beforeInteractive"
-          nonce={requestHeaders.get("x-nonce") ?? undefined}
           dangerouslySetInnerHTML={{
             __html: `
               window.dataLayer = window.dataLayer || [];

@@ -14,6 +14,9 @@ import { formatCurrency, getProjectStatusLabel } from "@/lib/utils";
 import type { ProjectStatus } from "@/generated/prisma/enums";
 import Button from "@/components/ui/Button";
 
+// Per-customer data behind a token: never prerendered or cached
+export const dynamic = "force-dynamic";
+
 type Props = PageProps<"/[locale]/project/[accessToken]">;
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {

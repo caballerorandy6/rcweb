@@ -4,7 +4,7 @@ import type { Metadata, Route } from "next";
 import { Link, type Href } from "@/i18n/navigation";
 import { notFound, permanentRedirect } from "next/navigation";
 
-import { getTranslations } from "next-intl/server";
+import { getTranslations, setRequestLocale } from "next-intl/server";
 import { JsonLdForBreadcrumb } from "@/components/seo/JsonLdForBreadcrumb";
 import { siteConfig } from "@/config/site";
 import { localizePathname } from "@/i18n/paths";
@@ -22,8 +22,10 @@ import {
 
 type Props = PageProps<"/[locale]/services/[slug]">;
 
-export function generateStaticParams() {
-  return offers.flatMap((offer) => [{ slug: offer.slug }, { slug: offer.slugEs }]);
+// Each language prerenders its own slugs; the other language's slug
+// redirects on demand (see below)
+export function generateStaticParams({ params }: { params: { locale: string } }) {
+  return offers.map((offer) => ({ slug: params.locale === "es" ? offer.slugEs : offer.slug }));
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
@@ -58,6 +60,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 export default async function ServicePage({ params }: Props) {
   const { slug, locale: rawLocale } = await params;
   const locale = rawLocale as Locale;
+  setRequestLocale(locale);
   const entry = await getLocalizedServicePage(slug, locale);
 
   if (!entry) notFound();

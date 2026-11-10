@@ -13,6 +13,9 @@ export const metadata: Metadata = {
 
 /** 32 random bytes in base64url, as issued by sendPortalLinkAction */
 const TOKEN_SHAPE = /^[A-Za-z0-9_-]{43}$/;
+// Per-customer data behind a token: never prerendered or cached
+export const dynamic = "force-dynamic";
+
 type Params = Promise<{ token: string; locale: Locale }>;
 
 /**

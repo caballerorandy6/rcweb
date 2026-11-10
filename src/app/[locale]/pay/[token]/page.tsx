@@ -16,6 +16,9 @@ export const metadata: Metadata = {
   },
 };
 
+// Per-customer data behind a token: never prerendered or cached
+export const dynamic = "force-dynamic";
+
 type Params = Promise<{ token: string; locale: Locale }>;
 
 // Magic link from the "project ready" email: the access token identifies the

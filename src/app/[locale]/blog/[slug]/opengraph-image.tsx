@@ -1,6 +1,6 @@
 import { ImageResponse } from "next/og";
 import { siteConfig } from "@/config/site";
-import { getPostBySlug } from "@/lib/blog";
+import { getAllSlugs, getPostBySlug } from "@/lib/blog";
 import type { Locale } from "@/i18n/routing";
 import { formatDate } from "@/lib/utils";
 import { loadOgFonts } from "@/lib/og/fonts";
@@ -11,6 +11,11 @@ export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
 type Props = { params: Promise<{ locale: string; slug: string }> };
+
+// Generated at build time, like the posts themselves
+export function generateStaticParams({ params }: { params: { locale: string } }) {
+  return getAllSlugs(params.locale as Locale).map((slug) => ({ slug }));
+}
 
 /** One card per post and language: title, description and tag in the page language */
 export default async function Image({ params }: Props) {

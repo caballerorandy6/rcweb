@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import dynamic from "next/dynamic";
-import { getTranslations } from "next-intl/server";
+import { getTranslations, setRequestLocale } from "next-intl/server";
 import { genPageMetadata } from "@/utils/genPageMetadata";
 import { getLocalizedCatalog } from "@/lib/catalog";
 
@@ -25,6 +25,11 @@ import { JsonLdForLocalBusiness } from "@/components/seo/JsonLdForLocalBusiness"
 import { JsonLdForWebSite } from "@/components/seo/JsonLdForWebSite";
 import type { Locale } from "@/i18n/routing";
 
+// Shows the Google reviews from the database: regenerated after each sync
+// (revalidatePagesWithReviews) and, as a safety net, every 7 days
+// (GOOGLE_REVIEWS_REFRESH_DAYS; it must be a literal here).
+export const revalidate = 604800;
+
 export async function generateMetadata({ params }: PageProps<"/[locale]">): Promise<Metadata> {
   const locale = (await params).locale as Locale;
   const t = await getTranslations({ locale, namespace: "Metadata.home" });
@@ -36,8 +41,10 @@ export async function generateMetadata({ params }: PageProps<"/[locale]">): Prom
   });
 }
 
-export default async function Home() {
-  const { faqs, offers } = await getLocalizedCatalog();
+export default async function Home({ params }: PageProps<"/[locale]">) {
+  const locale = (await params).locale as Locale;
+  setRequestLocale(locale);
+  const { faqs, offers } = await getLocalizedCatalog(locale);
 
   return (
     <div>

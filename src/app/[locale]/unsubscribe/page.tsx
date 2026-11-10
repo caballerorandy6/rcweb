@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { Suspense } from "react";
-import { getTranslations } from "next-intl/server";
+import { getTranslations, setRequestLocale } from "next-intl/server";
 import Unsubscribe from "@/components/forms/Unsubscribe";
 import UnsubscribeSkeleton from "@/components/skeletons/UnsubscribeSkeleton";
 import PageMessages from "@/components/layout/PageMessages";
@@ -21,7 +21,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   });
 }
 
-export default function UnsubscribePage() {
+export default async function UnsubscribePage({ params }: Props) {
+  setRequestLocale((await params).locale as Locale);
   return (
     <section id="unsubscribe-page">
       <PageMessages namespaces={["Unsubscribe"]}>

@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { buildContentSecurityPolicy, createCspNonce } from "./csp";
+import { buildContentSecurityPolicy } from "./csp";
 
 function directive(csp: string, name: string): string {
   const found = csp.split("; ").find((part) => part.startsWith(`${name} `));
@@ -8,24 +8,22 @@ function directive(csp: string, name: string): string {
 }
 
 describe("buildContentSecurityPolicy", () => {
-  const nonce = "dGVzdC1ub25jZQ==";
-
-  it("trusts only nonced scripts and what they load", () => {
-    const scriptSrc = directive(buildContentSecurityPolicy(nonce, false), "script-src");
-    expect(scriptSrc).toContain(`'nonce-${nonce}'`);
-    expect(scriptSrc).toContain("'strict-dynamic'");
-    expect(scriptSrc).not.toContain("'unsafe-inline'");
+  it("allows inline scripts and the listed hosts only, without nonces", () => {
+    const scriptSrc = directive(buildContentSecurityPolicy(false), "script-src");
+    expect(scriptSrc).toContain("'unsafe-inline'");
+    expect(scriptSrc).toContain("https://www.googletagmanager.com");
+    // 'strict-dynamic' would make browsers ignore 'unsafe-inline' and the hosts
+    expect(scriptSrc).not.toContain("'strict-dynamic'");
+    expect(scriptSrc).not.toContain("'nonce-");
     expect(scriptSrc).not.toContain("'unsafe-eval'");
   });
 
   it("allows eval only in development", () => {
-    expect(directive(buildContentSecurityPolicy(nonce, true), "script-src")).toContain(
-      "'unsafe-eval'"
-    );
+    expect(directive(buildContentSecurityPolicy(true), "script-src")).toContain("'unsafe-eval'");
   });
 
   it("keeps the hardening directives", () => {
-    const csp = buildContentSecurityPolicy(nonce, false);
+    const csp = buildContentSecurityPolicy(false);
     expect(directive(csp, "object-src")).toBe("object-src 'none'");
     expect(directive(csp, "base-uri")).toBe("base-uri 'self'");
     expect(directive(csp, "frame-ancestors")).toBe("frame-ancestors 'self'");
@@ -33,15 +31,6 @@ describe("buildContentSecurityPolicy", () => {
   });
 
   it("is a single-line header", () => {
-    expect(buildContentSecurityPolicy(nonce, false)).not.toMatch(/[\r\n]/);
-  });
-});
-
-describe("createCspNonce", () => {
-  it("is base64 and unique per call", () => {
-    const a = createCspNonce();
-    const b = createCspNonce();
-    expect(a).toMatch(/^[A-Za-z0-9+/]+=*$/);
-    expect(a).not.toBe(b);
+    expect(buildContentSecurityPolicy(false)).not.toMatch(/[\r\n]/);
   });
 });

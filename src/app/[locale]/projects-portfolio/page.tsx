@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { getTranslations } from "next-intl/server";
+import { getTranslations, setRequestLocale } from "next-intl/server";
 
 import type { Locale } from "@/i18n/routing";
 import { genPageMetadata } from "@/utils/genPageMetadata";
@@ -17,6 +17,7 @@ export async function generateMetadata({ params }: PageProps<"/[locale]/projects
 
 export default async function ProjectsPortfolioPage({ params }: PageProps<"/[locale]/projects-portfolio">) {
   const locale = (await params).locale as Locale;
+  setRequestLocale(locale);
   const [t, common, crumbs, { projects }] = await Promise.all([
     getTranslations("Portfolio"),
     getTranslations("Common"),

@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { getTranslations } from "next-intl/server";
+import { getTranslations, setRequestLocale } from "next-intl/server";
 import { genPageMetadata } from "@/utils/genPageMetadata";
 import { JsonLdForBreadcrumb } from "@/components/seo/JsonLdForBreadcrumb";
 import { localizedBreadcrumbs } from "@/lib/seo/breadcrumbs";
@@ -18,6 +18,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 export default async function BlogPage({ params }: Props) {
   const locale = (await params).locale as Locale;
+  setRequestLocale(locale);
   const [crumbs, t] = await Promise.all([
     localizedBreadcrumbs(locale, [
       { key: "home", pathname: "/" },

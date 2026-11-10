@@ -5,7 +5,7 @@ import type { Metadata } from "next";
 import { genPageMetadata } from "@/utils/genPageMetadata";
 import { JsonLdForBreadcrumb } from "@/components/seo/JsonLdForBreadcrumb";
 import { JsonLdForLocalBusiness } from "@/components/seo/JsonLdForLocalBusiness";
-import { getTranslations } from "next-intl/server";
+import { getTranslations, setRequestLocale } from "next-intl/server";
 import type { Locale } from "@/i18n/routing";
 import { localizedBreadcrumbs } from "@/lib/seo/breadcrumbs";
 import BackLink from "@/components/ui/BackLink";
@@ -23,6 +23,11 @@ import {
 } from "@heroicons/react/24/outline";
 
 type Props = PageProps<"/[locale]/web-developer-houston-tx">;
+
+// Shows the Google reviews from the database: regenerated after each sync
+// (revalidatePagesWithReviews) and, as a safety net, every 7 days
+// (GOOGLE_REVIEWS_REFRESH_DAYS; it must be a literal here).
+export const revalidate = 604800;
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const locale = (await params).locale as Locale;
@@ -74,6 +79,7 @@ const caseStudyLinks = [
 
 export default async function WebDeveloperHoustonPage({ params }: Props) {
   const locale = (await params).locale as Locale;
+  setRequestLocale(locale);
   const [t, common, crumbs] = await Promise.all([
     getTranslations("Houston"),
     getTranslations("Common"),

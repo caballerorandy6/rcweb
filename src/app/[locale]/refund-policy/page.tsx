@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { getTranslations } from "next-intl/server";
+import { getTranslations, setRequestLocale } from "next-intl/server";
 import { CurrencyDollarIcon } from "@heroicons/react/24/outline";
 import { genPageMetadata } from "@/utils/genPageMetadata";
 import { JsonLdForBreadcrumb } from "@/components/seo/JsonLdForBreadcrumb";
@@ -25,6 +25,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 export default async function RefundPolicyPage({ params }: Props) {
   const locale = (await params).locale as Locale;
+  setRequestLocale(locale);
   const doc = getLegalDocument("refund-policy", locale);
   const [crumbs, t] = await Promise.all([
     localizedBreadcrumbs(locale, [
