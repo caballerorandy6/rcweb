@@ -20,7 +20,21 @@ export function proxy(request: NextRequest) {
   // The backoffice has no locale segment: skip the language routing, which
   // would rewrite /admin-dashboard to /en/admin-dashboard.
   if (isBackofficePath(request.nextUrl.pathname)) return NextResponse.next();
+  // `/en/...` is the internal path of the English pages. next-intl sends it to
+  // the unprefixed URL with a 307; a 308 tells Google the move is permanent.
+  const unprefixed = stripDefaultLocale(request.nextUrl.pathname);
+  if (unprefixed !== null) {
+    const url = request.nextUrl.clone();
+    url.pathname = unprefixed;
+    return NextResponse.redirect(url, 308);
+  }
   return handleI18nRouting(request);
+}
+
+/** `/en` → `/`, `/en/blog/x` → `/blog/x`; null when the path has no `/en` prefix */
+function stripDefaultLocale(pathname: string): string | null {
+  if (pathname === "/en") return "/";
+  return pathname.startsWith("/en/") ? pathname.slice(3) : null;
 }
 
 /** Admin pages, their login and the internal tools (see app/(backoffice)) */
