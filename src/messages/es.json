@@ -1489,7 +1489,9 @@
       "line2": "Apto., suite (opcional)",
       "city": "Ciudad",
       "state": "Estado",
+      "stateFormat": "Código del estado de dos letras, como TX",
       "postalCode": "Código postal",
+      "postalCodeFormat": "Código postal de 5 dígitos, como 77489",
       "showZelle": "Ver los datos de Zelle",
       "cancelZelle": "Cancelar"
     }

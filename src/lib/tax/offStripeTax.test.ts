@@ -2,6 +2,7 @@ import { describe, expect, it } from "vitest";
 import { BillingAddressSchema } from "./billingAddress";
 import {
   buildTaxCalculationParams,
+  OffStripeTaxSchema,
   isCalculationFresh,
   taxTransactionReference,
 } from "./offStripeTax";
@@ -56,5 +57,20 @@ describe("isCalculationFresh", () => {
     expect(isCalculationFresh(calculatedAt, daysLater(88.9))).toBe(true);
     expect(isCalculationFresh(calculatedAt, daysLater(89))).toBe(false);
     expect(isCalculationFresh(calculatedAt, daysLater(120))).toBe(false);
+  });
+});
+
+describe("OffStripeTaxSchema", () => {
+  it("accepts the calculation a dialog sends back", () => {
+    expect(OffStripeTaxSchema.parse({ calculationId: "taxcalc_1Abc", taxAmount: 6600 })).toEqual({
+      calculationId: "taxcalc_1Abc",
+      taxAmount: 6600,
+    });
+  });
+
+  it("rejects ids that are not Stripe Tax calculations and non-cent amounts", () => {
+    expect(OffStripeTaxSchema.safeParse({ calculationId: "tax_1Abc", taxAmount: 6600 }).success).toBe(false);
+    expect(OffStripeTaxSchema.safeParse({ calculationId: "taxcalc_1Abc", taxAmount: -1 }).success).toBe(false);
+    expect(OffStripeTaxSchema.safeParse({ calculationId: "taxcalc_1Abc", taxAmount: 66.5 }).success).toBe(false);
   });
 });

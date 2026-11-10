@@ -101,7 +101,8 @@ export default function QuoteAcceptForm({
           type="checkbox"
           checked={accepted}
           onChange={(e) => setAccepted(e.target.checked)}
-          aria-describedby={hintId}
+          // The hint is unmounted together with the card button
+          aria-describedby={showAddress ? undefined : hintId}
           className="mt-1 h-4 w-4 shrink-0 rounded border-gray-600 bg-gray-900 text-gold focus:ring-gold focus:ring-offset-gray-900"
         />
         <span className="text-gray-300 text-sm">
@@ -157,6 +158,8 @@ export default function QuoteAcceptForm({
                   inputClassName="uppercase"
                   placeholder="TX"
                   maxLength={2}
+                  pattern="[A-Za-z]{2}"
+                  title={t("stateFormat")}
                   required
                 />
                 <AddressField
@@ -167,6 +170,8 @@ export default function QuoteAcceptForm({
                   inputMode="numeric"
                   className="col-span-4 sm:col-span-2"
                   maxLength={10}
+                  pattern="\d{5}(-\d{4})?"
+                  title={t("postalCodeFormat")}
                   required
                 />
               </div>
@@ -234,7 +239,7 @@ function AddressField({
   inputClassName?: string;
 } & Pick<
   InputHTMLAttributes<HTMLInputElement>,
-  "autoComplete" | "autoFocus" | "inputMode" | "maxLength" | "placeholder" | "required"
+  "autoComplete" | "autoFocus" | "inputMode" | "maxLength" | "pattern" | "placeholder" | "required" | "title"
 >) {
   return (
     <div className={className}>

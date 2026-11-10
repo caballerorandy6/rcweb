@@ -9,6 +9,7 @@ import { createProjectFromQuoteAction } from "@/actions/quotes/createProjectFrom
 import { MANUAL_PAYMENT_METHODS, PAYMENT_METHOD_LABELS } from "@/lib/project/paymentMethod";
 import { formatCurrency, formatDate } from "@/lib/utils";
 import { formatBillingPlace } from "@/lib/tax/billingAddress";
+import type { OffStripeTax } from "@/lib/tax/stripeTax";
 import AdminBillingAddress, { readBillingAddress } from "@/components/admin/AdminBillingAddress";
 import type { AdminQuote } from "@/types/quote";
 
@@ -58,11 +59,12 @@ export default function CreateProjectFromQuoteButton({
   const [taxDollars, setTaxDollars] = useState(storedTax);
   // The customer never gave an address (no Zelle request): the admin types it
   const needsAddress = quote.billingAddress === null;
-  const [typedTax, setTypedTax] = useState<number | null>(null);
+  // Stripe Tax's calculation for the typed address; the action records it instead of calculating again
+  const [calculation, setCalculation] = useState<OffStripeTax | null>(null);
 
   const openDialog = () => {
     setTaxDollars(storedTax);
-    setTypedTax(null);
+    setCalculation(null);
     setOpen(true);
   };
 
@@ -76,6 +78,7 @@ export default function CreateProjectFromQuoteButton({
         method,
         paidOn,
         taxCents,
+        ...(calculation ? { calculation } : {}),
         ...(needsAddress ? { billingAddress: readBillingAddress(data) } : {}),
       });
       if (!result.success) {
@@ -216,7 +219,7 @@ export default function CreateProjectFromQuoteButton({
                     if the customer sent a different amount; the sale is recorded in Stripe Tax
                     when it matches.
                   </>
-                ) : typedTax === null ? (
+                ) : calculation === null ? (
                   "Enter the billing address below and calculate the tax."
                 ) : (
                   "Calculated by Stripe Tax for the address below. Change it only if the customer sent a different amount."
@@ -229,9 +232,9 @@ export default function CreateProjectFromQuoteButton({
                 idPrefix={`${titleId}-billing`}
                 amount={depositAmount}
                 kind="deposit"
-                onCalculated={(taxCents) => {
-                  setTypedTax(taxCents);
-                  if (taxCents !== null) setTaxDollars((taxCents / 100).toFixed(2));
+                onCalculated={(tax) => {
+                  setCalculation(tax);
+                  if (tax) setTaxDollars((tax.taxAmount / 100).toFixed(2));
                 }}
               />
             ) : null}
@@ -247,7 +250,7 @@ export default function CreateProjectFromQuoteButton({
               </button>
               <button
                 type="submit"
-                disabled={isPending || (needsAddress && typedTax === null)}
+                disabled={isPending || (needsAddress && calculation === null)}
                 className={`${button} bg-gold/10 text-gold border-gold/30 hover:bg-gold/20`}
               >
                 {isPending ? "Creating…" : "Create project"}

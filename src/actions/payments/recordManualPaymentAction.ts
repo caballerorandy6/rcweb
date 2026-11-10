@@ -9,6 +9,7 @@ import { getProjectCharges, isPaid } from "@/lib/project/charges";
 import { createInvoiceAndSendEmail } from "@/lib/invoice/createInvoiceAndSendEmail";
 import { MANUAL_PAYMENT_METHODS } from "@/lib/project/paymentMethod";
 import { BillingAddressSchema, parseStoredBillingAddress } from "@/lib/tax/billingAddress";
+import { OffStripeTaxSchema } from "@/lib/tax/offStripeTax";
 import { recordChargeTax } from "@/lib/tax/recordChargeTax";
 import type { ProjectStatus } from "@/generated/prisma/enums";
 import type { ActionResult } from "@/types/common";
@@ -20,6 +21,8 @@ const RecordManualPaymentSchema = z.object({
   paidOn: z.iso.date(),
   /** Sales tax included in what the customer sent, in cents */
   taxCents: z.number().int().min(0).max(10_000_000),
+  /** The Stripe Tax calculation the dialog suggested, recorded as is while the tax matches */
+  calculation: OffStripeTaxSchema.optional(),
   /** Typed by the admin when the project has no billing address on file */
   billingAddress: BillingAddressSchema.optional(),
 });
@@ -64,7 +67,7 @@ export async function recordManualPaymentAction(
     if (!parsed.success) {
       return { success: false, error: z.prettifyError(parsed.error) };
     }
-    const { kind, method, paidOn, taxCents, billingAddress: typedAddress } = parsed.data;
+    const { kind, method, paidOn, taxCents, calculation, billingAddress: typedAddress } = parsed.data;
 
     const paidAt = toPaidAt(paidOn);
     if (paidAt.getTime() > Date.now() + 24 * 60 * 60 * 1000) {
@@ -124,6 +127,10 @@ export async function recordManualPaymentAction(
       amount: charge.amount,
       taxAmount: taxCents,
       address,
+      // Suggested moments ago in the dialog, so it is fresh
+      calculation: calculation
+        ? { id: calculation.calculationId, taxAmount: calculation.taxAmount, calculatedAt: new Date() }
+        : null,
     });
     if ("transactionId" in taxResult) {
       await prisma.payment.update({

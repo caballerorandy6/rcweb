@@ -3,6 +3,7 @@
 import { useState, useTransition, type InputHTMLAttributes } from "react";
 import { estimateChargeTaxAction } from "@/actions/payments/estimateChargeTaxAction";
 import type { BillingAddressInput } from "@/lib/tax/billingAddress";
+import type { OffStripeTax } from "@/lib/tax/stripeTax";
 import { formatCurrency } from "@/lib/utils";
 
 const input =
@@ -27,8 +28,8 @@ type AdminBillingAddressProps = {
   /** Cents of the charge, before tax */
   amount: number;
   kind: "deposit" | "final";
-  /** Tax Stripe calculated for the address, or null when the address changed since */
-  onCalculated: (taxCents: number | null) => void;
+  /** Stripe Tax's calculation for the address, or null when the address changed since */
+  onCalculated: (tax: OffStripeTax | null) => void;
 };
 
 /**
@@ -60,11 +61,9 @@ export default function AdminBillingAddress({ idPrefix, amount, kind, onCalculat
         onCalculated(null);
         return;
       }
-      setMessage({
-        text: `Stripe Tax: ${formatCurrency(result.data.taxAmount)} for ${result.data.place}.`,
-        error: false,
-      });
-      onCalculated(result.data.taxAmount);
+      const { place, ...tax } = result.data;
+      setMessage({ text: `Stripe Tax: ${formatCurrency(tax.taxAmount)} for ${place}.`, error: false });
+      onCalculated(tax);
     });
   };
 

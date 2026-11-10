@@ -6,12 +6,12 @@ import * as Sentry from "@sentry/nextjs";
 import { prisma } from "@/lib/prisma";
 import { requireAdmin } from "@/lib/authGuard";
 import { LEGAL_LAST_UPDATED } from "@/lib/company";
-import { splitDepositAmount } from "@/lib/project/charges";
+import { getProjectCharges, splitDepositAmount } from "@/lib/project/charges";
 import { uniqueProjectCode } from "@/lib/project/uniqueProjectCode";
 import { createProjectFromDeposit } from "@/lib/project/createProjectFromDeposit";
 import { MANUAL_PAYMENT_METHODS } from "@/lib/project/paymentMethod";
-import { getProjectCharges } from "@/lib/project/charges";
 import { BillingAddressSchema, parseStoredBillingAddress } from "@/lib/tax/billingAddress";
+import { OffStripeTaxSchema } from "@/lib/tax/offStripeTax";
 import { recordChargeTax } from "@/lib/tax/recordChargeTax";
 import type { ActionResult } from "@/types/common";
 
@@ -21,6 +21,8 @@ const CreateProjectFromQuoteSchema = z.object({
   paidOn: z.iso.date(),
   /** Sales tax included in what the customer sent, in cents */
   taxCents: z.number().int().min(0).max(10_000_000),
+  /** Calculated in the dialog for the typed address, recorded as is while the tax matches */
+  calculation: OffStripeTaxSchema.optional(),
   /** Typed by the admin when the customer never gave one (no Zelle request) */
   billingAddress: BillingAddressSchema.optional(),
 });
@@ -66,7 +68,7 @@ export async function createProjectFromQuoteAction(
     if (!parsed.success) {
       return { success: false, error: z.prettifyError(parsed.error) };
     }
-    const { method, paidOn, taxCents, billingAddress: typedAddress } = parsed.data;
+    const { method, paidOn, taxCents, calculation: typedCalculation, billingAddress: typedAddress } = parsed.data;
     const paidAt = toPaidAt(paidOn);
     if (paidAt.getTime() > Date.now() + 24 * 60 * 60 * 1000) {
       return { success: false, error: "The payment date cannot be in the future" };
@@ -84,13 +86,15 @@ export async function createProjectFromQuoteAction(
       return { success: false, error: `A ${quote.status} quote cannot be turned into a project` };
     }
 
-    const { deposit, balance } = splitDepositAmount(quote.totalAmount);
-    const projectCode = await uniqueProjectCode();
     // Sales tax depends on where the customer is: never record a deposit blind
-    const billingAddress = parseStoredBillingAddress(quote.billingAddress) ?? typedAddress ?? null;
+    const storedAddress = parseStoredBillingAddress(quote.billingAddress);
+    const billingAddress = storedAddress ?? typedAddress ?? null;
     if (!billingAddress) {
       return { success: false, error: "Enter the customer's billing address to calculate the sales tax" };
     }
+
+    const { deposit, balance } = splitDepositAmount(quote.totalAmount);
+    const projectCode = await uniqueProjectCode();
 
     const { project, emailErrors } = await createProjectFromDeposit(
       {
@@ -124,14 +128,18 @@ export async function createProjectFromQuoteAction(
       amount: deposit,
       taxAmount: taxCents,
       address: billingAddress,
+      // The calculation the customer saw with the Zelle request, or the one
+      // the admin just made for the address they typed
       calculation:
-        quote.zelleTaxCalculationId && quote.zelleRequestedAt
+        storedAddress && quote.zelleTaxCalculationId && quote.zelleRequestedAt
           ? {
               id: quote.zelleTaxCalculationId,
               taxAmount: quote.zelleTaxAmount ?? 0,
               calculatedAt: quote.zelleRequestedAt,
             }
-          : null,
+          : typedCalculation
+            ? { id: typedCalculation.calculationId, taxAmount: typedCalculation.taxAmount, calculatedAt: new Date() }
+            : null,
     });
     if ("transactionId" in taxResult) {
       await prisma.payment.update({

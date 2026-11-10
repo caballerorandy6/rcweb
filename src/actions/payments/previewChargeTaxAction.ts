@@ -10,10 +10,10 @@ import { calculateOffStripeTax } from "@/lib/tax/stripeTax";
 import type { ActionResult } from "@/types/common";
 
 export type ChargeTaxPreview =
-  /** Stripe Tax's amount for the project's billing address */
-  | { taxAmount: number; place: string }
-  /** Nothing to suggest: no address on file (the admin types it), or Stripe could not place it */
-  | { taxAmount: null; reason: string; needsAddress: boolean };
+  /** Stripe Tax's amount for the project's billing address; the calculation is reused when recording */
+  | { taxAmount: number; calculationId: string; place: string }
+  /** Nothing to suggest: no address on file, or Stripe could not place it */
+  | { taxAmount: null; reason: string };
 
 /**
  * Admin: the sales tax a charge paid outside Stripe should carry, so the
@@ -43,7 +43,7 @@ export async function previewChargeTaxAction(
 
     const address = parseStoredBillingAddress(project.billingAddress);
     if (!address) {
-      return { success: true, data: { taxAmount: null, reason: "No billing address on file", needsAddress: true } };
+      return { success: true, data: { taxAmount: null, reason: "No billing address on file" } };
     }
 
     const charge = getProjectCharges(project.payments)[kind];
@@ -51,16 +51,16 @@ export async function previewChargeTaxAction(
     if (!result.ok) {
       return {
         success: true,
-        data: {
-          taxAmount: null,
-          reason: "Stripe Tax could not place the billing address on file",
-          needsAddress: false,
-        },
+        data: { taxAmount: null, reason: "Stripe Tax could not place the billing address on file" },
       };
     }
     return {
       success: true,
-      data: { taxAmount: result.tax.taxAmount, place: formatBillingPlace(address) },
+      data: {
+        taxAmount: result.tax.taxAmount,
+        calculationId: result.tax.calculationId,
+        place: formatBillingPlace(address),
+      },
     };
   } catch (error) {
     Sentry.captureException(error, { tags: { feature: "sales-tax" }, extra: { projectId, kind } });

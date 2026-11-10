@@ -1489,7 +1489,9 @@
       "line2": "Apt, suite (optional)",
       "city": "City",
       "state": "State",
+      "stateFormat": "Two-letter state code, like TX",
       "postalCode": "ZIP code",
+      "postalCodeFormat": "5-digit ZIP code, like 77489",
       "showZelle": "Show the Zelle details",
       "cancelZelle": "Cancel"
     }

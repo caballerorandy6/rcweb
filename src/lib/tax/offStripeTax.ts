@@ -1,6 +1,14 @@
 import type Stripe from "stripe";
+import { z } from "zod";
 import type { PaymentKind } from "@/generated/prisma/enums";
 import { toStripeAddress, type BillingAddress } from "./billingAddress";
+
+/** A calculation the admin dialog received, sent back so the action records it without a second call */
+export const OffStripeTaxSchema = z.object({
+  calculationId: z.string().startsWith("taxcalc_").max(100),
+  /** Cents on top of the charge */
+  taxAmount: z.number().int().min(0).max(10_000_000),
+});
 
 // Sales tax on a charge paid outside Stripe (Zelle, cash), following
 // https://docs.stripe.com/tax/off-stripe: a Tax Calculation gives the amount

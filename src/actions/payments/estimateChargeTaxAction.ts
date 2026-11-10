@@ -4,7 +4,7 @@ import { z } from "zod";
 import * as Sentry from "@sentry/nextjs";
 import { requireAdmin } from "@/lib/authGuard";
 import { BillingAddressSchema, formatBillingPlace } from "@/lib/tax/billingAddress";
-import { calculateOffStripeTax } from "@/lib/tax/stripeTax";
+import { calculateOffStripeTax, type OffStripeTax } from "@/lib/tax/stripeTax";
 import type { ActionResult } from "@/types/common";
 
 const EstimateSchema = z.object({
@@ -16,12 +16,12 @@ const EstimateSchema = z.object({
 
 /**
  * Admin: sales tax for a charge paid outside Stripe when there is no billing
- * address on file and the admin types the customer's. Only a preview: the
- * action that records the payment calculates again with its own amount.
+ * address on file and the admin types the customer's. The action that
+ * records the payment reuses this calculation while the tax still matches.
  */
 export async function estimateChargeTaxAction(
   input: z.input<typeof EstimateSchema>
-): Promise<ActionResult<{ taxAmount: number; place: string }>> {
+): Promise<ActionResult<OffStripeTax & { place: string }>> {
   try {
     const authCheck = await requireAdmin();
     if (!authCheck.authorized) {
@@ -37,7 +37,7 @@ export async function estimateChargeTaxAction(
     if (!result.ok) {
       return { success: false, error: "Stripe Tax could not place that address; check it" };
     }
-    return { success: true, data: { taxAmount: result.tax.taxAmount, place: formatBillingPlace(address) } };
+    return { success: true, data: { ...result.tax, place: formatBillingPlace(address) } };
   } catch (error) {
     Sentry.captureException(error, { tags: { feature: "sales-tax" } });
     return { success: false, error: "Could not calculate the sales tax" };
