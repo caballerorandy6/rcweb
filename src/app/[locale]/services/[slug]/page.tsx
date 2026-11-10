@@ -22,10 +22,11 @@ import {
 
 type Props = PageProps<"/[locale]/services/[slug]">;
 
-// Each language prerenders its own slugs; the other language's slug
-// redirects on demand (see below)
-export function generateStaticParams({ params }: { params: { locale: string } }) {
-  return offers.map((offer) => ({ slug: params.locale === "es" ? offer.slugEs : offer.slug }));
+// Each language prerenders its own slugs and the other language's, which
+// become static redirects (see below). Any other slug is a 404 without
+// rendering: the [locale] layout sets dynamicParams = false.
+export function generateStaticParams() {
+  return offers.flatMap((offer) => [{ slug: offer.slug }, { slug: offer.slugEs }]);
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {

@@ -31,6 +31,7 @@ export async function generateMetadata({ params }: LayoutProps<"/[locale]">): Pr
 export function generateStaticParams() {
   return routing.locales.map((locale) => ({ locale }));
 }
+export const dynamicParams = false;
 
 /** Ad pixels ship only while a paid campaign is configured (see MarketingPixels). */
 const hasMarketingPixels = Boolean(
