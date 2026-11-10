@@ -20,6 +20,8 @@ export interface ZelleRequestAdminEmailProps {
   planName: string;
   /** Cents */
   depositAmount: number;
+  /** Cents of sales tax on top of the deposit (Stripe Tax, from the billing address) */
+  taxAmount: number;
   /** Admin page of the quote, where the deposit is confirmed */
   adminQuoteUrl: string;
 }
@@ -33,6 +35,7 @@ export const ZelleRequestAdminEmail = ({
   customerEmail,
   planName,
   depositAmount,
+  taxAmount,
   adminQuoteUrl,
 }: ZelleRequestAdminEmailProps) => (
   <Html>
@@ -51,6 +54,16 @@ export const ZelleRequestAdminEmail = ({
             quote {quoteNumber} and chose to pay the{" "}
             <strong>{formatCurrency(depositAmount)}</strong> deposit by Zelle, with
             the quote number as the memo.
+          </Text>
+          <Text style={styles.paragraph}>
+            {taxAmount > 0 ? (
+              <>
+                Sales tax: <strong>{formatCurrency(taxAmount)}</strong>, so expect{" "}
+                <strong>{formatCurrency(depositAmount + taxAmount)}</strong> in total.
+              </>
+            ) : (
+              <>No sales tax for the billing address they gave, so expect exactly the deposit.</>
+            )}
           </Text>
           <Text style={styles.paragraph}>
             When the money shows up, open the quote and press &ldquo;Deposit

@@ -6,10 +6,13 @@ import * as Sentry from "@sentry/nextjs";
 import { prisma } from "@/lib/prisma";
 import { requireAdmin } from "@/lib/authGuard";
 import { LEGAL_LAST_UPDATED } from "@/lib/company";
-import { splitDepositAmount } from "@/lib/project/charges";
+import { getProjectCharges, splitDepositAmount } from "@/lib/project/charges";
 import { uniqueProjectCode } from "@/lib/project/uniqueProjectCode";
 import { createProjectFromDeposit } from "@/lib/project/createProjectFromDeposit";
 import { MANUAL_PAYMENT_METHODS } from "@/lib/project/paymentMethod";
+import { BillingAddressSchema, parseStoredBillingAddress } from "@/lib/tax/billingAddress";
+import { OffStripeTaxSchema } from "@/lib/tax/offStripeTax";
+import { recordChargeTax } from "@/lib/tax/recordChargeTax";
 import type { ActionResult } from "@/types/common";
 
 const CreateProjectFromQuoteSchema = z.object({
@@ -18,9 +21,13 @@ const CreateProjectFromQuoteSchema = z.object({
   paidOn: z.iso.date(),
   /** Sales tax included in what the customer sent, in cents */
   taxCents: z.number().int().min(0).max(10_000_000),
+  /** Calculated in the dialog for the typed address, recorded as is while the tax matches */
+  calculation: OffStripeTaxSchema.optional(),
+  /** Typed by the admin when the customer never gave one (no Zelle request) */
+  billingAddress: BillingAddressSchema.optional(),
 });
 
-export type CreateProjectFromQuoteInput = z.infer<typeof CreateProjectFromQuoteSchema>;
+export type CreateProjectFromQuoteInput = z.input<typeof CreateProjectFromQuoteSchema>;
 
 export type CreateProjectFromQuoteData = {
   projectId: string;
@@ -28,6 +35,8 @@ export type CreateProjectFromQuoteData = {
   /** False when the customer never accepted the terms on the quote page */
   termsRecorded: boolean;
   invoiceErrors: string[];
+  /** Why the sale is not in Stripe Tax, when it could not be recorded */
+  taxWarning: string | null;
 };
 
 /** A day entered in the admin, stored at noon UTC so it reads the same in every US timezone */
@@ -40,6 +49,8 @@ function toPaidAt(paidOn: string): Date {
  * the project exactly as the webhook would: deposit paid with its method,
  * balance pending, terms acceptance copied from the quote page when the
  * customer recorded one, quote accepted, lead won, initial invoice emailed.
+ * The sale is then recorded in Stripe Tax from the billing address the
+ * customer gave with the Zelle request.
  */
 export async function createProjectFromQuoteAction(
   quoteId: string,
@@ -57,7 +68,7 @@ export async function createProjectFromQuoteAction(
     if (!parsed.success) {
       return { success: false, error: z.prettifyError(parsed.error) };
     }
-    const { method, paidOn, taxCents } = parsed.data;
+    const { method, paidOn, taxCents, calculation: typedCalculation, billingAddress: typedAddress } = parsed.data;
     const paidAt = toPaidAt(paidOn);
     if (paidAt.getTime() > Date.now() + 24 * 60 * 60 * 1000) {
       return { success: false, error: "The payment date cannot be in the future" };
@@ -73,6 +84,13 @@ export async function createProjectFromQuoteAction(
     // An expired quote can still be honoured: the money is in the bank
     if (quote.status !== "sent") {
       return { success: false, error: `A ${quote.status} quote cannot be turned into a project` };
+    }
+
+    // Sales tax depends on where the customer is: never record a deposit blind
+    const storedAddress = parseStoredBillingAddress(quote.billingAddress);
+    const billingAddress = storedAddress ?? typedAddress ?? null;
+    if (!billingAddress) {
+      return { success: false, error: "Enter the customer's billing address to calculate the sales tax" };
     }
 
     const { deposit, balance } = splitDepositAmount(quote.totalAmount);
@@ -98,9 +116,37 @@ export async function createProjectFromQuoteAction(
             }
           : null,
         quoteId: quote.id,
+        billingAddress,
       },
       new Resend(process.env.RESEND_API_KEY!)
     );
+
+    // After the project exists: a Stripe Tax problem must not lose the deposit
+    const taxResult = await recordChargeTax({
+      projectCode: project.projectCode,
+      kind: "deposit",
+      amount: deposit,
+      taxAmount: taxCents,
+      address: billingAddress,
+      // The calculation the customer saw with the Zelle request, or the one
+      // the admin just made for the address they typed
+      calculation:
+        storedAddress && quote.zelleTaxCalculationId && quote.zelleRequestedAt
+          ? {
+              id: quote.zelleTaxCalculationId,
+              taxAmount: quote.zelleTaxAmount ?? 0,
+              calculatedAt: quote.zelleRequestedAt,
+            }
+          : typedCalculation
+            ? { id: typedCalculation.calculationId, taxAmount: typedCalculation.taxAmount, calculatedAt: new Date() }
+            : null,
+    });
+    if ("transactionId" in taxResult) {
+      await prisma.payment.update({
+        where: { id: getProjectCharges(project.payments).deposit.id },
+        data: { stripeTaxTransactionId: taxResult.transactionId },
+      });
+    }
 
     return {
       success: true,
@@ -109,6 +155,7 @@ export async function createProjectFromQuoteAction(
         projectCode: project.projectCode,
         termsRecorded: quote.termsAcceptedAt !== null,
         invoiceErrors: emailErrors,
+        taxWarning: "warning" in taxResult ? taxResult.warning : null,
       },
     };
   } catch (error) {

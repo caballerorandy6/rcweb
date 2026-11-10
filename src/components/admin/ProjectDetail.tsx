@@ -166,6 +166,7 @@ export default function ProjectDetail({ project }: { project: AdminProjectDetail
                       projectId={project.id}
                       payment={payment}
                       label={PAYMENT_LABELS[payment.kind]}
+                      hasBillingAddress={project.hasBillingAddress}
                     />
                   </div>
                 ) : null}

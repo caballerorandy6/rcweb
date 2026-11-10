@@ -1,6 +1,7 @@
 import type { Prisma } from "@/generated/prisma/client";
 import { PaymentKind } from "@/generated/prisma/enums";
 import { toMilestone } from "@/lib/milestone/toMilestone";
+import { parseStoredBillingAddress } from "@/lib/tax/billingAddress";
 import type { AdminProjectDetail } from "@/types/project";
 
 /** The relations /projects/[id] needs, fetched in a single query */
@@ -59,5 +60,6 @@ export function toAdminProjectDetail(project: AdminProjectDetailPayload): AdminP
     quote: project.quote,
     termsAcceptedAt: project.termsAcceptance?.acceptedAt.toISOString() ?? null,
     termsVersion: project.termsAcceptance?.termsVersion ?? null,
+    hasBillingAddress: parseStoredBillingAddress(project.billingAddress) !== null,
   };
 }

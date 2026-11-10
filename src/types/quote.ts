@@ -1,6 +1,7 @@
 import type { Locale } from "@/i18n/routing";
 import type { QuoteStatus } from "@/generated/prisma/enums";
 import type { QuoteDisplayStatus } from "@/lib/quote/quoteStatus";
+import type { BillingAddress } from "@/lib/tax/billingAddress";
 
 /**
  * Quote as the admin pages see it. Serializable (dates as ISO strings): it
@@ -30,6 +31,10 @@ export type AdminQuote = {
   zelleRequestedAt: string | null;
   /** Terms accepted on the quote page without a Checkout Session (Zelle) */
   termsAcceptedAt: string | null;
+  /** Billing address typed with the Zelle request */
+  billingAddress: BillingAddress | null;
+  /** Cents of sales tax calculated on the deposit for that address */
+  zelleTaxAmount: number | null;
   createdAt: string;
   contactId: string | null;
   projectId: string | null;

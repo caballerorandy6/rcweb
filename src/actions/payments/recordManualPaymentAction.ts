@@ -8,6 +8,9 @@ import { requireAdmin } from "@/lib/authGuard";
 import { getProjectCharges, isPaid } from "@/lib/project/charges";
 import { createInvoiceAndSendEmail } from "@/lib/invoice/createInvoiceAndSendEmail";
 import { MANUAL_PAYMENT_METHODS } from "@/lib/project/paymentMethod";
+import { BillingAddressSchema, parseStoredBillingAddress } from "@/lib/tax/billingAddress";
+import { OffStripeTaxSchema } from "@/lib/tax/offStripeTax";
+import { recordChargeTax } from "@/lib/tax/recordChargeTax";
 import type { ProjectStatus } from "@/generated/prisma/enums";
 import type { ActionResult } from "@/types/common";
 
@@ -18,14 +21,20 @@ const RecordManualPaymentSchema = z.object({
   paidOn: z.iso.date(),
   /** Sales tax included in what the customer sent, in cents */
   taxCents: z.number().int().min(0).max(10_000_000),
+  /** The Stripe Tax calculation the dialog suggested, recorded as is while the tax matches */
+  calculation: OffStripeTaxSchema.optional(),
+  /** Typed by the admin when the project has no billing address on file */
+  billingAddress: BillingAddressSchema.optional(),
 });
 
-export type RecordManualPaymentInput = z.infer<typeof RecordManualPaymentSchema>;
+export type RecordManualPaymentInput = z.input<typeof RecordManualPaymentSchema>;
 
 export type RecordManualPaymentData = {
   projectStatus: ProjectStatus;
   /** Invoices that could not be generated or emailed; the payment is recorded anyway */
   invoiceErrors: string[];
+  /** Why the sale is not in Stripe Tax, when it could not be recorded */
+  taxWarning: string | null;
 };
 
 /** A day entered in the admin, stored at noon UTC so it reads the same in every US timezone */
@@ -38,6 +47,8 @@ function toPaidAt(paidOn: string): Date {
  * Mirrors what the webhook does after a Checkout Session: the charge is
  * marked paid, the final payment completes the project, and the same
  * invoices go out (initial for the deposit; final + summary for the balance).
+ * The sale is recorded in Stripe Tax from the project's billing address, as
+ * Checkout would have done.
  */
 export async function recordManualPaymentAction(
   projectId: string,
@@ -56,7 +67,7 @@ export async function recordManualPaymentAction(
     if (!parsed.success) {
       return { success: false, error: z.prettifyError(parsed.error) };
     }
-    const { kind, method, paidOn, taxCents } = parsed.data;
+    const { kind, method, paidOn, taxCents, calculation, billingAddress: typedAddress } = parsed.data;
 
     const paidAt = toPaidAt(paidOn);
     if (paidAt.getTime() > Date.now() + 24 * 60 * 60 * 1000) {
@@ -79,6 +90,12 @@ export async function recordManualPaymentAction(
     if (kind === "final" && !isPaid(charges.deposit)) {
       return { success: false, error: "Record the deposit before the final payment" };
     }
+    // Sales tax depends on where the customer is: never record a charge blind
+    const storedAddress = parseStoredBillingAddress(current.billingAddress);
+    const address = storedAddress ?? typedAddress ?? null;
+    if (!address) {
+      return { success: false, error: "Enter the customer's billing address to calculate the sales tax" };
+    }
 
     // Charge and project status in one write, like the webhook
     const statusChange: { status?: ProjectStatus } =
@@ -92,6 +109,7 @@ export async function recordManualPaymentAction(
       where: { id: current.id },
       data: {
         ...statusChange,
+        ...(storedAddress ? {} : { billingAddress: address }),
         payments: {
           update: {
             where: { id: charge.id },
@@ -101,6 +119,25 @@ export async function recordManualPaymentAction(
       },
       include: { payments: true, invoices: true },
     });
+
+    // After the charge is paid: a Stripe Tax problem must not lose the payment
+    const taxResult = await recordChargeTax({
+      projectCode: project.projectCode,
+      kind,
+      amount: charge.amount,
+      taxAmount: taxCents,
+      address,
+      // Suggested moments ago in the dialog, so it is fresh
+      calculation: calculation
+        ? { id: calculation.calculationId, taxAmount: calculation.taxAmount, calculatedAt: new Date() }
+        : null,
+    });
+    if ("transactionId" in taxResult) {
+      await prisma.payment.update({
+        where: { id: charge.id },
+        data: { stripeTaxTransactionId: taxResult.transactionId },
+      });
+    }
 
     // Same invoices the webhook sends; a failure here must not undo the payment
     const resend = new Resend(process.env.RESEND_API_KEY!);
@@ -123,7 +160,11 @@ export async function recordManualPaymentAction(
 
     return {
       success: true,
-      data: { projectStatus: project.status, invoiceErrors },
+      data: {
+        projectStatus: project.status,
+        invoiceErrors,
+        taxWarning: "warning" in taxResult ? taxResult.warning : null,
+      },
     };
   } catch (error) {
     console.error("Error recording manual payment:", error);

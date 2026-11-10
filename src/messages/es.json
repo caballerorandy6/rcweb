@@ -1461,10 +1461,13 @@
       "title": "Paga el anticipo por Zelle",
       "thanks": "Gracias por aceptar el presupuesto{date}. Envía el anticipo desde el Zelle de tu banco:",
       "on": " el {date}",
-      "amount": "Monto",
+      "amount": "Total a enviar",
       "sendTo": "Enviar a",
       "memo": "Concepto",
-      "note": "El trabajo empieza en cuanto se confirma la transferencia. Recibirás tu factura y un enlace para seguir el proyecto por correo."
+      "note": "El trabajo empieza en cuanto se confirma la transferencia. Recibirás tu factura y un enlace para seguir el proyecto por correo.",
+      "deposit": "Anticipo",
+      "tax": "Impuesto sobre las ventas",
+      "noTax": "Tu dirección de facturación no paga impuesto sobre las ventas."
     },
     "questions": "¿Dudas sobre este presupuesto?",
     "contact": "Escríbeme",
@@ -1479,7 +1482,18 @@
       "oneMoment": "Un momento…",
       "zelleHint": "Acepta primero los términos de arriba. Verás a dónde enviarlo y el trabajo empieza en cuanto se confirme la transferencia.",
       "redirecting": "Redirigiendo al pago seguro…",
-      "zelleThanks": "¡Gracias! Aquí tienes los datos de Zelle"
+      "zelleThanks": "¡Gracias! Aquí tienes los datos de Zelle",
+      "addressTitle": "Dirección de facturación",
+      "addressHint": "El impuesto sobre las ventas depende de dónde estés, así que la necesitamos para decirte el monto exacto que debes enviar.",
+      "line1": "Dirección",
+      "line2": "Apto., suite (opcional)",
+      "city": "Ciudad",
+      "state": "Estado",
+      "stateFormat": "Código del estado de dos letras, como TX",
+      "postalCode": "Código postal",
+      "postalCodeFormat": "Código postal de 5 dígitos, como 77489",
+      "showZelle": "Ver los datos de Zelle",
+      "cancelZelle": "Cancelar"
     }
   },
   "Project": {
@@ -1724,7 +1738,8 @@
       "expired": "Este presupuesto ha caducado. Responde al correo para pedir uno actualizado",
       "paymentFailed": "No se pudo iniciar el pago. Inténtalo de nuevo",
       "zelleUnavailable": "Los pagos por Zelle no están disponibles en este momento",
-      "failed": "Algo salió mal. Inténtalo de nuevo"
+      "failed": "Algo salió mal. Inténtalo de nuevo",
+      "addressInvalid": "No pudimos verificar esa dirección. Revisa la calle, la ciudad, el estado y el código postal"
     },
     "project": {
       "invalidCredentials": "Correo o código de proyecto no válidos",

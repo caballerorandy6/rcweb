@@ -1,6 +1,7 @@
 import type { Quote } from "@/generated/prisma/client";
 import type { AdminQuote } from "@/types/quote";
 import { getQuoteDisplayStatus } from "./quoteStatus";
+import { parseStoredBillingAddress } from "@/lib/tax/billingAddress";
 
 export type QuoteWithProject = Quote & {
   project: { projectCode: string } | null;
@@ -27,6 +28,8 @@ export function toAdminQuote(quote: QuoteWithProject, now: Date = new Date()): A
     acceptedAt: quote.acceptedAt?.toISOString() ?? null,
     zelleRequestedAt: quote.zelleRequestedAt?.toISOString() ?? null,
     termsAcceptedAt: quote.termsAcceptedAt?.toISOString() ?? null,
+    billingAddress: parseStoredBillingAddress(quote.billingAddress),
+    zelleTaxAmount: quote.zelleTaxAmount,
     createdAt: quote.createdAt.toISOString(),
     contactId: quote.contactId,
     projectId: quote.projectId,

@@ -12,6 +12,7 @@ function payment(overrides: Partial<Payment>): Payment {
     status: "pending",
     method: "stripe",
     stripeSessionId: null,
+    stripeTaxTransactionId: null,
     paidAt: null,
     createdAt: new Date("2026-01-01"),
     updatedAt: new Date("2026-01-01"),

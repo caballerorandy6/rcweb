@@ -85,6 +85,8 @@ export type AdminProjectDetail = {
   quote: { id: string; quoteNumber: string } | null;
   termsAcceptedAt: string | null;
   termsVersion: string | null;
+  /** A usable billing address is on file (Checkout or the Zelle request); else the admin types one */
+  hasBillingAddress: boolean;
 };
 
 /**
