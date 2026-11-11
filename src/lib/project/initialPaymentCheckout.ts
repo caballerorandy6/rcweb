@@ -67,6 +67,9 @@ export async function createInitialPaymentCheckout(
     customer_creation: "always",
     billing_address_collection: "required",
     metadata,
+    // Copied onto the PaymentIntent, so the charge (what refunds and disputes
+    // point at) names the project in the Stripe dashboard
+    payment_intent_data: { metadata: { projectCode, paymentType: "initial" } },
     line_items: [
       {
         price_data: {

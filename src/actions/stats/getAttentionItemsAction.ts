@@ -31,6 +31,16 @@ export interface AttentionItems {
     count: number;
     items: { id: string; name: string; planName: string; totalAmount: number }[];
   };
+  /** Charges a bank is asking back: the admin has to answer in Stripe before the deadline */
+  openDisputes: {
+    count: number;
+    items: {
+      id: string;
+      kind: "deposit" | "final";
+      amount: number;
+      project: { id: string; name: string };
+    }[];
+  };
   /** Unfinished milestones past their due date */
   overdueMilestones: {
     count: number;
@@ -65,6 +75,7 @@ export async function getAttentionItemsAction(): Promise<AttentionItems> {
     expiresAt: { gte: quoteFloor },
   };
   const readyWhere = { status: "ready_for_payment" as const };
+  const disputedWhere = { disputeStatus: "open" as const };
   const overdueWhere = {
     status: { not: "completed" as const },
     dueDate: { lt: now },
@@ -77,6 +88,8 @@ export async function getAttentionItemsAction(): Promise<AttentionItems> {
     openQuotesCount,
     ready,
     readyCount,
+    disputed,
+    disputedCount,
     overdue,
     overdueCount,
   ] = await Promise.all([
@@ -108,6 +121,18 @@ export async function getAttentionItemsAction(): Promise<AttentionItems> {
       select: { id: true, name: true, planName: true, totalAmount: true },
     }),
     prisma.project.count({ where: readyWhere }),
+    prisma.payment.findMany({
+      where: disputedWhere,
+      orderBy: { updatedAt: "asc" },
+      take: PREVIEW,
+      select: {
+        id: true,
+        kind: true,
+        amount: true,
+        project: { select: { id: true, name: true } },
+      },
+    }),
+    prisma.payment.count({ where: disputedWhere }),
     prisma.milestone.findMany({
       where: overdueWhere,
       orderBy: { dueDate: "asc" },
@@ -132,6 +157,7 @@ export async function getAttentionItemsAction(): Promise<AttentionItems> {
       ),
     },
     readyForPayment: { count: readyCount, items: ready },
+    openDisputes: { count: disputedCount, items: disputed },
     overdueMilestones: {
       count: overdueCount,
       items: overdue.flatMap((m) =>

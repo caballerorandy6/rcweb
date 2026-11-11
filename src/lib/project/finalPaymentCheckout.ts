@@ -46,6 +46,11 @@ export async function createFinalPaymentCheckout(
     // Dashboard because our own invoice covers them
     customer_creation: "always",
     metadata,
+    // Copied onto the PaymentIntent, so the charge (what refunds and disputes
+    // point at) names the project in the Stripe dashboard
+    payment_intent_data: {
+      metadata: { projectCode: project.projectCode, paymentType: "final" },
+    },
     line_items: [
       {
         price_data: {

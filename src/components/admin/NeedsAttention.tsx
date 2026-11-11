@@ -7,6 +7,7 @@ import {
   ClipboardDocumentListIcon,
   BanknotesIcon,
   FlagIcon,
+  ShieldExclamationIcon,
 } from "@heroicons/react/24/outline";
 import { getAttentionItemsAction } from "@/actions/stats/getAttentionItemsAction";
 import { ADMIN_ROUTES } from "@/config/adminRoutes";
@@ -45,7 +46,32 @@ export default async function NeedsAttention() {
   const data = await getAttentionItemsAction();
   const now = new Date();
 
+  // A chargeback is rare and has a deadline, so its card only shows up while
+  // one is open (the grid is laid out for the four everyday groups)
+  const disputes: Group[] =
+    data.openDisputes.count === 0
+      ? []
+      : [
+          {
+            key: "disputes",
+            title: "Disputed payments",
+            icon: ShieldExclamationIcon,
+            count: data.openDisputes.count,
+            allHref: ADMIN_ROUTES.projects,
+            empty: "",
+            rows: data.openDisputes.items.map((p) => ({
+              key: p.id,
+              href: `${ADMIN_ROUTES.projects}/${p.project.id}` as Route,
+              primary: p.project.name,
+              secondary: p.kind === "deposit" ? "Deposit" : "Final payment",
+              note: `${money(p.amount)} · respond in Stripe`,
+              urgent: true,
+            })),
+          },
+        ];
+
   const groups: Group[] = [
+    ...disputes,
     {
       key: "leads",
       title: "New leads",

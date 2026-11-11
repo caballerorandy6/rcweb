@@ -45,6 +45,9 @@ export function toAdminProjectDetail(project: AdminProjectDetailPayload): AdminP
         method: p.method,
         paidAt: p.paidAt?.toISOString() ?? null,
         stripeSessionId: p.stripeSessionId,
+        refundedAmount: p.refundedAmount,
+        refundedAt: p.refundedAt?.toISOString() ?? null,
+        disputeStatus: p.disputeStatus,
       })),
     invoices: project.invoices.map((i) => ({
       id: i.id,

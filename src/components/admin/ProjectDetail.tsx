@@ -19,6 +19,35 @@ const PAYMENT_LABELS: Record<AdminProjectPayment["kind"], string> = {
   final: "Final payment (50%)",
 };
 
+const PAYMENT_STATUS_BADGES: Record<AdminProjectPayment["status"], { label: string; className: string }> = {
+  paid: { label: "Paid", className: "bg-green-500/10 text-green-400 border-green-500/40" },
+  pending: { label: "Pending", className: "bg-gray-500/10 text-gray-300 border-gray-500/40" },
+  refunded: { label: "Refunded", className: "bg-red-500/10 text-red-400 border-red-500/40" },
+};
+
+const DISPUTE_BADGES: Record<NonNullable<AdminProjectPayment["disputeStatus"]>, { label: string; className: string }> = {
+  open: { label: "Disputed", className: "bg-amber-500/10 text-amber-400 border-amber-500/40" },
+  won: { label: "Dispute won", className: "bg-green-500/10 text-green-400 border-green-500/40" },
+  lost: { label: "Dispute lost", className: "bg-red-500/10 text-red-400 border-red-500/40" },
+};
+
+const badge = "inline-flex items-center px-2 py-0.5 rounded-full text-xs font-semibold border";
+
+/** "Paid Nov 4, 2026 · Credit card (Stripe) · + $66.00 sales tax", or why there is no payment yet */
+function paymentNote(payment: AdminProjectPayment): string {
+  if (!payment.paidAt) return "Not paid yet";
+  const parts = [`Paid ${formatDate(payment.paidAt)}`, PAYMENT_METHOD_LABELS[payment.method]];
+  if (payment.taxAmount > 0) parts.push(`+ ${formatCurrency(payment.taxAmount)} sales tax`);
+  return parts.join(" · ");
+}
+
+function refundNote(payment: AdminProjectPayment): string | null {
+  if (payment.refundedAmount === 0) return null;
+  const when = payment.refundedAt ? ` on ${formatDate(payment.refundedAt)}` : "";
+  const scope = payment.status === "refunded" ? "Refunded in full" : `${formatCurrency(payment.refundedAmount)} refunded`;
+  return `${scope}${when} (tax included)`;
+}
+
 const card =
   "bg-linear-to-br from-gray-800/80 to-gray-900/80 border border-gray-700/50 rounded-xl p-5 sm:p-6 shadow-xl shadow-black/20";
 
@@ -138,21 +167,18 @@ export default function ProjectDetail({ project }: { project: AdminProjectDetail
                   <dt className="text-gray-200">{PAYMENT_LABELS[payment.kind]}</dt>
                   <dd className="flex items-center gap-2">
                     <span className="font-semibold text-white">{formatCurrency(payment.amount)}</span>
-                    <span
-                      className={`inline-flex items-center px-2 py-0.5 rounded-full text-xs font-semibold border ${
-                        payment.status === "paid"
-                          ? "bg-green-500/10 text-green-400 border-green-500/40"
-                          : "bg-gray-500/10 text-gray-300 border-gray-500/40"
-                      }`}
-                    >
-                      {payment.status === "paid" ? "Paid" : "Pending"}
+                    <span className={`${badge} ${PAYMENT_STATUS_BADGES[payment.status].className}`}>
+                      {PAYMENT_STATUS_BADGES[payment.status].label}
                     </span>
+                    {payment.disputeStatus ? (
+                      <span className={`${badge} ${DISPUTE_BADGES[payment.disputeStatus].className}`}>
+                        {DISPUTE_BADGES[payment.disputeStatus].label}
+                      </span>
+                    ) : null}
                   </dd>
                 </div>
                 <p className="text-xs text-gray-500">
-                  {payment.paidAt ? `Paid ${formatDate(payment.paidAt)}` : "Not paid yet"}
-                  {payment.status === "paid" ? ` · ${PAYMENT_METHOD_LABELS[payment.method]}` : null}
-                  {payment.taxAmount > 0 ? ` · + ${formatCurrency(payment.taxAmount)} sales tax` : null}
+                  {paymentNote(payment)}
                   {payment.stripeSessionId ? (
                     <>
                       {" · "}
@@ -160,6 +186,9 @@ export default function ProjectDetail({ project }: { project: AdminProjectDetail
                     </>
                   ) : null}
                 </p>
+                {refundNote(payment) ? (
+                  <p className="text-xs text-red-400">{refundNote(payment)}</p>
+                ) : null}
                 {payment.status === "pending" ? (
                   <div className="pt-1">
                     <RecordPaymentButton

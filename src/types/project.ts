@@ -5,6 +5,7 @@
 
 import type { Locale } from "@/i18n/routing";
 import type {
+  DisputeStatus,
   InvoiceStatus,
   InvoiceType,
   LeadStatus,
@@ -46,6 +47,10 @@ export type AdminProjectPayment = {
   method: PaymentMethod;
   paidAt: string | null;
   stripeSessionId: string | null;
+  /** Cents returned to the customer, tax included; 0 when none */
+  refundedAmount: number;
+  refundedAt: string | null;
+  disputeStatus: DisputeStatus | null;
 };
 
 export type AdminProjectInvoice = {
