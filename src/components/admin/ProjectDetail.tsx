@@ -161,8 +161,10 @@ export default function ProjectDetail({ project }: { project: AdminProjectDetail
             <Row label="Project total">
               <span className="font-semibold">{formatCurrency(project.totalAmount)}</span>
             </Row>
-            {project.payments.map((payment) => (
-              <div key={payment.id} className="rounded-lg border border-gray-700/60 p-3 space-y-1">
+            {project.payments.map((payment) => {
+              const refund = refundNote(payment);
+              return (
+                <div key={payment.id} className="rounded-lg border border-gray-700/60 p-3 space-y-1">
                 <div className="flex flex-wrap justify-between gap-2 text-sm">
                   <dt className="text-gray-200">{PAYMENT_LABELS[payment.kind]}</dt>
                   <dd className="flex items-center gap-2">
@@ -186,9 +188,7 @@ export default function ProjectDetail({ project }: { project: AdminProjectDetail
                     </>
                   ) : null}
                 </p>
-                {refundNote(payment) ? (
-                  <p className="text-xs text-red-400">{refundNote(payment)}</p>
-                ) : null}
+                {refund ? <p className="text-xs text-red-400">{refund}</p> : null}
                 {payment.status === "pending" ? (
                   <div className="pt-1">
                     <RecordPaymentButton
@@ -199,8 +199,9 @@ export default function ProjectDetail({ project }: { project: AdminProjectDetail
                     />
                   </div>
                 ) : null}
-              </div>
-            ))}
+                </div>
+              );
+            })}
           </dl>
         </Card>
 
