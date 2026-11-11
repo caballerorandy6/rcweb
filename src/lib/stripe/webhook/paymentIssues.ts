@@ -25,8 +25,20 @@ export type PaymentIssueResult = {
   received: true;
   /** Why nothing was recorded; a 2xx with this is still the right answer to Stripe */
   warning?: string;
+  /**
+   * The charge belongs to one of our Checkout Sessions whose
+   * `checkout.session.completed` has not been processed yet (Stripe does not
+   * order events). The webhook answers non-2xx so Stripe retries later.
+   */
+  retry?: true;
   updated?: boolean;
   emailError?: string;
+};
+
+const NOT_YET_RECORDED: PaymentIssueResult = {
+  received: true,
+  retry: true,
+  warning: "Project payment not recorded yet; retry",
 };
 
 const CHARGE_LABELS = { deposit: "Deposit (50%)", final: "Final payment (50%)" } as const;
@@ -53,33 +65,48 @@ function idOf(ref: string | { id: string } | null | undefined): string | null {
   return typeof ref === "string" ? ref : ref.id;
 }
 
+export type ChargeLookup =
+  | { kind: "found"; payment: PaymentWithProject }
+  /** One of our project sessions, but its completed event has not been processed yet */
+  | { kind: "pending" }
+  /** Subscriptions, Payment Links, Dashboard charges… nothing to record */
+  | { kind: "foreign" };
+
 /**
  * The Payment behind a Stripe charge. Rows created before the PaymentIntent
  * was stored are matched through their Checkout Session and backfilled.
  */
-export async function findPaymentForCharge(
-  paymentIntentId: string | null
-): Promise<PaymentWithProject | null> {
-  if (!paymentIntentId) return null;
+export async function findPaymentForCharge(paymentIntentId: string | null): Promise<ChargeLookup> {
+  if (!paymentIntentId) return { kind: "foreign" };
 
   const byIntent = await findPaymentByPaymentIntent(paymentIntentId);
-  if (byIntent) return byIntent;
+  if (byIntent) return { kind: "found", payment: byIntent };
 
   const sessions = await stripe.checkout.sessions.list({ payment_intent: paymentIntentId, limit: 1 });
-  const sessionId = sessions.data[0]?.id;
-  if (!sessionId) return null;
+  const session = sessions.data[0];
+  if (!session) return { kind: "foreign" };
 
   const bySession = await prisma.payment.findUnique({
-    where: { stripeSessionId: sessionId },
+    where: { stripeSessionId: session.id },
     include: paymentInclude,
   });
-  if (!bySession) return null;
+  if (!bySession) {
+    const paymentType = session.metadata?.paymentType;
+    return paymentType === "initial" || paymentType === "final" ? { kind: "pending" } : { kind: "foreign" };
+  }
 
-  return prisma.payment.update({
+  const payment = await prisma.payment.update({
     where: { id: bySession.id },
     data: { stripePaymentIntentId: paymentIntentId },
     include: paymentInclude,
   });
+  return { kind: "found", payment };
+}
+
+function notFound(lookup: Exclude<ChargeLookup, { kind: "found" }>, what: string): PaymentIssueResult {
+  return lookup.kind === "pending"
+    ? NOT_YET_RECORDED
+    : { received: true, warning: `${what} on a charge that is not a project payment` };
 }
 
 async function notify(
@@ -112,10 +139,9 @@ export async function handleChargeRefunded(
   now = new Date()
 ): Promise<PaymentIssueResult> {
   const paymentIntentId = idOf(charge.payment_intent);
-  const payment = await findPaymentForCharge(paymentIntentId);
-  if (!payment) {
-    return { received: true, warning: "Refund on a charge that is not a project payment" };
-  }
+  const lookup = await findPaymentForCharge(paymentIntentId);
+  if (lookup.kind !== "found") return notFound(lookup, "Refund");
+  const { payment } = lookup;
 
   const patch = applyRefund(
     payment,
@@ -140,10 +166,9 @@ export async function handleDisputeCreated(
   dispute: Stripe.Dispute,
   resend: Resend
 ): Promise<PaymentIssueResult> {
-  const payment = await findPaymentForCharge(idOf(dispute.payment_intent));
-  if (!payment) {
-    return { received: true, warning: "Dispute on a charge that is not a project payment" };
-  }
+  const lookup = await findPaymentForCharge(idOf(dispute.payment_intent));
+  if (lookup.kind !== "found") return notFound(lookup, "Dispute");
+  const { payment } = lookup;
 
   const status = toDisputeStatus(dispute.status);
   if (payment.disputeId === dispute.id && payment.disputeStatus === status) {
@@ -171,10 +196,9 @@ export async function handleDisputeClosed(
   resend: Resend,
   now = new Date()
 ): Promise<PaymentIssueResult> {
-  const payment = await findPaymentForCharge(idOf(dispute.payment_intent));
-  if (!payment) {
-    return { received: true, warning: "Dispute on a charge that is not a project payment" };
-  }
+  const lookup = await findPaymentForCharge(idOf(dispute.payment_intent));
+  if (lookup.kind !== "found") return notFound(lookup, "Dispute");
+  const { payment } = lookup;
 
   const status = toDisputeStatus(dispute.status);
   if (status === "open") {

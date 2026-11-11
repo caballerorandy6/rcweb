@@ -147,6 +147,27 @@ describe("handleChargeRefunded", () => {
     expect(prisma.payment.update).not.toHaveBeenCalled();
   });
 
+  it("asks Stripe to retry when our own session has not been processed yet (events are unordered)", async () => {
+    prisma.payment.findUnique.mockResolvedValueOnce(null).mockResolvedValueOnce(null);
+    sessionsList.mockResolvedValueOnce({ data: [{ id: "cs_1", metadata: { paymentType: "initial" } }] });
+
+    const result = await handleChargeRefunded(charge(), resend, now);
+
+    expect(result.retry).toBe(true);
+    expect(prisma.payment.update).not.toHaveBeenCalled();
+    expect(sendAdminPaymentIssueNotification).not.toHaveBeenCalled();
+  });
+
+  it("treats a subscription session without a payment row as foreign, not pending", async () => {
+    prisma.payment.findUnique.mockResolvedValueOnce(null).mockResolvedValueOnce(null);
+    sessionsList.mockResolvedValueOnce({ data: [{ id: "cs_sub", metadata: { paymentType: "subscription" } }] });
+
+    const result = await handleChargeRefunded(charge(), resend, now);
+
+    expect(result.retry).toBeUndefined();
+    expect(result.warning).toMatch(/not a project payment/);
+  });
+
   it("acknowledges a charge without a PaymentIntent without calling Stripe", async () => {
     const result = await handleChargeRefunded(charge({ payment_intent: null }), resend, now);
 
@@ -185,6 +206,15 @@ describe("handleDisputeCreated", () => {
         stripeUrl: "https://dashboard.stripe.com/disputes/dp_1",
       })
     );
+  });
+
+  it("asks for a retry when the dispute arrives before the session was processed", async () => {
+    prisma.payment.findUnique.mockResolvedValueOnce(null).mockResolvedValueOnce(null);
+    sessionsList.mockResolvedValueOnce({ data: [{ id: "cs_1", metadata: { paymentType: "initial" } }] });
+
+    const result = await handleDisputeCreated(dispute(), resend);
+
+    expect(result.retry).toBe(true);
   });
 
   it("is idempotent for the same dispute", async () => {

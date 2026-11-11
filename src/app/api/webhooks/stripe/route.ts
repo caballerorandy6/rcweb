@@ -670,21 +670,22 @@ export async function POST(req: Request) {
 
   // ============= REFUNDS AND DISPUTES =============
   // Money going back to a customer of a 50/50 project. The handlers answer
-  // 2xx with a warning for charges that are not project payments and throw
-  // only on database errors, so Stripe retries those.
-  if (event.type === "charge.refunded") {
+  // 2xx with a warning for charges that are not project payments, ask for a
+  // retry (409) when our own checkout.session.completed has not been
+  // processed yet, and throw only on database errors, so Stripe retries those.
+  if (
+    event.type === "charge.refunded" ||
+    event.type === "charge.dispute.created" ||
+    event.type === "charge.dispute.closed"
+  ) {
     const resend = new Resend(process.env.RESEND_API_KEY!);
-    return NextResponse.json(await handleChargeRefunded(event.data.object, resend));
-  }
-
-  if (event.type === "charge.dispute.created") {
-    const resend = new Resend(process.env.RESEND_API_KEY!);
-    return NextResponse.json(await handleDisputeCreated(event.data.object, resend));
-  }
-
-  if (event.type === "charge.dispute.closed") {
-    const resend = new Resend(process.env.RESEND_API_KEY!);
-    return NextResponse.json(await handleDisputeClosed(event.data.object, resend));
+    const result =
+      event.type === "charge.refunded"
+        ? await handleChargeRefunded(event.data.object, resend)
+        : event.type === "charge.dispute.created"
+          ? await handleDisputeCreated(event.data.object, resend)
+          : await handleDisputeClosed(event.data.object, resend);
+    return NextResponse.json(result, { status: result.retry ? 409 : 200 });
   }
 
   return NextResponse.json({ received: true });
