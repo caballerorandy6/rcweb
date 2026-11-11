@@ -35,6 +35,8 @@ export interface DepositProjectInput {
     taxAmount?: number;
     /** Checkout Session that paid it (method stripe) */
     stripeSessionId?: string;
+    /** Its PaymentIntent: refund and dispute events are matched by it */
+    stripePaymentIntentId?: string;
   };
   /** Null when the customer never accepted the terms in the app (deposit sent out of band) */
   terms: {
@@ -117,6 +119,7 @@ export async function createProjectFromDeposit(
             method: input.deposit.method,
             paidAt: input.deposit.paidAt,
             stripeSessionId: input.deposit.stripeSessionId,
+            stripePaymentIntentId: input.deposit.stripePaymentIntentId,
           },
           { kind: "final", amount: input.secondPaymentAmount },
         ],

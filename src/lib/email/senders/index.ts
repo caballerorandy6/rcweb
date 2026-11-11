@@ -61,3 +61,5 @@ export {
 } from "./sendAdminFinalPaymentNotification";
 
 export { sendAdminZelleRequestNotification } from "./sendAdminZelleRequestNotification";
+
+export { sendAdminPaymentIssueNotification } from "./sendAdminPaymentIssueNotification";

@@ -55,3 +55,9 @@ export {
   ZelleRequestAdminEmail,
   type ZelleRequestAdminEmailProps,
 } from "./ZelleRequestAdminEmail";
+
+export {
+  PaymentIssueAdminEmail,
+  type PaymentIssueAdminEmailProps,
+  type PaymentIssueKind,
+} from "./PaymentIssueAdminEmail";

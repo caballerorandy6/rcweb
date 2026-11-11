@@ -26,6 +26,11 @@ import {
   sendSubscriptionPaymentFailed,
 } from "@/lib/email";
 import { fromStripeAddress } from "@/lib/tax/billingAddress";
+import {
+  handleChargeRefunded,
+  handleDisputeClosed,
+  handleDisputeCreated,
+} from "@/lib/stripe/webhook/paymentIssues";
 
 // Environment variables validation
 if (!process.env.STRIPE_WEBHOOK_SECRET) {
@@ -83,6 +88,11 @@ export async function POST(req: Request) {
     const metadata = parsed.data;
     // Stripe Tax added this on top of the charge; it is 0 outside Texas
     const taxAmount = session.total_details?.amount_tax ?? 0;
+    // Refund and dispute events name the PaymentIntent, not the session
+    const stripePaymentIntentId =
+      typeof session.payment_intent === "string"
+        ? session.payment_intent
+        : (session.payment_intent?.id ?? undefined);
 
     const resend = new Resend(process.env.RESEND_API_KEY!);
 
@@ -117,6 +127,7 @@ export async function POST(req: Request) {
               method: "stripe",
               paidAt: new Date(),
               stripeSessionId: session.id,
+              stripePaymentIntentId,
               taxAmount,
             },
             terms: {
@@ -194,6 +205,7 @@ export async function POST(req: Request) {
                     status: "paid",
                     paidAt: new Date(),
                     stripeSessionId: session.id,
+                    stripePaymentIntentId,
                     taxAmount,
                   },
                 },
@@ -209,7 +221,7 @@ export async function POST(req: Request) {
               payments: {
                 update: {
                   where: { id: final.id },
-                  data: { stripeSessionId: session.id },
+                  data: { stripeSessionId: session.id, stripePaymentIntentId },
                 },
               },
             },
@@ -654,6 +666,26 @@ export async function POST(req: Request) {
         warning: "Subscription not found",
       });
     }
+  }
+
+  // ============= REFUNDS AND DISPUTES =============
+  // Money going back to a customer of a 50/50 project. The handlers answer
+  // 2xx with a warning for charges that are not project payments, ask for a
+  // retry (409) when our own checkout.session.completed has not been
+  // processed yet, and throw only on database errors, so Stripe retries those.
+  if (
+    event.type === "charge.refunded" ||
+    event.type === "charge.dispute.created" ||
+    event.type === "charge.dispute.closed"
+  ) {
+    const resend = new Resend(process.env.RESEND_API_KEY!);
+    const result =
+      event.type === "charge.refunded"
+        ? await handleChargeRefunded(event.data.object, resend)
+        : event.type === "charge.dispute.created"
+          ? await handleDisputeCreated(event.data.object, resend)
+          : await handleDisputeClosed(event.data.object, resend);
+    return NextResponse.json(result, { status: result.retry ? 409 : 200 });
   }
 
   return NextResponse.json({ received: true });

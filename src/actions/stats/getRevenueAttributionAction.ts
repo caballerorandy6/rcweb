@@ -3,6 +3,7 @@
 import { prisma } from "@/lib/prisma";
 import { requireAdmin } from "@/lib/authGuard";
 import { normalizeLeadSource } from "@/lib/leadSources";
+import { recognizedRevenue } from "@/lib/project/refunds";
 
 export interface RevenueBySource {
   source: string;
@@ -41,7 +42,7 @@ export async function getRevenueAttributionAction(): Promise<RevenueAttributionR
       id: true,
       payments: {
         where: { status: "paid" },
-        select: { amount: true },
+        select: { status: true, amount: true, taxAmount: true, refundedAmount: true },
       },
       contact: {
         select: {
@@ -56,7 +57,7 @@ export async function getRevenueAttributionAction(): Promise<RevenueAttributionR
   // Paid amount per project
   const projectsWithRevenue = projects.map((p) => ({
     contact: p.contact,
-    paidAmount: p.payments.reduce((sum, payment) => sum + payment.amount, 0),
+    paidAmount: p.payments.reduce((sum, payment) => sum + recognizedRevenue(payment), 0),
   }));
 
   const totalRevenue = projectsWithRevenue.reduce((acc, p) => acc + p.paidAmount, 0);
