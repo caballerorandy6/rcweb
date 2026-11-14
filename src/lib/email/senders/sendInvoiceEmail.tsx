@@ -2,6 +2,7 @@
 
 import { Resend } from "resend";
 import { render } from "@react-email/components";
+import { ADMIN_EMAIL } from "../adminEmail";
 import { InvoiceEmail, InvoiceEmailType } from "../templates";
 import { emailTranslator } from "../i18n";
 import type { Locale } from "@/i18n/routing";
@@ -63,8 +64,9 @@ export async function sendInvoiceEmail(
     );
 
     const emailOptions: Parameters<typeof resend.emails.send>[0] = {
-      from: "RC Web Solutions <no-reply@rcweb.dev>",
+      from: "RC Web Solutions <contactus@rcweb.dev>",
       to: customerEmail,
+      replyTo: ADMIN_EMAIL,
       subject: emailTranslator(locale)(subjectKeys[type], { number: invoiceNumber }),
       html,
     };

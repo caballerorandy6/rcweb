@@ -45,7 +45,7 @@ export const ProjectReadyEmail = ({
   const unsubscribeUrl = `${SITE_BASE_URL}${localizePathname("/unsubscribe", locale)}?email=${encodeURIComponent(customerEmail)}`;
 
   return (
-    <Html>
+    <Html lang={locale}>
       <Head />
       <Body style={styles.body}>
         <Container style={styles.container}>

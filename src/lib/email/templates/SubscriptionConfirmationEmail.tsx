@@ -13,6 +13,7 @@ import {
 } from "@react-email/components";
 import * as React from "react";
 import { EMAIL_COLORS } from "../colors";
+import { maintenancePlanFeatures } from "@/lib/maintenancePlan";
 import { emailTranslator, formatLongDate } from "../i18n";
 import { localizePathname } from "@/i18n/paths";
 import type { Locale } from "@/i18n/routing";
@@ -35,7 +36,7 @@ export const SubscriptionConfirmationEmail: React.FC<
   const formattedDate = formatLongDate(nextBillingDate, locale);
 
   return (
-    <Html>
+    <Html lang={locale}>
       <Head />
       <Body style={styles.body}>
         <Container style={styles.container}>
@@ -54,10 +55,10 @@ export const SubscriptionConfirmationEmail: React.FC<
               {t.rich("subscription.confirmBody", { planName, b: (chunks) => <strong style={{ color: EMAIL_COLORS.gold }}>{chunks}</strong> })}
             </Text>
 
-            {/* {t("subscription.details")} - Light gray background */}
+            {/* Details - Light gray background */}
             <Section style={styles.detailsBox}>
               <Heading as="h3" style={styles.detailsTitle}>
-                Subscription Details
+                {t("subscription.details")}
               </Heading>
               <table style={styles.detailsTable}>
                 <tbody>
@@ -85,7 +86,7 @@ export const SubscriptionConfirmationEmail: React.FC<
                 {t("subscription.included")}
               </Heading>
               <ul style={styles.includedList}>
-                {(t.raw("subscription.items") as string[]).map((item) => (
+                {maintenancePlanFeatures(locale).map((item) => (
                   <li style={styles.listItem} key={item}>{item}</li>
                 ))}
               </ul>

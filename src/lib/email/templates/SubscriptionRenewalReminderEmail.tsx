@@ -34,7 +34,7 @@ export const SubscriptionRenewalReminderEmail: React.FC<
   const formattedDate = formatLongDate(renewalDate, locale);
 
   return (
-    <Html>
+    <Html lang={locale}>
       <Head />
       <Body style={styles.body}>
         <Container style={styles.container}>

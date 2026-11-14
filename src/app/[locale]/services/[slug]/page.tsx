@@ -219,7 +219,7 @@ export default async function ServicePage({ params }: Props) {
               {service.features.map((feature) => (
                 <div
                   key={feature.title}
-                  className="rounded-2xl border border-gold/20 bg-gray-900/50 p-6 lg:p-8 shadow-lg shadow-black/20"
+                  className="rounded-2xl border border-gold/20 bg-gray-900/50 p-6 lg:p-8 shadow-lg shadow-black/20 sm:last:odd:col-span-2"
                 >
                   <h3 className="text-2xl text-white font-iceland">
                     {feature.title}

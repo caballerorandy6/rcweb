@@ -43,6 +43,10 @@ The Monthly Website Maintenance and Support service operates on a subscription b
 
 - **Monthly Fee:** $200 USD charged automatically each month
 - **Billing Cycle:** Your card will be charged on the same day each month from your initial subscription date
+- **Content Changes:** Up to 2 hours of content changes per month (text, images, prices, hours and similar small edits) are included. Unused hours do not carry over to the next month
+- **Additional Work:** Content changes beyond the included hours are billed at $100 USD per hour, always quoted in advance and done only with your approval. New pages, new features and redesigns are quoted separately as projects
+- **Monthly Report:** Each month you receive a report covering the updates applied, uptime, backups, the content changes made and the hours used
+- **Urgent Issues:** An urgent issue is one that stops your site from working for your customers: the site is down, or forms, bookings or payments are not working. For urgent issues, we respond the same day, including weekends, when reported before 8 p.m. Central Time; issues reported later get a response the next morning. Responding means we confirm the problem and start working on it; fix times depend on the cause, including outages at third-party providers (hosting, domain, payment or email services) that are outside our control. Other requests are answered within one business day. If we will be unavailable, we will let you know in advance
 - **Cancellation:** You may cancel your subscription at any time. Cancellation takes effect at the end of the current billing period
 - **No Refunds:** Partial month refunds are not provided upon cancellation
 - **How to Manage:** You can manage your subscription, update payment methods, or cancel at any time by visiting [rcweb.dev/manage-subscription](/manage-subscription) or contacting us directly

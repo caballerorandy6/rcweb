@@ -29,7 +29,7 @@ export const SubscriptionPortalLinkEmail: React.FC<
 > = ({ customerName, locale, portalUrl, planName }) => {
   const t = emailTranslator(locale);
   return (
-    <Html>
+    <Html lang={locale}>
       <Head />
       <Body style={styles.body}>
         <Container style={styles.container}>

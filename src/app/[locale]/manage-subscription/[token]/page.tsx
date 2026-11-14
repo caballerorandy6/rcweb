@@ -2,7 +2,9 @@ import type { Metadata, Route } from "next";
 import { redirect as redirectExternal } from "next/navigation";
 import { redirect } from "@/i18n/navigation";
 import type { Locale } from "@/i18n/routing";
+import { localizePathname } from "@/i18n/paths";
 import { prisma } from "@/lib/prisma";
+import { SITE_BASE_URL } from "@/lib/projectUrl";
 import stripe from "@/lib/stripe";
 
 export const metadata: Metadata = {
@@ -50,7 +52,9 @@ export default async function SubscriptionPortalLinkPage(props: { params: Params
   try {
     const session = await stripe.billingPortal.sessions.create({
       customer: subscription.stripeCustomerId,
-      return_url: `${process.env.NEXT_PUBLIC_BASE_URL}/`,
+      // The link in the email is already in the customer's language
+      locale,
+      return_url: `${SITE_BASE_URL}${localizePathname("/", locale)}`,
     });
     portalUrl = session.url;
   } catch (error) {

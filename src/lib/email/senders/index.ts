@@ -30,6 +30,14 @@ export {
   sendSubscriptionPaymentFailed,
   type SendSubscriptionPaymentFailedParams,
 } from "./sendSubscriptionPaymentFailed";
+export {
+  sendSubscriptionCancelled,
+  type SendSubscriptionCancelledParams,
+} from "./sendSubscriptionCancelled";
+export {
+  sendSubscriptionCancellationChange,
+  type SendSubscriptionCancellationChangeParams,
+} from "./sendSubscriptionCancellationChange";
 
 export {
   sendContactConfirmationEmail,

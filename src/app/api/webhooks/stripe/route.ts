@@ -7,9 +7,13 @@ import { prisma } from "@/lib/prisma";
 import stripe from "@/lib/stripe";
 import { Resend } from "resend";
 import { createInvoiceAndSendEmail } from "@/lib/invoice/createInvoiceAndSendEmail";
-import { ADMIN_EMAIL } from "@/lib/email/adminEmail";
 import { LEGAL_LAST_UPDATED } from "@/lib/company";
-import { toSubscriptionStatus } from "@/lib/subscriptionStatus";
+import {
+  cancellationReason,
+  isScheduledToCancel,
+  needsAuthentication,
+  toSubscriptionStatus,
+} from "@/lib/subscriptionStatus";
 import { getProjectCharges, isPaid } from "@/lib/project/charges";
 import { createProjectFromDeposit } from "@/lib/project/createProjectFromDeposit";
 import { isUniqueConstraintError } from "@/lib/prismaErrors";
@@ -24,6 +28,8 @@ import {
   sendAdminFinalPaymentNotification,
   sendSubscriptionRenewalReminder,
   sendSubscriptionPaymentFailed,
+  sendSubscriptionCancelled,
+  sendSubscriptionCancellationChange,
 } from "@/lib/email";
 import { fromStripeAddress } from "@/lib/tax/billingAddress";
 import {
@@ -548,6 +554,29 @@ export async function POST(req: Request) {
           const baseUrl =
             process.env.NEXT_PUBLIC_BASE_URL || "https://www.rcweb.dev";
 
+          // 3D Secure: the card is fine, the bank wants a confirmation. Stripe
+          // emails the customer a link to confirm (Dashboard → Billing →
+          // Subscriptions and emails), so our "update your card" email would
+          // give the wrong instruction. Only the admin hears about it.
+          const withPayments = await stripe.invoices.retrieve(invoice.id!, {
+            expand: ["payments.data.payment.payment_intent"],
+          });
+          if (needsAuthentication(withPayments)) {
+            await sendAdminSubscriptionNotification(resend, {
+              event: "subscription_payment_action_required",
+              customerName: subscription.name,
+              customerEmail: subscription.email,
+              planName: subscription.planName,
+              amount: subscription.amount,
+              status: "past_due",
+              stripeSubscriptionId: subscription.stripeSubscriptionId,
+            });
+            return NextResponse.json({
+              received: true,
+              paymentNeedsAuthentication: true,
+            });
+          }
+
           // Email to customer with update payment link
           await sendSubscriptionPaymentFailed(resend, {
             customerEmail: subscription.email,
@@ -558,18 +587,14 @@ export async function POST(req: Request) {
             updatePaymentUrl: `${baseUrl}${localizePathname("/manage-subscription", subscription.locale)}`,
           });
 
-          // Email to admin
-          await resend.emails.send({
-            from: "RC Web Solutions <no-reply@rcweb.dev>",
-            to: ADMIN_EMAIL,
-            subject: `Payment Failed - ${subscription.email}`,
-            html: `
-              <h2>Subscription Payment Failed</h2>
-              <p><strong>Customer:</strong> ${subscription.name}</p>
-              <p><strong>Email:</strong> ${subscription.email}</p>
-              <p><strong>Plan:</strong> ${subscription.planName}</p>
-              <p><strong>Amount:</strong> $${(subscription.amount / 100).toFixed(2)}/month</p>
-            `,
+          await sendAdminSubscriptionNotification(resend, {
+            event: "subscription_payment_failed",
+            customerName: subscription.name,
+            customerEmail: subscription.email,
+            planName: subscription.planName,
+            amount: subscription.amount,
+            status: "past_due",
+            stripeSubscriptionId: subscription.stripeSubscriptionId,
           });
         }
 
@@ -588,41 +613,51 @@ export async function POST(req: Request) {
   if (event.type === "customer.subscription.deleted") {
     const stripeSubscription = event.data.object as Stripe.Subscription;
     const subscriptionId = stripeSubscription.id;
+    // Stripe's own end time, not the delivery time: a retried webhook can arrive hours later
+    const endedAt = stripeSubscription.ended_at
+      ? new Date(stripeSubscription.ended_at * 1000)
+      : new Date();
 
     try {
-      const subscription = await prisma.subscription.update({
-        where: { stripeSubscriptionId: subscriptionId },
+      // Only the request that moves the row to cancelled sends the emails, so
+      // a retried or resent event never tells the customer twice.
+      const changed = await prisma.subscription.updateMany({
+        where: {
+          stripeSubscriptionId: subscriptionId,
+          status: { not: "cancelled" },
+        },
         data: {
           status: "cancelled",
-          cancelledAt: new Date(),
+          cancelledAt: endedAt,
         },
+      });
+
+      if (changed.count === 0) {
+        return NextResponse.json({ received: true, alreadyCancelled: true });
+      }
+
+      const subscription = await prisma.subscription.findUniqueOrThrow({
+        where: { stripeSubscriptionId: subscriptionId },
       });
 
       const resend = new Resend(process.env.RESEND_API_KEY!);
 
-      await resend.emails.send({
-        from: "RC Web Solutions <no-reply@rcweb.dev>",
-        to: subscription.email,
-        subject: "Subscription Cancelled",
-        html: `
-          <h2>Subscription Cancelled</h2>
-          <p>Hi ${subscription.name},</p>
-          <p>Your <strong>${subscription.planName}</strong> subscription has been cancelled.</p>
-          <p>We're sorry to see you go. If you change your mind, you can always resubscribe.</p>
-          <p>Questions? Contact us at <a href="mailto:contactus@rcweb.dev">contactus@rcweb.dev</a></p>
-        `,
+      await sendSubscriptionCancelled(resend, {
+        customerEmail: subscription.email,
+        customerName: subscription.name,
+        locale: subscription.locale,
+        planName: subscription.planName,
+        endedAt,
       });
 
-      await resend.emails.send({
-        from: "RC Web Solutions <no-reply@rcweb.dev>",
-        to: ADMIN_EMAIL,
-        subject: `Subscription Cancelled - ${subscription.email}`,
-        html: `
-          <h2>Subscription Cancelled</h2>
-          <p><strong>Customer:</strong> ${subscription.name}</p>
-          <p><strong>Email:</strong> ${subscription.email}</p>
-          <p><strong>Plan:</strong> ${subscription.planName}</p>
-        `,
+      await sendAdminSubscriptionNotification(resend, {
+        event: "subscription_cancelled",
+        customerName: subscription.name,
+        customerEmail: subscription.email,
+        planName: subscription.planName,
+        amount: subscription.amount,
+        status: subscription.status,
+        stripeSubscriptionId: subscription.stripeSubscriptionId,
       });
 
       return NextResponse.json({ received: true, cancelled: true });
@@ -645,7 +680,19 @@ export async function POST(req: Request) {
       const currentPeriodEnd = subscriptionItem?.current_period_end;
       const currentPeriodStart = subscriptionItem?.current_period_start;
 
-      await prisma.subscription.update({
+      const scheduled = isScheduledToCancel(stripeSubscription);
+      // Flip the flag only if it differs: Stripe can send two updates in the
+      // same second (and retries), and only the request that changes the row
+      // may announce the change, so the customer never gets it twice.
+      const flipped = await prisma.subscription.updateMany({
+        where: {
+          stripeSubscriptionId: subscriptionId,
+          cancelAtPeriodEnd: !scheduled,
+        },
+        data: { cancelAtPeriodEnd: scheduled },
+      });
+
+      const subscription = await prisma.subscription.update({
         where: { stripeSubscriptionId: subscriptionId },
         data: {
           status: toSubscriptionStatus(stripeSubscription.status),
@@ -657,6 +704,49 @@ export async function POST(req: Request) {
             : undefined,
         },
       });
+
+      // The customer scheduled a cancellation in the portal, or took it back:
+      // confirm it to them and tell the admin while there is time to talk.
+      const change =
+        flipped.count === 0 ? null : scheduled ? "scheduled" : "resumed";
+      if (change) {
+        const resend = new Resend(process.env.RESEND_API_KEY!);
+        const baseUrl =
+          process.env.NEXT_PUBLIC_BASE_URL || "https://www.rcweb.dev";
+        const periodEnd = subscription.currentPeriodEnd ?? new Date();
+        // cancel_at is the real last day; the portal sets it to the period end
+        const date =
+          change === "scheduled" && stripeSubscription.cancel_at
+            ? new Date(stripeSubscription.cancel_at * 1000)
+            : periodEnd;
+
+        await sendSubscriptionCancellationChange(resend, {
+          kind: change,
+          customerEmail: subscription.email,
+          customerName: subscription.name,
+          locale: subscription.locale,
+          planName: subscription.planName,
+          date,
+          manageUrl: `${baseUrl}${localizePathname("/manage-subscription", subscription.locale)}`,
+        });
+        await sendAdminSubscriptionNotification(resend, {
+          event:
+            change === "scheduled"
+              ? "subscription_cancel_scheduled"
+              : "subscription_resumed",
+          customerName: subscription.name,
+          customerEmail: subscription.email,
+          planName: subscription.planName,
+          amount: subscription.amount,
+          status: subscription.status,
+          stripeSubscriptionId: subscription.stripeSubscriptionId,
+          nextBillingDate: date,
+          cancellationReason:
+            change === "scheduled"
+              ? cancellationReason(stripeSubscription.cancellation_details)
+              : null,
+        });
+      }
 
       return NextResponse.json({ received: true, updated: true });
     } catch (err) {

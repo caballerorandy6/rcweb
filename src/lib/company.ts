@@ -42,7 +42,7 @@ export const COMPANY_POSTAL_ADDRESS = `${COMPANY.address}, ${COMPANY.city}, ${CO
  */
 export const LEGAL_LAST_UPDATED = {
   /** Se guarda en TermsAcceptance.termsVersion y se muestra formateada */
-  version: "2026-11-05",
+  version: "2026-11-13",
 } as const;
 
 /**

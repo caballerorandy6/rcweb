@@ -183,10 +183,11 @@
         "features": [
           "Security patches and updates",
           "Performance and uptime monitoring",
-          "Content updates",
+          "Up to 2 hours of content changes a month",
           "Backup management",
           "Technical support",
-          "Same-day response for urgent issues"
+          "Same-day response for urgent issues",
+          "Monthly report on your site"
         ],
         "ideal": "Perfect for: every business that wants peace of mind",
         "checkoutCta": "Start Maintenance Plan"
@@ -779,7 +780,7 @@
         "metaDescription": "Monthly website maintenance and support: security updates, backups, uptime monitoring, content updates and technical support for sites I built. $200/month, cancel anytime.",
         "headline": "Monthly Maintenance & Support",
         "subheadline": "Ongoing maintenance, security updates, backups and technical support so your website keeps working while you run your business.",
-        "content": "A website is not finished when it launches. Dependencies get security updates, hosting and domains renew, content goes stale and one day a form stops sending. The maintenance plan covers that for any site I built: I keep the stack updated, monitor uptime and performance, keep backups, make the small content changes you send me and answer technical questions the same day when something is urgent. It is a monthly subscription paid through Stripe that you can cancel at any time from the link in your invoice email. If you need bigger changes, such as a new page or a new feature, I quote them separately so the monthly price stays predictable.",
+        "content": "A website is not finished when it launches. Dependencies get security updates, hosting and domains renew, content goes stale and one day a form stops sending. The maintenance plan covers that for any site I built: I keep the stack updated, monitor uptime and performance, keep backups, make the small content changes you send me (up to 2 hours a month), send you a monthly report and answer technical questions the same day when something is urgent. It is a monthly subscription paid through Stripe that you can cancel at any time from the subscription page, without calling anyone. If you need bigger changes, such as a new page or a new feature, I quote them separately so the monthly price stays predictable.",
         "localHeading": "Website Support from Houston",
         "localContent": "I am based in the Houston area, so support runs on Central Time and you deal directly with the person who built your site, in English or Spanish. That matters for the businesses I work with here, such as clinics and home service companies, where a broken contact form means missed calls. The plan covers sites I built, whether your business is in Houston, Katy, Sugar Land or Pasadena.",
         "remoteNote": "Location makes no difference to the plan: the work is remote, so businesses in other cities get the same support.",
@@ -794,7 +795,7 @@
           },
           {
             "title": "Content Updates",
-            "description": "Send me the new photo, price or opening hours and it is live without you touching anything."
+            "description": "Send me the new photo, price or opening hours and it is live without you touching anything. Up to 2 hours of changes a month are included; unused hours don't carry over, and anything beyond that is quoted first at $100/hour."
           },
           {
             "title": "Backup Management",
@@ -807,6 +808,10 @@
           {
             "title": "Same-Day Response for Urgent Issues",
             "description": "When the site is down or a payment fails, I respond the same day. Cancel anytime; no long-term contract."
+          },
+          {
+            "title": "Monthly Report",
+            "description": "Each month you get a short report on your site: updates applied, uptime, backups, the content changes made and the hours used."
           }
         ],
         "cta": "Start Maintenance Plan"
@@ -1616,18 +1621,17 @@
       "monthly": "Monthly Amount:",
       "perMonth": "/mo",
       "status": "Status:",
+      "statuses": {
+        "active": "Active",
+        "past_due": "Payment due",
+        "unpaid": "Unpaid",
+        "cancelled": "Cancelled"
+      },
       "nextBilling": "Next Billing Date:",
       "in30Days": "In approximately 30 days",
       "email": "Email:",
       "id": "Subscription ID:",
-      "includedTitle": "What's Included in Your Plan",
-      "included": [
-        "Security patches & updates",
-        "Performance monitoring",
-        "Content updates (up to 4 hours/month)",
-        "Technical support via email",
-        "Monthly reports"
-      ]
+      "includedTitle": "What's Included in Your Plan"
     }
   },
   "PaymentComplete": {
@@ -1882,6 +1886,7 @@
       "here": "here"
     },
     "subscription": {
+      "maintenancePlanName": "Monthly Website Maintenance and Support",
       "confirmSubject": "Subscription Confirmed - {planName}",
       "confirmHeading": "Subscription Activated!",
       "confirmBody": "Thank you for subscribing to our <b>{planName}</b> service! Your subscription is now active.",
@@ -1889,15 +1894,6 @@
       "monthly": "Monthly Amount (before tax):",
       "nextBilling": "Next Billing Date:",
       "included": "What's Included",
-      "items": [
-        "Security patches and updates",
-        "Performance monitoring and optimization",
-        "Content updates (text, images, minor changes)",
-        "Backup management",
-        "Uptime monitoring",
-        "Same-day response for urgent issues",
-        "Technical support via email/chat"
-      ],
       "manageAnytime": "You can manage or cancel your subscription at any time by visiting",
       "failedSubject": "Payment Failed - Action Required",
       "failedHeading": "Payment Failed",
@@ -1912,8 +1908,20 @@
         "Card declined by bank",
         "Incorrect billing information"
       ],
-      "failedDeadline": "If payment is not updated within 7 days, your subscription may be suspended.",
+      "failedDeadline": "We'll keep trying the charge for 2 weeks. If the payment method isn't updated by then, your subscription will be cancelled.",
       "failedBank": "If you believe this is an error, please check with your bank or contact us.",
+      "scheduledSubject": "Your subscription ends on {date}",
+      "scheduledHeading": "Cancellation Scheduled",
+      "scheduledBody": "Your <b>{planName}</b> subscription will stay active until <b>{date}</b>. After that date you won't be charged again.",
+      "scheduledUndo": "Changed your mind? You can keep your plan from the subscription page any time before that date.",
+      "resumedSubject": "Your subscription will continue - {planName}",
+      "resumedHeading": "Subscription Resumed",
+      "resumedBody": "Your <b>{planName}</b> subscription will no longer be cancelled. It renews on <b>{date}</b> as usual.",
+      "cancelledSubject": "Subscription Cancelled - {planName}",
+      "cancelledHeading": "Subscription Cancelled",
+      "cancelledBody": "Your <b>{planName}</b> subscription has been cancelled. You won't be charged again.",
+      "cancelledEnded": "Your maintenance service ended on {date}.",
+      "cancelledComeBack": "We're sorry to see you go. If you'd like to start again, just reply to this email and we'll set it up.",
       "portalSubject": "Manage Your Subscription - RC Web Solutions",
       "portalHeading": "Manage Your Subscription",
       "portalBody": "You requested access to manage your subscription. Click the button below to access your subscription portal where you can:",

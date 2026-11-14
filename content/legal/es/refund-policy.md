@@ -56,7 +56,7 @@ El servicio mensual de Mantenimiento y Soporte del sitio web funciona por suscri
 > [!warning] ⚠️ Política de reembolso de suscripciones: No se reembolsan los meses parciales al cancelar.
 
 - **Facturación:** Se cobrarán $200 USD a tu tarjeta automáticamente el mismo día de cada mes, contando desde la fecha de inicio de tu suscripción
-- **Cancelación:** Puedes cancelar tu suscripción en cualquier momento. La cancelación surte efecto al final de tu periodo de facturación en curso. Para cancelar, entra en [rcweb.dev/manage-subscription](/manage-subscription) o contáctanos directamente
+- **Cancelación:** Puedes cancelar tu suscripción en cualquier momento. La cancelación surte efecto al final de tu periodo de facturación en curso. Para cancelar, entra en [rcweb.dev/es/gestionar-suscripcion](/manage-subscription) o contáctanos directamente
 - **Sin reembolsos prorrateados:** Si cancelas a mitad de mes, seguirás recibiendo el servicio hasta el final del periodo pagado, pero no se reembolsarán los días restantes
 - **Pagos fallidos:** Si un pago falla, intentaremos cobrar a tu tarjeta de nuevo. Tras varios intentos fallidos, tu suscripción puede suspenderse
 

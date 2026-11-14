@@ -12,18 +12,33 @@ import {
 } from "@heroicons/react/24/outline";
 import confetti from "canvas-confetti";
 import type { Subscription } from "@/generated/prisma/client";
+
+/** The fields the page shows; the plan name already in the page's language */
+export type SubscriptionSuccessData = Pick<
+  Subscription,
+  | "planName"
+  | "amount"
+  | "currency"
+  | "status"
+  | "currentPeriodEnd"
+  | "email"
+  | "stripeSubscriptionId"
+>;
 import { trackLeadConversion, trackPurchase } from "@/lib/analytics";
 import { formatCurrency, formatDate as formatDateUtil } from "@/lib/utils";
 import { trackFBPurchase } from "@/components/tracking/FacebookPixel";
 import { trackLinkedInConversion } from "@/lib/linkedin";
 
 interface SubscriptionSuccessProps {
-  subscription?: Subscription | null;
+  subscription?: SubscriptionSuccessData | null;
+  /** What the plan includes, from the pricing cards */
+  features?: string[];
   error?: string;
 }
 
 export default function SubscriptionSuccess({
   subscription,
+  features = [],
   error,
 }: SubscriptionSuccessProps) {
   const t = useTranslations("PaymentSuccess");
@@ -115,8 +130,8 @@ export default function SubscriptionSuccess({
                   </div>
                   <div>
                     <span className="text-gray-400">{t("subscription.status")}</span>
-                    <p className="text-green-500 font-semibold capitalize">
-                      {subscription.status}
+                    <p className="text-green-500 font-semibold">
+                      {t(`subscription.statuses.${subscription.status}`)}
                     </p>
                   </div>
                 </div>
@@ -157,7 +172,7 @@ export default function SubscriptionSuccess({
           <div className="bg-blue-900/20 rounded-lg p-4 mb-8 border border-blue-500/30 font-inter">
             <h3 className="text-blue-400 font-semibold mb-3">{t("subscription.includedTitle")}</h3>
             <ul className="text-sm text-gray-300 space-y-2">
-              {(t.raw("subscription.included") as string[]).map((item) => (
+              {features.map((item) => (
                 <li key={item} className="flex items-center gap-2">
                   <CheckCircleIcon className="w-4 h-4 text-green-500" />
                   {item}

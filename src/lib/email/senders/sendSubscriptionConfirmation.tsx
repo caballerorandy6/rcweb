@@ -3,6 +3,8 @@
 import { emailTranslator } from "../i18n";
 import { Resend } from "resend";
 import { render } from "@react-email/components";
+import { subscriptionPlanName } from "@/lib/maintenancePlan";
+import { ADMIN_EMAIL } from "../adminEmail";
 import {
   SubscriptionConfirmationEmail,
   type SubscriptionConfirmationEmailProps,
@@ -17,8 +19,15 @@ export async function sendSubscriptionConfirmation(
   resend: Resend,
   params: SendSubscriptionConfirmationParams
 ): Promise<{ success: boolean; error?: string }> {
-  const { customerEmail, customerName, locale, planName, amount, nextBillingDate } =
-    params;
+  const {
+    customerEmail,
+    customerName,
+    locale,
+    planName: storedPlanName,
+    amount,
+    nextBillingDate,
+  } = params;
+  const planName = subscriptionPlanName(storedPlanName, locale);
 
   try {
     const html = await render(
@@ -32,9 +41,12 @@ export async function sendSubscriptionConfirmation(
     );
 
     const { error: sendError } = await resend.emails.send({
-      from: "RC Web Solutions <no-reply@rcweb.dev>",
+      from: "RC Web Solutions <contactus@rcweb.dev>",
       to: customerEmail,
-      subject: emailTranslator(locale)("subscription.confirmSubject", { planName }),
+      replyTo: ADMIN_EMAIL,
+      subject: emailTranslator(locale)("subscription.confirmSubject", {
+        planName,
+      }),
       html,
     });
     if (sendError) throw new Error(sendError.message);
