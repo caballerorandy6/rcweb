@@ -44,9 +44,13 @@ El servicio mensual de Mantenimiento y Soporte del sitio web funciona por suscri
 
 - **Cuota mensual:** $200 USD, cobrados automáticamente cada mes
 - **Ciclo de facturación:** Se cobrará a tu tarjeta el mismo día de cada mes, contando desde la fecha de tu suscripción inicial
+- **Cambios de contenido:** Se incluyen hasta 2 horas de cambios de contenido al mes (textos, imágenes, precios, horarios y otros cambios pequeños). Las horas que no se usen no pasan al mes siguiente
+- **Trabajo adicional:** Los cambios de contenido que superen las horas incluidas se cobran a $100 USD por hora, siempre presupuestados de antemano y solo con tu aprobación. Las páginas nuevas, las funciones nuevas y los rediseños se presupuestan aparte como proyectos
+- **Informe mensual:** Cada mes recibes un informe con las actualizaciones aplicadas, la disponibilidad, las copias de seguridad, los cambios de contenido hechos y las horas usadas
+- **Urgencias:** Una urgencia es un problema que impide que tu sitio funcione para tus clientes: el sitio está caído o no funcionan los formularios, las reservas o los pagos. Ante una urgencia respondemos el mismo día, también los fines de semana, si se avisa antes de las 8 p. m. (hora del Centro); si se avisa más tarde, respondemos a la mañana siguiente. Responder significa confirmar el problema y empezar a trabajar en él; el tiempo de arreglo depende de la causa, incluidas las caídas de proveedores externos (hosting, dominio, pagos o correo) que no dependen de nosotros. Las demás peticiones se responden en un día hábil. Si no vamos a estar disponibles, lo avisaremos con antelación
 - **Cancelación:** Puedes cancelar tu suscripción en cualquier momento. La cancelación surte efecto al final del periodo de facturación en curso
 - **Sin reembolsos:** No se reembolsan los meses parciales al cancelar
-- **Cómo gestionarla:** Puedes gestionar tu suscripción, actualizar el método de pago o cancelar en cualquier momento desde [rcweb.dev/manage-subscription](/manage-subscription) o contactándonos directamente
+- **Cómo gestionarla:** Puedes gestionar tu suscripción, actualizar el método de pago o cancelar en cualquier momento desde [rcweb.dev/es/gestionar-suscripcion](/manage-subscription) o contactándonos directamente
 
 ### 3.3 Métodos de pago
 

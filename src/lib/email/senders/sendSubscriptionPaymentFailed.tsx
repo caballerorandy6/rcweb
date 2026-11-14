@@ -3,6 +3,8 @@
 import { emailTranslator } from "../i18n";
 import { Resend } from "resend";
 import { render } from "@react-email/components";
+import { subscriptionPlanName } from "@/lib/maintenancePlan";
+import { ADMIN_EMAIL } from "../adminEmail";
 import {
   SubscriptionPaymentFailedEmail,
   type SubscriptionPaymentFailedEmailProps,
@@ -17,8 +19,15 @@ export async function sendSubscriptionPaymentFailed(
   resend: Resend,
   params: SendSubscriptionPaymentFailedParams
 ): Promise<{ success: boolean; error?: string }> {
-  const { customerEmail, customerName, locale, planName, amount, updatePaymentUrl } =
-    params;
+  const {
+    customerEmail,
+    customerName,
+    locale,
+    planName: storedPlanName,
+    amount,
+    updatePaymentUrl,
+  } = params;
+  const planName = subscriptionPlanName(storedPlanName, locale);
 
   try {
     const html = await render(
@@ -32,8 +41,9 @@ export async function sendSubscriptionPaymentFailed(
     );
 
     const { error: sendError } = await resend.emails.send({
-      from: "RC Web Solutions <no-reply@rcweb.dev>",
+      from: "RC Web Solutions <contactus@rcweb.dev>",
       to: customerEmail,
+      replyTo: ADMIN_EMAIL,
       subject: emailTranslator(locale)("subscription.failedSubject"),
       html,
     });

@@ -43,7 +43,7 @@ export const MilestoneCompletedEmail = ({
   const allDone = totalCount > 0 && completedCount === totalCount;
 
   return (
-    <Html>
+    <Html lang={locale}>
       <Head />
       <Body style={styles.body}>
         <Container style={styles.container}>

@@ -3,6 +3,8 @@
 import { emailTranslator } from "../i18n";
 import { Resend } from "resend";
 import { render } from "@react-email/components";
+import { subscriptionPlanName } from "@/lib/maintenancePlan";
+import { ADMIN_EMAIL } from "../adminEmail";
 import {
   SubscriptionPortalLinkEmail,
   type SubscriptionPortalLinkEmailProps,
@@ -17,7 +19,14 @@ export async function sendSubscriptionPortalLink(
   resend: Resend,
   params: SendSubscriptionPortalLinkParams
 ): Promise<{ success: boolean; error?: string }> {
-  const { customerEmail, customerName, locale, portalUrl, planName } = params;
+  const {
+    customerEmail,
+    customerName,
+    locale,
+    portalUrl,
+    planName: storedPlanName,
+  } = params;
+  const planName = subscriptionPlanName(storedPlanName, locale);
 
   try {
     const html = await render(
@@ -30,8 +39,9 @@ export async function sendSubscriptionPortalLink(
     );
 
     const { error: sendError } = await resend.emails.send({
-      from: "RC Web Solutions <no-reply@rcweb.dev>",
+      from: "RC Web Solutions <contactus@rcweb.dev>",
       to: customerEmail,
+      replyTo: ADMIN_EMAIL,
       subject: emailTranslator(locale)("subscription.portalSubject"),
       html,
     });

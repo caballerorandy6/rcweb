@@ -6,8 +6,9 @@ import { requireAdmin } from "@/lib/authGuard";
 import type { ActionResultSimple } from "@/types/common";
 
 /**
- * Cancels a subscription immediately via Stripe API
- * Updates local database after successful cancellation
+ * Cancels a subscription immediately via Stripe API.
+ * The customer.subscription.deleted webhook marks the row cancelled and sends
+ * the emails; writing it here would make the webhook skip them.
  */
 export async function cancelSubscriptionAction(
   subscriptionId: string
@@ -27,17 +28,7 @@ export async function cancelSubscriptionAction(
       return { success: false, error: "Subscription not found" };
     }
 
-    // Cancel in Stripe
     await stripe.subscriptions.cancel(subscription.stripeSubscriptionId);
-
-    // Update local database
-    await prisma.subscription.update({
-      where: { id: subscriptionId },
-      data: {
-        status: "cancelled",
-        cancelledAt: new Date(),
-      },
-    });
 
     return { success: true };
   } catch (error) {

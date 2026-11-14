@@ -16,6 +16,7 @@ export interface SubscriptionData {
   status: string;
   currentPeriodStart: string | null;
   currentPeriodEnd: string | null;
+  cancelAtPeriodEnd: boolean;
   cancelledAt: string | null;
   createdAt: string;
 }
@@ -48,6 +49,7 @@ export async function getAllSubscriptionsAction(): Promise<
           status: sub.status,
           currentPeriodStart: sub.currentPeriodStart?.toISOString() || null,
           currentPeriodEnd: sub.currentPeriodEnd?.toISOString() || null,
+          cancelAtPeriodEnd: sub.cancelAtPeriodEnd,
           cancelledAt: sub.cancelledAt?.toISOString() || null,
         createdAt: sub.createdAt.toISOString(),
       })),

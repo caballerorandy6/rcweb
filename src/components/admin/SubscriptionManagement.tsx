@@ -19,6 +19,7 @@ import {
   ArrowDownTrayIcon,
 } from "@heroicons/react/24/outline";
 import { toast } from "sonner";
+import Modal from "@/components/ui/Modal";
 import { formatCurrency, formatDate, formatDollars } from "@/lib/utils";
 
 interface SubscriptionManagementProps {
@@ -310,9 +311,15 @@ export default function SubscriptionManagement({
                         </span>
                       </td>
                       <td className="px-4 py-4 text-gray-400 text-sm">
-                        {subscription.status === "cancelled"
-                          ? `Cancelled: ${formatDate(subscription.cancelledAt)}`
-                          : formatDate(subscription.currentPeriodEnd)}
+                        {subscription.status === "cancelled" ? (
+                          `Cancelled: ${formatDate(subscription.cancelledAt)}`
+                        ) : subscription.cancelAtPeriodEnd ? (
+                          <span className="text-yellow-400">
+                            Ends: {formatDate(subscription.currentPeriodEnd)}
+                          </span>
+                        ) : (
+                          formatDate(subscription.currentPeriodEnd)
+                        )}
                       </td>
                       <td className="px-4 py-4">
                         <div className="flex items-center gap-2">
@@ -382,105 +389,113 @@ export default function SubscriptionManagement({
         </div>
       </div>
 
-      {/* Invoices Modal */}
-      {invoicesModal.isOpen && (
-        <div className="fixed inset-0 bg-black/70 backdrop-blur-xs z-50 flex items-center justify-center p-4">
-          <div className="bg-gray-800 rounded-xl border border-gray-700 max-w-2xl w-full max-h-[80vh] overflow-hidden">
-            {/* Modal Header */}
-            <div className="flex items-center justify-between px-6 py-4 border-b border-gray-700">
-              <div>
-                <h3 className="text-lg text-white font-iceland">
-                  Payment History
-                </h3>
-                <p className="text-sm text-gray-400 font-inter">
-                  {invoicesModal.customerName}
-                </p>
-              </div>
-              <button
-                onClick={closeInvoicesModal}
-                className="p-2 text-gray-400 hover:text-white transition-colors"
+      {/* Invoices Modal: native <dialog> closes on Escape and on the backdrop */}
+      <Modal
+        open={invoicesModal.isOpen}
+        onClose={closeInvoicesModal}
+        aria-labelledby="invoices-modal-title"
+        className="m-auto w-[calc(100%-2rem)] max-w-2xl bg-transparent p-0 text-inherit backdrop:bg-black/70 backdrop:backdrop-blur-xs"
+      >
+        <div className="bg-gray-800 rounded-xl border border-gray-700 w-full max-h-[80vh] overflow-hidden">
+          {/* Modal Header */}
+          <div className="flex items-center justify-between px-6 py-4 border-b border-gray-700">
+            <div>
+              <h3
+                id="invoices-modal-title"
+                className="text-lg text-white font-iceland"
               >
-                <XMarkIcon className="h-5 w-5" />
-              </button>
+                Payment History
+              </h3>
+              <p className="text-sm text-gray-400 font-inter">
+                {invoicesModal.customerName}
+              </p>
             </div>
+            <button
+              type="button"
+              onClick={closeInvoicesModal}
+              aria-label="Close"
+              className="p-2 text-gray-400 hover:text-white transition-colors"
+            >
+              <XMarkIcon className="h-5 w-5" />
+            </button>
+          </div>
 
-            {/* Modal Content */}
-            <div className="p-6 overflow-y-auto max-h-[60vh]">
-              {invoicesModal.loading ? (
-                <div className="flex items-center justify-center py-8">
-                  <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-gold"></div>
-                </div>
-              ) : invoicesModal.invoices.length === 0 ? (
-                <p className="text-gray-400 text-center py-8 font-inter">
-                  No invoices found
-                </p>
-              ) : (
-                <div className="space-y-3">
-                  {invoicesModal.invoices.map((invoice) => (
-                    <div
-                      key={invoice.id}
-                      className="bg-gray-900/50 rounded-lg p-4 border border-gray-700/50"
-                    >
-                      <div className="flex items-center justify-between">
-                        <div>
-                          <p className="text-white font-medium font-inter">
-                            {invoice.number || invoice.id.slice(0, 20)}
+          {/* Modal Content */}
+          <div className="p-6 overflow-y-auto max-h-[60vh]">
+            {invoicesModal.loading ? (
+              <div className="flex items-center justify-center py-8">
+                <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-gold"></div>
+              </div>
+            ) : invoicesModal.invoices.length === 0 ? (
+              <p className="text-gray-400 text-center py-8 font-inter">
+                No invoices found
+              </p>
+            ) : (
+              <div className="space-y-3">
+                {invoicesModal.invoices.map((invoice) => (
+                  <div
+                    key={invoice.id}
+                    className="bg-gray-900/50 rounded-lg p-4 border border-gray-700/50"
+                  >
+                    <div className="flex items-center justify-between">
+                      <div>
+                        <p className="text-white font-medium font-inter">
+                          {invoice.number || invoice.id.slice(0, 20)}
+                        </p>
+                        <p className="text-sm text-gray-400 font-inter">
+                          {formatDate(invoice.created)}
+                        </p>
+                      </div>
+                      <div className="flex items-center gap-4">
+                        <div className="text-right">
+                          <p className="text-gold font-semibold font-inter">
+                            {formatCurrency(invoice.amount)}
                           </p>
-                          <p className="text-sm text-gray-400 font-inter">
-                            {formatDate(invoice.created)}
-                          </p>
+                          <span
+                            className={`text-xs px-2 py-0.5 rounded-full ${
+                              invoice.status === "paid"
+                                ? "bg-green-400/10 text-green-400"
+                                : invoice.status === "open"
+                                  ? "bg-yellow-400/10 text-yellow-400"
+                                  : "bg-gray-400/10 text-gray-400"
+                            }`}
+                          >
+                            {invoice.status}
+                          </span>
                         </div>
-                        <div className="flex items-center gap-4">
-                          <div className="text-right">
-                            <p className="text-gold font-semibold font-inter">
-                              {formatCurrency(invoice.amount)}
-                            </p>
-                            <span
-                              className={`text-xs px-2 py-0.5 rounded-full ${
-                                invoice.status === "paid"
-                                  ? "bg-green-400/10 text-green-400"
-                                  : invoice.status === "open"
-                                    ? "bg-yellow-400/10 text-yellow-400"
-                                    : "bg-gray-400/10 text-gray-400"
-                              }`}
+                        <div className="flex items-center gap-1">
+                          {invoice.invoiceUrl && (
+                            <a
+                              href={invoice.invoiceUrl}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="p-2 text-gray-400 hover:text-blue-400 transition-colors"
+                              title="View Invoice"
                             >
-                              {invoice.status}
-                            </span>
-                          </div>
-                          <div className="flex items-center gap-1">
-                            {invoice.invoiceUrl && (
-                              <a
-                                href={invoice.invoiceUrl}
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                className="p-2 text-gray-400 hover:text-blue-400 transition-colors"
-                                title="View Invoice"
-                              >
-                                <ArrowTopRightOnSquareIcon className="h-4 w-4" />
-                              </a>
-                            )}
-                            {invoice.invoicePdf && (
-                              <a
-                                href={invoice.invoicePdf}
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                className="p-2 text-gray-400 hover:text-green-400 transition-colors"
-                                title="Download PDF"
-                              >
-                                <ArrowDownTrayIcon className="h-4 w-4" />
-                              </a>
-                            )}
-                          </div>
+                              <ArrowTopRightOnSquareIcon className="h-4 w-4" />
+                            </a>
+                          )}
+                          {invoice.invoicePdf && (
+                            <a
+                              href={invoice.invoicePdf}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="p-2 text-gray-400 hover:text-green-400 transition-colors"
+                              title="Download PDF"
+                            >
+                              <ArrowDownTrayIcon className="h-4 w-4" />
+                            </a>
+                          )}
                         </div>
                       </div>
                     </div>
-                  ))}
-                </div>
-              )}
-            </div>
+                  </div>
+                ))}
+              </div>
+            )}
           </div>
         </div>
-      )}
+      </Modal>
     </div>
   );
 }

@@ -211,7 +211,7 @@ Usamos el Portal de clientes de Stripe para que puedas gestionar tu suscripción
 - Ver el historial de facturación y descargar facturas
 - Cancelar tu suscripción
 
-Puedes acceder al Portal de clientes en cualquier momento desde [rcweb.dev/manage-subscription](/manage-subscription).
+Puedes acceder al Portal de clientes en cualquier momento desde [rcweb.dev/es/gestionar-suscripcion](/manage-subscription).
 
 ## Uso de tus Datos personales
 

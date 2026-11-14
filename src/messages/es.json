@@ -183,10 +183,11 @@
         "features": [
           "Parches y actualizaciones de seguridad",
           "Monitoreo de rendimiento y disponibilidad",
-          "Actualizaciones de contenido",
+          "Hasta 2 horas de cambios de contenido al mes",
           "Gestión de copias de seguridad",
           "Soporte técnico",
-          "Respuesta el mismo día para urgencias"
+          "Respuesta el mismo día para urgencias",
+          "Informe mensual de tu sitio"
         ],
         "ideal": "Ideal para: cualquier negocio que quiera tranquilidad",
         "checkoutCta": "Empezar plan de mantenimiento"
@@ -779,7 +780,7 @@
         "metaDescription": "Mantenimiento y soporte web mensual: actualizaciones de seguridad, copias de seguridad, monitoreo de disponibilidad, actualizaciones de contenido y soporte técnico para los sitios que construí. $200 al mes, cancela cuando quieras.",
         "headline": "Mantenimiento y soporte mensual",
         "subheadline": "Mantenimiento continuo, actualizaciones de seguridad, copias de seguridad y soporte técnico para que tu sitio web siga funcionando mientras tú atiendes tu negocio.",
-        "content": "Un sitio web no está terminado cuando se lanza. Las dependencias reciben actualizaciones de seguridad, el hosting y los dominios se renuevan, el contenido se queda viejo y un día un formulario deja de enviar. El plan de mantenimiento cubre todo eso para cualquier sitio que yo haya construido: mantengo el stack actualizado, monitoreo la disponibilidad y el rendimiento, conservo copias de seguridad, hago los pequeños cambios de contenido que me envíes y respondo las dudas técnicas el mismo día cuando algo es urgente. Es una suscripción mensual que se paga a través de Stripe y que puedes cancelar en cualquier momento desde el enlace del correo de tu factura. Si necesitas cambios mayores, como una página nueva o una función nueva, los presupuesto aparte para que el precio mensual siga siendo predecible.",
+        "content": "Un sitio web no está terminado cuando se lanza. Las dependencias reciben actualizaciones de seguridad, el hosting y los dominios se renuevan, el contenido se queda viejo y un día un formulario deja de enviar. El plan de mantenimiento cubre todo eso para cualquier sitio que yo haya construido: mantengo el stack actualizado, monitoreo la disponibilidad y el rendimiento, conservo copias de seguridad, hago los pequeños cambios de contenido que me envíes (hasta 2 horas al mes), te mando un informe mensual y respondo las dudas técnicas el mismo día cuando algo es urgente. Es una suscripción mensual que se paga a través de Stripe y que puedes cancelar en cualquier momento desde la página de suscripción, sin llamar a nadie. Si necesitas cambios mayores, como una página nueva o una función nueva, los presupuesto aparte para que el precio mensual siga siendo predecible.",
         "localHeading": "Soporte web desde Houston",
         "localContent": "Estoy en el área de Houston, así que el soporte funciona en horario del Centro y tratas directamente con quien construyó tu sitio, en inglés o en español. Eso importa en los negocios con los que trabajo aquí, como clínicas y empresas de servicios para el hogar, donde un formulario de contacto roto significa llamadas perdidas. El plan cubre los sitios que yo construí, ya sea que tu negocio esté en Houston, Katy, Sugar Land o Pasadena.",
         "remoteNote": "La ubicación no cambia el plan: el trabajo es a distancia, así que los negocios de otras ciudades reciben el mismo soporte.",
@@ -794,7 +795,7 @@
           },
           {
             "title": "Actualizaciones de contenido",
-            "description": "Envíame la foto, el precio o el horario nuevo y queda publicado sin que tengas que tocar nada."
+            "description": "Envíame la foto, el precio o el horario nuevo y queda publicado sin que tengas que tocar nada. Incluye hasta 2 horas de cambios al mes; las horas que no uses no se acumulan, y lo que pase de ahí te lo presupuesto antes a $100 la hora."
           },
           {
             "title": "Gestión de copias de seguridad",
@@ -807,6 +808,10 @@
           {
             "title": "Respuesta el mismo día para urgencias",
             "description": "Cuando el sitio está caído o falla un pago, respondo el mismo día. Cancela cuando quieras; sin contrato a largo plazo."
+          },
+          {
+            "title": "Informe mensual",
+            "description": "Cada mes recibes un informe breve de tu sitio: actualizaciones aplicadas, disponibilidad, copias de seguridad, los cambios de contenido hechos y las horas usadas."
           }
         ],
         "cta": "Empezar plan de mantenimiento"
@@ -1616,18 +1621,17 @@
       "monthly": "Monto mensual:",
       "perMonth": "/mes",
       "status": "Estado:",
+      "statuses": {
+        "active": "Activa",
+        "past_due": "Pago pendiente",
+        "unpaid": "Sin pagar",
+        "cancelled": "Cancelada"
+      },
       "nextBilling": "Próximo cobro:",
       "in30Days": "En aproximadamente 30 días",
       "email": "Correo:",
       "id": "ID de suscripción:",
-      "includedTitle": "Qué incluye tu plan",
-      "included": [
-        "Parches y actualizaciones de seguridad",
-        "Monitoreo del rendimiento",
-        "Actualizaciones de contenido (hasta 4 horas al mes)",
-        "Soporte técnico por correo",
-        "Reportes mensuales"
-      ]
+      "includedTitle": "Qué incluye tu plan"
     }
   },
   "PaymentComplete": {
@@ -1882,6 +1886,7 @@
       "here": "aquí"
     },
     "subscription": {
+      "maintenancePlanName": "Mantenimiento y soporte web mensual",
       "confirmSubject": "Suscripción confirmada - {planName}",
       "confirmHeading": "¡Suscripción activada!",
       "confirmBody": "¡Gracias por suscribirte a nuestro servicio <b>{planName}</b>! Tu suscripción ya está activa.",
@@ -1889,15 +1894,6 @@
       "monthly": "Monto mensual (antes de impuestos):",
       "nextBilling": "Próximo cobro:",
       "included": "Qué incluye",
-      "items": [
-        "Parches y actualizaciones de seguridad",
-        "Monitoreo y optimización del rendimiento",
-        "Actualizaciones de contenido (textos, imágenes, cambios menores)",
-        "Gestión de copias de seguridad",
-        "Monitoreo de disponibilidad",
-        "Respuesta el mismo día para urgencias",
-        "Soporte técnico por correo o chat"
-      ],
       "manageAnytime": "Puedes gestionar o cancelar tu suscripción en cualquier momento en",
       "failedSubject": "Pago fallido - Acción necesaria",
       "failedHeading": "Pago fallido",
@@ -1912,8 +1908,20 @@
         "Tarjeta rechazada por el banco",
         "Datos de facturación incorrectos"
       ],
-      "failedDeadline": "Si no actualizas el pago en 7 días, tu suscripción puede suspenderse.",
+      "failedDeadline": "Seguiremos intentando el cobro durante 2 semanas. Si para entonces no actualizas el método de pago, tu suscripción se cancelará.",
       "failedBank": "Si crees que es un error, consulta con tu banco o escríbenos.",
+      "scheduledSubject": "Tu suscripción termina el {date}",
+      "scheduledHeading": "Cancelación programada",
+      "scheduledBody": "Tu suscripción <b>{planName}</b> seguirá activa hasta el <b>{date}</b>. Después de esa fecha no se te volverá a cobrar.",
+      "scheduledUndo": "¿Cambiaste de idea? Puedes conservar tu plan desde la página de suscripción en cualquier momento antes de esa fecha.",
+      "resumedSubject": "Tu suscripción continúa - {planName}",
+      "resumedHeading": "Suscripción reactivada",
+      "resumedBody": "Tu suscripción <b>{planName}</b> ya no se cancelará. Se renovará el <b>{date}</b> como de costumbre.",
+      "cancelledSubject": "Suscripción cancelada - {planName}",
+      "cancelledHeading": "Suscripción cancelada",
+      "cancelledBody": "Tu suscripción <b>{planName}</b> se ha cancelado. No se te volverá a cobrar.",
+      "cancelledEnded": "Tu servicio de mantenimiento terminó el {date}.",
+      "cancelledComeBack": "Lamentamos que te vayas. Si quieres volver a empezar, responde a este correo y lo dejamos listo.",
       "portalSubject": "Gestiona tu suscripción - RC Web Solutions",
       "portalHeading": "Gestiona tu suscripción",
       "portalBody": "Pediste acceso para gestionar tu suscripción. Haz clic en el botón de abajo para entrar al portal, donde puedes:",

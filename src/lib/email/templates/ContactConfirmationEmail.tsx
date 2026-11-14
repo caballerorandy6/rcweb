@@ -29,7 +29,7 @@ export const ContactConfirmationEmail: React.FC<
 > = ({ customerName, locale, siteUrl }) => {
   const t = emailTranslator(locale);
   return (
-    <Html>
+    <Html lang={locale}>
       <Head />
       <Body style={styles.body}>
         <Container style={styles.container}>

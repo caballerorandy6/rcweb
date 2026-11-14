@@ -18,7 +18,27 @@ type NotificationType =
   | "initial_payment"
   | "final_payment"
   | "subscription"
+  | "subscription_cancelled"
+  | "subscription_cancel_scheduled"
+  | "subscription_resumed"
+  | "subscription_payment_failed"
+  | "subscription_payment_action_required"
   | "fallback";
+
+/**
+ * What a maintenance plan needs before the first month starts. GA4 and Search
+ * Console belong to every client (set up at delivery); the rest only exists
+ * for plan clients, because someone has to act on the alerts.
+ */
+const ONBOARDING_STEPS = [
+  "Dependabot on the site's repo (weekly grouped updates)",
+  "Uptime monitor with alerts to your phone",
+  "Sentry and Vercel Speed Insights on the site",
+  "Nightly database backups, only if the site has a database",
+  "GA4 and Search Console owned by the client, with you as admin",
+  "Client's privacy policy mentions GA4 and Sentry",
+  "Add the client to the monthly report",
+];
 
 export interface AdminNotificationEmailProps {
   type: NotificationType;
@@ -33,6 +53,7 @@ export interface AdminNotificationEmailProps {
   stripeSubscriptionId?: string;
   nextBillingDate?: Date;
   subscriptionStatus?: string;
+  cancellationReason?: string;
 }
 
 export const AdminNotificationEmail: React.FC<AdminNotificationEmailProps> = ({
@@ -48,6 +69,7 @@ export const AdminNotificationEmail: React.FC<AdminNotificationEmailProps> = ({
   stripeSubscriptionId,
   nextBillingDate,
   subscriptionStatus,
+  cancellationReason,
 }) => {
   const formattedAmount = (amount / 100).toFixed(2);
   const formattedPending = pendingAmount ? (pendingAmount / 100).toFixed(2) : "";
@@ -83,6 +105,41 @@ export const AdminNotificationEmail: React.FC<AdminNotificationEmailProps> = ({
           borderColor: EMAIL_COLORS.green,
           textColor: EMAIL_COLORS.green,
         };
+      case "subscription_cancelled":
+        return {
+          title: "Subscription Cancelled",
+          bgColor: EMAIL_COLORS.redLight,
+          borderColor: EMAIL_COLORS.red,
+          textColor: EMAIL_COLORS.redDark,
+        };
+      case "subscription_cancel_scheduled":
+        return {
+          title: "Cancellation Scheduled",
+          bgColor: EMAIL_COLORS.amberLight,
+          borderColor: EMAIL_COLORS.amber,
+          textColor: EMAIL_COLORS.amberDark,
+        };
+      case "subscription_resumed":
+        return {
+          title: "Subscription Resumed",
+          bgColor: EMAIL_COLORS.greenLight,
+          borderColor: EMAIL_COLORS.green,
+          textColor: EMAIL_COLORS.green,
+        };
+      case "subscription_payment_action_required":
+        return {
+          title: "Payment Needs Authentication",
+          bgColor: EMAIL_COLORS.blueLight,
+          borderColor: EMAIL_COLORS.blue,
+          textColor: EMAIL_COLORS.blueDark,
+        };
+      case "subscription_payment_failed":
+        return {
+          title: "Subscription Payment Failed",
+          bgColor: EMAIL_COLORS.orangeLight,
+          borderColor: EMAIL_COLORS.orange,
+          textColor: EMAIL_COLORS.orangeDark,
+        };
       case "fallback":
         return {
           title: "Payment Created via Fallback",
@@ -101,6 +158,7 @@ export const AdminNotificationEmail: React.FC<AdminNotificationEmailProps> = ({
   };
 
   const headerInfo = getHeaderInfo();
+  const isSubscription = type.startsWith("subscription");
 
   return (
     <Html>
@@ -158,7 +216,7 @@ export const AdminNotificationEmail: React.FC<AdminNotificationEmailProps> = ({
                       <td style={styles.infoValueHighlight}>{projectCode}</td>
                     </tr>
                   )}
-                  {type === "subscription" ? (
+                  {isSubscription ? (
                     <>
                       <tr>
                         <td style={styles.infoLabel}>Monthly Amount:</td>
@@ -180,8 +238,18 @@ export const AdminNotificationEmail: React.FC<AdminNotificationEmailProps> = ({
                       )}
                       {formattedDate && (
                         <tr>
-                          <td style={styles.infoLabel}>Next Billing:</td>
+                          <td style={styles.infoLabel}>
+                            {type === "subscription_cancel_scheduled"
+                              ? "Ends On:"
+                              : "Next Billing:"}
+                          </td>
                           <td style={styles.infoValue}>{formattedDate}</td>
+                        </tr>
+                      )}
+                      {cancellationReason && (
+                        <tr>
+                          <td style={styles.infoLabel}>Reason:</td>
+                          <td style={styles.infoValue}>{cancellationReason}</td>
                         </tr>
                       )}
                     </>
@@ -244,9 +312,59 @@ export const AdminNotificationEmail: React.FC<AdminNotificationEmailProps> = ({
             )}
 
             {type === "subscription" && (
+              <>
+                <Section style={styles.infoBox}>
+                  <Heading as="h3" style={styles.sectionTitle}>
+                    Onboarding checklist
+                  </Heading>
+                  <ul style={styles.checklist}>
+                    {ONBOARDING_STEPS.map((step) => (
+                      <li key={step} style={styles.checklistItem}>
+                        {step}
+                      </li>
+                    ))}
+                  </ul>
+                </Section>
+                <Text style={styles.reminderText}>
+                  The client has been sent a confirmation email with subscription
+                  details.
+                </Text>
+              </>
+            )}
+
+            {type === "subscription_cancelled" && (
               <Text style={styles.reminderText}>
-                The client has been sent a confirmation email with subscription
-                details.
+                The client has been sent a cancellation email. Stripe will not
+                charge them again.
+              </Text>
+            )}
+
+            {type === "subscription_cancel_scheduled" && (
+              <Text style={styles.reminderText}>
+                The plan stays active until the date above and the client was
+                sent a confirmation. A good moment to call them before it ends.
+              </Text>
+            )}
+
+            {type === "subscription_resumed" && (
+              <Text style={styles.reminderText}>
+                The client took back the cancellation; billing continues as
+                usual.
+              </Text>
+            )}
+
+            {type === "subscription_payment_action_required" && (
+              <Text style={styles.reminderText}>
+                Not a declined card: the client&apos;s bank asked them to confirm
+                this charge (3D Secure). Stripe emailed them a link and reminds
+                them on days 3, 5 and 7.
+              </Text>
+            )}
+
+            {type === "subscription_payment_failed" && (
+              <Text style={styles.reminderText}>
+                The client has been asked to update their payment method. Stripe
+                retries the charge automatically.
               </Text>
             )}
           </Section>
@@ -336,6 +454,16 @@ const styles: Record<string, React.CSSProperties> = {
     border: "none",
     borderTop: "1px solid #e5e7eb",
     margin: "24px 0",
+  },
+  checklist: {
+    color: EMAIL_COLORS.dark,
+    fontSize: "14px",
+    lineHeight: "1.8",
+    margin: 0,
+    paddingLeft: "20px",
+  },
+  checklistItem: {
+    marginBottom: "4px",
   },
   reminderText: {
     color: EMAIL_COLORS.gray,

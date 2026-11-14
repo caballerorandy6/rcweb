@@ -53,7 +53,7 @@ export const QuoteEmail = ({
   const validUntil = formatLongDate(expiresAt, locale);
 
   return (
-    <Html>
+    <Html lang={locale}>
       <Head />
       <Body style={styles.body}>
         <Container style={styles.container}>

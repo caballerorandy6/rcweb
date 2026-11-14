@@ -4,6 +4,7 @@ import { emailTranslator } from "../i18n";
 import type { Locale } from "@/i18n/routing";
 import { Resend } from "resend";
 import { render } from "@react-email/components";
+import { ADMIN_EMAIL } from "../adminEmail";
 import { ProjectReadyEmail } from "../templates";
 
 export interface SendProjectReadyEmailParams {
@@ -45,8 +46,9 @@ export async function sendProjectReadyEmail(
 
 
     const { error: sendError } = await resend.emails.send({
-      from: "RC Web Solutions <no-reply@rcweb.dev>",
+      from: "RC Web Solutions <contactus@rcweb.dev>",
       to: customerEmail,
+      replyTo: ADMIN_EMAIL,
       subject: emailTranslator(locale)("ready.subject", {
         planName,
         amount: `$${(finalAmount / 100).toFixed(2)}`,

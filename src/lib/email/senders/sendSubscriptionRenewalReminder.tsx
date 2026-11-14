@@ -3,6 +3,8 @@
 import { emailTranslator } from "../i18n";
 import { Resend } from "resend";
 import { render } from "@react-email/components";
+import { subscriptionPlanName } from "@/lib/maintenancePlan";
+import { ADMIN_EMAIL } from "../adminEmail";
 import {
   SubscriptionRenewalReminderEmail,
   type SubscriptionRenewalReminderEmailProps,
@@ -21,11 +23,12 @@ export async function sendSubscriptionRenewalReminder(
     customerEmail,
     customerName,
     locale,
-    planName,
+    planName: storedPlanName,
     amount,
     renewalDate,
     manageUrl,
   } = params;
+  const planName = subscriptionPlanName(storedPlanName, locale);
 
   try {
     const html = await render(
@@ -40,9 +43,12 @@ export async function sendSubscriptionRenewalReminder(
     );
 
     const { error: sendError } = await resend.emails.send({
-      from: "RC Web Solutions <no-reply@rcweb.dev>",
+      from: "RC Web Solutions <contactus@rcweb.dev>",
       to: customerEmail,
-      subject: emailTranslator(locale)("subscription.renewalSubject", { planName }),
+      replyTo: ADMIN_EMAIL,
+      subject: emailTranslator(locale)("subscription.renewalSubject", {
+        planName,
+      }),
       html,
     });
     if (sendError) throw new Error(sendError.message);

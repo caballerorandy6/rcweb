@@ -32,7 +32,7 @@ export const SubscriptionPaymentFailedEmail: React.FC<
   const formattedAmount = (amount / 100).toFixed(2);
 
   return (
-    <Html>
+    <Html lang={locale}>
       <Head />
       <Body style={styles.body}>
         <Container style={styles.container}>
@@ -75,6 +75,9 @@ export const SubscriptionPaymentFailedEmail: React.FC<
               ))}
             </ul>
 
+            {/* Mirrors Stripe Dashboard → Billing → Subscriptions and emails:
+                Smart Retries 8 times within 2 weeks, then cancel the
+                subscription. Change this copy if those settings change. */}
             <Text style={styles.warningText}>
               {t("subscription.failedDeadline")}
             </Text>

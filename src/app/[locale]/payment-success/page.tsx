@@ -1,11 +1,12 @@
 import { Suspense } from "react";
 import type { Metadata } from "next";
-import { getTranslations } from "next-intl/server";
+import { getLocale, getTranslations } from "next-intl/server";
 import PageMessages from "@/components/layout/PageMessages";
 import type { Locale } from "@/i18n/routing";
 import * as Sentry from "@sentry/nextjs";
 import { prisma } from "@/lib/prisma";
 import { getProjectCharges } from "@/lib/project/charges";
+import { maintenancePlanFeatures, subscriptionPlanName } from "@/lib/maintenancePlan";
 import type { PaymentSuccessData } from "@/types/project";
 import PaymentSuccess from "@/components/payment/PaymentSuccess";
 import SubscriptionSuccess from "@/components/payment/SubscriptionSuccess";
@@ -77,7 +78,11 @@ async function findPaidDeposit(sessionId: string): Promise<PaymentSuccessData | 
 }
 
 async function Content({ searchParams }: Pick<Props, "searchParams">) {
-  const [params, t] = await Promise.all([searchParams, getTranslations("PaymentSuccess")]);
+  const [params, t, locale] = await Promise.all([
+    searchParams,
+    getTranslations("PaymentSuccess"),
+    getLocale() as Promise<Locale>,
+  ]);
   const sessionId = typeof params.session_id === "string" ? params.session_id : "";
   const isSubscription = params.subscription === "true";
   const code = typeof params.code === "string" ? params.code : undefined;
@@ -97,7 +102,21 @@ async function Content({ searchParams }: Pick<Props, "searchParams">) {
       return <SubscriptionSuccess error={t("subscription.processing")} />;
     }
 
-    return <SubscriptionSuccess subscription={subscription} />;
+    // Only what the page shows crosses to the client (never the portal token)
+    return (
+      <SubscriptionSuccess
+        subscription={{
+          planName: subscriptionPlanName(subscription.planName, locale),
+          amount: subscription.amount,
+          currency: subscription.currency,
+          status: subscription.status,
+          currentPeriodEnd: subscription.currentPeriodEnd,
+          email: subscription.email,
+          stripeSubscriptionId: subscription.stripeSubscriptionId,
+        }}
+        features={maintenancePlanFeatures(locale)}
+      />
+    );
   }
 
   // 50/50 project flow

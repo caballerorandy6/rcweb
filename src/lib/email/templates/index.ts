@@ -31,6 +31,14 @@ export {
   SubscriptionPaymentFailedEmail,
   type SubscriptionPaymentFailedEmailProps,
 } from "./SubscriptionPaymentFailedEmail";
+export {
+  SubscriptionCancelledEmail,
+  type SubscriptionCancelledEmailProps,
+} from "./SubscriptionCancelledEmail";
+export {
+  SubscriptionCancellationChangeEmail,
+  type SubscriptionCancellationChangeEmailProps,
+} from "./SubscriptionCancellationChangeEmail";
 
 export {
   ContactConfirmationEmail,
