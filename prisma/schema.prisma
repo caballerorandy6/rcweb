@@ -321,6 +321,10 @@ model Subscription {
   cancelledAt       DateTime?
   cancelAtPeriodEnd Boolean   @default(false)
 
+  // Set by the admin once monitoring, backups and access are in place;
+  // until then the subscription shows up in "Needs attention"
+  onboardingAt DateTime?
+
   // Stripe session/checkout info
   stripeSessionId String?
 
@@ -333,10 +337,59 @@ model Subscription {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  termsAcceptance TermsAcceptance?
+  termsAcceptance    TermsAcceptance?
+  maintenanceLogs    MaintenanceLog[]
+  maintenanceReports MaintenanceReport[]
 
   @@index([email])
   @@index([stripeCustomerId])
+  @@index([status])
+}
+
+// One piece of work done under a maintenance plan (counts against the
+// 2 hours a month the plan includes)
+model MaintenanceLog {
+  id             String       @id @default(uuid())
+  subscriptionId String
+  subscription   Subscription @relation(fields: [subscriptionId], references: [id], onDelete: Cascade)
+
+  workedOn    DateTime @db.Date
+  minutes     Int
+  description String   @db.Text
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([subscriptionId, workedOn])
+}
+
+// Monthly report for a maintenance customer. The cron creates the draft on
+// the 1st; the admin fills in the figures and sends it. Hours come from
+// MaintenanceLog for the same month.
+model MaintenanceReport {
+  id             String       @id @default(uuid())
+  subscriptionId String
+  subscription   Subscription @relation(fields: [subscriptionId], references: [id], onDelete: Cascade)
+
+  // First day of the month the report covers
+  month  DateTime                @db.Date
+  status MaintenanceReportStatus @default(draft)
+
+  // Figures typed by the admin; null = not reported this month
+  errorsResolved  Int? // Sentry issues resolved
+  updatesApplied  Int? // dependency and security updates merged
+  backupsVerified Boolean?
+  uptimePercent   Decimal? @db.Decimal(5, 2)
+  visitors        Int? // GA4 users
+  pageViews       Int? // GA4 views
+  // Free text in the customer's language
+  notes           String?  @db.Text
+
+  sentAt    DateTime?
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+
+  @@unique([subscriptionId, month])
   @@index([status])
 }
 
@@ -424,6 +477,11 @@ enum SubscriptionStatus {
   cancelled
   past_due
   unpaid
+}
+
+enum MaintenanceReportStatus {
+  draft
+  sent
 }
 
 enum InvoiceType {

@@ -1990,6 +1990,27 @@
       "quoteDescription": "Anticipo del 50 % del presupuesto {quoteNumber}; el saldo se paga a la entrega",
       "finalName": "{planName} - Pago final (50 %)",
       "finalDescription": "Pago final al terminar el proyecto"
+    },
+    "maintenanceReport": {
+      "subject": "Informe de tu sitio web · {month}",
+      "heading": "Informe mensual de tu sitio web",
+      "subheading": "{month} · {planName}",
+      "intro": "Esto es lo que hicimos en tu sitio web en {month}.",
+      "hoursTitle": "Horas de soporte",
+      "hoursUsed": "<b>{used}</b> de las {included} incluidas este mes",
+      "hoursNone": "Este mes no se pidieron cambios.",
+      "hoursExtra": "{extra} por encima del plan. El tiempo extra siempre se presupuesta antes de cobrarlo.",
+      "figuresTitle": "Cuidado y monitoreo",
+      "errorsResolved": "Errores corregidos",
+      "updatesApplied": "Actualizaciones aplicadas",
+      "backups": "Copias de seguridad",
+      "backupsVerified": "Verificadas",
+      "backupsNotVerified": "Sin verificar este mes",
+      "uptime": "Disponibilidad",
+      "visitors": "Visitantes",
+      "pageViews": "Páginas vistas",
+      "notesTitle": "Notas",
+      "questions": "¿Preguntas o algo que quieras cambiar? Responde a este correo."
     }
   }
 }

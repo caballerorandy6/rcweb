@@ -1,6 +1,9 @@
 "use client";
 
 import { useState } from "react";
+import Link from "next/link";
+import type { Route } from "next";
+import { ADMIN_ROUTES } from "@/config/adminRoutes";
 import { SubscriptionData } from "@/actions/subscriptions/getAllSubscriptionsAction";
 import { cancelSubscriptionAction } from "@/actions/subscriptions/cancelSubscriptionAction";
 import {
@@ -130,13 +133,10 @@ export default function SubscriptionManagement({
     setCancellingId(null);
   };
 
-  const getStripeUrl = (stripeSubscriptionId: string) => {
-    const isTest = stripeSubscriptionId.startsWith("sub_");
-    const baseUrl = isTest
-      ? "https://dashboard.stripe.com/test/subscriptions"
-      : "https://dashboard.stripe.com/subscriptions";
-    return `${baseUrl}/${stripeSubscriptionId}`;
-  };
+  // Live and test IDs look the same (both start with sub_), so this links to
+  // live mode, like the webhook's admin emails
+  const getStripeUrl = (stripeSubscriptionId: string) =>
+    `https://dashboard.stripe.com/subscriptions/${stripeSubscriptionId}`;
 
   const handleViewInvoices = async (subscription: SubscriptionData) => {
     setInvoicesModal({
@@ -288,9 +288,12 @@ export default function SubscriptionManagement({
                     >
                       <td className="px-4 py-4">
                         <div>
-                          <p className="text-white font-medium">
+                          <Link
+                            href={`${ADMIN_ROUTES.subscriptions}/${subscription.id}` as Route}
+                            className="text-white font-medium hover:text-gold transition-colors"
+                          >
                             {subscription.name}
-                          </p>
+                          </Link>
                           <p className="text-gray-400 text-sm">
                             {subscription.email}
                           </p>

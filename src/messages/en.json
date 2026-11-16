@@ -1990,6 +1990,27 @@
       "quoteDescription": "50% deposit for quote {quoteNumber}; the balance is due on delivery",
       "finalName": "{planName} - Final Payment (50%)",
       "finalDescription": "Final payment upon project completion"
+    },
+    "maintenanceReport": {
+      "subject": "Your website report · {month}",
+      "heading": "Monthly Website Report",
+      "subheading": "{month} · {planName}",
+      "intro": "Here is what we did on your website in {month}.",
+      "hoursTitle": "Support hours",
+      "hoursUsed": "<b>{used}</b> of the {included} included this month",
+      "hoursNone": "No changes were requested this month.",
+      "hoursExtra": "{extra} over the plan. Extra time is always quoted before it is billed.",
+      "figuresTitle": "Care and monitoring",
+      "errorsResolved": "Errors fixed",
+      "updatesApplied": "Updates applied",
+      "backups": "Backups",
+      "backupsVerified": "Verified",
+      "backupsNotVerified": "Not verified this month",
+      "uptime": "Uptime",
+      "visitors": "Visitors",
+      "pageViews": "Page views",
+      "notesTitle": "Notes",
+      "questions": "Questions, or something you would like changed? Just reply to this email."
     }
   }
 }

@@ -51,6 +51,11 @@ export {
   type SendMilestoneCompletedEmailParams,
 } from "./sendMilestoneCompletedEmail";
 
+export {
+  sendMaintenanceReportEmail,
+  type SendMaintenanceReportEmailParams,
+} from "./sendMaintenanceReportEmail";
+
 
 // Admin email senders
 export {

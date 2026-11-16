@@ -5,10 +5,11 @@ import type { Locale } from "@/i18n/routing";
 import en from "@/messages/en.json";
 import es from "@/messages/es.json";
 import { parseCheckoutMetadata } from "@/lib/checkoutMetadata";
-import { formatLongDate } from "./i18n";
+import { formatLongDate, formatMonth } from "./i18n";
 import {
   ContactConfirmationEmail,
   InvoiceEmail,
+  MaintenanceReportEmail,
   MilestoneCompletedEmail,
   ProjectReadyEmail,
   QuoteEmail,
@@ -20,6 +21,18 @@ import {
 
 const date = new Date("2026-11-15T12:00:00Z");
 const base = { customerName: "Ana", planName: "Plan X" };
+const report = {
+  ...base,
+  month: new Date("2026-10-01T00:00:00Z"),
+  hours: { used: 150, included: 120, extra: 30 },
+  errorsResolved: 3,
+  updatesApplied: 12,
+  backupsVerified: true,
+  uptimePercent: 99.95,
+  visitors: 1234,
+  pageViews: null,
+  notes: "New photos on the home page",
+};
 
 const templates: [string, (locale: Locale) => ReactElement, string, string][] = [
   ["contact", (locale) => <ContactConfirmationEmail {...base} locale={locale} siteUrl="https://x.test" />, "Thanks for reaching out!", "¡Gracias por escribir!"],
@@ -33,6 +46,7 @@ const templates: [string, (locale: Locale) => ReactElement, string, string][] = 
   ["failed", (locale) => <SubscriptionPaymentFailedEmail {...base} locale={locale} amount={20000} updatePaymentUrl="https://x.test/m" />, "Payment Failed", "Pago fallido"],
   ["portal", (locale) => <SubscriptionPortalLinkEmail {...base} locale={locale} portalUrl="https://x.test/m" />, "Manage Your Subscription", "Gestiona tu suscripción"],
   ["renewal", (locale) => <SubscriptionRenewalReminderEmail {...base} locale={locale} amount={20000} renewalDate={date} manageUrl="https://x.test/m" />, "Upcoming Renewal", "Próxima renovación"],
+  ["maintenance report", (locale) => <MaintenanceReportEmail {...report} locale={locale} />, "Monthly Website Report", "Informe mensual de tu sitio web"],
 ];
 
 describe("customer emails", () => {
@@ -61,6 +75,39 @@ describe("customer emails", () => {
           : [`${prefix}${key}`]
       );
     expect(keys(es.Emails)).toEqual(keys(en.Emails));
+  });
+
+  it("leaves the figures the admin did not report out of the maintenance report", async () => {
+    const html = await render(<MaintenanceReportEmail {...report} locale="es" />);
+    expect(html).toContain("Errores corregidos");
+    expect(html).toContain("1,234");
+    expect(html).toContain("99.95%");
+    expect(html).toContain("2 h 30 min");
+    expect(html).toContain("30 min por encima del plan");
+    expect(html).not.toContain("Páginas vistas");
+
+    const quiet = await render(
+      <MaintenanceReportEmail
+        {...report}
+        locale="en"
+        hours={{ used: 0, included: 120, extra: 0 }}
+        errorsResolved={null}
+        updatesApplied={null}
+        backupsVerified={null}
+        uptimePercent={null}
+        visitors={null}
+        notes={null}
+      />
+    );
+    expect(quiet).toContain("No changes were requested this month.");
+    expect(quiet).not.toContain("Care and monitoring");
+    expect(quiet).not.toContain("Notes");
+  });
+
+  it("names the month in the customer's language", () => {
+    const october = new Date("2026-10-01T00:00:00Z");
+    expect(formatMonth(october, "en")).toBe("October 2026");
+    expect(formatMonth(october, "es")).toBe("octubre de 2026");
   });
 
   it("formats dates in the customer's language", () => {
