@@ -1,6 +1,5 @@
 import { NextResponse } from "next/server";
 import { isCronRequestAuthorized } from "@/lib/cronAuth";
-import { runMonitoredCron } from "@/lib/cronMonitor";
 import { syncSearchConsole } from "@/lib/searchConsole/sync";
 
 // Cron diario de Vercel (vercel.json).
@@ -11,7 +10,7 @@ export async function GET(request: Request) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
 
-  const outcome = await runMonitoredCron("/api/cron/search-console", syncSearchConsole, (result) => !result.ok);
+  const outcome = await syncSearchConsole();
   if (!outcome.ok) {
     return NextResponse.json(outcome, { status: outcome.error === "not_configured" ? 503 : 502 });
   }
