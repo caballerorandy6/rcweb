@@ -8,6 +8,8 @@ import {
   BanknotesIcon,
   FlagIcon,
   ShieldExclamationIcon,
+  WrenchScrewdriverIcon,
+  DocumentChartBarIcon,
 } from "@heroicons/react/24/outline";
 import { getAttentionItemsAction } from "@/actions/stats/getAttentionItemsAction";
 import { ADMIN_ROUTES } from "@/config/adminRoutes";
@@ -41,6 +43,8 @@ interface Group {
 }
 
 const money = (cents: number) => formatCurrency(cents, true);
+// MaintenanceReport.month is a calendar day stored at midnight UTC
+const reportMonth = new Intl.DateTimeFormat("en-US", { timeZone: "UTC", month: "short", year: "numeric" });
 
 export default async function NeedsAttention() {
   const data = await getAttentionItemsAction();
@@ -70,8 +74,59 @@ export default async function NeedsAttention() {
           },
         ];
 
+  // A new maintenance customer is rare too: the card only shows while one is
+  // waiting for monitoring, backups and access to be set up
+  const onboarding: Group[] =
+    data.pendingOnboarding.count === 0
+      ? []
+      : [
+          {
+            key: "onboarding",
+            title: "Maintenance onboarding",
+            icon: WrenchScrewdriverIcon,
+            count: data.pendingOnboarding.count,
+            allHref: ADMIN_ROUTES.subscriptions,
+            empty: "",
+            rows: data.pendingOnboarding.items.map((s) => ({
+              key: s.id,
+              href: `${ADMIN_ROUTES.subscriptions}/${s.id}` as Route,
+              primary: s.name,
+              secondary: "Monitor, backups and access",
+              note: `started ${formatDaysAgo(s.createdAt, now)}`,
+              // The customer is paying for monitoring they do not have yet
+              urgent: daysUntil(s.createdAt, now) <= -7,
+            })),
+          },
+        ];
+
+  // Drafts only exist for a few days after the cron runs on the 1st
+  const reports: Group[] =
+    data.draftReports.count === 0
+      ? []
+      : [
+          {
+            key: "reports",
+            title: "Reports to send",
+            icon: DocumentChartBarIcon,
+            count: data.draftReports.count,
+            allHref: ADMIN_ROUTES.subscriptions,
+            empty: "",
+            rows: data.draftReports.items.map((r) => ({
+              key: r.id,
+              href: `${ADMIN_ROUTES.subscriptions}/${r.subscription.id}` as Route,
+              primary: r.subscription.name,
+              secondary: "Fill in the figures and send",
+              note: reportMonth.format(r.month),
+              // Customers expect it in the first days of the month
+              urgent: now.getTime() - r.month.getTime() > 38 * 24 * 60 * 60 * 1000,
+            })),
+          },
+        ];
+
   const groups: Group[] = [
     ...disputes,
+    ...onboarding,
+    ...reports,
     {
       key: "leads",
       title: "New leads",

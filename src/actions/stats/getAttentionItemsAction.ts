@@ -41,6 +41,16 @@ export interface AttentionItems {
       project: { id: string; name: string };
     }[];
   };
+  /** Active maintenance plans whose onboarding (monitor, backups, access) is not done */
+  pendingOnboarding: {
+    count: number;
+    items: { id: string; name: string; createdAt: Date }[];
+  };
+  /** Maintenance reports drafted by the cron and not sent yet, oldest month first */
+  draftReports: {
+    count: number;
+    items: { id: string; month: Date; subscription: { id: string; name: string } }[];
+  };
   /** Unfinished milestones past their due date */
   overdueMilestones: {
     count: number;
@@ -57,7 +67,8 @@ export interface AttentionItems {
  * What is waiting on the admin right now. Everything is derived from existing
  * rows (no flags to keep in sync): a lead is "new" until its status changes, a
  * quote is "open" while sent, a project waits while ready_for_payment, a
- * milestone is overdue while unfinished past its due date.
+ * milestone is overdue while unfinished past its due date, a maintenance plan
+ * waits while active without onboardingAt, a report while it is a draft.
  */
 export async function getAttentionItemsAction(): Promise<AttentionItems> {
   const authCheck = await requireAdmin();
@@ -76,6 +87,8 @@ export async function getAttentionItemsAction(): Promise<AttentionItems> {
   };
   const readyWhere = { status: "ready_for_payment" as const };
   const disputedWhere = { disputeStatus: "open" as const };
+  const onboardingWhere = { status: "active" as const, onboardingAt: null };
+  const draftReportsWhere = { status: "draft" as const };
   const overdueWhere = {
     status: { not: "completed" as const },
     dueDate: { lt: now },
@@ -92,6 +105,10 @@ export async function getAttentionItemsAction(): Promise<AttentionItems> {
     disputedCount,
     overdue,
     overdueCount,
+    onboarding,
+    onboardingCount,
+    draftReports,
+    draftReportsCount,
   ] = await Promise.all([
     prisma.contact.findMany({
       where: newLeadsWhere,
@@ -145,6 +162,24 @@ export async function getAttentionItemsAction(): Promise<AttentionItems> {
       },
     }),
     prisma.milestone.count({ where: overdueWhere }),
+    prisma.subscription.findMany({
+      where: onboardingWhere,
+      orderBy: { createdAt: "asc" },
+      take: PREVIEW,
+      select: { id: true, name: true, createdAt: true },
+    }),
+    prisma.subscription.count({ where: onboardingWhere }),
+    prisma.maintenanceReport.findMany({
+      where: draftReportsWhere,
+      orderBy: { month: "asc" },
+      take: PREVIEW,
+      select: {
+        id: true,
+        month: true,
+        subscription: { select: { id: true, name: true } },
+      },
+    }),
+    prisma.maintenanceReport.count({ where: draftReportsWhere }),
   ]);
 
   return {
@@ -158,6 +193,8 @@ export async function getAttentionItemsAction(): Promise<AttentionItems> {
     },
     readyForPayment: { count: readyCount, items: ready },
     openDisputes: { count: disputedCount, items: disputed },
+    pendingOnboarding: { count: onboardingCount, items: onboarding },
+    draftReports: { count: draftReportsCount, items: draftReports },
     overdueMilestones: {
       count: overdueCount,
       items: overdue.flatMap((m) =>

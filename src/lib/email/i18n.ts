@@ -21,3 +21,12 @@ export function formatLongDate(date: Date, locale: Locale): string {
     day: "numeric",
   }).format(date);
 }
+
+/** "October 2026" / "octubre de 2026", for a `@db.Date` month stored at midnight UTC */
+export function formatMonth(month: Date, locale: Locale): string {
+  return new Intl.DateTimeFormat(locale === "es" ? "es-US" : "en-US", {
+    timeZone: "UTC",
+    year: "numeric",
+    month: "long",
+  }).format(month);
+}

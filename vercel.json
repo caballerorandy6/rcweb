@@ -8,6 +8,10 @@
     {
       "path": "/api/cron/google-reviews",
       "schedule": "0 10 * * 1"
+    },
+    {
+      "path": "/api/cron/maintenance-reports",
+      "schedule": "0 14 1 * *"
     }
   ]
 }

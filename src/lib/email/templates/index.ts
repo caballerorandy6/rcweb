@@ -52,6 +52,11 @@ export {
   type MilestoneCompletedEmailProps,
 } from "./MilestoneCompletedEmail";
 
+export {
+  MaintenanceReportEmail,
+  type MaintenanceReportEmailProps,
+} from "./MaintenanceReportEmail";
+
 
 // Admin email templates (React components)
 export {
