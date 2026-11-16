@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { isCronRequestAuthorized } from "@/lib/cronAuth";
+import { runMonitoredCron } from "@/lib/cronMonitor";
 import { syncGoogleReviews } from "@/lib/googleReviews/sync";
 
 // Cron semanal de Vercel (vercel.json): refresca nota, total y reseñas del
@@ -11,7 +12,7 @@ export async function GET(request: Request) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
 
-  const outcome = await syncGoogleReviews();
+  const outcome = await runMonitoredCron("/api/cron/google-reviews", syncGoogleReviews, (result) => !result.ok);
   if (!outcome.ok) {
     return NextResponse.json(outcome, { status: outcome.error === "not_configured" ? 503 : 502 });
   }
