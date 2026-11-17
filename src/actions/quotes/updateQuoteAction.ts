@@ -5,6 +5,7 @@ import { prisma } from "@/lib/prisma";
 import { requireAdmin } from "@/lib/authGuard";
 import { QuoteInputSchema, type QuoteInput } from "@/lib/zod";
 import { isQuoteOpen } from "@/lib/quote/quoteStatus";
+import { expireQuoteCheckout } from "@/lib/quote/quoteCheckout";
 import { toAdminQuote } from "@/lib/quote/toAdminQuote";
 import type { AdminQuote } from "@/types/quote";
 import type { ActionResult } from "@/types/common";
@@ -58,6 +59,9 @@ export async function updateQuoteAction(
       },
       include: { project: { select: { projectCode: true } } },
     });
+
+    // A Checkout Session the customer left open still sells the old quote
+    await expireQuoteCheckout(quote);
 
     revalidatePath("/quotes");
 

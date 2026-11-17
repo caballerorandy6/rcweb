@@ -226,6 +226,11 @@ model Quote {
   zelleTaxCalculationId String?
   zelleTaxAmount        Int? // Cents, on top of the deposit
 
+  // The deposit Checkout Session the customer last opened. A quote keeps one
+  // payable session at a time (src/lib/quote/quoteCheckout.ts), so it cannot
+  // be paid twice; editing or cancelling the quote expires it.
+  checkoutSessionId String?
+
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 

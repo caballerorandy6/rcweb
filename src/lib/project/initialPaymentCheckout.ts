@@ -33,7 +33,7 @@ export interface InitialPaymentInput {
  */
 export async function createInitialPaymentCheckout(
   input: InitialPaymentInput
-): Promise<{ sessionUrl: string; projectCode: string }> {
+): Promise<{ sessionUrl: string; sessionId: string; projectCode: string }> {
   const locale = input.locale ?? routing.defaultLocale;
   const t = emailTranslator(locale);
   const projectCode = await uniqueProjectCode();
@@ -94,5 +94,5 @@ export async function createInitialPaymentCheckout(
     throw new Error("Stripe did not return a Checkout URL");
   }
 
-  return { sessionUrl: session.url, projectCode };
+  return { sessionUrl: session.url, sessionId: session.id, projectCode };
 }

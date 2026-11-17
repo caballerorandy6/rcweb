@@ -9,6 +9,7 @@ import { LEGAL_LAST_UPDATED } from "@/lib/company";
 import { getProjectCharges, splitDepositAmount } from "@/lib/project/charges";
 import { uniqueProjectCode } from "@/lib/project/uniqueProjectCode";
 import { createProjectFromDeposit } from "@/lib/project/createProjectFromDeposit";
+import { claimQuoteForProject, expireQuoteCheckout, releaseQuoteClaim } from "@/lib/quote/quoteCheckout";
 import { MANUAL_PAYMENT_METHODS } from "@/lib/project/paymentMethod";
 import { BillingAddressSchema, parseStoredBillingAddress } from "@/lib/tax/billingAddress";
 import { OffStripeTaxSchema } from "@/lib/tax/offStripeTax";
@@ -93,6 +94,13 @@ export async function createProjectFromQuoteAction(
       return { success: false, error: "Enter the customer's billing address to calculate the sales tax" };
     }
 
+    // Only one confirmation of this deposit goes on (two tabs, a repeated request)
+    if (!(await claimQuoteForProject(quote.id))) {
+      return { success: false, error: "This quote already has a project" };
+    }
+    // The deposit arrived another way: the card payment must not go through too
+    await expireQuoteCheckout(quote);
+
     const { deposit, balance } = splitDepositAmount(quote.totalAmount);
     const projectCode = await uniqueProjectCode();
 
@@ -119,7 +127,11 @@ export async function createProjectFromQuoteAction(
         billingAddress,
       },
       new Resend(process.env.RESEND_API_KEY!)
-    );
+    ).catch(async (error) => {
+      // No project: the quote is open again
+      await releaseQuoteClaim(quote.id);
+      throw error;
+    });
 
     // After the project exists: a Stripe Tax problem must not lose the deposit
     const taxResult = await recordChargeTax({
