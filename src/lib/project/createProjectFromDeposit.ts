@@ -170,6 +170,10 @@ export async function createProjectFromDeposit(
     } catch (invoiceError) {
       const message = invoiceError instanceof Error ? invoiceError.message : String(invoiceError);
       console.error("❌ Invoice error:", message);
+      Sentry.captureException(invoiceError, {
+        tags: { feature: "deposit-invoice" },
+        extra: { projectId: project.id, projectCode: project.projectCode },
+      });
       emailErrors.push(`Error creating invoice: ${message}`);
     }
   }

@@ -6,6 +6,7 @@ import * as Sentry from "@sentry/nextjs";
 import { prisma } from "@/lib/prisma";
 import { requireAdmin } from "@/lib/authGuard";
 import { getProjectCharges, isPaid } from "@/lib/project/charges";
+import { markChargePaid } from "@/lib/project/markChargePaid";
 import { createInvoiceAndSendEmail } from "@/lib/invoice/createInvoiceAndSendEmail";
 import { MANUAL_PAYMENT_METHODS } from "@/lib/project/paymentMethod";
 import { BillingAddressSchema, parseStoredBillingAddress } from "@/lib/tax/billingAddress";
@@ -105,18 +106,22 @@ export async function recordManualPaymentAction(
           ? { status: "in_progress" }
           : {};
 
-    const project = await prisma.project.update({
-      where: { id: current.id },
-      data: {
+    // One click wins: a second one must not record the sale in Stripe Tax again
+    const recorded = await markChargePaid({
+      projectId: current.id,
+      chargeId: charge.id,
+      charge: { method, paidAt, taxAmount: taxCents },
+      project: {
         ...statusChange,
         ...(storedAddress ? {} : { billingAddress: address }),
-        payments: {
-          update: {
-            where: { id: charge.id },
-            data: { status: "paid", method, paidAt, taxAmount: taxCents },
-          },
-        },
       },
+    });
+    if (!recorded) {
+      return { success: false, error: "That charge is already paid" };
+    }
+
+    const project = await prisma.project.findUniqueOrThrow({
+      where: { id: current.id },
       include: { payments: true, invoices: true },
     });
 

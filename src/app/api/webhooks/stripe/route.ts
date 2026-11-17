@@ -2,6 +2,7 @@
 
 import { localizePathname } from "@/i18n/paths";
 import { NextResponse } from "next/server";
+import * as Sentry from "@sentry/nextjs";
 import Stripe from "stripe";
 import { prisma } from "@/lib/prisma";
 import stripe from "@/lib/stripe";
@@ -15,6 +16,7 @@ import {
   toSubscriptionStatus,
 } from "@/lib/subscriptionStatus";
 import { getProjectCharges, isPaid } from "@/lib/project/charges";
+import { markChargePaid } from "@/lib/project/markChargePaid";
 import { createProjectFromDeposit } from "@/lib/project/createProjectFromDeposit";
 import { isUniqueConstraintError } from "@/lib/prismaErrors";
 import {
@@ -198,25 +200,22 @@ export async function POST(req: Request) {
         // has paid by now, so the charge is recorded whatever the status is.
         const { final } = getProjectCharges(project.payments);
 
+        // Only one delivery marks the charge paid, however many arrive at once
+        let firstDelivery = false;
         if (!isPaid(final)) {
-          // Mark the final charge as paid and complete the project (one atomic write)
-          project = await prisma.project.update({
-            where: { id: projectId },
-            data: {
-              status: "completed",
-              payments: {
-                update: {
-                  where: { id: final.id },
-                  data: {
-                    status: "paid",
-                    paidAt: new Date(),
-                    stripeSessionId: session.id,
-                    stripePaymentIntentId,
-                    taxAmount,
-                  },
-                },
-              },
+          firstDelivery = await markChargePaid({
+            projectId,
+            chargeId: final.id,
+            charge: {
+              paidAt: new Date(),
+              stripeSessionId: session.id,
+              stripePaymentIntentId,
+              taxAmount,
             },
+            project: { status: "completed" },
+          });
+          project = await prisma.project.findUniqueOrThrow({
+            where: { id: projectId },
             include: { payments: true, invoices: true },
           });
         } else if (!final.stripeSessionId) {
@@ -258,6 +257,10 @@ export async function POST(req: Request) {
           } catch (invoiceError) {
             const errorMsg = `Error creating final invoice: ${invoiceError instanceof Error ? invoiceError.message : String(invoiceError)}`;
             console.error("❌ Final invoice error:", errorMsg);
+            Sentry.captureException(invoiceError, {
+              tags: { feature: "stripe-webhook" },
+              extra: { projectId, sessionId: session.id, type: "final" },
+            });
             emailErrors.push(errorMsg);
           }
         }
@@ -273,22 +276,30 @@ export async function POST(req: Request) {
           } catch (invoiceError) {
             const errorMsg = `Error creating summary invoice: ${invoiceError instanceof Error ? invoiceError.message : String(invoiceError)}`;
             console.error("❌ Summary invoice error:", errorMsg);
+            Sentry.captureException(invoiceError, {
+              tags: { feature: "stripe-webhook" },
+              extra: { projectId, sessionId: session.id, type: "summary" },
+            });
             emailErrors.push(errorMsg);
           }
         }
 
         // ============= ADMIN EMAIL =============
-        const adminResult = await sendAdminFinalPaymentNotification(resend, {
-          projectCode: project.projectCode,
-          customerName: project.name,
-          customerEmail: project.email,
-          planName: project.planName,
-          finalPaymentAmount: final.amount,
-          totalAmount: project.totalAmount,
-        });
+        // Only for the delivery that recorded the payment: a Stripe retry or a
+        // resend (to recover a failed invoice) must not notify the admin again
+        if (firstDelivery) {
+          const adminResult = await sendAdminFinalPaymentNotification(resend, {
+            projectCode: project.projectCode,
+            customerName: project.name,
+            customerEmail: project.email,
+            planName: project.planName,
+            finalPaymentAmount: final.amount,
+            totalAmount: project.totalAmount,
+          });
 
-        if (!adminResult.success && adminResult.error) {
-          emailErrors.push(adminResult.error);
+          if (!adminResult.success && adminResult.error) {
+            emailErrors.push(adminResult.error);
+          }
         }
 
         // If there were email errors, include them in response (but don't fail)

@@ -26,8 +26,10 @@ export async function uploadInvoicePDF(
     const blob = await put(`${invoiceBlobPrefix()}${fileName}`, pdfBuffer, {
       access: 'public',
       contentType: 'application/pdf',
-      addRandomSuffix: false, // Mantener nombre exacto para fácil identificación
-      allowOverwrite: true, // Permitir sobrescribir si el archivo ya existe
+      // Dos facturas creadas a la vez pueden proponer el mismo número antes de
+      // que la base de datos decida cuál se lo queda: con sufijo aleatorio
+      // ninguna pisa el PDF de la otra (y la URL pública deja de ser adivinable)
+      addRandomSuffix: true,
     });
 
     return {
