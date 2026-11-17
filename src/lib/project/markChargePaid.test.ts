@@ -19,7 +19,7 @@ beforeEach(() => {
 });
 
 describe("markChargePaid", () => {
-  it("marks the charge paid only while it is not paid yet", async () => {
+  it("marks the charge paid only while it is pending", async () => {
     const won = await markChargePaid({
       projectId: "p1",
       chargeId: "c1",
@@ -28,7 +28,7 @@ describe("markChargePaid", () => {
 
     expect(won).toBe(true);
     expect(tx.payment.updateMany).toHaveBeenCalledWith({
-      where: { id: "c1", projectId: "p1", status: { not: "paid" } },
+      where: { id: "c1", projectId: "p1", status: "pending" },
       data: { paidAt, method: "zelle", taxAmount: 660, status: "paid" },
     });
     expect(tx.project.update).not.toHaveBeenCalled();

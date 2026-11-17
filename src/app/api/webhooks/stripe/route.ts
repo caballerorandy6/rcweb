@@ -15,7 +15,7 @@ import {
   needsAuthentication,
   toSubscriptionStatus,
 } from "@/lib/subscriptionStatus";
-import { getProjectCharges, isPaid } from "@/lib/project/charges";
+import { getProjectCharges } from "@/lib/project/charges";
 import { markChargePaid } from "@/lib/project/markChargePaid";
 import { createProjectFromDeposit } from "@/lib/project/createProjectFromDeposit";
 import { isUniqueConstraintError } from "@/lib/prismaErrors";
@@ -38,6 +38,7 @@ import {
   handleChargeRefunded,
   handleDisputeClosed,
   handleDisputeCreated,
+  reportUnrecordedFinalPayment,
 } from "@/lib/stripe/webhook/paymentIssues";
 
 // Environment variables validation
@@ -198,20 +199,19 @@ export async function POST(req: Request) {
         // The session could only be created while the project was
         // ready_for_payment (createFinalPaymentSessionAction). The customer
         // has paid by now, so the charge is recorded whatever the status is.
-        const { final } = getProjectCharges(project.payments);
+        let { final } = getProjectCharges(project.payments);
 
-        // Only one delivery marks the charge paid, however many arrive at once.
-        // A charge that already carries this session was paid by it and then
-        // refunded: a late retry of the event must not mark it paid again.
+        // Only one delivery marks the charge paid, however many arrive at once,
+        // and only a pending charge: one that was paid and refunded keeps
+        // describing the money that went back.
         let firstDelivery = false;
-        if (final.stripeSessionId === session.id) {
-          // Nothing to record
-        } else if (!isPaid(final)) {
+        if (final.status === "pending") {
           firstDelivery = await markChargePaid({
             projectId,
             chargeId: final.id,
             charge: {
               paidAt: new Date(),
+              checkoutSessionId: null,
               stripeSessionId: session.id,
               stripePaymentIntentId,
               taxAmount,
@@ -222,19 +222,24 @@ export async function POST(req: Request) {
             where: { id: projectId },
             include: { payments: true, invoices: true },
           });
-        } else if (!final.stripeSessionId) {
-          // Already paid (retry): only record the session if missing
-          project = await prisma.project.update({
-            where: { id: projectId },
-            data: {
-              payments: {
-                update: {
-                  where: { id: final.id },
-                  data: { stripeSessionId: session.id, stripePaymentIntentId },
-                },
-              },
-            },
-            include: { payments: true, invoices: true },
+          final = getProjectCharges(project.payments).final;
+        }
+
+        // The charge was settled by something else (another session, Zelle or
+        // cash, or a payment since refunded): this is a second payment. It is
+        // not recorded anywhere; the admin is told to refund it.
+        if (final.stripeSessionId !== session.id) {
+          const emailError = await reportUnrecordedFinalPayment(resend, {
+            project,
+            final,
+            sessionId: session.id,
+            amountPaid: session.amount_total ?? 0,
+            paymentIntentId: stripePaymentIntentId,
+          });
+          return NextResponse.json({
+            received: true,
+            warning: "Final payment already settled; second payment not recorded",
+            ...(emailError && { emailErrors: [emailError] }),
           });
         }
 

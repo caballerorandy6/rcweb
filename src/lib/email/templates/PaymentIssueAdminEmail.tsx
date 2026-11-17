@@ -13,7 +13,13 @@ import * as React from "react";
 import { EMAIL_COLORS } from "../colors";
 import { formatCurrency } from "@/lib/utils";
 
-export type PaymentIssueKind = "refund" | "dispute_opened" | "dispute_won" | "dispute_lost";
+export type PaymentIssueKind =
+  | "refund"
+  | "dispute_opened"
+  | "dispute_won"
+  | "dispute_lost"
+  /** A second payment of a charge that was already settled; it is not recorded */
+  | "duplicate_payment";
 
 export interface PaymentIssueAdminEmailProps {
   kind: PaymentIssueKind;
@@ -25,7 +31,7 @@ export interface PaymentIssueAdminEmailProps {
   chargeLabel: string;
   /** Cents the customer paid for this charge, tax included */
   chargeTotal: number;
-  /** Cents involved in this event: refunded so far, or disputed */
+  /** Cents involved in this event: refunded so far, disputed, or paid a second time */
   amount: number;
   /** Stripe's reason for a dispute (`fraudulent`, `product_not_received`…) */
   reason?: string;
@@ -44,6 +50,7 @@ const COPY: Record<PaymentIssueKind, { title: string; tone: string }> = {
   dispute_opened: { title: "Payment disputed", tone: colors.red },
   dispute_won: { title: "Dispute won", tone: colors.green },
   dispute_lost: { title: "Dispute lost", tone: colors.red },
+  duplicate_payment: { title: "Charge paid twice", tone: colors.red },
 };
 
 const formatDate = (date: Date) =>
@@ -115,7 +122,22 @@ export const PaymentIssueAdminEmail = ({
                   . The revenue figures already leave it out.
                 </>
               )}
+              {kind === "duplicate_payment" && (
+                <>
+                  <strong>{customerName}</strong> ({customerEmail}) has just paid{" "}
+                  <strong>{formatCurrency(amount)}</strong> by card for the{" "}
+                  {chargeLabel.toLowerCase()}, which was already settled (
+                  {formatCurrency(chargeTotal)}). This second payment is{" "}
+                  <strong>not recorded</strong> in the project and no invoice was sent for it.
+                </>
+              )}
             </Text>
+            {kind === "duplicate_payment" ? (
+              <Text style={styles.paragraph}>
+                Refund it from the Stripe dashboard and let the customer know. Nothing else
+                needs to change: the project and its invoices describe the first payment.
+              </Text>
+            ) : null}
             {kind === "dispute_opened" && respondBy ? (
               <Text style={styles.paragraph}>
                 Respond in the Stripe dashboard <strong>before {formatDate(respondBy)}</strong>:

@@ -6,6 +6,7 @@ import * as Sentry from "@sentry/nextjs";
 import { prisma } from "@/lib/prisma";
 import { requireAdmin } from "@/lib/authGuard";
 import { getProjectCharges, isPaid } from "@/lib/project/charges";
+import { closeFinalPaymentCheckout } from "@/lib/project/finalPaymentCheckout";
 import { markChargePaid } from "@/lib/project/markChargePaid";
 import { createInvoiceAndSendEmail } from "@/lib/invoice/createInvoiceAndSendEmail";
 import { MANUAL_PAYMENT_METHODS } from "@/lib/project/paymentMethod";
@@ -102,6 +103,15 @@ export async function recordManualPaymentAction(
     const address = storedAddress ?? typedAddress ?? null;
     if (!address) {
       return { success: false, error: "Enter the customer's billing address to calculate the sales tax" };
+    }
+
+    // The customer may have Checkout open for this same charge: it stops being
+    // payable before the money is recorded, so the charge is not paid twice
+    if ((await closeFinalPaymentCheckout(charge)) === "paid") {
+      return {
+        success: false,
+        error: "The customer has just paid this charge by card. Reload the page in a moment",
+      };
     }
 
     // Charge and project status in one write, like the webhook

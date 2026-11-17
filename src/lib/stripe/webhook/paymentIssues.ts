@@ -92,7 +92,20 @@ export async function findPaymentForCharge(paymentIntentId: string | null): Prom
   });
   if (!bySession) {
     const paymentType = session.metadata?.paymentType;
-    return paymentType === "initial" || paymentType === "final" ? { kind: "pending" } : { kind: "foreign" };
+    if (paymentType === "initial") return { kind: "pending" };
+    if (paymentType !== "final") return { kind: "foreign" };
+
+    // A final payment whose charge is settled by something else is a second
+    // payment: it was never recorded (reportUnrecordedFinalPayment) and never
+    // will be, so its refund has no row to wait for
+    const projectId = session.metadata?.projectId;
+    const final = projectId
+      ? await prisma.payment.findUnique({
+          where: { projectId_kind: { projectId, kind: "final" } },
+          select: { status: true },
+        })
+      : null;
+    return final?.status === "pending" ? { kind: "pending" } : { kind: "foreign" };
   }
 
   const payment = await prisma.payment.update({
@@ -131,6 +144,56 @@ async function notify(
 
 const paymentUrl = (paymentIntentId: string) => `https://dashboard.stripe.com/payments/${paymentIntentId}`;
 const disputeUrl = (disputeId: string) => `https://dashboard.stripe.com/disputes/${disputeId}`;
+
+/**
+ * A Checkout Session for the final payment was paid, but the charge was
+ * already settled: by another session, outside Stripe (Zelle, cash) or by a
+ * payment since refunded. One open session per charge makes this rare
+ * (openFinalPaymentCheckout), not impossible. The money is real and has no
+ * row to live on, so nothing is recorded and the admin is told to refund it.
+ */
+export async function reportUnrecordedFinalPayment(
+  resend: Resend,
+  details: {
+    project: { id: string; projectCode: string; name: string; email: string; planName: string };
+    final: { amount: number; taxAmount: number; stripeSessionId: string | null; method: string; status: string };
+    sessionId: string;
+    /** Cents the customer paid in this session, tax included */
+    amountPaid: number;
+    paymentIntentId?: string;
+  }
+): Promise<string | undefined> {
+  const { project, final, sessionId, amountPaid, paymentIntentId } = details;
+
+  Sentry.captureMessage("Final payment paid twice: second payment not recorded", {
+    level: "error",
+    tags: { feature: "stripe-webhook" },
+    extra: {
+      projectId: project.id,
+      projectCode: project.projectCode,
+      sessionId,
+      paymentIntentId,
+      amountPaid,
+      recordedSessionId: final.stripeSessionId,
+      recordedMethod: final.method,
+      recordedStatus: final.status,
+    },
+  });
+
+  const result = await sendAdminPaymentIssueNotification(resend, {
+    kind: "duplicate_payment",
+    projectCode: project.projectCode,
+    customerName: project.name,
+    customerEmail: project.email,
+    planName: project.planName,
+    chargeLabel: CHARGE_LABELS.final,
+    chargeTotal: chargeTotal(final),
+    amount: amountPaid,
+    adminProjectUrl: `${SITE_BASE_URL}${ADMIN_ROUTES.projects}/${project.id}`,
+    stripeUrl: paymentIntentId ? paymentUrl(paymentIntentId) : "https://dashboard.stripe.com/payments",
+  });
+  return result.success ? undefined : result.error;
+}
 
 /** `charge.refunded`: Stripe sends the cumulative amount, so this is idempotent */
 export async function handleChargeRefunded(

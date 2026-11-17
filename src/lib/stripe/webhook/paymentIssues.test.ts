@@ -16,7 +16,12 @@ vi.mock("@/lib/email", () => ({ sendAdminPaymentIssueNotification }));
 vi.mock("@sentry/nextjs", () => ({ captureMessage }));
 vi.mock("@/lib/projectUrl", () => ({ SITE_BASE_URL: "https://www.rcweb.dev" }));
 
-import { handleChargeRefunded, handleDisputeClosed, handleDisputeCreated } from "./paymentIssues";
+import {
+  handleChargeRefunded,
+  handleDisputeClosed,
+  handleDisputeCreated,
+  reportUnrecordedFinalPayment,
+} from "./paymentIssues";
 
 const resend = {} as never;
 const now = new Date("2026-11-10T20:00:00Z");
@@ -158,6 +163,40 @@ describe("handleChargeRefunded", () => {
     expect(sendAdminPaymentIssueNotification).not.toHaveBeenCalled();
   });
 
+  it("asks Stripe to retry a final payment whose session has not been processed yet", async () => {
+    prisma.payment.findUnique
+      .mockResolvedValueOnce(null) // by payment intent
+      .mockResolvedValueOnce(null) // by session
+      .mockResolvedValueOnce({ status: "pending" }); // the project's final charge
+    sessionsList.mockResolvedValueOnce({
+      data: [{ id: "cs_f", metadata: { paymentType: "final", projectId: "proj-1" } }],
+    });
+
+    const result = await handleChargeRefunded(charge(), resend, now);
+
+    expect(result.retry).toBe(true);
+    expect(prisma.payment.findUnique).toHaveBeenLastCalledWith({
+      where: { projectId_kind: { projectId: "proj-1", kind: "final" } },
+      select: { status: true },
+    });
+  });
+
+  it("acknowledges the refund of a second final payment, which was never recorded", async () => {
+    prisma.payment.findUnique
+      .mockResolvedValueOnce(null)
+      .mockResolvedValueOnce(null)
+      .mockResolvedValueOnce({ status: "paid" }); // settled by another session or by Zelle
+    sessionsList.mockResolvedValueOnce({
+      data: [{ id: "cs_dup", metadata: { paymentType: "final", projectId: "proj-1" } }],
+    });
+
+    const result = await handleChargeRefunded(charge(), resend, now);
+
+    expect(result.retry).toBeUndefined();
+    expect(result.warning).toMatch(/not a project payment/);
+    expect(prisma.payment.update).not.toHaveBeenCalled();
+  });
+
   it("treats a subscription session without a payment row as foreign, not pending", async () => {
     prisma.payment.findUnique.mockResolvedValueOnce(null).mockResolvedValueOnce(null);
     sessionsList.mockResolvedValueOnce({ data: [{ id: "cs_sub", metadata: { paymentType: "subscription" } }] });
@@ -296,5 +335,48 @@ describe("handleDisputeClosed", () => {
     expect(result.warning).toMatch(/under_review/);
     expect(captureMessage).toHaveBeenCalled();
     expect(prisma.payment.update).not.toHaveBeenCalled();
+  });
+});
+
+describe("reportUnrecordedFinalPayment", () => {
+  it("tells the admin to refund the second payment and leaves the charge alone", async () => {
+    const emailError = await reportUnrecordedFinalPayment(resend, {
+      project,
+      final: { amount: 100000, taxAmount: 6600, stripeSessionId: "cs_first", method: "stripe", status: "paid" },
+      sessionId: "cs_second",
+      amountPaid: 106600,
+      paymentIntentId: "pi_second",
+    });
+
+    expect(emailError).toBeUndefined();
+    expect(prisma.payment.update).not.toHaveBeenCalled();
+    expect(captureMessage).toHaveBeenCalledWith(
+      "Final payment paid twice: second payment not recorded",
+      expect.objectContaining({ level: "error" })
+    );
+    expect(sendAdminPaymentIssueNotification).toHaveBeenCalledWith(
+      resend,
+      expect.objectContaining({
+        kind: "duplicate_payment",
+        projectCode: "AB3K9Z",
+        chargeLabel: "Final payment (50%)",
+        chargeTotal: 106600,
+        amount: 106600,
+        stripeUrl: "https://dashboard.stripe.com/payments/pi_second",
+      })
+    );
+  });
+
+  it("returns the email error so the webhook can report it", async () => {
+    sendAdminPaymentIssueNotification.mockResolvedValueOnce({ success: false, error: "quota" });
+
+    const emailError = await reportUnrecordedFinalPayment(resend, {
+      project,
+      final: { amount: 100000, taxAmount: 0, stripeSessionId: null, method: "zelle", status: "paid" },
+      sessionId: "cs_second",
+      amountPaid: 100000,
+    });
+
+    expect(emailError).toBe("quota");
   });
 });

@@ -261,6 +261,9 @@ model Payment {
   status    PaymentStatus @default(pending)
   method    PaymentMethod @default(stripe)
 
+  // Checkout Session open for the customer to pay this charge: one at a time,
+  // so the same charge cannot be paid twice (final payment, see finalPaymentCheckout.ts)
+  checkoutSessionId      String?   @unique
   stripeSessionId        String?   @unique // Checkout Session that paid this charge (method stripe)
   // PaymentIntent behind that session: refund and dispute events name it, not the session
   stripePaymentIntentId  String?   @unique

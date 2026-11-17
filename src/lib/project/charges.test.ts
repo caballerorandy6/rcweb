@@ -11,6 +11,7 @@ function payment(overrides: Partial<Payment>): Payment {
     taxAmount: 0,
     status: "pending",
     method: "stripe",
+    checkoutSessionId: null,
     stripeSessionId: null,
     stripePaymentIntentId: null,
     stripeTaxTransactionId: null,

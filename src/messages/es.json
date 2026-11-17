@@ -1749,6 +1749,7 @@
       "invalidCredentials": "Correo o código de proyecto no válidos",
       "depositPending": "El pago inicial no se ha completado",
       "notReady": "El proyecto todavía no está listo para el pago final",
+      "alreadyPaid": "Este proyecto ya está pagado por completo",
       "verificationFailed": "La verificación falló",
       "sessionFailed": "No se pudo crear la sesión de pago"
     },

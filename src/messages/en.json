@@ -1749,6 +1749,7 @@
       "invalidCredentials": "Invalid email or project code",
       "depositPending": "Initial payment not completed",
       "notReady": "Project is not ready for final payment yet",
+      "alreadyPaid": "This project is already paid in full",
       "verificationFailed": "Verification failed",
       "sessionFailed": "Failed to create payment session"
     },
