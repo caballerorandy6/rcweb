@@ -6,6 +6,7 @@ import { requireAdmin } from "@/lib/authGuard";
 import { QuoteInputSchema, type QuoteInput } from "@/lib/zod";
 import { isQuoteOpen } from "@/lib/quote/quoteStatus";
 import { expireQuoteCheckout } from "@/lib/quote/quoteCheckout";
+import { zelleRequestAfterEdit } from "@/lib/quote/zelleRequest";
 import { toAdminQuote } from "@/lib/quote/toAdminQuote";
 import type { AdminQuote } from "@/types/quote";
 import type { ActionResult } from "@/types/common";
@@ -35,7 +36,13 @@ export async function updateQuoteAction(
 
     const current = await prisma.quote.findUnique({
       where: { id: quoteId },
-      select: { status: true },
+      select: {
+        id: true,
+        status: true,
+        totalAmount: true,
+        billingAddress: true,
+        zelleTaxCalculationId: true,
+      },
     });
     if (!current) {
       return { success: false, error: "Quote not found" };
@@ -43,6 +50,10 @@ export async function updateQuoteAction(
     if (!isQuoteOpen(current)) {
       return { success: false, error: `A ${current.status} quote cannot be edited` };
     }
+
+    const totalAmount = Math.round(data.totalDollars * 100);
+    // The customer chose Zelle for another price: its sales tax follows the new one
+    const zelleRequest = await zelleRequestAfterEdit(current, totalAmount);
 
     const quote = await prisma.quote.update({
       where: { id: quoteId },
@@ -54,7 +65,8 @@ export async function updateQuoteAction(
         planName: data.planName,
         scope: data.scope,
         notes: data.notes || null,
-        totalAmount: Math.round(data.totalDollars * 100),
+        totalAmount,
+        ...zelleRequest,
         ...(data.contactId && { contactId: data.contactId }),
       },
       include: { project: { select: { projectCode: true } } },
