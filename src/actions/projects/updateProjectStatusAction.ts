@@ -3,7 +3,8 @@
 import { Resend } from "resend";
 import { prisma } from "@/lib/prisma";
 import { sendProjectReadyEmail } from "@/lib/email/senders";
-import { getProjectCharges } from "@/lib/project/charges";
+import { getProjectCharges, isPaid } from "@/lib/project/charges";
+import { getNextProjectStatus } from "@/lib/project/status";
 import { getPayUrl } from "@/lib/projectUrl";
 import type { UpdateableProjectStatus } from "@/types/project";
 import type { ProjectStatus } from "@/generated/prisma/enums";
@@ -46,12 +47,29 @@ export async function updateProjectStatusAction(
     if (!current) {
       return { success: false, error: "Project not found" };
     }
-    const { final } = getProjectCharges(current.payments);
+    const { deposit, final } = getProjectCharges(current.payments);
 
-    const project = await prisma.project.update({
-      where: { id: current.id },
+    // The same rule the buttons follow, enforced here: a request built by
+    // hand (or a stale tab) cannot skip a step, go back, or start a project
+    // whose deposit is not paid
+    const next = getNextProjectStatus(current.status, {
+      depositPaid: isPaid(deposit),
+      finalPaid: isPaid(final),
+    });
+    if (status !== next) {
+      return { success: false, error: "The project cannot move to that status from where it is now" };
+    }
+
+    // Only if it is still where it was read: two clicks (two tabs) must not
+    // both email the customer the payment link
+    const { count } = await prisma.project.updateMany({
+      where: { id: current.id, status: current.status },
       data: { status },
     });
+    if (count === 0) {
+      return { success: false, error: "The project status has just changed. Reload the page" };
+    }
+    const project = { ...current, status };
 
     let emailError: string | undefined;
 
