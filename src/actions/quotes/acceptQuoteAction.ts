@@ -7,7 +7,7 @@ import type { Locale } from "@/i18n/routing";
 import { prisma } from "@/lib/prisma";
 import { checkActionRateLimit, rateLimiters } from "@/lib/rateLimit";
 import { getQuoteDisplayStatus } from "@/lib/quote/quoteStatus";
-import { createInitialPaymentCheckout } from "@/lib/project/initialPaymentCheckout";
+import { openQuoteCheckout } from "@/lib/quote/quoteCheckout";
 import { getQuoteUrl } from "@/lib/projectUrl";
 import type { ActionResult } from "@/types/common";
 
@@ -50,18 +50,18 @@ export async function acceptQuoteAction(
       return { success: false, error: t("quote.expired") };
     }
 
-    const { sessionUrl } = await createInitialPaymentCheckout({
-      planName: quote.planName,
-      totalAmount: quote.totalAmount,
-      customerName: quote.name,
-      customerEmail: quote.email,
-      quoteId: quote.id,
+    // One payable session per quote: a second visit gets the same one back
+    const checkout = await openQuoteCheckout(quote, {
       description: emailTranslator(locale as Locale)("checkout.quoteDescription", { quoteNumber: quote.quoteNumber }),
       cancelUrl: getQuoteUrl(quote.token, locale as Locale),
       locale: locale as Locale,
     });
+    // Paid moments ago; the webhook has not marked the quote accepted yet
+    if (checkout.kind === "paid") {
+      return { success: false, error: t("quote.accepted") };
+    }
 
-    return { success: true, data: { sessionUrl } };
+    return { success: true, data: { sessionUrl: checkout.sessionUrl } };
   } catch (error) {
     console.error("❌ Error accepting quote:", error);
     return { success: false, error: t("quote.paymentFailed") };

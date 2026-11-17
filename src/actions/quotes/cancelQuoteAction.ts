@@ -4,6 +4,7 @@ import { revalidatePath } from "next/cache";
 import { prisma } from "@/lib/prisma";
 import { requireAdmin } from "@/lib/authGuard";
 import { isQuoteOpen } from "@/lib/quote/quoteStatus";
+import { expireQuoteCheckout } from "@/lib/quote/quoteCheckout";
 import { toAdminQuote } from "@/lib/quote/toAdminQuote";
 import type { AdminQuote } from "@/types/quote";
 import type { ActionResult } from "@/types/common";
@@ -34,6 +35,9 @@ export async function cancelQuoteAction(
       data: { status: "cancelled" },
       include: { project: { select: { projectCode: true } } },
     });
+
+    // A Checkout Session the customer left open must not be payable any more
+    await expireQuoteCheckout(quote);
 
     revalidatePath("/quotes");
 
