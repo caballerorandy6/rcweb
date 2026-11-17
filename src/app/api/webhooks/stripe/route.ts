@@ -200,9 +200,13 @@ export async function POST(req: Request) {
         // has paid by now, so the charge is recorded whatever the status is.
         const { final } = getProjectCharges(project.payments);
 
-        // Only one delivery marks the charge paid, however many arrive at once
+        // Only one delivery marks the charge paid, however many arrive at once.
+        // A charge that already carries this session was paid by it and then
+        // refunded: a late retry of the event must not mark it paid again.
         let firstDelivery = false;
-        if (!isPaid(final)) {
+        if (final.stripeSessionId === session.id) {
+          // Nothing to record
+        } else if (!isPaid(final)) {
           firstDelivery = await markChargePaid({
             projectId,
             chargeId: final.id,

@@ -225,6 +225,18 @@ describe("handleDisputeCreated", () => {
     expect(result).toEqual({ received: true, updated: false });
     expect(prisma.payment.update).not.toHaveBeenCalled();
   });
+
+  it("ignores the created event when it arrives after the dispute was closed (events are unordered)", async () => {
+    for (const disputeStatus of ["won", "lost"]) {
+      prisma.payment.findUnique.mockResolvedValueOnce(payment({ disputeId: "dp_1", disputeStatus }));
+
+      const result = await handleDisputeCreated(dispute(), resend);
+
+      expect(result).toEqual({ received: true, updated: false });
+    }
+    expect(prisma.payment.update).not.toHaveBeenCalled();
+    expect(sendAdminPaymentIssueNotification).not.toHaveBeenCalled();
+  });
 });
 
 describe("handleDisputeClosed", () => {
