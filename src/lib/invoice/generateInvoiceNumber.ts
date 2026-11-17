@@ -1,102 +1,46 @@
 // lib/invoice/generateInvoiceNumber.ts
-// Genera números únicos de invoice secuenciales
+// Sequential invoice numbers: INV-YYYY-NNN, restarting every year
 
 import { prisma } from "@/lib/prisma";
 
+/** INV-2026-001 … INV-2026-999, INV-2026-1000: three digits or more */
+const INVOICE_NUMBER_PATTERN = /^INV-(\d{4})-(\d{3,})$/;
+
 /**
- * Genera un número de invoice único y secuencial
- * Formato: INV-YYYY-NNN
- * Ejemplo: INV-2025-001, INV-2025-002, etc.
- *
- * Se reinicia la secuencia cada año.
+ * The number after the highest one of that year. Compared as numbers: sorted
+ * as text, "999" comes after "1000" and the sequence would stall there.
+ */
+export function nextInvoiceNumber(existing: string[], year: number): string {
+  let highest = 0;
+  for (const invoiceNumber of existing) {
+    const match = INVOICE_NUMBER_PATTERN.exec(invoiceNumber);
+    if (match && Number(match[1]) === year) {
+      highest = Math.max(highest, Number(match[2]));
+    }
+  }
+  return `INV-${year}-${String(highest + 1).padStart(3, "0")}`;
+}
+
+/**
+ * Proposes the next invoice number of the current year. It reserves nothing:
+ * two invoices created at once get the same proposal, and the unique
+ * `invoiceNumber` decides who keeps it. Call it through saveInvoice(), which
+ * asks for another number when it loses.
  */
 export async function generateInvoiceNumber(): Promise<string> {
-  const currentYear = new Date().getFullYear();
-  const prefix = `INV-${currentYear}-`;
+  const year = new Date().getFullYear();
+  const invoices = await prisma.invoice.findMany({
+    where: { invoiceNumber: { startsWith: `INV-${year}-` } },
+    select: { invoiceNumber: true },
+  });
 
-  try {
-    // Buscar el último invoice del año actual
-    const lastInvoice = await prisma.invoice.findFirst({
-      where: {
-        invoiceNumber: {
-          startsWith: prefix,
-        },
-      },
-      orderBy: {
-        invoiceNumber: 'desc',
-      },
-    });
-
-    let nextNumber = 1;
-
-    if (lastInvoice) {
-      // Extraer el número del último invoice
-      // Ej: "INV-2025-042" -> "042" -> 42
-      const lastNumberStr = lastInvoice.invoiceNumber.split('-')[2];
-      const lastNumber = parseInt(lastNumberStr, 10);
-
-      if (!isNaN(lastNumber)) {
-        nextNumber = lastNumber + 1;
-      }
-    }
-
-    // Formatear con padding de 3 dígitos (001, 002, ..., 999)
-    const formattedNumber = nextNumber.toString().padStart(3, '0');
-    const invoiceNumber = `${prefix}${formattedNumber}`;
-
-    // Verificar unicidad (por si acaso hay race conditions)
-    const exists = await prisma.invoice.findUnique({
-      where: { invoiceNumber },
-    });
-
-    if (exists) {
-      // Si existe, intentar con el siguiente número
-      console.warn(`Invoice number ${invoiceNumber} already exists, trying next...`);
-      return generateInvoiceNumber(); // Recursión para obtener el siguiente
-    }
-
-    return invoiceNumber;
-  } catch (error) {
-    console.error('Error generating invoice number:', error);
-    throw new Error(`Failed to generate invoice number: ${error instanceof Error ? error.message : 'Unknown error'}`);
-  }
+  return nextInvoiceNumber(
+    invoices.map((invoice) => invoice.invoiceNumber),
+    year
+  );
 }
 
-/**
- * Valida el formato de un número de invoice
- * @param invoiceNumber - Número de invoice a validar
- * @returns true si el formato es válido
- */
+/** True for INV-YYYY-NNN (three digits or more) */
 export function validateInvoiceNumber(invoiceNumber: string): boolean {
-  // Formato: INV-YYYY-NNN
-  const pattern = /^INV-\d{4}-\d{3}$/;
-  return pattern.test(invoiceNumber);
-}
-
-/**
- * Extrae el año de un número de invoice
- * @param invoiceNumber - Número de invoice
- * @returns Año del invoice
- */
-export function extractYearFromInvoiceNumber(invoiceNumber: string): number | null {
-  if (!validateInvoiceNumber(invoiceNumber)) {
-    return null;
-  }
-
-  const parts = invoiceNumber.split('-');
-  return parseInt(parts[1], 10);
-}
-
-/**
- * Extrae el número secuencial de un invoice
- * @param invoiceNumber - Número de invoice
- * @returns Número secuencial
- */
-export function extractSequenceFromInvoiceNumber(invoiceNumber: string): number | null {
-  if (!validateInvoiceNumber(invoiceNumber)) {
-    return null;
-  }
-
-  const parts = invoiceNumber.split('-');
-  return parseInt(parts[2], 10);
+  return INVOICE_NUMBER_PATTERN.test(invoiceNumber);
 }

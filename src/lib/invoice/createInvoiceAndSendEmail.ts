@@ -3,6 +3,7 @@
 
 import { Resend } from "resend";
 import { createInvoice, createInvoiceSummary, type CreatedInvoice } from "./actions";
+import { InvoiceAlreadyExistsError } from "./saveInvoice";
 import { InvoiceType } from "./types";
 import { sendInvoiceEmail } from "@/lib/email/senders";
 import { emailTranslator } from "@/lib/email/i18n";
@@ -22,6 +23,10 @@ type InvoiceResult = Omit<CreatedInvoice, "pdfBuffer">;
  * Crea un invoice, genera el PDF y lo envía por email.
  * La llaman el webhook de Stripe y recordManualPaymentAction; el método y la
  * fecha de pago salen del cobro (Payment) correspondiente.
+ *
+ * Si el proyecto ya tiene esa factura (otra entrega del mismo evento o un
+ * segundo clic la guardó primero) devuelve la existente y no envía nada: el
+ * correo es de quien la creó.
  */
 export async function createInvoiceAndSendEmail({
   project,
@@ -90,6 +95,13 @@ export async function createInvoiceAndSendEmail({
 
     return created;
   } catch (error) {
+    if (error instanceof InvoiceAlreadyExistsError) {
+      return {
+        invoiceId: error.existing.id,
+        invoiceNumber: error.existing.invoiceNumber,
+        pdfUrl: error.existing.pdfUrl ?? "",
+      };
+    }
     console.error("Error creating invoice and sending email:", error);
     throw new Error(
       `Failed to create invoice and send email: ${

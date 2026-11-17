@@ -9,7 +9,10 @@ const { createInvoice, createInvoiceSummary, sendInvoiceEmail } = vi.hoisted(() 
 vi.mock("./actions", () => ({ createInvoice, createInvoiceSummary }));
 vi.mock("@/lib/email/senders", () => ({ sendInvoiceEmail }));
 
+vi.mock("@/lib/prisma", () => ({ prisma: {} }));
+
 import { createInvoiceAndSendEmail } from "./createInvoiceAndSendEmail";
+import { InvoiceAlreadyExistsError } from "./saveInvoice";
 
 const project = {
   id: "p1",
@@ -64,5 +67,16 @@ describe("createInvoiceAndSendEmail", () => {
       expect.anything(),
       expect.objectContaining({ totalAmount: 106600 })
     );
+  });
+
+  it("does not email again an invoice another delivery already created", async () => {
+    createInvoice.mockRejectedValueOnce(
+      new InvoiceAlreadyExistsError({ id: "first", invoiceNumber: "INV-2026-011", pdfUrl: "https://x.test/first.pdf" })
+    );
+
+    const result = await createInvoiceAndSendEmail({ project, type: "initial", resend: {} as never });
+
+    expect(result).toEqual({ invoiceId: "first", invoiceNumber: "INV-2026-011", pdfUrl: "https://x.test/first.pdf" });
+    expect(sendInvoiceEmail).not.toHaveBeenCalled();
   });
 });

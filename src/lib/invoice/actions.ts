@@ -1,11 +1,13 @@
 // lib/invoice/actions.ts
-"use server";
 
 import { emailTranslator } from "@/lib/email/i18n";
 import { prisma } from "@/lib/prisma";
-import { generateInvoiceNumber } from "./generateInvoiceNumber";
 import { generateInvoicePDF, generateInvoiceSummaryPDF } from "./generateInvoicePDF";
-import { uploadInvoicePDF } from "../blob";
+import {
+  InvoiceAlreadyExistsError,
+  saveInvoice,
+  type CreatedInvoice,
+} from "./saveInvoice";
 import {
   CreateInvoiceData,
   InvoiceData,
@@ -15,13 +17,7 @@ import {
 } from "./types";
 import { getProjectCharges, isPaid } from "@/lib/project/charges";
 
-/** The PDF travels back with the row: re-downloading it from Blob right after the upload can return a 404 */
-export interface CreatedInvoice {
-  invoiceId: string;
-  invoiceNumber: string;
-  pdfUrl: string;
-  pdfBuffer: Buffer;
-}
+export type { CreatedInvoice };
 
 /**
  * Crea un invoice individual (initial o final) y genera su PDF
@@ -30,53 +26,41 @@ export async function createInvoice(
   data: CreateInvoiceData
 ): Promise<CreatedInvoice> {
   try {
-    // 1. Generar número de invoice único
-    const invoiceNumber = await generateInvoiceNumber();
-
-    // 2. Calcular impuestos y total
+    // 1. Calcular impuestos y total
     const { taxAmount } = data;
     const taxRate = effectiveTaxRate(data.subtotal, taxAmount);
     const total = calculateTotal(data.subtotal, taxAmount);
+    const issueDate = new Date();
 
-    // 3. Preparar datos del invoice
-    const invoiceData: InvoiceData = {
-      invoiceNumber,
+    // 2. Numerar, generar el PDF, subirlo y guardar la fila
+    return await saveInvoice({
+      projectId: data.projectId,
       type: data.type,
-      customerName: data.customerName,
-      locale: data.locale,
-      customerEmail: data.customerEmail,
-      projectCode: data.projectCode,
-      planName: data.planName,
-      description: data.description,
-      subtotal: data.subtotal,
-      taxRate,
-      taxAmount,
-      total,
-      currency: "USD",
-      status: "paid",
-      issueDate: new Date(),
-      dueDate: new Date(), // Same as issue date for paid invoices
-      paidDate: data.paidDate,
-      paymentMethod: data.paymentMethod,
-      stripeSessionId: data.stripeSessionId,
-    };
-
-    // 4. Generar PDF
-    const pdfBuffer = await generateInvoicePDF(invoiceData);
-
-    // 5. Subir PDF a Vercel Blob
-    const fileName = `${invoiceNumber}.pdf`;
-    const { url: pdfUrl, pathname: pdfBlobKey } = await uploadInvoicePDF(
-      fileName,
-      pdfBuffer
-    );
-
-    // 6. Guardar invoice en base de datos
-    const invoice = await prisma.invoice.create({
-      data: {
-        invoiceNumber,
-        projectId: data.projectId,
-        type: data.type,
+      render: (invoiceNumber) => {
+        const invoiceData: InvoiceData = {
+          invoiceNumber,
+          type: data.type,
+          customerName: data.customerName,
+          locale: data.locale,
+          customerEmail: data.customerEmail,
+          projectCode: data.projectCode,
+          planName: data.planName,
+          description: data.description,
+          subtotal: data.subtotal,
+          taxRate,
+          taxAmount,
+          total,
+          currency: "USD",
+          status: "paid",
+          issueDate,
+          dueDate: issueDate, // Same as issue date for paid invoices
+          paidDate: data.paidDate,
+          paymentMethod: data.paymentMethod,
+          stripeSessionId: data.stripeSessionId,
+        };
+        return generateInvoicePDF(invoiceData);
+      },
+      row: () => ({
         customerName: data.customerName,
         customerEmail: data.customerEmail,
         projectCode: data.projectCode,
@@ -87,24 +71,16 @@ export async function createInvoice(
         taxAmount,
         total,
         currency: "USD",
-        pdfUrl,
-        pdfBlobKey,
         paymentMethod: data.paymentMethod,
         stripeSessionId: data.stripeSessionId,
         status: "paid",
-        issueDate: new Date(),
-        dueDate: new Date(),
+        issueDate,
+        dueDate: issueDate,
         paidDate: data.paidDate,
-      },
+      }),
     });
-
-    return {
-      invoiceId: invoice.id,
-      invoiceNumber: invoice.invoiceNumber,
-      pdfUrl: invoice.pdfUrl!,
-      pdfBuffer,
-    };
   } catch (error) {
+    if (error instanceof InvoiceAlreadyExistsError) throw error;
     console.error("Error creating invoice:", error);
     throw new Error(
       `Failed to create invoice: ${
@@ -143,65 +119,53 @@ export async function createInvoiceSummary(
 
     const t = emailTranslator(project.locale);
 
-    // 2. Generar número de invoice único
-    const invoiceNumber = await generateInvoiceNumber();
-
-    // 3. Totales de los dos cobros: `amount` no incluye impuesto
+    // 2. Totales de los dos cobros: `amount` no incluye impuesto
     const subtotal = deposit.amount + final.amount;
     const taxAmount = deposit.taxAmount + final.taxAmount;
     const taxRate = effectiveTaxRate(subtotal, taxAmount);
     const total = calculateTotal(subtotal, taxAmount);
+    const issueDate = new Date();
 
-    // 4. Preparar datos del invoice summary
-    const invoiceSummaryData: InvoiceSummaryData = {
-      invoiceNumber,
+    // 3. Numerar, generar el PDF, subirlo y guardar la fila
+    return await saveInvoice({
+      projectId: project.id,
       type: "summary",
-      customerName: project.name,
-      locale: project.locale,
-      customerEmail: project.email,
-      projectCode: project.projectCode,
-      planName: project.planName,
-      items: [
-        {
-          description: t("pdf.depositLine", { planName: project.planName }),
-          amount: deposit.amount,
-          paidDate: depositPaidAt,
-          paymentMethod: deposit.method,
-        },
-        {
-          description: t("pdf.finalLine", { planName: project.planName }),
-          amount: final.amount,
+      render: (invoiceNumber) => {
+        const invoiceSummaryData: InvoiceSummaryData = {
+          invoiceNumber,
+          type: "summary",
+          customerName: project.name,
+          locale: project.locale,
+          customerEmail: project.email,
+          projectCode: project.projectCode,
+          planName: project.planName,
+          items: [
+            {
+              description: t("pdf.depositLine", { planName: project.planName }),
+              amount: deposit.amount,
+              paidDate: depositPaidAt,
+              paymentMethod: deposit.method,
+            },
+            {
+              description: t("pdf.finalLine", { planName: project.planName }),
+              amount: final.amount,
+              paidDate: finalPaidAt,
+              paymentMethod: final.method,
+            },
+          ],
+          subtotal,
+          taxRate,
+          taxAmount,
+          total,
+          currency: "USD",
+          status: "paid",
+          issueDate,
           paidDate: finalPaidAt,
           paymentMethod: final.method,
-        },
-      ],
-      subtotal,
-      taxRate,
-      taxAmount,
-      total,
-      currency: "USD",
-      status: "paid",
-      issueDate: new Date(),
-      paidDate: finalPaidAt,
-      paymentMethod: final.method,
-    };
-
-    // 5. Generar PDF
-    const pdfBuffer = await generateInvoiceSummaryPDF(invoiceSummaryData);
-
-    // 6. Subir PDF a Vercel Blob
-    const fileName = `${invoiceNumber}.pdf`;
-    const { url: pdfUrl, pathname: pdfBlobKey } = await uploadInvoicePDF(
-      fileName,
-      pdfBuffer
-    );
-
-    // 7. Guardar invoice en base de datos
-    const invoice = await prisma.invoice.create({
-      data: {
-        invoiceNumber,
-        projectId: project.id,
-        type: "summary",
+        };
+        return generateInvoiceSummaryPDF(invoiceSummaryData);
+      },
+      row: () => ({
         customerName: project.name,
         customerEmail: project.email,
         projectCode: project.projectCode,
@@ -212,22 +176,14 @@ export async function createInvoiceSummary(
         taxAmount,
         total,
         currency: "USD",
-        pdfUrl,
-        pdfBlobKey,
         paymentMethod: final.method,
         status: "paid",
-        issueDate: new Date(),
+        issueDate,
         paidDate: finalPaidAt,
-      },
+      }),
     });
-
-    return {
-      invoiceId: invoice.id,
-      invoiceNumber: invoice.invoiceNumber,
-      pdfUrl: invoice.pdfUrl!,
-      pdfBuffer,
-    };
   } catch (error) {
+    if (error instanceof InvoiceAlreadyExistsError) throw error;
     console.error("Error creating invoice summary:", error);
     throw new Error(
       `Failed to create invoice summary: ${

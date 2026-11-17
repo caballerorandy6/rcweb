@@ -564,7 +564,9 @@ model Invoice {
   createdAt DateTime      @default(now())
   updatedAt DateTime      @updatedAt
 
-  @@index([projectId])
+  // One invoice of each type per project: two deliveries of the same Stripe
+  // event (or a double click) cannot both invoice the customer
+  @@unique([projectId, type])
   @@index([type])
   @@index([customerEmail])
   @@index([projectCode])

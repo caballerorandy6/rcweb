@@ -3,6 +3,7 @@
 
 import { NextRequest, NextResponse } from "next/server";
 import { getInvoiceByNumber } from "@/lib/invoice/actions";
+import { validateInvoiceNumber } from "@/lib/invoice/generateInvoiceNumber";
 import { auth } from "@/lib/auth";
 
 // Configuración para prevenir indexación
@@ -26,7 +27,7 @@ export async function GET(
     const { invoiceNumber } = await context.params;
 
     // Validar formato del invoice number
-    if (!invoiceNumber || !/^INV-\d{4}-\d{3}$/.test(invoiceNumber)) {
+    if (!invoiceNumber || !validateInvoiceNumber(invoiceNumber)) {
       return NextResponse.json(
         { error: "Invalid invoice number format" },
         { status: 400 }
