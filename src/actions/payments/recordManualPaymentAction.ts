@@ -88,6 +88,12 @@ export async function recordManualPaymentAction(
     if (isPaid(charge)) {
       return { success: false, error: "That charge is already paid" };
     }
+    // The row still describes the charge that went back to the customer (its
+    // Stripe ids, the amount refunded): paying over it would count as revenue
+    // a payment the statistics subtract in full
+    if (charge.status === "refunded") {
+      return { success: false, error: "That charge was refunded in full and cannot be recorded as paid again" };
+    }
     if (kind === "final" && !isPaid(charges.deposit)) {
       return { success: false, error: "Record the deposit before the final payment" };
     }
