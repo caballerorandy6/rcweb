@@ -171,8 +171,13 @@ export async function handleDisputeCreated(
   const { payment } = lookup;
 
   const status = toDisputeStatus(dispute.status);
-  if (payment.disputeId === dispute.id && payment.disputeStatus === status) {
-    return { received: true, updated: false };
+  if (payment.disputeId === dispute.id) {
+    // Stripe does not order events: this one can arrive after the dispute was
+    // closed, and its snapshot (still open) must not undo the outcome
+    const alreadyClosed = payment.disputeStatus === "won" || payment.disputeStatus === "lost";
+    if (alreadyClosed || payment.disputeStatus === status) {
+      return { received: true, updated: false };
+    }
   }
 
   await prisma.payment.update({
