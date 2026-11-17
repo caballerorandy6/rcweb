@@ -1,7 +1,8 @@
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
 // vi.mock is hoisted above the imports, so the mocks it uses must be too
-const { findUnique, markChargePaid, recordChargeTax } = vi.hoisted(() => ({
+const { findUnique, markChargePaid, recordChargeTax, closeFinalPaymentCheckout } = vi.hoisted(() => ({
+  closeFinalPaymentCheckout: vi.fn(),
   findUnique: vi.fn(),
   markChargePaid: vi.fn(),
   recordChargeTax: vi.fn(),
@@ -12,6 +13,7 @@ vi.mock("@/lib/authGuard", () => ({
   requireAdmin: vi.fn().mockResolvedValue({ authorized: true, userId: "admin" }),
 }));
 vi.mock("@/lib/project/markChargePaid", () => ({ markChargePaid }));
+vi.mock("@/lib/project/finalPaymentCheckout", () => ({ closeFinalPaymentCheckout }));
 vi.mock("@/lib/tax/recordChargeTax", () => ({ recordChargeTax }));
 vi.mock("@/lib/invoice/createInvoiceAndSendEmail", () => ({ createInvoiceAndSendEmail: vi.fn() }));
 vi.mock("resend", () => ({ Resend: vi.fn() }));
@@ -41,6 +43,7 @@ const input = { method: "zelle", paidOn: "2026-11-17", taxCents: 0 } as const;
 
 beforeEach(() => {
   vi.clearAllMocks();
+  closeFinalPaymentCheckout.mockResolvedValue("closed");
 });
 
 describe("recordManualPaymentAction", () => {
@@ -73,5 +76,31 @@ describe("recordManualPaymentAction", () => {
 
     expect(result).toEqual({ success: false, error: "That charge is already paid" });
     expect(markChargePaid).not.toHaveBeenCalled();
+  });
+
+  it("closes the customer's open Checkout before recording the balance", async () => {
+    findUnique.mockResolvedValue(project("paid", "pending"));
+    markChargePaid.mockResolvedValue(false);
+
+    await recordManualPaymentAction(PROJECT_ID, { kind: "final", ...input });
+
+    expect(closeFinalPaymentCheckout).toHaveBeenCalledWith(expect.objectContaining({ id: "fin" }));
+    expect(closeFinalPaymentCheckout.mock.invocationCallOrder[0]).toBeLessThan(
+      markChargePaid.mock.invocationCallOrder[0]
+    );
+  });
+
+  it("does not record a balance the customer has just paid by card", async () => {
+    findUnique.mockResolvedValue(project("paid", "pending"));
+    closeFinalPaymentCheckout.mockResolvedValue("paid");
+
+    const result = await recordManualPaymentAction(PROJECT_ID, { kind: "final", ...input });
+
+    expect(result).toEqual({
+      success: false,
+      error: "The customer has just paid this charge by card. Reload the page in a moment",
+    });
+    expect(markChargePaid).not.toHaveBeenCalled();
+    expect(recordChargeTax).not.toHaveBeenCalled();
   });
 });

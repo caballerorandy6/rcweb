@@ -4,7 +4,7 @@ import type { Metadata, Route } from "next";
 import { redirect } from "@/i18n/navigation";
 import type { Locale } from "@/i18n/routing";
 import { getProjectCharges, isPaid } from "@/lib/project/charges";
-import { createFinalPaymentCheckout } from "@/lib/project/finalPaymentCheckout";
+import { openFinalPaymentCheckout, type FinalPaymentCheckout } from "@/lib/project/finalPaymentCheckout";
 import { checkActionRateLimit, rateLimiters } from "@/lib/rateLimit";
 
 export const metadata: Metadata = {
@@ -33,8 +33,8 @@ export default async function MagicLinkPaymentPage(props: { params: Params }) {
     fail("invalid-link");
   }
 
-  // Every visit creates a Checkout Session: cap it per IP, with the general
-  // API budget rather than the contact form's
+  // Every visit asks Stripe for the Checkout Session: cap it per IP, with the
+  // general API budget rather than the contact form's
   const rateCheck = await checkActionRateLimit(rateLimiters.api);
   if (!rateCheck.success) {
     fail("too-many-requests");
@@ -59,17 +59,18 @@ export default async function MagicLinkPaymentPage(props: { params: Params }) {
     fail("project-not-ready");
   }
 
-  let sessionUrl: string;
+  let checkout: FinalPaymentCheckout;
   try {
-    sessionUrl = await createFinalPaymentCheckout(
-      { ...project, finalAmount: final.amount },
-      "magic-link",
-      locale
-    );
+    checkout = await openFinalPaymentCheckout(project, "magic-link", locale);
   } catch (error) {
     console.error("❌ Error creating final payment from magic link:", error);
     fail("payment-failed");
   }
 
-  redirectExternal(sessionUrl as Route);
+  // Paid a moment ago in another tab; the webhook is recording it
+  if (checkout.kind === "paid") {
+    return redirect({ href: "/payment-complete", locale });
+  }
+
+  redirectExternal(checkout.sessionUrl as Route);
 }

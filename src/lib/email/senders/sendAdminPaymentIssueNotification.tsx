@@ -8,9 +8,10 @@ const SUBJECTS: Record<PaymentIssueAdminEmailProps["kind"], string> = {
   dispute_opened: "Payment disputed, response needed",
   dispute_won: "Dispute won",
   dispute_lost: "Dispute lost",
+  duplicate_payment: "Charge paid twice, refund needed",
 };
 
-/** Tells the admin about a refund or a dispute on a project charge; never throws */
+/** Tells the admin about a refund, a dispute or a second payment of a project charge; never throws */
 export async function sendAdminPaymentIssueNotification(
   resend: Resend,
   props: PaymentIssueAdminEmailProps
