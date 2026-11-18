@@ -93,7 +93,7 @@ Minimum to run the site locally:
 | `ADMIN_EMAIL`, `ADMIN_PASSWORD` | First admin user (seed) |
 | `NEXT_PUBLIC_BASE_URL` | Site URL, e.g. `http://localhost:3000` |
 
-Optional, by feature: `STRIPE_*` (payments), `RESEND_API_KEY` (email), `TWILIO_*` (SMS and voice), `OPENAI_API_KEY` (chat), `RECAPTCHA_*` (forms), `BLOB_READ_WRITE_TOKEN` (uploads), `GOOGLE_OAUTH_*`, `GBP_*` and `SEARCH_CONSOLE_SITE_URL` (Google data), `CRON_SECRET` (cron routes), `SENTRY_*` (monitoring), `NEXT_PUBLIC_GA_MEASUREMENT_ID` and other `NEXT_PUBLIC_*` IDs (analytics).
+Optional, by feature: `STRIPE_*` (payments), `RESEND_API_KEY` (email), `TWILIO_*` (SMS and voice), `OPENAI_API_KEY` (chat), `RECAPTCHA_*` (forms), `INVOICES_STORE_ID` / `INVOICES_READ_WRITE_TOKEN` (invoice PDFs, private Blob store), `GOOGLE_OAUTH_*`, `GBP_*` and `SEARCH_CONSOLE_SITE_URL` (Google data), `CRON_SECRET` (cron routes), `SENTRY_*` (monitoring), `NEXT_PUBLIC_GA_MEASUREMENT_ID` and other `NEXT_PUBLIC_*` IDs (analytics).
 
 ## Scripts
 

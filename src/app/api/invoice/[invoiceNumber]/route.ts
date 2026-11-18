@@ -5,6 +5,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { getInvoiceByNumber } from "@/lib/invoice/actions";
 import { validateInvoiceNumber } from "@/lib/invoice/generateInvoiceNumber";
 import { auth } from "@/lib/auth";
+import { readInvoicePDF } from "@/lib/blob";
 
 // Configuración para prevenir indexación
 export const dynamic = "force-dynamic";
@@ -12,7 +13,7 @@ export const revalidate = 0;
 
 /**
  * GET /api/invoice/[invoiceNumber]
- * Descarga un invoice PDF por su número
+ * Sirve el PDF de un invoice por su número (el store de Blob es privado)
  * Ejemplo: /api/invoice/INV-2025-001
  *
  * Security: Requires one of:
@@ -70,22 +71,27 @@ export async function GET(
       );
     }
 
-    if (!invoice.pdfUrl) {
-      return NextResponse.json(
-        { error: "Invoice PDF not available" },
-        { status: 404 }
-      );
-    }
+    const notAvailable = () =>
+      NextResponse.json({ error: "Invoice PDF not available" }, { status: 404 });
 
-    // Redirigir al PDF en Vercel Blob con headers de seguridad
-    const response = NextResponse.redirect(invoice.pdfUrl);
+    if (!invoice.pdfBlobKey) return notAvailable();
 
-    // Headers de seguridad para prevenir indexación y caching
-    response.headers.set("X-Robots-Tag", "noindex, nofollow, noarchive");
-    response.headers.set("Cache-Control", "no-store, no-cache, must-revalidate, private");
-    response.headers.set("Pragma", "no-cache");
+    // The store is private: the PDF is read with the server's credentials and
+    // streamed to whoever passed the check above
+    const pdf = await readInvoicePDF(invoice.pdfBlobKey);
+    if (!pdf) return notAvailable();
 
-    return response;
+    return new Response(pdf.stream, {
+      headers: {
+        "Content-Type": "application/pdf",
+        "Content-Length": String(pdf.size),
+        "Content-Disposition": `inline; filename="${invoice.invoiceNumber}.pdf"`,
+        "X-Content-Type-Options": "nosniff",
+        "X-Robots-Tag": "noindex, nofollow, noarchive",
+        "Cache-Control": "no-store, no-cache, must-revalidate, private",
+        Pragma: "no-cache",
+      },
+    });
   } catch (error) {
     console.error("Error fetching invoice:", error);
     // The message stays in the logs: it can name tables or hosts
