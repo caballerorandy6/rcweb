@@ -1,5 +1,6 @@
 import { defineConfig, devices } from "@playwright/test";
 import { config as loadEnv } from "dotenv";
+import { E2E_WEBHOOK_SECRET } from "./e2e/support/env";
 
 // End-to-end smoke tests. They run against a real Next.js server that
 // Playwright starts on its own (see webServer below).
@@ -26,6 +27,15 @@ export default defineConfig({
   projects: [{ name: "chromium", use: { ...devices["Desktop Chrome"] } }],
   webServer: {
     command: `npx next dev -p ${PORT}`,
+    // These win over .env, so the suite never reaches a real service: emails
+    // and invoice PDFs fail (the flows tolerate that) and nothing is reported
+    // to Sentry. The webhook secret is the one the suite signs events with.
+    env: {
+      STRIPE_WEBHOOK_SECRET: E2E_WEBHOOK_SECRET,
+      RESEND_API_KEY: "re_e2e_placeholder",
+      BLOB_READ_WRITE_TOKEN: "",
+      NEXT_PUBLIC_SENTRY_DSN: "",
+    },
     url: `http://localhost:${PORT}`,
     // Locally reuse a dev server that is already running on that port
     reuseExistingServer: !process.env.CI,

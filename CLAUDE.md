@@ -98,7 +98,8 @@ Client accepts terms → Stripe Checkout (50%) → Webhook creates `Project` wit
 ## Testing
 
 - **Vitest** for pure logic (`src/lib/*.test.ts`); mock Prisma/Sentry with `vi.hoisted` + `vi.mock`.
-- **Playwright** in `e2e/` against `next dev -p 3100`; admin tests use `TEST_ADMIN_*` from `.env.test` (never real credentials).
+- **Playwright** in `e2e/` against `next dev -p 3100`; admin tests use `TEST_ADMIN_*` from `.env.test` (never real credentials). The test server starts with a fake Resend key, no Blob token, no Sentry DSN and its own webhook secret (`webServer.env` in `playwright.config.ts`), so the suite never reaches a real service. Stop any other `next dev` in the repo first: Next allows one per directory.
+- **Money flow:** `src/app/api/webhooks/stripe/route.test.ts` drives the webhook route with signed events (everything else mocked); `e2e/payment-journey.spec.ts` walks quote → deposit → ready → final payment → completed against the real database, delivering the two `checkout.session.completed` events signed (`e2e/support/payments.ts`) instead of paying in Stripe Checkout.
 - **CI** (`.github/workflows/ci.yml`): lint → `next typegen` → tsc → vitest, then e2e with a Postgres service. Keep it green before merging.
 
 ## Code Conventions
