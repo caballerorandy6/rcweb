@@ -1,3 +1,4 @@
+import { formatCurrency } from "@/lib/utils";
 // lib/invoice/InvoiceTemplate.tsx
 // Professional PDF Invoice Template using @react-pdf/renderer
 
@@ -14,7 +15,6 @@ import {
   InvoiceData,
   InvoiceSummaryData,
   RC_WEB_COMPANY_INFO,
-  centsToDollars,
 } from "./types";
 
 // Estilos profesionales para el PDF
@@ -258,7 +258,7 @@ export const InvoiceTemplate: React.FC<InvoiceTemplateProps> = ({ data }) => {
           <View style={styles.tableRow}>
             <Text style={styles.tableColDescription}>{data.description}</Text>
             <Text style={styles.tableColAmount}>
-              ${centsToDollars(data.subtotal)}
+              {formatCurrency(data.subtotal)}
             </Text>
           </View>
         </View>
@@ -268,7 +268,7 @@ export const InvoiceTemplate: React.FC<InvoiceTemplateProps> = ({ data }) => {
           <View style={styles.totalRow}>
             <Text style={styles.totalLabel}>{t("pdf.subtotal")}</Text>
             <Text style={styles.totalAmount}>
-              ${centsToDollars(data.subtotal)}
+              {formatCurrency(data.subtotal)}
             </Text>
           </View>
           <View style={styles.totalRow}>
@@ -276,13 +276,13 @@ export const InvoiceTemplate: React.FC<InvoiceTemplateProps> = ({ data }) => {
               {t("pdf.tax", { rate: data.taxRate })}
             </Text>
             <Text style={styles.totalAmount}>
-              ${centsToDollars(data.taxAmount)}
+              {formatCurrency(data.taxAmount)}
             </Text>
           </View>
           <View style={styles.grandTotal}>
             <Text style={styles.grandTotalLabel}>{t("pdf.total")}</Text>
             <Text style={styles.grandTotalAmount}>
-              ${centsToDollars(data.total)}
+              {formatCurrency(data.total)}
             </Text>
           </View>
         </View>
@@ -404,7 +404,7 @@ export const InvoiceSummaryTemplate: React.FC<InvoiceSummaryTemplateProps> = ({
                 {formatLongDate(item.paidDate, data.locale)}
               </Text>
               <Text style={styles.tableColAmount}>
-                ${centsToDollars(item.amount)}
+                {formatCurrency(item.amount)}
               </Text>
             </View>
           ))}
@@ -415,7 +415,7 @@ export const InvoiceSummaryTemplate: React.FC<InvoiceSummaryTemplateProps> = ({
           <View style={styles.totalRow}>
             <Text style={styles.totalLabel}>{t("pdf.subtotal")}</Text>
             <Text style={styles.totalAmount}>
-              ${centsToDollars(data.subtotal)}
+              {formatCurrency(data.subtotal)}
             </Text>
           </View>
           <View style={styles.totalRow}>
@@ -423,13 +423,13 @@ export const InvoiceSummaryTemplate: React.FC<InvoiceSummaryTemplateProps> = ({
               {t("pdf.tax", { rate: data.taxRate })}
             </Text>
             <Text style={styles.totalAmount}>
-              ${centsToDollars(data.taxAmount)}
+              {formatCurrency(data.taxAmount)}
             </Text>
           </View>
           <View style={styles.grandTotal}>
             <Text style={styles.grandTotalLabel}>{t("pdf.totalPaid")}</Text>
             <Text style={styles.grandTotalAmount}>
-              ${centsToDollars(data.total)}
+              {formatCurrency(data.total)}
             </Text>
           </View>
         </View>

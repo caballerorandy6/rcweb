@@ -1,3 +1,4 @@
+import { formatCurrency } from "@/lib/utils";
 import {
   Html,
   Head,
@@ -97,7 +98,7 @@ export const InvoiceEmail = ({
 
             {type === "final" && (
               <Text style={styles.message}>
-                {t.rich("invoice.bodyFinal", { amount: `$${(secondPayment / 100).toFixed(2)}`, b: (chunks) => <strong style={{ color: colors.green, fontSize: "18px" }}>{chunks}</strong> })}
+                {t.rich("invoice.bodyFinal", { amount: formatCurrency(secondPayment), b: (chunks) => <strong style={{ color: colors.green, fontSize: "18px" }}>{chunks}</strong> })}
               </Text>
             )}
 
@@ -129,21 +130,21 @@ export const InvoiceEmail = ({
                     <tr>
                       <td style={styles.summaryLabel}>{t("invoice.initialPayment")}</td>
                       <td style={styles.summaryValuePaid}>
-                        ${(firstPayment / 100).toFixed(2)} ✓
+                        {formatCurrency(firstPayment)} ✓
                       </td>
                     </tr>
                     {depositTax > 0 && (
                       <tr>
                         <td style={styles.summaryLabel}>{t("invoice.salesTax")}</td>
                         <td style={styles.summaryValuePaid}>
-                          ${(depositTax / 100).toFixed(2)} ✓
+                          {formatCurrency(depositTax)} ✓
                         </td>
                       </tr>
                     )}
                     <tr>
                       <td style={styles.summaryLabel}>{t("invoice.remaining")}</td>
                       <td style={styles.summaryValue}>
-                        ${(secondPayment / 100).toFixed(2)}
+                        {formatCurrency(secondPayment)}
                       </td>
                     </tr>
                     <tr>
@@ -167,7 +168,7 @@ export const InvoiceEmail = ({
                           color: colors.gray,
                         }}
                       >
-                        ${(totalAmount / 100).toFixed(2)}
+                        {formatCurrency(totalAmount)}
                       </td>
                     </tr>
                   </tbody>
@@ -180,7 +181,7 @@ export const InvoiceEmail = ({
               <Section style={styles.summaryBox}>
                 <Text style={styles.summaryTitle}>Total Paid</Text>
                 <Text style={styles.totalAmount}>
-                  ${(totalAmount / 100).toFixed(2)}
+                  {formatCurrency(totalAmount)}
                 </Text>
                 <Text style={styles.allPaymentsNote}>{t("invoice.allReceived")}</Text>
               </Section>

@@ -3,6 +3,7 @@ import {
   daysUntil,
   formatCurrency,
   formatDate,
+  formatDateTime,
   formatDaysAgo,
   formatDeadline,
   formatFileSize,
@@ -45,9 +46,18 @@ describe("formatCurrency", () => {
 
 describe("formatDate", () => {
   it("formats Date and ISO strings", () => {
-    const date = new Date(2026, 0, 15);
+    const date = new Date("2026-01-15T18:00:00Z");
     expect(formatDate(date)).toBe("Jan 15, 2026");
     expect(formatDate(date, { month: "long" })).toBe("January 15, 2026");
+    expect(formatDate("2026-01-15T18:00:00Z")).toBe("Jan 15, 2026");
+  });
+
+  it("uses the business day in Houston unless a time zone is given", () => {
+    // 8:30 pm in Houston on January 15, already January 16 in UTC
+    const evening = new Date("2026-01-16T02:30:00Z");
+    expect(formatDate(evening)).toBe("Jan 15, 2026");
+    expect(formatDate(evening, { timeZone: "UTC" })).toBe("Jan 16, 2026");
+    expect(formatDateTime(evening)).toBe("Jan 15, 2026, 8:30 PM");
   });
 
   it("returns N/A for null or invalid input", () => {

@@ -1,3 +1,4 @@
+import { formatCurrency } from "@/lib/utils";
 // src/lib/email/templates/SubscriptionRenewalReminderEmail.tsx
 
 import {
@@ -30,7 +31,7 @@ export const SubscriptionRenewalReminderEmail: React.FC<
   SubscriptionRenewalReminderEmailProps
 > = ({ customerName, locale, planName, amount, renewalDate, manageUrl }) => {
   const t = emailTranslator(locale);
-  const formattedAmount = (amount / 100).toFixed(2);
+  const formattedAmount = formatCurrency(amount);
   const formattedDate = formatLongDate(renewalDate, locale);
 
   return (
@@ -64,7 +65,7 @@ export const SubscriptionRenewalReminderEmail: React.FC<
                   <tr>
                     <td style={styles.detailLabel}>{t("subscription.amount")}</td>
                     <td style={styles.detailValueHighlight}>
-                      ${formattedAmount}{t("common.perMonth")}
+                      {formattedAmount}{t("common.perMonth")}
                     </td>
                   </tr>
                   <tr>

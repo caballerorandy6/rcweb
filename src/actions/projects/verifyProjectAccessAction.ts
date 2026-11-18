@@ -38,6 +38,11 @@ export async function verifyProjectAccessAction(
       return { success: false, error: t("project.depositPending") };
     }
 
+    // Checked before the status: a completed project is not "not ready yet"
+    if (final.status !== "pending") {
+      return { success: false, error: t("project.alreadyPaid") };
+    }
+
     if (project.status !== "ready_for_payment") {
       return { success: false, error: t("project.notReady") };
     }

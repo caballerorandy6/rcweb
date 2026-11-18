@@ -1,3 +1,4 @@
+import { formatCurrency } from "@/lib/utils";
 import {
   Html,
   Head,
@@ -83,7 +84,7 @@ export const ProjectReadyEmail = ({
                   <tr>
                     <td style={styles.summaryLabel}>{t("ready.due")}</td>
                     <td style={styles.summaryValueAmount}>
-                      ${(finalAmount / 100).toFixed(2)}
+                      {formatCurrency(finalAmount)}
                     </td>
                   </tr>
                 </tbody>

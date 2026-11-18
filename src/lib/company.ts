@@ -7,6 +7,13 @@
  * (CAN-SPAM: pie de cada correo comercial). Usa COMPANY_POSTAL_ADDRESS
  * únicamente en plantillas de marketing.
  */
+/**
+ * The business runs on Houston time. Dates shown to customers and to the
+ * admin (invoices, emails, pages) use this zone, never the server's: Vercel
+ * runs in UTC, where an evening payment already belongs to the next day.
+ */
+export const BUSINESS_TIME_ZONE = "America/Chicago";
+
 export const COMPANY = {
   name: "RC Web Solutions LLC",
   /** Solo para el pie de correos comerciales (CAN-SPAM). */

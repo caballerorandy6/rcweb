@@ -96,13 +96,6 @@ export interface GenerateInvoiceResult {
 }
 
 /**
- * Helper para convertir centavos a dólares
- */
-export function centsToDollars(cents: number): string {
-  return (cents / 100).toFixed(2);
-}
-
-/**
  * Helper para convertir dólares a centavos
  */
 export function dollarsToCents(dollars: number): number {

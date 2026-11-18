@@ -65,7 +65,7 @@ export async function GET(
 
     if (!authorized) {
       return NextResponse.json(
-        { error: "Unauthorized: Invalid credentials or email mismatch" },
+        { error: "Unauthorized" },
         { status: 401 }
       );
     }
@@ -88,12 +88,7 @@ export async function GET(
     return response;
   } catch (error) {
     console.error("Error fetching invoice:", error);
-    return NextResponse.json(
-      {
-        error: "Failed to fetch invoice",
-        details: error instanceof Error ? error.message : "Unknown error",
-      },
-      { status: 500 }
-    );
+    // The message stays in the logs: it can name tables or hosts
+    return NextResponse.json({ error: "Failed to fetch invoice" }, { status: 500 });
   }
 }
