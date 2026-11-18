@@ -161,7 +161,7 @@ export default function InvoiceManagement({ invoices, revenue }: InvoiceManageme
                       <td className="px-4 sm:px-6 py-4 align-top">
                         <div className="flex flex-wrap gap-2">
                           {invoice.pdfUrl ? (
-                            <a href={invoice.pdfUrl} target="_blank" rel="noopener noreferrer" className={button}>
+                            <a href={`/api/invoice/${invoice.invoiceNumber}`} target="_blank" rel="noopener noreferrer" className={button}>
                               <DocumentArrowDownIcon className="w-4 h-4" aria-hidden="true" />
                               PDF
                             </a>

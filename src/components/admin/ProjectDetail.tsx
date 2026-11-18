@@ -257,7 +257,7 @@ export default function ProjectDetail({ project }: { project: AdminProjectDetail
                   </div>
                   {invoice.pdfUrl ? (
                     <a
-                      href={invoice.pdfUrl}
+                      href={`/api/invoice/${invoice.invoiceNumber}`}
                       target="_blank"
                       rel="noopener noreferrer"
                       className="inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg text-xs font-medium border transition-colors bg-gray-700/40 text-gray-200 border-gray-600 hover:bg-gray-700/70"

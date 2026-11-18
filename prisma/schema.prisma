@@ -556,8 +556,8 @@ model Invoice {
   currency    String @default("USD")
 
   // Almacenamiento del PDF
-  pdfUrl     String? // URL en Vercel Blob
-  pdfBlobKey String? // Key para eliminar de Vercel Blob si es necesario
+  pdfUrl     String? // URL en Vercel Blob (store privado: no se abre sin credenciales)
+  pdfBlobKey String? // Pathname en el store: con él se lee (/api/invoice/[n]) y se borra el PDF
 
   // Cómo se cobró (snapshot para el PDF): Stripe o un pago manual
   paymentMethod   PaymentMethod @default(stripe)

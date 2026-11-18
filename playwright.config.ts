@@ -33,7 +33,8 @@ export default defineConfig({
     env: {
       STRIPE_WEBHOOK_SECRET: E2E_WEBHOOK_SECRET,
       RESEND_API_KEY: "re_e2e_placeholder",
-      BLOB_READ_WRITE_TOKEN: "",
+      INVOICES_READ_WRITE_TOKEN: "",
+      INVOICES_STORE_ID: "",
       NEXT_PUBLIC_SENTRY_DSN: "",
     },
     url: `http://localhost:${PORT}`,
