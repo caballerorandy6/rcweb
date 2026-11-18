@@ -1,3 +1,4 @@
+import { formatCurrency } from "@/lib/utils";
 // src/lib/email/templates/AdminNotificationEmail.tsx
 // Unified admin notification template for all payment types
 
@@ -71,9 +72,9 @@ export const AdminNotificationEmail: React.FC<AdminNotificationEmailProps> = ({
   subscriptionStatus,
   cancellationReason,
 }) => {
-  const formattedAmount = (amount / 100).toFixed(2);
-  const formattedPending = pendingAmount ? (pendingAmount / 100).toFixed(2) : "";
-  const formattedTotal = totalAmount ? (totalAmount / 100).toFixed(2) : "";
+  const formattedAmount = formatCurrency(amount);
+  const formattedPending = pendingAmount ? formatCurrency(pendingAmount) : "";
+  const formattedTotal = totalAmount ? formatCurrency(totalAmount) : "";
   const formattedDate = nextBillingDate
     ? nextBillingDate.toLocaleDateString("en-US", {
         year: "numeric",
@@ -220,7 +221,7 @@ export const AdminNotificationEmail: React.FC<AdminNotificationEmailProps> = ({
                     <>
                       <tr>
                         <td style={styles.infoLabel}>Monthly Amount:</td>
-                        <td style={styles.infoValue}>${formattedAmount}/month</td>
+                        <td style={styles.infoValue}>{formattedAmount}/month</td>
                       </tr>
                       {subscriptionStatus && (
                         <tr>
@@ -257,12 +258,12 @@ export const AdminNotificationEmail: React.FC<AdminNotificationEmailProps> = ({
                     <>
                       <tr>
                         <td style={styles.infoLabel}>Initial Payment:</td>
-                        <td style={styles.infoValueGreen}>${formattedAmount}</td>
+                        <td style={styles.infoValueGreen}>{formattedAmount}</td>
                       </tr>
                       {formattedPending && (
                         <tr>
                           <td style={styles.infoLabel}>Pending Payment:</td>
-                          <td style={styles.infoValue}>${formattedPending}</td>
+                          <td style={styles.infoValue}>{formattedPending}</td>
                         </tr>
                       )}
                     </>
@@ -270,12 +271,12 @@ export const AdminNotificationEmail: React.FC<AdminNotificationEmailProps> = ({
                     <>
                       <tr>
                         <td style={styles.infoLabel}>Final Payment:</td>
-                        <td style={styles.infoValueGreen}>${formattedAmount}</td>
+                        <td style={styles.infoValueGreen}>{formattedAmount}</td>
                       </tr>
                       {formattedTotal && (
                         <tr>
                           <td style={styles.infoLabel}>Total Project Value:</td>
-                          <td style={styles.infoValue}>${formattedTotal}</td>
+                          <td style={styles.infoValue}>{formattedTotal}</td>
                         </tr>
                       )}
                       <tr>
@@ -288,7 +289,7 @@ export const AdminNotificationEmail: React.FC<AdminNotificationEmailProps> = ({
                   ) : (
                     <tr>
                       <td style={styles.infoLabel}>Amount:</td>
-                      <td style={styles.infoValue}>${formattedAmount}</td>
+                      <td style={styles.infoValue}>{formattedAmount}</td>
                     </tr>
                   )}
                   {projectId && (

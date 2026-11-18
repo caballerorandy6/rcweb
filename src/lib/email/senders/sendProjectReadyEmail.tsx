@@ -1,3 +1,4 @@
+import { formatCurrency } from "@/lib/utils";
 // src/lib/email/senders/sendProjectReadyEmail.tsx
 
 import { emailTranslator } from "../i18n";
@@ -51,7 +52,7 @@ export async function sendProjectReadyEmail(
       replyTo: ADMIN_EMAIL,
       subject: emailTranslator(locale)("ready.subject", {
         planName,
-        amount: `$${(finalAmount / 100).toFixed(2)}`,
+        amount: formatCurrency(finalAmount),
       }),
       html,
     });

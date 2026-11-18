@@ -1,3 +1,4 @@
+import { formatCurrency } from "@/lib/utils";
 // src/lib/email/templates/SubscriptionConfirmationEmail.tsx
 
 import {
@@ -32,7 +33,7 @@ export const SubscriptionConfirmationEmail: React.FC<
 > = ({ customerName, locale, planName, amount, nextBillingDate }) => {
   const t = emailTranslator(locale);
   const managePath = localizePathname("/manage-subscription", locale);
-  const formattedAmount = (amount / 100).toFixed(2);
+  const formattedAmount = formatCurrency(amount);
   const formattedDate = formatLongDate(nextBillingDate, locale);
 
   return (
@@ -69,7 +70,7 @@ export const SubscriptionConfirmationEmail: React.FC<
                   <tr>
                     <td style={styles.detailLabel}>{t("subscription.monthly")}</td>
                     <td style={styles.detailValueHighlight}>
-                      ${formattedAmount}{t("common.perMonth")}
+                      {formattedAmount}{t("common.perMonth")}
                     </td>
                   </tr>
                   <tr>

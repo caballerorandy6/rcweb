@@ -1,3 +1,4 @@
+import { formatCurrency } from "@/lib/utils";
 // src/lib/email/templates/SubscriptionPaymentFailedEmail.tsx
 
 import {
@@ -29,7 +30,7 @@ export const SubscriptionPaymentFailedEmail: React.FC<
   SubscriptionPaymentFailedEmailProps
 > = ({ customerName, locale, planName, amount, updatePaymentUrl }) => {
   const t = emailTranslator(locale);
-  const formattedAmount = (amount / 100).toFixed(2);
+  const formattedAmount = formatCurrency(amount);
 
   return (
     <Html lang={locale}>
@@ -51,7 +52,7 @@ export const SubscriptionPaymentFailedEmail: React.FC<
             {/* Alert Box */}
             <Section style={styles.alertBox}>
               <Text style={styles.alertText}>
-                {t.rich("subscription.failedBody", { amount: `$${formattedAmount}`, planName, b: (chunks) => <strong>{chunks}</strong> })}
+                {t.rich("subscription.failedBody", { amount: formattedAmount, planName, b: (chunks) => <strong>{chunks}</strong> })}
               </Text>
             </Section>
 
