@@ -1,3 +1,5 @@
+import { BUSINESS_TIME_ZONE } from "@/lib/company";
+
 // Función para validar formato de número USA
 export const validateUSPhoneNumber = (phone: string): boolean => {
   const cleaned = phone.replace(/\D/g, "");
@@ -47,7 +49,10 @@ type DateFormatOptions = {
   year?: "numeric" | "2-digit";
   month?: "numeric" | "2-digit" | "long" | "short" | "narrow";
   day?: "numeric" | "2-digit";
-  /** Pass "UTC" for date-only values (YYYY-MM-DD) so the day never shifts */
+  /**
+   * Houston time by default, on the server and in the browser alike. Pass
+   * "UTC" for date-only values (YYYY-MM-DD) so the day never shifts
+   */
   timeZone?: string;
   /** BCP 47 tag of the visitor's language; US English by default */
   locale?: string;
@@ -87,7 +92,7 @@ export function formatDate(
       year: options?.year || "numeric",
       month: options?.month || "short",
       day: options?.day || "numeric",
-      timeZone: options?.timeZone,
+      timeZone: options?.timeZone ?? BUSINESS_TIME_ZONE,
     },
     options?.locale
   ).format(dateObj);
@@ -104,6 +109,7 @@ export function formatDateTime(date: Date | string | null): string {
     day: "numeric",
     hour: "numeric",
     minute: "2-digit",
+    timeZone: BUSINESS_TIME_ZONE,
   }).format(dateObj);
 }
 

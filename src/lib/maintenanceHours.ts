@@ -1,9 +1,10 @@
+import { BUSINESS_TIME_ZONE } from "@/lib/company";
+
 /** The maintenance plan includes 2 hours of changes a month; unused time does not carry over */
 export const INCLUDED_MINUTES_PER_MONTH = 120;
 
-// Months are counted on the business calendar, so work logged late on the
-// 30th in Houston does not slip into the next month's report
-const BUSINESS_TIME_ZONE = "America/Chicago";
+// Months are counted on the business calendar (BUSINESS_TIME_ZONE), so work
+// logged late on the 30th in Houston does not slip into the next month's report
 
 const yearMonth = new Intl.DateTimeFormat("en-US", {
   timeZone: BUSINESS_TIME_ZONE,

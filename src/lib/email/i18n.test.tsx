@@ -114,6 +114,15 @@ describe("customer emails", () => {
     expect(formatLongDate(date, "en")).toBe("November 15, 2026");
     expect(formatLongDate(date, "es")).toBe("15 de noviembre de 2026");
   });
+
+  it("dates an evening payment by the business day in Houston, not by the server's UTC day", () => {
+    // 6:44 pm in Houston on November 17 is already November 18 in UTC
+    const evening = new Date("2026-11-18T00:44:00Z");
+    expect(formatLongDate(evening, "en")).toBe("November 17, 2026");
+    expect(formatLongDate(evening, "es")).toBe("17 de noviembre de 2026");
+    // A manual payment is stored at noon UTC of the day the admin picked
+    expect(formatLongDate(new Date("2026-11-17T12:00:00Z"), "en")).toBe("November 17, 2026");
+  });
 });
 
 describe("checkout metadata", () => {
