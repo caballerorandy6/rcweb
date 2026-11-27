@@ -6,7 +6,9 @@ import {
   formatMinutes,
   monthOfDay,
   monthStart,
+  monthStartInstant,
   summarizeMonth,
+  workLogWindow,
 } from "@/lib/maintenanceHours";
 
 describe("monthStart", () => {
@@ -52,6 +54,55 @@ describe("monthOfDay", () => {
     expect(monthOfDay(new Date("2026-10-31T00:00:00Z")).toISOString()).toBe(
       "2026-10-01T00:00:00.000Z"
     );
+  });
+});
+
+describe("monthStartInstant", () => {
+  it("is midnight in Houston on standard time", () => {
+    expect(monthStartInstant(new Date("2026-12-01T00:00:00Z")).toISOString()).toBe(
+      "2026-12-01T06:00:00.000Z"
+    );
+  });
+
+  it("is midnight in Houston on daylight time", () => {
+    expect(monthStartInstant(new Date("2026-07-01T00:00:00Z")).toISOString()).toBe(
+      "2026-07-01T05:00:00.000Z"
+    );
+  });
+
+  it("uses the offset of that midnight when the clocks change later that day", () => {
+    // Nov 1, 2026: daylight time ends at 2 a.m., two hours after the month starts
+    expect(monthStartInstant(new Date("2026-11-01T00:00:00Z")).toISOString()).toBe(
+      "2026-11-01T05:00:00.000Z"
+    );
+  });
+
+  it("round-trips with monthStart", () => {
+    const december = new Date("2026-12-01T00:00:00Z");
+    const start = monthStartInstant(december);
+    expect(monthStart(start)).toEqual(december);
+    expect(monthStart(new Date(start.getTime() - 1))).toEqual(new Date("2026-11-01T00:00:00Z"));
+  });
+});
+
+describe("workLogWindow", () => {
+  it("runs from the 1st of last month to today in Houston", () => {
+    expect(workLogWindow(new Date("2026-11-15T18:00:00Z"))).toEqual({
+      earliest: "2026-10-01",
+      today: "2026-11-15",
+    });
+  });
+
+  it("follows the Houston day late on the last evening of a month", () => {
+    // Nov 30, 9 p.m. CST = Dec 1, 03:00 UTC
+    expect(workLogWindow(new Date("2026-12-01T03:00:00Z"))).toEqual({
+      earliest: "2026-10-01",
+      today: "2026-11-30",
+    });
+  });
+
+  it("reaches back into December from January", () => {
+    expect(workLogWindow(new Date("2027-01-10T18:00:00Z")).earliest).toBe("2026-12-01");
   });
 });
 

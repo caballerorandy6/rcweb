@@ -4,6 +4,8 @@ import { revalidatePath } from "next/cache";
 import { z } from "zod";
 import { requireAdmin } from "@/lib/authGuard";
 import { prisma } from "@/lib/prisma";
+import { workLogWindow } from "@/lib/maintenanceHours";
+import { isMonthReported, SENT_MONTH_ERROR } from "@/lib/maintenanceReport/sentMonth";
 import type { ActionResultSimple } from "@/types/common";
 
 const InputSchema = z.object({
@@ -29,12 +31,23 @@ export async function addMaintenanceLogAction(
   }
 
   const { subscriptionId, workedOn, minutes, description } = parsed.data;
+  // Only the two months the page lists: an older or future entry would be
+  // counted in a report without ever being visible, or removable, here
+  const { earliest, today } = workLogWindow(new Date());
+  if (workedOn < earliest || workedOn > today) {
+    return { success: false, error: `The date must be between ${earliest} and today` };
+  }
+
+  // @db.Date column: midnight UTC keeps the calendar day as typed
+  const day = new Date(`${workedOn}T00:00:00.000Z`);
   try {
+    if (await isMonthReported(subscriptionId, day)) {
+      return { success: false, error: SENT_MONTH_ERROR };
+    }
     await prisma.maintenanceLog.create({
       data: {
         subscriptionId,
-        // @db.Date column: midnight UTC keeps the calendar day as typed
-        workedOn: new Date(`${workedOn}T00:00:00.000Z`),
+        workedOn: day,
         minutes,
         description,
       },
