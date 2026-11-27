@@ -30,6 +30,7 @@ const mocks = vi.hoisted(() => {
     markChargePaid: vi.fn(),
     createInvoiceAndSendEmail: vi.fn(),
     captureException: vi.fn(),
+    captureMessage: vi.fn(),
     subscriptionsRetrieve: vi.fn(),
     email: {
       sendSubscriptionConfirmation: vi.fn(sent),
@@ -47,6 +48,13 @@ const mocks = vi.hoisted(() => {
       handleDisputeClosed: vi.fn(),
       reportUnrecordedFinalPayment: vi.fn(),
     },
+    subscriptions: {
+      handleInvoicePaid: vi.fn(),
+      handleInvoiceUpcoming: vi.fn(),
+      handleInvoicePaymentFailed: vi.fn(),
+      handleSubscriptionDeleted: vi.fn(),
+      handleSubscriptionUpdated: vi.fn(),
+    },
   };
 });
 
@@ -63,7 +71,10 @@ vi.mock("@/lib/stripe", async () => {
   };
 });
 vi.mock("resend", () => ({ Resend: vi.fn() }));
-vi.mock("@sentry/nextjs", () => ({ captureException: mocks.captureException }));
+vi.mock("@sentry/nextjs", () => ({
+  captureException: mocks.captureException,
+  captureMessage: mocks.captureMessage,
+}));
 vi.mock("@/lib/email", () => mocks.email);
 vi.mock("@/lib/project/createProjectFromDeposit", () => ({
   createProjectFromDeposit: mocks.createProjectFromDeposit,
@@ -73,6 +84,7 @@ vi.mock("@/lib/invoice/createInvoiceAndSendEmail", () => ({
   createInvoiceAndSendEmail: mocks.createInvoiceAndSendEmail,
 }));
 vi.mock("@/lib/stripe/webhook/paymentIssues", () => mocks.issues);
+vi.mock("@/lib/stripe/webhook/subscriptions", () => mocks.subscriptions);
 
 import { POST } from "./route";
 
@@ -82,8 +94,10 @@ const {
   markChargePaid,
   createInvoiceAndSendEmail,
   captureException,
+  captureMessage,
   email,
   issues,
+  subscriptions,
 } = mocks;
 
 const URL = "https://www.rcweb.dev/api/webhooks/stripe";
@@ -541,6 +555,68 @@ describe("checkout.session.completed: subscription", () => {
     expect(prisma.$transaction).not.toHaveBeenCalled();
     expect(email.sendSubscriptionConfirmation).not.toHaveBeenCalled();
     expect(email.sendAdminSubscriptionNotification).not.toHaveBeenCalled();
+  });
+});
+
+describe("checkout.session.completed: subscription emails", () => {
+  it("reports a confirmation that could not be sent, since no retry will send it", async () => {
+    prisma.subscription.findUnique.mockResolvedValue(null);
+    mocks.subscriptionsRetrieve.mockResolvedValue({
+      customer: "cus_test_1",
+      status: "active",
+      items: { data: [{ price: { unit_amount: 20_000 }, current_period_start: 1, current_period_end: 2 }] },
+    });
+    prisma.$transaction.mockResolvedValue({ id: "sub-row" });
+    email.sendSubscriptionConfirmation.mockResolvedValueOnce({ success: false, error: "quota exceeded" });
+
+    const response = await deliver(
+      "checkout.session.completed",
+      session(
+        {
+          paymentType: "subscription",
+          planName: "Care Plan",
+          customerName: "Ana Pérez",
+          customerEmail: "ana@example.com",
+          termsAcceptedAt: "2026-11-17T18:00:00.000Z",
+          locale: "en",
+        },
+        { subscription: "sub_test_1" }
+      )
+    );
+
+    expect(response.status).toBe(200);
+    expect(await response.json()).toMatchObject({ subscriptionId: "sub-row", emailErrors: ["quota exceeded"] });
+    expect(captureMessage).toHaveBeenCalledTimes(1);
+    expect(captureMessage.mock.calls[0][1]).toMatchObject({ extra: { emailErrors: ["quota exceeded"] } });
+  });
+});
+
+describe("subscription lifecycle", () => {
+  it.each([
+    ["invoice.paid", "handleInvoicePaid"],
+    ["invoice.upcoming", "handleInvoiceUpcoming"],
+    ["invoice.payment_failed", "handleInvoicePaymentFailed"],
+    ["customer.subscription.deleted", "handleSubscriptionDeleted"],
+    ["customer.subscription.updated", "handleSubscriptionUpdated"],
+  ] as const)("hands %s to its handler and answers what it returns", async (type, handler) => {
+    subscriptions[handler].mockResolvedValue({ received: true, warning: "Subscription not in the database" });
+    const object = { id: "obj_test_1" };
+
+    const response = await deliver(type, object);
+
+    expect(response.status).toBe(200);
+    expect(await response.json()).toEqual({ received: true, warning: "Subscription not in the database" });
+    expect(subscriptions[handler]).toHaveBeenCalledTimes(1);
+    expect(subscriptions[handler].mock.calls[0][0]).toEqual(object);
+    for (const [name, other] of Object.entries(subscriptions)) {
+      if (name !== handler) expect(other).not.toHaveBeenCalled();
+    }
+  });
+
+  it("fails the delivery when a handler throws, so Stripe retries", async () => {
+    subscriptions.handleInvoicePaid.mockRejectedValue(new Error("connection reset"));
+
+    await expect(deliver("invoice.paid", { id: "in_test_1" })).rejects.toThrow("connection reset");
   });
 });
 
