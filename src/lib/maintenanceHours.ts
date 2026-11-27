@@ -43,6 +43,50 @@ export function monthOfDay(day: Date): Date {
   return new Date(Date.UTC(day.getUTCFullYear(), day.getUTCMonth(), 1));
 }
 
+const zoneClock = new Intl.DateTimeFormat("en-US", {
+  timeZone: BUSINESS_TIME_ZONE,
+  hourCycle: "h23",
+  year: "numeric",
+  month: "numeric",
+  day: "numeric",
+  hour: "numeric",
+  minute: "numeric",
+  second: "numeric",
+});
+
+/** How far Houston's clock is from UTC at `instant` (negative: behind) */
+function zoneOffsetMs(instant: Date): number {
+  const part = Object.fromEntries(
+    zoneClock.formatToParts(instant).map((p) => [p.type, Number(p.value)])
+  );
+  const wallClock = Date.UTC(part.year, part.month - 1, part.day, part.hour, part.minute, part.second);
+  return wallClock - Math.floor(instant.getTime() / 1000) * 1000;
+}
+
+/**
+ * The instant a month (a monthStart) begins in Houston: Nov 1 is 05:00 UTC
+ * while daylight time lasts, Dec 1 is 06:00 UTC. Use it to compare a month
+ * with timestamps like `createdAt`; `@db.Date` columns compare with the
+ * month itself.
+ */
+export function monthStartInstant(month: Date): Date {
+  const wallClock = month.getTime();
+  // Second pass: the offset is read at the instant itself, not six hours off
+  const approximate = wallClock - zoneOffsetMs(new Date(wallClock));
+  return new Date(wallClock - zoneOffsetMs(new Date(approximate)));
+}
+
+/**
+ * The days (YYYY-MM-DD) the work log accepts: from the 1st of last month,
+ * the oldest month the admin page lists, to today in Houston.
+ */
+export function workLogWindow(now: Date): { earliest: string; today: string } {
+  return {
+    earliest: addMonths(monthStart(now), -1).toISOString().slice(0, 10),
+    today: businessToday(now),
+  };
+}
+
 /** First day of the month `delta` months away from `month` (a monthStart) */
 export function addMonths(month: Date, delta: number): Date {
   return new Date(Date.UTC(month.getUTCFullYear(), month.getUTCMonth() + delta, 1));

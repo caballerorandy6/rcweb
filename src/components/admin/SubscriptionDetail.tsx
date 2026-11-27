@@ -8,7 +8,8 @@ import MaintenanceLogForm from "@/components/admin/MaintenanceLogForm";
 import DeleteMaintenanceLogButton from "@/components/admin/DeleteMaintenanceLogButton";
 import MaintenanceReportForm, { type ReportFigures } from "@/components/admin/MaintenanceReportForm";
 import CreateReportDraftButton from "@/components/admin/CreateReportDraftButton";
-import { addMonths, formatMinutes, summarizeMonth } from "@/lib/maintenanceHours";
+import { formatMinutes, summarizeMonth } from "@/lib/maintenanceHours";
+import { startedBeforeMonthEnded } from "@/lib/maintenanceReport/drafts";
 
 export interface AdminSubscriptionDetail {
   id: string;
@@ -29,6 +30,8 @@ export interface AdminSubscriptionDetail {
 export interface AdminWorkLog {
   /** YYYY-MM-DD in Houston */
   today: string;
+  /** Oldest day the log accepts: the 1st of the previous month */
+  earliest: string;
   /** Current month first, then the previous one */
   months: {
     month: Date;
@@ -215,7 +218,7 @@ export default function SubscriptionDetail({
   const lastMonthLabel = monthLabel.format(reports.lastMonth);
   const hasLastMonth = reports.items.some((r) => r.month.getTime() === reports.lastMonth.getTime());
   // Same rule as the cron: the customer was paying before last month ended
-  const coversLastMonth = subscription.createdAt < addMonths(reports.lastMonth, 1);
+  const coversLastMonth = startedBeforeMonthEnded(subscription.createdAt, reports.lastMonth);
   const status = STATUS_BADGES[subscription.status];
   const isActive = subscription.status === "active";
 
@@ -291,7 +294,11 @@ export default function SubscriptionDetail({
       <Card title="Work log">
         <div className="space-y-6">
           {isActive ? (
-            <MaintenanceLogForm subscriptionId={subscription.id} today={workLog.today} />
+            <MaintenanceLogForm
+              subscriptionId={subscription.id}
+              today={workLog.today}
+              earliest={workLog.earliest}
+            />
           ) : null}
           {workLog.months.map((m) => (
             <WorkLogMonth key={m.month.toISOString()} {...m} />

@@ -1,7 +1,7 @@
 import { notFound } from "next/navigation";
 import { prisma } from "@/lib/prisma";
 import SubscriptionDetail from "@/components/admin/SubscriptionDetail";
-import { addMonths, businessToday, monthOfDay, monthStart } from "@/lib/maintenanceHours";
+import { addMonths, monthOfDay, monthStart, workLogWindow } from "@/lib/maintenanceHours";
 import { reportMonthFor } from "@/lib/maintenanceReport/drafts";
 import { genPageMetadata } from "@/utils/genPageMetadata";
 
@@ -84,7 +84,7 @@ export default async function SubscriptionPage(props: { params: Params }) {
     <SubscriptionDetail
       subscription={rest}
       workLog={{
-        today: businessToday(now),
+        ...workLogWindow(now),
         months: [currentMonth, previousMonth].map((month) => ({
           month,
           entries: maintenanceLogs.filter((e) => monthOfDay(e.workedOn).getTime() === month.getTime()),

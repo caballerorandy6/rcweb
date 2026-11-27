@@ -12,10 +12,13 @@ const input =
 export default function MaintenanceLogForm({
   subscriptionId,
   today,
+  earliest,
 }: {
   subscriptionId: string;
   /** YYYY-MM-DD in Houston, computed on the server so SSR and the browser agree */
   today: string;
+  /** Oldest day the action accepts (YYYY-MM-DD): older months are not listed on the page */
+  earliest: string;
 }) {
   const router = useRouter();
   const [isPending, startTransition] = useTransition();
@@ -54,6 +57,7 @@ export default function MaintenanceLogForm({
           type="date"
           required
           defaultValue={today}
+          min={earliest}
           max={today}
           className={input}
         />
