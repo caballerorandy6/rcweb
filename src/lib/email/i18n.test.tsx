@@ -44,7 +44,8 @@ const templates: [string, (locale: Locale) => ReactElement, string, string][] = 
   ["ready", (locale) => <ProjectReadyEmail {...base} locale={locale} projectCode="ABC123" finalAmount={50000} customerEmail="a@x.test" paymentUrl="https://x.test/pay" />, "Your Project is Ready!", "¡Tu proyecto está listo!"],
   ["subscription", (locale) => <SubscriptionConfirmationEmail {...base} locale={locale} amount={20000} nextBillingDate={date} />, "Subscription Activated!", "¡Suscripción activada!"],
   ["failed", (locale) => <SubscriptionPaymentFailedEmail {...base} locale={locale} amount={20000} updatePaymentUrl="https://x.test/m" />, "Payment Failed", "Pago fallido"],
-  ["portal", (locale) => <SubscriptionPortalLinkEmail {...base} locale={locale} portalUrl="https://x.test/m" />, "Manage Your Subscription", "Gestiona tu suscripción"],
+  ["portal", (locale) => <SubscriptionPortalLinkEmail customerName="Ana" locale={locale} links={[{ planName: "Plan X", portalUrl: "https://x.test/m", startedAt: date }]} />, "Manage Your Subscription", "Gestiona tu suscripción"],
+  ["portal, two plans", (locale) => <SubscriptionPortalLinkEmail customerName="Ana" locale={locale} links={[{ planName: "Plan X", portalUrl: "https://x.test/m1", startedAt: date }, { planName: "Plan X", portalUrl: "https://x.test/m2", startedAt: new Date("2026-08-02T12:00:00Z") }]} />, "You have 2 subscriptions under this email", "Tienes 2 suscripciones con este correo"],
   ["renewal", (locale) => <SubscriptionRenewalReminderEmail {...base} locale={locale} amount={20000} renewalDate={date} manageUrl="https://x.test/m" />, "Upcoming Renewal", "Próxima renovación"],
   ["maintenance report", (locale) => <MaintenanceReportEmail {...report} locale={locale} />, "Monthly Website Report", "Informe mensual de tu sitio web"],
 ];

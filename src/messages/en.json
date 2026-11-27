@@ -1926,6 +1926,8 @@
       "portalSubject": "Manage Your Subscription - RC Web Solutions",
       "portalHeading": "Manage Your Subscription",
       "portalBody": "You requested access to manage your subscription. Click the button below to access your subscription portal where you can:",
+      "portalBodyMany": "You have {count} subscriptions under this email. Each button below opens the portal of one of them, where you can:",
+      "portalCtaPlan": "{planName}, since {date}",
       "portalItems": [
         "Update your payment method",
         "View your billing history",
@@ -1934,6 +1936,7 @@
       ],
       "portalCta": "Access Subscription Portal",
       "portalExpiry": "This link will expire in 24 hours for security reasons.",
+      "portalExpiryMany": "These links will expire in 24 hours for security reasons.",
       "portalIgnore": "If you didn't request this link, you can safely ignore this email.",
       "renewalSubject": "Upcoming Renewal - {planName}",
       "renewalHeading": "Upcoming Renewal",

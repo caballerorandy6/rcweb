@@ -23,6 +23,7 @@ const mocks = vi.hoisted(() => {
         findUniqueOrThrow: vi.fn(),
         update: vi.fn(),
         updateMany: vi.fn(),
+        count: vi.fn(),
       },
       $transaction: vi.fn(),
     },
@@ -559,7 +560,57 @@ describe("checkout.session.completed: subscription", () => {
 });
 
 describe("checkout.session.completed: subscription emails", () => {
+  const newSubscription = () =>
+    deliver(
+      "checkout.session.completed",
+      session(
+        {
+          paymentType: "subscription",
+          planName: "Care Plan",
+          customerName: "Ana Pérez",
+          customerEmail: "ana@example.com",
+          termsAcceptedAt: "2026-11-17T18:00:00.000Z",
+          locale: "en",
+        },
+        { subscription: "sub_test_1" }
+      )
+    );
+
+  beforeEach(() => {
+    prisma.subscription.findUnique.mockResolvedValue(null);
+    mocks.subscriptionsRetrieve.mockResolvedValue({
+      customer: "cus_test_1",
+      status: "active",
+      items: { data: [{ price: { unit_amount: 20_000 }, current_period_start: 1, current_period_end: 2 }] },
+    });
+    prisma.$transaction.mockResolvedValue({ id: "sub-row" });
+  });
+
+  it("tells the admin when the email already has another live subscription", async () => {
+    prisma.subscription.count.mockResolvedValue(1);
+
+    expect((await newSubscription()).status).toBe(200);
+    expect(prisma.subscription.count).toHaveBeenCalledWith({
+      where: { email: "ana@example.com", status: { not: "cancelled" }, id: { not: "sub-row" } },
+    });
+    expect(email.sendAdminSubscriptionNotification.mock.calls[0][1]).toMatchObject({
+      otherActiveSubscriptions: 1,
+    });
+  });
+
+  it("still sends both emails when the other subscriptions cannot be counted", async () => {
+    prisma.subscription.count.mockRejectedValue(new Error("connection reset"));
+
+    expect((await newSubscription()).status).toBe(200);
+    expect(captureException).toHaveBeenCalledTimes(1);
+    expect(email.sendSubscriptionConfirmation).toHaveBeenCalledTimes(1);
+    expect(email.sendAdminSubscriptionNotification.mock.calls[0][1]).toMatchObject({
+      otherActiveSubscriptions: 0,
+    });
+  });
+
   it("reports a confirmation that could not be sent, since no retry will send it", async () => {
+    prisma.subscription.count.mockResolvedValue(0);
     prisma.subscription.findUnique.mockResolvedValue(null);
     mocks.subscriptionsRetrieve.mockResolvedValue({
       customer: "cus_test_1",
