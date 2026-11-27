@@ -10,21 +10,26 @@ export default function Unsubscribe() {
   const t = useTranslations("Unsubscribe");
   const searchParams = useSearchParams();
   const email = searchParams.get("email");
+  // Signature of the address, from the link in our emails
+  const token = searchParams.get("token");
   const [unsubscribed, setUnsubscribed] = useState(false);
+  const [error, setError] = useState<string | null>(null);
   const [isPending, startTransition] = useTransition();
 
   const handleUnsubscribe = () => {
     if (!email) return;
     startTransition(async () => {
-      const result = await unsubscribeFromEmailAction(email);
+      setError(null);
+      const result = await unsubscribeFromEmailAction(email, token);
       if (result.success) setUnsubscribed(true);
+      else setError(result.error ?? t("invalid"));
     });
   };
 
   if (!email) {
     return (
-      <div className="min-h-screen bg-gray-900 flex items-center justify-center">
-        <p className="text-white font-inter">{t("invalid")}</p>
+      <div className="min-h-screen bg-gray-900 flex items-center justify-center px-4">
+        <p className="max-w-md text-center text-white font-inter">{t("invalid")}</p>
       </div>
     );
   }
@@ -75,6 +80,12 @@ export default function Unsubscribe() {
               ))}
             </ul>
           </div>
+
+          {error ? (
+            <p role="alert" className="mb-6 text-sm text-red-400 font-inter">
+              {error}
+            </p>
+          ) : null}
 
           <div className="flex gap-4">
             <Button

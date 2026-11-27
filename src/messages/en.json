@@ -1694,7 +1694,7 @@
       "title": "Unsubscribe",
       "description": "Unsubscribe from RC Web Solutions LLC email communications."
     },
-    "invalid": "Invalid unsubscribe link",
+    "invalid": "This unsubscribe link is not valid. Use the link at the bottom of our latest email, or write to contactus@rcweb.dev and we will remove you.",
     "done": {
       "title": "Unsubscribed Successfully",
       "text": "{email} has been removed from RC Web Solutions marketing emails.",
@@ -1765,7 +1765,8 @@
       "failed": "An error occurred while subscribing to the blog."
     },
     "unsubscribe": {
-      "notFound": "Contact not found",
+      "invalidLink": "This unsubscribe link is not valid. Use the link at the bottom of our latest email, or write to contactus@rcweb.dev and we will remove you.",
+      "tooMany": "Too many attempts. Please try again in a minute.",
       "failed": "Failed to unsubscribe"
     },
     "checkout": {
