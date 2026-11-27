@@ -41,6 +41,18 @@ export async function addMaintenanceLogAction(
   // @db.Date column: midnight UTC keeps the calendar day as typed
   const day = new Date(`${workedOn}T00:00:00.000Z`);
   try {
+    // The page only shows the form for an active plan; a tab left open
+    // from before a cancellation must not add hours to it
+    const subscription = await prisma.subscription.findUnique({
+      where: { id: subscriptionId },
+      select: { status: true },
+    });
+    if (!subscription) {
+      return { success: false, error: "Subscription not found" };
+    }
+    if (subscription.status !== "active") {
+      return { success: false, error: "Work can only be logged on an active subscription" };
+    }
     if (await isMonthReported(subscriptionId, day)) {
       return { success: false, error: SENT_MONTH_ERROR };
     }

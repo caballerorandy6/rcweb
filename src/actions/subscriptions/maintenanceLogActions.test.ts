@@ -1,6 +1,7 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
-const { create, findUnique, deleteMany, findReport } = vi.hoisted(() => ({
+const { create, findUnique, deleteMany, findReport, findSubscription } = vi.hoisted(() => ({
+  findSubscription: vi.fn(),
   create: vi.fn(),
   findUnique: vi.fn(),
   deleteMany: vi.fn(),
@@ -13,6 +14,7 @@ vi.mock("@/lib/prisma", () => ({
   prisma: {
     maintenanceLog: { create, findUnique, deleteMany },
     maintenanceReport: { findFirst: findReport },
+    subscription: { findUnique: findSubscription },
   },
 }));
 
@@ -27,6 +29,7 @@ beforeEach(() => {
   // Nov 15, noon in Houston
   vi.useFakeTimers({ now: new Date("2026-11-15T18:00:00Z") });
   findReport.mockResolvedValue(null);
+  findSubscription.mockResolvedValue({ status: "active" });
 });
 
 afterEach(() => {
@@ -60,6 +63,26 @@ describe("addMaintenanceLogAction", () => {
 
   it("rejects a day that has not happened yet in Houston", async () => {
     expect((await addMaintenanceLogAction({ ...entry, workedOn: "2026-11-16" })).success).toBe(false);
+    expect(create).not.toHaveBeenCalled();
+  });
+
+  it.each(["past_due", "unpaid", "cancelled"])("refuses a %s plan, whose page has no form", async (status) => {
+    findSubscription.mockResolvedValueOnce({ status });
+
+    expect(await addMaintenanceLogAction({ ...entry, workedOn: "2026-11-15" })).toEqual({
+      success: false,
+      error: "Work can only be logged on an active subscription",
+    });
+    expect(create).not.toHaveBeenCalled();
+  });
+
+  it("refuses a subscription that does not exist", async () => {
+    findSubscription.mockResolvedValueOnce(null);
+
+    expect(await addMaintenanceLogAction({ ...entry, workedOn: "2026-11-15" })).toEqual({
+      success: false,
+      error: "Subscription not found",
+    });
     expect(create).not.toHaveBeenCalled();
   });
 
