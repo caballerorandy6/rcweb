@@ -32,6 +32,8 @@ export type PaymentIssueResult = {
    */
   retry?: true;
   updated?: boolean;
+  /** Nothing to record, but the admin was told: the charge is a maintenance plan payment */
+  subscriptionNotified?: true;
   emailError?: string;
 };
 
@@ -122,6 +124,51 @@ function notFound(lookup: Exclude<ChargeLookup, { kind: "found" }>, what: string
     : { received: true, warning: `${what} on a charge that is not a project payment` };
 }
 
+/**
+ * A refund or a dispute of a monthly maintenance payment. Those charges have
+ * no row here (Stripe keeps the invoices), so nothing is recorded, but the
+ * admin must hear about it: a dispute has a deadline. Returns null when the
+ * charge is not from a customer with a maintenance plan.
+ */
+async function reportSubscriptionChargeIssue(
+  resend: Resend,
+  kind: PaymentIssueKind,
+  charge: { customerId: string | null; total: number },
+  details: { amount: number; reason?: string; respondBy?: Date; stripeUrl: string }
+): Promise<PaymentIssueResult | null> {
+  if (!charge.customerId) return null;
+  const subscription = await prisma.subscription.findFirst({
+    where: { stripeCustomerId: charge.customerId },
+    orderBy: { createdAt: "desc" },
+    select: { id: true, name: true, email: true, planName: true },
+  });
+  if (!subscription) return null;
+
+  const result = await sendAdminPaymentIssueNotification(resend, {
+    kind,
+    subject: "subscription",
+    customerName: subscription.name,
+    customerEmail: subscription.email,
+    planName: subscription.planName,
+    chargeLabel: "Monthly payment",
+    chargeTotal: charge.total,
+    adminProjectUrl: `${SITE_BASE_URL}${ADMIN_ROUTES.subscriptions}/${subscription.id}`,
+    ...details,
+  });
+  return {
+    received: true,
+    updated: false,
+    subscriptionNotified: true,
+    ...(!result.success && result.error && { emailError: result.error }),
+  };
+}
+
+/** The charge a dispute is about: the event names it but does not carry its customer */
+async function chargeOfDispute(dispute: Stripe.Dispute): Promise<{ customerId: string | null; total: number }> {
+  const charge = typeof dispute.charge === "string" ? await stripe.charges.retrieve(dispute.charge) : dispute.charge;
+  return { customerId: idOf(charge.customer), total: charge.amount };
+}
+
 async function notify(
   resend: Resend,
   payment: PaymentWithProject,
@@ -203,6 +250,18 @@ export async function handleChargeRefunded(
 ): Promise<PaymentIssueResult> {
   const paymentIntentId = idOf(charge.payment_intent);
   const lookup = await findPaymentForCharge(paymentIntentId);
+  if (lookup.kind === "foreign") {
+    const reported = await reportSubscriptionChargeIssue(
+      resend,
+      "refund",
+      { customerId: idOf(charge.customer), total: charge.amount },
+      {
+        amount: charge.amount_refunded,
+        stripeUrl: paymentIntentId ? paymentUrl(paymentIntentId) : "https://dashboard.stripe.com/payments",
+      }
+    );
+    if (reported) return reported;
+  }
   if (lookup.kind !== "found") return notFound(lookup, "Refund");
   const { payment } = lookup;
 
@@ -230,6 +289,16 @@ export async function handleDisputeCreated(
   resend: Resend
 ): Promise<PaymentIssueResult> {
   const lookup = await findPaymentForCharge(idOf(dispute.payment_intent));
+  if (lookup.kind === "foreign") {
+    const dueBy = dispute.evidence_details?.due_by;
+    const reported = await reportSubscriptionChargeIssue(resend, "dispute_opened", await chargeOfDispute(dispute), {
+      amount: dispute.amount,
+      reason: dispute.reason,
+      respondBy: dueBy ? new Date(dueBy * 1000) : undefined,
+      stripeUrl: disputeUrl(dispute.id),
+    });
+    if (reported) return reported;
+  }
   if (lookup.kind !== "found") return notFound(lookup, "Dispute");
   const { payment } = lookup;
 
@@ -265,6 +334,19 @@ export async function handleDisputeClosed(
   now = new Date()
 ): Promise<PaymentIssueResult> {
   const lookup = await findPaymentForCharge(idOf(dispute.payment_intent));
+  if (lookup.kind === "foreign") {
+    const outcome = toDisputeStatus(dispute.status);
+    const reported =
+      outcome === "open"
+        ? null
+        : await reportSubscriptionChargeIssue(
+            resend,
+            outcome === "won" ? "dispute_won" : "dispute_lost",
+            await chargeOfDispute(dispute),
+            { amount: dispute.amount, reason: dispute.reason, stripeUrl: disputeUrl(dispute.id) }
+          );
+    if (reported) return reported;
+  }
   if (lookup.kind !== "found") return notFound(lookup, "Dispute");
   const { payment } = lookup;
 
