@@ -341,6 +341,13 @@ model Subscription {
   portalToken          String?   @unique
   portalTokenExpiresAt DateTime?
 
+  // What the webhook already announced, so a retried or redelivered event
+  // (Stripe retries a failed charge for two weeks) never emails twice:
+  // the invoice whose failed payment was reported, and the period end the
+  // renewal reminder was sent for
+  paymentFailedInvoiceId String?
+  renewalReminderFor     DateTime?
+
   // Timestamps
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt

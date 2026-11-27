@@ -1,6 +1,5 @@
 // app/api/stripe/webhook/route.ts
 
-import { localizePathname } from "@/i18n/paths";
 import { NextResponse } from "next/server";
 import * as Sentry from "@sentry/nextjs";
 import Stripe from "stripe";
@@ -9,12 +8,7 @@ import stripe from "@/lib/stripe";
 import { Resend } from "resend";
 import { createInvoiceAndSendEmail } from "@/lib/invoice/createInvoiceAndSendEmail";
 import { LEGAL_LAST_UPDATED } from "@/lib/company";
-import {
-  cancellationReason,
-  isScheduledToCancel,
-  needsAuthentication,
-  toSubscriptionStatus,
-} from "@/lib/subscriptionStatus";
+import { toSubscriptionStatus } from "@/lib/subscriptionStatus";
 import { getProjectCharges } from "@/lib/project/charges";
 import { markChargePaid } from "@/lib/project/markChargePaid";
 import { createProjectFromDeposit } from "@/lib/project/createProjectFromDeposit";
@@ -28,10 +22,6 @@ import {
   sendAdminSubscriptionNotification,
   sendAdminInitialPaymentNotification,
   sendAdminFinalPaymentNotification,
-  sendSubscriptionRenewalReminder,
-  sendSubscriptionPaymentFailed,
-  sendSubscriptionCancelled,
-  sendSubscriptionCancellationChange,
 } from "@/lib/email";
 import { fromStripeAddress } from "@/lib/tax/billingAddress";
 import {
@@ -40,6 +30,13 @@ import {
   handleDisputeCreated,
   reportUnrecordedFinalPayment,
 } from "@/lib/stripe/webhook/paymentIssues";
+import {
+  handleInvoicePaid,
+  handleInvoicePaymentFailed,
+  handleInvoiceUpcoming,
+  handleSubscriptionDeleted,
+  handleSubscriptionUpdated,
+} from "@/lib/stripe/webhook/subscriptions";
 
 // Environment variables validation
 if (!process.env.STRIPE_WEBHOOK_SECRET) {
@@ -443,6 +440,16 @@ export async function POST(req: Request) {
           emailErrors.push(adminResult.error);
         }
 
+        // The row exists, so a retry would not send them again: make a
+        // customer left without their confirmation visible
+        if (emailErrors.length > 0) {
+          Sentry.captureMessage("Subscription email not sent", {
+            level: "error",
+            tags: { feature: "stripe-webhook" },
+            extra: { event: event.type, subscriptionId, emailErrors },
+          });
+        }
+
         return NextResponse.json({
           received: true,
           subscriptionId: subscription.id,
@@ -460,322 +467,29 @@ export async function POST(req: Request) {
     }
   }
 
-  // ============= INVOICE PAID (Subscription Renewal) =============
+  // ============= SUBSCRIPTION LIFECYCLE =============
+  // Renewals, reminders, failed payments and cancellations of a maintenance
+  // plan. The handlers answer 2xx with a warning for a subscription we have
+  // no row for and throw on a database or Stripe error, so Stripe retries.
   if (event.type === "invoice.paid") {
-    const invoice = event.data.object as Stripe.Invoice;
-    const subscriptionId =
-      typeof invoice.parent?.subscription_details?.subscription === "string"
-        ? invoice.parent.subscription_details.subscription
-        : null;
-
-    // Only process subscription invoices (not the first one)
-    if (subscriptionId && invoice.billing_reason !== "subscription_create") {
-      try {
-        const stripeSubscription = await stripe.subscriptions.retrieve(
-          subscriptionId,
-          { expand: ["items.data.price"] }
-        );
-
-        const subscriptionItem = stripeSubscription.items.data[0];
-        const currentPeriodEnd = subscriptionItem?.current_period_end;
-        const currentPeriodStart = subscriptionItem?.current_period_start;
-
-        await prisma.subscription.update({
-          where: { stripeSubscriptionId: subscriptionId },
-          data: {
-            status: toSubscriptionStatus(stripeSubscription.status),
-            currentPeriodStart: currentPeriodStart
-              ? new Date(currentPeriodStart * 1000)
-              : undefined,
-            currentPeriodEnd: currentPeriodEnd
-              ? new Date(currentPeriodEnd * 1000)
-              : undefined,
-          },
-        });
-
-        return NextResponse.json({ received: true, renewed: true });
-      } catch (err) {
-        console.error("❌ Error processing subscription renewal:", err);
-        return NextResponse.json({
-          received: true,
-          warning: "Subscription not found in DB",
-        });
-      }
-    }
+    return NextResponse.json(await handleInvoicePaid(event.data.object));
   }
-
-  // ============= INVOICE UPCOMING (Renewal Reminder) =============
-  if (event.type === "invoice.upcoming") {
-    const invoice = event.data.object as Stripe.Invoice;
-    const subscriptionId =
-      typeof invoice.parent?.subscription_details?.subscription === "string"
-        ? invoice.parent.subscription_details.subscription
-        : null;
-
-    if (subscriptionId) {
-      try {
-        const subscription = await prisma.subscription.findUnique({
-          where: { stripeSubscriptionId: subscriptionId },
-        });
-
-        if (subscription && subscription.status === "active") {
-          const resend = new Resend(process.env.RESEND_API_KEY!);
-          const baseUrl =
-            process.env.NEXT_PUBLIC_BASE_URL || "https://www.rcweb.dev";
-
-          // Calculate renewal date (from invoice or current period end)
-          const renewalDate = invoice.next_payment_attempt
-            ? new Date(invoice.next_payment_attempt * 1000)
-            : subscription.currentPeriodEnd || new Date();
-
-          await sendSubscriptionRenewalReminder(resend, {
-            customerEmail: subscription.email,
-            customerName: subscription.name,
-            locale: subscription.locale,
-            planName: subscription.planName,
-            amount: subscription.amount,
-            renewalDate,
-            manageUrl: `${baseUrl}${localizePathname("/manage-subscription", subscription.locale)}`,
-          });
-        }
-
-        return NextResponse.json({ received: true, reminderSent: true });
-      } catch (err) {
-        console.error("❌ Error sending renewal reminder:", err);
-        return NextResponse.json({
-          received: true,
-          warning: "Error sending renewal reminder",
-        });
-      }
-    }
-  }
-
-  // ============= INVOICE PAYMENT FAILED =============
-  if (event.type === "invoice.payment_failed") {
-    const invoice = event.data.object as Stripe.Invoice;
-    const subscriptionId =
-      typeof invoice.parent?.subscription_details?.subscription === "string"
-        ? invoice.parent.subscription_details.subscription
-        : null;
-
-    if (subscriptionId) {
-      try {
-        const subscription = await prisma.subscription.findUnique({
-          where: { stripeSubscriptionId: subscriptionId },
-        });
-
-        if (subscription) {
-          await prisma.subscription.update({
-            where: { id: subscription.id },
-            data: { status: "past_due" },
-          });
-
-          const resend = new Resend(process.env.RESEND_API_KEY!);
-          const baseUrl =
-            process.env.NEXT_PUBLIC_BASE_URL || "https://www.rcweb.dev";
-
-          // 3D Secure: the card is fine, the bank wants a confirmation. Stripe
-          // emails the customer a link to confirm (Dashboard → Billing →
-          // Subscriptions and emails), so our "update your card" email would
-          // give the wrong instruction. Only the admin hears about it.
-          const withPayments = await stripe.invoices.retrieve(invoice.id!, {
-            expand: ["payments.data.payment.payment_intent"],
-          });
-          if (needsAuthentication(withPayments)) {
-            await sendAdminSubscriptionNotification(resend, {
-              event: "subscription_payment_action_required",
-              customerName: subscription.name,
-              customerEmail: subscription.email,
-              planName: subscription.planName,
-              amount: subscription.amount,
-              status: "past_due",
-              stripeSubscriptionId: subscription.stripeSubscriptionId,
-            });
-            return NextResponse.json({
-              received: true,
-              paymentNeedsAuthentication: true,
-            });
-          }
-
-          // Email to customer with update payment link
-          await sendSubscriptionPaymentFailed(resend, {
-            customerEmail: subscription.email,
-            customerName: subscription.name,
-            locale: subscription.locale,
-            planName: subscription.planName,
-            amount: subscription.amount,
-            updatePaymentUrl: `${baseUrl}${localizePathname("/manage-subscription", subscription.locale)}`,
-          });
-
-          await sendAdminSubscriptionNotification(resend, {
-            event: "subscription_payment_failed",
-            customerName: subscription.name,
-            customerEmail: subscription.email,
-            planName: subscription.planName,
-            amount: subscription.amount,
-            status: "past_due",
-            stripeSubscriptionId: subscription.stripeSubscriptionId,
-          });
-        }
-
-        return NextResponse.json({ received: true, paymentFailed: true });
-      } catch (err) {
-        console.error("❌ Error handling payment failure:", err);
-        return NextResponse.json({
-          received: true,
-          warning: "Error processing payment failure",
-        });
-      }
-    }
-  }
-
-  // ============= SUBSCRIPTION DELETED (Cancelled) =============
-  if (event.type === "customer.subscription.deleted") {
-    const stripeSubscription = event.data.object as Stripe.Subscription;
-    const subscriptionId = stripeSubscription.id;
-    // Stripe's own end time, not the delivery time: a retried webhook can arrive hours later
-    const endedAt = stripeSubscription.ended_at
-      ? new Date(stripeSubscription.ended_at * 1000)
-      : new Date();
-
-    try {
-      // Only the request that moves the row to cancelled sends the emails, so
-      // a retried or resent event never tells the customer twice.
-      const changed = await prisma.subscription.updateMany({
-        where: {
-          stripeSubscriptionId: subscriptionId,
-          status: { not: "cancelled" },
-        },
-        data: {
-          status: "cancelled",
-          cancelledAt: endedAt,
-        },
-      });
-
-      if (changed.count === 0) {
-        return NextResponse.json({ received: true, alreadyCancelled: true });
-      }
-
-      const subscription = await prisma.subscription.findUniqueOrThrow({
-        where: { stripeSubscriptionId: subscriptionId },
-      });
-
-      const resend = new Resend(process.env.RESEND_API_KEY!);
-
-      await sendSubscriptionCancelled(resend, {
-        customerEmail: subscription.email,
-        customerName: subscription.name,
-        locale: subscription.locale,
-        planName: subscription.planName,
-        endedAt,
-      });
-
-      await sendAdminSubscriptionNotification(resend, {
-        event: "subscription_cancelled",
-        customerName: subscription.name,
-        customerEmail: subscription.email,
-        planName: subscription.planName,
-        amount: subscription.amount,
-        status: subscription.status,
-        stripeSubscriptionId: subscription.stripeSubscriptionId,
-      });
-
-      return NextResponse.json({ received: true, cancelled: true });
-    } catch (err) {
-      console.error("❌ Error processing subscription cancellation:", err);
-      return NextResponse.json({
-        received: true,
-        warning: "Subscription not found",
-      });
-    }
-  }
-
-  // ============= SUBSCRIPTION UPDATED =============
-  if (event.type === "customer.subscription.updated") {
-    const stripeSubscription = event.data.object as Stripe.Subscription;
-    const subscriptionId = stripeSubscription.id;
-
-    try {
-      const subscriptionItem = stripeSubscription.items.data[0];
-      const currentPeriodEnd = subscriptionItem?.current_period_end;
-      const currentPeriodStart = subscriptionItem?.current_period_start;
-
-      const scheduled = isScheduledToCancel(stripeSubscription);
-      // Flip the flag only if it differs: Stripe can send two updates in the
-      // same second (and retries), and only the request that changes the row
-      // may announce the change, so the customer never gets it twice.
-      const flipped = await prisma.subscription.updateMany({
-        where: {
-          stripeSubscriptionId: subscriptionId,
-          cancelAtPeriodEnd: !scheduled,
-        },
-        data: { cancelAtPeriodEnd: scheduled },
-      });
-
-      const subscription = await prisma.subscription.update({
-        where: { stripeSubscriptionId: subscriptionId },
-        data: {
-          status: toSubscriptionStatus(stripeSubscription.status),
-          currentPeriodStart: currentPeriodStart
-            ? new Date(currentPeriodStart * 1000)
-            : undefined,
-          currentPeriodEnd: currentPeriodEnd
-            ? new Date(currentPeriodEnd * 1000)
-            : undefined,
-        },
-      });
-
-      // The customer scheduled a cancellation in the portal, or took it back:
-      // confirm it to them and tell the admin while there is time to talk.
-      const change =
-        flipped.count === 0 ? null : scheduled ? "scheduled" : "resumed";
-      if (change) {
-        const resend = new Resend(process.env.RESEND_API_KEY!);
-        const baseUrl =
-          process.env.NEXT_PUBLIC_BASE_URL || "https://www.rcweb.dev";
-        const periodEnd = subscription.currentPeriodEnd ?? new Date();
-        // cancel_at is the real last day; the portal sets it to the period end
-        const date =
-          change === "scheduled" && stripeSubscription.cancel_at
-            ? new Date(stripeSubscription.cancel_at * 1000)
-            : periodEnd;
-
-        await sendSubscriptionCancellationChange(resend, {
-          kind: change,
-          customerEmail: subscription.email,
-          customerName: subscription.name,
-          locale: subscription.locale,
-          planName: subscription.planName,
-          date,
-          manageUrl: `${baseUrl}${localizePathname("/manage-subscription", subscription.locale)}`,
-        });
-        await sendAdminSubscriptionNotification(resend, {
-          event:
-            change === "scheduled"
-              ? "subscription_cancel_scheduled"
-              : "subscription_resumed",
-          customerName: subscription.name,
-          customerEmail: subscription.email,
-          planName: subscription.planName,
-          amount: subscription.amount,
-          status: subscription.status,
-          stripeSubscriptionId: subscription.stripeSubscriptionId,
-          nextBillingDate: date,
-          cancellationReason:
-            change === "scheduled"
-              ? cancellationReason(stripeSubscription.cancellation_details)
-              : null,
-        });
-      }
-
-      return NextResponse.json({ received: true, updated: true });
-    } catch (err) {
-      console.error("❌ Error updating subscription:", err);
-      return NextResponse.json({
-        received: true,
-        warning: "Subscription not found",
-      });
-    }
+  if (
+    event.type === "invoice.upcoming" ||
+    event.type === "invoice.payment_failed" ||
+    event.type === "customer.subscription.deleted" ||
+    event.type === "customer.subscription.updated"
+  ) {
+    const resend = new Resend(process.env.RESEND_API_KEY!);
+    const result =
+      event.type === "invoice.upcoming"
+        ? await handleInvoiceUpcoming(event.data.object, resend)
+        : event.type === "invoice.payment_failed"
+          ? await handleInvoicePaymentFailed(event.data.object, resend)
+          : event.type === "customer.subscription.deleted"
+            ? await handleSubscriptionDeleted(event.data.object, resend)
+            : await handleSubscriptionUpdated(event.data.object, resend);
+    return NextResponse.json(result);
   }
 
   // ============= REFUNDS AND DISPUTES =============
