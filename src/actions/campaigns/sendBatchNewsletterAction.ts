@@ -595,6 +595,11 @@ export const continueBatchCampaign = async (
  */
 export const getAllCampaigns = async () => {
   try {
+    const authCheck = await requireAdmin();
+    if (!authCheck.authorized) {
+      return { success: false, campaigns: [] };
+    }
+
     const campaigns = await prisma.emailCampaign.findMany({
       orderBy: { createdAt: "desc" },
     });
@@ -608,25 +613,6 @@ export const getAllCampaigns = async () => {
     return {
       success: false,
       campaigns: [],
-    };
-  }
-};
-
-/**
- * Get current quota status
- */
-export const getQuotaStatus = async () => {
-  try {
-    const quota = await getCurrentQuota();
-    return {
-      success: true,
-      quota,
-    };
-  } catch (error) {
-    console.error("Error fetching quota:", error);
-    return {
-      success: false,
-      quota: null,
     };
   }
 };

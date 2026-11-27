@@ -109,6 +109,11 @@ export async function deleteFailedEmailsFromCampaignsAction(): Promise<
   ActionResult<DeleteResult>
 > {
   try {
+    const authCheck = await requireAdmin();
+    if (!authCheck.authorized) {
+      return { success: false, error: authCheck.error };
+    }
+
     // Get all emails with failed, bounced, or undelivered status from campaign logs
     const failedEmailLogs = await prisma.campaignEmailLog.findMany({
       where: {

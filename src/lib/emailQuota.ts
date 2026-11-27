@@ -1,5 +1,5 @@
-"use server";
-
+// Not a Server Action module: with "use server" every export here became an
+// endpoint a visitor could call (read, reserve or release the daily quota).
 import { prisma } from "@/lib/prisma";
 
 const DAILY_LIMIT = 100; // Resend free plan limit
