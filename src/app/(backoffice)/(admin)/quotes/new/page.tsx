@@ -1,3 +1,4 @@
+import { requireAdminPage } from "@/lib/authGuard";
 import { prisma } from "@/lib/prisma";
 import { quoteOfferOptions } from "@/lib/quote/offerOptions";
 import QuoteForm from "@/components/admin/QuoteForm";
@@ -15,6 +16,7 @@ type SearchParams = Promise<{ contactId?: string | string[] }>;
 // Reached from the Quotes list, the dashboard quick action or a contact row
 // (?contactId=… prefills the customer from that lead).
 export default async function NewQuotePage(props: { searchParams: SearchParams }) {
+  await requireAdminPage();
   const { contactId } = await props.searchParams;
 
   const contact =

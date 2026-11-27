@@ -1,4 +1,6 @@
+import { redirect } from "next/navigation";
 import { auth } from "@/lib/auth";
+import { ADMIN_LOGIN_ROUTE } from "@/config/adminRoutes";
 
 export type AuthResult =
   | { authorized: true; userId: string }
@@ -28,4 +30,17 @@ export async function requireAdmin(): Promise<AuthResult> {
     console.error("Auth check failed:", error);
     return { authorized: false, error: "Authentication failed" };
   }
+}
+
+/**
+ * Sends anyone who is not a signed-in admin to the login page.
+ *
+ * Call it at the top of an admin page that reads the database itself. The
+ * check in the admin layout is not enough for those: Next.js renders a layout
+ * and its page at the same time, so the page's data is already in the
+ * response (the RSC payload) when the layout redirects.
+ */
+export async function requireAdminPage(): Promise<void> {
+  const authCheck = await requireAdmin();
+  if (!authCheck.authorized) redirect(ADMIN_LOGIN_ROUTE);
 }
