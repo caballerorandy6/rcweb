@@ -55,10 +55,3 @@ export async function unsubscribeFromEmailAction(
     return { success: false, error: t("unsubscribe.failed") };
   }
 }
-
-// Generar token de desuscripción seguro (opcional pero recomendado)
-export async function generateUnsubscribeToken(contactId: string) {
-  // Podrías guardar esto en la BD con expiración
-  const token = Buffer.from(`${contactId}-${Date.now()}`).toString("base64");
-  return token;
-}

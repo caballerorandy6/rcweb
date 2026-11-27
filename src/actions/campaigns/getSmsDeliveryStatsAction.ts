@@ -2,6 +2,7 @@
 
 import twilio from "twilio";
 import type { ActionResult } from "@/types/common";
+import { requireAdmin } from "@/lib/authGuard";
 
 const twilioClient = twilio(
   process.env.TWILIO_ACCOUNT_SID!,
@@ -36,6 +37,12 @@ export async function getSmsDeliveryStatsAction(
   hoursAgo: number = 24
 ): Promise<ActionResult<SmsDeliveryStats>> {
   try {
+    // Phone numbers and delivery errors: admin only
+    const authCheck = await requireAdmin();
+    if (!authCheck.authorized) {
+      return { success: false, error: authCheck.error };
+    }
+
     // Calcular fecha de inicio
     const startDate = new Date();
     startDate.setHours(startDate.getHours() - hoursAgo);

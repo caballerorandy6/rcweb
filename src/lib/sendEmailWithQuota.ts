@@ -1,5 +1,3 @@
-"use server";
-
 import { Resend } from "resend";
 import { checkAndReserveEmailQuota, releaseEmailQuota } from "./emailQuota";
 
