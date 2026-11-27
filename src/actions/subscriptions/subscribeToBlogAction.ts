@@ -4,6 +4,7 @@ import { getTranslations } from "next-intl/server";
 import { prisma } from "@/lib/prisma";
 import { BlogSubscriptionData, BlogSubscriptionSchema } from "@/lib/zod";
 import { sendNewLeadNotification } from "@/lib/email/senders/sendNewLeadNotification";
+import { checkActionRateLimit, rateLimiters } from "@/lib/rateLimit";
 
 const SOURCE = "blog_subscription";
 
@@ -14,6 +15,13 @@ const SOURCE = "blog_subscription";
  */
 export const subscribeToBlogAction = async (data: BlogSubscriptionData) => {
   const t = await getTranslations("Actions");
+
+  // Every new address emails the admin: keep a script from flooding both
+  const rateCheck = await checkActionRateLimit(rateLimiters.contact);
+  if (!rateCheck.success) {
+    return { success: false, message: t("blog.tooMany") };
+  }
+
   const parsedData = BlogSubscriptionSchema.safeParse(data);
 
   if (!parsedData.success) {
@@ -29,8 +37,9 @@ export const subscribeToBlogAction = async (data: BlogSubscriptionData) => {
     });
 
     if (existingEmail) {
+      // Same answer as a new sign-up: the form must not tell who is on the list
       if (existingEmail.contact.marketingConsent) {
-        return { success: false, message: t("blog.alreadySubscribed") };
+        return { success: true, message: t("blog.subscribed") };
       }
 
       // Known lead (or someone who unsubscribed) opting back in

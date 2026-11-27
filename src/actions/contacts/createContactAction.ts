@@ -14,6 +14,7 @@ import { sendContactConfirmationEmail } from "@/lib/email/senders/sendContactCon
 import { verifyRecaptcha } from "@/lib/recaptchaServer";
 import { offers } from "@/lib/data";
 import { CONTACT_CHANNEL_LABELS } from "@/lib/contactChannel";
+import { checkActionRateLimit, rateLimiters } from "@/lib/rateLimit";
 
 export interface CreateContactAction {
   success: boolean;
@@ -35,12 +36,26 @@ const resend = new Resend(process.env.RESEND_API_KEY!);
 
 const RECAPTCHA_ACTION = "submit_contact_form";
 
+// What a visitor's form may send besides the fields: where the form lives and
+// the campaign that brought them. Anything else is dropped, not stored.
+const PUBLIC_SOURCES = ["contact_form", "schedule_page"] as const;
+const utmValue = z.string().trim().max(500).nullish();
+const UTMSchema = z.object({
+  utmSource: utmValue,
+  utmMedium: utmValue,
+  utmCampaign: utmValue,
+  utmTerm: utmValue,
+  utmContent: utmValue,
+  referrer: utmValue,
+  landingPage: utmValue,
+});
+
 export const createContactAction = async (
   data: FormData,
   recaptchaToken?: string,
   timeSpent?: number,
-  source: string = "contact_form",
-  utmData?: UTMData
+  requestedSource: string = "contact_form",
+  rawUtmData?: UTMData
 ): Promise<CreateContactAction> => {
   // El admin crea contactos manualmente desde el dashboard sin reCAPTCHA.
   const session = await auth();
@@ -48,6 +63,19 @@ export const createContactAction = async (
   const locale = (await getLocale()) as Locale;
   const [t, messages] = await Promise.all([getTranslations("Actions"), getMessages()]);
   const skipBotChecks = isAdmin || process.env.NODE_ENV === "development";
+
+  if (!isAdmin) {
+    const rateCheck = await checkActionRateLimit(rateLimiters.contact);
+    if (!rateCheck.success) {
+      return { success: false, message: t("contact.tooMany"), errors: {} };
+    }
+  }
+
+  // Only the admin's manual form is "manual"; a visitor cannot choose a label
+  const source = isAdmin
+    ? "manual"
+    : PUBLIC_SOURCES.find((allowed) => allowed === requestedSource) ?? "contact_form";
+  const utmData = UTMSchema.safeParse(rawUtmData ?? {}).data;
 
   if (!skipBotChecks) {
     const isHuman = await verifyRecaptcha(recaptchaToken, RECAPTCHA_ACTION);
@@ -61,7 +89,7 @@ export const createContactAction = async (
     }
 
     // Anti-Bot Validation: Check minimum time (3 seconds)
-    if (timeSpent !== undefined && timeSpent < 3000) {
+    if (typeof timeSpent !== "number" || timeSpent < 3000) {
       console.warn(`🚫 Bot detected: Form submitted too quickly (${timeSpent}ms)`);
       return {
         success: false,
@@ -122,8 +150,10 @@ export const createContactAction = async (
       await prisma.contact.update({
         where: { id: contact.id },
         data: {
-          name,
-          marketingConsent,
+          // A visitor only proves they know an email or phone, not that they
+          // own it: their form cannot rename the contact nor withdraw its
+          // marketing consent (that takes the signed unsubscribe link)
+          ...(isAdmin ? { name, marketingConsent } : marketingConsent && { marketingConsent: true }),
           // A lead added by hand must not take the language of the admin panel
           ...(!isAdmin && { locale }),
           // A returning lead's latest answer wins (also "Not sure yet"); the
