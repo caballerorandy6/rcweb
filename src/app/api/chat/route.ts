@@ -1,4 +1,6 @@
+import * as Sentry from "@sentry/nextjs";
 import { OpenAI } from "openai";
+import { parseChatRequest } from "@/lib/chatRequest";
 import { getClientIp, rateLimiters } from "@/lib/rateLimit";
 
 const openai = new OpenAI({
@@ -17,7 +19,15 @@ export async function POST(req: Request) {
       );
     }
 
-    const { messages, locale } = await req.json();
+    const chatRequest = parseChatRequest(await req.text());
+    if (!chatRequest) {
+      return new Response(JSON.stringify({ error: "Invalid chat request" }), {
+        status: 400,
+        headers: { "Content-Type": "application/json" },
+      });
+    }
+
+    const { messages, locale } = chatRequest;
     const language = locale === "es" ? "Spanish" : "English";
 
     // System prompt personalizado para tu negocio
@@ -73,6 +83,9 @@ The visitor is browsing the site in ${language}: answer in ${language} unless th
       },
     });
   } catch (error) {
+    // A visitor only sees "try again": without this an outage of the chat
+    // (expired key, no credits) goes unnoticed
+    Sentry.captureException(error, { tags: { feature: "chat" } });
     console.error("OpenAI API error:", error);
     return new Response(
       JSON.stringify({ error: "Error processing chat request" }),

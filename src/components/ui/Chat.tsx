@@ -5,6 +5,7 @@ import { useState, useEffect, useRef } from "react";
 import { useLocale, useTranslations } from "next-intl";
 import Image from "next/image";
 import { event as trackEvent } from "@/lib/analytics";
+import { CHAT_MAX_MESSAGES, CHAT_MAX_USER_CHARS } from "@/lib/chatLimits";
 
 interface Message {
   id: string;
@@ -85,6 +86,7 @@ export default function Chat({ onClose }: ChatProps) {
           // The welcome line is UI copy, not part of the conversation
           messages: [...messages, userMessage]
             .filter((m) => m.id !== "welcome")
+            .slice(-CHAT_MAX_MESSAGES)
             .map((m) => ({ role: m.role, content: m.content })),
         }),
       });
@@ -253,6 +255,7 @@ export default function Chat({ onClose }: ChatProps) {
             autoComplete="off"
             value={input}
             onChange={(e) => setInput(e.target.value)}
+            maxLength={CHAT_MAX_USER_CHARS}
             placeholder={t("placeholder")}
             className="flex-1 min-w-0 bg-gray-800 text-white placeholder:text-white/40 px-4 py-2 rounded-lg border border-gold/20 focus:border-gold focus:outline-hidden focus:ring-2 focus:ring-gold/20 font-inter text-sm transition"
             disabled={isLoading}
