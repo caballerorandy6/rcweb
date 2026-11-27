@@ -1694,7 +1694,7 @@
       "title": "Cancelar suscripción",
       "description": "Cancela la suscripción a las comunicaciones por correo de RC Web Solutions LLC."
     },
-    "invalid": "Enlace de cancelación no válido",
+    "invalid": "Este enlace de baja no es válido. Usa el enlace al final de nuestro último correo o escribe a contactus@rcweb.dev y te daremos de baja.",
     "done": {
       "title": "Suscripción cancelada",
       "text": "{email} se ha eliminado de los correos de marketing de RC Web Solutions.",
@@ -1765,7 +1765,8 @@
       "failed": "Ocurrió un error al suscribirte al blog."
     },
     "unsubscribe": {
-      "notFound": "Contacto no encontrado",
+      "invalidLink": "Este enlace de baja no es válido. Usa el enlace al final de nuestro último correo o escribe a contactus@rcweb.dev y te daremos de baja.",
+      "tooMany": "Demasiados intentos. Vuelve a intentarlo en un minuto.",
       "failed": "No se pudo cancelar la suscripción"
     },
     "checkout": {

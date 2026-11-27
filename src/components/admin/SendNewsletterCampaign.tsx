@@ -291,7 +291,7 @@ export default function SendNewsletterCampaign({
           <a href="https://www.rcweb.dev/privacy-policy" style="color: #888; font-size: 12px">Privacy Policy</a> |
           <a href="https://www.rcweb.dev/terms-of-service" style="color: #888; font-size: 12px">Terms of Service</a>
         </div>
-        <div style="margin-top: 20px; font-size: 12px; color: #666">Don't want to receive these emails? <a href="#" style="color: #888">Unsubscribe</a></div>
+        <div style="margin-top: 20px; font-size: 12px; color: #666">Don't want to receive these emails? <a href="{{unsubscribe_url}}" style="color: #888">Unsubscribe</a></div>
       </div>
     </div>
   </body>

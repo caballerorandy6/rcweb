@@ -10,6 +10,7 @@ import {
 } from "@/lib/emailQuota";
 import { deleteFailedEmailsAction } from "@/actions/contacts/deleteFailedEmailsAction";
 import { requireAdmin } from "@/lib/authGuard";
+import { withUnsubscribeLink } from "@/lib/unsubscribe";
 
 const resend = new Resend(process.env.RESEND_API_KEY!);
 
@@ -79,6 +80,7 @@ export const createAndSendBatchCampaign = async (
       },
       select: {
         name: true,
+        locale: true,
         emails: {
           select: {
             email: true,
@@ -100,7 +102,8 @@ export const createAndSendBatchCampaign = async (
         from: "RC Web Solutions <no-reply@rcweb.dev>",
         to: email.email,
         subject: subject,
-        html: htmlContent,
+        // Each recipient gets their own signed unsubscribe link
+        html: withUnsubscribeLink(htmlContent, email.email, contact.locale),
         contactName: contact.name,
       }))
     );
@@ -380,6 +383,7 @@ export const continueBatchCampaign = async (
       },
       select: {
         name: true,
+        locale: true,
         emails: {
           select: {
             email: true,
@@ -394,7 +398,7 @@ export const continueBatchCampaign = async (
         from: "RC Web Solutions <no-reply@rcweb.dev>",
         to: email.email,
         subject: campaign.subject,
-        html: campaign.htmlContent,
+        html: withUnsubscribeLink(campaign.htmlContent, email.email, contact.locale),
         contactName: contact.name,
       }))
     );

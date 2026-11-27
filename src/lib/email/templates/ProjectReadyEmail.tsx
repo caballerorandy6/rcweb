@@ -17,6 +17,7 @@ import { emailTranslator } from "../i18n";
 import { localizePathname } from "@/i18n/paths";
 import type { Locale } from "@/i18n/routing";
 import { SITE_BASE_URL } from "@/lib/projectUrl";
+import { unsubscribeUrl } from "@/lib/unsubscribe";
 
 export interface ProjectReadyEmailProps {
   customerName: string;
@@ -43,7 +44,7 @@ export const ProjectReadyEmail = ({
 }: ProjectReadyEmailProps) => {
   const t = emailTranslator(locale);
   const finalPaymentUrl = `${SITE_BASE_URL}${localizePathname("/final-payment", locale)}`;
-  const unsubscribeUrl = `${SITE_BASE_URL}${localizePathname("/unsubscribe", locale)}?email=${encodeURIComponent(customerEmail)}`;
+  const unsubscribeLink = unsubscribeUrl(customerEmail, locale);
 
   return (
     <Html lang={locale}>
@@ -135,7 +136,7 @@ export const ProjectReadyEmail = ({
             <Text style={styles.unsubscribe}>
               {t("ready.unsubscribe")}{" "}
               <Link
-                href={unsubscribeUrl}
+                href={unsubscribeLink}
                 style={styles.link}
               >
                 {t("ready.here")}
