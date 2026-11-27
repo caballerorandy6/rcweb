@@ -23,7 +23,14 @@ export type PaymentIssueKind =
 
 export interface PaymentIssueAdminEmailProps {
   kind: PaymentIssueKind;
-  projectCode: string;
+  /**
+   * What the charge paid for: one of the two charges of a project (default)
+   * or a month of a maintenance plan, which has no row of its own in the
+   * admin and no project to decide about.
+   */
+  subject?: "project" | "subscription";
+  /** Only for a project */
+  projectCode?: string;
   customerName: string;
   customerEmail: string;
   planName: string;
@@ -37,7 +44,7 @@ export interface PaymentIssueAdminEmailProps {
   reason?: string;
   /** Deadline to submit evidence, for an open dispute */
   respondBy?: Date;
-  /** Admin page of the project */
+  /** Admin page of the project or of the subscription */
   adminProjectUrl: string;
   /** The payment or dispute in the Stripe dashboard */
   stripeUrl: string;
@@ -59,6 +66,7 @@ const formatDate = (date: Date) =>
 /** To the admin: money went back to a customer, or a bank is asking for it */
 export const PaymentIssueAdminEmail = ({
   kind,
+  subject = "project",
   projectCode,
   customerName,
   customerEmail,
@@ -73,6 +81,7 @@ export const PaymentIssueAdminEmail = ({
 }: PaymentIssueAdminEmailProps) => {
   const { title, tone } = COPY[kind];
   const partial = amount < chargeTotal;
+  const isPlan = subject === "subscription";
 
   return (
     <Html>
@@ -82,7 +91,7 @@ export const PaymentIssueAdminEmail = ({
           <Section style={styles.header}>
             <Heading style={{ ...styles.headerTitle, color: tone }}>{title}</Heading>
             <Text style={styles.headerSubtitle}>
-              Project {projectCode} · {planName}
+              {isPlan ? `Maintenance plan · ${planName}` : `Project ${projectCode} · ${planName}`}
             </Text>
           </Section>
           <Section style={styles.content}>
@@ -92,9 +101,17 @@ export const PaymentIssueAdminEmail = ({
                   <strong>{formatCurrency(amount)}</strong> of the {chargeLabel.toLowerCase()} (
                   {formatCurrency(chargeTotal)}) paid by <strong>{customerName}</strong> (
                   {customerEmail}) has been refunded
-                  {partial ? ", so the charge stays marked as paid" : " in full"}. The revenue
-                  figures in the admin already leave it out; Stripe Tax reverses the tax on its
-                  own.
+                  {isPlan
+                    ? partial
+                      ? " in part"
+                      : " in full"
+                    : partial
+                      ? ", so the charge stays marked as paid"
+                      : " in full"}
+                  .{" "}
+                  {isPlan
+                    ? "Stripe Tax reverses the tax on its own."
+                    : "The revenue figures in the admin already leave it out; Stripe Tax reverses the tax on its own."}
                 </>
               )}
               {kind === "dispute_opened" && (
@@ -110,7 +127,8 @@ export const PaymentIssueAdminEmail = ({
                 <>
                   The bank sided with you on the <strong>{formatCurrency(amount)}</strong>{" "}
                   dispute over the {chargeLabel.toLowerCase()} of <strong>{customerName}</strong>{" "}
-                  ({customerEmail}). The money is back in the account and the charge stays paid.
+                  ({customerEmail}). The money is back in the account
+                  {isPlan ? "." : " and the charge stays paid."}
                 </>
               )}
               {kind === "dispute_lost" && (
@@ -118,8 +136,12 @@ export const PaymentIssueAdminEmail = ({
                   The bank sided with the customer: <strong>{formatCurrency(amount)}</strong> of
                   the {chargeLabel.toLowerCase()} of <strong>{customerName}</strong> (
                   {customerEmail}) is gone for good
-                  {partial ? " and the charge stays marked as paid for the rest" : ", so the charge is marked as refunded"}
-                  . The revenue figures already leave it out.
+                  {isPlan
+                    ? ""
+                    : partial
+                      ? " and the charge stays marked as paid for the rest"
+                      : ", so the charge is marked as refunded"}
+                  .{isPlan ? "" : " The revenue figures already leave it out."}
                 </>
               )}
               {kind === "duplicate_payment" && (
@@ -147,8 +169,9 @@ export const PaymentIssueAdminEmail = ({
             ) : null}
             {kind === "refund" || kind === "dispute_lost" ? (
               <Text style={styles.paragraph}>
-                The project itself has not been changed: decide from its page whether the work
-                goes on, and let the customer know.
+                {isPlan
+                  ? "The subscription itself has not been changed and will keep renewing: cancel it from its page if the customer is leaving, and let them know."
+                  : "The project itself has not been changed: decide from its page whether the work goes on, and let the customer know."}
               </Text>
             ) : null}
             <Section style={{ textAlign: "center", margin: "32px 0" }}>
@@ -158,7 +181,8 @@ export const PaymentIssueAdminEmail = ({
             </Section>
             <Hr style={styles.hr} />
             <Text style={styles.footer}>
-              Project page: <a href={adminProjectUrl} style={styles.link}>{adminProjectUrl}</a>
+              {isPlan ? "Subscription page" : "Project page"}:{" "}
+              <a href={adminProjectUrl} style={styles.link}>{adminProjectUrl}</a>
             </Text>
           </Section>
         </Container>
