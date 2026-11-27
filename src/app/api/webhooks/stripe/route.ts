@@ -408,6 +408,26 @@ export async function POST(req: Request) {
           return newSubscription;
         });
 
+        // Every Checkout makes its own Stripe customer, so nothing stops the
+        // same email from subscribing twice: the admin is told, and decides.
+        // The row exists and a retry would send nothing, so a failed count
+        // must not stop the emails.
+        const otherActiveSubscriptions = await prisma.subscription
+          .count({
+            where: {
+              email: customerEmail,
+              status: { not: "cancelled" },
+              id: { not: subscription.id },
+            },
+          })
+          .catch((error: unknown) => {
+            Sentry.captureException(error, {
+              tags: { feature: "stripe-webhook" },
+              extra: { event: event.type, subscriptionId },
+            });
+            return 0;
+          });
+
         // ============= SEND EMAILS =============
         const emailErrors: string[] = [];
 
@@ -434,6 +454,7 @@ export async function POST(req: Request) {
           status: toSubscriptionStatus(stripeSubscription.status),
           stripeSubscriptionId: subscriptionId,
           nextBillingDate,
+          otherActiveSubscriptions,
         });
 
         if (!adminResult.success && adminResult.error) {

@@ -19,22 +19,19 @@ export async function sendSubscriptionPortalLink(
   resend: Resend,
   params: SendSubscriptionPortalLinkParams
 ): Promise<{ success: boolean; error?: string }> {
-  const {
-    customerEmail,
-    customerName,
-    locale,
-    portalUrl,
-    planName: storedPlanName,
-  } = params;
-  const planName = subscriptionPlanName(storedPlanName, locale);
+  const { customerEmail, customerName, locale } = params;
+  // The stored plan name is the English one
+  const links = params.links.map((link) => ({
+    ...link,
+    planName: subscriptionPlanName(link.planName, locale),
+  }));
 
   try {
     const html = await render(
       <SubscriptionPortalLinkEmail
         customerName={customerName}
         locale={locale}
-        portalUrl={portalUrl}
-        planName={planName}
+        links={links}
       />
     );
 

@@ -1926,6 +1926,8 @@
       "portalSubject": "Gestiona tu suscripción - RC Web Solutions",
       "portalHeading": "Gestiona tu suscripción",
       "portalBody": "Pediste acceso para gestionar tu suscripción. Haz clic en el botón de abajo para entrar al portal, donde puedes:",
+      "portalBodyMany": "Tienes {count} suscripciones con este correo. Cada botón de abajo abre el portal de una de ellas, donde puedes:",
+      "portalCtaPlan": "{planName}, desde el {date}",
       "portalItems": [
         "Actualizar tu método de pago",
         "Ver tu historial de facturación",
@@ -1934,6 +1936,7 @@
       ],
       "portalCta": "Entrar al portal de suscripción",
       "portalExpiry": "Por seguridad, este enlace caduca en 24 horas.",
+      "portalExpiryMany": "Por seguridad, estos enlaces caducan en 24 horas.",
       "portalIgnore": "Si no pediste este enlace, puedes ignorar este correo.",
       "renewalSubject": "Próxima renovación - {planName}",
       "renewalHeading": "Próxima renovación",
