@@ -14,20 +14,28 @@ import {
 } from "@react-email/components";
 import * as React from "react";
 import { EMAIL_COLORS } from "../colors";
-import { emailTranslator } from "../i18n";
+import { emailTranslator, formatLongDate } from "../i18n";
 import type { Locale } from "@/i18n/routing";
+
+export interface PortalLink {
+  planName: string;
+  portalUrl: string;
+  /** Tells apart two plans with the same name */
+  startedAt: Date;
+}
 
 export interface SubscriptionPortalLinkEmailProps {
   customerName: string;
   locale: Locale;
-  portalUrl: string;
-  planName: string;
+  /** One per subscription the customer can manage; usually a single one */
+  links: PortalLink[];
 }
 
 export const SubscriptionPortalLinkEmail: React.FC<
   SubscriptionPortalLinkEmailProps
-> = ({ customerName, locale, portalUrl, planName }) => {
+> = ({ customerName, locale, links }) => {
   const t = emailTranslator(locale);
+  const single = links.length === 1 ? links[0] : null;
   return (
     <Html lang={locale}>
       <Head />
@@ -36,7 +44,7 @@ export const SubscriptionPortalLinkEmail: React.FC<
           {/* Header */}
           <Section style={styles.header}>
             <Heading style={styles.headerTitle}>{t("subscription.portalHeading")}</Heading>
-            <Text style={styles.headerSubtitle}>{planName}</Text>
+            {single && <Text style={styles.headerSubtitle}>{single.planName}</Text>}
           </Section>
 
           {/* Content */}
@@ -45,7 +53,9 @@ export const SubscriptionPortalLinkEmail: React.FC<
               {t.rich("common.greeting", { name: customerName, b: (chunks) => <strong>{chunks}</strong> })}
             </Text>
             <Text style={styles.paragraph}>
-              {t("subscription.portalBody")}
+              {single
+                ? t("subscription.portalBody")
+                : t("subscription.portalBodyMany", { count: links.length })}
             </Text>
 
             {/* Features list */}
@@ -58,14 +68,21 @@ export const SubscriptionPortalLinkEmail: React.FC<
             </Section>
 
             {/* CTA Button */}
-            <Section style={styles.buttonContainer}>
-              <Button href={portalUrl} style={styles.button}>
-                {t("subscription.portalCta")}
-              </Button>
-            </Section>
+            {links.map((link) => (
+              <Section style={styles.buttonContainer} key={link.portalUrl}>
+                <Button href={link.portalUrl} style={styles.button}>
+                  {single
+                    ? t("subscription.portalCta")
+                    : t("subscription.portalCtaPlan", {
+                        planName: link.planName,
+                        date: formatLongDate(link.startedAt, locale),
+                      })}
+                </Button>
+              </Section>
+            ))}
 
             <Text style={styles.expiryNote}>
-              {t("subscription.portalExpiry")}
+              {single ? t("subscription.portalExpiry") : t("subscription.portalExpiryMany")}
             </Text>
 
             <Hr style={styles.divider} />

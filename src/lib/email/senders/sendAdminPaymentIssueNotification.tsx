@@ -11,7 +11,7 @@ const SUBJECTS: Record<PaymentIssueAdminEmailProps["kind"], string> = {
   duplicate_payment: "Charge paid twice, refund needed",
 };
 
-/** Tells the admin about a refund, a dispute or a second payment of a project charge; never throws */
+/** Tells the admin about a refund, a dispute or a second payment of a project charge, or a refund or dispute of a maintenance plan payment; never throws */
 export async function sendAdminPaymentIssueNotification(
   resend: Resend,
   props: PaymentIssueAdminEmailProps
@@ -21,7 +21,7 @@ export async function sendAdminPaymentIssueNotification(
     const { error: sendError } = await resend.emails.send({
       from: "RC Web Solutions <no-reply@rcweb.dev>",
       to: ADMIN_EMAIL,
-      subject: `${SUBJECTS[props.kind]} - ${props.projectCode} - ${props.customerName}`,
+      subject: `${SUBJECTS[props.kind]} - ${props.projectCode ?? props.planName} - ${props.customerName}`,
       html,
     });
     if (sendError) throw new Error(sendError.message);

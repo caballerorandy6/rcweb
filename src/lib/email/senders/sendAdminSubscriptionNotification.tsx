@@ -35,6 +35,8 @@ export interface AdminSubscriptionNotificationParams {
   nextBillingDate?: Date;
   /** From the portal's cancellation survey */
   cancellationReason?: string | null;
+  /** Other live subscriptions under the same email, for a new one */
+  otherActiveSubscriptions?: number;
 }
 
 export async function sendAdminSubscriptionNotification(
@@ -51,7 +53,9 @@ export async function sendAdminSubscriptionNotification(
     stripeSubscriptionId,
     nextBillingDate,
     cancellationReason,
+    otherActiveSubscriptions = 0,
   } = params;
+  const duplicate = event === "subscription" && otherActiveSubscriptions > 0;
 
   try {
     const html = await render(
@@ -65,6 +69,7 @@ export async function sendAdminSubscriptionNotification(
         subscriptionStatus={status}
         nextBillingDate={nextBillingDate}
         cancellationReason={cancellationReason ?? undefined}
+        otherActiveSubscriptions={otherActiveSubscriptions}
       />
     );
 
@@ -72,9 +77,10 @@ export async function sendAdminSubscriptionNotification(
       from: "RC Web Solutions <no-reply@rcweb.dev>",
       to: ADMIN_EMAIL,
       // A new subscription is announced by plan; problems by customer.
-      subject: `${SUBJECTS[event]} - ${
-        event === "subscription" ? planName : customerEmail
-      }`,
+      // A second plan under the same email is announced by customer too.
+      subject: duplicate
+        ? `New Subscription (possible duplicate) - ${customerEmail}`
+        : `${SUBJECTS[event]} - ${event === "subscription" ? planName : customerEmail}`,
       html,
     });
     if (sendError) throw new Error(sendError.message);

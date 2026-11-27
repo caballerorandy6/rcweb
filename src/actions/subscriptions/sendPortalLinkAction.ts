@@ -10,6 +10,7 @@ import { sendSubscriptionPortalLink } from "@/lib/email/senders";
 import type { ActionResultSimple } from "@/types/common";
 import { checkActionRateLimit, rateLimiters } from "@/lib/rateLimit";
 import { ManageSubscriptionSchema } from "@/lib/zod";
+import { portalSubscriptions } from "@/lib/subscriptionPortal";
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 
@@ -23,6 +24,9 @@ const PORTAL_LINK_TTL_MS = 24 * 60 * 60 * 1000;
  * Emails a magic link to /manage-subscription/[token]. That page creates the
  * Stripe Customer Portal session at click time, because a portal session
  * URL itself expires five minutes after creation.
+ *
+ * Someone who subscribed twice with the same email gets one link per plan
+ * that is still alive, in a single email (see portalSubscriptions).
  */
 export async function sendPortalLinkAction(
   email: string
@@ -39,34 +43,51 @@ export async function sendPortalLinkAction(
       return { success: false, error: t("portal.invalidEmail") };
     }
 
-    const subscription = await prisma.subscription.findFirst({
-      where: { email: parsed.data.email.toLowerCase() },
-      orderBy: { createdAt: "desc" },
-      select: { id: true, email: true, name: true, planName: true },
-    });
+    const subscriptions = portalSubscriptions(
+      await prisma.subscription.findMany({
+        where: { email: parsed.data.email.toLowerCase() },
+        orderBy: { createdAt: "desc" },
+        select: {
+          id: true,
+          email: true,
+          name: true,
+          planName: true,
+          status: true,
+          stripeCustomerId: true,
+          createdAt: true,
+        },
+      })
+    );
 
     // Same answer whether or not the email exists, to avoid enumeration.
-    if (!subscription) {
+    const [latest] = subscriptions;
+    if (!latest) {
       return { success: true };
     }
 
-    const token = randomBytes(32).toString("base64url");
-    await prisma.subscription.update({
-      where: { id: subscription.id },
-      data: {
-        portalToken: token,
-        portalTokenExpiresAt: new Date(Date.now() + PORTAL_LINK_TTL_MS),
-      },
-    });
+    const expiresAt = new Date(Date.now() + PORTAL_LINK_TTL_MS);
+    const links = await Promise.all(
+      subscriptions.map(async (subscription) => {
+        const token = randomBytes(32).toString("base64url");
+        await prisma.subscription.update({
+          where: { id: subscription.id },
+          data: { portalToken: token, portalTokenExpiresAt: expiresAt },
+        });
+        return {
+          planName: subscription.planName,
+          startedAt: subscription.createdAt,
+          // The emailed link keeps the language the customer asked in
+          portalUrl: `${process.env.NEXT_PUBLIC_BASE_URL}${localizePathname("/manage-subscription/[token]", locale as Locale, { token })}`,
+        };
+      })
+    );
 
     const emailResult = await sendSubscriptionPortalLink(resend, {
-      customerEmail: subscription.email,
-      customerName: subscription.name,
-      // The email and its link keep the language the customer asked in
+      customerEmail: latest.email,
+      customerName: latest.name,
+      // The email keeps the language the customer asked in
       locale,
-      // The emailed link keeps the language the customer asked in
-      portalUrl: `${process.env.NEXT_PUBLIC_BASE_URL}${localizePathname("/manage-subscription/[token]", locale as Locale, { token })}`,
-      planName: subscription.planName,
+      links,
     });
 
     if (!emailResult.success) {

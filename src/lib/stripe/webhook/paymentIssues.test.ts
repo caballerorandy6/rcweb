@@ -1,9 +1,13 @@
 import { afterEach, describe, expect, it, vi } from "vitest";
 import type Stripe from "stripe";
 
-const { prisma, sessionsList, sendAdminPaymentIssueNotification, captureMessage } = vi.hoisted(() => ({
-  prisma: { payment: { findUnique: vi.fn(), update: vi.fn() } },
+const { prisma, sessionsList, chargesRetrieve, sendAdminPaymentIssueNotification, captureMessage } = vi.hoisted(() => ({
+  prisma: {
+    payment: { findUnique: vi.fn(), update: vi.fn() },
+    subscription: { findFirst: vi.fn() },
+  },
   sessionsList: vi.fn(),
+  chargesRetrieve: vi.fn(),
   sendAdminPaymentIssueNotification: vi.fn(
     async (): Promise<{ success: boolean; error?: string }> => ({ success: true })
   ),
@@ -11,7 +15,9 @@ const { prisma, sessionsList, sendAdminPaymentIssueNotification, captureMessage 
 }));
 
 vi.mock("@/lib/prisma", () => ({ prisma }));
-vi.mock("@/lib/stripe", () => ({ default: { checkout: { sessions: { list: sessionsList } } } }));
+vi.mock("@/lib/stripe", () => ({
+  default: { checkout: { sessions: { list: sessionsList } }, charges: { retrieve: chargesRetrieve } },
+}));
 vi.mock("@/lib/email", () => ({ sendAdminPaymentIssueNotification }));
 vi.mock("@sentry/nextjs", () => ({ captureMessage }));
 vi.mock("@/lib/projectUrl", () => ({ SITE_BASE_URL: "https://www.rcweb.dev" }));
@@ -335,6 +341,106 @@ describe("handleDisputeClosed", () => {
     expect(result.warning).toMatch(/under_review/);
     expect(captureMessage).toHaveBeenCalled();
     expect(prisma.payment.update).not.toHaveBeenCalled();
+  });
+});
+
+describe("maintenance plan payments", () => {
+  const plan = { id: "sub-row-1", name: "Ana", email: "ana@example.com", planName: "Monthly Maintenance" };
+  const planCharge = { id: "ch_sub", customer: "cus_plan", amount: 21650 };
+
+  // Not a project payment: no row by PaymentIntent and no Checkout Session behind it
+  function foreignCharge() {
+    prisma.payment.findUnique.mockResolvedValueOnce(null);
+    sessionsList.mockResolvedValueOnce({ data: [] });
+  }
+
+  it("tells the admin about a refund of a monthly payment without recording anything", async () => {
+    foreignCharge();
+    prisma.subscription.findFirst.mockResolvedValueOnce(plan);
+
+    const result = await handleChargeRefunded(
+      charge({ customer: "cus_plan", amount: 21650, amount_refunded: 21650 }),
+      resend,
+      now
+    );
+
+    expect(result).toEqual({ received: true, updated: false, subscriptionNotified: true });
+    expect(prisma.subscription.findFirst).toHaveBeenCalledWith(
+      expect.objectContaining({ where: { stripeCustomerId: "cus_plan" } })
+    );
+    expect(prisma.payment.update).not.toHaveBeenCalled();
+    expect(sendAdminPaymentIssueNotification).toHaveBeenCalledWith(resend, {
+      kind: "refund",
+      subject: "subscription",
+      customerName: "Ana",
+      customerEmail: "ana@example.com",
+      planName: "Monthly Maintenance",
+      chargeLabel: "Monthly payment",
+      chargeTotal: 21650,
+      amount: 21650,
+      adminProjectUrl: "https://www.rcweb.dev/subscriptions/sub-row-1",
+      stripeUrl: "https://dashboard.stripe.com/payments/pi_1",
+    });
+  });
+
+  it("tells the admin about a dispute of a monthly payment, with the deadline", async () => {
+    foreignCharge();
+    chargesRetrieve.mockResolvedValueOnce(planCharge);
+    prisma.subscription.findFirst.mockResolvedValueOnce(plan);
+
+    const result = await handleDisputeCreated(dispute({ charge: "ch_sub", amount: 21650 }), resend);
+
+    expect(result).toEqual({ received: true, updated: false, subscriptionNotified: true });
+    expect(chargesRetrieve).toHaveBeenCalledWith("ch_sub");
+    expect(sendAdminPaymentIssueNotification.mock.calls[0]).toMatchObject([
+      resend,
+      {
+        kind: "dispute_opened",
+        subject: "subscription",
+        chargeTotal: 21650,
+        amount: 21650,
+        reason: "fraudulent",
+        respondBy: new Date(1794268800 * 1000),
+        stripeUrl: "https://dashboard.stripe.com/disputes/dp_1",
+      },
+    ]);
+  });
+
+  it.each([
+    ["won", "dispute_won"],
+    ["lost", "dispute_lost"],
+  ] as const)("tells the admin when a dispute of a monthly payment is %s", async (status, kind) => {
+    foreignCharge();
+    chargesRetrieve.mockResolvedValueOnce(planCharge);
+    prisma.subscription.findFirst.mockResolvedValueOnce(plan);
+
+    const result = await handleDisputeClosed(dispute({ charge: "ch_sub", status }), resend, now);
+
+    expect(result).toMatchObject({ subscriptionNotified: true });
+    expect(sendAdminPaymentIssueNotification).toHaveBeenCalledWith(
+      resend,
+      expect.objectContaining({ kind, subject: "subscription" })
+    );
+  });
+
+  it("stays a warning when the customer of the charge has no maintenance plan", async () => {
+    foreignCharge();
+    prisma.subscription.findFirst.mockResolvedValueOnce(null);
+
+    const result = await handleChargeRefunded(charge({ customer: "cus_other" }), resend, now);
+
+    expect(result).toEqual({ received: true, warning: "Refund on a charge that is not a project payment" });
+    expect(sendAdminPaymentIssueNotification).not.toHaveBeenCalled();
+  });
+
+  it("carries an email that could not be sent in the answer", async () => {
+    foreignCharge();
+    prisma.subscription.findFirst.mockResolvedValueOnce(plan);
+    sendAdminPaymentIssueNotification.mockResolvedValueOnce({ success: false, error: "quota" });
+
+    const result = await handleChargeRefunded(charge({ customer: "cus_plan" }), resend, now);
+
+    expect(result).toMatchObject({ subscriptionNotified: true, emailError: "quota" });
   });
 });
 

@@ -55,6 +55,8 @@ export interface AdminNotificationEmailProps {
   nextBillingDate?: Date;
   subscriptionStatus?: string;
   cancellationReason?: string;
+  /** Other live subscriptions under the same email when this one was created */
+  otherActiveSubscriptions?: number;
 }
 
 export const AdminNotificationEmail: React.FC<AdminNotificationEmailProps> = ({
@@ -71,6 +73,7 @@ export const AdminNotificationEmail: React.FC<AdminNotificationEmailProps> = ({
   nextBillingDate,
   subscriptionStatus,
   cancellationReason,
+  otherActiveSubscriptions = 0,
 }) => {
   const formattedAmount = formatCurrency(amount);
   const formattedPending = pendingAmount ? formatCurrency(pendingAmount) : "";
@@ -314,6 +317,19 @@ export const AdminNotificationEmail: React.FC<AdminNotificationEmailProps> = ({
 
             {type === "subscription" && (
               <>
+                {otherActiveSubscriptions > 0 && (
+                  <Section style={styles.warningBox}>
+                    <Heading as="h3" style={styles.warningTitle}>
+                      Possible duplicate
+                    </Heading>
+                    <Text style={styles.warningText}>
+                      This email already has {otherActiveSubscriptions} other
+                      active {otherActiveSubscriptions === 1 ? "subscription" : "subscriptions"}.
+                      If the client did not mean to buy a second plan, cancel
+                      this one and refund its first charge in Stripe.
+                    </Text>
+                  </Section>
+                )}
                 <Section style={styles.infoBox}>
                   <Heading as="h3" style={styles.sectionTitle}>
                     Onboarding checklist
@@ -465,6 +481,25 @@ const styles: Record<string, React.CSSProperties> = {
   },
   checklistItem: {
     marginBottom: "4px",
+  },
+  warningBox: {
+    backgroundColor: EMAIL_COLORS.amberLight,
+    borderLeft: `4px solid ${EMAIL_COLORS.amber}`,
+    borderRadius: "8px",
+    padding: "16px 20px",
+    margin: "0 0 16px 0",
+  },
+  warningTitle: {
+    color: EMAIL_COLORS.amberDark,
+    fontSize: "16px",
+    fontWeight: 700,
+    margin: "0 0 8px 0",
+  },
+  warningText: {
+    color: EMAIL_COLORS.dark,
+    fontSize: "14px",
+    lineHeight: "1.6",
+    margin: 0,
   },
   reminderText: {
     color: EMAIL_COLORS.gray,
