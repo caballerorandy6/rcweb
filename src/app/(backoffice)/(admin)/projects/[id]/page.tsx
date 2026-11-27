@@ -1,4 +1,5 @@
 import { notFound } from "next/navigation";
+import { requireAdminPage } from "@/lib/authGuard";
 import { prisma } from "@/lib/prisma";
 import { adminProjectDetailInclude, toAdminProjectDetail } from "@/lib/project/toAdminProjectDetail";
 import ProjectDetail from "@/components/admin/ProjectDetail";
@@ -13,8 +14,8 @@ export const metadata = genPageMetadata({
 
 type Params = Promise<{ id: string }>;
 
-// The admin layout already checks the session
 export default async function ProjectPage(props: { params: Params }) {
+  await requireAdminPage();
   const { id } = await props.params;
 
   const project = await prisma.project.findUnique({

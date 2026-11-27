@@ -1,4 +1,5 @@
 import { notFound } from "next/navigation";
+import { requireAdminPage } from "@/lib/authGuard";
 import { prisma } from "@/lib/prisma";
 import SubscriptionDetail from "@/components/admin/SubscriptionDetail";
 import { addMonths, monthOfDay, monthStart, workLogWindow } from "@/lib/maintenanceHours";
@@ -18,6 +19,7 @@ export const dynamic = "force-dynamic";
 type Params = Promise<{ id: string }>;
 
 export default async function SubscriptionPage(props: { params: Params }) {
+  await requireAdminPage();
   const { id } = await props.params;
   const now = new Date();
   const currentMonth = monthStart(now);

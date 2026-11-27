@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import { requireAdminPage } from "@/lib/authGuard";
 import { prisma } from "@/lib/prisma";
 import { isQuoteOpen, QUOTE_STATUS_LABELS } from "@/lib/quote/quoteStatus";
 import { quoteOfferOptions } from "@/lib/quote/offerOptions";
@@ -20,6 +21,7 @@ export const metadata = genPageMetadata({
 type Params = Promise<{ id: string }>;
 
 export default async function EditQuotePage(props: { params: Params }) {
+  await requireAdminPage();
   const { id } = await props.params;
 
   const quote = await prisma.quote.findUnique({
