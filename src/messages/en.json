@@ -1732,7 +1732,8 @@
       "verification": "Verification failed. Please refresh the page and try again.",
       "tooFast": "Please take a moment to review your message.",
       "invalid": "Please check the form and try again.",
-      "failed": "The message could not be sent. Please try again or call us."
+      "failed": "The message could not be sent. Please try again or call us.",
+      "tooMany": "Too many messages in a short time. Please wait a minute and try again, or call us."
     },
     "tooManyRequests": "Too many requests. Please try again later.",
     "quote": {
@@ -1760,9 +1761,9 @@
     },
     "blog": {
       "invalid": "Please enter a valid email address",
-      "alreadySubscribed": "This email is already subscribed to the blog.",
       "subscribed": "Successfully subscribed to the blog.",
-      "failed": "An error occurred while subscribing to the blog."
+      "failed": "An error occurred while subscribing to the blog.",
+      "tooMany": "Too many attempts. Please try again in a minute."
     },
     "unsubscribe": {
       "invalidLink": "This unsubscribe link is not valid. Use the link at the bottom of our latest email, or write to contactus@rcweb.dev and we will remove you.",

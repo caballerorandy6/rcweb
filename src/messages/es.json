@@ -1732,7 +1732,8 @@
       "verification": "No se pudo verificar el envío. Recarga la página e inténtalo de nuevo.",
       "tooFast": "Tómate un momento para revisar tu mensaje.",
       "invalid": "Revisa el formulario e inténtalo de nuevo.",
-      "failed": "No se pudo enviar el mensaje. Inténtalo de nuevo o llámanos."
+      "failed": "No se pudo enviar el mensaje. Inténtalo de nuevo o llámanos.",
+      "tooMany": "Demasiados mensajes en poco tiempo. Espera un minuto e inténtalo de nuevo, o llámanos."
     },
     "tooManyRequests": "Demasiadas solicitudes. Inténtalo de nuevo más tarde.",
     "quote": {
@@ -1760,9 +1761,9 @@
     },
     "blog": {
       "invalid": "Escribe un correo electrónico válido",
-      "alreadySubscribed": "Este correo ya está suscrito al blog.",
       "subscribed": "Te has suscrito al blog correctamente.",
-      "failed": "Ocurrió un error al suscribirte al blog."
+      "failed": "Ocurrió un error al suscribirte al blog.",
+      "tooMany": "Demasiados intentos. Vuelve a intentarlo en un minuto."
     },
     "unsubscribe": {
       "invalidLink": "Este enlace de baja no es válido. Usa el enlace al final de nuestro último correo o escribe a contactus@rcweb.dev y te daremos de baja.",
